@@ -3,6 +3,8 @@
   <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
     <file url="file://$PROJECT_DIR$/web/js/app/view/Header.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/view/Viewport.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../zsmzj/web/js/app/view/Header.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../zsmzj/web/js/app/view/Viewport.js" charset="UTF-8" />
   </component>
 </project>
 
