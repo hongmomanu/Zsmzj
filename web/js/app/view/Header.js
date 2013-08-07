@@ -6,7 +6,7 @@ Ext.define('ZSMZJ.view.Header', {
     extend: 'Ext.Component',
 
     dock: 'top',
-    baseCls: 'cf-header',
+    baseCls: 'main-header',
 
     initComponent: function() {
         Ext.applyIf(this, {
