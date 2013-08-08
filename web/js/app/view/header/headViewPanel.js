@@ -23,6 +23,7 @@ Ext.define('ZSMZJ.view.header.headViewPanel' ,{
             //title: 'Simple DataView (0 items selected)',
             items: Ext.create('Ext.view.View', {
                 store: 'HeaderViewers',
+                id: 'headviewitem',
                 tpl: [
                     '<tpl for=".">',
                     '<div class="thumb-wrap" id="{name}">',
@@ -49,8 +50,21 @@ Ext.define('ZSMZJ.view.header.headViewPanel' ,{
                     });
                     return data;
                 },
+
                 listeners: {
                     selectionchange: function(dv, nodes ){
+                        //alert(1);
+                        //console.log(dv);
+                        //console.log(nodes[0]);
+                        var menu_arr=eval(nodes[0].raw.value);
+                        //console.log(menu_arr);
+                        Ext.getCmp('west-panel').removeAll();
+                        Ext.getCmp('west-panel').add(menu_arr);
+
+
+
+
+
                         //var l = nodes.length,
                         //    s = l !== 1 ? 's' : '';
                         //this.up('panel').setTitle('Simple DataView (' + l + ' item' + s + ' selected)');
@@ -62,6 +76,7 @@ Ext.define('ZSMZJ.view.header.headViewPanel' ,{
 
         });
         this.callParent(arguments);
+
         // store singleton selection model instance
     }
 });

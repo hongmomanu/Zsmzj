@@ -21,32 +21,24 @@ Ext.define('ZSMZJ.controller.Header', {
 
 
     /*refs: [
-        {ref: 'summitChart', selector: 'summitchart'},
-        {ref: 'summitGrid', selector: 'summitgrid'}
+        {ref: 'headViewPanel', selector: 'headViewpanel'}
     ],*/
     views: [
-        'Header'
+        'Header','header.headViewPanel'
     ],
 
     init: function() {
         var me = this;
-        /**
+        //testobj=me;
+        /*
         this.control({
-            'missiongrid':{
-                itemclick: this.showContent
-            },
-            'managergrid':{
-                itemclick: this.showContent
+            'headviewpanel#headviewitem':{
+                selectionchange: this.selectionchange
             }
         }, this);
-         **/
+*/
     },
 
-    showContent: function(grid, record) {
-        console.log('Double clicked on ' + record.get('label'));
-
-
-    } ,
 
 
 

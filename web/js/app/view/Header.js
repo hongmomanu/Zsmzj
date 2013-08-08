@@ -7,20 +7,18 @@ Ext.define('ZSMZJ.view.Header', {
 
     dock: 'top',
     baseCls: 'main-header',
+    alias : 'widget.myheader',
 
     requires: [
         'Ext.data.*',
         'Ext.util.*',
-        'Ext.view.View',
-        'ZSMZJ.view.header.headViewPanel'
-
+        'Ext.view.View'
 
     ],
 
 
     initComponent: function() {
         Ext.applyIf(this, {
-            //xtype:'headviewpanel'
             //html: '舟山市社会救助管理平台'
             xtype:'panel',
             frame : false,

@@ -15,35 +15,34 @@
 Ext.define('ZSMZJ.controller.Navigation', {
     extend: 'Ext.app.Controller',
 
-    models: [],
-    stores: [],
+    models: ['UserConfig'],
+    stores: ['UserConfigs'],
 
     /*refs: [
         {ref: 'summitChart', selector: 'summitchart'},
         {ref: 'summitGrid', selector: 'summitgrid'}
     ],*/
     views: [
-        // 'user.List'
+        'navigation.userConfigGrid'
 
     ],
 
     init: function() {
         var me = this;
-        /**
+        testobj=me;
+
         this.control({
-            'missiongrid':{
-                itemclick: this.showContent
-            },
-            'managergrid':{
+            'userconfiggrid':{
                 itemclick: this.showContent
             }
         }, this);
-         **/
+
     },
 
     showContent: function(grid, record) {
-        console.log('Double clicked on ' + record.get('label'));
+        //alert(1);
 
+        console.log('Double clicked on ' + record.get('label'));
 
     } ,
 

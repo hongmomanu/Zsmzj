@@ -1,6 +1,7 @@
 {"images": [
     {
         "name": "社会救助",
+        "value":"menu_shjz",
 
         "url": "img\/shjz.png"
     },
@@ -21,6 +22,12 @@
     },
     {
         "name": "老人数据库",
+
+        "url": "img\/oldmandb.png"
+    },
+    {
+        "name": "权限管理",
+        "value":"menu_qxgl",
 
         "url": "img\/oldmandb.png"
     }
