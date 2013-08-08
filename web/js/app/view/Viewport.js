@@ -89,6 +89,47 @@ Ext.define('ZSMZJ.view.Viewport', {
 
                             iconCls: 'nav'
 
+                        }, {
+                            title: '孤儿救助',
+                            /*items:[
+                             {
+                             xtype:'managergrid'
+                             }
+                             ],*/
+
+                            iconCls: 'nav'
+
+                        }, {
+                            title: '慈善救助',
+                            /*items:[
+                             {
+                             xtype:'managergrid'
+                             }
+                             ],*/
+
+                            iconCls: 'nav'
+
+                        },  {
+                            title: '综合查询',
+                            /*items:[
+                             {
+                             xtype:'managergrid'
+                             }
+                             ],*/
+
+                            iconCls: 'nav'
+
+                        },
+                            {
+                            title: '系统管理',
+                            /*items:[
+                             {
+                             xtype:'managergrid'
+                             }
+                             ],*/
+
+                            iconCls: 'nav'
+
                         }]
                     },
 
@@ -101,7 +142,7 @@ Ext.define('ZSMZJ.view.Viewport', {
                         items: [
                             {
                                 xtype: 'cf_mappanel',
-                                title: '地图浏览',
+                                title: '首页',
                                 autoScroll: true
                             }
 

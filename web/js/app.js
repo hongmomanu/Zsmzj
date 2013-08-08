@@ -12,20 +12,32 @@
  */
 Ext.Loader.setConfig({
     enabled: true,
-    disableCaching: true
-});
+    disableCaching: true,
+    paths: {
+        //GeoExt: "static/javascripts/geoext4/src/GeoExt",
+        // for dev use
+        //Ext: extLocation+"src"
+        // for build purpose
+        'Ext.ux': extLocation+'examples/ux'
+    }
 
+});
 
 /**
  * ZSMZJ.app
- * 舟山民政救助系统应用mvc框架
+ * 舟山民政救助系统应用mvc框架配置入口
  *
  */
 Ext.application({
     name: 'ZSMZJ',
     appFolder: 'js/app',
+    //附加dataview组件
+    requires: [
+        'Ext.ux.DataView.DragSelector',
+        'Ext.ux.DataView.LabelEditor'
+    ],
     controllers: [
-        'Navigation'
+        'Navigation','Header'
     ],
     autoCreateViewport: true
 });
