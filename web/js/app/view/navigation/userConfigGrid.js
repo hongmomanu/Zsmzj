@@ -11,9 +11,9 @@ Ext.define('ZSMZJ.view.navigation.userConfigGrid' ,{
     extend: 'Ext.grid.Panel',
     alias : 'widget.userconfiggrid',
     cls:'navigation-grid',
-    /*requires: [
-        'CF.view.mission.cachePanel'
-    ],*/
+    requires: [
+
+    ],
     initComponent: function() {
         Ext.apply(this, {
             border: false,

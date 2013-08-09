@@ -19,6 +19,12 @@ public class RoleImplement implements RoleMethods {
     @Override
     public ArrayList<Map<String, Object>> getRoles(int start, int limit, String keyword) {
         RoleDao dao=new RoleDao();
-        return dao.getRoles(start,limit,keyword);
+        return dao.getRoles(start, limit, keyword);
+    }
+
+    @Override
+    public int addnewRole(String rolename) {
+        RoleDao dao=new RoleDao();
+        return dao.addNewRole(rolename);
     }
 }

@@ -25,7 +25,7 @@ Ext.Loader.setConfig({
 
 /**
  * ZSMZJ.app
- * 舟山民政救助系统应用mvc框架配置入口
+ * 舟山民政救助系统应用前台配置入口
  *
  */
 Ext.application({
@@ -37,7 +37,7 @@ Ext.application({
         'Ext.ux.DataView.LabelEditor'
     ],
     controllers: [
-        'Navigation','Header'
+        'Navigation','Header','Manager'
     ],
     autoCreateViewport: true
 });

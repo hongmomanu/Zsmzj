@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,9 +20,10 @@ import java.util.Map;
  */
 public class RoleDao {
     private static final Logger log = Logger.getLogger(RoleDao.class);
+    private  static String RoleTable="roles";
     public ArrayList<Map<String, Object>> getRoles(int start, int limit, String keyword) {
         Connection testConn= JdbcFactory.getConn("sqlite");
-        String sql=  "select rolename,id from roles Limit "+limit+" Offset "+ start;
+        String sql=  "select rolename,id from "+RoleTable+" Limit "+limit+" Offset "+ start;
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
         ArrayList<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         try {
@@ -38,6 +40,25 @@ public class RoleDao {
             log.debug(E.getMessage());
             return list;
         }
+
+    }
+    public int addNewRole(String rolename){
+        Connection conn= JdbcFactory.getConn("sqlite");
+        String sql = "insert  into " + RoleTable + " (rolename) values (?)  ";
+        PreparedStatement pstmt = JdbcFactory.getPstmt(conn, sql);
+
+        try {
+            pstmt.setString(1, rolename);
+
+            //pstmt.setInt(7, Integer.parseInt(params.get("keyid").toString()));
+            return pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            log.debug(ex.getMessage());
+            return -1;
+
+        }
+
+
 
     }
 

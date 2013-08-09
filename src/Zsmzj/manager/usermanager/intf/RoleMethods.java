@@ -12,5 +12,6 @@ import java.util.Map;
  */
 public interface RoleMethods {
     ArrayList<Map<String, Object>> getRoles(int start, int limit, String keyword);
+    int addnewRole(String rolename);
 
 }

@@ -3,6 +3,10 @@ package Zsmzj.manager.usermanager.business;
 import Zsmzj.manager.usermanager.impl.RoleImplement;
 import Zsmzj.manager.usermanager.impl.UserImplement;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,6 +20,15 @@ public class RoleControl {
 
         RoleImplement role=new RoleImplement();
         return JSONArray.fromObject(role.getRoles(start, limit, keyword)).toString();
+
+    }
+    public String addNewRole(String rolename){
+        RoleImplement role=new RoleImplement();
+        Map<String,Object> res=new HashMap<String, Object>();
+        int roleid=role.addnewRole(rolename);
+        if(roleid>=0)res.put("success",true);
+        else res.put("success",false);
+        return JSONObject.fromObject(res).toString();
 
     }
 

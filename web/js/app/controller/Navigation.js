@@ -23,14 +23,13 @@ Ext.define('ZSMZJ.controller.Navigation', {
         {ref: 'summitGrid', selector: 'summitgrid'}
     ],*/
     views: [
-        'navigation.userConfigGrid'
+        'navigation.userConfigGrid',
+
 
     ],
 
     init: function() {
         var me = this;
-        testobj=me;
-
         this.control({
             'userconfiggrid':{
                 itemclick: this.showContent
@@ -42,7 +41,42 @@ Ext.define('ZSMZJ.controller.Navigation', {
     showContent: function(grid, record) {
         //alert(1);
 
-        console.log('Double clicked on ' + record.get('label'));
+        //console.log('Double clicked on ' + record.get('label'));
+
+        var label=record.get('label');
+
+        var tabs=Ext.getCmp('mainContent-panel');
+        if(tabs.getComponent('tab'+label)){
+            tabs.getComponent('tab'+label).show();
+        }else{
+            var type=record.get('type');
+            var value=record.get('value');
+            if(type=='widget'){
+                tabs.add({
+                    closable: true,
+                    id: 'tab'+label,
+                    xtype: value,
+                    autoScroll: true,
+                    iconCls: 'tabs',
+                    title: label
+                }).show();
+            }else if(type=="url"){
+                tabs.add({
+                    closable: true,
+                    id: 'tab'+label,
+                    html:'<iframe src="'+value+'" width="100%" height="100%">',
+                    //loader: { url: "http://www.baidu.com", contentType: 'html', loadMask: 'loading...', autoLoad: true, scripts: true },
+                    autoScroll: false,
+                    iconCls: 'tabs',
+                    title: label
+                }).show();
+
+            }
+
+        }
+
+
+
 
     } ,
 

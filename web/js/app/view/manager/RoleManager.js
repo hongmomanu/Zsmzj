@@ -5,12 +5,11 @@
  * Time: 上午9:48
  * To change this template use File | Settings | File Templates.
  */
-Ext.define('ZSMZJ.view.manager.UserManager' ,{
+Ext.define('ZSMZJ.view.manager.RoleManager' ,{
     extend: 'Ext.grid.Panel',
-    alias : 'widget.usermanagerpanel',
+    alias : 'widget.rolemanagerpanel',
     cls:'navigation-grid',
     requires: [
-
     ],
     initComponent: function() {
         Ext.apply(this, {
@@ -28,34 +27,30 @@ Ext.define('ZSMZJ.view.manager.UserManager' ,{
             columns: [
 
 
-                {header: '用户名', dataIndex: 'username',width: 150},
-                {header: '角色', dataIndex: 'rolename',width: 250},
-                {header: '注册时间', dataIndex: 'time',width: 150, renderer: function (val, obj, record) {
-                    var time = new Date(val);
-                    val = Ext.util.Format.date(time, 'Y-m-d H:i');
-                    return val;
-                }}
+                {header: '角色名', dataIndex: 'rolename',flex: 1},
+                {header: '角色id', dataIndex: 'roleid',width: 250,hidden:true}
 
             ],
             flex: 1,
             bbar: Ext.create('Ext.PagingToolbar', {
-                store: 'manager.UserManagers',
+                store: 'manager.RoleManagers',
                 displayInfo: true,
                 displayMsg: '显示用户 {0} - {1} of {2}',
                 emptyMsg: "没有用户",
                 items:[
                     '-', {
-                        text: '新增用户'
+                        text: '新增角色',
+                        action:'addnewrole'
 
                     }]
             }),
-            store: 'manager.UserManagers'
+            store: 'manager.RoleManagers'
 
 
         });
         this.callParent(arguments);
         // store singleton selection model instance
-        ZSMZJ.view.manager.UserManager.selectionModel = this.getSelectionModel();
+        ZSMZJ.view.manager.RoleManager.selectionModel = this.getSelectionModel();
 
     }
     /*,
