@@ -13,10 +13,13 @@ CREATE TABLE IF NOT EXISTS roles
 (
 
   id integer primary key autoincrement,   --自增主键
-  rolename VARCHAR(50),                   --角色名称
-  funcidarr Text                          --功能集合
+  rolename VARCHAR(50)                   --角色名称
+
 
 );
+
+
+
 --功能表
 CREATE TABLE IF NOT EXISTS functions
 (
@@ -27,3 +30,12 @@ CREATE TABLE IF NOT EXISTS functions
 
 );
 
+--角色功能关联表
+CREATE TABLE IF NOT EXISTS functorule
+(
+
+  id integer primary key autoincrement,   --自增主键
+  funcid VARCHAR(50),                   --功能id
+  ruleid VARCHAR(50)                    --角色id
+
+);

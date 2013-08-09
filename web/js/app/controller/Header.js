@@ -15,9 +15,9 @@
 Ext.define('ZSMZJ.controller.Header', {
     extend: 'Ext.app.Controller',
 
-    models: ['HeaderViewer'],
+    models: ['header.HeaderViewer'],
 
-    stores: ['HeaderViewers'],
+    stores: ['header.HeaderViewers'],
 
 
     /*refs: [

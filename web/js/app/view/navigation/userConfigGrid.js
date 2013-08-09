@@ -27,7 +27,7 @@ Ext.define('ZSMZJ.view.navigation.userConfigGrid' ,{
 
             ],
             flex: 1,
-            store: 'UserConfigs'
+            store: 'navigation.UserConfigs'
 
 
         });

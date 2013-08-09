@@ -22,7 +22,7 @@ Ext.define('ZSMZJ.view.header.headViewPanel' ,{
             //renderTo: 'dataview-example',
             //title: 'Simple DataView (0 items selected)',
             items: Ext.create('Ext.view.View', {
-                store: 'HeaderViewers',
+                store: 'header.HeaderViewers',
                 id: 'headviewitem',
                 tpl: [
                     '<tpl for=".">',

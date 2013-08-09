@@ -15,8 +15,8 @@
 Ext.define('ZSMZJ.controller.Navigation', {
     extend: 'Ext.app.Controller',
 
-    models: ['UserConfig'],
-    stores: ['UserConfigs'],
+    models: ['navigation.UserConfig'],
+    stores: ['navigation.UserConfigs'],
 
     /*refs: [
         {ref: 'summitChart', selector: 'summitchart'},

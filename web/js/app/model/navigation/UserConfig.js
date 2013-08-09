@@ -8,7 +8,7 @@
 /**
  * Model for a summit
  */
-Ext.define('ZSMZJ.model.UserConfig', {
+Ext.define('ZSMZJ.model.navigation.UserConfig', {
     extend: 'Ext.data.Model',
     fields: [
         {

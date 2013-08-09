@@ -9,9 +9,9 @@
 /**
  * The store used for mission
  */
-Ext.define('ZSMZJ.store.UserConfigs', {
+Ext.define('ZSMZJ.store.navigation.UserConfigs', {
     extend: 'Ext.data.Store',
-    model: 'ZSMZJ.model.UserConfig',
+    model: 'ZSMZJ.model.navigation.UserConfig',
     data: [
         {label: '用户管理',value:'missiongridpanel',type:'widget'}
 

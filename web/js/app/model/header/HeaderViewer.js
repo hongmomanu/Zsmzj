@@ -5,7 +5,7 @@
  * Time: 下午5:40
  * To change this template use File | Settings | File Templates.
  */
-Ext.define('ZSMZJ.model.HeaderViewer', {
+Ext.define('ZSMZJ.model.header.HeaderViewer', {
     extend: 'Ext.data.Model',
     fields: [
         {name: 'name'},
