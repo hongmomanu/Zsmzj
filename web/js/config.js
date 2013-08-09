@@ -10,7 +10,7 @@ var menu_shjz=[{layout: 'fit',title: '低保管理',iconCls: 'nav' }, {title: '�
     title: '临时救助',iconCls: 'nav'}, {title: '医疗救助',iconCls: 'nav'}, {title: '孤儿救助',iconCls: 'nav'},
     {title: '慈善救助',iconCls: 'nav'},  {title: '综合查询',iconCls: 'nav'}];
 
-var menu_qxgl=[{layout: 'fit',title: '用户设置',items:[{xtype:'userconfiggrid'}],iconCls: 'nav' }, {title: '角色设置',iconCls: 'nav'}, {
-    title: '功能菜单',iconCls: 'nav'}];
+var menu_qxgl=[{layout: 'fit',title: '权限设置',items:[{xtype:'userconfiggrid'}],iconCls: 'nav' }, {title: '配置文件',iconCls: 'nav'}, {
+    title: '服务日志',items:[{xtype:'funcconfiggrid'}],iconCls: 'nav'}];
 
 

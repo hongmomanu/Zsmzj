@@ -14,6 +14,7 @@ Ext.define('ZSMZJ.store.navigation.UserConfigs', {
     model: 'ZSMZJ.model.navigation.UserConfig',
     data: [
         {label: '用户管理',value:'usermanagerpanel',type:'widget'},
+        {label: '功能管理',value:'funcmanagerpanel',type:'widget'},
         {label: '角色管理',value:'rolemanagerpanel',type:'widget'}
 
     ]

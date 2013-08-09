@@ -8,31 +8,39 @@
 Ext.define('ZSMZJ.controller.Manager', {
     extend: 'Ext.app.Controller',
 
-    models: ['manager.UserManager','manager.RoleManager'],
-    stores: ['manager.UserManagers','manager.RoleManagers'],
+    models: ['manager.UserManager','manager.RoleManager','manager.FuncManager'],
+    stores: ['manager.UserManagers','manager.RoleManagers','manager.FuncManagers'],
 
-    /*refs: [
-     {ref: 'summitChart', selector: 'summitchart'},
-     {ref: 'summitGrid', selector: 'summitgrid'}
-     ],*/
+    refs: [
+     {ref: 'addNewRoleWin', selector: 'addnewrolewin'}
+     ],
     views: [
 
         'manager.UserManager',
         'manager.RoleManager',
+        'manager.FuncManager',
         'manager.addNewRoleWin',
+        'manager.addNewFuncWin',
         'manager.roleMenu'
 
     ],
 
     init: function() {
         var me = this;
-
+        testobj=me;
         this.control({
             'rolemanagerpanel button[action=addnewrole]':{
                 click: this.addnewrolewin
             },
+            'funcmanagerpanel button[action=addnewfunc]':{
+                click: this.addnewfuncwin
+            },
+
             'addnewrolewin button[action=add]': {
                 click: this.addnewrole
+            },
+            'addnewfuncwin button[action=add]': {
+                click: this.addnewfunc
             },
             'rolemanagerpanel': {
                 itemcontextmenu: this.showMenu
@@ -59,6 +67,7 @@ Ext.define('ZSMZJ.controller.Manager', {
 
     rolemanager:function (item, e, eOpts) {
         var roleid=item.parentMenu.roledata.data.roleid;
+
         var params = {
            roleid:roleid
         };
@@ -83,6 +92,30 @@ Ext.define('ZSMZJ.controller.Manager', {
         this.newRoleWin.show();
 
     } ,
+    addnewfuncwin:function(btn){
+        if (!this.newFuncWin)this.newFuncWin = Ext.widget('addnewfuncwin');
+        this.newFuncWin.show();
+    },
+    addnewfunc:function(btn){
+        var me=this;
+        var params = {
+
+        };
+        var funcstore=this.getManagerFuncManagersStore();
+        var successFunc = function (form, action) {
+            funcstore.load();
+            me.newFuncWin.hide();
+
+        };
+        var failFunc = function (form, action) {
+            Ext.Msg.alert("提示信息", "新增功能失败，检查web服务或数据库服务");
+
+        };
+
+        this.formSubmit(btn, params, 'ajax/addnewfunc.jsp', successFunc, failFunc,"正在提交数据");
+
+
+    },
     addnewrole: function(btn) {
         var me=this;
         var params = {
@@ -98,7 +131,7 @@ Ext.define('ZSMZJ.controller.Manager', {
             Ext.Msg.alert("提示信息", "新增角色失败，检查web服务或数据库服务");
 
         };
-        testobj=this;
+
         this.formSubmit(btn, params, 'ajax/addnewrole.jsp', successFunc, failFunc,"正在提交数据");
 
     } ,

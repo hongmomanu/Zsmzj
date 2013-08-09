@@ -15,8 +15,8 @@
 Ext.define('ZSMZJ.controller.Navigation', {
     extend: 'Ext.app.Controller',
 
-    models: ['navigation.UserConfig'],
-    stores: ['navigation.UserConfigs'],
+    models: ['navigation.UserConfig','navigation.FuncConfig'],
+    stores: ['navigation.UserConfigs','navigation.FuncConfigs'],
 
     /*refs: [
         {ref: 'summitChart', selector: 'summitchart'},
@@ -24,6 +24,7 @@ Ext.define('ZSMZJ.controller.Navigation', {
     ],*/
     views: [
         'navigation.userConfigGrid',
+        'navigation.funcConfigGrid'
 
 
     ],
@@ -31,7 +32,7 @@ Ext.define('ZSMZJ.controller.Navigation', {
     init: function() {
         var me = this;
         this.control({
-            'userconfiggrid':{
+            'userconfiggrid,funcconfiggrid':{
                 itemclick: this.showContent
             }
         }, this);
