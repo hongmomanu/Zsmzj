@@ -62,4 +62,23 @@ public class RoleDao {
 
     }
 
+    public int delRole (int roleid){
+        Connection conn= JdbcFactory.getConn("sqlite");
+        String sql = "delete  from " + RoleTable + " where id=? ";
+        PreparedStatement pstmt = JdbcFactory.getPstmt(conn, sql);
+
+        try {
+            pstmt.setInt(1, roleid);
+            return pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            log.debug(ex.getMessage());
+            return -1;
+
+        }
+
+
+
+    }
+
+
 }

@@ -10,8 +10,7 @@ Ext.define('ZSMZJ.view.manager.roleMenu', {
     extend : 'Ext.menu.Menu',
     alias : 'widget.rolemenu',
     items:[{
-        text: '删除角色',
-        action:'del'
+        text: '删除角色'
     }]
 
 });

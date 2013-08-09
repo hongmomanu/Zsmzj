@@ -32,5 +32,17 @@ public class RoleControl {
 
     }
 
+    public String delRole(int roleid){
+        RoleImplement role=new RoleImplement();
+        Map<String,Object> res=new HashMap<String, Object>();
+        int resultid=role.delRole(roleid);
+        System.out.println(resultid);
+        if(resultid>=0)res.put("success",true);
+        else res.put("success",false);
+        return JSONObject.fromObject(res).toString();
+
+    }
+
+
 
 }

@@ -27,4 +27,10 @@ public class RoleImplement implements RoleMethods {
         RoleDao dao=new RoleDao();
         return dao.addNewRole(rolename);
     }
+
+    @Override
+    public int delRole(int roleid) {
+        RoleDao dao=new RoleDao();
+        return dao.delRole(roleid);
+    }
 }

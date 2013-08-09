@@ -25,7 +25,7 @@ Ext.Loader.setConfig({
 
 /**
  * ZSMZJ.app
- * 舟山民政救助系统应用前台配置入口
+ * 舟山民政救助系统应用mvc框架配置入口
  *
  */
 Ext.application({
