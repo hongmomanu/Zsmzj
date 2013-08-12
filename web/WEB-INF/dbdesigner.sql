@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS functorole
 (
 
   id integer primary key autoincrement,   --自增主键
-  funcid VARCHAR(50),                   --功能id
-  roleid VARCHAR(50)                    --角色id
+  funcid integer,                   --功能id
+  roleid integer                    --角色id
 
 );
