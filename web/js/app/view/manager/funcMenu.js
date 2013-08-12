@@ -6,13 +6,11 @@
  * To change this template use File | Settings | File Templates.
  */
 
-Ext.define('ZSMZJ.view.manager.roleMenu', {
+Ext.define('ZSMZJ.view.manager.funcMenu', {
     extend : 'Ext.menu.Menu',
-    alias : 'widget.rolemenu',
+    alias : 'widget.funcmenu',
     items:[{
-        text: '删除角色'
-    },{
-        text: '功能配置'
+        text: '删除功能'
     }]
 
 });

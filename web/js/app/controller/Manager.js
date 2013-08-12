@@ -21,6 +21,8 @@ Ext.define('ZSMZJ.controller.Manager', {
         'manager.FuncManager',
         'manager.addNewRoleWin',
         'manager.addNewFuncWin',
+        'manager.RoleFuncWin',
+        'manager.funcMenu',
         'manager.roleMenu'
 
     ],
@@ -43,7 +45,10 @@ Ext.define('ZSMZJ.controller.Manager', {
                 click: this.addnewfunc
             },
             'rolemanagerpanel': {
-                itemcontextmenu: this.showMenu
+                itemcontextmenu: this.showRoleMenu
+            },
+            'funcmanagerpanel': {
+                itemcontextmenu: this.showFuncMenu
             }
             ,
             'rolemenu button[action=del]': {
@@ -51,11 +56,14 @@ Ext.define('ZSMZJ.controller.Manager', {
             },
             'rolemenu > menuitem': {
                 click: this.rolemanager
+            },
+            'funcmenu > menuitem': {
+                click: this.funcmanager
             }
         }, this);
 
     },
-    showMenu: function (panelView, record, item, index, e, eOpts) {
+    showRoleMenu: function (panelView, record, item, index, e, eOpts) {
 
         var me = this;
         e.preventDefault();
@@ -64,24 +72,59 @@ Ext.define('ZSMZJ.controller.Manager', {
         menu.roledata=record;
         menu.showAt(e.getXY());
     },
+    showFuncMenu: function (panelView, record, item, index, e, eOpts) {
 
-    rolemanager:function (item, e, eOpts) {
-        var roleid=item.parentMenu.roledata.data.roleid;
+        var me = this;
+        e.preventDefault();
+        e.stopEvent();
+        var menu = Ext.widget('funcmenu');
+        menu.funcdata=record;
+        menu.showAt(e.getXY());
+    },
+
+    funcmanager:function (item, e, eOpts) {
+        var funcid=item.parentMenu.funcdata.data.funcid;
 
         var params = {
-           roleid:roleid
+            funcid:funcid
         };
-        var rolestore=this.getManagerRoleManagersStore();
+        var funcstore=this.getManagerFuncManagersStore();
         var successFunc = function (form, action) {
 
-            rolestore.load();
+            funcstore.load();
 
         };
         var failFunc = function (form, action) {
             Ext.Msg.alert("提示信息", "删除角色失败，检查web服务或数据库服务");
 
         };
-        this.ajaxSend(params, 'ajax/delrole.jsp', successFunc, failFunc);
+        this.ajaxSend(params, 'ajax/delfunc.jsp', successFunc, failFunc);
+
+    },
+    rolemanager:function (item, e, eOpts) {
+        var roleid=item.parentMenu.roledata.data.roleid;
+
+        if(item.text=='删除角色'){
+            var params = {
+                roleid:roleid
+            };
+            var rolestore=this.getManagerRoleManagersStore();
+            var successFunc = function (form, action) {
+
+                rolestore.load();
+
+            };
+            var failFunc = function (form, action) {
+                Ext.Msg.alert("提示信息", "删除角色失败，检查web服务或数据库服务");
+
+            };
+            this.ajaxSend(params, 'ajax/delrole.jsp', successFunc, failFunc);
+
+        }
+        else if(item.text=='功能配置'){
+
+            this.rolefuncwin(item);
+        }
 
     },
 
@@ -95,6 +138,12 @@ Ext.define('ZSMZJ.controller.Manager', {
     addnewfuncwin:function(btn){
         if (!this.newFuncWin)this.newFuncWin = Ext.widget('addnewfuncwin');
         this.newFuncWin.show();
+    },
+
+    rolefuncwin:function(item){
+
+        Ext.widget('rolefuncwin').show();
+
     },
     addnewfunc:function(btn){
         var me=this;
