@@ -23,6 +23,7 @@ Ext.define('ZSMZJ.controller.Manager', {
         'manager.RoleFuncGrid',
         'manager.addNewRoleWin',
         'manager.addNewFuncWin',
+        'manager.addNewUserWin',
         'manager.RoleFuncWin',
         'manager.funcMenu',
         'manager.roleMenu'
@@ -38,6 +39,9 @@ Ext.define('ZSMZJ.controller.Manager', {
             },
             'funcmanagerpanel button[action=addnewfunc]':{
                 click: this.addnewfuncwin
+            },
+            'usermanagerpanel button[action=addnewuser]':{
+                click: this.addnewuserwin
             },
 
             'addnewrolewin button[action=add]': {
@@ -149,6 +153,12 @@ Ext.define('ZSMZJ.controller.Manager', {
     addnewfuncwin:function(btn){
         if (!this.newFuncWin)this.newFuncWin = Ext.widget('addnewfuncwin');
         this.newFuncWin.show();
+    },
+
+    addnewuserwin:function(btn){
+        if (!this.newUserWin)this.newUserWin = Ext.widget('addnewuserwin');
+        this.newUserWin.show();
+
     },
 
     rolefuncwin:function(roleid){

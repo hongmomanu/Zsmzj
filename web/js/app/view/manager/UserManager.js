@@ -46,7 +46,8 @@ Ext.define('ZSMZJ.view.manager.UserManager' ,{
                 emptyMsg: "没有用户",
                 items:[
                     '-', {
-                        text: '新增用户'
+                        text: '新增用户',
+                        action:'addnewuser'
 
                     }]
             }),
