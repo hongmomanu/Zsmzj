@@ -8,8 +8,8 @@
 Ext.define('ZSMZJ.controller.Manager', {
     extend: 'Ext.app.Controller',
 
-    models: ['manager.UserManager','manager.RoleManager','manager.FuncManager'],
-    stores: ['manager.UserManagers','manager.RoleManagers','manager.FuncManagers'],
+    models: ['manager.UserManager','manager.RoleManager','manager.FuncManager','manager.RoleFunc'],
+    stores: ['manager.UserManagers','manager.RoleManagers','manager.FuncManagers','manager.RoleFuncs'],
 
     refs: [
      {ref: 'viewRoleManager', selector: 'rolemanagerpanel'} //view的实例引用自定义名,class别名
@@ -19,6 +19,7 @@ Ext.define('ZSMZJ.controller.Manager', {
         'manager.UserManager',
         'manager.RoleManager',
         'manager.FuncManager',
+        'manager.RoleFuncGrid',
         'manager.addNewRoleWin',
         'manager.addNewFuncWin',
         'manager.RoleFuncWin',
@@ -44,6 +45,14 @@ Ext.define('ZSMZJ.controller.Manager', {
             'addnewfuncwin button[action=add]': {
                 click: this.addnewfunc
             },
+            'rolefuncgrid button[action=save]': {
+                click: this.saverolefuncs
+            },
+            'rolefuncgrid button[action=cancel]': {
+                click: this.cancelrolefuncs
+            },
+
+
             'rolemanagerpanel': {
                 itemcontextmenu: this.showRoleMenu
             },
@@ -123,7 +132,8 @@ Ext.define('ZSMZJ.controller.Manager', {
         }
         else if(item.text=='功能配置'){
 
-            this.rolefuncwin(item);
+            this.rolefuncwin(roleid);
+
         }
 
     },
@@ -140,9 +150,22 @@ Ext.define('ZSMZJ.controller.Manager', {
         this.newFuncWin.show();
     },
 
-    rolefuncwin:function(item){
+    rolefuncwin:function(roleid){
 
+        var rolefuncstore=this.getManagerRoleFuncsStore()
+        rolefuncstore.proxy.extraParams.roleid=roleid;
+        rolefuncstore.load();
         Ext.widget('rolefuncwin').show();
+
+    },
+
+    saverolefuncs:function(btn){
+        alert(1);
+
+    },
+    cancelrolefuncs:function(btn){
+        var win = btn.up('window');
+        win.close();
 
     },
     addnewfunc:function(btn){

@@ -21,6 +21,8 @@ import java.util.Map;
 public class RoleDao {
     private static final Logger log = Logger.getLogger(RoleDao.class);
     private  static String RoleTable="roles";
+    private static String RoleFuncTable="functorole";
+    private static String FuncTable="functions";
     public ArrayList<Map<String, Object>> getRoles(int start, int limit, String keyword) {
         Connection testConn= JdbcFactory.getConn("sqlite");
         String sql=  "select rolename,id from "+RoleTable+" Limit "+limit+" Offset "+ start;
@@ -42,6 +44,31 @@ public class RoleDao {
         }
 
     }
+
+    public ArrayList<Map<String, Object>> getRoleFuncs(int start, int limit, String keyword,int roleid) {
+        Connection testConn= JdbcFactory.getConn("sqlite");
+        String sql=  "select funcname,functype,id from "+FuncTable+" Limit "+limit+" Offset "+ start;
+        PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
+        ArrayList<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        try {
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Map<String,Object> role=new HashMap<String, Object>();
+                role.put("funcname",rs.getString("funcname"));
+
+                role.put("funcid",rs.getInt("id"));
+                list.add(role);
+
+            }
+            return list;
+        }catch (Exception E){
+            log.debug(E.getMessage());
+            return list;
+        }
+
+    }
+
+
     public int addNewRole(String rolename){
         Connection conn= JdbcFactory.getConn("sqlite");
         String sql = "insert  into " + RoleTable + " (rolename) values (?)  ";

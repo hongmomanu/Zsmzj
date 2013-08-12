@@ -1,5 +1,6 @@
 package Zsmzj.manager.usermanager.business;
 
+import Zsmzj.manager.usermanager.impl.FuncImplement;
 import Zsmzj.manager.usermanager.impl.RoleImplement;
 import Zsmzj.manager.usermanager.impl.UserImplement;
 import net.sf.json.JSONArray;
@@ -20,6 +21,12 @@ public class RoleControl {
 
         RoleImplement role=new RoleImplement();
         return JSONArray.fromObject(role.getRoles(start, limit, keyword)).toString();
+
+    }
+
+    public String getRoleFuncs(int start,int limit,String keyword,int roleid){
+        FuncImplement func=new FuncImplement();
+        return JSONArray.fromObject(func.getFuncs(start, limit, keyword)).toString();
 
     }
     public String addNewRole(String rolename){

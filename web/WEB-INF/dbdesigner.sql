@@ -2,10 +2,11 @@
 CREATE TABLE IF NOT EXISTS users
 (
 
-  id integer primary key autoincrement,   --自增主键
-  username VARCHAR(50),                   --用户名字
-  password VARCHAR(50),                    --用户密码
-  roleid  integer                         --角色id
+  id integer primary key autoincrement,                   --自增主键
+  username VARCHAR(50),                                   --用户名字
+  password VARCHAR(50),                                   --用户密码
+  time TIMESTAMP default (datetime('now', 'localtime')),  --注册时间
+  roleid  integer                                         --角色id
 
 );
 --角色表
@@ -31,11 +32,11 @@ CREATE TABLE IF NOT EXISTS functions
 );
 
 --角色功能关联表
-CREATE TABLE IF NOT EXISTS functorule
+CREATE TABLE IF NOT EXISTS functorole
 (
 
   id integer primary key autoincrement,   --自增主键
   funcid VARCHAR(50),                   --功能id
-  ruleid VARCHAR(50)                    --角色id
+  roleid VARCHAR(50)                    --角色id
 
 );
