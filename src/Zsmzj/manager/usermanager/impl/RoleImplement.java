@@ -1,5 +1,6 @@
 package Zsmzj.manager.usermanager.impl;
 
+import Zsmzj.manager.usermanager.dao.FuncDao;
 import Zsmzj.manager.usermanager.dao.RoleDao;
 import Zsmzj.manager.usermanager.dao.UserDao;
 import Zsmzj.manager.usermanager.intf.RoleMethods;
@@ -27,6 +28,20 @@ public class RoleImplement implements RoleMethods {
         RoleDao dao=new RoleDao();
         return dao.getRoleFuncs(start, limit, keyword,roleid);
 
+    }
+
+    @Override
+    public int delRoleFuncs(int roleid) {
+
+        RoleDao dao=new RoleDao();
+        return dao.delRoleFuncs(roleid);
+
+    }
+
+    @Override
+    public int addRoleFuncs(int roleid, int funcid) {
+        RoleDao dao=new RoleDao();
+        return dao.addRoleFuncs(roleid,funcid);
     }
 
     @Override

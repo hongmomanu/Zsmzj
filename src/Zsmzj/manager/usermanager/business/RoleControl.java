@@ -6,6 +6,7 @@ import Zsmzj.manager.usermanager.impl.UserImplement;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,10 +24,38 @@ public class RoleControl {
         return JSONArray.fromObject(role.getRoles(start, limit, keyword)).toString();
 
     }
+    public String makeRoleFuncs(int roleid,String[] funcid){
+        RoleImplement role=new RoleImplement();
+        role.delRoleFuncs(roleid);
+        for(String str_id:funcid){
+            int func_id=Integer.parseInt(str_id);
+            role.addRoleFuncs(roleid,func_id);
+        }
 
+        Map<String,Object> res=new HashMap<String, Object>();
+        res.put("success",true);
+        return JSONObject.fromObject(res).toString();
+
+    }
     public String getRoleFuncs(int start,int limit,String keyword,int roleid){
         FuncImplement func=new FuncImplement();
-        return JSONArray.fromObject(func.getFuncs(start, limit, keyword)).toString();
+        ArrayList<Map<String, Object>> funcs=func.getFuncs(start, limit, keyword);
+        RoleImplement role=new RoleImplement();
+        ArrayList<Map<String, Object>> role_funcs=role.getRoleFuncs(start, limit, keyword,roleid);
+        ArrayList<Map<String, Object>> result=new ArrayList<Map<String, Object>>();
+        for(Map<String, Object> func_item:funcs){
+            for(Map<String,Object> rolefunc_item:role_funcs){
+                 if(rolefunc_item.get("funcid").toString().equals(func_item.get("funcid").toString())){
+                     //func_item.put("rolefuncid",rolefunc_item.get("rolefuncid"));
+                     func_item.put("selected",true);
+                 }
+
+            }
+           result.add(func_item);
+        }
+
+
+        return JSONArray.fromObject(result).toString();
 
     }
     public String addNewRole(String rolename){
@@ -49,6 +78,7 @@ public class RoleControl {
         return JSONObject.fromObject(res).toString();
 
     }
+
 
 
 

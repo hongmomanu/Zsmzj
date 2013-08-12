@@ -12,7 +12,8 @@ Ext.define('ZSMZJ.controller.Manager', {
     stores: ['manager.UserManagers','manager.RoleManagers','manager.FuncManagers','manager.RoleFuncs'],
 
     refs: [
-     {ref: 'viewRoleManager', selector: 'rolemanagerpanel'} //view的实例引用自定义名,class别名
+     {ref: 'viewRoleManager', selector: 'rolemanagerpanel'}, //view的实例引用自定义名,class别名
+     {ref: 'viewRoleFuncGrid', selector: 'rolefuncgrid'}
      ],
     views: [
 
@@ -30,7 +31,7 @@ Ext.define('ZSMZJ.controller.Manager', {
 
     init: function() {
         var me = this;
-        testobj=me;
+        //testobj=me;
         this.control({
             'rolemanagerpanel button[action=addnewrole]':{
                 click: this.addnewrolewin
@@ -152,20 +153,72 @@ Ext.define('ZSMZJ.controller.Manager', {
 
     rolefuncwin:function(roleid){
 
-        var rolefuncstore=this.getManagerRoleFuncsStore()
+        var rolefuncstore=this.getManagerRoleFuncsStore();
         rolefuncstore.proxy.extraParams.roleid=roleid;
-        rolefuncstore.load();
-        Ext.widget('rolefuncwin').show();
+
+
+        if (!this.rolewin)this.rolewin =Ext.widget('rolefuncwin');
+        this.rolewin.roleid=roleid;
+        this.rolewin.show();
+        this.rolefuncstoreLoad(rolefuncstore);
+
+    },
+    rolefuncstoreLoad:function(store){
+        var me=this;
+
+        store.on('beforeload', function (store, options) {
+            //var new_params = { name: Ext.getCmp('search').getValue() };
+            //Ext.apply(store.proxy.extraParams, new_params);
+            // alert('beforeload');
+        });
+        store.on('load', function (store, options) {
+            var grid=me.getViewRoleFuncGrid();
+            Ext.each(store.data.items,function(a){
+                if(a.raw.selected){
+                    grid.getSelectionModel().select(a.index,true,false);
+                }
+            });
+            //var new_params = { name: Ext.getCmp('search').getValue() };
+            //Ext.apply(store.proxy.extraParams, new_params);
+            // alert('beforeload');
+        });
+
+        store.load();
 
     },
 
     saverolefuncs:function(btn){
-        alert(1);
+        var me=this;
+        var panel=btn.up('panel');
+        var selModel=panel.getSelectionModel();
+        var selectItems=selModel.getSelection();
+        var funcid_arr=[];
+        Ext.each(selectItems,function(a){
+            funcid_arr.push(a.data.funcid);
+        });
+        var params = {
+            roleid:btn.up('window').roleid,
+            funcid:funcid_arr
+
+        };
+
+        var rolefuncstore=this.getManagerRoleFuncsStore();
+        var successFunc = function (form, action) {
+
+            me.rolefuncstoreLoad(rolefuncstore);
+
+        };
+        var failFunc = function (form, action) {
+            Ext.Msg.alert("提示信息", "功能设置失败，检查web服务或数据库服务");
+
+        };
+        this.ajaxSend(params, 'ajax/makerolefunc.jsp', successFunc, failFunc);
+
 
     },
     cancelrolefuncs:function(btn){
         var win = btn.up('window');
-        win.close();
+        win.hide();
 
     },
     addnewfunc:function(btn){

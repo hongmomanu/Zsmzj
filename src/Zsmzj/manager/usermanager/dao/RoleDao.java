@@ -47,16 +47,18 @@ public class RoleDao {
 
     public ArrayList<Map<String, Object>> getRoleFuncs(int start, int limit, String keyword,int roleid) {
         Connection testConn= JdbcFactory.getConn("sqlite");
-        String sql=  "select funcname,functype,id from "+FuncTable+" Limit "+limit+" Offset "+ start;
+        String sql=  "select funcid,roleid,id from "+RoleFuncTable+" where roleid=? Limit "+limit+" Offset "+ start;
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
         ArrayList<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         try {
+            pstmt.setInt(1, roleid);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 Map<String,Object> role=new HashMap<String, Object>();
-                role.put("funcname",rs.getString("funcname"));
+                role.put("funcid",rs.getInt("funcid"));
 
-                role.put("funcid",rs.getInt("id"));
+                role.put("roleid",rs.getInt("roleid"));
+                role.put("rolefuncid",rs.getInt("id"));
                 list.add(role);
 
             }
@@ -89,6 +91,44 @@ public class RoleDao {
 
     }
 
+    public int addRoleFuncs(int roleid,int funcid){
+
+        Connection conn= JdbcFactory.getConn("sqlite");
+        String sql = "insert  into " + RoleFuncTable + " (roleid,funcid) values (?,?)  ";
+        PreparedStatement pstmt = JdbcFactory.getPstmt(conn, sql);
+
+        try {
+            pstmt.setInt(1, roleid);
+            pstmt.setInt(2, funcid);
+            return pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            log.debug(ex.getMessage());
+            return -1;
+
+        }
+
+
+
+    }
+
+    public int delRoleFuncs(int roleid){
+        Connection conn= JdbcFactory.getConn("sqlite");
+        String sql = "delete  from " + RoleFuncTable + " where roleid=? ";
+        PreparedStatement pstmt = JdbcFactory.getPstmt(conn, sql);
+
+        try {
+            pstmt.setInt(1, roleid);
+            return pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            log.debug(ex.getMessage());
+            return -1;
+
+        }
+
+
+
+
+    }
     public int delRole (int roleid){
         Connection conn= JdbcFactory.getConn("sqlite");
         String sql = "delete  from " + RoleTable + " where id=? ";

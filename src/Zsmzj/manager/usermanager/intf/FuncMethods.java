@@ -11,8 +11,9 @@ import java.util.Map;
  * To change this template use File | Settings | File Templates.
  */
 public interface FuncMethods {
-    ArrayList<Map<String, Object>> getFuncs(int start, int limit, String keyword);
-    int addnewFunc(String funcname,String functype);
-    int delFunc(int funcid);
+
+    ArrayList<Map<String, Object>> getFuncs(int start, int limit, String keyword); //获取功能接口
+    int addnewFunc(String funcname,String functype); //新增功能接口
+    int delFunc(int funcid); //删除功能接口
 
 }
