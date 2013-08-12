@@ -12,7 +12,7 @@ Ext.define('ZSMZJ.controller.Manager', {
     stores: ['manager.UserManagers','manager.RoleManagers','manager.FuncManagers'],
 
     refs: [
-     {ref: 'addNewRoleWin', selector: 'addnewrolewin'}
+     {ref: 'viewRoleManager', selector: 'rolemanagerpanel'} //view的实例引用自定义名,class别名
      ],
     views: [
 
