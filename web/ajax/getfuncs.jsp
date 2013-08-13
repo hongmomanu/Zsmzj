@@ -22,5 +22,4 @@
         FuncControl role=new FuncControl();
         out.print(role.getFuncs(start,limit,keyword));
     }
-    //out.print("ok");
 %>

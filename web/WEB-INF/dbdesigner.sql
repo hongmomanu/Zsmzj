@@ -5,7 +5,8 @@ CREATE TABLE IF NOT EXISTS users
   id integer primary key autoincrement,                   --自增主键
   username VARCHAR(50),                                   --用户名字
   password VARCHAR(50),                                   --用户密码
-  time TIMESTAMP default (datetime('now', 'localtime')),  --注册时间
+  --time TIMESTAMP default CURRENT_TIMESTAMP,
+  time DATETIME DEFAULT (datetime(CURRENT_TIMESTAMP,'localtime')),  --注册时间
   roleid  integer                                         --角色id
 
 );

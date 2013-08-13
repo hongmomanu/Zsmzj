@@ -6,10 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-<%@page import="java.util.HashMap"%>
-<%@page import="java.util.Map"%>
-<%@page import="java.util.Enumeration"%>
-<%@ page import="java.io.*" %>
+
 <%@ page import="Zsmzj.manager.usermanager.business.UserControl" %>
 <%@ page language="java"  contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
@@ -26,5 +23,4 @@
         UserControl user=new UserControl();
         out.print(user.getUsers(start,limit,keyword));
     }
-    //out.print("ok");
 %>

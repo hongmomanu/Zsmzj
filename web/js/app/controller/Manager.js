@@ -43,7 +43,9 @@ Ext.define('ZSMZJ.controller.Manager', {
             'usermanagerpanel button[action=addnewuser]':{
                 click: this.addnewuserwin
             },
-
+            'addnewuserwin button[action=add]': {
+                click: this.addnewuser
+            },
             'addnewrolewin button[action=add]': {
                 click: this.addnewrole
             },
@@ -251,6 +253,30 @@ Ext.define('ZSMZJ.controller.Manager', {
 
 
     },
+
+    addnewuser:function(btn){
+
+        var me=this;
+        var params = {
+
+        };
+        var userstore=this.getManagerUserManagersStore();
+        var successFunc = function (form, action) {
+            userstore.load();
+            me.newUserWin.hide();
+
+        };
+        var failFunc = function (form, action) {
+            Ext.Msg.alert("提示信息", "新增用户失败，检查web服务或数据库服务");
+
+        };
+
+        this.formSubmit(btn, params, 'ajax/addnewuser.jsp', successFunc, failFunc,"正在提交数据");
+
+
+
+    },
+
     addnewrole: function(btn) {
         var me=this;
         var params = {

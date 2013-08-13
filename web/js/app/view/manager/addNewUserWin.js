@@ -211,21 +211,10 @@ Ext.define('ZSMZJ.view.manager.addNewUserWin' ,{
                         disabled: true,
                         text: '提交',
                         width: 140,
-                        handler: function() {
-                            var form = this.up('form').getForm();
 
-                            /* Normally we would submit the form to the server here and handle the response...
-                             form.submit({
-                             clientValidation: true,
-                             url: 'register.php',
-                             success: function(form, action) {
-                             //...
-                             },
-                             failure: function(form, action) {
-                             //...
-                             }
-                             });
-                             */
+                        action:'add'
+                        /*handler: function() {
+                            var form = this.up('form').getForm();
 
                             if (form.isValid()) {
                                 var out = [];
@@ -234,7 +223,7 @@ Ext.define('ZSMZJ.view.manager.addNewUserWin' ,{
                                 });
                                 Ext.Msg.alert('Submitted Values', out.join('<br />'));
                             }
-                        }
+                        }*/
                     }]
                 }],
 
