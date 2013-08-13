@@ -233,6 +233,7 @@ Ext.define('ZSMZJ.controller.Manager', {
 
 
         if (!this.edit_func_win)this.edit_func_win =Ext.widget('editfuncwin');
+        this.edit_func_win.down('form').getForm().reset();
         this.edit_func_win.down('form').getForm().setValues(data);
         this.edit_func_win.show();
         this.edit_func_win.editdata=data;

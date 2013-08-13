@@ -22,6 +22,18 @@ public class FuncControl {
         return JSONArray.fromObject(func.getFuncs(start, limit, keyword)).toString();
 
     }
+
+    public String EditFunc(int funcid,String funcname,String functype,String label,String imgurl)
+    {
+
+        FuncImplement func=new FuncImplement();
+        Map<String,Object> res=new HashMap<String, Object>();
+        int resultid=func.EditFunc(funcid,funcname,functype,label,imgurl);
+        if(resultid>=0)res.put("success",true);
+        else res.put("success",false);
+        return JSONObject.fromObject(res).toString();
+    }
+
     public String addNewFunc(String funcname,String functype){
         FuncImplement func=new FuncImplement();
         Map<String,Object> res=new HashMap<String, Object>();

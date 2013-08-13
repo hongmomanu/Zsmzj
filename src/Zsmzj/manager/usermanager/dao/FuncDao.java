@@ -23,7 +23,7 @@ public class FuncDao {
     private  static String FuncTable="functions";
     public ArrayList<Map<String, Object>> getFuncs(int start, int limit, String keyword) {
         Connection testConn= JdbcFactory.getConn("sqlite");
-        String sql=  "select funcname,functype,id from "+FuncTable+" Limit "+limit+" Offset "+ start;
+        String sql=  "select funcname,functype,id,label,imgurl from "+FuncTable+" Limit "+limit+" Offset "+ start;
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
         ArrayList<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         try {
@@ -32,6 +32,8 @@ public class FuncDao {
                 Map<String,Object> func=new HashMap<String, Object>();
                 func.put("funcname",rs.getString("funcname"));
                 func.put("functype",rs.getString("functype"));
+                func.put("label",rs.getString("label"));
+                func.put("imgurl",rs.getString("imgurl"));
                 func.put("funcid",rs.getInt("id"));
                 list.add(func);
 
@@ -61,6 +63,28 @@ public class FuncDao {
         }
 
 
+
+    }
+
+    public int EditFunc(int funcid,String funcname,String functype,String label,String imgurl)
+    {
+        Connection conn= JdbcFactory.getConn("sqlite");
+        String sql = "update " + FuncTable + " set funcname=?,functype=?," +
+                "label=?,imgurl=? where id=? ";
+        PreparedStatement pstmt = JdbcFactory.getPstmt(conn, sql);
+
+        try {
+            pstmt.setString(1, funcname);
+            pstmt.setString(2, functype);
+            pstmt.setString(3, label);
+            pstmt.setString(4, imgurl);
+            pstmt.setInt(5, funcid);
+            return pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            log.debug(ex.getMessage());
+            return -1;
+
+        }
 
     }
 
