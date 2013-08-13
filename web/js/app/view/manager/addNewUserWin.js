@@ -94,12 +94,31 @@ Ext.define('ZSMZJ.view.manager.addNewUserWin' ,{
                     }
                     ,
                     {
+                        columnWidth: 0.6,
+                        fieldLabel: '所属角色',
+                        name: 'roleid',
+                        xtype: 'combo',
+                        allowBlank: false,
+                        blankText: "不能为空",
+                        displayField: 'rolename',
+                        valueField: 'roleid',
+                        emptyText: '请选择角色',
+                        listeners: {
+                            scope: this,
+                            'select': function (combo, records) {
+                            }
+                        },
+                        //queryMode: 'local',
+                        store:'manager.RoleManagers'
+
+                    }
+                    /*{
                         xtype: 'textfield',
                         fieldLabel: '所属角色',
                         allowBlank:false,
                         blankText   : '不能为空',
                         name: 'roleid'
-                    }
+                    }*/
                 ],
 
                 dockedItems: [{
