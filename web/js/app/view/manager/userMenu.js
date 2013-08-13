@@ -6,15 +6,13 @@
  * To change this template use File | Settings | File Templates.
  */
 
-Ext.define('ZSMZJ.view.manager.funcMenu', {
+Ext.define('ZSMZJ.view.manager.userMenu', {
     extend : 'Ext.menu.Menu',
-    alias : 'widget.funcmenu',
+    alias : 'widget.usermenu',
     items:[{
-        text: '删除功能'
-    },
-     {
-        text: '编辑功能'
-     }
-    ]
+        text: '删除用户'
+    },{
+        text: '修改密码'
+    }]
 
 });

@@ -34,8 +34,8 @@ Ext.define('ZSMZJ.view.Header', {
             items: [
                 {
                     html: '<div class="header-left-div"><ul><a>舟山市社会救助管理综合平台</a></ul><ul>' +
-                        '<li ><a>在线人数:1</a></li><li><a>未读信息:0</a></li>' +
-                        '<li><a>待办事务:3</a></li></ul></div>',
+                        '<li ><a>在线人数:'+onlinenums+'</a></li><li><a>未读信息:0</a></li>' +
+                        '<li><a>待办事务:0</a></li><li><a href="logout">退出</a></li></ul></div>',
                     border: 0,
                     baseCls: 'main-header',
                     columnWidth: 0.5

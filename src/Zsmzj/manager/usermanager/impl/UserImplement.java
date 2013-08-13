@@ -25,4 +25,16 @@ public class UserImplement implements UserMethods {
         UserDao dao=new UserDao();
         return dao.addnewUser(username,password,roleid);
     }
+
+    @Override
+    public int delUser(int userid) {
+        UserDao dao=new UserDao();
+        return dao.delUser(userid);
+    }
+
+    @Override
+    public Map<String, Object> login(String username, String password) {
+        UserDao dao=new UserDao();
+        return dao.login(username,password);
+    }
 }

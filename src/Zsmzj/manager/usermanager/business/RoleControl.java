@@ -37,22 +37,42 @@ public class RoleControl {
         return JSONObject.fromObject(res).toString();
 
     }
-    public String getRoleFuncs(int start,int limit,String keyword,int roleid){
+    public String getRoleFuncs(int start,int limit,String keyword,int roleid,String type){
         FuncImplement func=new FuncImplement();
         ArrayList<Map<String, Object>> funcs=func.getFuncs(start, limit, keyword);
         RoleImplement role=new RoleImplement();
         ArrayList<Map<String, Object>> role_funcs=role.getRoleFuncs(start, limit, keyword,roleid);
         ArrayList<Map<String, Object>> result=new ArrayList<Map<String, Object>>();
-        for(Map<String, Object> func_item:funcs){
-            for(Map<String,Object> rolefunc_item:role_funcs){
-                 if(rolefunc_item.get("funcid").toString().equals(func_item.get("funcid").toString())){
-                     //func_item.put("rolefuncid",rolefunc_item.get("rolefuncid"));
-                     func_item.put("selected",true);
-                 }
+        if(type==null){
+            for(Map<String, Object> func_item:funcs){
+                for(Map<String,Object> rolefunc_item:role_funcs){
+                    if(rolefunc_item.get("funcid").toString().equals(func_item.get("funcid").toString())){
+                        //func_item.put("rolefuncid",rolefunc_item.get("rolefuncid"));
+                        func_item.put("selected",true);
+                    }
+
+                }
+                result.add(func_item);
+            }
+
+        }
+        else{
+            for(Map<String, Object> func_item:funcs){
+                for(Map<String,Object> rolefunc_item:role_funcs){
+                    if(rolefunc_item.get("funcid").toString().equals(func_item.get("funcid").toString())
+                          && func_item.get("functype").toString().equals(type)
+                            ){
+                        //func_item.put("rolefuncid",rolefunc_item.get("rolefuncid"));
+                        func_item.put("selected",true);
+                        result.add(func_item);
+                    }
+
+                }
 
             }
-           result.add(func_item);
+
         }
+
 
 
         return JSONArray.fromObject(result).toString();

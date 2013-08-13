@@ -21,9 +21,11 @@ import java.util.Map;
 public class UserDao {
     private static final Logger log = Logger.getLogger(UserDao.class);
     private static String  UserTable="users";
+    private static String  RoleTable="roles";
     public ArrayList<Map<String, Object>> getUsers(int start, int limit, String keyword) {
         Connection testConn= JdbcFactory.getConn("sqlite");
-        String sql=  "select username,time,id from "+UserTable+" Limit "+limit+" Offset "+ start;
+        String sql=  "select a.username,a.time,a.id,b.rolename from "+UserTable+" as a,"+RoleTable+" as b " +
+                " where a.roleid=b.id Limit "+limit+" Offset "+ start;
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
         ArrayList<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         try {
@@ -31,6 +33,7 @@ public class UserDao {
             while (rs.next()) {
                 Map<String,Object> user=new HashMap<String, Object>();
                 user.put("username",rs.getString("username"));
+                user.put("rolename",rs.getString("rolename"));
                 user.put("time",rs.getString("time"));
                 user.put("userid",rs.getInt("id"));
                 list.add(user);
@@ -44,6 +47,46 @@ public class UserDao {
 
     }
 
+    public Map<String,Object> login(String username,String password){
+        Connection testConn= JdbcFactory.getConn("sqlite");
+        String sql=  "select id,roleid from "+UserTable+" " +
+                " where password=? and username=? ";
+        PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
+        Map<String,Object> res=new HashMap<String, Object>();
+        try {
+            pstmt.setString(1, password);
+            pstmt.setString(2, username);
+            ResultSet rs = pstmt.executeQuery();
+            boolean issuccess=false;
+            while (rs.next()) {
+                issuccess=true;
+                res.put("issuccess", true);
+
+                res.put("msg", "用户验证成功");
+                res.put("userid", rs.getInt(1));
+                res.put("roleid", rs.getInt(2));
+
+
+            }
+            if(!issuccess){
+                res.put("issuccess", false);
+                res.put("msg", "用户名或者密码错误！");
+
+            }
+            res.put("username", username);
+
+            return res;
+        }catch (Exception E){
+            log.debug(E.getMessage());
+            res.put("issuccess", false);
+            res.put("msg", E.getMessage());
+            return res;
+        }
+
+
+
+
+    }
     public int addnewUser (String username,String password,int roleid){
 
         Connection conn= JdbcFactory.getConn("sqlite");
@@ -64,6 +107,21 @@ public class UserDao {
         }
 
 
+    }
+    public int delUser(int userid){
+
+        Connection conn= JdbcFactory.getConn("sqlite");
+        String sql = "delete  from " + UserTable + " where id=? ";
+        PreparedStatement pstmt = JdbcFactory.getPstmt(conn, sql);
+
+        try {
+            pstmt.setInt(1, userid);
+            return pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            log.debug(ex.getMessage());
+            return -1;
+
+        }
     }
 
 }

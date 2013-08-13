@@ -5,17 +5,17 @@
  * Time: 下午1:35
  * To change this template use File | Settings | File Templates.
  */
-Ext.define('ZSMZJ.view.manager.addNewFuncWin' ,{
+Ext.define('ZSMZJ.view.manager.EditFuncWin' ,{
     extend: 'Ext.window.Window',
-    alias : 'widget.addnewfuncwin',
+    alias : 'widget.editfuncwin',
     requires: [
         //'Ext.form.*'
     ],
     initComponent: function() {
         Ext.apply(this, {
-            title: '新增功能',
-            height: 185,
-            width: 300,
+            title: '编辑功能',
+            height: 300,
+            width: 600,
             closeAction : 'hide',
             resizable:false,
             layout: 'fit',
@@ -47,8 +47,7 @@ Ext.define('ZSMZJ.view.manager.addNewFuncWin' ,{
                         xtype: 'textfield',
                         fieldLabel: '功能类型',
                         name: 'functype'
-                    }
-                    ,
+                    },
                     {
                         xtype: 'textfield',
                         fieldLabel: '功能标识',
@@ -69,8 +68,8 @@ Ext.define('ZSMZJ.view.manager.addNewFuncWin' ,{
                         }
                     } ,
                     {
-                        text: '添加',
-                        action: 'add'
+                        text: '保存',
+                        action: 'save'
 
                     }
                 ],

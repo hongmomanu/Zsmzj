@@ -11,12 +11,7 @@
 <%@ page language="java"  contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%
-    if(request.getParameter("start")==null){
-       out.print("缺少分页参数start");
-    }else if(request.getParameter("limit")==null){
-        out.print("缺少分页参数limit");
-    }
-    else if(request.getParameter("roleid")==null){
+    if(request.getParameter("roleid")==null){
         out.print("缺少分页参数roleid");
     }
     else{
@@ -24,9 +19,9 @@
         int limit=Integer.parseInt(request.getParameter("limit"));
         int roleid=Integer.parseInt(request.getParameter("roleid"));
         String keyword=request.getParameter("keyword");
-
+        String type=request.getParameter("type");
         RoleControl role=new RoleControl();
-        out.print(role.getRoleFuncs(start,limit,keyword,roleid));
+        out.print(role.getRoleFuncs(start,limit,keyword,roleid,type));
     }
     //out.print("ok");
 %>

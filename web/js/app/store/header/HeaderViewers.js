@@ -14,6 +14,10 @@ Ext.define('ZSMZJ.store.header.HeaderViewers', {
     proxy: {
         type: 'ajax',
         url: 'ajax/image.json',
+        params:{
+            roleid:roleid,
+            type:"系统菜单"
+        },
         reader: {
             type: 'json',
             root: 'images'

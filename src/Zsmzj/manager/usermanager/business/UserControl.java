@@ -32,6 +32,18 @@ public class UserControl {
 
 
     }
+    public String delUser(int userid){
+        UserImplement user=new UserImplement();
+        Map<String,Object> res=new HashMap<String, Object>();
+        int resultid=user.delUser(userid);
+        if(resultid>=0)res.put("success",true);
+        else res.put("success",false);
+        return JSONObject.fromObject(res).toString();
 
+    }
+    public Map<String,Object> login(String username,String password){
+        UserImplement user=new UserImplement();
+        return user.login(username, password);
 
+    }
 }

@@ -28,6 +28,8 @@ CREATE TABLE IF NOT EXISTS functions
 
   id integer primary key autoincrement,   --自增主键
   funcname VARCHAR(50),                   --功能名称
+  label  VARCHAR(50),                     --功能标识
+  imgurl  VARCHAR(250),                   --图片标识
   functype VARCHAR(50)                    --功能类型
 
 );

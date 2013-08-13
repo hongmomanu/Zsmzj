@@ -25,7 +25,9 @@ Ext.define('ZSMZJ.controller.Manager', {
         'manager.addNewFuncWin',
         'manager.addNewUserWin',
         'manager.RoleFuncWin',
+        'manager.EditFuncWin',
         'manager.funcMenu',
+        'manager.userMenu',
         'manager.roleMenu'
 
     ],
@@ -52,13 +54,19 @@ Ext.define('ZSMZJ.controller.Manager', {
             'addnewfuncwin button[action=add]': {
                 click: this.addnewfunc
             },
+            'editfuncwin button[action=save]': {
+                click: this.saveeditfunc
+            },
+
             'rolefuncgrid button[action=save]': {
                 click: this.saverolefuncs
             },
             'rolefuncgrid button[action=cancel]': {
                 click: this.cancelrolefuncs
             },
-
+            'usermanagerpanel': {
+                itemcontextmenu: this.showUserMenu
+            },
 
             'rolemanagerpanel': {
                 itemcontextmenu: this.showRoleMenu
@@ -70,6 +78,9 @@ Ext.define('ZSMZJ.controller.Manager', {
             'rolemenu button[action=del]': {
                 click: this.delrole
             },
+            'usermenu > menuitem': {
+                click: this.usermanager
+            },
             'rolemenu > menuitem': {
                 click: this.rolemanager
             },
@@ -78,6 +89,15 @@ Ext.define('ZSMZJ.controller.Manager', {
             }
         }, this);
 
+    },
+    showUserMenu: function (panelView, record, item, index, e, eOpts) {
+
+        var me = this;
+        e.preventDefault();
+        e.stopEvent();
+        var menu = Ext.widget('usermenu');
+        menu.userdata=record;
+        menu.showAt(e.getXY());
     },
     showRoleMenu: function (panelView, record, item, index, e, eOpts) {
 
@@ -101,20 +121,54 @@ Ext.define('ZSMZJ.controller.Manager', {
     funcmanager:function (item, e, eOpts) {
         var funcid=item.parentMenu.funcdata.data.funcid;
 
-        var params = {
-            funcid:funcid
-        };
-        var funcstore=this.getManagerFuncManagersStore();
-        var successFunc = function (form, action) {
+        if(item.text=='删除功能'){
+            var params = {
+                funcid:funcid
+            };
+            var funcstore=this.getManagerFuncManagersStore();
+            var successFunc = function (form, action) {
 
-            funcstore.load();
+                funcstore.load();
 
-        };
-        var failFunc = function (form, action) {
-            Ext.Msg.alert("提示信息", "删除角色失败，检查web服务或数据库服务");
+            };
+            var failFunc = function (form, action) {
+                Ext.Msg.alert("提示信息", "删除角色失败，检查web服务或数据库服务");
 
-        };
-        this.ajaxSend(params, 'ajax/delfunc.jsp', successFunc, failFunc);
+            };
+            this.ajaxSend(params, 'ajax/delfunc.jsp', successFunc, failFunc);
+
+        }
+        else if (item.text=='编辑功能'){
+            this.editfuncwin(funcid,item.parentMenu.funcdata.raw);
+
+        }
+
+    },
+    usermanager:function (item, e, eOpts) {
+        var userid=item.parentMenu.userdata.data.userid;
+
+        if(item.text=='删除用户'){
+            var params = {
+                userid:userid
+            };
+            var userstore=this.getManagerUserManagersStore();
+            var successFunc = function (form, action) {
+
+                userstore.load();
+
+            };
+            var failFunc = function (form, action) {
+                Ext.Msg.alert("提示信息", "删除角色失败，检查web服务或数据库服务");
+
+            };
+            this.ajaxSend(params, 'ajax/deluser.jsp', successFunc, failFunc);
+
+        }
+        else if(item.text=='修改密码'){
+
+            //this.rolefuncwin(roleid);
+
+        }
 
     },
     rolemanager:function (item, e, eOpts) {
@@ -175,6 +229,16 @@ Ext.define('ZSMZJ.controller.Manager', {
         this.rolefuncstoreLoad(rolefuncstore);
 
     },
+    editfuncwin:function(funcid,data){
+
+
+        if (!this.edit_func_win)this.edit_func_win =Ext.widget('editfuncwin');
+        this.edit_func_win.down('form').getForm().setValues(data);
+        this.edit_func_win.show();
+        this.edit_func_win.editdata=data;
+
+
+    },
     rolefuncstoreLoad:function(store){
         var me=this;
 
@@ -231,6 +295,29 @@ Ext.define('ZSMZJ.controller.Manager', {
     cancelrolefuncs:function(btn){
         var win = btn.up('window');
         win.hide();
+
+    },
+    saveeditfunc:function(btn){
+
+        var me=this;
+        var params = {
+           funcid:btn.up('window').editdata.funcid
+        };
+        var funcstore=this.getManagerFuncManagersStore();
+        var successFunc = function (form, action) {
+            funcstore.load();
+            me.edit_func_win.hide();
+
+        };
+        var failFunc = function (form, action) {
+            Ext.Msg.alert("提示信息", "新增功能失败，检查web服务或数据库服务");
+
+        };
+
+        this.formSubmit(btn, params, 'ajax/editfunc.jsp', successFunc, failFunc,"正在提交数据");
+
+
+
 
     },
     addnewfunc:function(btn){
