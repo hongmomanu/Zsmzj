@@ -123,6 +123,10 @@ Ext.define('ZSMZJ.view.manager.addNewUserWin' ,{
                         invalidText: '用户信息不合法',
                         tipTpl: Ext.create('Ext.XTemplate', '<ul class="' + Ext.plainListCls + '"><tpl for="."><li><span class="field-name">{name}</span>: <span class="error">{error}</span></li></tpl></ul>'),
 
+                        onDestroy: function() {
+                            Ext.destroy(this.tip);
+                            Ext.Component.prototype.onDestroy.call(this);
+                        },
                         getTip: function() {
                             var tip = this.tip;
                             if (!tip) {
@@ -134,11 +138,28 @@ Ext.define('ZSMZJ.view.manager.addNewUserWin' ,{
                                     anchor: 'top',
                                     //mouseOffset: [-11, -2],
                                     closable: true,
-                                    constrain :true,
-                                    constrainPosition: true,
+                                    //constrain :true,
+                                    constrainPosition: false,
                                     cls: 'errors-tip'
                                 });
+
+                                var win = this.up('window');
+
+                                if (win) {
+                                    /*tip.mon(win, 'move', function() {
+                                        if (tip.isVisible()) {
+                                            Ext.defer(tip.show, 50, tip);
+                                        }
+                                    });*/
+                                    tip.mon(Ext.getBody(), 'mouseup', function() {
+                                        if (tip.isVisible()) {
+                                            tip.show();
+                                        }
+                                    }, null, {delay: 50});
+                                }
+
                                 tip.show();
+
                             }
                             return tip;
                         },
@@ -146,6 +167,7 @@ Ext.define('ZSMZJ.view.manager.addNewUserWin' ,{
                         setErrors: function(errors) {
                             var me = this,
                                 tip = me.getTip();
+
 
                             errors = Ext.Array.from(errors);
 
