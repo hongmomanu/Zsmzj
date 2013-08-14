@@ -20,6 +20,7 @@ Ext.define('ZSMZJ.view.navigation.dbglConfigTree' ,{
     border: false,
     useArrows: true,
 
+
     initComponent: function() {
         Ext.apply(this, {
             viewConfig: {
@@ -28,33 +29,11 @@ Ext.define('ZSMZJ.view.navigation.dbglConfigTree' ,{
                     containerScroll: true
                 }
             },
-            listeners : {
-                'beforeload' : function(store) {
-                    var params={
-                        roleid:roleid,
-                        leaf:true,
-                        type:"低保管理"+this.searchtype
-
-                    }
-                    Ext.apply(store.proxy.extraParams, params);
-
-                    //this.test();
-
-                },
-                'beforeitemclick':function (record, item, index, e, eOpts){
-                    this.searchtype=item.data.text;
-
-                }
-
-            },
-
             store: 'navigation.DbglTreeConfigs'
 
         });
         this.callParent(arguments);
         // store singleton selection model instance
-    },
-    test:function(){
-        alert(2);
     }
+
 });

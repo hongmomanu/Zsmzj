@@ -15,8 +15,8 @@
 Ext.define('ZSMZJ.controller.Navigation', {
     extend: 'Ext.app.Controller',
 
-    models: ['navigation.UserConfig','navigation.FuncConfig','navigation.DbglTreeConfig'],
-    stores: ['navigation.UserConfigs','navigation.FuncConfigs','navigation.DbglTreeConfigs'],
+    models: ['navigation.UserConfig', 'navigation.FuncConfig', 'navigation.DbglTreeConfig'],
+    stores: ['navigation.UserConfigs', 'navigation.FuncConfigs', 'navigation.DbglTreeConfigs'],
 
     refs: [
         {ref: 'mydbglConfigTree', selector: 'dbglconfigtree'}
@@ -29,68 +29,76 @@ Ext.define('ZSMZJ.controller.Navigation', {
 
     ],
 
-    init: function() {
+    init: function () {
         var me = this;
+        testobjs=me;
         this.control({
-            'userconfiggrid,funcconfiggrid':{
+            'userconfiggrid,funcconfiggrid': {
                 itemclick: this.showContent
+            },
+            'dbglconfigtree': {
+                itemclick: this.treeclick,
+                beforeitemclick: this.beforeitemclick,
+                beforeload:function(store){return this.initLoadStore(store,"低保管理");}
             }
+
+
         }, this);
-        this.initDbglStore();
+        //this.initLoadStore(this.getNavigationDbglTreeConfigsStore(),"低保管理");
 
     },
+    initLoadStore:function(store,type){
+        var me=this;
+        alert(type);
 
-    initDbglStore:function(){
-
-
-        /*store.on('beforeload', function (store, options) {
-
-
-            var selectModel=treepanel.getSelectionModel();
-            var item=selectModel.getSelection()[0];
-            var type=item.data.text;
-            var params={
+        var params={
                 roleid:roleid,
-                type:"低保管理"+type
+                leaf:true,
+                type:type+me.searchtype
 
-            }
-
-            Ext.apply(store.proxy.extraParams, params);
-
-
-            //viewpanel.select(0);
-        });*/
-
+        };
+        Ext.apply(store.proxy.extraParams, params);
 
 
     },
-    showContent: function(grid, record) {
+
+
+    beforeitemclick:function (record, item, index, e, eOpts){
+        this.searchtype=item.data.text;
+
+    },
+    treeclick: function (record, item, index, e, eOpts) {
+        if (item.data.leaf) {
+            alert(1);
+        }
+    },
+    showContent: function (grid, record) {
         //alert(1);
 
         //console.log('Double clicked on ' + record.get('label'));
 
-        var label=record.get('label');
+        var label = record.get('label');
 
-        var tabs=Ext.getCmp('mainContent-panel');
-        if(tabs.getComponent('tab'+label)){
-            tabs.getComponent('tab'+label).show();
-        }else{
-            var type=record.get('type');
-            var value=record.get('value');
-            if(type=='widget'){
+        var tabs = Ext.getCmp('mainContent-panel');
+        if (tabs.getComponent('tab' + label)) {
+            tabs.getComponent('tab' + label).show();
+        } else {
+            var type = record.get('type');
+            var value = record.get('value');
+            if (type == 'widget') {
                 tabs.add({
                     closable: true,
-                    id: 'tab'+label,
+                    id: 'tab' + label,
                     xtype: value,
                     autoScroll: true,
                     iconCls: 'tabs',
                     title: label
                 }).show();
-            }else if(type=="url"){
+            } else if (type == "url") {
                 tabs.add({
                     closable: true,
-                    id: 'tab'+label,
-                    html:'<iframe src="'+value+'" width="100%" height="100%">',
+                    id: 'tab' + label,
+                    html: '<iframe src="' + value + '" width="100%" height="100%">',
                     //loader: { url: "http://www.baidu.com", contentType: 'html', loadMask: 'loading...', autoLoad: true, scripts: true },
                     autoScroll: false,
                     iconCls: 'tabs',
@@ -102,13 +110,10 @@ Ext.define('ZSMZJ.controller.Navigation', {
         }
 
 
+    },
 
 
-    } ,
-
-
-
-    onLaunch: function() {
+    onLaunch: function () {
         var me = this;
 
         // for dev purpose
