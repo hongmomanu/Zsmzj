@@ -13,6 +13,7 @@ Ext.define('ZSMZJ.model.navigation.UserConfig', {
     fields: [
         {
             name: 'label',
+            mapping:'name',
             type:'string'
         },{
             name: 'value',

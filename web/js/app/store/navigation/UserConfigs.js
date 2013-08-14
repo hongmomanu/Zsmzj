@@ -12,10 +12,26 @@
 Ext.define('ZSMZJ.store.navigation.UserConfigs', {
     extend: 'Ext.data.Store',
     model: 'ZSMZJ.model.navigation.UserConfig',
-    data: [
+    autoLoad:true,
+
+    proxy: {
+        type: 'ajax',
+        url: 'ajax/getfuncsbyrule.jsp',
+        getMethod:function(request){ return 'POST'; },
+        extraParams:{
+            roleid:roleid,
+            type:"权限设置"
+
+        },
+        reader: {
+             type: 'json',
+             root: 'images'
+        }
+    }
+    /*data: [
         {label: '用户管理',value:'usermanagerpanel',type:'widget'},
         {label: '功能管理',value:'funcmanagerpanel',type:'widget'},
         {label: '角色管理',value:'rolemanagerpanel',type:'widget'}
 
-    ]
+    ]*/
 });
