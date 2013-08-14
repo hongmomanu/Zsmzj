@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS functions
   funcname VARCHAR(50),                   --功能名称
   label  VARCHAR(50),                     --功能标识
   imgurl  VARCHAR(250),                   --图片标识
+  sortnum integer,                        --排序号
   functype VARCHAR(50)                    --功能类型
 
 );

@@ -18,9 +18,10 @@
         String functype=request.getParameter("functype");
         String label=request.getParameter("label");
         String imgurl=request.getParameter("imgurl");
+        int sortnum=Integer.parseInt(request.getParameter("sortnum"));
         int funcid=Integer.parseInt(request.getParameter("funcid"));
         FuncControl func=new FuncControl();
-        out.print(func.EditFunc(funcid,funcname,functype,label,imgurl));
+        out.print(func.EditFunc(funcid,funcname,functype,label,imgurl,sortnum));
     }
     //out.print("ok");
 %>

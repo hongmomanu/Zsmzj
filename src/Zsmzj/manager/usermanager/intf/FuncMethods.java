@@ -16,6 +16,6 @@ public interface FuncMethods {
     ArrayList<Map<String, Object>> getFuncsByRole(int roleid,String type);
     int addnewFunc(String funcname,String functype); //新增功能接口
     int delFunc(int funcid); //删除功能接口
-    int EditFunc(int funcid,String funcname,String functype,String label,String imgurl);//编辑功能函数接口
+    int EditFunc(int funcid,String funcname,String functype,String label,String imgurl,int sortnum);//编辑功能函数接口
 
 }

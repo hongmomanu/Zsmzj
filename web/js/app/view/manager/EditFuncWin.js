@@ -14,7 +14,7 @@ Ext.define('ZSMZJ.view.manager.EditFuncWin' ,{
     initComponent: function() {
         Ext.apply(this, {
             title: '编辑功能',
-            height: 300,
+            height: 350,
             width: 600,
             closeAction : 'hide',
             resizable:false,
@@ -57,6 +57,12 @@ Ext.define('ZSMZJ.view.manager.EditFuncWin' ,{
                         xtype: 'textfield',
                         fieldLabel: '功能图标',
                         name: 'imgurl'
+                    }
+                    ,
+                    {
+                        xtype: 'textfield',
+                        fieldLabel: '排序号',
+                        name: 'sortnum'
                     }
                 ],
                 buttons: [

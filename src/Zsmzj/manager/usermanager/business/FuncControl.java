@@ -31,12 +31,12 @@ public class FuncControl {
 
     }
 
-    public String EditFunc(int funcid,String funcname,String functype,String label,String imgurl)
+    public String EditFunc(int funcid,String funcname,String functype,String label,String imgurl,int sortnum)
     {
 
         FuncImplement func=new FuncImplement();
         Map<String,Object> res=new HashMap<String, Object>();
-        int resultid=func.EditFunc(funcid,funcname,functype,label,imgurl);
+        int resultid=func.EditFunc(funcid,funcname,functype,label,imgurl,sortnum);
         if(resultid>=0)res.put("success",true);
         else res.put("success",false);
         return JSONObject.fromObject(res).toString();

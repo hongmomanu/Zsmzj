@@ -40,8 +40,8 @@ public class FuncImplement implements FuncMethods {
     }
 
     @Override
-    public int EditFunc(int funcid, String funcname, String functype, String label, String imgurl) {
+    public int EditFunc(int funcid, String funcname, String functype, String label, String imgurl,int sortnum) {
         FuncDao dao=new FuncDao();
-        return dao.EditFunc(funcid, funcname, functype, label, imgurl);
+        return dao.EditFunc(funcid, funcname, functype, label, imgurl,sortnum);
     }
 }

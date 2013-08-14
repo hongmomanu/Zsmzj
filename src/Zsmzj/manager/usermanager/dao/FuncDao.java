@@ -24,7 +24,7 @@ public class FuncDao {
     private static String FuncToRoleTable="functorole";
     public ArrayList<Map<String, Object>> getFuncs(int start, int limit, String keyword) {
         Connection testConn= JdbcFactory.getConn("sqlite");
-        String sql=  "select funcname,functype,id,label,imgurl from "+FuncTable+" Limit "+limit+" Offset "+ start;
+        String sql=  "select funcname,functype,id,label,imgurl,sortnum from "+FuncTable+" Limit "+limit+" Offset "+ start;
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
         ArrayList<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         try {
@@ -35,6 +35,7 @@ public class FuncDao {
                 func.put("functype",rs.getString("functype"));
                 func.put("label",rs.getString("label"));
                 func.put("imgurl",rs.getString("imgurl"));
+                func.put("sortnum",rs.getInt("sortnum"));
                 func.put("funcid",rs.getInt("id"));
                 list.add(func);
 
@@ -52,7 +53,8 @@ public class FuncDao {
         log.debug(type);
 
         String sql=  "select a.funcname,a.imgurl,a.label from "+FuncTable+" as a,"+
-                FuncToRoleTable+" as b where a.id=b.funcid and b.roleid=? and a.functype=?";
+                FuncToRoleTable+" as b where a.id=b.funcid and b.roleid=? and a.functype=?" +
+                " order by a.sortnum asc";
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
         ArrayList<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         try {
@@ -96,11 +98,11 @@ public class FuncDao {
 
     }
 
-    public int EditFunc(int funcid,String funcname,String functype,String label,String imgurl)
+    public int EditFunc(int funcid,String funcname,String functype,String label,String imgurl,int sortum)
     {
         Connection conn= JdbcFactory.getConn("sqlite");
         String sql = "update " + FuncTable + " set funcname=?,functype=?," +
-                "label=?,imgurl=? where id=? ";
+                "label=?,imgurl=?,sortnum=? where id=? ";
         PreparedStatement pstmt = JdbcFactory.getPstmt(conn, sql);
 
         try {
@@ -108,7 +110,8 @@ public class FuncDao {
             pstmt.setString(2, functype);
             pstmt.setString(3, label);
             pstmt.setString(4, imgurl);
-            pstmt.setInt(5, funcid);
+            pstmt.setInt(5, sortum);
+            pstmt.setInt(6, funcid);
             return pstmt.executeUpdate();
         } catch (SQLException ex) {
             log.debug(ex.getMessage());
