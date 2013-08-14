@@ -23,6 +23,14 @@ public class FuncControl {
 
     }
 
+    public String getFuncsByRole(int roleid,String type){
+
+        FuncImplement func=new FuncImplement();
+        return JSONArray.fromObject(func.getFuncsByRole(roleid,type)).toString();
+
+
+    }
+
     public String EditFunc(int funcid,String funcname,String functype,String label,String imgurl)
     {
 

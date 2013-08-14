@@ -13,14 +13,15 @@ Ext.define('ZSMZJ.store.header.HeaderViewers', {
 
     proxy: {
         type: 'ajax',
-        url: 'ajax/image.json',
-        params:{
+        url: 'ajax/getfuncsbyrule.jsp',
+        getMethod:function(request){ return 'POST'; },
+        extraParams:{
             roleid:roleid,
             type:"系统菜单"
         },
         reader: {
-            type: 'json',
-            root: 'images'
+            type: 'json'/*,
+            root: 'images'*/
         }
     }
 });

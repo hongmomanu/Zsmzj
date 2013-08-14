@@ -21,6 +21,7 @@ import java.util.Map;
 public class FuncDao {
     private static final Logger log = Logger.getLogger(FuncDao.class);
     private  static String FuncTable="functions";
+    private static String FuncToRoleTable="functorole";
     public ArrayList<Map<String, Object>> getFuncs(int start, int limit, String keyword) {
         Connection testConn= JdbcFactory.getConn("sqlite");
         String sql=  "select funcname,functype,id,label,imgurl from "+FuncTable+" Limit "+limit+" Offset "+ start;
@@ -43,6 +44,35 @@ public class FuncDao {
             log.debug(E.getMessage());
             return list;
         }
+
+    }
+    public ArrayList<Map<String, Object>>   getFuncsByRole(int roleid,String type){
+
+        Connection testConn= JdbcFactory.getConn("sqlite");
+        log.debug(type);
+
+        String sql=  "select a.funcname,a.imgurl,a.label from "+FuncTable+" as a,"+
+                FuncToRoleTable+" as b where a.id=b.funcid and b.roleid=? and a.functype=?";
+        PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
+        ArrayList<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        try {
+            pstmt.setInt(1,roleid);
+            pstmt.setString(2,type);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Map<String,Object> func=new HashMap<String, Object>();
+                func.put("name",rs.getString("funcname"));
+                func.put("value",rs.getString("label"));
+                func.put("url",rs.getString("imgurl"));
+                list.add(func);
+
+            }
+            return list;
+        }catch (Exception E){
+            log.debug(E.getMessage());
+            return list;
+        }
+
 
     }
     public int addNewFunc(String funcname,String functype){

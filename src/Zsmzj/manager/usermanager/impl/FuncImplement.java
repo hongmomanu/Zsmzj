@@ -21,6 +21,13 @@ public class FuncImplement implements FuncMethods {
     }
 
     @Override
+    public ArrayList<Map<String, Object>> getFuncsByRole(int roleid, String type) {
+
+        FuncDao dao=new FuncDao();
+        return dao.getFuncsByRole(roleid,type);
+    }
+
+    @Override
     public int addnewFunc(String funcname,String functype) {
         FuncDao dao=new FuncDao();
         return dao.addNewFunc(funcname,functype);
@@ -35,6 +42,6 @@ public class FuncImplement implements FuncMethods {
     @Override
     public int EditFunc(int funcid, String funcname, String functype, String label, String imgurl) {
         FuncDao dao=new FuncDao();
-        return dao.EditFunc(funcid,funcname,functype,label,imgurl);
+        return dao.EditFunc(funcid, funcname, functype, label, imgurl);
     }
 }
