@@ -15,15 +15,15 @@
 Ext.define('ZSMZJ.controller.Navigation', {
     extend: 'Ext.app.Controller',
 
-    models: ['navigation.UserConfig','navigation.FuncConfig'],
-    stores: ['navigation.UserConfigs','navigation.FuncConfigs'],
+    models: ['navigation.UserConfig','navigation.FuncConfig','navigation.DbglTreeConfig'],
+    stores: ['navigation.UserConfigs','navigation.FuncConfigs','navigation.DbglTreeConfigs'],
 
-    /*refs: [
-        {ref: 'summitChart', selector: 'summitchart'},
-        {ref: 'summitGrid', selector: 'summitgrid'}
-    ],*/
+    refs: [
+        {ref: 'mydbglConfigTree', selector: 'dbglconfigtree'}
+    ],
     views: [
         'navigation.userConfigGrid',
+        'navigation.dbglConfigTree',
         'navigation.funcConfigGrid'
 
 
@@ -36,9 +36,34 @@ Ext.define('ZSMZJ.controller.Navigation', {
                 itemclick: this.showContent
             }
         }, this);
+        this.initDbglStore();
 
     },
 
+    initDbglStore:function(){
+
+
+        /*store.on('beforeload', function (store, options) {
+
+
+            var selectModel=treepanel.getSelectionModel();
+            var item=selectModel.getSelection()[0];
+            var type=item.data.text;
+            var params={
+                roleid:roleid,
+                type:"低保管理"+type
+
+            }
+
+            Ext.apply(store.proxy.extraParams, params);
+
+
+            //viewpanel.select(0);
+        });*/
+
+
+
+    },
     showContent: function(grid, record) {
         //alert(1);
 

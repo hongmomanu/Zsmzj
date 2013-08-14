@@ -24,8 +24,8 @@ Ext.define('ZSMZJ.store.navigation.UserConfigs', {
 
         },
         reader: {
-             type: 'json',
-             root: 'images'
+             type: 'json'/*,
+             root: 'images'*/
         }
     }
     /*data: [

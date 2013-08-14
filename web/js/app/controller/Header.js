@@ -29,7 +29,6 @@ Ext.define('ZSMZJ.controller.Header', {
 
     init: function() {
         var me = this;
-        testobj=this;
         this.initHeadView();
 
         /*

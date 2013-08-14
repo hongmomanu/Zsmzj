@@ -5,6 +5,7 @@ import Zsmzj.manager.usermanager.impl.RoleImplement;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,10 +24,17 @@ public class FuncControl {
 
     }
 
-    public String getFuncsByRole(int roleid,String type){
+    public String getFuncsByRole(int roleid,String type,String leaf){
 
         FuncImplement func=new FuncImplement();
-        return JSONArray.fromObject(func.getFuncsByRole(roleid,type)).toString();
+        ArrayList<Map<String, Object>> result=func.getFuncsByRole(roleid,type);
+        if(leaf !=null){
+            for(Map<String, Object> item:result){
+                item.put("leaf",true);
+            }
+        }
+
+        return JSONArray.fromObject(result).toString();
 
 
     }

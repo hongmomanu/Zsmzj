@@ -18,7 +18,8 @@
     else{
         int roleid=Integer.parseInt(request.getParameter("roleid"));
         String type=request.getParameter("type");
+        String leaf=request.getParameter("leaf");
         FuncControl role=new FuncControl();
-        out.print(role.getFuncsByRole(roleid,type,null));
+        out.print(role.getFuncsByRole(roleid,type,leaf));
     }
 %>
