@@ -89,6 +89,8 @@ Ext.define('ZSMZJ.controller.Manager', {
             }
         }, this);
 
+
+
     },
     showUserMenu: function (panelView, record, item, index, e, eOpts) {
 

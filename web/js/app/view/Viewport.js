@@ -52,7 +52,7 @@ Ext.define('ZSMZJ.view.Viewport', {
                         animCollapse: true,
                         margins: '0 0 0 0',
                         layout: 'accordion',
-                        items: menu_shjz
+                        items: []
                     },
 
                     Ext.create('Ext.tab.Panel', {

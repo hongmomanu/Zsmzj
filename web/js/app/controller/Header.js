@@ -20,15 +20,18 @@ Ext.define('ZSMZJ.controller.Header', {
     stores: ['header.HeaderViewers'],
 
 
-    /*refs: [
-        {ref: 'headViewPanel', selector: 'headViewpanel'}
-    ],*/
+    refs: [
+        {ref: 'myviewheadViewPanel', selector: 'headviewpanel'}
+    ],
     views: [
         'Header','header.headViewPanel'
     ],
 
     init: function() {
         var me = this;
+        testobj=this;
+        this.initHeadView();
+
         /*
         this.control({
             'headviewpanel#headviewitem':{
@@ -40,7 +43,18 @@ Ext.define('ZSMZJ.controller.Header', {
 
 
 
+    initHeadView:function(){
+        var me=this;
+        var store=this.getHeaderHeaderViewersStore();
 
+        store.on('load', function (store, options) {
+            var viewpanel=me.getMyviewheadViewPanel().items.items[0];
+            viewpanel.select(0);
+        });
+
+
+
+    },
     onLaunch: function() {
         var me = this;
 
