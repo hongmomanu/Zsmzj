@@ -39,7 +39,7 @@ Ext.define('ZSMZJ.controller.Navigation', {
             'dbglconfigtree': {
                 itemclick: this.treeclick,
                 beforeitemclick: this.beforeitemclick,
-                beforeload:function(store){return this.initLoadStore(store,"低保管理");}
+                beforeload:function(store){return this.initLoadStore(store,store.getRootNode().data.text);}
             }
 
 
@@ -49,7 +49,6 @@ Ext.define('ZSMZJ.controller.Navigation', {
     },
     initLoadStore:function(store,type){
         var me=this;
-        alert(type);
 
         var params={
                 roleid:roleid,

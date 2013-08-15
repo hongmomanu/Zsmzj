@@ -20,7 +20,6 @@ Ext.define('ZSMZJ.view.navigation.dbglConfigTree' ,{
     border: false,
     useArrows: true,
 
-
     initComponent: function() {
         Ext.apply(this, {
             viewConfig: {
@@ -29,6 +28,7 @@ Ext.define('ZSMZJ.view.navigation.dbglConfigTree' ,{
                     containerScroll: true
                 }
             },
+
             store: 'navigation.DbglTreeConfigs'
 
         });
