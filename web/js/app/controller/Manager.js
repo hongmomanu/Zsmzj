@@ -8,8 +8,14 @@
 Ext.define('ZSMZJ.controller.Manager', {
     extend: 'Ext.app.Controller',
 
-    models: ['manager.UserManager','manager.RoleManager','manager.FuncManager','manager.RoleFunc'],
-    stores: ['manager.UserManagers','manager.RoleManagers','manager.FuncManagers','manager.RoleFuncs'],
+    models: ['manager.UserManager','manager.RoleManager',
+             'manager.FuncManager','manager.RoleFunc',
+             'manager.EnumerateConfigManager'
+            ],
+    stores: ['manager.UserManagers','manager.RoleManagers',
+             'manager.FuncManagers','manager.RoleFuncs',
+             'manager.EnumerateConfigManagers'
+            ],
 
     refs: [
      {ref: 'viewRoleManager', selector: 'rolemanagerpanel'}, //view的实例引用自定义名,class别名
@@ -20,6 +26,7 @@ Ext.define('ZSMZJ.controller.Manager', {
         'manager.UserManager',
         'manager.RoleManager',
         'manager.FuncManager',
+        'manager.EnumerateConfigManager',
         'manager.RoleFuncGrid',
         'manager.addNewRoleWin',
         'manager.addNewFuncWin',
@@ -272,19 +279,26 @@ Ext.define('ZSMZJ.controller.Manager', {
         var selModel=panel.getSelectionModel();
         var selectItems=selModel.getSelection();
         var funcid_arr=[];
+        var delete_arr=[];
         Ext.each(selectItems,function(a){
             funcid_arr.push(a.data.funcid);
         });
+        Ext.each(panel.getStore().data.items,function(a){
+            delete_arr.push(a.data.funcid);
+        });
         var params = {
             roleid:btn.up('window').roleid,
+            deleteid:delete_arr,
             funcid:funcid_arr
 
         };
 
         var rolefuncstore=this.getManagerRoleFuncsStore();
         var successFunc = function (form, action) {
-
+            me.rolewin.hide();
             me.rolefuncstoreLoad(rolefuncstore);
+            Ext.Msg.alert("提示信息", "功能设置成功");
+
 
         };
         var failFunc = function (form, action) {

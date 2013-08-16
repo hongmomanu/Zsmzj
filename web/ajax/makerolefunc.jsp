@@ -12,14 +12,15 @@
          pageEncoding="UTF-8"%>
 <%
     if(request.getParameter("roleid")==null){
-       out.print("{sucess:false,msg:\"缺少分页参数roleid\"}");
+       out.print("{sucess:false,msg:\"缺少参数roleid\"}");
     }
     else{
         int roleid=Integer.parseInt(request.getParameter("roleid"));
         String[] func_arr=request.getParameterValues("funcid");
+        String[] delete_arr=request.getParameterValues("deleteid");
         System.out.println(func_arr.length);
         RoleControl role=new RoleControl();
-        out.print(role.makeRoleFuncs(roleid,func_arr));
+        out.print(role.makeRoleFuncs(roleid,func_arr,delete_arr));
         //out.print("ok");
     }
 %>

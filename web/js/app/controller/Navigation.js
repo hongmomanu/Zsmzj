@@ -15,17 +15,21 @@
 Ext.define('ZSMZJ.controller.Navigation', {
     extend: 'Ext.app.Controller',
 
-    models: ['navigation.UserConfig', 'navigation.FuncConfig', 'navigation.DbglTreeConfig'],
-    stores: ['navigation.UserConfigs', 'navigation.FuncConfigs', 'navigation.DbglTreeConfigs'],
+    models: ['navigation.UserConfig','navigation.SystemConfig',
+             'navigation.FuncConfig', 'navigation.DbglTreeConfig'
+            ],
+    stores: ['navigation.UserConfigs','navigation.SystemConfigs',
+             'navigation.FuncConfigs', 'navigation.DbglTreeConfigs'
+            ],
 
     refs: [
         {ref: 'mydbglConfigTree', selector: 'dbglconfigtree'}
     ],
     views: [
         'navigation.userConfigGrid',
+        'navigation.systemConfigGrid',
         'navigation.dbglConfigTree',
         'navigation.funcConfigGrid'
-
 
     ],
 
@@ -33,7 +37,7 @@ Ext.define('ZSMZJ.controller.Navigation', {
         var me = this;
         testobjs=me;
         this.control({
-            'userconfiggrid,funcconfiggrid': {
+            'userconfiggrid,funcconfiggrid,systemconfiggrid': {
                 itemclick: this.showContent
             },
             'dbglconfigtree': {
