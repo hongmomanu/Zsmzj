@@ -29,13 +29,16 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
     init: function() {
         var me = this;
-        /*
+
          this.control({
-         'headviewpanel#headviewitem':{
-         selectionchange: this.selectionchange
+         'dbglbusinessapplyform component':{
+           imgclick:function (c){
+
+               alert(2);
+           }
          }
          }, this);
-         */
+
     },
 
 

@@ -72,8 +72,6 @@ Ext.define('ZSMZJ.controller.Navigation', {
     },
     treeclick: function (record, item, index, e, eOpts) {
         if (item.data.leaf) {
-            //alert(1);
-            console.log(item.data.text +"-----"+item.data.value+"-------"+item.data.type);
             this.showtab(item.data.text,item.data.value,item.data.type);
         }
     },
