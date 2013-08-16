@@ -16,7 +16,7 @@ Ext.define('ZSMZJ.view.manager.RoleManager' ,{
             border: false,
             viewConfig: {
                 trackOver: false,
-                loadMask: false,
+                loadMask: true,
                 scrollToTop: Ext.emptyFn,
                 enableTextSelection:true,
                 stripeRows: true

@@ -8,7 +8,7 @@ Ext.define('ZSMZJ.store.manager.EnumerateConfigManagers', {
     proxy:{
         type: 'ajax',
 
-        url: 'ajax/getEnumerate.jsp'
+        url: 'ajax/getEnums.jsp'
     }
 
 });

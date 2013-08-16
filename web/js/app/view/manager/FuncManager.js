@@ -16,7 +16,7 @@ Ext.define('ZSMZJ.view.manager.FuncManager' ,{
             border: false,
             viewConfig: {
                 trackOver: false,
-                loadMask: false,
+                loadMask: true,
                 scrollToTop: Ext.emptyFn,
                 enableTextSelection:true,
                 stripeRows: true

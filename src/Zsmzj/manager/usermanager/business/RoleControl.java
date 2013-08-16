@@ -24,9 +24,13 @@ public class RoleControl {
         return JSONArray.fromObject(role.getRoles(start, limit, keyword)).toString();
 
     }
-    public String makeRoleFuncs(int roleid,String[] funcid){
+    public String makeRoleFuncs(int roleid,String[] funcid,String[] deleteids){
         RoleImplement role=new RoleImplement();
-        role.delRoleFuncs(roleid);
+        for(String str_id:deleteids){
+            int func_id=Integer.parseInt(str_id);
+            role.delRoleFuncs(roleid,func_id);
+        }
+
         for(String str_id:funcid){
             int func_id=Integer.parseInt(str_id);
             role.addRoleFuncs(roleid,func_id);

@@ -31,6 +31,7 @@ Ext.define('ZSMZJ.controller.Manager', {
         'manager.addNewRoleWin',
         'manager.addNewFuncWin',
         'manager.addNewUserWin',
+        'manager.addNewEnumWin',
         'manager.RoleFuncWin',
         'manager.EditFuncWin',
         'manager.funcMenu',
@@ -49,6 +50,9 @@ Ext.define('ZSMZJ.controller.Manager', {
             'funcmanagerpanel button[action=addnewfunc]':{
                 click: this.addnewfuncwin
             },
+            'enumerateconfigmanager button[action=addnewenumerate]':{
+                click: this.addnewenumwin
+            },
             'usermanagerpanel button[action=addnewuser]':{
                 click: this.addnewuserwin
             },
@@ -60,6 +64,9 @@ Ext.define('ZSMZJ.controller.Manager', {
             },
             'addnewfuncwin button[action=add]': {
                 click: this.addnewfunc
+            },
+            'addnewenumwin button[action=add]': {
+                click: this.addnewenum
             },
             'editfuncwin button[action=save]': {
                 click: this.saveeditfunc
@@ -219,6 +226,11 @@ Ext.define('ZSMZJ.controller.Manager', {
         if (!this.newFuncWin)this.newFuncWin = Ext.widget('addnewfuncwin');
         this.newFuncWin.show();
     },
+    addnewenumwin:function(btn){
+
+        if (!this.newEnumWin)this.newEnumWin = Ext.widget('addnewenumwin');
+        this.newEnumWin.show();
+    },
 
     addnewuserwin:function(btn){
         if (!this.newUserWin)this.newUserWin = Ext.widget('addnewuserwin');
@@ -333,6 +345,27 @@ Ext.define('ZSMZJ.controller.Manager', {
 
         this.formSubmit(btn, params, 'ajax/editfunc.jsp', successFunc, failFunc,"正在提交数据");
 
+
+
+
+    },
+    addnewenum:function(btn){
+        var me=this;
+        var params = {
+
+        };
+        var enumstore=this.getManagerEnumerateConfigManagersStore();
+        var successFunc = function (form, action) {
+            enumstore.load();
+            me.newEnumWin.hide();
+
+        };
+        var failFunc = function (form, action) {
+            Ext.Msg.alert("提示信息", "新增枚举失败，检查web服务或数据库服务");
+
+        };
+
+        this.formSubmit(btn, params, 'ajax/addnewenum.jsp', successFunc, failFunc,"正在提交数据");
 
 
 

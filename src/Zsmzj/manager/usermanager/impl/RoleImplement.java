@@ -31,10 +31,10 @@ public class RoleImplement implements RoleMethods {
     }
 
     @Override
-    public int delRoleFuncs(int roleid) {
+    public int delRoleFuncs(int roleid,int deleteid) {
 
         RoleDao dao=new RoleDao();
-        return dao.delRoleFuncs(roleid);
+        return dao.delRoleFuncs(roleid,deleteid);
 
     }
 
