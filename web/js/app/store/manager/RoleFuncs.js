@@ -10,9 +10,6 @@ Ext.define('ZSMZJ.store.manager.RoleFuncs', {
     },
     listeners: {
         load: function(store, records, success) {
-                 //alert("ok");
-                 //console.log(store);
-                 //console.log(records);
 
         }
     }

@@ -37,7 +37,7 @@ Ext.application({
         'Ext.ux.DataView.LabelEditor'
     ],
     controllers: [
-        'Navigation','Header','Manager'
+        'Navigation','Header','Manager','Dbgl'
     ],
     autoCreateViewport: true
 });

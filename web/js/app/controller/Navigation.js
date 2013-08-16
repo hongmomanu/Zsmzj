@@ -38,7 +38,7 @@ Ext.define('ZSMZJ.controller.Navigation', {
         testobjs=me;
         this.control({
             'userconfiggrid,funcconfiggrid,systemconfiggrid': {
-                itemclick: this.showContent
+                itemclick: this.showGridContent
             },
             'dbglconfigtree': {
                 itemclick: this.treeclick,
@@ -72,26 +72,20 @@ Ext.define('ZSMZJ.controller.Navigation', {
     },
     treeclick: function (record, item, index, e, eOpts) {
         if (item.data.leaf) {
-            alert(1);
+            //alert(1);
+            console.log(item.data.text +"-----"+item.data.value+"-------"+item.data.type);
+            this.showtab(item.data.text,item.data.value,item.data.type);
         }
     },
-    showContent: function (grid, record) {
-        //alert(1);
-
-        //console.log('Double clicked on ' + record.get('label'));
-
-        var label = record.get('label');
-
+    showtab:function(label,value,type){
         var tabs = Ext.getCmp('mainContent-panel');
-        if (tabs.getComponent('tab' + label)) {
-            tabs.getComponent('tab' + label).show();
+        if (tabs.getComponent('tab' + value)) {
+            tabs.getComponent('tab' + value).show();
         } else {
-            var type = record.get('type');
-            var value = record.get('value');
             if (type == 'widget') {
                 tabs.add({
                     closable: true,
-                    id: 'tab' + label,
+                    id: 'tab' + value,
                     xtype: value,
                     autoScroll: true,
                     iconCls: 'tabs',
@@ -112,6 +106,13 @@ Ext.define('ZSMZJ.controller.Navigation', {
 
         }
 
+    },
+    showGridContent: function (grid, record) {
+
+        var label = record.get('label');
+        var type = record.get('type');
+        var value = record.get('value');
+        this.showtab(label,value,type);
 
     },
 
