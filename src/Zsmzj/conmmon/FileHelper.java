@@ -7,7 +7,9 @@ import javax.servlet.ServletContext;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,21 +20,24 @@ import java.util.List;
  */
 public class FileHelper {
     private static final Logger log = Logger.getLogger(FileHelper.class);
-    public String saveUploadFile( List<FileItem> fileitems,String filepath){
+    public Map<String,Object> saveUploadFile( List<FileItem> fileitems,String filepath){
+        Map<String,Object> result=new HashMap<String, Object>();
         try {
+            String savename="";
+
             for (FileItem item : fileitems) {
                 if (item.isFormField()) {
                     String name = item.getFieldName();
                     String value = item.getString();
-
                     // 转换下字符集编码
                     value = new String(value.getBytes("iso-8859-1"), "utf-8");
-                    System.out.println(name + "=" + value);
+                    log.debug(name + "=" + value);
                 } else {
                     String filename = item.getName();
                     String extName = filename.substring(filename.lastIndexOf(".") );
                     //log.debug(item.getContentType());
-                    File file = new File(filepath, StringHelper.getTimeStr()+extName);
+                    savename=StringHelper.getTimeStr()+extName;
+                    File file = new File(filepath,savename );
                     //没有目录，则初始化
                     file.getParentFile().mkdirs();
                     file.createNewFile();
@@ -52,10 +57,14 @@ public class FileHelper {
 
                 }
             }
-            return "{success:true}";
+            result.put("success",true);
+            result.put("filepath",savename);
+            return result;
         } catch (Exception e) {
             e.printStackTrace();
-            return "{success:false}";
+            result.put("success",false);
+            result.put("msg",e.getMessage());
+            return result;
         }
 
     }

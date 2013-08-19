@@ -15,4 +15,5 @@ var menu_qxgl=[{layout: 'fit',title: '权限设置',items:[{xtype:'userconfiggri
     {title: '系统配置',items:[{xtype:'systemconfiggrid'}],iconCls: 'nav'}, {
     title: '服务日志',items:[{xtype:'funcconfiggrid'}],iconCls: 'nav'}];
 
+var imgfiletype={'jpg':true,'jpeg':true,'gif':true};
 

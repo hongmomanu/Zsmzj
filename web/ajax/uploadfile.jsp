@@ -4,6 +4,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="Zsmzj.conmmon.FileHelper" %>
 <%@ page import="Zsmzj.conmmon.Config" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="net.sf.json.JSONObject" %>
 <%--
   Created by IntelliJ IDEA.
   User: jack
@@ -24,6 +26,8 @@
     Config dbconfig = Config.getConfig("config.properties");
     String filedir = dbconfig.getValue("uploaddirname");
     String filepath=context.getRealPath(filedir);
-    out.print(fh.saveUploadFile(fileitems,filepath));
+    Map<String,Object> result=fh.saveUploadFile(fileitems, filepath);
+    result.put("filepath",filedir+"/"+result.get("filepath"));
+    out.print(JSONObject.fromObject(result).toString());
 
 %>

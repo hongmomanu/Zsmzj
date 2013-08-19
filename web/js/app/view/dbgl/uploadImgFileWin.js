@@ -5,9 +5,9 @@
  * Time: 下午1:35
  * To change this template use File | Settings | File Templates.
  */
-Ext.define('ZSMZJ.view.dbgl.uploadFileWin' ,{
+Ext.define('ZSMZJ.view.dbgl.uploadImgFileWin' ,{
     extend: 'Ext.window.Window',
-    alias : 'widget.uploadfilewin',
+    alias : 'widget.uploadimgfilewin',
     requires: [
         //'Ext.form.*'
     ],
@@ -50,10 +50,18 @@ Ext.define('ZSMZJ.view.dbgl.uploadFileWin' ,{
                     },{
                         xtype: 'filefield',
                         id: 'form-file',
-                        emptyText: '选择文件',
-                        fieldLabel: '文件',
+                        emptyText: '选择照片',
+                        fieldLabel: '照片',
                         name: 'filepath',
                         buttonText: '',
+                        validator: function(value){
+                            var arr = value.split('.');
+                            if(imgfiletype[arr[arr.length-1]]){
+                                return true;
+                            }else{
+                                return '情上传图片文件';
+                            }
+                        },
                         buttonConfig: {
                             iconCls: 'upload-icon'
                         }

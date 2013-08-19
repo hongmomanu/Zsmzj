@@ -21,11 +21,12 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
 
     refs: [
-        {ref: 'myviewbusinessapplyform', selector: 'dbglbusinessapplyform'}
+        {ref: 'myviewbusinessapplyform', selector: 'dbglbusinessapplyform'},
+        {ref: 'myviewuploadimgfilewin', selector: 'uploadimgfilewin'}
     ],
     views: [
         'dbgl.businessApply',
-        'dbgl.uploadFileWin'
+        'dbgl.uploadImgFileWin'
     ],
 
     init: function() {
@@ -34,23 +35,25 @@ Ext.define('ZSMZJ.controller.Dbgl', {
          this.control({
          'dbglbusinessapplyform component':{
            imgclick:function (c){
-               this.showUploadWin();
+               this.showUploadImgWin();
            }
          },
-         'uploadfilewin button[action=upload]':{
-             click: this.uploadFile
+         'uploadimgfilewin button[action=upload]':{
+             click: this.uploadImgFile
          }
          }, this);
 
 
     },
-    uploadFile:function(btn){
+    uploadImgFile:function(btn){
         var me=this;
         var params = {
 
         };
         var successFunc = function (form, action) {
-            me.uploadWin.hide();
+            var filepath=action.result.filepath;
+            Ext.getCmp('dbglaccountimg').getEl().dom.src=filepath;
+            me.uploadimgWin.hide();
 
         };
         var failFunc = function (form, action) {
@@ -84,9 +87,9 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
     },
 
-    showUploadWin:function(){
-        if(!this.uploadWin)this.uploadWin=Ext.widget('uploadfilewin');
-        this.uploadWin.show();
+    showUploadImgWin:function(){
+        if(!this.uploadimgWin)this.uploadimgWin=Ext.widget('uploadimgfilewin');
+        this.uploadimgWin.show();
 
     },
     onLaunch: function() {
