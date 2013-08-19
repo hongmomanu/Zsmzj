@@ -3,6 +3,7 @@
 <%@ page import="org.apache.commons.fileupload.FileItem" %>
 <%@ page import="java.util.List" %>
 <%@ page import="Zsmzj.conmmon.FileHelper" %>
+<%@ page import="Zsmzj.conmmon.Config" %>
 <%--
   Created by IntelliJ IDEA.
   User: jack
@@ -19,6 +20,10 @@
     ServletFileUpload upload = new ServletFileUpload(factory);
     List<FileItem> fileitems = upload.parseRequest(request);
     FileHelper fh=new FileHelper();
-    out.print(fh.saveUploadFile(fileitems));
+    ServletContext context = request.getServletContext();
+    Config dbconfig = Config.getConfig("config.properties");
+    String filedir = dbconfig.getValue("uploaddirname");
+    String filepath=context.getRealPath(filedir);
+    out.print(fh.saveUploadFile(fileitems,filepath));
 
 %>

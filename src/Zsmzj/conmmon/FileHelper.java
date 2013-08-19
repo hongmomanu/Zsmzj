@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class FileHelper {
     private static final Logger log = Logger.getLogger(FileHelper.class);
-    public String saveUploadFile( List<FileItem> fileitems){
+    public String saveUploadFile( List<FileItem> fileitems,String filepath){
         try {
             for (FileItem item : fileitems) {
                 if (item.isFormField()) {
@@ -26,17 +26,16 @@ public class FileHelper {
                     String value = item.getString();
 
                     // 转换下字符集编码
-                    //value = new String(value.getBytes("iso-8859-1"), "utf-8");
+                    value = new String(value.getBytes("iso-8859-1"), "utf-8");
                     System.out.println(name + "=" + value);
                 } else {
                     String filename = item.getName();
-                    log.debug(filename);
-
-                    // 上传的文件存放路径为...\\WebRoot\\upload\\filename
-                    /*String dir = context.getRealPath("upload");
-                    File file = new File(dir, filename);
+                    String extName = filename.substring(filename.lastIndexOf(".") );
+                    //log.debug(item.getContentType());
+                    File file = new File(filepath, StringHelper.getTimeStr()+extName);
+                    //没有目录，则初始化
+                    file.getParentFile().mkdirs();
                     file.createNewFile();
-
                     // 获得流，读取数据写入文件
                     InputStream in = item.getInputStream();
                     FileOutputStream fos = new FileOutputStream(file);
@@ -45,12 +44,11 @@ public class FileHelper {
                     byte[] buffer = new byte[1024];
                     while ((len = in.read(buffer)) > 0)
                         fos.write(buffer, 0, len);
-
                     // 关闭资源文件操作
                     fos.close();
                     in.close();
                     // 删除临时文件
-                    item.delete();*/
+                    item.delete();
 
                 }
             }

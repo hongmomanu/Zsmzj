@@ -4,6 +4,9 @@
  */
 package Zsmzj.conmmon;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Map;
 
 /**
@@ -18,5 +21,11 @@ public class StringHelper {
             formatedStr = formatedStr.replaceAll("\\$\\{" + key + "\\}", arguments.get(key).toString());
         }
         return formatedStr;
+    }
+    public static String getTimeStr(){
+        DateFormat df = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+        Calendar calendar = Calendar.getInstance();
+        return df.format(calendar.getTime());
+
     }
 }
