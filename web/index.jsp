@@ -9,8 +9,7 @@
 %>
 <html>
   <head>
-      <link rel="stylesheet" type="text/css" href="css/main.css" />
-      <link rel="stylesheet" type="text/css" href="css/data-view.css" />
+
       <script type="text/javascript" src="js/config.js">
 
       </script>
@@ -30,6 +29,8 @@
 
       </script>
 
+      <link rel="stylesheet" type="text/css" href="css/main.css" />
+      <link rel="stylesheet" type="text/css" href="css/data-view.css" />
      <%-- 加载web应用层--%>
 
       <script type="text/javascript" src="js/app.js"></script>

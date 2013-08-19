@@ -91,6 +91,7 @@ CREATE VIRTUAL TABLE IF NOT EXISTS business USING fts3
   bank                    VARCHAR(50),                              --开户银行
   bankower                VARCHAR(50),                              --开户人
   bankid                  VARCHAR(50),                              --银行账号
+  otherfamilyinfo         VARCHAR(50),                              --家庭备注
   houseproperties         VARCHAR(50),                              --住房性质
   housestructure          VARCHAR(50),                              --住房结构
   housearea               VARCHAR(50),                              --住房总面积
