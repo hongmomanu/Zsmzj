@@ -11,7 +11,6 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
     extend : 'Ext.form.Panel',
     alias : 'widget.dbglbusinessapplyform',
     requires: [
-        'ZSMZJ.view.dbgl.FamilyMemberGrid'
     ],
     initComponent: function() {
         var required = '<span style="color:red;font-weight:bold" data-qtip="必填字段">*</span>';
@@ -144,10 +143,13 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                         //emptyText: '低保户类型',
                         allowBlank: true
                     },{
+                        itemId: 'FamilyPersons',
                         name: 'households',
                         fieldLabel: '家庭总人口',
                         afterLabelTextTpl: required,
                         blankText:'家庭总人口',
+                        value:0,
+                        disabled:true,
                         //emptyText: '低保户类型',
                         allowBlank: false
                     }
@@ -431,14 +433,14 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                     layout: 'fit',
 
                     items:[
-                        {
+                       /* {
                             xtype:'panel',
                             layout: 'fit',
-                            items:[
+                            items:[*/
                                 {xtype:'familymembergrid'}
-                            ]
+                           /* ]
 
-                        }
+                        }*/
 
                     ]
                 }

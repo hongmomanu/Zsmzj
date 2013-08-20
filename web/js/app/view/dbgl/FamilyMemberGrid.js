@@ -17,6 +17,7 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
             autoCancel: false
         });
         var strore=Ext.widget('familymembers');
+        //this.rowEditing=rowEditing;
 
         Ext.apply(this, {
             border: false,
@@ -25,7 +26,7 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
             viewConfig: {
                 trackOver: false,
                 loadMask: true,
-                //scrollToTop: Ext.emptyFn,
+                scrollToTop: Ext.emptyFn,
                 //autoFit : true,
                 enableTextSelection:true,
                 stripeRows: true
@@ -44,6 +45,7 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     header: '与户主关系*',
                     dataIndex: 'relationship',
                     locked   : true,
+                    width:150,
                     //flex: 1,
                     summaryType: 'count',//求数量
                     summaryRenderer: function(value){
@@ -82,21 +84,27 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     xtype: 'datecolumn',
                     header: '出生日期',
                     dataIndex: 'birthday',
+                    format: 'Y-m-d',
+
                     //width: 105,
+
                     editor: {
                         xtype: 'datefield',
                         allowBlank: false,
-                        format: 'm/d/Y',
-                        minValue: '01/01/2006',
+                        itemId: 'personbirthday',
+                        format: 'Y-m-d',
+                        minValue: '1900-01-01',
                         minText: 'Cannot have a start date before the company existed!',
-                        maxValue: Ext.Date.format(new Date(), 'm/d/Y')
+                        maxValue: Ext.Date.format(new Date(), 'Y-m-d')
                     }
                 },
                 {
                     header: '年龄',
                     dataIndex: 'age',
-                    //width: 160,
+
                     editor: {
+                        itemId: 'personage',
+                        xtype:'textfield',
                         allowBlank: false
                         //vtype: 'email'
                     }
@@ -165,7 +173,7 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     editor: {
                         xtype: 'numberfield',
                         allowBlank: false,
-                        minValue: 1,
+                        minValue: 0,
                         maxValue: 150000
                     }
                 },
@@ -238,43 +246,24 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
             tbar: [{
                 text: '新增家庭成员',
                 iconCls: 'employee-add',
-                handler : function() {
-                    rowEditing.cancelEdit();
-                    testobj=this;
-                    // Create a model instance
-                    var r = Ext.create('ZSMZJ.model.dbgl.FamilyMember', {
-                        name: 'New Guy',
-                        email: 'new@sencha-test.com',
-                        start: Ext.Date.clearTime(new Date()),
-                        salary: 50000,
-                        active: true
-                    });
+                action:'addnewperson'
 
-                    strore.insert(0, r);
-                    rowEditing.startEdit(0, 0);
-                }
             }, {
-                itemId: 'removeEmployee',
+                itemId: 'removePerson',
                 text: '删除家庭成员',
                 iconCls: 'employee-remove',
-                handler: function() {
-                    var sm = grid.getSelectionModel();
-                    rowEditing.cancelEdit();
-                    store.remove(sm.getSelection());
-                    if (store.getCount() > 0) {
-                        sm.select(0);
-                    }
-                },
+                action:'delperson',
+
                 disabled: true
             }],
             plugins: [rowEditing],
-            flex: 1,
-            listeners: {
+            flex: 1
+            /*listeners: {
                 'selectionchange': function(view, records) {
                     //grid.down('#removeEmployee').setDisabled(!records.length);
                 }
             }
-
+*/
 
         });
         this.callParent(arguments);

@@ -21,10 +21,13 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
     refs: [
         {ref: 'myviewbusinessapplyform', selector: 'dbglbusinessapplyform'},
+        {ref: 'familymemberage', selector: '#personage'},
+        {ref: 'myviewfamilymembergrid', selector: 'familymembergrid'},
         {ref: 'myviewuploadimgfilewin', selector: 'uploadimgfilewin'}
     ],
     views: [
         'dbgl.businessApply',
+        'dbgl.FamilyMemberGrid',
         'dbgl.uploadImgFileWin'
     ],
 
@@ -39,11 +42,78 @@ Ext.define('ZSMZJ.controller.Dbgl', {
          },
          'uploadimgfilewin button[action=upload]':{
              click: this.uploadImgFile
+         },
+          'familymembergrid button[action=addnewperson]':{
+
+              click:this.addnewperson
+          },
+         'familymembergrid button[action=delperson]':{
+
+             click:this.delperson
+         },
+         'familymembergrid':{
+
+             selectionchange:this.personselected
+         },
+         '#personbirthday':{ //更新生日，触发年龄信息
+
+             change:this.birthdaychange
          }
          }, this);
 
 
     },
+    birthdaychange:function(newValue, oldValue, eOpts ){
+        testobj=newValue;
+        testobjs=oldValue;
+        this.getFamilymemberage().setValue(12);
+    },
+    personselected:function(view, records){
+        var grid=this.getMyviewfamilymembergrid();
+        grid.down('#removePerson').setDisabled(!records.length);
+    },
+    delperson:function(btn){
+
+        var  gridpanel=btn.up('panel');
+        var rowEditing=gridpanel.editingPlugin;
+        var sm = gridpanel.getSelectionModel();
+        rowEditing.cancelEdit();
+        gridpanel.getStore().remove(sm.getSelection());
+        if (gridpanel.getStore().getCount() > 0) {
+            sm.select(0);
+        }
+       var applyform=this.getMyviewbusinessapplyform();
+       var countitem=applyform.down('#FamilyPersons');
+       countitem.setValue(parseInt(countitem.getValue())-1);
+    },
+    addnewperson:function(btn){
+        var  gridpanel=btn.up('panel');
+        var rowEditing=gridpanel.editingPlugin;
+        rowEditing.cancelEdit();
+        // Create a model instance
+        var r = Ext.create('ZSMZJ.model.dbgl.FamilyMember', {
+            name: '赵某',
+            relationship:'户主',
+            personid:'xxxxxxxxxxxxxxxxxx',
+            isenjoyed:'不享受',
+            persontype:'低保户',
+            jobstatus:'无',
+            bodystatus:'差',
+            sex: '男',
+            birthday: Ext.Date.clearTime(new Date()),
+            age:0,
+            monthlyincome: 0
+
+        });
+
+        gridpanel.getStore().insert(0, r);
+        rowEditing.startEdit(0, 0);
+
+        var applyform=this.getMyviewbusinessapplyform();
+        var countitem=applyform.down('#FamilyPersons');
+        countitem.setValue(parseInt(countitem.getValue())+1);
+    },
+
     uploadImgFile:function(btn){
         var me=this;
         var params = {

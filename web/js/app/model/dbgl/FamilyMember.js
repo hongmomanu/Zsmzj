@@ -11,10 +11,25 @@ Ext.define('ZSMZJ.model.dbgl.FamilyMember', {
     fields: [
 
         'name',
-        'email',
-        { name: 'start', type: 'date', dateFormat: 'n/j/Y' },
-        { name: 'salary', type: 'float' },
-        { name: 'active', type: 'bool' }
+        'relationship',
+        'personid',
+        'sex',
+        'isenjoyed',
+        'persontype',
+        'jobstatus',
+        'bodystatus',
+        'age',
+        'specialobject',
+        'workunits',
+        'accounttype',
+        'maritalstatus',
+        'education',
+        'political',
+        'disabledtype',
+        'disabledlevel',
+        'disablenum',
+        { name: 'birthday', type: 'date', dateFormat: 'Y-n-j' },
+        { name: 'monthlyincome', type: 'float' }
 
     ]
 });
