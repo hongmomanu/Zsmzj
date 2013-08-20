@@ -22,12 +22,11 @@
       </script>
       <script>
          /**加载ext**/
-         /*document.write('<script type="text/javascript"  src="'+extLocation+
-                 'examples/shared/include-ext.js"><\/script>');
-         document.write('<script type="text/javascript"  src="'+extLocation+
-                 'examples/shared/options-toolbar.js"><\/script>');*/
+
          document.write('<script type="text/javascript"  src="'+extLocation+
                  'ext-all.js"><\/script>');
+         document.write('<script type="text/javascript"  src="'+extLocation+
+                 'locale/ext-lang-zh_CN.js"><\/script>');
          document.write('<link rel="stylesheet" type="text/css" href="'+extLocation+
                  'resources/ext-theme-neptune/ext-theme-neptune-all.css"><\/>');
 

@@ -63,10 +63,10 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
 
     },
-    birthdaychange:function(newValue, oldValue, eOpts ){
-        testobj=newValue;
-        testobjs=oldValue;
-        this.getFamilymemberage().setValue(12);
+    birthdaychange:function(obj,newValue, oldValue, eOpts ){
+
+        var age=(new Date()).getFullYear()-newValue.getFullYear();
+        this.getFamilymemberage().setValue(age);
     },
     personselected:function(view, records){
         var grid=this.getMyviewfamilymembergrid();
