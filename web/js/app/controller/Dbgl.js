@@ -15,10 +15,9 @@
 Ext.define('ZSMZJ.controller.Dbgl', {
     extend: 'Ext.app.Controller',
 
-    models: [],
+    models: ['dbgl.FamilyMember'],
 
-    stores: [],
-
+    stores: ['dbgl.FamilyMembers'],
 
     refs: [
         {ref: 'myviewbusinessapplyform', selector: 'dbglbusinessapplyform'},

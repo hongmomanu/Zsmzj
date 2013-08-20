@@ -23,6 +23,7 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                 labelWidth: 180,
                 msgTarget: 'side'
             },
+            autoScroll: true,
             items: [{
                 xtype: 'fieldset',
                 title: '<a>【低保业务办理】家庭基本信息</a>',
@@ -427,11 +428,16 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                     title: '<a>家庭成员信息</a>',
                     defaultType: 'textfield',
                     bodyStyle: 'padding:5px 5px 5px 5px',
-                    layout: 'anchor',
+                    layout: 'fit',
 
                     items:[
                         {
-                            xtype:'familymembergrid'
+                            xtype:'panel',
+                            layout: 'fit',
+                            items:[
+                                {xtype:'familymembergrid'}
+                            ]
+
                         }
 
                     ]
