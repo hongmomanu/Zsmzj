@@ -92,7 +92,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         rowEditing.cancelEdit();
         // Create a model instance
         var r = Ext.create('ZSMZJ.model.dbgl.FamilyMember', {
-            name: '赵某',
+            name: '<a href="" target="_blank">赵某</a>',
             relationship:'户主',
             personid:'xxxxxxxxxxxxxxxxxx',
             isenjoyed:'不享受',

@@ -444,6 +444,85 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
 
                     ]
                 }
+                ,
+                {
+                    xtype: 'fieldset',
+                    title: '<a>电子附件信息</a>',
+                    collapsible: true,
+                    collapsed:true,
+                    defaultType: 'label',
+                    bodyStyle: 'padding:5px 5px 5px 5px',
+                    layout: {
+                        type: 'table',
+                        // The total column count must be specified here
+                        columns: 2,
+                        tableAttrs: {
+                            border: 1,
+                            cellpadding: 5,
+                            cellspacing: 1,
+                            width: '100%',
+                            align: 'center',
+                            style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:center;"
+                            /*style: {
+                             width: '100%'
+                             }*/
+                        }
+                    },
+
+                    items:[
+
+                        {
+                            xtype:'panel',
+                            border:0,
+                            defaults:{
+                                border:0
+                            },
+                            items:[
+                                {
+                                    html: '  <a>【申请人】身份证(0)<a>',
+                                    cls:'mouseover',
+                                    listeners: {
+                                        click: {
+                                            element: 'el', //bind to the underlying el property on the panel
+                                            fn: function(){ alert('click el'); }
+                                        }
+
+                                    }
+                                }
+                            ]
+
+                        },
+                        {
+                            xtype:'panel',
+                            border:0,
+                            defaults:{
+                                border:0
+                            },
+                            items:[
+                                {html: '  <a>【申请人】户口本(0)<a>'}
+                            ]
+
+                        },
+                        {
+                            html: '  <a>【申请人】残疾证(0)<a>'
+                        },
+                        {
+                            html: '  <a>【申请人】疾病诊断书(0)<a>'
+                        },
+                        {
+                            html: '  <a >【申请人】婚姻状况证明(0)<a>'
+                        },
+                        {
+                            html: '  <a>【申请人】房产证明(0) <a>'
+                        },
+                        {
+                            html: '  <a>【申请人】经济收入证明(0)  <a>'
+                        },
+                        {
+                            html: '  <a>【申请人】家庭财产证明(0) <a>'
+                        }
+                    ]
+                }
             ]
 
             });
