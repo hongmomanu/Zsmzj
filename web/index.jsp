@@ -17,6 +17,7 @@
           /*session全局变量*/
           var onlinenums=<%= SessionListener.size()%>;
           var userid=<%=request.getSession().getAttribute("userid")%>;
+          var username="<%=request.getSession().getAttribute("username")%>";
           var roleid=<%=request.getSession().getAttribute("roleid")%>;
 
       </script>

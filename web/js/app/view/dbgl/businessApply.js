@@ -654,8 +654,155 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                             format: 'Y-m-d',
                             value: Ext.Date.format(new Date(), 'Y-m-d'),
                             allowBlank: false
+                        },
+                        {
+                            name: 'helpedtime',
+                            fieldLabel: '救助结束日期',
+                            xtype: 'datefield',
+                            //itemId: 'personbirthday',
+                            format: 'Y-m-d',
+                            allowBlank: true
+                        },
+                        {
+                            fieldLabel: '享受人数',
+                            afterLabelTextTpl: required,
+                            disabled:true,
+                            allowBlank: false
+                        },
+                        {
+                            name: 'disabledpersons',
+                            fieldLabel: '重残人数',
+                            afterLabelTextTpl: required,
+                            emptyText: '请输入重残人数',
+                            blankText : '请输入重残人数',
+                            allowBlank: false
+                        },
+                        {
+                            name: 'disabledmoney',
+                            fieldLabel: '重残低保金(元)',
+                            value:0,
+                            allowBlank: true
+                        },
+                        {
+                            name: 'othershelpmoney',
+                            fieldLabel: '其他人员低保金(元)',
+                            value:0,
+                            allowBlank: true
+                        }
+                        ,
+                        {
+                            name: 'totalhelpmoney',
+                            fieldLabel: '总救助金额(元/月/户)',
+                            value:0,
+                            allowBlank: true
+                        }
+                        ,
+                        {
+                            name: 'publicityedtm',
+                            fieldLabel: '公示结束日期',
+                            xtype: 'datefield',
+                            format: 'Y-m-d',
+                            colspan:2,
+                            allowBlank: true
+                        }
+                        ,{
+                            name: 'helpreason',
+                            fieldLabel: '救助原因',
+                            colspan:3,
+                            minWidth:600,
+                            width:800,
+                            //draggable :true,
+                            anchor : '100%',
+                            //width:800,
+                            xtype : 'textarea',
+                            grow : true,
+
+                            afterLabelTextTpl: required,
+                            emptyText: '输入救助原因',
+                            emptyText: '输入救助原因',
+                            allowBlank: false
+                        },{
+                            name: 'villageopinion',
+                            fieldLabel: '社区/村意见',
+                            colspan:3,
+                            minWidth:600,
+                            width:800,
+                            //draggable :true,
+                            anchor : '100%',
+                            //width:800,
+                            xtype : 'textarea',
+                            grow : true,
+
+                            allowBlank: true
+                        },{
+                            name: 'townopinion',
+                            fieldLabel: '街道/乡镇意见',
+                            colspan:3,
+                            minWidth:600,
+                            width:800,
+                            //draggable :true,
+                            anchor : '100%',
+                            //width:800,
+                            xtype : 'textarea',
+                            grow : true,
+                            allowBlank: true
+                        },{
+                            name: 'civilopinion',
+                            fieldLabel: '民政局意见',
+                            colspan:3,
+                            minWidth:600,
+                            width:800,
+                            //draggable :true,
+                            anchor : '100%',
+                            //width:800,
+                            xtype : 'textarea',
+                            grow : true,
+                            allowBlank: true
+                        }
+                        ,{
+                            colspan:3,
+                            anchor : '100%',
+                            width:'100%',
+                            xtype : 'panel',
+                            border:0,
+                            defaults:{
+                                border:0
+                            },
+                            layout:'column',
+                            defaultType: 'textfield',
+
+                            items:[
+                                {
+                                    fieldLabel: '制表时间',
+                                    name:'mktime',
+                                    columnWidth:.5,
+                                    disabled:true,
+                                    value:Ext.Date.format(new Date(), 'Y-m-d')
+
+                                }
+                                 ,
+
+                                {
+                                    fieldLabel:"制表人",
+                                    name:'mkperson',
+                                    columnWidth:.5,
+                                    value:username,
+                                    disabled:true
+
+
+                                }
+                            ]
                         }
                     ]
+                }
+            ],
+            buttons:[
+                {
+                    text: '提交申请',
+                    handler: function () {
+                        //this.up('form').getForm().reset();
+                        //this.up('window').hide();
+                    }
                 }
             ]
 
