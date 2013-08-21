@@ -528,6 +528,135 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                         }
                     ]
                 }
+                ,
+                {
+                    xtype: 'fieldset',
+                    title: '<a>业务申请信息</a>',
+                    defaultType: 'textfield',
+
+                    //layout: 'anchor',
+                    layout: {
+                        type: 'table',
+
+                        // The total column count must be specified here
+                        columns: 3,
+                        tableAttrs: {
+                            border: 1,
+                            cellpadding: 5,
+                            cellspacing: 1,
+                            width: '100%',
+                            align: 'center',
+                            style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:center;"
+                            /*style: {
+                             width: '100%'
+                             }*/
+                        }
+                    },
+
+                    items: [{
+                        xtype:'combo',
+                        name: 'icomemonth',
+                        fieldLabel: '收入累计月份',
+                        afterLabelTextTpl: required,
+                        emptyText: '请选择累计月份',
+                        blankText : '请选择累计月份',
+                        allowBlank: false
+                    },
+                    {
+                        name: 'familyincome',
+                        fieldLabel: '家庭总收入',
+                        afterLabelTextTpl: required,
+                        value:0,
+                        emptyText: '请输入家庭总收入',
+                        blankText : '请输入家庭总收入',
+                        allowBlank: false
+                    }
+                        ,
+                        {
+                            name: 'averageincome',
+                            fieldLabel: '月人均收入',
+                            afterLabelTextTpl: required,
+                            value:0,
+                            emptyText: '请输入家庭总收入',
+                            blankText : '请输入家庭总收入',
+                            allowBlank: false
+                        }
+                        ,
+                        {
+                            name: 'applymoney',
+                            fieldLabel: '申请救济金(元/月/人)',
+                            afterLabelTextTpl: required,
+                            value:0,
+                            emptyText: '请输入家庭总收入',
+                            blankText : '请输入家庭总收入',
+                            allowBlank: false
+                        }
+
+                    ]
+                },
+                {
+                    xtype: 'fieldset',
+                    title: '<a>业务审批信息</a>',
+                    defaultType: 'textfield',
+
+                    //layout: 'anchor',
+                    layout: {
+                        type: 'table',
+
+                        // The total column count must be specified here
+                        columns: 3,
+                        tableAttrs: {
+                            border: 1,
+                            cellpadding: 5,
+                            cellspacing: 1,
+                            width: '100%',
+                            align: 'center',
+                            style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:center;"
+                            /*style: {
+                             width: '100%'
+                             }*/
+                        }
+                    },
+
+                    items: [
+                        {
+                         xtype:'combo',
+                         name: 'poortype',
+                         fieldLabel: '低保类型',
+                         afterLabelTextTpl: required,
+                         emptyText: '请输入低保类型',
+                         blankText : '请输入低保类型',
+                         allowBlank: false
+                         },
+                         {
+                         name: 'poorstandard',
+                         fieldLabel: '低保标准(元)',
+                         afterLabelTextTpl: required,
+                         emptyText: '请输入低保包尊',
+                         blankText : '请输入低保标准',
+                         allowBlank: false
+                         }
+                         ,
+                         {
+                         name: 'aidnum',
+                         fieldLabel: '救助证编号',
+                         allowBlank: true
+                         }
+                        ,
+                        {
+                            name: 'helpbgtime',
+                            fieldLabel: '救助开始日期',
+                            afterLabelTextTpl: required,
+                            emptyText: '请选择救助开始日期',
+                            blankText : '请输选择救助开始日期',
+                            xtype: 'datefield',
+                            //itemId: 'personbirthday',
+                            format: 'Y-m-d',
+                            value: Ext.Date.format(new Date(), 'Y-m-d'),
+                            allowBlank: false
+                        }
+                    ]
+                }
             ]
 
             });
