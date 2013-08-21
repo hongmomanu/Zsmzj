@@ -62,8 +62,9 @@ CREATE VIRTUAL TABLE IF NOT EXISTS attachment USING fts3
   (
   id integer primary key autoincrement,            --自增主键
   businessid               integer,                --业务信息id
+  attachmentname           VARCHAR(50),            --附件名称
   attachmenttype           VARCHAR(50),            --附件类型
-  attachmentpath           VARCHAR(50)             --附件路径
+  attachmentpath           VARCHAR(500)            --附件路径
 
   );
 

@@ -5,21 +5,22 @@
  * Time: 下午1:35
  * To change this template use File | Settings | File Templates.
  */
-Ext.define('ZSMZJ.view.dbgl.uploadImgFileWin' ,{
+Ext.define('ZSMZJ.view.dbgl.uploadAffixFileWin' ,{
     extend: 'Ext.window.Window',
-    alias : 'widget.uploadimgfilewin',
+    alias : 'widget.uploadaffixfilewin',
     requires: [
         //'Ext.form.*'
     ],
     initComponent: function() {
         Ext.apply(this, {
-            title: '上传文件',
-            height: 260,
-            width: 330,
+            title: '上传附件',
+            height: 360,
+            width: 450,
             closeAction : 'hide',
             resizable:false,
             layout: 'fit',
-            items: {  // Let's put an empty grid in just to illustrate fit layout
+            items: [
+                {
                 xtype: 'form',
                 defaults: {
                     anchor: '100%',
@@ -46,10 +47,10 @@ Ext.define('ZSMZJ.view.dbgl.uploadImgFileWin' ,{
                 items: [
                     {
                         xtype: 'textfield',
+                        name:'filename',
                         fieldLabel: '文件名'
                     },{
                         xtype: 'filefield',
-                        id: 'form-file',
                         emptyText: '选择照片',
                         fieldLabel: '照片',
                         name: 'filepath',
@@ -67,13 +68,14 @@ Ext.define('ZSMZJ.view.dbgl.uploadImgFileWin' ,{
                             if(imgfiletype[arr[arr.length-1]]){
                                 return true;
                             }else{
-                                return '情上传图片文件';
+                                return '请上传图片文件';
                             }
                         },
                         buttonConfig: {
                             iconCls: 'upload-icon'
                         }
-                    }
+                    },
+                    {"xtype":'affixfilesgrid'}
                 ],
                 buttons: [
                     {
@@ -91,6 +93,8 @@ Ext.define('ZSMZJ.view.dbgl.uploadImgFileWin' ,{
                 ],
                 border: false
             }
+
+            ]
 
         });
         this.callParent(arguments);

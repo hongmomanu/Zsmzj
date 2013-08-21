@@ -8,27 +8,30 @@
 
 
 /**
- * Map controller
- * Used to manage map layers and showing their related views
- * 导航栏，显示各种信息
+ * Dbgl controller
+ * 低保管理业务控制层，描述低保各种业务信息
  */
 Ext.define('ZSMZJ.controller.Dbgl', {
     extend: 'Ext.app.Controller',
 
-    models: ['dbgl.FamilyMember'],
+    models: ['dbgl.FamilyMember','dbgl.AffixFilesGrid'],
 
-    stores: ['dbgl.FamilyMembers'],
+    stores: ['dbgl.FamilyMembers','dbgl.AffixFilesGrids'],
 
     refs: [
         {ref: 'myviewbusinessapplyform', selector: 'dbglbusinessapplyform'},
         {ref: 'familymemberage', selector: '#personage'},
         {ref: 'myviewfamilymembergrid', selector: 'familymembergrid'},
+        {ref: 'myviewaffixfilesgrid', selector: 'affixfilesgrid'},
         {ref: 'myviewuploadimgfilewin', selector: 'uploadimgfilewin'}
     ],
     views: [
         'dbgl.businessApply',
         'dbgl.FamilyMemberGrid',
-        'dbgl.uploadImgFileWin'
+        'dbgl.uploadImgFileWin',
+        'dbgl.uploadAffixFileWin',
+        'dbgl.AffixFilesGrid'
+
     ],
 
     init: function() {
@@ -36,12 +39,18 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
          this.control({
          'dbglbusinessapplyform component':{
-           imgclick:function (c){
+            imgclick:function (c){
                this.showUploadImgWin();
-           }
+           },
+            affixclick:function (c){
+               this.showaffixWindow(c);
+            }
          },
          'uploadimgfilewin button[action=upload]':{
              click: this.uploadImgFile
+         },
+         'uploadaffixfilewin button[action=upload]':{
+                 click: this.uploadAffixFile
          },
           'familymembergrid button[action=addnewperson]':{
 
@@ -55,6 +64,10 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
              selectionchange:this.personselected
          },
+         /*'affixfilesgrid':{
+
+             itemmouseenter:this.affixgridprew
+         },*/
          '#personbirthday':{ //更新生日，触发年龄信息
 
              change:this.birthdaychange
@@ -62,6 +75,16 @@ Ext.define('ZSMZJ.controller.Dbgl', {
          }, this);
 
 
+    },
+    affixgridprew:function (view, record, item) {
+        /*var tip = Ext.create('Ext.tip.ToolTip', {
+            target: item,
+            autoHide: true,
+            html: '<div style="overflow:hidden"><img width="100" height="110" src="'+record.data.attachmentpath+'" alt="Website Thumbnail" /></div>'
+        });*/
+       // Ext.fly(item).set({'data-qtip': 'My tooltip: '});
+        //tip.show();
+        //Ext.fly(item).set({ 'data-qtip': 'Hello' });
     },
     birthdaychange:function(obj,newValue, oldValue, eOpts ){
 
@@ -113,7 +136,34 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         var countitem=applyform.down('#FamilyPersons');
         countitem.setValue(parseInt(countitem.getValue())+1);
     },
+    uploadAffixFile:function(btn){
+        var me=this;
+        var params = {
 
+        };
+        var successFunc = function (form, action) {
+            var filepath=action.result.filepath;
+            var filename=action.result.filename;
+            var grid=me.getMyviewaffixfilesgrid();
+            var r = Ext.create('ZSMZJ.model.dbgl.AffixFilesGrid', {
+                attachmentname: filename,
+                attachmentpath:filepath
+
+            });
+            grid.getStore().insert(0, r);
+            //grid.doAutoRender();
+
+        };
+        var failFunc = function (form, action) {
+            Ext.Msg.alert("提示信息", "上传文件失败，检查web服务");
+
+        };
+
+        this.formSubmit(btn, params, 'ajax/uploadfile.jsp', successFunc, failFunc,"正在提交数据");
+
+
+
+    },
     uploadImgFile:function(btn){
         var me=this;
         var params = {
@@ -159,6 +209,11 @@ Ext.define('ZSMZJ.controller.Dbgl', {
     showUploadImgWin:function(){
         if(!this.uploadimgWin)this.uploadimgWin=Ext.widget('uploadimgfilewin');
         this.uploadimgWin.show();
+
+    },
+    showaffixWindow:function(c){
+        if(!this.uploadaffixWin)this.uploadaffixWin=Ext.widget('uploadaffixfilewin');
+        this.uploadaffixWin.show();
 
     },
     onLaunch: function() {

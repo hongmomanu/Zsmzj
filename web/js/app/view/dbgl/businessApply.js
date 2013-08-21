@@ -481,10 +481,14 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                                 {
                                     html: '  <a>【申请人】身份证(0)<a>',
                                     cls:'mouseover',
+                                    type:'personid',
                                     listeners: {
-                                        click: {
+                                        /*click: {
                                             element: 'el', //bind to the underlying el property on the panel
                                             fn: function(){ alert('click el'); }
+                                        }*/
+                                        render: function(c){
+                                            c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
                                         }
 
                                     }

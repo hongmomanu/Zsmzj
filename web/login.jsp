@@ -70,7 +70,7 @@
         </form>--%>
         <form method='post' action="login">
             <table align='center' class='table-4'>
-                <caption id='welcome'>欢迎使用地理信息系统云结点</caption>
+                <caption id='welcome'>欢迎使用舟山市民政救助系统</caption>
                 <tr>
                     <td class='rowhead'>用户名：</td>
                     <td><input class='text-2' type='text' required="true" placeholder="在这里输入用户名" name='username' id='account' /></td>

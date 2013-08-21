@@ -23,15 +23,19 @@ public class FileHelper {
     public Map<String,Object> saveUploadFile( List<FileItem> fileitems,String filepath){
         Map<String,Object> result=new HashMap<String, Object>();
         try {
-            String savename="";
-
+            String savename=""; //保存的路径名
+            String customname="";//上传的自定义名
             for (FileItem item : fileitems) {
                 if (item.isFormField()) {
                     String name = item.getFieldName();
                     String value = item.getString();
                     // 转换下字符集编码
-                    value = new String(value.getBytes("iso-8859-1"), "utf-8");
-                    log.debug(name + "=" + value);
+                    if(name.equals("filename")){
+                        value = new String(value.getBytes("iso-8859-1"), "utf-8");
+                        customname=value;
+                    }
+
+                    //log.debug(name + "=" + value);
                 } else {
                     String filename = item.getName();
                     String extName = filename.substring(filename.lastIndexOf(".") );
@@ -59,6 +63,7 @@ public class FileHelper {
             }
             result.put("success",true);
             result.put("filepath",savename);
+            result.put("filename",customname);
             return result;
         } catch (Exception e) {
             e.printStackTrace();
