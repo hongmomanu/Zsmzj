@@ -46,6 +46,10 @@ Ext.define('ZSMZJ.controller.Dbgl', {
                this.showaffixWindow(c);
             }
          },
+         'dbglbusinessapplyform button[action=applysubmit]':{
+             click: this.applysubmit
+         },
+
          'uploadimgfilewin button[action=upload]':{
              click: this.uploadImgFile
          },
@@ -204,6 +208,11 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         this.formSubmit(btn, params, 'ajax/uploadfile.jsp', successFunc, failFunc,"正在提交数据");
 
 
+
+    },
+    applysubmit:function(btn){
+      alert(1);
+      testobj=btn;
 
     },
     uploadImgFile:function(btn){

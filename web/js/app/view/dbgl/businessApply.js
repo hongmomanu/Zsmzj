@@ -17,6 +17,7 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
         Ext.apply(this, {
             bodyPadding: 10,
             cls: 'shadowdiv',
+            buttonAlign : 'center',
             fieldDefaults: {
                 labelAlign: 'right',
                 labelWidth: 180,
@@ -759,7 +760,7 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                             grow : true,
                             allowBlank: true
                         }
-                        ,{
+                        ,/*{
                             colspan:3,
                             anchor : '100%',
                             width:'100%',
@@ -771,38 +772,39 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                             layout:'column',
                             defaultType: 'textfield',
 
-                            items:[
+                            items:[*/
                                 {
                                     fieldLabel: '制表时间',
                                     name:'mktime',
-                                    columnWidth:.5,
-                                    disabled:true,
+                                    //columnWidth:.5,
+                                    readOnly: true,
                                     value:Ext.Date.format(new Date(), 'Y-m-d')
 
                                 }
+                                 ,{
+                                xtype:'label',
+                                text:''
+
+                        }
                                  ,
 
                                 {
                                     fieldLabel:"制表人",
                                     name:'mkperson',
-                                    columnWidth:.5,
                                     value:username,
-                                    disabled:true
+                                    readOnly: true
 
 
                                 }
-                            ]
-                        }
+                         /*   ]
+                        }*/
                     ]
                 }
             ],
             buttons:[
                 {
                     text: '提交申请',
-                    handler: function () {
-                        //this.up('form').getForm().reset();
-                        //this.up('window').hide();
-                    }
+                    action:'applysubmit'
                 }
             ]
 
