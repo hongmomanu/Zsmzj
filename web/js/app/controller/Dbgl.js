@@ -52,6 +52,9 @@ Ext.define('ZSMZJ.controller.Dbgl', {
          'uploadaffixfilewin button[action=upload]':{
                  click: this.uploadAffixFile
          },
+         'uploadaffixfilewin button[action=confirm]':{
+             click: this.uploadAffixFileConfirm
+         },
           'familymembergrid button[action=addnewperson]':{
 
               click:this.addnewperson
@@ -152,6 +155,26 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         var countitem=applyform.down('#FamilyPersons');
         countitem.setValue(parseInt(countitem.getValue())+1);
     },
+    uploadAffixFileConfirm:function(btn){
+        var win=btn.up('window');
+        var grid=btn.up('panel').down('panel');
+        var store=grid.getStore();
+        var count=store.getCount();
+        //var applyform=this.getMyviewbusinessapplyform();
+        var text=win.itemdata.el.dom.innerText;
+        var before_str=text.slice(0,text.indexOf("(")+1);
+        var after_str=text.slice(text.indexOf(")"));
+        var formdata=[];
+        Ext.each(store.data.items,function(a){
+            formdata.push(a.data);
+        })
+        win.itemdata.update(before_str+count+after_str);
+        win.itemdata.formdata=formdata;
+        win.hide();
+        //console.log(store);
+
+
+    },
     uploadAffixFile:function(btn){
         var me=this;
         var params = {
@@ -160,7 +183,8 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         var successFunc = function (form, action) {
             var filepath=action.result.filepath;
             var filename=action.result.filename;
-            var grid=me.getMyviewaffixfilesgrid();
+            //var grid=me.getMyviewaffixfilesgrid();
+            var grid=btn.up('panel').down('panel');
             var r = Ext.create('ZSMZJ.model.dbgl.AffixFilesGrid', {
                 attachmentname: filename,
                 attachmentpath:filepath
@@ -230,7 +254,10 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
     },
     showaffixWindow:function(c){
-        if(!this.uploadaffixWin)this.uploadaffixWin=Ext.widget('uploadaffixfilewin');
+        if(!this.uploadaffixWin){
+            this.uploadaffixWin=Ext.widget('uploadaffixfilewin');
+            this.uploadaffixWin.itemdata=c;
+        }
         this.uploadaffixWin.show();
 
     },

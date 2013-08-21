@@ -480,6 +480,7 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                             items:[
                                 {
                                     html: '  <a>【申请人】身份证(0)<a>',
+
                                     cls:'mouseover',
                                     type:'personid',
                                     listeners: {
