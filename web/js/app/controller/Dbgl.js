@@ -83,18 +83,13 @@ Ext.define('ZSMZJ.controller.Dbgl', {
     affixgridrendered:function(grid,e){
         var view = grid.getView();
         var tip = Ext.create('Ext.tip.ToolTip', {
-            // The overall target element.
             target: view.el,
-            // Each grid row causes its own separate show and hide.
             delegate: view.itemSelector,
-            // Moving within the row should not hide the tip.
             trackMouse: true,
-            // Render immediately so that tip.body can be referenced prior to the first show.
             //renderTo: Ext.getBody(),
             listeners: {
-                // Change content dynamically depending on which element triggered the show.
                 beforeshow: function updateTipBody(tip) {
-                    tip.update('<div><img width="100" height="110" src="' + view.getRecord(tip.triggerElement).get('attachmentpath') + '"/></div>');
+                    tip.update('<div><img width="220" height="170" src="' + view.getRecord(tip.triggerElement).get('attachmentpath') + '"/></div>');
                 }
             }
         });

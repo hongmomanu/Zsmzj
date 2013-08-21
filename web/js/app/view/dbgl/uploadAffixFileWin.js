@@ -89,6 +89,11 @@ Ext.define('ZSMZJ.view.dbgl.uploadAffixFileWin' ,{
                         text: '上传',
                         action: 'upload'
 
+                    } ,
+                    {
+                        text: '确定',
+                        action: 'confirm'
+
                     }
                 ],
                 border: false
