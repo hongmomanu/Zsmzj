@@ -29,13 +29,10 @@ Ext.define('ZSMZJ.view.dbgl.AffixFilesGrid' ,{
             columns: [
 
 
-                {header: '附件名',
+                {   header: '附件名',
                     dataIndex: 'attachmentname',
-                    flex:1,
-                    renderer : function(value, metadata) {
-                        metadata.tdAttr = 'data-qtip="' + value + '"';
-                        return value;
-                    }
+                    flex:1
+
                 },
                 {header: '附件路径', dataIndex: 'attachmentpath',width: 250,hidden:true}
 

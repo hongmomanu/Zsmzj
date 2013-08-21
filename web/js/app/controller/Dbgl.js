@@ -68,6 +68,10 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
              itemmouseenter:this.affixgridprew
          },*/
+         'affixfilesgrid':{
+
+             afterrender:this.affixgridrendered
+         },
          '#personbirthday':{ //更新生日，触发年龄信息
 
              change:this.birthdaychange
@@ -76,16 +80,33 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
 
     },
-    affixgridprew:function (view, record, item) {
-        /*var tip = Ext.create('Ext.tip.ToolTip', {
-            target: item,
-            autoHide: true,
-            html: '<div style="overflow:hidden"><img width="100" height="110" src="'+record.data.attachmentpath+'" alt="Website Thumbnail" /></div>'
-        });*/
-       // Ext.fly(item).set({'data-qtip': 'My tooltip: '});
-        //tip.show();
-        //Ext.fly(item).set({ 'data-qtip': 'Hello' });
+    affixgridrendered:function(grid,e){
+        var view = grid.getView();
+        var tip = Ext.create('Ext.tip.ToolTip', {
+            // The overall target element.
+            target: view.el,
+            // Each grid row causes its own separate show and hide.
+            delegate: view.itemSelector,
+            // Moving within the row should not hide the tip.
+            trackMouse: true,
+            // Render immediately so that tip.body can be referenced prior to the first show.
+            //renderTo: Ext.getBody(),
+            listeners: {
+                // Change content dynamically depending on which element triggered the show.
+                beforeshow: function updateTipBody(tip) {
+                    tip.update('<div><img width="100" height="110" src="' + view.getRecord(tip.triggerElement).get('attachmentpath') + '"/></div>');
+                }
+            }
+        });
     },
+    /*affixgridprew:function (view, record, item) {
+        var tip = Ext.create('Ext.tip.ToolTip', {
+            target: item,
+            html: '<div><img width="100" height="110" src="'+record.data.attachmentpath+'"/></div>'
+        });
+        tip.show();
+
+    },*/
     birthdaychange:function(obj,newValue, oldValue, eOpts ){
 
         var age=(new Date()).getFullYear()-newValue.getFullYear();
@@ -150,8 +171,10 @@ Ext.define('ZSMZJ.controller.Dbgl', {
                 attachmentpath:filepath
 
             });
+
             grid.getStore().insert(0, r);
-            //grid.doAutoRender();
+
+            grid.doLayout();
 
         };
         var failFunc = function (form, action) {
