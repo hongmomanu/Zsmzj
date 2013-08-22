@@ -35,7 +35,6 @@ Ext.define('ZSMZJ.controller.Navigation', {
 
     init: function () {
         var me = this;
-        testobjs=me;
         this.control({
             'userconfiggrid,funcconfiggrid,systemconfiggrid': {
                 itemclick: this.showGridContent
@@ -92,10 +91,7 @@ Ext.define('ZSMZJ.controller.Navigation', {
         } else {
             if (type == 'widget') {
 
-
-
                 ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
-
 
                 tabs.add({
                     closable: true,
