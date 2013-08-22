@@ -23,11 +23,32 @@ Ext.Loader.setConfig({
 
 });
 
+
+
+var splashscreen;
+
+Ext.onReady(function() {
+    // Start the mask on the body and get a reference to the mask
+    splashscreen = Ext.getBody().mask('页面加载中', 'splashscreen');
+    //splashscreen.addCls('splashscreen');
+
+   /* Ext.DomHelper.insertFirst(Ext.query('.x-mask-msg')[0], {
+        cls: 'x-splash-icon'
+    });*/
+});
+
+
+
+
 /**
  * ZSMZJ.app
  * 舟山民政救助系统应用mvc框架配置入口
  *
  */
+
+
+
+//var myMask = new Ext.LoadMask(Ext.getBody(), {msg:"Please wait..."});
 Ext.application({
     name: 'ZSMZJ',
     appFolder: 'js/app',
@@ -39,6 +60,31 @@ Ext.application({
     controllers: [
         'Navigation','Header','Manager','Dbgl'
     ],
+
+    launch: function() {
+        // Setup a task to fadeOut the splashscreen
+        var task = new Ext.util.DelayedTask(function() {
+            // Fade out the body mask
+            splashscreen.fadeOut({
+                duration: 1000,
+                remove:true
+            });
+            // Fade out the icon and message
+            splashscreen.next().fadeOut({
+                duration: 1000,
+                remove:true,
+                listeners: {
+                    afteranimate: function() {
+                        // Set the body as unmasked after the animation
+                        Ext.getBody().unmask();
+                    }
+                }
+            });
+        });
+        // Run the fade 500 milliseconds after launch.
+        task.delay(500);
+    },
+
     autoCreateViewport: true
 });
 

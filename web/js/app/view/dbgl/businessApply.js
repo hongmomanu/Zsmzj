@@ -490,12 +490,13 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                              }*/
                         }
                     },
-
+                    itemId: 'affixfilespanel',
                     items:[
 
                         {
                             xtype:'panel',
                             border:0,
+
                             defaults:{
                                 border:0
                             },
@@ -698,6 +699,7 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                         {
                             name: 'disabledpersons',
                             fieldLabel: '重残人数',
+                            value:0,
                             afterLabelTextTpl: required,
                             emptyText: '请输入重残人数',
                             blankText : '请输入重残人数',

@@ -44,6 +44,10 @@ Ext.define('ZSMZJ.controller.Manager', {
         var me = this;
         //testobj=me;
         this.control({
+            'funcmanagerpanel,rolemanagerpanel,enumerateconfigmanager,usermanagerpanel':{
+                afterrender: this.afterrenderEvents
+            },
+
             'rolemanagerpanel button[action=addnewrole]':{
                 click: this.addnewrolewin
             },
@@ -105,6 +109,26 @@ Ext.define('ZSMZJ.controller.Manager', {
 
 
 
+    },
+    afterrenderEvents:function(){
+        var task = new Ext.util.DelayedTask(function() {
+            // Fade out the body mask
+            ViewWaitMask.fadeOut({
+                duration: 1000,
+                remove:true
+            });
+            ViewWaitMask.next().fadeOut({
+                duration: 1000,
+                remove:true,
+                listeners: {
+                    afteranimate: function() {
+                        Ext.getCmp('mainContent-panel').getEl().unmask();
+                    }
+                }
+            });
+        });
+        // Run the fade 500 milliseconds after launch.
+        task.delay(500);
     },
     showUserMenu: function (panelView, record, item, index, e, eOpts) {
 

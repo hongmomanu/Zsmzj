@@ -49,7 +49,9 @@ Ext.define('ZSMZJ.controller.Dbgl', {
          'dbglbusinessapplyform button[action=applysubmit]':{
              click: this.applysubmit
          },
-
+         'dbglbusinessapplyform':{
+             afterrender: this.afterrenderEvents
+         },
          'uploadimgfilewin button[action=upload]':{
              click: this.uploadImgFile
          },
@@ -90,6 +92,26 @@ Ext.define('ZSMZJ.controller.Dbgl', {
          }, this);
 
 
+    },
+    afterrenderEvents:function(){
+        var task = new Ext.util.DelayedTask(function() {
+            // Fade out the body mask
+            ViewWaitMask.fadeOut({
+                duration: 1000,
+                remove:true
+            });
+            ViewWaitMask.next().fadeOut({
+                duration: 1000,
+                remove:true,
+                listeners: {
+                    afteranimate: function() {
+                        Ext.getCmp('mainContent-panel').getEl().unmask();
+                    }
+                }
+            });
+        });
+        // Run the fade 500 milliseconds after launch.
+        task.delay(500);
     },
     affixgridrendered:function(grid,e){
         var view = grid.getView();
@@ -222,8 +244,45 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
     },
     applysubmit:function(btn){
-      alert(1);
-      testobj=btn;
+      /*var form = button.up('form').getForm();
+      if (form.isValid()) {
+       familymembers,affixfiles,
+      }*/
+        var store=this.getMyviewfamilymembergrid().getStore();
+        var familymembers=[];
+        var affixfiles=[];
+
+        Ext.each(store.data.items,function(a){
+            familymembers.push(a.data);
+        })
+        var form=btn.up('form');
+        var affixpanel=form.down('#affixfilespanel');
+        Ext.each(affixpanel.items.items,function(a){
+            if(a.xtype=='panel'){
+                var formdata=a.down('panel').formdata;
+                var affixfileitem={};
+                affixfileitem[a.down('panel').type]=formdata;
+                if(formdata)affixfiles.push(affixfileitem);
+
+            }
+
+        });
+        affixfiles.push({})
+        var params = {
+            businesstype:businessTableType.dbgl,
+            familymembers:Ext.JSON.encode(familymembers),
+            affixfiles:Ext.JSON.encode(affixfiles)
+        };
+        var successFunc = function (form, action) {
+
+        };
+        var failFunc = function (form, action) {
+            Ext.Msg.alert("提示信息", "提交申请失败,检查web服务");
+
+        };
+
+        this.formSubmit(btn, params, 'ajax/senddbglapply.jsp', successFunc, failFunc,"正在提交数据");
+
 
     },
     uploadImgFile:function(btn){

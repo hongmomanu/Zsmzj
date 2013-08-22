@@ -43,6 +43,7 @@ Ext.define('ZSMZJ.controller.Navigation', {
             'dbglconfigtree': {
                 itemclick: this.treeclick,
                 beforeitemclick: this.beforeitemclick,
+
                 beforeload:function(store){return this.initLoadStore(store,store.getRootNode().data.text);}
             }
 
@@ -76,11 +77,26 @@ Ext.define('ZSMZJ.controller.Navigation', {
         }
     },
     showtab:function(label,value,type){
+        if(ViewWaitMask){
+             try{
+                 Ext.getCmp('mainContent-panel').getEl().unmask();
+             }catch (e){
+
+             }
+
+
+        }
         var tabs = Ext.getCmp('mainContent-panel');
         if (tabs.getComponent('tab' + value)) {
             tabs.getComponent('tab' + value).show();
         } else {
             if (type == 'widget') {
+
+
+
+                ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
+
+
                 tabs.add({
                     closable: true,
                     id: 'tab' + value,
