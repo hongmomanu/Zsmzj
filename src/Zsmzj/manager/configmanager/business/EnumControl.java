@@ -22,6 +22,12 @@ public class EnumControl {
 
     }
 
+    public String getEnumsBytype(String type){
+        EnumImplement myenum= new EnumImplement();
+        return JSONArray.fromObject(myenum.getEnumsByType(type)).toString();
+
+    }
+
     public String addEnum(String label,String value,String type){
         EnumImplement myenum= new EnumImplement();
         Map<String,Object> res=new HashMap<String, Object>();

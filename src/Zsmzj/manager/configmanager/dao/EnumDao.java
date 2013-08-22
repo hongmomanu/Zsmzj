@@ -47,6 +47,31 @@ public class EnumDao {
 
 
     }
+    public ArrayList<Map<String, Object>>  getEnumsByType(String type){
+        Connection testConn= JdbcFactory.getConn("sqlite");
+        String sql=  "select enumeratelabel,enumeratevalue  from "+
+                Enum_Table+" where enumeratetype  MATCH ?";
+        PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
+        ArrayList<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        try {
+            pstmt.setString(1,type);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Map<String,Object> obj=new HashMap<String, Object>();
+                obj.put("label",rs.getString("enumeratelabel"));
+                obj.put("value",rs.getString("enumeratevalue"));
+                list.add(obj);
+
+            }
+            return list;
+        }catch (Exception E){
+            log.debug(E.getMessage());
+            return list;
+        }
+
+
+
+    }
 
     public int addNewEnum(String label,String value,String type){
         Connection conn= JdbcFactory.getConn("sqlite");

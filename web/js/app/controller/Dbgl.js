@@ -13,10 +13,9 @@
  */
 Ext.define('ZSMZJ.controller.Dbgl', {
     extend: 'Ext.app.Controller',
+    models: ['dbgl.FamilyMember','dbgl.AffixFilesGrid','dbgl.comboxwidget.ApplyType'],
 
-    models: ['dbgl.FamilyMember','dbgl.AffixFilesGrid'],
-
-    stores: ['dbgl.FamilyMembers','dbgl.AffixFilesGrids'],
+    stores: ['dbgl.FamilyMembers','dbgl.AffixFilesGrids','dbgl.comboxwidget.ApplyTypes'],
 
     refs: [
         {ref: 'myviewbusinessapplyform', selector: 'dbglbusinessapplyform'},
@@ -30,7 +29,8 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.FamilyMemberGrid',
         'dbgl.uploadImgFileWin',
         'dbgl.uploadAffixFileWin',
-        'dbgl.AffixFilesGrid'
+        'dbgl.AffixFilesGrid',
+        'dbgl.comboxwidget.applytype'
 
     ],
 
@@ -82,6 +82,10 @@ Ext.define('ZSMZJ.controller.Dbgl', {
          '#personbirthday':{ //更新生日，触发年龄信息
 
              change:this.birthdaychange
+         },
+         'dbglapplytype': {
+
+             beforeload:function(store){alert(1)}
          }
          }, this);
 
@@ -130,7 +134,11 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         }
        var applyform=this.getMyviewbusinessapplyform();
        var countitem=applyform.down('#FamilyPersons');
-       countitem.setValue(parseInt(countitem.getValue())-1);
+       var enjoyitem=applyform.down('#enjoyPersons');
+       var count=parseInt(countitem.getValue())-1;
+       countitem.setValue(count);
+       enjoyitem.setValue(count)
+
     },
     addnewperson:function(btn){
         var  gridpanel=btn.up('panel');
@@ -157,7 +165,10 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
         var applyform=this.getMyviewbusinessapplyform();
         var countitem=applyform.down('#FamilyPersons');
-        countitem.setValue(parseInt(countitem.getValue())+1);
+        var enjoyitem=applyform.down('#enjoyPersons');
+        var count=parseInt(countitem.getValue())+1;
+        countitem.setValue(count);
+        enjoyitem.setValue(count);
     },
     uploadAffixFileConfirm:function(btn){
         var win=btn.up('window');

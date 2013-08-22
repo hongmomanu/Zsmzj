@@ -11,6 +11,8 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
     extend : 'Ext.form.Panel',
     alias : 'widget.dbglbusinessapplyform',
     requires: [
+
+
     ],
     initComponent: function() {
         var required = '<span style="color:red;font-weight:bold" data-qtip="必填字段">*</span>';
@@ -60,7 +62,7 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                     {
                         xtype: 'component',
                         name:'accountimgpath',
-
+                        value:"jajaja",
                         width:100,
                         height:110,
                         id:'dbglaccountimg',
@@ -77,15 +79,24 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                         }
                     }
                     ,{
+                        xtype:'dbglaplytype',
                         name: 'applytype',
+                        searchtype:"dbglapplytype",
+                        fieldLabel: '申请类别',
+                        emptyText: '请输入申请类别',
+                        blankText: '请输入申请类别',
+                        afterLabelTextTpl: required
+
+                        /*name: 'applytype',
                         afterLabelTextTpl: required,
                         fieldLabel: '申请类别',
                         emptyText: '请输入申请类别',
                         blankText: '请输入申请类别',
-                        allowBlank: false
-                    },
-                    ,{
-                        name: 'applytype',
+                        allowBlank: false*/
+                    },{
+                        xtype:'dbglaplytype',
+                        name: 'familytype',
+                        searchtype:"dbglfamilytype",
                         fieldLabel: '家庭类别',
                         afterLabelTextTpl: required,
                         emptyText: '请输入家庭类别',
@@ -107,6 +118,8 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                         emptyText: '请输入身份证号',
                         allowBlank: false
                     },{
+                        xtype:'dbglaplytype',
+                        searchtype:"dbglpoorfamilytype",
                         name: 'poorfamilytype',
                         fieldLabel: '低保户类型',
                         afterLabelTextTpl: required,
@@ -114,6 +127,8 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                         emptyText: '低保户类型',
                         allowBlank: false
                     },{
+                        xtype:'dbglaplytype',
+                        searchtype:"dbglfamilyaccount",
                         name: 'familyaccount',
                         fieldLabel: '家庭户口',
                         emptyText: '请选择家庭户口',
@@ -161,6 +176,8 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                         //emptyText: '低保户类型',
                         allowBlank: true
                     },{
+                        xtype:'dbglaplytype',
+                        searchtype:"dbglbank",
                         name: 'bank',
                         fieldLabel: '开户银行',
                         //afterLabelTextTpl: required,
@@ -224,6 +241,8 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                     },
                     items:[
                         {
+                            xtype:'dbglaplytype',
+                            searchtype:"dbglhouseproperties",
                             name: 'houseproperties',
                             fieldLabel: '住房性质',
                             //afterLabelTextTpl: required,
@@ -231,6 +250,8 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                             allowBlank: true
                         }
                         ,{
+                            xtype:'dbglaplytype',
+                            searchtype:"dbglhousestructure",
                             name: 'housestructure',
                             fieldLabel: '住房结构',
                             //afterLabelTextTpl: required,
@@ -555,7 +576,8 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                     },
 
                     items: [{
-                        xtype:'combo',
+                        xtype:'dbglaplytype',
+                        searchtype:"dbglicomemonth",
                         name: 'icomemonth',
                         fieldLabel: '收入累计月份',
                         afterLabelTextTpl: required,
@@ -621,7 +643,8 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
 
                     items: [
                         {
-                         xtype:'combo',
+                         xtype:'dbglaplytype',
+                         searchtype:"dbglpoortype",
                          name: 'poortype',
                          fieldLabel: '低保类型',
                          afterLabelTextTpl: required,
@@ -666,6 +689,8 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                         },
                         {
                             fieldLabel: '享受人数',
+                            value:0,
+                            itemId: 'enjoyPersons',
                             afterLabelTextTpl: required,
                             disabled:true,
                             allowBlank: false

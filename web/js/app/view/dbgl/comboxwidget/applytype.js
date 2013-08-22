@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-Ext.define('ZSMZJ.view.dbgl.comboxwidget.mapTree', {
+Ext.define('ZSMZJ.view.dbgl.comboxwidget.applytype', {
     extend: 'Ext.form.ComboBox',
     alias: 'widget.dbglaplytype',
     requires: [
@@ -14,10 +14,15 @@ Ext.define('ZSMZJ.view.dbgl.comboxwidget.mapTree', {
     ],
     initComponent: function() {
         Ext.apply(this, {
-            fieldLabel: 'Choose State',
-            displayField: 'name',
-            /*store: states,*/
-            valueField: 'abbr'
+            displayField: 'label',
+            store: (function(me){
+                var s = Ext.widget('dbglapplytypes');
+                s.proxy.extraParams = {
+                    type:me.searchtype
+                }
+                return s;
+            })(this),
+            valueField: 'value'
 
         });
         this.callParent(arguments);

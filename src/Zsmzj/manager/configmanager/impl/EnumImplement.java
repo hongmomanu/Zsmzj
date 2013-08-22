@@ -21,6 +21,13 @@ public class EnumImplement implements EnumMethods {
     }
 
     @Override
+    public ArrayList<Map<String, Object>> getEnumsByType(String type) {
+        EnumDao dao=new EnumDao();
+        return dao.getEnumsByType(type);
+
+    }
+
+    @Override
     public int addEnum(String label, String value, String type) {
         EnumDao dao=new EnumDao();
         return dao.addNewEnum(label, value, type);

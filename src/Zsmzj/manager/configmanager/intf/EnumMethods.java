@@ -12,5 +12,6 @@ import java.util.Map;
  */
 public interface EnumMethods {
     ArrayList<Map<String, Object>> getEnums(int start, int limit, String keyword); //获取枚举接口
+    ArrayList<Map<String, Object>> getEnumsByType(String type); //更具类型获取枚举接口
     int addEnum(String label,String value,String type);
 }
