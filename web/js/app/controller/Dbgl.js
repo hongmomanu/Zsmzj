@@ -94,24 +94,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
     },
     afterrenderEvents:function(){
-        var task = new Ext.util.DelayedTask(function() {
-            // Fade out the body mask
-            ViewWaitMask.fadeOut({
-                duration: 1000,
-                remove:true
-            });
-            ViewWaitMask.next().fadeOut({
-                duration: 1000,
-                remove:true,
-                listeners: {
-                    afteranimate: function() {
-                        Ext.getCmp('mainContent-panel').getEl().unmask();
-                    }
-                }
-            });
-        });
-        // Run the fade 500 milliseconds after launch.
-        task.delay(500);
+        CommonFunc.removeTask(ViewWaitMask,Ext.getCmp('mainContent-panel').getEl());
     },
     affixgridrendered:function(grid,e){
         var view = grid.getView();

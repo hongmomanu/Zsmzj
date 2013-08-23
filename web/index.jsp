@@ -12,6 +12,7 @@
 
       <script type="text/javascript" src="js/config.js">
 
+
       </script>
       <script type="text/javascript">
           /*session全局变量*/
@@ -38,7 +39,7 @@
      <%-- 加载web应用层--%>
 
       <script type="text/javascript" src="js/app.js"></script>
-
+      <script type="text/javascript" src="js/app/commonfunc.js"></script>
     <title></title>
   </head>
   <body>
