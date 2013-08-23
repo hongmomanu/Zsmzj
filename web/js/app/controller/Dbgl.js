@@ -30,6 +30,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.uploadImgFileWin',
         'dbgl.uploadAffixFileWin',
         'dbgl.AffixFilesGrid',
+        'dbgl.NeedToDoGrid',
         'dbgl.comboxwidget.applytype'
 
     ],

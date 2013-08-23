@@ -86,9 +86,51 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
     showneedthings:function(c){
-       alert(1);
-        testobj=c;
-        console.log(c);
+        /*testobj=c;
+        console.log(c);*/
+        this.showtab('代办业务','needtodopanel','widget');
+
+    },
+    showtab:function(label,value,type){
+        if(ViewWaitMask){
+            try{
+                Ext.getCmp('mainContent-panel').getEl().unmask();
+            }catch (e){
+
+            }
+
+
+        }
+        var tabs = Ext.getCmp('mainContent-panel');
+        if (tabs.getComponent('tab' + value)) {
+            tabs.getComponent('tab' + value).show();
+        } else {
+            if (type == 'widget') {
+
+                ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
+
+                tabs.add({
+                    closable: true,
+                    id: 'tab' + value,
+                    xtype: value,
+                    autoScroll: true,
+                    iconCls: 'tabs',
+                    title: label
+                }).show();
+            } else if (type == "url") {
+                tabs.add({
+                    closable: true,
+                    id: 'tab' + label,
+                    html: '<iframe src="' + value + '" width="100%" height="100%">',
+                    //loader: { url: "http://www.baidu.com", contentType: 'html', loadMask: 'loading...', autoLoad: true, scripts: true },
+                    autoScroll: false,
+                    iconCls: 'tabs',
+                    title: label
+                }).show();
+
+            }
+
+        }
 
     },
     initHeadView:function(){
