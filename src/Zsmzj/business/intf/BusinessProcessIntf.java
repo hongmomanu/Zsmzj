@@ -10,7 +10,13 @@ import java.util.Map;
  * To change this template use File | Settings | File Templates.
  */
 public interface BusinessProcessIntf {
-    public int applyBusiness(Map<String,Object> param);
-    public int saveFamilyMembers(String membersjson);
-    public int saveAffixFiles(String filesjson);
+    /**
+     * saveApplyBusiness  saveFamilyMembers   saveAffixFiles 三个接口属于同一trancsiction
+     * ***/
+    public int saveApplyBusiness(Map<String,Object> param);//提交业务信息
+    public int saveFamilyMembers(String membersjson,int businessid);//保存家庭成员信息
+    public int saveAffixFiles(String filesjson,int businessid);//保存附件信心
+
+    public int getNeedTodoCounts(int roleid);//获取待办事务
+    public int changeStatus(int businessid,int type);//改变事务状态
 }

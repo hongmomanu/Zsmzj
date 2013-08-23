@@ -158,7 +158,7 @@ Ext.define('ZSMZJ.controller.Manager', {
                 Ext.Msg.alert("提示信息", "删除角色失败，检查web服务或数据库服务");
 
             };
-            this.ajaxSend(params, 'ajax/delfunc.jsp', successFunc, failFunc);
+            this.ajaxSend(params, 'ajax/delfunc.jsp', successFunc, failFunc,'POST');
 
         }
         else if (item.text=='编辑功能'){
@@ -184,7 +184,7 @@ Ext.define('ZSMZJ.controller.Manager', {
                 Ext.Msg.alert("提示信息", "删除角色失败，检查web服务或数据库服务");
 
             };
-            this.ajaxSend(params, 'ajax/deluser.jsp', successFunc, failFunc);
+            this.ajaxSend(params, 'ajax/deluser.jsp', successFunc, failFunc,'POST');
 
         }
         else if(item.text=='修改密码'){
@@ -211,7 +211,7 @@ Ext.define('ZSMZJ.controller.Manager', {
                 Ext.Msg.alert("提示信息", "删除角色失败，检查web服务或数据库服务");
 
             };
-            this.ajaxSend(params, 'ajax/delrole.jsp', successFunc, failFunc);
+            this.ajaxSend(params, 'ajax/delrole.jsp', successFunc, failFunc,'POST');
 
         }
         else if(item.text=='功能配置'){
@@ -324,7 +324,7 @@ Ext.define('ZSMZJ.controller.Manager', {
             Ext.Msg.alert("提示信息", "功能设置失败，检查web服务或数据库服务");
 
         };
-        this.ajaxSend(params, 'ajax/makerolefunc.jsp', successFunc, failFunc);
+        this.ajaxSend(params, 'ajax/makerolefunc.jsp', successFunc, failFunc,'POST');
 
 
     },
@@ -440,9 +440,10 @@ Ext.define('ZSMZJ.controller.Manager', {
         this.formSubmit(btn, params, 'ajax/addnewrole.jsp', successFunc, failFunc,"正在提交数据");
 
     } ,
-    ajaxSend:function(params,url,sucFun,failFunc){
+    ajaxSend:function(params,url,sucFun,failFunc,method){
         Ext.Ajax.request({
             url: url,
+            method : method,
             params: params,
             success:sucFun,
             failure:failFunc

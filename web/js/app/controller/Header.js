@@ -21,7 +21,8 @@ Ext.define('ZSMZJ.controller.Header', {
 
 
     refs: [
-        {ref: 'myviewheadViewPanel', selector: 'headviewpanel'}
+        {ref: 'myviewheadViewPanel', selector: 'headviewpanel'} ,
+        {ref: 'myheaderPanel', selector: 'myheader'}
     ],
     views: [
         'Header','header.headViewPanel'
@@ -31,17 +32,65 @@ Ext.define('ZSMZJ.controller.Header', {
         var me = this;
         this.initHeadView();
 
-        /*
+
         this.control({
-            'headviewpanel#headviewitem':{
+            /*'headviewpanel#headviewitem':{
                 selectionchange: this.selectionchange
+            }*/
+            'myheader':{
+                afterrender: this.headerRenderEvents
+
+            },
+            'myheader component':{
+                needthingsclick:function (c){
+                    this.showneedthings(c);
+                }
             }
+
         }, this);
-*/
+
     },
 
+    headerRenderEvents:function(){
+        var params = {
+            roleid:roleid,
+            type:'count'
+        };
+        var changeItem=this.getMyheaderPanel().down('#needtodopanel');
+        //testobj=this.getMyheaderPanel();
+        var successFunc = function (response, option) {
+            var res = Ext.JSON.decode(response.responseText);
+            var count=res.count;
+            var text=changeItem.el.dom.innerText;
+            var before_str=text.slice(0,text.indexOf("(")+count);
+            var after_str=text.slice(text.indexOf(")"));
+            changeItem.update(before_str+count+after_str);
 
 
+        };
+        var failFunc = function (form, action) {
+            Ext.Msg.alert("提示信息", "获取待办信息失败");
+
+        };
+        this.ajaxSend(params, 'ajax/getneedtodos.jsp', successFunc, failFunc,'POST');
+
+    },
+    ajaxSend:function(params,url,sucFun,failFunc,method){
+        Ext.Ajax.request({
+            url: url,
+            method:method,
+            params: params,
+            success:sucFun,
+            failure:failFunc
+        });
+
+    },
+    showneedthings:function(c){
+       alert(1);
+        testobj=c;
+        console.log(c);
+
+    },
     initHeadView:function(){
         var me=this;
         var store=this.getHeaderHeaderViewersStore();

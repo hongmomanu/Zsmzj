@@ -32,10 +32,11 @@
             if(parName.equals("familymembers"))familymembers=request.getParameter(parName);
             else if(parName.equals("affixfiles"))affixfiles=request.getParameter(parName);
             else if(parName.equals("businesstype"))businesstype=request.getParameter(parName);
+            else if(parName.equals("mktime")||parName.equals("mkperson"))continue;
             else params.put(parName,request.getParameter(parName));
         }
 
         BusinessProcessControl business=new BusinessProcessControl();
-        business.saveNewBusinessApply(params,familymembers,affixfiles,businesstype);
+        out.print(business.saveNewBusinessApply(params,familymembers,affixfiles,businesstype));
     }
 %>

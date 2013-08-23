@@ -12,13 +12,14 @@ Ext.define('ZSMZJ.view.dbgl.comboxwidget.applytype', {
     requires: [
 
     ],
-    initComponent: function() {
+    initComponent: function () {
         Ext.apply(this, {
             displayField: 'label',
-            store: (function(me){
+            editable: false,
+            store: (function (me) {
                 var s = Ext.widget('dbglapplytypes');
                 s.proxy.extraParams = {
-                    type:me.searchtype
+                    type: me.searchtype
                 }
                 return s;
             })(this),

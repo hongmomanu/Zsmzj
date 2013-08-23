@@ -44,6 +44,7 @@ public class JdbcFactory {
                 if(dbtype.equalsIgnoreCase("sqlite")){
                     SqliteSql db=new SqliteSql();
                     conn=db.getConn();
+                    //conn.setAutoCommit(false);
 
                 }
                 else if(dbtype.equalsIgnoreCase("postgres")){

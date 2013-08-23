@@ -77,7 +77,7 @@
         padding:10px;
  }
 .x-tree-icon { display: none !important; }
-.mouseover{cursor: hand}
+.mouseover{cursor: hand;font-size: 10;}
 /*.my-header .x-fieldset-header-text {
     color: red;
 }*/

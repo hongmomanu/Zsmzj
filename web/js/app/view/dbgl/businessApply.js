@@ -62,7 +62,7 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                     {
                         xtype: 'component',
                         name:'accountimgpath',
-                        value:"jajaja",
+                        value:"",
                         width:100,
                         height:110,
                         id:'dbglaccountimg',

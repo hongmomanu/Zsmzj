@@ -250,13 +250,15 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             }
 
         });
-        affixfiles.push({})
+        affixfiles.push({"accountimgpath":[{'attachmentname':'照片','attachmentpath':Ext.getCmp('dbglaccountimg').value}]});
         var params = {
             businesstype:businessTableType.dbgl,
+            userid:userid,
             familymembers:Ext.JSON.encode(familymembers),
             affixfiles:Ext.JSON.encode(affixfiles)
         };
         var successFunc = function (form, action) {
+            Ext.Msg.alert("提示信息", "提交申请成功");
 
         };
         var failFunc = function (form, action) {
@@ -264,7 +266,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
         };
 
-        this.formSubmit(btn, params, 'ajax/senddbglapply.jsp', successFunc, failFunc,"正在提交数据");
+        this.formSubmit(btn, params, 'ajax/sendapply.jsp', successFunc, failFunc,"正在提交数据");
 
 
     },
@@ -276,6 +278,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         var successFunc = function (form, action) {
             var filepath=action.result.filepath;
             Ext.getCmp('dbglaccountimg').getEl().dom.src=filepath;
+            Ext.getCmp('dbglaccountimg').value=filepath;
             me.uploadimgWin.hide();
 
         };
