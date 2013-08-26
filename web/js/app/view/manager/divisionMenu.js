@@ -8,7 +8,7 @@
 
 Ext.define('ZSMZJ.view.manager.divisionMenu', {
     extend : 'Ext.menu.Menu',
-    alias : 'widget.divisionMenu',
+    alias : 'widget.divisionmenu',
     items:[{
         text: '删除'
     },{

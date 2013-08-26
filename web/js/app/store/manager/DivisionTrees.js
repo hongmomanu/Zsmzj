@@ -29,6 +29,7 @@ Ext.define('ZSMZJ.store.manager.DivisionTrees', {
     },
     root: {
         text: '舟山市',
+        divisionpath:'舟山市',
         id:0,
         expanded: true
     }

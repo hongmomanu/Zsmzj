@@ -22,7 +22,7 @@ Ext.define('ZSMZJ.model.manager.DivisionTree', {
             name: 'value',
             type:'string'
         },{
-            name: 'type',
+            name: 'divisionpath',
             type:'string'
         }
     ]
