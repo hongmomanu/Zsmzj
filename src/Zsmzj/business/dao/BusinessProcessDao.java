@@ -23,7 +23,51 @@ public class BusinessProcessDao {
     private static final Logger log = Logger.getLogger(BusinessProcessDao.class);
 
 
-    public int getNeedToDoCounts (ArrayList<Map<String, Object>> arr,String tablename){
+    public ArrayList<Map<String,Object>> getNeedToDoLists(ArrayList<Map<String,Object>> arr,int start
+                                                          ,int limit,String keyword,String tablename){
+
+        Connection testConn= JdbcFactory.getConn("sqlite");
+        String match_str="";
+        for(Map<String,Object> item:arr){
+            match_str+=item.get("name").toString()+" OR ";
+        }
+        match_str=match_str.substring(0,match_str.lastIndexOf("OR"));
+        String sql=  "select processstatus   from "+
+                tablename+" where processstatus  MATCH ? ";
+        if(keyword!=null)sql+="AND ? ";
+        sql+="Limit ? Offset ?";
+        PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
+        ArrayList<Map<String,Object>> list=new ArrayList<Map<String, Object>>();
+        try {
+            pstmt.setString(1,match_str);
+            if(keyword!=null){
+                pstmt.setString(2,keyword);
+                pstmt.setInt(3, limit);
+                pstmt.setInt(4,start);
+            }else{
+                pstmt.setInt(2, limit);
+                pstmt.setInt(3,start);
+            }
+
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Map<String,Object> map=new HashMap<String, Object>();
+                map.put("processstatus",rs.getString("processstatus"));
+                list.add(map);
+            }
+
+        }catch (Exception E){
+            log.debug(E.getMessage());
+        }finally {
+            return list;
+        }
+
+
+
+
+
+    }
+    public int getNeedToDoCounts (ArrayList<Map<String, Object>> arr,String keyword,String tablename){
 
 
         Connection testConn= JdbcFactory.getConn("sqlite");
@@ -33,11 +77,13 @@ public class BusinessProcessDao {
         }
         match_str=match_str.substring(0,match_str.lastIndexOf("OR"));
         String sql=  "select count(*)   from "+
-                tablename+" where processstatus  MATCH ?";
+                tablename+" where processstatus  MATCH ? ";
+        if(keyword!=null)sql+="AND ?";
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
         int totalnums=0;
         try {
             pstmt.setString(1,match_str);
+            if(keyword!=null)pstmt.setString(1,keyword);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 totalnums=rs.getInt(1);

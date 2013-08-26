@@ -91,3 +91,6 @@
     -webkit-box-shadow: 20px 20px 5px black; /*safari或chrome*/
     box-shadow: 5px 5px 5px black; /*opera或ie9*/
 }
+
+.process{background-image: url(/img/process.gif) !important;}
+.sp{background-image: url(/img/sp.gif) !important;}

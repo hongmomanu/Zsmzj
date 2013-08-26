@@ -2,10 +2,13 @@ package Zsmzj.business.control;
 
 import Zsmzj.business.impl.BusinessProcess;
 import Zsmzj.jdbc.JdbcFactory;
+import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -21,7 +24,20 @@ public class BusinessProcessControl {
 
     public int getNeedTodoCounts(int roleid){
         BusinessProcess bp=new BusinessProcess();
-        return bp.getNeedTodoCounts(roleid);
+        return bp.getNeedTodoCounts(roleid,null);
+
+    }
+
+    public String getNeedTodoList(int roleid,int start,int limit ,String keyword){
+
+        BusinessProcess bp=new BusinessProcess();
+        int totalnum=bp.getNeedTodoCounts(roleid,keyword);
+        ArrayList<Map<String,Object>> list=new ArrayList<Map<String, Object>>();
+        list=bp.getNeedTodoList(roleid,start,limit,keyword);
+        Map<String,Object>res=new HashMap<String, Object>();
+        res.put("totalCount",totalnum);
+        res.put("results",list);
+        return JSONObject.fromObject(res).toString();
 
     }
 

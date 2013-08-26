@@ -1,5 +1,6 @@
 package Zsmzj.business.intf;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -17,6 +18,7 @@ public interface BusinessProcessIntf {
     public int saveFamilyMembers(String membersjson,int businessid);//保存家庭成员信息
     public int saveAffixFiles(String filesjson,int businessid);//保存附件信心
 
-    public int getNeedTodoCounts(int roleid);//获取待办事务
+    public int getNeedTodoCounts(int roleid,String keyword);//获取待办事务
+    public ArrayList<Map<String,Object>> getNeedTodoList(int roleid,int start,int limit,String keyword);//获取代办事务列表
     public int changeStatus(int businessid,int type);//改变事务状态
 }

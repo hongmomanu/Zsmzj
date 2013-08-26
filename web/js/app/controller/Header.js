@@ -15,9 +15,9 @@
 Ext.define('ZSMZJ.controller.Header', {
     extend: 'Ext.app.Controller',
 
-    models: ['header.HeaderViewer'],
+    models: ['header.HeaderViewer','header.NeedToDo'],
 
-    stores: ['header.HeaderViewers'],
+    stores: ['header.HeaderViewers','header.NeedToDos'],
 
 
     refs: [
@@ -25,7 +25,7 @@ Ext.define('ZSMZJ.controller.Header', {
         {ref: 'myheaderPanel', selector: 'myheader'}
     ],
     views: [
-        'Header','header.headViewPanel','dbgl.NeedToDoGrid'
+        'Header','header.headViewPanel','header.NeedToDoGrid'
     ],
 
     init: function() {

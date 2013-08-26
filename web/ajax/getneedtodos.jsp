@@ -25,9 +25,12 @@
             out.print("{count:"+count+"}");
 
         }
-        else{
-
-
+        else if(type.equals("list")){
+            BusinessProcessControl bp=new BusinessProcessControl();
+            int start=Integer.parseInt(request.getParameter("start"));
+            int limit=Integer.parseInt(request.getParameter("limit"));
+            String keyword=request.getParameter("keyword");
+            out.print(bp.getNeedTodoList(roleid,start,limit,keyword));
         }
     }
     //out.print("ok");
