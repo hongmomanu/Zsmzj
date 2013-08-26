@@ -37,7 +37,7 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
                         Ext.defer(function () {
                             Ext.widget('button', {
                                 renderTo: id1,
-                                iconCls: 'process',
+                                icon:'img/process.gif',
                                 text: '流程' ,
                                 width: 55,
                                 handler: function () { Ext.Msg.alert('Info', r.get('processstatus')) }
@@ -48,7 +48,7 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
                             Ext.widget('button', {
                                 renderTo: id2,
                                 text: '审批' ,
-                                iconCls:'sp',
+                                icon:'img/sp.gif',
                                 width: 55,
                                 handler: function () { Ext.Msg.alert('Info', r.get('processstatus')) }
                             });

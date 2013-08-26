@@ -10,11 +10,15 @@ Ext.define('ZSMZJ.controller.Manager', {
 
     models: ['manager.UserManager','manager.RoleManager',
              'manager.FuncManager','manager.RoleFunc',
-             'manager.EnumerateConfigManager'
+             'manager.EnumerateConfigManager',
+             'manager.DivisionTree',
+
             ],
     stores: ['manager.UserManagers','manager.RoleManagers',
              'manager.FuncManagers','manager.RoleFuncs',
-             'manager.EnumerateConfigManagers'
+             'manager.EnumerateConfigManagers',
+             'manager.DivisionTrees'
+
             ],
 
     refs: [
@@ -27,6 +31,8 @@ Ext.define('ZSMZJ.controller.Manager', {
         'manager.RoleManager',
         'manager.FuncManager',
         'manager.EnumerateConfigManager',
+        'manager.addNewDivisionWin',
+        'manager.DivisionTreePanel',
         'manager.RoleFuncGrid',
         'manager.addNewRoleWin',
         'manager.addNewFuncWin',
@@ -36,6 +42,7 @@ Ext.define('ZSMZJ.controller.Manager', {
         'manager.EditFuncWin',
         'manager.funcMenu',
         'manager.userMenu',
+        'manager.divisionMenu',
         'manager.roleMenu'
 
     ],
@@ -44,7 +51,7 @@ Ext.define('ZSMZJ.controller.Manager', {
         var me = this;
         //testobj=me;
         this.control({
-            'funcmanagerpanel,rolemanagerpanel,enumerateconfigmanager,usermanagerpanel':{
+            'funcmanagerpanel,rolemanagerpanel,enumerateconfigmanager,usermanagerpanel,divisiontreepanel':{
                 afterrender: this.afterrenderEvents
             },
 
@@ -71,6 +78,12 @@ Ext.define('ZSMZJ.controller.Manager', {
             },
             'addnewenumwin button[action=add]': {
                 click: this.addnewenum
+            },
+            'divisiontreepanel button[action=add]':{
+                click: this.addnewdivisionwin
+            },
+            'addnewdivisionwin button[action=add]':{
+                click: this.addnewdivision
             },
             'editfuncwin button[action=save]': {
                 click: this.saveeditfunc
@@ -102,6 +115,9 @@ Ext.define('ZSMZJ.controller.Manager', {
             'rolemenu > menuitem': {
                 click: this.rolemanager
             },
+            'divisiontreepanel': {
+                itemcontextmenu: this.showDivisionMenu
+            },
             'funcmenu > menuitem': {
                 click: this.funcmanager
             }
@@ -129,6 +145,16 @@ Ext.define('ZSMZJ.controller.Manager', {
         e.stopEvent();
         var menu = Ext.widget('rolemenu');
         menu.roledata=record;
+        menu.showAt(e.getXY());
+    },
+    showDivisionMenu:function (panelView, record, item, index, e, eOpts) {
+
+        var me = this;
+        e.preventDefault();
+        e.stopEvent();
+        var menu = Ext.widget('divisionmenu');
+        cosole.log(record);
+        menu.divisiondata=record;
         menu.showAt(e.getXY());
     },
     showFuncMenu: function (panelView, record, item, index, e, eOpts) {
@@ -242,6 +268,12 @@ Ext.define('ZSMZJ.controller.Manager', {
     addnewuserwin:function(btn){
         if (!this.newUserWin)this.newUserWin = Ext.widget('addnewuserwin');
         this.newUserWin.show();
+
+    },
+    addnewdivisionwin:function(btn){
+        if (!this.newDivisionWin)this.newDivisionWin = Ext.widget('addnewdivisionwin');
+        this.newDivisionWin.show();
+
 
     },
 
@@ -397,7 +429,32 @@ Ext.define('ZSMZJ.controller.Manager', {
 
 
     },
+    addnewdivision:function(btn){
 
+        var me=this;
+        var store=this.getManagerDivisionTreesStore();
+        var root=store.getRootNode();
+        var id=root.getId();
+        var params = {
+            parentid:id,
+            divisionpath:root.getData().text
+
+        };
+        //var userstore=this.getManagerUserManagersStore();
+        var successFunc = function (form, action) {
+            store.load();
+            me.newDivisionWin.hide();
+
+        };
+        var failFunc = function (form, action) {
+            Ext.Msg.alert("提示信息", "新增用户失败，检查web服务或数据库服务");
+
+        };
+
+        this.formSubmit(btn, params, 'ajax/addnewdivision.jsp', successFunc, failFunc,"正在提交数据");
+
+
+    },
     addnewuser:function(btn){
 
         var me=this;

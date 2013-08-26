@@ -7,10 +7,27 @@ CREATE TABLE IF NOT EXISTS users
   username VARCHAR(50),                                   --用户名字
   password VARCHAR(50),                                   --用户密码
   --time TIMESTAMP default CURRENT_TIMESTAMP,
+  displayname VACHAR(50),                                 --显示名称
+  divisionid  integer,                                    --行政区划id
   time DATETIME DEFAULT (datetime(CURRENT_TIMESTAMP,'localtime')),  --注册时间
   roleid  integer                                         --角色id
 
 );
+
+--行政区划表
+CREATE VIRTUAL TABLE IF NOT EXISTS divisions USING fts3
+(
+
+  id integer primary key autoincrement,            --自增主键
+  parentid integer,                                --父节点
+  divisionname VARCHAR(50),                         --角色名称
+  divisionpath varchar(50)                         --行政区划路径
+
+
+);
+
+
+
 --角色表
 CREATE TABLE IF NOT EXISTS roles
 (

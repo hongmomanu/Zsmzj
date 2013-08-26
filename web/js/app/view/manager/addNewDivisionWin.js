@@ -5,9 +5,9 @@
  * Time: 下午1:35
  * To change this template use File | Settings | File Templates.
  */
-Ext.define('ZSMZJ.view.manager.addNewUserWin' ,{
+Ext.define('ZSMZJ.view.manager.addNewDivisionWin' ,{
     extend: 'Ext.window.Window',
-    alias : 'widget.addnewuserwin',
+    alias : 'widget.addnewdivisionwin',
     requires: [
         //'Ext.form.*'
         'Ext.Img',
@@ -15,8 +15,8 @@ Ext.define('ZSMZJ.view.manager.addNewUserWin' ,{
     ],
     initComponent: function() {
         Ext.apply(this, {
-            title: '新增用户',
-            height: 355,
+            title: '新增行政区划',
+            height: 180,
             width: 400,
             closeAction : 'hide',
             resizable:false,
@@ -68,67 +68,10 @@ Ext.define('ZSMZJ.view.manager.addNewUserWin' ,{
                 items: [
                     {
                         xtype: 'textfield',
-                        fieldLabel: '用户名',
+                        fieldLabel: '行政区划名',
                         allowBlank:false,
                         blankText   : '不能为空',
-                        name: 'username'
-                    },
-                    {
-                        xtype: 'textfield',
-                        fieldLabel: '用户密码',
-                        blankText   : '不能为空',
-                        allowBlank:false,
-                        inputType: 'password',
-                        name: 'password'
-                    },
-                    {
-                        xtype: 'textfield',
-                        fieldLabel: '密码确认',
-                        inputType: 'password',
-                        allowBlank:false,
-                        name: 'passwordagain',
-                        validator: function(value) {
-                            var password1 = this.previousSibling('[name=password]');
-                            return (value === password1.getValue()) ? true : '前后密码不匹配.'
-                        }
-                    }
-                    ,
-                    {
-                        fieldLabel: '所属行政区划',
-                        name: 'divisionid',
-                        xtype: 'combo',
-                        allowBlank: false,
-                        blankText: "不能为空",
-                        displayField: 'rolename',
-                        valueField: 'roleid',
-                        emptyText: '请选择角色',
-                        listeners: {
-                            scope: this,
-                            'select': function (combo, records) {
-                            }
-                        },
-                        //queryMode: 'local',
-                        store:'manager.RoleManagers'
-
-                    },
-                    {
-                        columnWidth: 0.6,
-                        fieldLabel: '所属角色',
-                        name: 'roleid',
-                        xtype: 'combo',
-                        allowBlank: false,
-                        blankText: "不能为空",
-                        displayField: 'rolename',
-                        valueField: 'roleid',
-                        emptyText: '请选择角色',
-                        listeners: {
-                            scope: this,
-                            'select': function (combo, records) {
-                            }
-                        },
-                        //queryMode: 'local',
-                        store:'manager.RoleManagers'
-
+                        name: 'divisionname'
                     }
                     /*{
                         xtype: 'textfield',
@@ -156,8 +99,8 @@ Ext.define('ZSMZJ.view.manager.addNewUserWin' ,{
                         validCls: Ext.baseCSSPrefix + 'dd-drop-icon',
                         baseCls: 'form-error-state',
                         flex: 1,
-                        validText: '用户信息合法',
-                        invalidText: '用户信息不合法',
+                        validText: '信息合法',
+                        invalidText: '信息不合法',
                         tipTpl: Ext.create('Ext.XTemplate', '<ul class="' + Ext.plainListCls + '"><tpl for="."><li><span class="field-name">{name}</span>: <span class="error">{error}</span></li></tpl></ul>'),
 
                         onDestroy: function() {
@@ -231,34 +174,10 @@ Ext.define('ZSMZJ.view.manager.addNewUserWin' ,{
                         width: 140,
 
                         action:'add'
-                        /*handler: function() {
-                            var form = this.up('form').getForm();
 
-                            if (form.isValid()) {
-                                var out = [];
-                                Ext.Object.each(form.getValues(), function(key, value){
-                                    out.push(key + '=' + value);
-                                });
-                                Ext.Msg.alert('Submitted Values', out.join('<br />'));
-                            }
-                        }*/
                     }]
                 }],
 
-                /*buttons: [
-                    {
-                        text: '取消',
-                        handler: function () {
-                            //this.up('form').getForm().reset();
-                            this.up('window').hide();
-                        }
-                    } ,
-                    {
-                        text: '添加',
-                        action: 'add'
-
-                    }
-                ],*/
                 border: false
             }
 
