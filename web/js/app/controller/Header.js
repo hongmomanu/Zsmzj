@@ -25,7 +25,7 @@ Ext.define('ZSMZJ.controller.Header', {
         {ref: 'myheaderPanel', selector: 'myheader'}
     ],
     views: [
-        'Header','header.headViewPanel'
+        'Header','header.headViewPanel','dbgl.NeedToDoGrid'
     ],
 
     init: function() {
@@ -45,12 +45,18 @@ Ext.define('ZSMZJ.controller.Header', {
                 needthingsclick:function (c){
                     this.showneedthings(c);
                 }
+            },
+            'needtodopanel':{
+
+                afterrender: this.afterrenderEvents
             }
 
         }, this);
 
     },
-
+    afterrenderEvents:function(){
+        CommonFunc.removeTask(ViewWaitMask,Ext.getCmp('mainContent-panel').getEl());
+    },
     headerRenderEvents:function(){
         var params = {
             roleid:roleid,

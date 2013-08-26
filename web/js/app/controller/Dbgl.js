@@ -30,7 +30,6 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.uploadImgFileWin',
         'dbgl.uploadAffixFileWin',
         'dbgl.AffixFilesGrid',
-        'dbgl.NeedToDoGrid',
         'dbgl.comboxwidget.applytype'
 
     ],
@@ -53,6 +52,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
          'dbglbusinessapplyform':{
              afterrender: this.afterrenderEvents
          },
+
          'uploadimgfilewin button[action=upload]':{
              click: this.uploadImgFile
          },
