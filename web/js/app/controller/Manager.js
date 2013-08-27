@@ -43,6 +43,7 @@ Ext.define('ZSMZJ.controller.Manager', {
         'manager.funcMenu',
         'manager.userMenu',
         'manager.divisionMenu',
+        'dbgl.comboxwidget.divisiontree',
         'manager.roleMenu'
 
     ],

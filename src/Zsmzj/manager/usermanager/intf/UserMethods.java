@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public interface UserMethods {
     ArrayList<Map<String, Object>> getUsers(int start,int limit,String keyword);//获取用户接口
-    int addnewUser(String username,String password,int roleid); //新增功能接口
+    int addnewUser(String username,String password,int roleid,int divisionid,String displayname); //新增功能接口
     int delUser(int userid);
     Map<String,Object> login(String username,String password);
 

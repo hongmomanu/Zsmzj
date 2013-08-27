@@ -22,10 +22,10 @@ public class UserControl {
         return JSONArray.fromObject(user.getUsers(start, limit, keyword)).toString();
 
     }
-    public String addNewUser(String username,String password,int roleid){
+    public String addNewUser(String username,String password,int roleid,int divisionid,String displayname){
         UserImplement user=new UserImplement();
         Map<String,Object> res=new HashMap<String, Object>();
-        int userid=user.addnewUser(username, password, roleid);
+        int userid=user.addnewUser(username, password, roleid,divisionid,displayname);
         if(userid>=0)res.put("success",true);
         else res.put("success",false);
         return JSONObject.fromObject(res).toString();

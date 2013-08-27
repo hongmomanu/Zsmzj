@@ -87,17 +87,19 @@ public class UserDao {
 
 
     }
-    public int addnewUser (String username,String password,int roleid){
+    public int addnewUser (String username,String password,int roleid,int divisionid,String displayname){
 
         Connection conn= JdbcFactory.getConn("sqlite");
-        String sql = "insert  into " + UserTable + " (username,password,roleid) values (?,?,?)  ";
+        String sql = "insert  into " + UserTable + " (username,password,roleid,divisionid,displayname) " +
+                "values (?,?,?,?,?)  ";
         PreparedStatement pstmt = JdbcFactory.getPstmt(conn, sql);
 
         try {
             pstmt.setString(1, username);
             pstmt.setString(2, password);
             pstmt.setInt(3, roleid);
-
+            pstmt.setInt(4, divisionid);
+            pstmt.setString(5,displayname);
             //pstmt.setInt(7, Integer.parseInt(params.get("keyid").toString()));
             return pstmt.executeUpdate();
         } catch (SQLException ex) {

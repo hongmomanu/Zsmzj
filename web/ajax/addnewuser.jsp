@@ -18,14 +18,19 @@
     }
     else if(request.getParameter("username")==null){
         out.print("缺少参数username");
+    }else if(request.getParameter("displayname")==null){
+        out.print("缺少参数displayname");
+    }else if(request.getParameter("divisionid")==null){
+        out.print("divisionid");
     }
     else{
         int roleid=Integer.parseInt(request.getParameter("roleid"));
+        int divisionid=Integer.parseInt(request.getParameter("divisionid"));
         String username=request.getParameter("username");
         String password=request.getParameter("password");
-
+        String displayname=request.getParameter("displayname");
         UserControl user=new UserControl();
-        out.print(user.addNewUser(username,password,roleid));
+        out.print(user.addNewUser(username,password,roleid,divisionid,displayname));
     }
     //out.print("ok");
 %>

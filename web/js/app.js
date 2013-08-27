@@ -18,7 +18,7 @@ Ext.Loader.setConfig({
         // for dev use
         //Ext: extLocation+"src"
         // for build purpose
-        'Ext.ux': extLocation+'examples/ux'
+        'Ext.ux':'js/Ext/ux'
     }
 
 });
@@ -55,7 +55,8 @@ Ext.application({
     //附加dataview组件
     requires: [
         'Ext.ux.DataView.DragSelector',
-        'Ext.ux.DataView.LabelEditor'
+        'Ext.ux.DataView.LabelEditor',
+        'Ext.ux.TreeCombo'
     ],
     controllers: [
         'Navigation','Header','Manager','Dbgl'

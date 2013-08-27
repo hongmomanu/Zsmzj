@@ -16,7 +16,7 @@ Ext.define('ZSMZJ.view.manager.addNewUserWin' ,{
     initComponent: function() {
         Ext.apply(this, {
             title: '新增用户',
-            height: 355,
+            height: 385,
             width: 400,
             closeAction : 'hide',
             resizable:false,
@@ -68,10 +68,17 @@ Ext.define('ZSMZJ.view.manager.addNewUserWin' ,{
                 items: [
                     {
                         xtype: 'textfield',
-                        fieldLabel: '用户名',
+                        fieldLabel: '登录名',
                         allowBlank:false,
                         blankText   : '不能为空',
                         name: 'username'
+                    },
+                    {
+                        xtype: 'textfield',
+                        fieldLabel: '用户名',
+                        allowBlank:false,
+                        blankText   : '不能为空',
+                        name: 'displayname'
                     },
                     {
                         xtype: 'textfield',
@@ -94,25 +101,21 @@ Ext.define('ZSMZJ.view.manager.addNewUserWin' ,{
                     }
                     ,
                     {
-                        fieldLabel: '所属行政区划',
+                        fieldLabel: '行政区划',
                         name: 'divisionid',
-                        xtype: 'combo',
+                        //width:'200',
+                        /*xtype: 'combo',*/
+                        xtype:'dbgldivsioncombtree',
+                        //xtype:,
                         allowBlank: false,
                         blankText: "不能为空",
-                        displayField: 'rolename',
-                        valueField: 'roleid',
-                        emptyText: '请选择角色',
-                        listeners: {
-                            scope: this,
-                            'select': function (combo, records) {
-                            }
-                        },
-                        //queryMode: 'local',
-                        store:'manager.RoleManagers'
+                        displayField: 'text',
+                        //valueField: 'id',
+                        emptyText: '请选择行政区划'
 
                     },
                     {
-                        columnWidth: 0.6,
+                        //columnWidth: 0.6,
                         fieldLabel: '所属角色',
                         name: 'roleid',
                         xtype: 'combo',

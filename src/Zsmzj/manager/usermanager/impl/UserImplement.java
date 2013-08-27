@@ -21,9 +21,9 @@ public class UserImplement implements UserMethods {
     }
 
     @Override
-    public int addnewUser(String username, String password, int roleid) {
+    public int addnewUser(String username, String password, int roleid,int divisionid,String displayname) {
         UserDao dao=new UserDao();
-        return dao.addnewUser(username,password,roleid);
+        return dao.addnewUser(username,password,roleid,divisionid,displayname);
     }
 
     @Override
