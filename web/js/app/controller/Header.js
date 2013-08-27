@@ -63,12 +63,11 @@ Ext.define('ZSMZJ.controller.Header', {
             type:'count'
         };
         var changeItem=this.getMyheaderPanel().down('#needtodopanel');
-        //testobj=this.getMyheaderPanel();
         var successFunc = function (response, option) {
             var res = Ext.JSON.decode(response.responseText);
             var count=res.count;
             var text=changeItem.el.dom.innerText;
-            var before_str=text.slice(0,text.indexOf("(")+count);
+            var before_str=text.slice(0,text.indexOf("(")+1);
             var after_str=text.slice(text.indexOf(")"));
             changeItem.update(before_str+count+after_str);
 

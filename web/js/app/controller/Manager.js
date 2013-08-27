@@ -11,7 +11,7 @@ Ext.define('ZSMZJ.controller.Manager', {
     models: ['manager.UserManager','manager.RoleManager',
              'manager.FuncManager','manager.RoleFunc',
              'manager.EnumerateConfigManager',
-             'manager.DivisionTree',
+             'manager.DivisionTree'
 
             ],
     stores: ['manager.UserManagers','manager.RoleManagers',
@@ -44,6 +44,7 @@ Ext.define('ZSMZJ.controller.Manager', {
         'manager.userMenu',
         'manager.divisionMenu',
         'dbgl.comboxwidget.divisiontree',
+        'dbgl.comboxwidget.divisiontreepath',
         'manager.roleMenu'
 
     ],

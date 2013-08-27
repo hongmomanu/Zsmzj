@@ -102,6 +102,7 @@ Ext.define('ZSMZJ.view.manager.addNewUserWin' ,{
                     ,
                     {
                         fieldLabel: '行政区划',
+                        //id:'testcombox',
                         name: 'divisionid',
                         //width:'200',
                         /*xtype: 'combo',*/
@@ -110,7 +111,7 @@ Ext.define('ZSMZJ.view.manager.addNewUserWin' ,{
                         allowBlank: false,
                         blankText: "不能为空",
                         displayField: 'text',
-                        //valueField: 'id',
+                        valueField: 'id',
                         emptyText: '请选择行政区划'
 
                     },

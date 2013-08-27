@@ -9,16 +9,16 @@
 
 
 
-Ext.define('ZSMZJ.view.dbgl.comboxwidget.divisiontree', {
+Ext.define('ZSMZJ.view.dbgl.comboxwidget.divisiontreepath', {
     extend: 'Ext.ux.TreeCombo',
-    alias: 'widget.dbgldivsioncombtree',
+    alias: 'widget.dbgldivsioncombtreepath',
 
 
 
     initComponent: function () {
         Ext.apply(this, {
             //margin:10,
-            //width:120,
+            width:500,
             //height: 10,
             //treeHeight: 10,
             treeWidth: 240,
@@ -27,9 +27,9 @@ Ext.define('ZSMZJ.view.dbgl.comboxwidget.divisiontree', {
             canSelectFolders: true,
             itemTreeClick: function(view, record, item, index, e, eOpts, treeCombo)
             {
-                var id = record.data.id;
-
-                this.setValue(id);
+                //var id = record.data.id;
+                this.setValue(record.data.divisionpath);
+                this.setRawValue(record.data.divisionpath);
                 this.collapse();
                 // I want to do something here.
                 // But combo do nothing (not selected item or not finish) when i init itemTreeClick function

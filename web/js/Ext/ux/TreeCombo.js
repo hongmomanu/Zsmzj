@@ -27,8 +27,8 @@ Ext.define('Ext.ux.TreeCombo',
         selectChildren: true,
         canSelectFolders: true,
         multiselect: false,
-        displayField: 'text',
-        valueField: 'id',
+        //displayField: 'text',
+        //valueField: 'id',
         treeWidth: 300,
         matchFieldWidth: false,
         treeHeight: 400,
@@ -119,12 +119,12 @@ Ext.define('Ext.ux.TreeCombo',
             me.records = [];
             Ext.each(me.recursiveRecords, function(record)
             {
-                var	id = record.get(me.valueField),
-                    index = values.indexOf(''+id);
+                var	id = record.get(me.valueField);
+                    index = Ext.Array.contains(values,''+id);
 
                 if(me.multiselect == true) record.set('checked', false);
 
-                if(index != -1)
+                if(index)
                 {
                     valueFin.push(record.get(me.displayField));
                     if(me.multiselect == true) record.set('checked', true);
