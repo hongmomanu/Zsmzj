@@ -10,9 +10,11 @@ Ext.define('ZSMZJ.view.manager.divisionMenu', {
     extend : 'Ext.menu.Menu',
     alias : 'widget.divisionmenu',
     items:[{
-        text: '删除'
+        text: '删除',
+        value:'del'
     },{
-        text: '新增'
+        text: '新增',
+        value:'add'
     }]
 
 });

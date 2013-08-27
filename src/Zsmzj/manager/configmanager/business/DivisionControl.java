@@ -24,6 +24,16 @@ public class DivisionControl {
         return JSONObject.fromObject(res).toString();
 
     }
+    public String delDivision(int divisionid){
+        DivisionImplement di=new DivisionImplement();
+        int returnid=di.delDivision(divisionid);
+        Map<String,Object> res=new HashMap<String, Object>();
+        if(returnid>=0)res.put("success",true);
+        else res.put("success",false);
+        return JSONObject.fromObject(res).toString();
+
+
+    }
     public String getDivisions(int parentid){
         Map<String,Object> res=new HashMap<String, Object>();
         DivisionImplement di=new DivisionImplement();

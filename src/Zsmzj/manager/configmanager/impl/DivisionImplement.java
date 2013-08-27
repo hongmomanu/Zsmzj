@@ -32,4 +32,10 @@ public class DivisionImplement implements DivisionMethods {
         return dd.addNewDivision(divisionname,divisionpath,parentid);
 
     }
+
+    @Override
+    public int delDivision(int divisionid) {
+        DivisionDao dd=new DivisionDao();
+        return dd.delDivision(divisionid);
+    }
 }

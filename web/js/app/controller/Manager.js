@@ -80,10 +80,10 @@ Ext.define('ZSMZJ.controller.Manager', {
                 click: this.addnewenum
             },
             'divisiontreepanel button[action=add]':{
-                click: this.addnewdivisionwin
+                click: this.addnewdivisionwinbt
             },
             'addnewdivisionwin button[action=add]':{
-                click: this.addnewdivision
+                click: this.addnewdivisionfrombt
             },
             'editfuncwin button[action=save]': {
                 click: this.saveeditfunc
@@ -114,6 +114,9 @@ Ext.define('ZSMZJ.controller.Manager', {
             },
             'rolemenu > menuitem': {
                 click: this.rolemanager
+            },
+            'divisionmenu > menuitem': {
+                click: this.divisionmanager
             },
             'divisiontreepanel': {
                 itemcontextmenu: this.showDivisionMenu
@@ -153,7 +156,7 @@ Ext.define('ZSMZJ.controller.Manager', {
         e.preventDefault();
         e.stopEvent();
         var menu = Ext.widget('divisionmenu');
-        cosole.log(record);
+        console.log(record);
         menu.divisiondata=record;
         menu.showAt(e.getXY());
     },
@@ -220,6 +223,35 @@ Ext.define('ZSMZJ.controller.Manager', {
         }
 
     },
+    divisionmanager:function(item,e,eOpts){
+        //alert(1);
+        var store=this.getManagerDivisionTreesStore();
+        var root=item.parentMenu.divisiondata;
+        //testobj=root;
+        if(item.value=='add'){
+            this.addnewdivisionwin(null,store,root);
+
+        }else if(item.value=='del'){
+            this.deldivisionwin(store,root);
+
+        }
+
+    },
+    deldivisionwin:function(store,root){
+        var me=this;
+        Ext.Msg.show({
+            title: '确定要删除此节点?',
+            msg: '你正在试图删除选中行政区划.你想继续么?',
+            buttons: Ext.Msg.YESNO,
+            fn: function (btn) {
+                if(btn=='yes'){
+                    me.deldivision(root,store);
+                }
+            },
+            icon: Ext.Msg.QUESTION
+        })
+
+    },
     rolemanager:function (item, e, eOpts) {
         var roleid=item.parentMenu.roledata.data.roleid;
 
@@ -270,9 +302,18 @@ Ext.define('ZSMZJ.controller.Manager', {
         this.newUserWin.show();
 
     },
-    addnewdivisionwin:function(btn){
+
+    addnewdivisionwinbt:function(btn){
+        var store=this.getManagerDivisionTreesStore();
+        var root=store.getRootNode();
+        this.addnewdivisionwin(btn,store,root)
+    },
+    addnewdivisionwin:function(btn,store,root){
+
         if (!this.newDivisionWin)this.newDivisionWin = Ext.widget('addnewdivisionwin');
         this.newDivisionWin.show();
+        this.newDivisionWin.store=store;
+        this.newDivisionWin.root=root;
 
 
     },
@@ -429,20 +470,37 @@ Ext.define('ZSMZJ.controller.Manager', {
 
 
     },
-    addnewdivision:function(btn){
+    deldivision:function(root,store){
 
+        var params = {
+            divisionid:root.getId()
+        };
+        var successFunc = function (form, action) {
+            store.load({node:root.parentNode});
+
+        };
+        var failFunc = function (form, action) {
+            Ext.Msg.alert("提示信息", "删除行政区划失败，检查web服务或数据库服务");
+
+        };
+        this.ajaxSend(params, 'ajax/deldivision.jsp', successFunc, failFunc,'POST');
+
+
+
+    },
+    addnewdivision:function(btn){
         var me=this;
-        var store=this.getManagerDivisionTreesStore();
-        var root=store.getRootNode();
-        var id=root.getId();
+        var node=me.newDivisionWin.root;
+        var store=me.newDivisionWin.store;
+        var id=node.getId();
         var params = {
             parentid:id,
-            divisionpath:root.getData().text
+            divisionpath:node.getData().divisionpath
 
         };
         //var userstore=this.getManagerUserManagersStore();
         var successFunc = function (form, action) {
-            store.load();
+            store.load({node:node});
             me.newDivisionWin.hide();
 
         };
@@ -453,6 +511,12 @@ Ext.define('ZSMZJ.controller.Manager', {
 
         this.formSubmit(btn, params, 'ajax/addnewdivision.jsp', successFunc, failFunc,"正在提交数据");
 
+    },
+    addnewdivisionfrombt:function(btn){
+
+
+
+        this.addnewdivision(btn);
 
     },
     addnewuser:function(btn){

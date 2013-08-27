@@ -50,6 +50,22 @@ public class DivisionDao {
 
 
     }
+    public int delDivision(int divisionid){
+        Connection conn= JdbcFactory.getConn("sqlite");
+        String sql = "delete  from " + DivisionTable +
+                " where rowid=? ";
+
+        PreparedStatement pstmt = JdbcFactory.getPstmt(conn, sql);
+        try {
+            pstmt.setInt(1, divisionid);
+            return pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            log.debug(ex.getMessage());
+            return -1;
+
+        }
+
+    }
     public int addNewDivision(String divisionname,String divisionpath,int parentid){
         Connection conn= JdbcFactory.getConn("sqlite");
         String sql = "insert  into " + DivisionTable +
