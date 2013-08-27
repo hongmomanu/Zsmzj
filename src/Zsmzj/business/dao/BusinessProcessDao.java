@@ -1,5 +1,6 @@
 package Zsmzj.business.dao;
 
+import Zsmzj.enums.ProcessType;
 import Zsmzj.jdbc.JdbcFactory;
 import org.apache.log4j.Logger;
 
@@ -7,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -21,6 +23,7 @@ import java.util.Map;
  */
 public class BusinessProcessDao {
     private static final Logger log = Logger.getLogger(BusinessProcessDao.class);
+    private static final String UserTable="users";
 
 
     public ArrayList<Map<String,Object>> getNeedToDoLists(ArrayList<Map<String,Object>> arr,int start
@@ -32,10 +35,10 @@ public class BusinessProcessDao {
             match_str+=item.get("name").toString()+" OR ";
         }
         match_str=match_str.substring(0,match_str.lastIndexOf("OR"));
-        String sql=  "select processstatus   from "+
-                tablename+" where processstatus  MATCH ? ";
+        String sql=  "select a.processstatus,b.displayname,a.time,a.rowid   from "+
+                tablename+" a,"+UserTable+" b where processstatus  MATCH ? ";
         if(keyword!=null)sql+="AND ? ";
-        sql+="Limit ? Offset ?";
+        sql+="and a.userid=b.id Limit ? Offset ?";
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
         ArrayList<Map<String,Object>> list=new ArrayList<Map<String, Object>>();
         try {
@@ -52,7 +55,12 @@ public class BusinessProcessDao {
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 Map<String,Object> map=new HashMap<String, Object>();
-                map.put("processstatus",rs.getString("processstatus"));
+                String processstatus=rs.getString("processstatus");
+                map.put("processstatus",processstatus);
+                map.put("process", ProcessType.UseProcessType.getNext(ProcessType.UseProcessType.getProcessFromChinese(processstatus)));
+                map.put("businessid",rs.getInt("rowid"));
+                map.put("displayname",rs.getString("displayname"));
+                map.put("time",rs.getString("time"));
                 list.add(map);
             }
 
@@ -113,8 +121,10 @@ public class BusinessProcessDao {
             col_str+=key+",";
 
         }
-        col_str=col_str.substring(0,col_str.length()-1);
-        val_str=val_str.substring(0,val_str.length()-1);
+        //col_str=col_str.substring(0,col_str.length()-1);
+        //val_str=val_str.substring(0,val_str.length()-1);
+        col_str+="time";
+        val_str+="?";
 
         String sql = "insert  into " + tablename +
                 " ("+col_str+") values " +"("+val_str+")";
@@ -123,12 +133,15 @@ public class BusinessProcessDao {
         log.debug(val_arr);
         PreparedStatement pstmt = JdbcFactory.getPstmt(conn, sql);
         try {
-
-            for(int i=0;i<val_arr.size();i++){
+            int i=0;
+            for( i=0;i<val_arr.size();i++){
 
                 pstmt.setString(i+1, val_arr.get(i)==null?"":val_arr.get(i));
 
             }
+            SimpleDateFormat   sDateFormat   =   new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String   date   =   sDateFormat.format(new   java.util.Date());
+            pstmt.setString(i+1, date);
             //pstmt.addBatch();
             //int[] ret = pstmt.executeBatch();
             //pstmt.clearBatch();

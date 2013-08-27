@@ -27,6 +27,83 @@ public enum ProcessType {
          * @param pType
          * @return
          */
+
+        public static String getPrevious(ProcessType pType){
+            String result = "";
+            switch(pType){
+
+                case Check:
+                    result = "申请";
+                    break;
+                case Approval:
+                    result = "审核";
+                    break;
+                case Grant:
+                    result = "审批";
+                    break;
+                default :
+                    result = "其他";
+                    break;
+            }
+            return result.toString();
+        }
+
+
+
+        public static String getNext(ProcessType pType){
+            String result = "";
+            switch(pType){
+                case Apply :
+                    result ="提交" ;
+                    break;
+
+                case Check:
+                    result = "审批";
+                    break;
+                case Approval:
+                    result = "资金发放";
+                    break;
+                case Grant :
+                    result = "正享受";
+                    break;
+                default :
+                    result = "其他";
+                    break;
+            }
+            return result.toString();
+
+
+
+        }
+
+        public static ProcessType getProcessFromChinese(String str){
+            ProcessType pType=null;
+            if (str.equals("申请")) {
+                pType = Apply;
+
+            } else if (str.equals("提交")) {
+                pType = Submit;
+
+            } else if (str.equals("审核")) {
+                pType = Check;
+
+            } else if (str.equals("审批")) {
+                pType = Approval;
+
+            } else if (str.equals("资金发放")) {
+                pType = Grant;
+
+            } else if (str.equals("注销")) {
+                pType = Cancellation;
+
+            } else {
+                pType = Apply;
+
+            }
+            return  pType;
+        }
+
+
         public static String getChineseSeason(ProcessType pType){
             String result = "";
             switch(pType){

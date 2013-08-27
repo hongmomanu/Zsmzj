@@ -78,6 +78,7 @@ CREATE VIRTUAL TABLE IF NOT EXISTS enumerate USING fts3
 CREATE VIRTUAL TABLE IF NOT EXISTS attachment USING fts3
   (
   id integer primary key autoincrement,            --自增主键
+  time DATETIME DEFAULT (datetime(CURRENT_TIMESTAMP,'localtime')),  --提交时间
   businessid               integer,                --业务信息id
   attachmentname           VARCHAR(50),            --附件名称
   attachmenttype           VARCHAR(50),            --附件类型
@@ -158,7 +159,7 @@ CREATE VIRTUAL TABLE IF NOT EXISTS business USING fts3
 );
 
 ---家庭成员表
-CREATE TABLE IF NOT EXISTS familymembers
+CREATE VIRTUAL TABLE IF NOT EXISTS familymembers  USING fts3
 (
 
   id integer primary key autoincrement,                             --自增主键
@@ -194,7 +195,7 @@ CREATE TABLE IF NOT EXISTS familymembers
 );
 
 ---流程审批表
-CREATE TABLE IF NOT EXISTS approvalprocess
+CREATE VIRTUAL TABLE IF NOT EXISTS approvalprocess USING fts3
 (
 
   id integer primary key autoincrement,                             --自增主键

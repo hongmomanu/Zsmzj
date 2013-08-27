@@ -57,13 +57,17 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
                         return Ext.String.format('<span id="{0}"></span><span>&nbsp;&nbsp;&nbsp;</span><span id="{1}"></span>', id1,id2);
                     }
                 },
-                {header: '审批名称', dataIndex: 'rolename',width: 150},
-                {header: '审批流程', dataIndex: 'processstatus',width: 150},
-                {header: '审批内容'},
+                //{header: '审批名称', dataIndex: 'rolename',width: 150},
+                {header: '流程状态', dataIndex: 'processstatus',width: 150},
+                {header: '当前流程',dataIndex:'process'},
                 {header: '类型'},
-                {header: '提交机构'},
-                {header: '提交时间'},
-                {header: '提交人'},
+                {header: '提交机构',hidden:true},
+                {header: '提交时间',dataIndex:'time',renderer: function (val, obj, record) {
+                    var time = new Date(val);
+                    val = Ext.util.Format.date(time, 'Y-m-d H:i');
+                    return val;
+                }},
+                {header: '提交人',dataIndex:'displayname'},
                 {header: '业务id', width: 150,dataIndex:'businessid',hidden:true}
 
 
