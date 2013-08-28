@@ -23,6 +23,7 @@ Ext.define('ZSMZJ.controller.Header', {
     refs: [
         {ref: 'myviewheadViewPanel', selector: 'headviewpanel'} ,
         {ref: 'myprocesspicturePanel', selector: 'processpicturepanel'} ,
+        {ref: 'myprocessvector', selector: 'dbglprocessvector'} ,
         {ref: 'myheaderPanel', selector: 'myheader'}
     ],
     views: [
@@ -64,36 +65,20 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
     showProcessWin:function(c,r){//显示进程窗口
-        var me=this;
-        var params = {
-            type:'dbglprocessimg'
-        };
-        var successFunc = function (response, option) {
-            var res_arr = Ext.JSON.decode(response.responseText);
-            Ext.each(res_arr,function(a){
-               if(a.label==r.get('processstatus')){
 
-                   if(!me.processWin)me.processWin=Ext.widget('processwin');
-                   me.processWin.show();
-                   //console.log(me.getMyprocesspicturePanel());
-                   //alert(me.getMyprocesspicturePanel().items.items[0].el.dom.nodeName);
+       var me=this;
 
-                   /*var pic_panel=me.getMyprocesspicturePanel();
-                   pic_panel.update('<img src="'+ a.value+'">');*/
+       if(!me.processWin)me.processWin=Ext.widget('processwin');
+       me.processWin.show();
+       testobj=me.getMyprocessvector().surface;
+       me.getMyprocessvector().surface.add({
+           type: "text",
+           text: '侧四海',
+           x:555,
+           y:30
 
+       }).show(true);
 
-
-
-
-               }
-            });
-
-        };
-        var failFunc = function (form, action) {
-            Ext.Msg.alert("提示信息", "获取流程状态信息失败");
-
-        };
-        this.ajaxSend(params, 'ajax/getenumbytype.jsp', successFunc, failFunc,'POST');
 
 
 
