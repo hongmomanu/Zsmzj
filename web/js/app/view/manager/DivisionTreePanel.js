@@ -36,7 +36,8 @@ Ext.define('ZSMZJ.view.manager.DivisionTreePanel' ,{
                     flex: 1,
                     dataIndex: 'updatetime',
                     renderer: function (val) {
-                        var time = new Date(val);
+                        var time =Ext.Date.parse(val, "Y-m-d H:i:s");
+                        //var time = new Date(val);
                         val = Ext.util.Format.date(time, 'Y-m-d H:i');
                         return val;
                     },

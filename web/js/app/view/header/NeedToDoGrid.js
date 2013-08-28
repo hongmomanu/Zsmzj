@@ -33,6 +33,7 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
 
                 {header: '审批操作', width: 150,
                     renderer: function (v, m, r) {
+                        var me=this;
                         var id1 = Ext.id();
                         Ext.defer(function () {
                             Ext.widget('button', {
@@ -40,7 +41,28 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
                                 icon:'img/process.gif',
                                 text: '流程' ,
                                 width: 55,
-                                handler: function () { Ext.Msg.alert('Info', r.get('processstatus')) }
+                                listeners: {
+                                    /*click: {
+                                     element: 'el', //bind to the underlying el property on the panel
+                                     fn: function(){ alert('click el'); }
+                                     }*/
+                                    render: function(c){
+                                        c.getEl().on('click', function(){
+                                            //Ext.Msg.alert('Info', r.get('processstatus'))
+
+                                            me.fireEvent('processclick', c);
+
+                                        }, c);
+                                    }
+
+                                }/*,
+
+
+                                handler: function () {
+
+                                    Ext.Msg.alert('Info', r.get('processstatus'))
+
+                                }*/
                             });
                         }, 50);
                         var id2=Ext.id();
@@ -67,7 +89,8 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
                 }},
                 {header: '提交机构',hidden:true},
                 {header: '提交时间',dataIndex:'time',width:200,renderer: function (val, obj, record) {
-                    var time = new Date(val);
+                    var time =Ext.Date.parse(val, "Y-m-d H:i:s");
+                    //var time = new Date(val);
                     val = Ext.util.Format.date(time, 'Y-m-d H:i');
                     return val;
                 }},

@@ -48,10 +48,19 @@ Ext.define('ZSMZJ.controller.Header', {
             },
             'needtodopanel':{
 
-                afterrender: this.afterrenderEvents
+                afterrender: this.afterrenderEvents,
+                processclick:function (c){
+                    this.showProcessWin(c);
+                }
             }
 
+
         }, this);
+
+    },
+    showProcessWin:function(c){
+        if(!this.processWin)this.processWin=Ext.widget('processwin');
+        this.processWin.show();
 
     },
     afterrenderEvents:function(){
@@ -63,10 +72,11 @@ Ext.define('ZSMZJ.controller.Header', {
             type:'count'
         };
         var changeItem=this.getMyheaderPanel().down('#needtodopanel');
+        //testobjects=changeItem;
         var successFunc = function (response, option) {
             var res = Ext.JSON.decode(response.responseText);
             var count=res.count;
-            var text=changeItem.el.dom.innerText;
+            var text=changeItem.el.dom.textContent;
             var before_str=text.slice(0,text.indexOf("(")+1);
             var after_str=text.slice(text.indexOf(")"));
             changeItem.update(before_str+count+after_str);
