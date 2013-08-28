@@ -9,7 +9,8 @@
       Ext.onReady(function() {
           var tiger = Ext.create('Ext.draw.Component', {
               width: 153,
-              height: 153,
+              height: 306,
+              viewBox:true,
               cls: 'cursor-dragme',
               draggable: {
                   constrain: true,
@@ -18,14 +19,58 @@
               floating: {
                   shadow: false
               },
+              layout: {
+                  type: 'vbox'
+              },
               renderTo: Ext.getBody(),
               items: [
                   {
                       type: "image",
+                      viewBox:true,
                       src: "img/2013061301494220876442.gif",
                       width: 153,
                       height: 153
+                  },
+                  {
+                      type: "ellipse",
+                      radiusX: 100,
+                      radiusY: 50,
+                      stroke: 'red',
+                      x: 100,
+                      y: 100/*,
+                      fill: 'red'
+*/
+                  },
+                  {
+                        type: 'circle',
+                        fill: '#79BB3F',
+                        radius: 20,
+                        x: 10,
+                        y: 10
+                  },
+                  {
+                      type: 'circle',
+                      fill: '#79BB3F',
+                      radius: 20,
+                      x: 40,
+                      y: 40
+                  },
+
+                  {
+                      type: "text",
+                      text: '测试',
+                      x:70,
+                      y:70
+
                   }
+                  , {
+                      type: "path",
+                      path: "M100 0  L200 0 Z",    //路径      L150 50
+                      "stroke-width": "1",
+                      stroke: "#000",
+                      fill: "blue"
+                  }
+
               ]
           });
       });

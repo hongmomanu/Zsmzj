@@ -50,7 +50,7 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
                                         c.getEl().on('click', function(){
                                             //Ext.Msg.alert('Info', r.get('processstatus'))
 
-                                            me.fireEvent('processclick', c);
+                                            me.fireEvent('processclick', c,r);
 
                                         }, c);
                                     }

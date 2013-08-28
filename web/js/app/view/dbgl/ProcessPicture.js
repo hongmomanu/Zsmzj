@@ -15,9 +15,22 @@ Ext.define('ZSMZJ.view.dbgl.ProcessPicture' ,{
     initComponent: function() {
         Ext.apply(this, {
             border: false,
-            html:'<img src="img/bmhd.png">'
+
+
+
+
+            items:[
+                {html:'测试'},
+                {
+                    xtype:'dbglprocessvector'
+                }
+
+            ]
+
+
 
         });
+
         this.callParent(arguments);
 
     }

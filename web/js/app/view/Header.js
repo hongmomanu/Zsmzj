@@ -95,7 +95,7 @@ Ext.define('ZSMZJ.view.Header', {
                                     }
                                 },
                                 {
-                                    html: '  <a>待办事务:(0)<a>',
+                                    html: '待办事务:(0)',
                                     baseCls: 'main-header',
                                     columnWidth:.3,
                                     itemId: 'needtodopanel',

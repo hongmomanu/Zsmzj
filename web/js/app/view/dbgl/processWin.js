@@ -14,7 +14,7 @@ Ext.define('ZSMZJ.view.dbgl.processWin' ,{
     initComponent: function() {
         Ext.apply(this, {
             title: '流程记录',
-            height: 560,
+            height: 460,
             width: 830,
             closeAction : 'hide',
             maximizable: true,

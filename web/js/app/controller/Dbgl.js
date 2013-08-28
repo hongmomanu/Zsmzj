@@ -33,7 +33,8 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.comboxwidget.applytype',
         'dbgl.ProcessHistoryGrid',
         'dbgl.processWin',
-        'dbgl.ProcessPicture'
+        'dbgl.ProcessPicture',
+        'dbgl.ProcessVector'
 
     ],
 

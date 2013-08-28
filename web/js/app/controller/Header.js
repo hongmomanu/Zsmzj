@@ -8,9 +8,9 @@
 
 
 /**
- * Map controller
+ * Header controller
  * Used to manage map layers and showing their related views
- * 导航栏，显示各种信息
+ * 标题栏，显示各种信息
  */
 Ext.define('ZSMZJ.controller.Header', {
     extend: 'Ext.app.Controller',
@@ -22,6 +22,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
     refs: [
         {ref: 'myviewheadViewPanel', selector: 'headviewpanel'} ,
+        {ref: 'myprocesspicturePanel', selector: 'processpicturepanel'} ,
         {ref: 'myheaderPanel', selector: 'myheader'}
     ],
     views: [
@@ -46,11 +47,15 @@ Ext.define('ZSMZJ.controller.Header', {
                     this.showneedthings(c);
                 }
             },
+            'processpicturepanel':{
+                afterrender: this.processpictureRenderEvent
+
+            },
             'needtodopanel':{
 
                 afterrender: this.afterrenderEvents,
-                processclick:function (c){
-                    this.showProcessWin(c);
+                processclick:function (c,r){
+                    this.showProcessWin(c,r);
                 }
             }
 
@@ -58,13 +63,46 @@ Ext.define('ZSMZJ.controller.Header', {
         }, this);
 
     },
-    showProcessWin:function(c){
-        if(!this.processWin)this.processWin=Ext.widget('processwin');
-        this.processWin.show();
+    showProcessWin:function(c,r){//显示进程窗口
+        var me=this;
+        var params = {
+            type:'dbglprocessimg'
+        };
+        var successFunc = function (response, option) {
+            var res_arr = Ext.JSON.decode(response.responseText);
+            Ext.each(res_arr,function(a){
+               if(a.label==r.get('processstatus')){
+
+                   if(!me.processWin)me.processWin=Ext.widget('processwin');
+                   me.processWin.show();
+                   //console.log(me.getMyprocesspicturePanel());
+                   //alert(me.getMyprocesspicturePanel().items.items[0].el.dom.nodeName);
+
+                   /*var pic_panel=me.getMyprocesspicturePanel();
+                   pic_panel.update('<img src="'+ a.value+'">');*/
+
+
+
+
+
+               }
+            });
+
+        };
+        var failFunc = function (form, action) {
+            Ext.Msg.alert("提示信息", "获取流程状态信息失败");
+
+        };
+        this.ajaxSend(params, 'ajax/getenumbytype.jsp', successFunc, failFunc,'POST');
+
+
 
     },
     afterrenderEvents:function(){
         CommonFunc.removeTask(ViewWaitMask,Ext.getCmp('mainContent-panel').getEl());
+    },
+    processpictureRenderEvent:function(){
+
     },
     headerRenderEvents:function(){
         var params = {
@@ -72,14 +110,15 @@ Ext.define('ZSMZJ.controller.Header', {
             type:'count'
         };
         var changeItem=this.getMyheaderPanel().down('#needtodopanel');
-        //testobjects=changeItem;
+        testobj= changeItem;
         var successFunc = function (response, option) {
             var res = Ext.JSON.decode(response.responseText);
             var count=res.count;
-            var text=changeItem.el.dom.textContent;
+            var text=changeItem.el.dom.innerHTML;
             var before_str=text.slice(0,text.indexOf("(")+1);
             var after_str=text.slice(text.indexOf(")"));
-            changeItem.update(before_str+count+after_str);
+
+            changeItem.el.setHTML(before_str+count+after_str);
 
 
         };
