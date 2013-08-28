@@ -47,7 +47,7 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
                         Ext.defer(function () {
                             Ext.widget('button', {
                                 renderTo: id2,
-                                text: '审批' ,
+                                text: r.get('process'),
                                 icon:'img/sp.gif',
                                 width: 55,
                                 handler: function () { Ext.Msg.alert('Info', r.get('processstatus')) }
@@ -58,11 +58,15 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
                     }
                 },
                 //{header: '审批名称', dataIndex: 'rolename',width: 150},
-                {header: '流程状态', dataIndex: 'processstatus',width: 150},
+                {header: '流程状态', dataIndex: 'processstatus',width: 150,renderer:function(val,obj,record){
+                    return "已"+val;
+                }},
                 {header: '当前流程',dataIndex:'process'},
-                {header: '类型'},
+                {header: '类型',renderer:function(val,obj,record){
+                    return "待办";
+                }},
                 {header: '提交机构',hidden:true},
-                {header: '提交时间',dataIndex:'time',renderer: function (val, obj, record) {
+                {header: '提交时间',dataIndex:'time',width:200,renderer: function (val, obj, record) {
                     var time = new Date(val);
                     val = Ext.util.Format.date(time, 'Y-m-d H:i');
                     return val;

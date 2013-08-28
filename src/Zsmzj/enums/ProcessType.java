@@ -54,7 +54,7 @@ public enum ProcessType {
             String result = "";
             switch(pType){
                 case Apply :
-                    result ="提交" ;
+                    result ="审核" ;
                     break;
 
                 case Check:
