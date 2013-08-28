@@ -11,11 +11,11 @@
               width: 153,
               height: 306,
               viewBox:true,
-              cls: 'cursor-dragme',
+              /*cls: 'cursor-dragme',
               draggable: {
                   constrain: true,
                   constrainTo: Ext.getBody()
-              },
+              },*/
               floating: {
                   shadow: false
               },

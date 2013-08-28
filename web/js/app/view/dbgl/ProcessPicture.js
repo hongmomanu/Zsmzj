@@ -15,12 +15,10 @@ Ext.define('ZSMZJ.view.dbgl.ProcessPicture' ,{
     initComponent: function() {
         Ext.apply(this, {
             border: false,
-
-
-
+            layout:'fit',
 
             items:[
-                {html:'测试'},
+
                 {
                     xtype:'dbglprocessvector'
                 }
