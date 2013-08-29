@@ -34,6 +34,12 @@ public class BusinessProcessControl {
         return JSONObject.fromObject(res).toString();
 
     }
+    public String getAffixfilebybid(int businessid){
+        BusinessProcess bp=new BusinessProcess();
+        ArrayList<Map<String,Object>> res =bp.getAffixfilebybid(businessid);
+        return JSONObject.fromObject(res).toString();
+
+    }
 
     public String getNeedTodoList(int roleid,int start,int limit ,String keyword){
 

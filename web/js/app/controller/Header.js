@@ -79,7 +79,7 @@ Ext.define('ZSMZJ.controller.Header', {
         var form=this.getMydbglbusinessalterform();
 
         this.getValueBybusinessid(r.get('businessid'),'ajax/getapplyformbybid.jsp',this.setFormValues,form);
-        //this.getValueBybusinessid(r.get('businessid'),'ajax/getaffixfilebybid.jsp',this.setAffixValue,form)
+        this.getValueBybusinessid(r.get('businessid'),'ajax/getaffixfilebybid.jsp',this.setAffixValue,form)
 
 
     },

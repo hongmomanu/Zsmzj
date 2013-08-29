@@ -23,7 +23,31 @@ public class BusinessProcessDao {
     private static final String UserTable="users";
 
 
+    public  ArrayList<Map<String, Object>> getAffixfilebybid(int businessid,String tablename){
+        Connection testConn= JdbcFactory.getConn("sqlite");
+        String sql=  "select * from ? where businessid MATCH ?";
+        ArrayList<Map<String,Object>> list=new ArrayList<Map<String, Object>>();
+        PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
+        try {
+            pstmt.setString(1,tablename);
+            pstmt.setInt(2, businessid);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Map<String,Object> map=new HashMap<String, Object>();
+               // map.put("")
 
+            }
+        }catch (Exception E){
+            log.debug(E.getMessage());
+        }
+        finally {
+            return list;
+        }
+
+
+
+
+    }
     public Map<String,Object> getApplyForm(int businessid,String tablename){
         Connection testConn= JdbcFactory.getConn("sqlite");
         String sql=  "select a.*,b.displayname   from "+
