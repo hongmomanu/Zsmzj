@@ -78,7 +78,8 @@ Ext.define('ZSMZJ.controller.Header', {
         this.showtab("修改信息",'dbglbusinessalterform','widget');
         var form=this.getMydbglbusinessalterform();
 
-        this.getValueBybusinessid(r.get('businessid'),'ajax/getapplyformbyid.jsp',this.setFormValus,form);
+        this.getValueBybusinessid(r.get('businessid'),'ajax/getapplyformbybid.jsp',this.setFormValues,form);
+        //this.getValueBybusinessid(r.get('businessid'),'ajax/getaffixfilebybid.jsp',this.setAffixValue,form)
 
 
     },
@@ -88,14 +89,14 @@ Ext.define('ZSMZJ.controller.Header', {
            /* this.showtab(processdiction.steptwo,'dbglbusinessapplyform','widget');
             var form=this.getMydbglbusinessapplyform();
 
-            this.getValueBybusinessid(r.get('businessid'),'ajax/getapplyformbyid.jsp',this.setFormValus,form);*/
+            this.getValueBybusinessid(r.get('businessid'),'ajax/getapplyformbybid.jsp',this.setFormValus,form);*/
 
         }
         else if(r.get("process")==processdiction.steptwo){
            this.showtab(processdiction.steptwo,'dbglbusinesscheckform','widget');
 
             var form=this.getMydbglbusinesscheckform();
-           this.getValueBybusinessid(r.get('businessid'),'ajax/getapplyformbyid.jsp',this.setFormValus,form);
+           this.getValueBybusinessid(r.get('businessid'),'ajax/getapplyformbybid.jsp',this.setFormValues,form);
 
 
 
@@ -124,8 +125,41 @@ Ext.define('ZSMZJ.controller.Header', {
     },
 
 
+    setAffixValue:function(data,me,form){
+       /* var
+        var filepath=action.result.filepath;
+        var filename=action.result.filename;
+        //var grid=me.getMyviewaffixfilesgrid();
+        var grid=btn.up('panel').down('panel');
+        var r = Ext.create('ZSMZJ.model.dbgl.AffixFilesGrid', {
+            attachmentname: filename,
+            attachmentpath:filepath
 
-    setFormValus:function(data,me,form){
+        });*/
+
+        var num=data.length;
+
+        //var applyform=this.getMyviewbusinessapplyform();
+        for(var i=0;i<num;i++){
+
+            var item=form.down('#'+data[i].attachmenttype);
+            var count=data[i].results.length;
+            CommonFunc.updateitemnum(item,count);
+
+
+
+        }
+
+        /*var formdata=[];
+        Ext.each(store.data.items,function(a){
+            formdata.push(a.data);
+        })
+        win.itemdata.update(before_str+count+after_str);
+        win.itemdata.formdata=formdata;
+*/
+
+    },
+    setFormValues:function(data,me,form){
         form.getForm().setValues(data);
         var divisiontype=form.down('#divisiontype');
 
@@ -202,11 +236,7 @@ Ext.define('ZSMZJ.controller.Header', {
         var successFunc = function (response, option) {
             var res = Ext.JSON.decode(response.responseText);
             var count=res.count;
-            var text=changeItem.el.dom.innerHTML;
-            var before_str=text.slice(0,text.indexOf("(")+1);
-            var after_str=text.slice(text.indexOf(")"));
-
-            changeItem.el.setHTML(before_str+count+after_str);
+            CommonFunc.updateitemnum(changeItem,count)
 
 
         };

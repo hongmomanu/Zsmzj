@@ -195,15 +195,11 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         var grid=btn.up('panel').down('panel');
         var store=grid.getStore();
         var count=store.getCount();
-        //var applyform=this.getMyviewbusinessapplyform();
-        var text=win.itemdata.el.dom.innerText;
-        var before_str=text.slice(0,text.indexOf("(")+1);
-        var after_str=text.slice(text.indexOf(")"));
         var formdata=[];
         Ext.each(store.data.items,function(a){
             formdata.push(a.data);
-        })
-        win.itemdata.update(before_str+count+after_str);
+        });
+        CommonFunc.updateitemnum(win.itemdata,count);
         win.itemdata.formdata=formdata;
         win.hide();
         //console.log(store);

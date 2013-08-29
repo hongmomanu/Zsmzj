@@ -7,6 +7,13 @@
  */
 var CommonFunc={
 
+    updateitemnum:function(item,count){
+        var text=item.el.dom.innerHTML;
+        var before_str=text.slice(0,text.indexOf("(")+1);
+        var after_str=text.slice(text.indexOf(")"));
+        item.el.setHTML(before_str+count+after_str);
+
+    },
     removeTask:function(mask,el){
         var task = new Ext.util.DelayedTask(function() {
             // Fade out the body mask

@@ -510,10 +510,11 @@ Ext.define('ZSMZJ.view.dbgl.businessAlter', {
                             },
                             items:[
                                 {
-                                    html: '  <a>【申请人】身份证(0)<a>',
+                                    html: ' 【申请人】身份证(0)',
 
                                     cls:'mouseover',
                                     type:'personid',
+                                    itemId:'personid',
                                     listeners: {
                                         /*click: {
                                             element: 'el', //bind to the underlying el property on the panel
