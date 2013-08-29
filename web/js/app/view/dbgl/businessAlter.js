@@ -7,9 +7,9 @@
  */
 
 
-Ext.define('ZSMZJ.view.dbgl.businessCheck', {
+Ext.define('ZSMZJ.view.dbgl.businessAlter', {
     extend : 'Ext.form.Panel',
-    alias : 'widget.dbglbusinesscheckform',
+    alias : 'widget.dbglbusinessalterform',
     requires: [
 
 
@@ -53,15 +53,17 @@ Ext.define('ZSMZJ.view.dbgl.businessCheck', {
                 items: [{
                         name: 'division',
                         fieldLabel: '行政区划',
+                        itemId:'divisiontype',
                         //width:300,
                         //id:'testobjcomb',
                         xtype:'dbgldivsioncombtreepath',
-                        //blankText: "不能为空",
+                        allowBlank: false,
+                        blankText: "不能为空",
                         displayField: 'text',
                         valueField:'id',
                         afterLabelTextTpl: required,
-                        //emptyText: '请输入行政区划',
-                        //blankText : '请输入行政区划',
+                        emptyText: '请输入行政区划',
+                        blankText : '请输入行政区划',
                         colspan:2,//合并列
                         allowBlank: false
                     },
@@ -793,75 +795,51 @@ Ext.define('ZSMZJ.view.dbgl.businessCheck', {
                             grow : true,
                             allowBlank: true
                         }
+                        ,/*{
+                            colspan:3,
+                            anchor : '100%',
+                            width:'100%',
+                            xtype : 'panel',
+                            border:0,
+                            defaults:{
+                                border:0
+                            },
+                            layout:'column',
+                            defaultType: 'textfield',
 
+                            items:[*/
+                                {
+                                    fieldLabel: '制表时间',
+                                    name:'mktime',
+                                    //columnWidth:.5,
+                                    readOnly: true,
+                                    value:Ext.Date.format(new Date(), 'Y-m-d')
 
-                    ]
-                },
-                {
-                    xtype: 'fieldset',
-                    title: '<a>审批记录</a>',
-                    defaultType: 'textfield',
-
-                    //layout: 'anchor',
-                    layout: {
-                        type: 'table',
-
-                        // The total column count must be specified here
-                        columns: 3,
-                        tableAttrs: {
-                            border: 1,
-                            cellpadding: 5,
-                            cellspacing: 1,
-                            width: '100%',
-                            align: 'center',
-                            style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:center;"
-                            /*style: {
-                             width: '100%'
-                             }*/
-                        }
-                    },
-
-                    items:[
-
-                        {
-                            xtype:'processhistorygrid',
-                            colspan:3
-                        },
-                        {
-                            fieldLabel: '制表时间',
-                            name:'mktime'
-                            //columnWidth:.5,
-                            //readOnly: true,
-                            //value:Ext.Date.format(new Date(), 'Y-m-d')
+                                }
+                                 ,{
+                                xtype:'label',
+                                text:''
 
                         }
-                        ,{
-                            xtype:'label',
-                            text:''
+                                 ,
 
-                        }
-                        ,
-
-                        {
-                            fieldLabel:"制表人",
-                            name:'mkperson'
-                            //value:username,
-                            //readOnly: true
+                                {
+                                    fieldLabel:"制表人",
+                                    name:'mkperson',
+                                    value:username,
+                                    readOnly: true
 
 
-                        }
-
+                                }
+                         /*   ]
+                        }*/
                     ]
                 }
             ],
             buttons:[
                 {
-                    text: '审核通过',
-                    action:'check'
-                },
-                {
                     text: '保存',
-                    action:'save'
+                    action:'applysubmit'
                 }
             ]
 

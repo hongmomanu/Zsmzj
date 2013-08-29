@@ -25,7 +25,7 @@ Ext.define('ZSMZJ.controller.Header', {
         {ref: 'myprocesspicturePanel', selector: 'processpicturepanel'} ,
         {ref: 'myprocessvector', selector: 'dbglprocessvector'} ,
         {ref: 'mydbglbusinesscheckform', selector: 'dbglbusinesscheckform'},
-        {ref: 'mydbgldivsioncombtreepath', selector: 'dbgldivsioncombtreepath'},
+        {ref: 'mydbglbusinessalterform', selector: 'dbglbusinessalterform'},
         {ref: 'myheaderPanel', selector: 'myheader'}
     ],
     views: [
@@ -63,6 +63,10 @@ Ext.define('ZSMZJ.controller.Header', {
                 businessclick:function(c,r){//业务审核处理
 
                    this.showBusinessCheckContent(c,r);
+                },
+                alterclick:function(c,r){//业务审核处理
+
+                    this.showAlterContent(c,r);
                 }
             }
 
@@ -70,12 +74,28 @@ Ext.define('ZSMZJ.controller.Header', {
         }, this);
 
     },
+    showAlterContent:function(c,r){
+        this.showtab("修改信息",'dbglbusinessalterform','widget');
+        var form=this.getMydbglbusinessalterform();
+
+        this.getValueBybusinessid(r.get('businessid'),'ajax/getapplyformbyid.jsp',this.setFormValus,form);
+
+
+    },
     showBusinessCheckContent:function(c,r){
-       if(r.get("process")==processdiction.steptwo){
+        if(r.get("process")==processdiction.stepone){
+
+           /* this.showtab(processdiction.steptwo,'dbglbusinessapplyform','widget');
+            var form=this.getMydbglbusinessapplyform();
+
+            this.getValueBybusinessid(r.get('businessid'),'ajax/getapplyformbyid.jsp',this.setFormValus,form);*/
+
+        }
+        else if(r.get("process")==processdiction.steptwo){
            this.showtab(processdiction.steptwo,'dbglbusinesscheckform','widget');
 
-
-           this.getValueBybusinessid(r.get('businessid'),'ajax/getapplyformbyid.jsp',this.setFormValus)
+            var form=this.getMydbglbusinesscheckform();
+           this.getValueBybusinessid(r.get('businessid'),'ajax/getapplyformbyid.jsp',this.setFormValus,form);
 
 
 
@@ -84,7 +104,7 @@ Ext.define('ZSMZJ.controller.Header', {
     },
 
 
-    getValueBybusinessid:function(businessid,url,callbackfn){
+    getValueBybusinessid:function(businessid,url,callbackfn,form){
         var me=this;
         var params = {
             businessid:businessid
@@ -92,8 +112,7 @@ Ext.define('ZSMZJ.controller.Header', {
         var successFunc = function (response, option) {
             var res = Ext.JSON.decode(response.responseText);
 
-            callbackfn(res,me)
-
+            callbackfn(res,me,form)
 
         };
         var failFunc = function (form, action) {
@@ -104,11 +123,14 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
 
-    setFormValus:function(data,me){
-        var form=me.getMydbglbusinesscheckform();
+
+
+    setFormValus:function(data,me,form){
         form.getForm().setValues(data);
-        me.getMydbgldivsioncombtreepath().setValue(data.division);
-        me.getMydbgldivsioncombtreepath().setRawValue(data.division);
+        var divisiontype=form.down('#divisiontype');
+
+        divisiontype.setValue(data.division);
+        divisiontype.setRawValue(data.division);
     },
 
     showProcessWin:function(c,r){//显示进程窗口

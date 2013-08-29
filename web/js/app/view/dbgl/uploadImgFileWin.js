@@ -49,7 +49,6 @@ Ext.define('ZSMZJ.view.dbgl.uploadImgFileWin' ,{
                         fieldLabel: '文件名'
                     },{
                         xtype: 'filefield',
-                        id: 'form-file',
                         emptyText: '选择照片',
                         fieldLabel: '照片',
                         name: 'filepath',

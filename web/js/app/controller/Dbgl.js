@@ -35,7 +35,8 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.processWin',
         'dbgl.ProcessPicture',
         'dbgl.ProcessVector',
-        'dbgl.businessCheck'
+        'dbgl.businessCheck',
+        'dbgl.businessAlter'
 
     ],
 
@@ -45,16 +46,24 @@ Ext.define('ZSMZJ.controller.Dbgl', {
          this.control({
          'dbglbusinessapplyform component':{
             imgclick:function (c){
-               this.showUploadImgWin();
+               this.showUploadImgWin(c);
            },
             affixclick:function (c){
                this.showaffixWindow(c);
             }
          },
+         'dbglbusinessalterform component':{
+             imgclick:function (c){
+                 this.showAlterUploadImgWin(c);
+             },
+             affixclick:function (c){
+                 this.showAlteraffixWindow(c);
+             }
+         },
          'dbglbusinessapplyform button[action=applysubmit]':{
              click: this.applysubmit
          },
-         'dbglbusinessapplyform,dbglbusinesscheckform':{
+         'dbglbusinessapplyform,dbglbusinesscheckform,dbglbusinessalterform':{
              afterrender: this.afterrenderEvents
          },
 
@@ -237,6 +246,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
       if (form.isValid()) {
        familymembers,affixfiles,
       }*/
+
         var store=this.getMyviewfamilymembergrid().getStore();
         var familymembers=[];
         var affixfiles=[];
@@ -256,7 +266,8 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             }
 
         });
-        affixfiles.push({"accountimgpath":[{'attachmentname':'照片','attachmentpath':Ext.getCmp('dbglaccountimg').value}]});
+
+        affixfiles.push({"accountimgpath":[{'attachmentname':'照片','attachmentpath':form.down('#dbglaccountimg').value}]});
         var params = {
             businesstype:businessTableType.dbgl,
             userid:userid,
@@ -281,11 +292,15 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         var params = {
 
         };
+        //var applyform=this.getMyviewbusinessapplyform();
+        var win=btn.up('window');
+
+        var applyform=win.itemdata.up('form');
         var successFunc = function (form, action) {
             var filepath=action.result.filepath;
-            Ext.getCmp('dbglaccountimg').getEl().dom.src=filepath;
-            Ext.getCmp('dbglaccountimg').value=filepath;
-            me.uploadimgWin.hide();
+            applyform.down('#dbglaccountimg').getEl().dom.src=filepath;
+            applyform.down('#dbglaccountimg').value=filepath;
+            win.hide();
 
         };
         var failFunc = function (form, action) {
@@ -319,9 +334,16 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
     },
 
-    showUploadImgWin:function(){
+    showUploadImgWin:function(c){
         if(!this.uploadimgWin)this.uploadimgWin=Ext.widget('uploadimgfilewin');
+        this.uploadimgWin.itemdata= c;
         this.uploadimgWin.show();
+
+    },
+    showAlterUploadImgWin:function(c){
+        if(!this.alteruploadimgWin)this.alteruploadimgWin=Ext.widget('uploadimgfilewin');
+        this.alteruploadimgWin.itemdata= c;
+        this.alteruploadimgWin.show();
 
     },
     showaffixWindow:function(c){
@@ -330,6 +352,14 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             this.uploadaffixWin.itemdata=c;
         }
         this.uploadaffixWin.show();
+
+    },
+    showAlteraffixWindow:function(c){
+        if(!this.alteruploadaffixWin){
+            this.alteruploadaffixWin=Ext.widget('uploadaffixfilewin');
+            this.alteruploadaffixWin.itemdata=c;
+        }
+        this.alteruploadaffixWin.show();
 
     },
     onLaunch: function() {

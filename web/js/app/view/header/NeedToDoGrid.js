@@ -31,9 +31,31 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
             columns: [
 
 
-                {header: '审批操作', width: 150,
+                {header: '业务操作', width: 250,
                     renderer: function (v, m, r) {
                         var me=this;
+                        var id0=Ext.id();
+                        Ext.defer(function () {
+                            Ext.widget('button', {
+                                renderTo: id0,
+                                text: '修改',
+                                icon:'img/sp.gif',
+                                hidden:!(r.get('processstatus').toString()==processdiction.stepzero),
+                                width: 55,
+                                listeners: {
+
+                                    render: function(c){
+                                        c.getEl().on('click', function(){
+                                            me.fireEvent('alterclick', c,r);
+
+                                        }, c);
+                                    }
+
+                                }
+                            });
+                        }, 50);
+
+
                         var id1 = Ext.id();
                         Ext.defer(function () {
                             Ext.widget('button', {
@@ -41,6 +63,7 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
                                 icon:'img/process.gif',
                                 text: '流程' ,
                                 width: 55,
+                                hidden: r.get('processstatus').toString()==processdiction.stepzero,
                                 listeners: {
 
                                     render: function(c){
@@ -75,7 +98,31 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
                             });
                         }, 50);
 
-                        return Ext.String.format('<span id="{0}"></span><span>&nbsp;&nbsp;&nbsp;</span><span id="{1}"></span>', id1,id2);
+
+                        var id3=Ext.id();
+                        Ext.defer(function () {
+                            Ext.widget('button', {
+                                renderTo: id3,
+                                text: '删除',
+                                icon:'img/sp.gif',
+                                hidden:!(r.get('processstatus').toString()==processdiction.stepzero),
+                                width: 55,
+                                listeners: {
+
+                                    render: function(c){
+                                        c.getEl().on('click', function(){
+                                            me.fireEvent('delclick', c,r);
+
+                                        }, c);
+                                    }
+
+                                }
+                            });
+                        }, 50);
+
+                        return Ext.String.format('<span id="{0}" style="padding-left:5px; "></span>' +
+                            '<span id="{1}" style="padding-left:5px; "></span><span id="{2}" style="padding-left:5px; "></span>' +
+                            '<span id="{3}" style="padding-left:5px; "></span>',id0, id1,id2,id3);
                     }
                 },
                 //{header: '审批名称', dataIndex: 'rolename',width: 150},

@@ -50,7 +50,7 @@ Ext.define('ZSMZJ.view.dbgl.AffixFilesGrid' ,{
 
                     }]
             }),*/
-            store: 'dbgl.AffixFilesGrids'
+            store: Ext.widget('affixfilesgridstores')
 
 
         });

@@ -18,5 +18,5 @@ var menu_qxgl=[{layout: 'fit',title: '权限设置',items:[{xtype:'userconfiggri
 var imgfiletype={'jpg':true,'jpeg':true,'gif':true};
 var businessTableType={'dbgl':"低保",'dbbyh':"边缘户"};
 var ViewWaitMask=null;
-var processdiction={"stepone":"申请","steptwo":"审核","stepthree":"审批"}
+var processdiction={"stepzero":"申请","stepone":"提交","steptwo":"审核","stepthree":"审批"}
 

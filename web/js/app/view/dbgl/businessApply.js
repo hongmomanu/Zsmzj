@@ -72,7 +72,7 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                         value:"",
                         width:100,
                         height:110,
-                        id:'dbglaccountimg',
+                        itemId:'dbglaccountimg',
                         rowspan:4,
                         listeners: {
                             render: function(c){
@@ -587,6 +587,7 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                         xtype:'dbglaplytype',
                         searchtype:"dbglicomemonth",
                         name: 'icomemonth',
+
                         fieldLabel: '收入累计月份',
                         afterLabelTextTpl: required,
                         emptyText: '请选择累计月份',
