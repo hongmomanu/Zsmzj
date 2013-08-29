@@ -25,6 +25,7 @@ Ext.define('ZSMZJ.controller.Header', {
         {ref: 'myprocesspicturePanel', selector: 'processpicturepanel'} ,
         {ref: 'myprocessvector', selector: 'dbglprocessvector'} ,
         {ref: 'mydbglbusinesscheckform', selector: 'dbglbusinesscheckform'},
+        {ref: 'mydbgldivsioncombtreepath', selector: 'dbgldivsioncombtreepath'},
         {ref: 'myheaderPanel', selector: 'myheader'}
     ],
     views: [
@@ -72,9 +73,9 @@ Ext.define('ZSMZJ.controller.Header', {
     showBusinessCheckContent:function(c,r){
        if(r.get("process")==processdiction.steptwo){
            this.showtab(processdiction.steptwo,'dbglbusinesscheckform','widget');
-           var form=this.getMydbglbusinesscheckform();
 
-           this.getValueBybusinessid(r.get('businessid'),'ajax/getapplyformbyid.jsp',this.setFormValus,form)
+
+           this.getValueBybusinessid(r.get('businessid'),'ajax/getapplyformbyid.jsp',this.setFormValus)
 
 
 
@@ -83,15 +84,15 @@ Ext.define('ZSMZJ.controller.Header', {
     },
 
 
-    getValueBybusinessid:function(businessid,url,callbackfn,form){
-
+    getValueBybusinessid:function(businessid,url,callbackfn){
+        var me=this;
         var params = {
             businessid:businessid
         };
         var successFunc = function (response, option) {
             var res = Ext.JSON.decode(response.responseText);
 
-            callbackfn(form,res)
+            callbackfn(res,me)
 
 
         };
@@ -103,11 +104,11 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
 
-    setFormValus:function(form,data){
-
+    setFormValus:function(data,me){
+        var form=me.getMydbglbusinesscheckform();
         form.getForm().setValues(data);
-        this.setValue(data.division);
-        this.setRawValue(data.division);
+        me.getMydbgldivsioncombtreepath().setValue(data.division);
+        me.getMydbgldivsioncombtreepath().setRawValue(data.division);
     },
 
     showProcessWin:function(c,r){//显示进程窗口

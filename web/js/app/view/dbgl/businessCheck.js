@@ -56,13 +56,12 @@ Ext.define('ZSMZJ.view.dbgl.businessCheck', {
                         //width:300,
                         //id:'testobjcomb',
                         xtype:'dbgldivsioncombtreepath',
-                        allowBlank: false,
-                        blankText: "不能为空",
+                        //blankText: "不能为空",
                         displayField: 'text',
                         valueField:'id',
                         afterLabelTextTpl: required,
-                        emptyText: '请输入行政区划',
-                        blankText : '请输入行政区划',
+                        //emptyText: '请输入行政区划',
+                        //blankText : '请输入行政区划',
                         colspan:2,//合并列
                         allowBlank: false
                     },
