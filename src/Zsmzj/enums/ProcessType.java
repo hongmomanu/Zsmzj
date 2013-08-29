@@ -31,9 +31,11 @@ public enum ProcessType {
         public static String getPrevious(ProcessType pType){
             String result = "";
             switch(pType){
-
+                case Submit:
+                    result ="申请";
+                    break;
                 case Check:
-                    result = "申请";
+                    result = "提交";
                     break;
                 case Approval:
                     result = "审核";
@@ -54,9 +56,11 @@ public enum ProcessType {
             String result = "";
             switch(pType){
                 case Apply :
-                    result ="审核" ;
+                    result ="提交" ;
                     break;
-
+                case Submit:
+                    result ="审核";
+                    break;
                 case Check:
                     result = "审批";
                     break;
