@@ -34,7 +34,8 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.ProcessHistoryGrid',
         'dbgl.processWin',
         'dbgl.ProcessPicture',
-        'dbgl.ProcessVector'
+        'dbgl.ProcessVector',
+        'dbgl.businessCheck'
 
     ],
 
@@ -53,7 +54,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
          'dbglbusinessapplyform button[action=applysubmit]':{
              click: this.applysubmit
          },
-         'dbglbusinessapplyform':{
+         'dbglbusinessapplyform,dbglbusinesscheckform':{
              afterrender: this.afterrenderEvents
          },
 

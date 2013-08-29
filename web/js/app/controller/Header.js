@@ -55,8 +55,12 @@ Ext.define('ZSMZJ.controller.Header', {
             'needtodopanel':{
 
                 afterrender: this.afterrenderEvents,
-                processclick:function (c,r){
+                processclick:function (c,r){//查看流程
                     this.showProcessWin(c,r);
+                },
+                businessclick:function(c,r){//业务审核处理
+
+                   this.showBusinessCheckContent(c,r);
                 }
             }
 
@@ -64,20 +68,61 @@ Ext.define('ZSMZJ.controller.Header', {
         }, this);
 
     },
+    showBusinessCheckContent:function(c,r){
+       if(r.get("process")==processdiction.steptwo){
+           this.showtab(processdiction.steptwo,'dbglbusinesscheckform','widget');
+       }
+
+    },
     showProcessWin:function(c,r){//显示进程窗口
 
        var me=this;
 
-       if(!me.processWin)me.processWin=Ext.widget('processwin');
-       me.processWin.show();
-       testobj=me.getMyprocessvector().surface;
-       me.getMyprocessvector().surface.add({
-           type: "text",
-           text: '侧四海',
-           x:555,
-           y:30
+       if(!me.processWin){
+           me.processWin=Ext.widget('processwin');
+           me.processWin.show();
+           me.vectornums=me.getMyprocessvector().surface.items.items.length;
+       }else{
+           me.processWin.show();
+       }
 
-       }).show(true);
+       var mysurface=me.getMyprocessvector().surface;
+       for(var i=me.vectornums;i<mysurface.items.items.length;i++){
+           mysurface.remove(mysurface.items.items[i]);
+
+       }
+        if(r.get("processstatus")==processdiction.stepone){
+
+            mysurface.add({
+                type: "path",
+
+                path: "M40 35  L50 45 L65 28",    //路径      L150 50
+                "stroke-width": "4",
+                opacity :0.6,
+                stroke: "red"/*,
+                fill: "blue"*/
+            }).show(true);
+            //流程分割符号
+            mysurface.add({
+                type: "path",
+                path: "M110 80  L110 100 L105 100 L115 110 L125 100 L120 100 L120 80 Z",    //路径      L150 50
+                "stroke-width": "2",
+                //opacity :0.6,
+                stroke: "red",
+                fill: "red"
+            }).show(true);
+            //提交申请人名单
+            mysurface.add({
+                type: "text",
+                text:r.get("displayname"),
+                x:20,
+                y:90
+
+            }).show(true);
+
+            me.processWin.doLayout();
+
+        }
 
 
 
@@ -95,7 +140,6 @@ Ext.define('ZSMZJ.controller.Header', {
             type:'count'
         };
         var changeItem=this.getMyheaderPanel().down('#needtodopanel');
-        testobj= changeItem;
         var successFunc = function (response, option) {
             var res = Ext.JSON.decode(response.responseText);
             var count=res.count;

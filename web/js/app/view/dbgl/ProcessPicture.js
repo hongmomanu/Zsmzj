@@ -16,6 +16,8 @@ Ext.define('ZSMZJ.view.dbgl.ProcessPicture' ,{
         Ext.apply(this, {
             border: false,
             layout:'fit',
+            padding:10,
+            margin:10,
 
             items:[
 

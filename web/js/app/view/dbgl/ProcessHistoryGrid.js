@@ -21,7 +21,7 @@ Ext.define('ZSMZJ.view.dbgl.ProcessHistoryGrid' ,{
                 enableTextSelection:true,
                 stripeRows: true
             },
-
+            //title:'审批流程记录',
             //view: new Ext.grid.GridView({ scrollToTop: Ext.emptyFn }),
 
             //hideHeaders:true,

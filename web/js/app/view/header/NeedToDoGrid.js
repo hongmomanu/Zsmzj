@@ -42,10 +42,7 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
                                 text: '流程' ,
                                 width: 55,
                                 listeners: {
-                                    /*click: {
-                                     element: 'el', //bind to the underlying el property on the panel
-                                     fn: function(){ alert('click el'); }
-                                     }*/
+
                                     render: function(c){
                                         c.getEl().on('click', function(){
                                             //Ext.Msg.alert('Info', r.get('processstatus'))
@@ -55,14 +52,7 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
                                         }, c);
                                     }
 
-                                }/*,
-
-
-                                handler: function () {
-
-                                    Ext.Msg.alert('Info', r.get('processstatus'))
-
-                                }*/
+                                }
                             });
                         }, 50);
                         var id2=Ext.id();
@@ -72,7 +62,16 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
                                 text: r.get('process'),
                                 icon:'img/sp.gif',
                                 width: 55,
-                                handler: function () { Ext.Msg.alert('Info', r.get('processstatus')) }
+                                listeners: {
+
+                                    render: function(c){
+                                        c.getEl().on('click', function(){
+                                            me.fireEvent('businessclick', c,r);
+
+                                        }, c);
+                                    }
+
+                                }
                             });
                         }, 50);
 

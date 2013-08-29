@@ -20,6 +20,7 @@ Ext.define('ZSMZJ.view.dbgl.ProcessVector' ,{
                     type: "ellipse",
                     radiusX: 50,
                     radiusY: 30,
+                    "stroke-width": "2",
                     stroke: 'blue',
                     x: 50,
                     y: 30
@@ -42,6 +43,7 @@ Ext.define('ZSMZJ.view.dbgl.ProcessVector' ,{
 
                 {
                     type: "ellipse",
+                    "stroke-width": "2",
                     radiusX: 50,
                     radiusY: 30,
                     stroke: 'blue',
@@ -66,6 +68,7 @@ Ext.define('ZSMZJ.view.dbgl.ProcessVector' ,{
 
                 {
                     type: "ellipse",
+                    "stroke-width": "2",
                     radiusX: 50,
                     radiusY: 30,
                     stroke: 'blue',
@@ -89,6 +92,7 @@ Ext.define('ZSMZJ.view.dbgl.ProcessVector' ,{
                 },
                 {
                     type: "ellipse",
+                    "stroke-width": "2",
                     radiusX: 50,
                     radiusY: 30,
                     stroke: 'blue',
