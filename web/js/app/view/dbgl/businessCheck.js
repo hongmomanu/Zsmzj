@@ -830,10 +830,10 @@ Ext.define('ZSMZJ.view.dbgl.businessCheck', {
                         },
                         {
                             fieldLabel: '制表时间',
-                            name:'mktime',
+                            name:'mktime'
                             //columnWidth:.5,
-                            readOnly: true,
-                            value:Ext.Date.format(new Date(), 'Y-m-d')
+                            //readOnly: true,
+                            //value:Ext.Date.format(new Date(), 'Y-m-d')
 
                         }
                         ,{
@@ -845,9 +845,9 @@ Ext.define('ZSMZJ.view.dbgl.businessCheck', {
 
                         {
                             fieldLabel:"制表人",
-                            name:'mkperson',
-                            value:username,
-                            readOnly: true
+                            name:'mkperson'
+                            //value:username,
+                            //readOnly: true
 
 
                         }

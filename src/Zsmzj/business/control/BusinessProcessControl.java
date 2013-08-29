@@ -28,6 +28,13 @@ public class BusinessProcessControl {
 
     }
 
+    public String getApplyForm(int businessid){
+        BusinessProcess bp=new BusinessProcess();
+        Map<String,Object>res =bp.getApplyForm(businessid);
+        return JSONObject.fromObject(res).toString();
+
+    }
+
     public String getNeedTodoList(int roleid,int start,int limit ,String keyword){
 
         BusinessProcess bp=new BusinessProcess();

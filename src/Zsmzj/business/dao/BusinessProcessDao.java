@@ -4,10 +4,7 @@ import Zsmzj.enums.ProcessType;
 import Zsmzj.jdbc.JdbcFactory;
 import org.apache.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +23,35 @@ public class BusinessProcessDao {
     private static final String UserTable="users";
 
 
+
+    public Map<String,Object> getApplyForm(int businessid,String tablename){
+        Connection testConn= JdbcFactory.getConn("sqlite");
+        String sql=  "select a.*,b.displayname   from "+
+                tablename+" a,"+UserTable+" b where a.rowid =? and a.userid=b.id ";
+        PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
+        Map<String,Object> map=new HashMap<String, Object>();
+        try {
+            pstmt.setInt(1, businessid);
+            ResultSet rs = pstmt.executeQuery();
+            ResultSetMetaData data=rs.getMetaData();
+            int colnums=data.getColumnCount();
+            while (rs.next()) {
+                for(int i = 1;i<= colnums;i++){
+                    String columnName = data.getColumnName(i);
+                    String value=rs.getString(columnName);
+                    map.put(columnName,value);
+
+                }
+            }
+        }catch (Exception E){
+            log.debug(E.getMessage());
+        }
+        finally {
+             return map;
+        }
+
+
+    }
     public ArrayList<Map<String,Object>> getNeedToDoLists(ArrayList<Map<String,Object>> arr,int start
                                                           ,int limit,String keyword,String tablename){
 

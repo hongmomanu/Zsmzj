@@ -130,4 +130,10 @@ public class BusinessProcess implements BusinessProcessIntf {
     public int changeStatus(int businessid, int type) {
         return 0;  //To change body of implemented methods use File | Settings | File Templates.
     }
+
+    @Override
+    public Map<String, Object> getApplyForm(int businessid) {
+        BusinessProcessDao bpDao=new BusinessProcessDao();
+        return bpDao.getApplyForm(businessid,BusinessTable);
+    }
 }

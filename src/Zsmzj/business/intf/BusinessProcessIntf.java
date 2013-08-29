@@ -21,4 +21,5 @@ public interface BusinessProcessIntf {
     public int getNeedTodoCounts(int roleid,String keyword);//获取待办事务
     public ArrayList<Map<String,Object>> getNeedTodoList(int roleid,int start,int limit,String keyword);//获取代办事务列表
     public int changeStatus(int businessid,int type);//改变事务状态
+    public Map<String,Object> getApplyForm(int businessid);//获取提交信息
 }

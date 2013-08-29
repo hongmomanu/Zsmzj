@@ -24,6 +24,7 @@ Ext.define('ZSMZJ.controller.Header', {
         {ref: 'myviewheadViewPanel', selector: 'headviewpanel'} ,
         {ref: 'myprocesspicturePanel', selector: 'processpicturepanel'} ,
         {ref: 'myprocessvector', selector: 'dbglprocessvector'} ,
+        {ref: 'mydbglbusinesscheckform', selector: 'dbglbusinesscheckform'},
         {ref: 'myheaderPanel', selector: 'myheader'}
     ],
     views: [
@@ -71,9 +72,44 @@ Ext.define('ZSMZJ.controller.Header', {
     showBusinessCheckContent:function(c,r){
        if(r.get("process")==processdiction.steptwo){
            this.showtab(processdiction.steptwo,'dbglbusinesscheckform','widget');
+           var form=this.getMydbglbusinesscheckform();
+
+           this.getValueBybusinessid(r.get('businessid'),'ajax/getapplyformbyid.jsp',this.setFormValus,form)
+
+
+
        }
 
     },
+
+
+    getValueBybusinessid:function(businessid,url,callbackfn,form){
+
+        var params = {
+            businessid:businessid
+        };
+        var successFunc = function (response, option) {
+            var res = Ext.JSON.decode(response.responseText);
+
+            callbackfn(form,res)
+
+
+        };
+        var failFunc = function (form, action) {
+            Ext.Msg.alert("提示信息", "获取业务信息失败");
+
+        };
+        this.ajaxSend(params, url, successFunc, failFunc,'POST');
+
+    },
+
+    setFormValus:function(form,data){
+
+        form.getForm().setValues(data);
+        this.setValue(data.division);
+        this.setRawValue(data.division);
+    },
+
     showProcessWin:function(c,r){//显示进程窗口
 
        var me=this;
