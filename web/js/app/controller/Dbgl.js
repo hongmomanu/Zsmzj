@@ -63,6 +63,9 @@ Ext.define('ZSMZJ.controller.Dbgl', {
          'dbglbusinessapplyform button[action=applysubmit]':{
              click: this.applysubmit
          },
+         'dbglbusinessalterform button[action=applysubmit]':{
+             click: this.applysubmitupdate
+         },
          'dbglbusinessapplyform,dbglbusinesscheckform,dbglbusinessalterform':{
              afterrender: this.afterrenderEvents
          },
@@ -150,7 +153,8 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         if (gridpanel.getStore().getCount() > 0) {
             sm.select(0);
         }
-       var applyform=this.getMyviewbusinessapplyform();
+       //var applyform=this.getMyviewbusinessapplyform();
+       var applyform=gridpanel.up('form');
        var countitem=applyform.down('#FamilyPersons');
        var enjoyitem=applyform.down('#enjoyPersons');
        var count=parseInt(countitem.getValue())-1;
@@ -180,7 +184,6 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
         gridpanel.getStore().insert(0, r);
         rowEditing.startEdit(0, 0);
-
         //var applyform=this.getMyviewbusinessapplyform();
         var applyform=gridpanel.up('form');
         var countitem=applyform.down('#FamilyPersons');
@@ -237,13 +240,57 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
 
     },
+    applysubmitupdate:function(btn){
+        var store=btn.up('form').down('#familymembergrid').getStore();
+        var familymembers=[];
+        var affixfiles=[];
+
+        Ext.each(store.data.items,function(a){
+            familymembers.push(a.data);
+        })
+        var form=btn.up('form');
+        var affixpanel=form.down('#affixfilespanel');
+        Ext.each(affixpanel.items.items,function(a){
+            if(a.xtype=='panel'){
+                var formdata=a.down('panel').formdata;
+                var affixfileitem={};
+                affixfileitem[a.down('panel').type]=formdata;
+                if(formdata)affixfiles.push(affixfileitem);
+
+            }
+
+        });
+
+        affixfiles.push({"accountimgpath":[{'attachmentname':'照片','attachmentpath':form.down('#dbglaccountimg').value}]});
+
+        var params = {
+            businessid:form.businessid,
+            familymembers:Ext.JSON.encode(familymembers),
+            affixfiles:Ext.JSON.encode(affixfiles)
+        };
+
+        var successFunc = function (form, action) {
+            Ext.Msg.alert("提示信息", "提交申请成功");
+
+        };
+        var failFunc = function (form, action) {
+            Ext.Msg.alert("提示信息", "提交申请失败,检查web服务");
+
+        };
+
+        this.formSubmit(btn, params, 'ajax/updateapply.jsp', successFunc, failFunc,"正在提交数据");
+
+
+
+    },
     applysubmit:function(btn){
       /*var form = button.up('form').getForm();
       if (form.isValid()) {
        familymembers,affixfiles,
       }*/
 
-        var store=this.getMyviewfamilymembergrid().getStore();
+        //var store=this.getMyviewfamilymembergrid().getStore();
+        var store=btn.up('form').down('#familymembergrid').getStore();
         var familymembers=[];
         var affixfiles=[];
 
@@ -336,6 +383,16 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         this.uploadimgWin.show();
 
     },
+    cleanuploadWin:function(){
+        if(this.alteruploadaffixWin){
+            this.alteruploadaffixWin.destroy();
+            this.alteruploadaffixWin=null;
+        }
+        if(this.alteruploadimgWin){
+            this.alteruploadimgWin.destroy();
+            this.alteruploadimgWin=null;
+        }
+    },
     showAlterUploadImgWin:function(c){
         if(!this.alteruploadimgWin)this.alteruploadimgWin=Ext.widget('uploadimgfilewin');
         this.alteruploadimgWin.itemdata= c;
@@ -343,6 +400,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         this.alteruploadimgWin.show();
 
     },
+
     showaffixWindow:function(c){
         if(!this.uploadaffixWin){
             this.uploadaffixWin=Ext.widget('uploadaffixfilewin');
@@ -355,9 +413,9 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         if(!this.alteruploadaffixWin){
             this.alteruploadaffixWin=Ext.widget('uploadaffixfilewin');
             this.alteruploadaffixWin.itemdata=c;
-            //console.log(this.alteruploadaffixWin.down('panel'));
+            //alert(1);
             var store=this.alteruploadaffixWin.down('panel').down('panel').getStore();
-            //console.log(store);
+
             Ext.each(c.formdata,function(a){
                 var r = Ext.create('ZSMZJ.model.dbgl.AffixFilesGrid',a);
                 store.insert(0, r);
@@ -365,9 +423,6 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
         }
         this.alteruploadaffixWin.show();
-
-
-
 
     },
     onLaunch: function() {

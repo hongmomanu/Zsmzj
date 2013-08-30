@@ -38,6 +38,12 @@ public class BusinessProcess implements BusinessProcessIntf {
     }
 
     @Override
+    public int updateApplyBusiness(int businessid, Map<String, Object> param) {
+        BusinessProcessDao bDao=new BusinessProcessDao();
+        return bDao.updateTableVales(param, BusinessTable,businessid,"rowid");
+    }
+
+    @Override
     public int saveFamilyMembers(String membersjson,int businessid) {
 
         int result_num=0;
@@ -60,6 +66,35 @@ public class BusinessProcess implements BusinessProcessIntf {
 
         }
         return result_num;
+    }
+
+    @Override
+    public int updateFamilyMembers(String membersjson, int businessid) {
+
+        BusinessProcessDao bDao=new BusinessProcessDao();
+        bDao.deldatabyid(businessid,FamilyTable,"businessid");
+
+        int result_num=0;
+        JSONArray arr=JSONArray.fromObject(membersjson);
+        for(Object item:arr){
+            JSONObject jsonitem=JSONObject.fromObject(item);
+            Iterator<?> it = jsonitem.keys();
+            Map<String,Object> mp=new HashMap<String, Object>();
+            mp.put("businessid",businessid);
+
+            while(it.hasNext()){//遍历JSONObject
+                String name = (String) it.next().toString();
+                if(name.equals("age"))continue;
+                String value = jsonitem.getString(name);
+                mp.put(name,value);
+
+            }
+
+            result_num=bDao.insertTableVales(mp, FamilyTable);
+
+        }
+        return result_num;
+
     }
 
     @Override
@@ -91,6 +126,44 @@ public class BusinessProcess implements BusinessProcessIntf {
                     }
 
                     BusinessProcessDao bDao=new BusinessProcessDao();
+                    result_num=bDao.insertTableVales(mp,AttachmentTable);
+                }
+            }
+        }
+        return result_num;
+
+
+    }
+
+    @Override
+    public int updateAffixFiles(String filesjson, int businessid) {
+
+
+        BusinessProcessDao bDao=new BusinessProcessDao();
+        bDao.deldatabyid(businessid,AttachmentTable,"businessid");
+
+        int result_num=0;
+        JSONArray arr=JSONArray.fromObject(filesjson);
+        for(Object item:arr){
+            JSONObject jsonitem=JSONObject.fromObject(item);
+            Iterator<?> it = jsonitem.keys();
+            Map<String,Object> mp=new HashMap<String, Object>();
+            mp.put("businessid",businessid);
+
+            while(it.hasNext()){//遍历JSONObject
+                String name = (String) it.next().toString();
+                mp.put("attachmenttype",name);
+                JSONArray value = jsonitem.getJSONArray(name);
+
+                for(Object item_value:value){
+
+                    JSONObject jsonitem_value=JSONObject.fromObject(item_value);
+                    Iterator<?> it_value = jsonitem_value.keys();
+                    while(it_value.hasNext()){//遍历JSONObject
+                        String name_value = (String) it_value.next().toString();
+                        String value_value=jsonitem_value.getString(name_value);
+                        mp.put(name_value,value_value);
+                    }
                     result_num=bDao.insertTableVales(mp,AttachmentTable);
                 }
 

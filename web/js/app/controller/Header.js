@@ -36,7 +36,6 @@ Ext.define('ZSMZJ.controller.Header', {
         var me = this;
         this.initHeadView();
 
-
         this.control({
             /*'headviewpanel#headviewitem':{
                 selectionchange: this.selectionchange
@@ -70,11 +69,11 @@ Ext.define('ZSMZJ.controller.Header', {
                 }
             }
 
-
         }, this);
 
     },
     clearAlterContent:function(form){
+
         form.getForm().reset();
         //家庭成员清空
         var grid=form.down('#familymembergrid');
@@ -87,20 +86,33 @@ Ext.define('ZSMZJ.controller.Header', {
         //附件清空
         var affixfilespanel=form.down('#affixfilespanel');
         Ext.each(affixfilespanel.items.items,function(a){
-            //console.log(a);
-            if(a.items)CommonFunc.updateitemnum(a.items.items[0],0);
+            if(a.items){
+                CommonFunc.updateitemnum(a.items.items[0],0);
+                a.items.items[0].formdata=[];
+
+            }
         });
+
+        //清空窗口
+        var dbgl_cl=this.application.getController("Dbgl");
+        dbgl_cl.cleanuploadWin();
+
 
     },
     showAlterContent:function(c,r){
         this.showtab("修改信息",'dbglbusinessalterform','widget');
 
         var form=this.getMydbglbusinessalterform();
+
+        var businessid=r.get('businessid');
+
+        form.businessid=businessid;
+
         this.clearAlterContent(form);
 
-        this.getValueBybusinessid(r.get('businessid'),'ajax/getapplyformbybid.jsp',this.setFormValues,form);
-        this.getValueBybusinessid(r.get('businessid'),'ajax/getaffixfilebybid.jsp',this.setAffixValue,form);
-        this.getValueBybusinessid(r.get('businessid'),'ajax/getfamilymembersbybid.jsp',this.setFamilymembers,form);
+        this.getValueBybusinessid(businessid,'ajax/getapplyformbybid.jsp',this.setFormValues,form);
+        this.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',this.setAffixValue,form);
+        this.getValueBybusinessid(businessid,'ajax/getfamilymembersbybid.jsp',this.setFamilymembers,form);
 
 
     },
@@ -155,7 +167,6 @@ Ext.define('ZSMZJ.controller.Header', {
         me.closemask();
         var countitem=form.down('#FamilyPersons');
         var enjoyitem=form.down('#enjoyPersons');
-        console.log(countitem);
         countitem.setValue(data.length);
         enjoyitem.setValue(data.length);
 
@@ -303,8 +314,6 @@ Ext.define('ZSMZJ.controller.Header', {
             tabs.getComponent('tab' + value).show();
         } else {
             if (type == 'widget') {
-
-
 
                 tabs.add({
                     closable: true,

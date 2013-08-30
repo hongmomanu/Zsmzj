@@ -175,6 +175,26 @@ public class BusinessProcessDao {
 
 
     }
+
+    public int  deldatabyid (int id,String tablename,String colname){
+
+        Connection testConn= JdbcFactory.getConn("sqlite");
+        String sql=  "delete   from  "+
+                tablename+" where "+colname+"  MATCH ? ";
+        PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
+        try {
+            pstmt.setInt(1,id);
+            return pstmt.executeUpdate();
+
+        }catch (Exception E){
+            log.debug(E.getMessage());
+            return -1;
+        }
+
+
+
+
+    }
     public int getNeedToDoCounts (ArrayList<Map<String, Object>> arr,String keyword,String tablename){
 
 
@@ -206,7 +226,57 @@ public class BusinessProcessDao {
 
 
     }
+    public int updateTableVales(Map<String,Object> col_vals,String tablename,int businessid,String colname){
+        Connection conn= JdbcFactory.getConn("sqlite");
+        String str="";
+        ArrayList<String> val_arr=new ArrayList<String>();
+        Iterator iter = col_vals.keySet().iterator();
+        while (iter.hasNext()) {
+            String key = iter.next().toString();
+            String val = col_vals.get(key).toString();
+            val_arr.add(val);
+            str+=key+"=?,";
+        }
+        //col_str=col_str.substring(0,col_str.length()-1);
+        //val_str=val_str.substring(0,val_str.length()-1);
+        str+="time=?";
 
+        String sql = "update " + tablename +" set "+str+" where "+colname+" MATCH ?";
+
+        log.debug(sql);
+        log.debug(val_arr);
+        PreparedStatement pstmt = JdbcFactory.getPstmt(conn, sql);
+        try {
+            int i=0;
+            for( i=0;i<val_arr.size();i++){
+
+                pstmt.setString(i+1, val_arr.get(i)==null?"":val_arr.get(i));
+
+            }
+            SimpleDateFormat   sDateFormat   =   new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String   date   =   sDateFormat.format(new   java.util.Date());
+            pstmt.setString(i+1, date);
+            pstmt.setInt(i+2, businessid);
+
+            return pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            finally {
+                log.debug(ex.getMessage());
+                return -1;
+            }
+
+
+        }
+
+
+
+
+    }
     public int insertTableVales(Map<String,Object> col_vals,String tablename){
         Connection conn= JdbcFactory.getConn("sqlite");
         String col_str="";

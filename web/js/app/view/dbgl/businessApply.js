@@ -466,7 +466,11 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                             xtype:'panel',
                             layout: 'fit',
                             items:[*/
-                                {xtype:'familymembergrid'}
+                                {
+                                    xtype:'familymembergrid',
+                                    itemId:'familymembergrid'
+
+                                }
                            /* ]
 
                         }*/
