@@ -257,13 +257,13 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                 disabled: true
             }],
             plugins: [rowEditing],
-            flex: 1
-            /*listeners: {
+            flex: 1,
+            listeners: {
                 'selectionchange': function(view, records) {
+                    this.down('#removePerson').setDisabled(!records.length);
                     //grid.down('#removeEmployee').setDisabled(!records.length);
                 }
             }
-*/
 
         });
         this.callParent(arguments);

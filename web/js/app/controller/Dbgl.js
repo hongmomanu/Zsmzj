@@ -84,10 +84,10 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
              click:this.delperson
          },
-         'familymembergrid':{
+         /*'familymembergrid':{
 
              selectionchange:this.personselected
-         },
+         },*/
          /*'affixfilesgrid':{
 
              itemmouseenter:this.affixgridprew
@@ -95,6 +95,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
          'affixfilesgrid':{
 
              afterrender:this.affixgridrendered
+
          },
          '#personbirthday':{ //更新生日，触发年龄信息
 
@@ -138,10 +139,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         var age=(new Date()).getFullYear()-newValue.getFullYear();
         this.getFamilymemberage().setValue(age);
     },
-    personselected:function(view, records){
-        var grid=this.getMyviewfamilymembergrid();
-        grid.down('#removePerson').setDisabled(!records.length);
-    },
+
     delperson:function(btn){
 
         var  gridpanel=btn.up('panel');
@@ -339,6 +337,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
     showAlterUploadImgWin:function(c){
         if(!this.alteruploadimgWin)this.alteruploadimgWin=Ext.widget('uploadimgfilewin');
         this.alteruploadimgWin.itemdata= c;
+
         this.alteruploadimgWin.show();
 
     },
@@ -354,8 +353,19 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         if(!this.alteruploadaffixWin){
             this.alteruploadaffixWin=Ext.widget('uploadaffixfilewin');
             this.alteruploadaffixWin.itemdata=c;
+            //console.log(this.alteruploadaffixWin.down('panel'));
+            var store=this.alteruploadaffixWin.down('panel').down('panel').getStore();
+            //console.log(store);
+            Ext.each(c.formdata,function(a){
+                var r = Ext.create('ZSMZJ.model.dbgl.AffixFilesGrid',a);
+                store.insert(0, r);
+            });
+
         }
         this.alteruploadaffixWin.show();
+
+
+
 
     },
     onLaunch: function() {

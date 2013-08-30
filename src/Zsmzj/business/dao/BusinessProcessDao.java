@@ -25,16 +25,33 @@ public class BusinessProcessDao {
 
     public  ArrayList<Map<String, Object>> getAffixfilebybid(int businessid,String tablename){
         Connection testConn= JdbcFactory.getConn("sqlite");
-        String sql=  "select * from ? where businessid MATCH ?";
+        String sql=  "select attachmenttype from "+tablename+" where businessid MATCH ? group by attachmenttype";
         ArrayList<Map<String,Object>> list=new ArrayList<Map<String, Object>>();
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
         try {
-            pstmt.setString(1,tablename);
-            pstmt.setInt(2, businessid);
+            pstmt.setInt(1, businessid);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 Map<String,Object> map=new HashMap<String, Object>();
-               // map.put("")
+                String typename=rs.getString("attachmenttype");
+                String sql_child="select * from "+tablename+" where rowid in (" +
+                        "select rowid from "+tablename+" where businessid MATCH ? AND  ROWID in (" +
+                        "select rowid from "+tablename+" where attachmenttype MATCH ?))" +
+                        "";
+                PreparedStatement pstmt_child = JdbcFactory.getPstmt(testConn, sql_child);
+                pstmt_child.setInt(1,businessid);
+                pstmt_child.setString(2,typename);
+                ResultSet rs_child = pstmt_child.executeQuery();
+                ArrayList<Map<String,Object>> list_child=new ArrayList<Map<String, Object>>();
+                while (rs_child.next()){
+                    Map<String,Object> map_child=new HashMap<String, Object>();
+                    map_child.put("attachmentname",rs_child.getString("attachmentname"));
+                    map_child.put("attachmentpath",rs_child.getString("attachmentpath"));
+                    list_child.add(map_child);
+                }
+                map.put("attachmenttype",typename);
+                map.put("results",list_child);
+                list.add(map);
 
             }
         }catch (Exception E){

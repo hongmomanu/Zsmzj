@@ -516,10 +516,7 @@ Ext.define('ZSMZJ.view.dbgl.businessAlter', {
                                     type:'personid',
                                     itemId:'personid',
                                     listeners: {
-                                        /*click: {
-                                            element: 'el', //bind to the underlying el property on the panel
-                                            fn: function(){ alert('click el'); }
-                                        }*/
+
                                         render: function(c){
                                             c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
                                         }

@@ -2,6 +2,7 @@ package Zsmzj.business.control;
 
 import Zsmzj.business.impl.BusinessProcess;
 import Zsmzj.jdbc.JdbcFactory;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 
@@ -37,7 +38,7 @@ public class BusinessProcessControl {
     public String getAffixfilebybid(int businessid){
         BusinessProcess bp=new BusinessProcess();
         ArrayList<Map<String,Object>> res =bp.getAffixfilebybid(businessid);
-        return JSONObject.fromObject(res).toString();
+        return JSONArray.fromObject(res).toString();
 
     }
 

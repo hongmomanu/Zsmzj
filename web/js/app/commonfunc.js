@@ -8,10 +8,11 @@
 var CommonFunc={
 
     updateitemnum:function(item,count){
-        var text=item.el.dom.innerHTML;
+        var text=item.el.dom.innerText;
         var before_str=text.slice(0,text.indexOf("(")+1);
         var after_str=text.slice(text.indexOf(")"));
-        item.el.setHTML(before_str+count+after_str);
+        item.update(before_str+count+after_str);
+        item.doLayout();
 
     },
     removeTask:function(mask,el){

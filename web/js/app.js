@@ -77,7 +77,11 @@ Ext.application({
                 listeners: {
                     afteranimate: function() {
                         // Set the body as unmasked after the animation
-                        Ext.getBody().unmask();
+                        try{
+                            Ext.getBody().unmask();
+                        }catch(e){
+
+                        }
                     }
                 }
             });

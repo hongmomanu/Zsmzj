@@ -38,18 +38,19 @@ Ext.define('ZSMZJ.view.dbgl.AffixFilesGrid' ,{
 
             ],
             flex: 1,
-            /*bbar: Ext.create('Ext.PagingToolbar', {
-                store: 'manager.UserManagers',
-                displayInfo: true,
-                displayMsg: '显示用户 {0} - {1} of {2}',
-                emptyMsg: "没有用户",
-                items:[
-                    '-', {
-                        text: '新增用户',
-                        action:'addnewuser'
-
-                    }]
-            }),*/
+            tbar: [{
+                itemId: 'removeFile',
+                text: '删除所选项',
+                iconCls: 'employee-remove',
+                action:'delfile',
+                disabled: true
+            }],
+            listeners: {
+                'selectionchange': function(view, records) {
+                    this.down('#removeFile').setDisabled(!records.length);
+                    //grid.down('#removeEmployee').setDisabled(!records.length);
+                }
+            },
             store: Ext.widget('affixfilesgridstores')
 
 

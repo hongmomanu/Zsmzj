@@ -141,10 +141,22 @@ Ext.define('ZSMZJ.controller.Header', {
 
         //var applyform=this.getMyviewbusinessapplyform();
         for(var i=0;i<num;i++){
-
-            var item=form.down('#'+data[i].attachmenttype);
-            var count=data[i].results.length;
-            CommonFunc.updateitemnum(item,count);
+            if(data[i].attachmenttype!='accountimgpath'){
+                var item=form.down('#'+data[i].attachmenttype);
+                var count=data[i].results.length;
+                CommonFunc.updateitemnum(item,count);
+                var formdata=[];
+                Ext.each(data[i].results,function(a){
+                    formdata.push(a);
+                })
+                item.formdata=formdata;
+            }
+            else{
+                var filepath=data[i].results[0].attachmentpath;
+                var img_item=form.down('#dbglaccountimg');
+                img_item.getEl().dom.src=filepath;
+                img_item.value=filepath;
+            }
 
 
 
