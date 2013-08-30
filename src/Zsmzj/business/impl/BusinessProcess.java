@@ -140,6 +140,12 @@ public class BusinessProcess implements BusinessProcessIntf {
     @Override
     public ArrayList<Map<String, Object>> getAffixfilebybid(int businessid) {
         BusinessProcessDao bpDao=new BusinessProcessDao();
-        return bpDao.getAffixfilebybid(businessid,AttachmentTable);
+        return bpDao.getAffixfilebybid(businessid, AttachmentTable);
+    }
+
+    @Override
+    public ArrayList<Map<String, Object>> getFamilymembersbybid(int businessid) {
+        BusinessProcessDao bpDao=new BusinessProcessDao();
+        return bpDao.getFamilymembersbybid(businessid, FamilyTable);
     }
 }

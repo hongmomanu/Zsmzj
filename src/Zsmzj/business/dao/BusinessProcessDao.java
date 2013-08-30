@@ -65,6 +65,39 @@ public class BusinessProcessDao {
 
 
     }
+    public ArrayList<Map<String,Object>> getFamilymembersbybid(int businessid,String tablename){
+
+        Connection testConn= JdbcFactory.getConn("sqlite");
+        String sql=  "select *  from "+
+                tablename+"  where businessid MATCH ?";
+        PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
+
+        ArrayList<Map<String,Object>> list=new ArrayList<Map<String, Object>>();
+
+        try {
+            pstmt.setInt(1, businessid);
+            ResultSet rs = pstmt.executeQuery();
+            ResultSetMetaData data=rs.getMetaData();
+            int colnums=data.getColumnCount();
+            while (rs.next()) {
+                Map<String,Object> map=new HashMap<String, Object>();
+                for(int i = 1;i<= colnums;i++){
+                    String columnName = data.getColumnName(i);
+                    String value=rs.getString(columnName);
+                    map.put(columnName,value);
+
+                }
+                list.add(map);
+            }
+        }catch (Exception E){
+            log.debug(E.getMessage());
+        }
+        finally {
+            return list;
+        }
+
+
+    }
     public Map<String,Object> getApplyForm(int businessid,String tablename){
         Connection testConn= JdbcFactory.getConn("sqlite");
         String sql=  "select a.*,b.displayname   from "+

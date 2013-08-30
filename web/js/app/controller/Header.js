@@ -74,12 +74,33 @@ Ext.define('ZSMZJ.controller.Header', {
         }, this);
 
     },
+    clearAlterContent:function(form){
+        form.getForm().reset();
+        //家庭成员清空
+        var grid=form.down('#familymembergrid');
+        grid.getStore().removeAll();
+        //照片清空
+        var img_item=form.down('#dbglaccountimg');
+        img_item.getEl().dom.src="img/noperson.gif";
+        img_item.value="img/noperson.gif";
+
+        //附件清空
+        var affixfilespanel=form.down('#affixfilespanel');
+        Ext.each(affixfilespanel.items.items,function(a){
+            //console.log(a);
+            if(a.items)CommonFunc.updateitemnum(a.items.items[0],0);
+        });
+
+    },
     showAlterContent:function(c,r){
         this.showtab("修改信息",'dbglbusinessalterform','widget');
+
         var form=this.getMydbglbusinessalterform();
+        this.clearAlterContent(form);
 
         this.getValueBybusinessid(r.get('businessid'),'ajax/getapplyformbybid.jsp',this.setFormValues,form);
-        this.getValueBybusinessid(r.get('businessid'),'ajax/getaffixfilebybid.jsp',this.setAffixValue,form)
+        this.getValueBybusinessid(r.get('businessid'),'ajax/getaffixfilebybid.jsp',this.setAffixValue,form);
+        this.getValueBybusinessid(r.get('businessid'),'ajax/getfamilymembersbybid.jsp',this.setFamilymembers,form);
 
 
     },
@@ -124,22 +145,29 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
 
+    setFamilymembers:function(data,me,form){
 
+        var grid=form.down('#familymembergrid');
+        Ext.each(data,function(a){
+            var r = Ext.create('ZSMZJ.model.dbgl.FamilyMember',a);
+            grid.getStore().insert(0, r);
+        });
+        me.closemask();
+        var countitem=form.down('#FamilyPersons');
+        var enjoyitem=form.down('#enjoyPersons');
+        console.log(countitem);
+        countitem.setValue(data.length);
+        enjoyitem.setValue(data.length);
+
+    },
+    closemask:function(){
+        try{
+            Ext.getCmp('mainContent-panel').getEl().unmask();
+        }catch (e){
+        }
+    },
     setAffixValue:function(data,me,form){
-       /* var
-        var filepath=action.result.filepath;
-        var filename=action.result.filename;
-        //var grid=me.getMyviewaffixfilesgrid();
-        var grid=btn.up('panel').down('panel');
-        var r = Ext.create('ZSMZJ.model.dbgl.AffixFilesGrid', {
-            attachmentname: filename,
-            attachmentpath:filepath
-
-        });*/
-
         var num=data.length;
-
-        //var applyform=this.getMyviewbusinessapplyform();
         for(var i=0;i<num;i++){
             if(data[i].attachmenttype!='accountimgpath'){
                 var item=form.down('#'+data[i].attachmenttype);
@@ -161,14 +189,6 @@ Ext.define('ZSMZJ.controller.Header', {
 
 
         }
-
-        /*var formdata=[];
-        Ext.each(store.data.items,function(a){
-            formdata.push(a.data);
-        })
-        win.itemdata.update(before_str+count+after_str);
-        win.itemdata.formdata=formdata;
-*/
 
     },
     setFormValues:function(data,me,form){
@@ -276,22 +296,15 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
     showtab:function(label,value,type){
-        if(ViewWaitMask){
-            try{
-                Ext.getCmp('mainContent-panel').getEl().unmask();
-            }catch (e){
-
-            }
-
-
-        }
+        this.closemask();
+        ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
         var tabs = Ext.getCmp('mainContent-panel');
         if (tabs.getComponent('tab' + value)) {
             tabs.getComponent('tab' + value).show();
         } else {
             if (type == 'widget') {
 
-                ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
+
 
                 tabs.add({
                     closable: true,

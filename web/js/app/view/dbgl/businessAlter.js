@@ -463,14 +463,11 @@ Ext.define('ZSMZJ.view.dbgl.businessAlter', {
                     layout: 'fit',
 
                     items:[
-                       /* {
-                            xtype:'panel',
-                            layout: 'fit',
-                            items:[*/
-                                {xtype:'familymembergrid'}
-                           /* ]
 
-                        }*/
+                             {
+                                 xtype:'familymembergrid',
+                                 itemId:'familymembergrid'
+                             }
 
                     ]
                 }

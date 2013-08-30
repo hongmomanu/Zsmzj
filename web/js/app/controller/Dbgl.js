@@ -181,10 +181,12 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         gridpanel.getStore().insert(0, r);
         rowEditing.startEdit(0, 0);
 
-        var applyform=this.getMyviewbusinessapplyform();
+        //var applyform=this.getMyviewbusinessapplyform();
+        var applyform=gridpanel.up('form');
         var countitem=applyform.down('#FamilyPersons');
         var enjoyitem=applyform.down('#enjoyPersons');
         var count=parseInt(countitem.getValue())+1;
+
         countitem.setValue(count);
         enjoyitem.setValue(count);
     },

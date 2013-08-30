@@ -41,6 +41,12 @@ public class BusinessProcessControl {
         return JSONArray.fromObject(res).toString();
 
     }
+    public String getFamilymembersbybid(int businessid){
+        BusinessProcess bp=new BusinessProcess();
+        ArrayList<Map<String,Object>>  res =bp.getFamilymembersbybid(businessid);
+        return JSONArray.fromObject(res).toString();
+
+    }
 
     public String getNeedTodoList(int roleid,int start,int limit ,String keyword){
 
