@@ -241,7 +241,7 @@ public class BusinessProcessDao {
         //val_str=val_str.substring(0,val_str.length()-1);
         str+="time=?";
 
-        String sql = "update " + tablename +" set "+str+" where "+colname+" MATCH ?";
+        String sql = "update " + tablename +" set "+str+" where "+colname+" = ?";
 
         log.debug(sql);
         log.debug(val_arr);
