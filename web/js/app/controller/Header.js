@@ -44,6 +44,21 @@ Ext.define('ZSMZJ.controller.Header', {
                 afterrender: this.headerRenderEvents
 
             },
+            'dbglbusinessalterform':{
+                alterapplyaftershow:function(){
+                    var form=this.getMydbglbusinessalterform();
+
+                    var businessid=form.businessid;
+
+                    //form.businessid=businessid;
+
+                    this.clearAlterContent(form);
+
+                    this.getValueBybusinessid(businessid,'ajax/getapplyformbybid.jsp',this.setFormValues,form);
+                    this.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',this.setAffixValue,form);
+                    this.getValueBybusinessid(businessid,'ajax/getfamilymembersbybid.jsp',this.setFamilymembers,form);
+                }
+            } ,
             'myheader component':{
                 needthingsclick:function (c){
                     this.showneedthings(c);
@@ -100,19 +115,11 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
     showAlterContent:function(c,r){
-        this.showtab("修改信息",'dbglbusinessalterform','widget');
-
-        var form=this.getMydbglbusinessalterform();
-
         var businessid=r.get('businessid');
+        this.showtab("修改信息",'dbglbusinessalterform','widget',businessid);
 
-        form.businessid=businessid;
 
-        this.clearAlterContent(form);
 
-        this.getValueBybusinessid(businessid,'ajax/getapplyformbybid.jsp',this.setFormValues,form);
-        this.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',this.setAffixValue,form);
-        this.getValueBybusinessid(businessid,'ajax/getfamilymembersbybid.jsp',this.setFamilymembers,form);
 
 
     },
@@ -306,11 +313,12 @@ Ext.define('ZSMZJ.controller.Header', {
         this.showtab('代办业务','needtodopanel','widget');
 
     },
-    showtab:function(label,value,type){
+    showtab:function(label,value,type,businessid){
         this.closemask();
         ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
         var tabs = Ext.getCmp('mainContent-panel');
         if (tabs.getComponent('tab' + value)) {
+            tabs.getComponent('tab' + value).businessid=businessid;
             tabs.getComponent('tab' + value).show();
         } else {
             if (type == 'widget') {
@@ -319,6 +327,7 @@ Ext.define('ZSMZJ.controller.Header', {
                     closable: true,
                     id: 'tab' + value,
                     xtype: value,
+                    businessid:businessid,
                     autoScroll: true,
                     iconCls: 'tabs',
                     title: label
