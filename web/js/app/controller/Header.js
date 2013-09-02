@@ -152,10 +152,12 @@ Ext.define('ZSMZJ.controller.Header', {
 
 
     },
+
     showBusinessCheckContent:function(c,r){
+
         if(r.get("process")==processdiction.stepone){
 
-            alert(r.get("process"));
+
            /* this.showtab(processdiction.steptwo,'dbglbusinessapplyform','widget');
             var form=this.getMydbglbusinessapplyform();
 
