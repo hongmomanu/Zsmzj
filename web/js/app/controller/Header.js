@@ -66,6 +66,7 @@ Ext.define('ZSMZJ.controller.Header', {
             'needtodopanel':{
 
                 afterrender: this.afterrenderEvents,
+                alterapplyaftershow:this.afterrenderEvents,
                 processclick:function (c,r){//查看流程
                     this.showProcessWin(c,r);
                 },
@@ -154,6 +155,7 @@ Ext.define('ZSMZJ.controller.Header', {
     showBusinessCheckContent:function(c,r){
         if(r.get("process")==processdiction.stepone){
 
+            alert(r.get("process"));
            /* this.showtab(processdiction.steptwo,'dbglbusinessapplyform','widget');
             var form=this.getMydbglbusinessapplyform();
 
@@ -180,13 +182,10 @@ Ext.define('ZSMZJ.controller.Header', {
         };
         var successFunc = function (response, option) {
             var res = Ext.JSON.decode(response.responseText);
-
             callbackfn(res,me,form)
-
         };
         var failFunc = function (form, action) {
             Ext.Msg.alert("提示信息", "获取业务信息失败");
-
         };
         this.ajaxSend(params, url, successFunc, failFunc,'POST');
 
@@ -336,8 +335,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
     showneedthings:function(c){
-        /*testobj=c;
-        console.log(c);*/
+
         this.showtab('代办业务','needtodopanel','widget');
 
     },
@@ -347,7 +345,15 @@ Ext.define('ZSMZJ.controller.Header', {
         var tabs = Ext.getCmp('mainContent-panel');
         if (tabs.getComponent('tab' + value)) {
             tabs.getComponent('tab' + value).businessid=businessid;
-            tabs.getComponent('tab' + value).show();
+            if(tabs.getComponent('tab' + value).isHidden()){
+                tabs.getComponent('tab' + value).show();
+            }
+            else{
+
+                CommonFunc.removeTask(ViewWaitMask,Ext.getCmp('mainContent-panel').getEl());
+            }
+
+
         } else {
             if (type == 'widget') {
 
