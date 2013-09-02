@@ -176,11 +176,16 @@ public class BusinessProcessDao {
 
     }
 
-    public int  deldatabyid (int id,String tablename,String colname){
+    public int  deldatabyid (int id,String tablename,String colname,Boolean isrowid){
 
         Connection testConn= JdbcFactory.getConn("sqlite");
         String sql=  "delete   from  "+
-                tablename+" where "+colname+"  MATCH ? ";
+                tablename+" where "+colname;
+        if(isrowid){
+            sql+="=?";
+        }else{
+            sql+="  MATCH ? ";
+        }
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
         try {
             pstmt.setInt(1,id);

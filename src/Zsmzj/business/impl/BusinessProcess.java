@@ -3,12 +3,15 @@ package Zsmzj.business.impl;
 import Zsmzj.business.dao.BusinessProcessDao;
 import Zsmzj.business.intf.BusinessProcessIntf;
 import Zsmzj.enums.ProcessType;
+import Zsmzj.jdbc.JdbcFactory;
 import Zsmzj.manager.usermanager.impl.FuncImplement;
 import Zsmzj.manager.usermanager.impl.RoleImplement;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -40,7 +43,7 @@ public class BusinessProcess implements BusinessProcessIntf {
     @Override
     public int updateApplyBusiness(int businessid, Map<String, Object> param) {
         BusinessProcessDao bDao=new BusinessProcessDao();
-        return bDao.updateTableVales(param, BusinessTable,businessid,"rowid");
+        return bDao.updateTableVales(param, BusinessTable, businessid, "rowid");
     }
 
     @Override
@@ -72,7 +75,7 @@ public class BusinessProcess implements BusinessProcessIntf {
     public int updateFamilyMembers(String membersjson, int businessid) {
 
         BusinessProcessDao bDao=new BusinessProcessDao();
-        bDao.deldatabyid(businessid,FamilyTable,"businessid");
+        bDao.deldatabyid(businessid,FamilyTable,"businessid",false);
 
         int result_num=0;
         JSONArray arr=JSONArray.fromObject(membersjson);
@@ -140,7 +143,7 @@ public class BusinessProcess implements BusinessProcessIntf {
 
 
         BusinessProcessDao bDao=new BusinessProcessDao();
-        bDao.deldatabyid(businessid,AttachmentTable,"businessid");
+        bDao.deldatabyid(businessid,AttachmentTable,"businessid",false);
 
         int result_num=0;
         JSONArray arr=JSONArray.fromObject(filesjson);
@@ -220,5 +223,31 @@ public class BusinessProcess implements BusinessProcessIntf {
     public ArrayList<Map<String, Object>> getFamilymembersbybid(int businessid) {
         BusinessProcessDao bpDao=new BusinessProcessDao();
         return bpDao.getFamilymembersbybid(businessid, FamilyTable);
+    }
+
+    @Override
+    public int delBusinessbybid(int businessid) {
+        Connection conn= JdbcFactory.getConn("sqlite");
+
+        try {
+            conn.setAutoCommit(false);
+            BusinessProcessDao bpdao=new BusinessProcessDao();
+            bpdao.deldatabyid(businessid,BusinessTable,"rowid",true);
+            bpdao.deldatabyid(businessid,FamilyTable,"businessid",false);
+            bpdao.deldatabyid(businessid,AttachmentTable,"businessid",false);
+            conn.commit();
+            conn.setAutoCommit(true);
+            return 1;
+        }catch (SQLException e) {
+            try {
+                conn.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }finally {
+                return -1;
+            }
+            //e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
     }
 }

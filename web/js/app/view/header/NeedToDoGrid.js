@@ -111,7 +111,7 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
 
                                     render: function(c){
                                         c.getEl().on('click', function(){
-                                            me.fireEvent('delclick', c,r);
+                                            me.fireEvent('delclick', c,r,me);
 
                                         }, c);
                                     }

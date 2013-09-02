@@ -21,6 +21,7 @@ Ext.define('ZSMZJ.view.dbgl.comboxwidget.divisiontree', {
             //width:120,
             //height: 10,
             //treeHeight: 10,
+            rootVisible:false,
             treeWidth: 240,
             store: 'manager.DivisionTrees',
             selectChildren: true,
@@ -30,6 +31,7 @@ Ext.define('ZSMZJ.view.dbgl.comboxwidget.divisiontree', {
                 var id = record.data.id;
 
                 this.setValue(id);
+                this.setRawValue(record.data.text);
                 this.collapse();
                 // I want to do something here.
                 // But combo do nothing (not selected item or not finish) when i init itemTreeClick function

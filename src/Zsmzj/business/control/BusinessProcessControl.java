@@ -61,6 +61,14 @@ public class BusinessProcessControl {
 
     }
 
+    public String delBusinessbybid(int businessid){
+        BusinessProcess bp=new BusinessProcess();
+        int result=bp.delBusinessbybid(businessid);
+        if(result>0)return "{success:true}";
+        else  return "{success:false}";
+
+    }
+
     public String saveUpdateBusinessApply(int businessid,Map<String,Object> params,String familymembers,
                                           String affixfiles){
         BusinessProcess bp=new BusinessProcess();

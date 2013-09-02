@@ -22,6 +22,7 @@ Ext.define('ZSMZJ.view.dbgl.comboxwidget.divisiontreepath', {
             //height: 10,
             //treeHeight: 10,
             treeWidth: 240,
+            rootVisible:false,
             store: 'manager.DivisionTrees',
             selectChildren: true,
             canSelectFolders: true,

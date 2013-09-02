@@ -251,7 +251,7 @@ Ext.define('ZSMZJ.controller.Manager', {
                 }
             },
             icon: Ext.Msg.QUESTION
-        })
+        });
 
     },
     rolemanager:function (item, e, eOpts) {

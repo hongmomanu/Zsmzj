@@ -29,4 +29,5 @@ public interface BusinessProcessIntf {
     public Map<String,Object> getApplyForm(int businessid);//获取提交信息
     public ArrayList<Map<String,Object>> getAffixfilebybid(int businessid);//获取提交附件信息
     public ArrayList<Map<String,Object>> getFamilymembersbybid(int businessid); //获取家庭成员
+    public int delBusinessbybid(int businessid);//删除申请的业务
 }

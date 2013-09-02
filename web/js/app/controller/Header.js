@@ -47,13 +47,8 @@ Ext.define('ZSMZJ.controller.Header', {
             'dbglbusinessalterform':{
                 alterapplyaftershow:function(){
                     var form=this.getMydbglbusinessalterform();
-
                     var businessid=form.businessid;
-
-                    //form.businessid=businessid;
-
                     this.clearAlterContent(form);
-
                     this.getValueBybusinessid(businessid,'ajax/getapplyformbybid.jsp',this.setFormValues,form);
                     this.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',this.setAffixValue,form);
                     this.getValueBybusinessid(businessid,'ajax/getfamilymembersbybid.jsp',this.setFamilymembers,form);
@@ -78,9 +73,13 @@ Ext.define('ZSMZJ.controller.Header', {
 
                    this.showBusinessCheckContent(c,r);
                 },
-                alterclick:function(c,r){//业务审核处理
+                alterclick:function(c,r){//未提交前修改
 
                     this.showAlterContent(c,r);
+                },
+                delclick:function(c,r,grid){//未提交前删除
+
+                    this.delbusinessapply(c,r,grid);
                 }
             }
 
@@ -118,8 +117,37 @@ Ext.define('ZSMZJ.controller.Header', {
         var businessid=r.get('businessid');
         this.showtab("修改信息",'dbglbusinessalterform','widget',businessid);
 
+    },
+    delbusinessapply:function(c,r,grid){
+        var businessid=r.get('businessid');
+        var me=this;
+        Ext.Msg.show({
+            title: '确定要删除此申请?',
+            msg: '你正在试图删除选中的 <a><font color="red">'+ r.get('displayname')+'</font></a> 的申请.你想继续么?',
+            buttons: Ext.Msg.YESNO,
+            fn: function (btn) {
+                if(btn=='yes'){
+                    me.delapplybybid(businessid,grid.getStore());
+                }
+            },
+            icon: Ext.Msg.QUESTION
+        });
 
+    },
+    delapplybybid:function(businessid,store){
 
+        var params = {
+            businessid:businessid
+        };
+        var successFunc = function (form, action) {
+            store.load();
+
+        };
+        var failFunc = function (form, action) {
+            Ext.Msg.alert("提示信息", "删除失败，检查web服务或数据库服务");
+
+        };
+        this.ajaxSend(params, 'ajax/delbusinessbybid.jsp', successFunc, failFunc,'POST');
 
 
     },
