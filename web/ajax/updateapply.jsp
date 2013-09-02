@@ -31,7 +31,8 @@
             String  parName=(String)e.nextElement();
             if(parName.equals("familymembers"))familymembers=request.getParameter(parName);
             else if(parName.equals("affixfiles"))affixfiles=request.getParameter(parName);
-            else if(parName.equals("mktime")||parName.equals("mkperson")||parName.equals("businessid"))continue;
+            else if(parName.equals("mktime")||parName.equals("mkperson")||parName.equals("businessid")
+                    ||parName.equals("displayname"))continue;
             else params.put(parName,request.getParameter(parName));
         }
 

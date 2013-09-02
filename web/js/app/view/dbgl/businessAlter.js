@@ -823,9 +823,9 @@ Ext.define('ZSMZJ.view.dbgl.businessAlter', {
 
                                 {
                                     fieldLabel:"制表人",
-                                    name:'displayname'
+                                    name:'displayname',
                                     //value:username,
-                                    //readOnly: true
+                                    readOnly: true
 
 
                                 }
