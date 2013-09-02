@@ -54,6 +54,29 @@ Ext.define('ZSMZJ.controller.Header', {
                     this.getValueBybusinessid(businessid,'ajax/getfamilymembersbybid.jsp',this.setFamilymembers,form);
                 }
             } ,
+            'dbglbusinesscheckform':{
+                alterapplyaftershow:function(){
+                    var form=this.getMydbglbusinesscheckform();
+                    var businessid=form.businessid;
+                    this.clearAlterContent(form);
+                    this.getValueBybusinessid(businessid,'ajax/getapplyformbybid.jsp',this.setFormValues,form);
+                    this.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',this.setAffixValue,form);
+                    this.getValueBybusinessid(businessid,'ajax/getfamilymembersbybid.jsp',this.setFamilymembers,form);
+                }
+
+            },
+            'dbglbusinesscheckform button[action=cancel]':{
+                click: this.cancelcheck
+
+            },
+            'dbglbusinesscheckform button[action=check]':{
+                click: this.showcheckwin
+
+            },
+            'dbglbusinesscheckform button[action=showprocess]':{
+                click: this.showcheckprocess
+
+            },
             'myheader component':{
                 needthingsclick:function (c){
                     this.showneedthings(c);
@@ -67,16 +90,16 @@ Ext.define('ZSMZJ.controller.Header', {
 
                 afterrender: this.afterrenderEvents,
                 alterapplyaftershow:this.afterrenderEvents,
-                processclick:function (c,r){//查看流程
-                    this.showProcessWin(c,r);
+                processclick:function (c,r,grid){//查看流程
+                    this.showProcessWin(c,r,grid);
                 },
-                businessclick:function(c,r){//业务审核处理
+                businessclick:function(c,r,grid){//业务审核处理
 
-                   this.showBusinessCheckContent(c,r);
+                   this.showBusinessCheckContent(c,r,grid);
                 },
-                alterclick:function(c,r){//未提交前修改
+                alterclick:function(c,r,grid){//未提交前修改
 
-                    this.showAlterContent(c,r);
+                    this.showAlterContent(c,r,grid);
                 },
                 delclick:function(c,r,grid){//未提交前删除
 
@@ -85,6 +108,16 @@ Ext.define('ZSMZJ.controller.Header', {
             }
 
         }, this);
+
+    },
+    cancelcheck:function(btn){
+
+       this.closetab("dbglbusinesscheckform");
+    },
+    showcheckwin:function(btn){
+
+    },
+    showcheckprocess:function(btn){
 
     },
     clearAlterContent:function(form){
@@ -152,25 +185,53 @@ Ext.define('ZSMZJ.controller.Header', {
 
 
     },
+    changeapplystatus:function(businessid,status,store){
 
-    showBusinessCheckContent:function(c,r){
+        var params = {
+            businessid:businessid,
+            status:status
+        };
+        var successFunc = function (form, action) {
+            store.load();
+
+        };
+        var failFunc = function (form, action) {
+            Ext.Msg.alert("提示信息", "提交失败，检查web服务或数据库服务");
+
+        };
+        this.ajaxSend(params, 'ajax/changeapplystatus.jsp', successFunc, failFunc,'POST');
+
+
+    },
+
+
+    showsendapplywin:function(c,r,grid){
+        var me=this;
+        var businessid=r.get('businessid');
+        var status= r.get('process');
+        Ext.Msg.show({
+            title: '确定提交申请?',
+            msg: '你正在试图提交申请.你想继续么?',
+            buttons: Ext.Msg.YESNO,
+            fn: function (btn) {
+                if(btn=='yes'){
+                    me.changeapplystatus(businessid, status,grid.getStore());
+                }
+            },
+            icon: Ext.Msg.QUESTION
+        });
+
+    },
+
+    showBusinessCheckContent:function(c,r,grid){
 
         if(r.get("process")==processdiction.stepone){
 
-
-           /* this.showtab(processdiction.steptwo,'dbglbusinessapplyform','widget');
-            var form=this.getMydbglbusinessapplyform();
-
-            this.getValueBybusinessid(r.get('businessid'),'ajax/getapplyformbybid.jsp',this.setFormValus,form);*/
-
+             this.showsendapplywin(c,r,grid);
         }
         else if(r.get("process")==processdiction.steptwo){
-           this.showtab(processdiction.steptwo,'dbglbusinesscheckform','widget');
-
-            var form=this.getMydbglbusinesscheckform();
-           this.getValueBybusinessid(r.get('businessid'),'ajax/getapplyformbybid.jsp',this.setFormValues,form);
-
-
+           var businessid=r.get('businessid');
+           this.showtab(processdiction.steptwo,'dbglbusinesscheckform','widget',businessid);
 
        }
 
@@ -263,7 +324,7 @@ Ext.define('ZSMZJ.controller.Header', {
            mysurface.remove(mysurface.items.items[i]);
 
        }
-        if(r.get("processstatus")==processdiction.stepone){
+        if(r.get("processstatus")==processdiction.stepzero){
 
             mysurface.add({
                 type: "path",
@@ -288,6 +349,36 @@ Ext.define('ZSMZJ.controller.Header', {
                 type: "text",
                 text:r.get("displayname"),
                 x:20,
+                y:90
+
+            }).show(true);
+
+            me.processWin.doLayout();
+
+        }else if(r.get("processstatus")==processdiction.stepone){
+
+            mysurface.add({
+                type: "path",
+                path: "M195 35  L205 45 L220 28",    //路径      L150 50
+                "stroke-width": "4",
+                opacity :0.6,
+                stroke: "red"/*,
+                 fill: "blue"*/
+            }).show(true);
+            //流程分割符号
+            mysurface.add({
+                type: "path",
+                path: "M265 80  L265 100 L260 100 L270 110 L280 100 L275 100 L275 80 Z",    //路径      L150 50
+                "stroke-width": "2",
+                //opacity :0.6,
+                stroke: "red",
+                fill: "red"
+            }).show(true);
+            //提交申请人名单
+            mysurface.add({
+                type: "text",
+                text:r.get("displayname"),
+                x:175,
                 y:90
 
             }).show(true);
@@ -339,6 +430,15 @@ Ext.define('ZSMZJ.controller.Header', {
     showneedthings:function(c){
 
         this.showtab('代办业务','needtodopanel','widget');
+
+    },
+    closetab:function(value){
+        var tabs = Ext.getCmp('mainContent-panel');
+        var tab=tabs.getComponent('tab' + value)
+        if (tab) {
+
+            tab.close();
+        }
 
     },
     showtab:function(label,value,type,businessid){

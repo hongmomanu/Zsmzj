@@ -14,6 +14,9 @@ Ext.define('ZSMZJ.view.dbgl.businessCheck', {
 
 
     ],
+    afterShow: function(animateTarget, cb, scope) {
+        this.fireEvent('alterapplyaftershow');
+    },
     initComponent: function() {
         var required = '<span style="color:red;font-weight:bold" data-qtip="必填字段">*</span>';
         Ext.apply(this, {
@@ -55,6 +58,7 @@ Ext.define('ZSMZJ.view.dbgl.businessCheck', {
                         fieldLabel: '行政区划',
                         //width:300,
                         //id:'testobjcomb',
+                        itemId:'divisiontype',
                         xtype:'dbgldivsioncombtreepath',
                         //blankText: "不能为空",
                         displayField: 'text',
@@ -465,7 +469,10 @@ Ext.define('ZSMZJ.view.dbgl.businessCheck', {
                             xtype:'panel',
                             layout: 'fit',
                             items:[*/
-                                {xtype:'familymembergrid'}
+                                {
+                                    xtype:'familymembergrid',
+                                    itemId:'familymembergrid'
+                                }
                            /* ]
 
                         }*/
@@ -829,9 +836,10 @@ Ext.define('ZSMZJ.view.dbgl.businessCheck', {
                         },
                         {
                             fieldLabel: '制表时间',
-                            name:'mktime'
+                            name:'time',
+                            //itemId: 'personbirthday',
                             //columnWidth:.5,
-                            //readOnly: true,
+                            readOnly: true
                             //value:Ext.Date.format(new Date(), 'Y-m-d')
 
                         }
@@ -844,9 +852,9 @@ Ext.define('ZSMZJ.view.dbgl.businessCheck', {
 
                         {
                             fieldLabel:"制表人",
-                            name:'mkperson'
+                            name:'displayname',
                             //value:username,
-                            //readOnly: true
+                            readOnly: true
 
 
                         }
@@ -856,12 +864,16 @@ Ext.define('ZSMZJ.view.dbgl.businessCheck', {
             ],
             buttons:[
                 {
-                    text: '审核通过',
+                    text: '审核',
                     action:'check'
                 },
                 {
-                    text: '保存',
-                    action:'save'
+                    text: '取消',
+                    action:'cancel'
+                },
+                {
+                    text: '查看流程',
+                    action:'showprocess'
                 }
             ]
 

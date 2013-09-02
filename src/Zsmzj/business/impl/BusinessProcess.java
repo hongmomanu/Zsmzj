@@ -203,8 +203,10 @@ public class BusinessProcess implements BusinessProcessIntf {
     }
 
     @Override
-    public int changeStatus(int businessid, int type) {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+    public int changeStatus(int businessid, String status) {
+
+        BusinessProcessDao bpDao=new BusinessProcessDao();
+        return bpDao.changeStatus(businessid,status,BusinessTable);
     }
 
     @Override

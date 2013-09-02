@@ -49,7 +49,7 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
 
                                     render: function(c){
                                         c.getEl().on('click', function(){
-                                            me.fireEvent('alterclick', c,r);
+                                            me.fireEvent('alterclick', c,r,me);
 
                                         }, c);
                                     }
@@ -73,7 +73,7 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
                                         c.getEl().on('click', function(){
                                             //Ext.Msg.alert('Info', r.get('processstatus'))
 
-                                            me.fireEvent('processclick', c,r);
+                                            me.fireEvent('processclick', c,r,me);
 
                                         }, c);
                                     }
@@ -92,7 +92,7 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
 
                                     render: function(c){
                                         c.getEl().on('click', function(){
-                                            me.fireEvent('businessclick', c,r);
+                                            me.fireEvent('businessclick', c,r,me);
 
                                         }, c);
                                     }

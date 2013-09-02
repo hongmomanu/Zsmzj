@@ -176,6 +176,22 @@ public class BusinessProcessDao {
 
     }
 
+    public int changeStatus(int businessid,String status,String tablename){
+        Connection testConn= JdbcFactory.getConn("sqlite");
+        String sql=  "update  "+tablename+" set processstatus=?  where rowid=?";
+        PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
+        try {
+            pstmt.setString(1,status);
+            pstmt.setInt(2,businessid);
+            return pstmt.executeUpdate();
+
+        }catch (Exception E){
+            log.debug(E.getMessage());
+            return -1;
+        }
+
+
+    }
     public int  deldatabyid (int id,String tablename,String colname,Boolean isrowid){
 
         Connection testConn= JdbcFactory.getConn("sqlite");

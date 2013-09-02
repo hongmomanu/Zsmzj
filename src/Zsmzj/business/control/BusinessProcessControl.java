@@ -28,6 +28,13 @@ public class BusinessProcessControl {
         return bp.getNeedTodoCounts(roleid,null);
 
     }
+    public String changeBusinessStatus(int businessid,String status){
+        BusinessProcess bp=new BusinessProcess();
+        int result=bp.changeStatus(businessid,status);
+        if(result>0)return "{success:true}";
+        else  return "{success:false}";
+
+    }
 
     public String getApplyForm(int businessid){
         BusinessProcess bp=new BusinessProcess();
