@@ -47,7 +47,7 @@ Ext.define('ZSMZJ.controller.Header', {
             'dbglbusinessalterform':{
                 alterapplyaftershow:function(){
                     var form=this.getMydbglbusinessalterform();
-                    var businessid=form.businessid;
+                    var businessid=form.objdata.businessid;
                     this.clearAlterContent(form);
                     this.getValueBybusinessid(businessid,'ajax/getapplyformbybid.jsp',this.setFormValues,form);
                     this.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',this.setAffixValue,form);
@@ -57,7 +57,7 @@ Ext.define('ZSMZJ.controller.Header', {
             'dbglbusinesscheckform':{
                 alterapplyaftershow:function(){
                     var form=this.getMydbglbusinesscheckform();
-                    var businessid=form.businessid;
+                    var businessid=form.objdata.businessid;
                     this.clearAlterContent(form);
                     this.getValueBybusinessid(businessid,'ajax/getapplyformbybid.jsp',this.setFormValues,form);
                     this.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',this.setAffixValue,form);
@@ -73,6 +73,7 @@ Ext.define('ZSMZJ.controller.Header', {
                 click: this.showcheckwin
 
             },
+
             'dbglbusinesscheckform button[action=showprocess]':{
                 click: this.showcheckprocess
 
@@ -116,8 +117,17 @@ Ext.define('ZSMZJ.controller.Header', {
     },
     showcheckwin:function(btn){
 
+        if(!this.checkprocessWin)this.checkprocessWin=Ext.widget('processcheckwin');
+        this.checkprocessWin.show();
+        this.checkprocessWin.dataform=btn.up('form');
+
     },
     showcheckprocess:function(btn){
+        var form=this.getMydbglbusinesscheckform();
+        var c=form.objdata.item;
+        var r=form.objdata.record;
+        var grid=form.objdata.grid;
+        this.showProcessWin(c,r,grid);
 
     },
     clearAlterContent:function(form){
@@ -147,9 +157,16 @@ Ext.define('ZSMZJ.controller.Header', {
 
 
     },
-    showAlterContent:function(c,r){
-        var businessid=r.get('businessid');
-        this.showtab("修改信息",'dbglbusinessalterform','widget',businessid);
+    showAlterContent:function(c,r,grid){
+        //var businessid=r.get('businessid');
+        var objdata={
+            businessid:r.get('businessid'),
+            record:r,
+            grid:grid,
+            item:c
+
+        };
+        this.showtab("修改信息",'dbglbusinessalterform','widget',objdata);
 
     },
     delbusinessapply:function(c,r,grid){
@@ -230,8 +247,16 @@ Ext.define('ZSMZJ.controller.Header', {
              this.showsendapplywin(c,r,grid);
         }
         else if(r.get("process")==processdiction.steptwo){
-           var businessid=r.get('businessid');
-           this.showtab(processdiction.steptwo,'dbglbusinesscheckform','widget',businessid);
+           //var businessid=r.get('businessid');
+            var objdata={
+                businessid:r.get('businessid'),
+                record:r,
+                grid:grid,
+                item:c
+
+            };
+
+           this.showtab(processdiction.steptwo,'dbglbusinesscheckform','widget',objdata);
 
        }
 
@@ -307,7 +332,7 @@ Ext.define('ZSMZJ.controller.Header', {
         divisiontype.setRawValue(data.division);
     },
 
-    showProcessWin:function(c,r){//显示进程窗口
+    showProcessWin:function(c,r,grid){//显示进程窗口
 
        var me=this;
 
@@ -441,12 +466,12 @@ Ext.define('ZSMZJ.controller.Header', {
         }
 
     },
-    showtab:function(label,value,type,businessid){
+    showtab:function(label,value,type,objdata){
         this.closemask();
         ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
         var tabs = Ext.getCmp('mainContent-panel');
         if (tabs.getComponent('tab' + value)) {
-            tabs.getComponent('tab' + value).businessid=businessid;
+            tabs.getComponent('tab' + value).objdata=objdata;
             if(tabs.getComponent('tab' + value).isHidden()){
                 tabs.getComponent('tab' + value).show();
             }
@@ -463,7 +488,7 @@ Ext.define('ZSMZJ.controller.Header', {
                     closable: true,
                     id: 'tab' + value,
                     xtype: value,
-                    businessid:businessid,
+                    objdata:objdata,
                     autoScroll: true,
                     iconCls: 'tabs',
                     title: label

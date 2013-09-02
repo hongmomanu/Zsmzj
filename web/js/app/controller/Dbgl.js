@@ -19,6 +19,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
     refs: [
         {ref: 'myviewbusinessapplyform', selector: 'dbglbusinessapplyform'},
+        {ref: 'mydbglbusinesscheckform', selector: 'dbglbusinesscheckform'},
         {ref: 'familymemberage', selector: '#personage'},
         {ref: 'myviewfamilymembergrid', selector: 'familymembergrid'},
         {ref: 'myviewaffixfilesgrid', selector: 'affixfilesgrid'},
@@ -36,7 +37,8 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.ProcessPicture',
         'dbgl.ProcessVector',
         'dbgl.businessCheck',
-        'dbgl.businessAlter'
+        'dbgl.businessAlter',
+        'dbgl.processCheckWin'
 
     ],
 
@@ -86,6 +88,9 @@ Ext.define('ZSMZJ.controller.Dbgl', {
          'familymembergrid button[action=delperson]':{
 
              click:this.delperson
+         },
+         'processcheckwin button[action=send]':{
+             click:this.sendCheckForm
          },
          /*'familymembergrid':{
 
@@ -234,8 +239,8 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             Ext.Msg.alert("提示信息", "上传文件失败，检查web服务");
 
         };
-
-        this.formSubmit(btn, params, 'ajax/uploadfile.jsp', successFunc, failFunc,"正在提交数据");
+        var form =btn.up('form');
+        this.formSubmit(form, params, 'ajax/uploadfile.jsp', successFunc, failFunc,"正在提交数据");
 
 
 
@@ -247,7 +252,8 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
         Ext.each(store.data.items,function(a){
             familymembers.push(a.data);
-        })
+        });
+        testobj=form;
         var form=btn.up('form');
         var affixpanel=form.down('#affixfilespanel');
         Ext.each(affixpanel.items.items,function(a){
@@ -264,7 +270,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         affixfiles.push({"accountimgpath":[{'attachmentname':'照片','attachmentpath':form.down('#dbglaccountimg').value}]});
 
         var params = {
-            businessid:form.businessid,
+            businessid:form.objdata.businessid,
             familymembers:Ext.JSON.encode(familymembers),
             affixfiles:Ext.JSON.encode(affixfiles)
         };
@@ -277,8 +283,30 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             Ext.Msg.alert("提示信息", "提交申请失败,检查web服务");
 
         };
+        var form =btn.up('form');
+        this.formSubmit(form, params, 'ajax/updateapply.jsp', successFunc, failFunc,"正在提交数据");
 
-        this.formSubmit(btn, params, 'ajax/updateapply.jsp', successFunc, failFunc,"正在提交数据");
+
+
+    },
+    sendCheckForm:function(btn){
+        var form=btn.up('window').dataform;
+        var businessid=form.objdata.businessid;
+        var params = {
+            userid:userid,
+            businessid:businessid,
+            approvalname:'街道/乡镇审核'
+        };
+        var successFunc = function (form, action) {
+            Ext.Msg.alert("提示信息", "审核成功");
+
+        };
+        var failFunc = function (form, action) {
+            Ext.Msg.alert("提示信息", "提交审核失败,检查web服务");
+
+        };
+        var form=btn.up('window').down('form');
+        this.formSubmit(form, params, 'ajax/sendcheckform.jsp', successFunc, failFunc,"正在提交数据");
 
 
 
@@ -325,8 +353,8 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             Ext.Msg.alert("提示信息", "提交申请失败,检查web服务");
 
         };
-
-        this.formSubmit(btn, params, 'ajax/sendapply.jsp', successFunc, failFunc,"正在提交数据");
+        var form =btn.up('form');
+        this.formSubmit(form, params, 'ajax/sendapply.jsp', successFunc, failFunc,"正在提交数据");
 
 
     },
@@ -350,17 +378,14 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             Ext.Msg.alert("提示信息", "上传文件失败，检查web服务");
 
         };
-
-        this.formSubmit(btn, params, 'ajax/uploadfile.jsp', successFunc, failFunc,"正在提交数据");
-
-
+        var form =btn.up('form');
+        this.formSubmit(form, params, 'ajax/uploadfile.jsp', successFunc, failFunc,"正在提交数据");
 
     },
-    formSubmit: function (button, params, url, sucFunc, failFunc,waitmsg) {
-        var form = button.up('form').getForm();
+    formSubmit: function (myform, params, url, sucFunc, failFunc,waitmsg) {
+        var form = myform.getForm();
         if (form.isValid()) {
             //Ext.MessageBox.alert('Submitted Values', form.getValues(true));
-
             form.submit({
                 waitTitle: '提示', //标题
                 waitMsg: waitmsg, //提示信息
