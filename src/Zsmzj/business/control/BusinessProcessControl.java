@@ -40,7 +40,7 @@ public class BusinessProcessControl {
         int totalnum =cd.getTotalCount(BusinessTable);
         String sql_list="select a.*,a.rowid as businessid,b.displayname,(select count(*)  from " +
                 FamilyTable+" c  where c.businessid MATCH a.rowid) as familynum" +
-                ",(select d.time from " + ApprovalTable+" d where d.businessid MATCH a.rowid order by desc limit 1"+
+                ",(select d.time from " + ApprovalTable+" d where d.businessid MATCH a.rowid order by d.time desc limit 1"+
                 " ) as approvaltime from "+BusinessTable +" a,"+UserTable+" b " +
                 "where a.userid MATCH b.id Limit "+limit+" Offset "+start;
 
