@@ -1,6 +1,7 @@
 package Zsmzj.business.control;
 
 import Zsmzj.business.impl.BusinessProcess;
+import Zsmzj.enums.ProcessType;
 import Zsmzj.jdbc.JdbcFactory;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -26,6 +27,37 @@ public class BusinessProcessControl {
     public int getNeedTodoCounts(int roleid){
         BusinessProcess bp=new BusinessProcess();
         return bp.getNeedTodoCounts(roleid,null);
+
+    }
+    public String makeApproval(Map<String,Object> param,boolean isapproval,String processstatus){
+        BusinessProcess bp=new BusinessProcess();
+        String staus="";
+        if(isapproval)staus= ProcessType.UseProcessType.getNext
+                (ProcessType.UseProcessType.getProcessFromChinese(processstatus));
+        else staus= ProcessType.UseProcessType.getChineseSeason(ProcessType.Callback);
+
+        Connection conn= JdbcFactory.getConn("sqlite");
+
+        try {
+            conn.setAutoCommit(false);
+            bp.makeApproval(param);
+            bp.changeStatus(Integer.parseInt(param.get("businessid").toString()),staus);
+            conn.commit();
+            conn.setAutoCommit(true);
+            return "{success:true}";
+        } catch (Exception e) {
+            log.debug(e.getMessage());
+            try {
+                conn.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }finally {
+                return"{success:false}";
+            }
+            //e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+
 
     }
     public String changeBusinessStatus(int businessid,String status){

@@ -253,7 +253,6 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         Ext.each(store.data.items,function(a){
             familymembers.push(a.data);
         });
-        testobj=form;
         var form=btn.up('form');
         var affixpanel=form.down('#affixfilespanel');
         Ext.each(affixpanel.items.items,function(a){
@@ -289,24 +288,35 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
 
     },
+
     sendCheckForm:function(btn){
+        var me=this;
         var form=btn.up('window').dataform;
+        var ajaxform=btn.up('window').down('form');
+        var grid=form.objdata.grid;
         var businessid=form.objdata.businessid;
         var params = {
             userid:userid,
             businessid:businessid,
+            processstatus:form.objdata.record.get('processstatus'),
+            isapproval: ajaxform.getForm().getValues().approvalresult==approvalresult.yes,
             approvalname:'街道/乡镇审核'
         };
+        testobj=me;
         var successFunc = function (form, action) {
+            btn.up('window').close();
             Ext.Msg.alert("提示信息", "审核成功");
+            var hc=me.application.getController("Header");
+            hc.closetab("dbglbusinesscheckform");
+            grid.getStore().load();
 
         };
         var failFunc = function (form, action) {
             Ext.Msg.alert("提示信息", "提交审核失败,检查web服务");
 
         };
-        var form=btn.up('window').down('form');
-        this.formSubmit(form, params, 'ajax/sendcheckform.jsp', successFunc, failFunc,"正在提交数据");
+
+        this.formSubmit(ajaxform, params, 'ajax/sendcheckform.jsp', successFunc, failFunc,"正在提交数据");
 
 
 

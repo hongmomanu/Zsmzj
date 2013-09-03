@@ -1,5 +1,6 @@
 package Zsmzj.manager.usermanager.business;
 
+import Zsmzj.conmmon.ComonDao;
 import Zsmzj.manager.usermanager.impl.FuncImplement;
 import Zsmzj.manager.usermanager.impl.RoleImplement;
 import Zsmzj.manager.usermanager.impl.UserImplement;
@@ -18,6 +19,7 @@ import java.util.Map;
  * To change this template use File | Settings | File Templates.
  */
 public class RoleControl {
+    private  final String FuncTable="functions";
     public String getRoles(int start,int limit,String keyword){
 
         RoleImplement role=new RoleImplement();
@@ -43,6 +45,10 @@ public class RoleControl {
     }
     public String getRoleFuncs(int start,int limit,String keyword,int roleid,String type){
         FuncImplement func=new FuncImplement();
+        ComonDao cd=new ComonDao();
+
+        int totalnum= cd.getTotalCount(FuncTable);
+
         ArrayList<Map<String, Object>> funcs=func.getFuncs(start, limit, keyword);
         RoleImplement role=new RoleImplement();
         ArrayList<Map<String, Object>> role_funcs=role.getRoleFuncs(start, limit, keyword,roleid);
@@ -77,9 +83,10 @@ public class RoleControl {
 
         }
 
-
-
-        return JSONArray.fromObject(result).toString();
+        Map<String,Object>res=new HashMap<String, Object>();
+        res.put("totalCount",totalnum);
+        res.put("results",result);
+        return JSONObject.fromObject(res).toString();
 
     }
     public String addNewRole(String rolename){

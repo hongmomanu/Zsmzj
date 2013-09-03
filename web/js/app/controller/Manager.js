@@ -353,9 +353,14 @@ Ext.define('ZSMZJ.controller.Manager', {
         });
         store.on('load', function (store, options) {
             var grid=me.getViewRoleFuncGrid();
+            testobj=grid;
+            var currentPage=store.currentPage;
+            var pageSize=store.pageSize;
+            var begin_num=pageSize*(currentPage-1);
             Ext.each(store.data.items,function(a){
+
                 if(a.raw.selected){
-                    grid.getSelectionModel().select(a.index,true,false);
+                    grid.getSelectionModel().select(a.index-begin_num,true,false);
                 }
             });
             //var new_params = { name: Ext.getCmp('search').getValue() };

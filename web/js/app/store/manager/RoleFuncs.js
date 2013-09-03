@@ -6,7 +6,12 @@ Ext.define('ZSMZJ.store.manager.RoleFuncs', {
     autoLoad:false,
     proxy:{
         type: 'ajax',
-        url: 'ajax/getrolefuncs.jsp'
+        url: 'ajax/getrolefuncs.jsp',
+        reader: {
+            type: 'json',
+            root: 'results',
+            totalProperty: 'totalCount'
+        }
     },
     listeners: {
         load: function(store, records, success) {

@@ -9,7 +9,7 @@ package Zsmzj.enums;
  */
 public enum ProcessType {
 
-    Apply(1),Submit(2), Check(3), Approval(4), Grant(5),Cancellation(6);
+    Apply(1),Submit(2), Check(3), Approval(4), Grant(5),Cancellation(6),Callback(7);
 
     private int code;
     private ProcessType(int code){
@@ -55,6 +55,9 @@ public enum ProcessType {
         public static String getNext(ProcessType pType){
             String result = "";
             switch(pType){
+                case Callback:
+                    result ="提交" ;
+                    break;
                 case Apply :
                     result ="提交" ;
                     break;
@@ -100,6 +103,9 @@ public enum ProcessType {
             } else if (str.equals("注销")) {
                 pType = Cancellation;
 
+            } else if (str.equals("退回")) {
+                pType = Callback;
+
             } else {
                 pType = Apply;
 
@@ -113,6 +119,9 @@ public enum ProcessType {
             switch(pType){
                 case Apply :
                     result ="申请" ;
+                    break;
+                case Callback:
+                    result ="退回" ;
                     break;
                 case Submit:
                     result = "提交";

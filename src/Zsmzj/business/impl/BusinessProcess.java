@@ -29,6 +29,7 @@ public class BusinessProcess implements BusinessProcessIntf {
     private static final String  BusinessTable="business";
     private static final String FamilyTable="familymembers" ;
     private static final String AttachmentTable="attachment";
+    private static final String ApprovalTable= "approvalprocess";
     private static final String NeedKey="待办事务";
     @Override
     public int saveApplyBusiness(Map<String, Object> param) {
@@ -251,5 +252,11 @@ public class BusinessProcess implements BusinessProcessIntf {
             //e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
 
+    }
+
+    @Override
+    public int makeApproval(Map<String,Object> map) {
+        BusinessProcessDao bpdao=new BusinessProcessDao();
+        return bpdao.insertTableVales(map,ApprovalTable);
     }
 }

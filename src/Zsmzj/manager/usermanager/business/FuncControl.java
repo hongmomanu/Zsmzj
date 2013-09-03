@@ -1,5 +1,6 @@
 package Zsmzj.manager.usermanager.business;
 
+import Zsmzj.conmmon.ComonDao;
 import Zsmzj.manager.usermanager.impl.FuncImplement;
 import Zsmzj.manager.usermanager.impl.RoleImplement;
 import net.sf.json.JSONArray;
@@ -17,10 +18,17 @@ import java.util.Map;
  * To change this template use File | Settings | File Templates.
  */
 public class FuncControl {
+    private  final String FuncTable="functions";
     public String getFuncs(int start,int limit,String keyword){
 
         FuncImplement func=new FuncImplement();
-        return JSONArray.fromObject(func.getFuncs(start, limit, keyword)).toString();
+        ComonDao cd=new ComonDao();
+        int totalnum= cd.getTotalCount(FuncTable);
+        ArrayList<Map<String,Object>> list=func.getFuncs(start, limit, keyword);
+        Map<String,Object>res=new HashMap<String, Object>();
+        res.put("totalCount",totalnum);
+        res.put("results",list);
+        return JSONObject.fromObject(res).toString();
 
     }
 

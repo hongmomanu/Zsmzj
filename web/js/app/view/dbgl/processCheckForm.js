@@ -31,18 +31,27 @@ Ext.define('ZSMZJ.view.dbgl.processCheckForm' ,{
             },
 
             items: [
+
                 {
-                    xtype: 'radio',
-                    checked: true,
+                    xtype: 'radiogroup',
                     fieldLabel: '审批结果',
                     boxLabel: '同意',
-                    name: 'approvalresult',
-                    inputValue: '同意'
-                }, {
-                    xtype: 'radio',
-                    boxLabel: '不同意',
-                    name: 'approvalresult',
-                    inputValue: '不同意'
+                    //vertical: true,
+                    padding:'0 0 20 0',
+                    columns: 1,
+                    items:[
+                        {
+                            boxLabel: '同意',
+                            checked: true,
+                            name: 'approvalresult',
+                            inputValue: approvalresult.yes
+                        }, {
+                            boxLabel: '不同意',
+                            name: 'approvalresult',
+                            inputValue: approvalresult.no
+                        }
+                    ]
+
                 },
                 {
                     anchor : '100%',
