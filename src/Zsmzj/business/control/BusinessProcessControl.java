@@ -1,6 +1,7 @@
 package Zsmzj.business.control;
 
 import Zsmzj.business.impl.BusinessProcess;
+import Zsmzj.conmmon.ComonDao;
 import Zsmzj.enums.ProcessType;
 import Zsmzj.jdbc.JdbcFactory;
 import net.sf.json.JSONArray;
@@ -23,10 +24,27 @@ import java.util.Map;
 public class BusinessProcessControl {
 
     private static final Logger log = Logger.getLogger(BusinessProcessControl.class);
+    private final String BusinessTable="business";
+    private final String ApprovalTable="approvalprocess";
+    private final String UserTable="users";
 
     public int getNeedTodoCounts(int roleid){
         BusinessProcess bp=new BusinessProcess();
         return bp.getNeedTodoCounts(roleid,null);
+
+    }
+    public String getProcessHistorybid(int businessid,int start,int limit){
+        ComonDao cd=new ComonDao();
+        String sql="select count(*) from "+ApprovalTable +" where businessid MATCH "+businessid;
+        int totalnum= cd.getTotalCountBySql(sql);
+        String sql_list="select a.*,b.displayname from "+ApprovalTable +" a,"+UserTable+" b " +
+                "where businessid  MATCH "+businessid
+                +" and a.userid=b.id Limit "+limit+" Offset "+start;
+        ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
+        Map<String,Object>res=new HashMap<String, Object>();
+        res.put("totalCount",totalnum);
+        res.put("results",list);
+        return JSONObject.fromObject(res).toString();
 
     }
     public String makeApproval(Map<String,Object> param,boolean isapproval,String processstatus){
@@ -41,7 +59,7 @@ public class BusinessProcessControl {
         try {
             conn.setAutoCommit(false);
             bp.makeApproval(param);
-            bp.changeStatus(Integer.parseInt(param.get("businessid").toString()),staus);
+            bp.changeStatus(Integer.parseInt(param.get("businessid").toString()), staus);
             conn.commit();
             conn.setAutoCommit(true);
             return "{success:true}";

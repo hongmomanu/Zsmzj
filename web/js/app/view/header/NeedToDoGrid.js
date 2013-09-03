@@ -43,7 +43,8 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
                                 renderTo: id0,
                                 text: '修改',
                                 icon:'img/sp.gif',
-                                hidden:!(r.get('processstatus').toString()==processdiction.stepzero),
+                                hidden:!(r.get('processstatus').toString()==processdiction.stepzero
+                                    ||r.get('processstatus').toString()==processdiction.stepback),
                                 width: 55,
                                 listeners: {
 
@@ -66,7 +67,8 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
                                 icon:'img/process.gif',
                                 text: '流程' ,
                                 width: 55,
-                                hidden: r.get('processstatus').toString()==processdiction.stepzero,
+                                hidden: r.get('processstatus').toString()==processdiction.stepzero||
+                                    r.get('processstatus').toString()==processdiction.stepback,
                                 listeners: {
 
                                     render: function(c){
@@ -108,7 +110,8 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
                                 renderTo: id3,
                                 text: '删除',
                                 icon:'img/sp.gif',
-                                hidden:!(r.get('processstatus').toString()==processdiction.stepzero),
+                                hidden:!(r.get('processstatus').toString()==processdiction.stepzero
+                                    ||r.get('processstatus').toString()==processdiction.stepback),
                                 width: 55,
                                 listeners: {
 

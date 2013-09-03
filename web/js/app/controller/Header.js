@@ -335,7 +335,7 @@ Ext.define('ZSMZJ.controller.Header', {
     showProcessWin:function(c,r,grid){//显示进程窗口
 
        var me=this;
-
+       //窗口初始化显示
        if(!me.processWin){
            me.processWin=Ext.widget('processwin');
            me.processWin.show();
@@ -344,11 +344,20 @@ Ext.define('ZSMZJ.controller.Header', {
            me.processWin.show();
        }
 
+       //清空流程图
        var mysurface=me.getMyprocessvector().surface;
        for(var i=me.vectornums;i<mysurface.items.items.length;i++){
            mysurface.remove(mysurface.items.items[i]);
 
        }
+        //显示历史审批表
+        var store=me.processWin.down('grid').getStore();
+        store.proxy.extraParams = {
+            businessid: r.get('businessid')
+        };
+        store.load();
+
+        //绘制流程图
         if(r.get("processstatus")==processdiction.stepzero){
 
             mysurface.add({

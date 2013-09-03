@@ -204,6 +204,12 @@ public class BusinessProcess implements BusinessProcessIntf {
     }
 
     @Override
+    public ArrayList<Map<String, Object>> getProcessHistory(int businessid, int start, int limit) {
+
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
     public int changeStatus(int businessid, String status) {
 
         BusinessProcessDao bpDao=new BusinessProcessDao();

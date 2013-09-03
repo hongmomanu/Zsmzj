@@ -13,9 +13,9 @@
  */
 Ext.define('ZSMZJ.controller.Dbgl', {
     extend: 'Ext.app.Controller',
-    models: ['dbgl.FamilyMember','dbgl.AffixFilesGrid','dbgl.comboxwidget.ApplyType'],
+    models: ['dbgl.FamilyMember','dbgl.AffixFilesGrid','dbgl.comboxwidget.ApplyType','dbgl.ProcessHistory'],
 
-    stores: ['dbgl.FamilyMembers','dbgl.AffixFilesGrids','dbgl.comboxwidget.ApplyTypes'],
+    stores: ['dbgl.FamilyMembers','dbgl.AffixFilesGrids','dbgl.comboxwidget.ApplyTypes','dbgl.ProcessHistorys'],
 
     refs: [
         {ref: 'myviewbusinessapplyform', selector: 'dbglbusinessapplyform'},

@@ -25,6 +25,7 @@ public interface BusinessProcessIntf {
 
     public int getNeedTodoCounts(int roleid,String keyword);//获取待办事务
     public ArrayList<Map<String,Object>> getNeedTodoList(int roleid,int start,int limit,String keyword);//获取代办事务列表
+    public ArrayList<Map<String,Object>> getProcessHistory(int businessid,int start,int limit);//获取代办事务列表
     public int changeStatus(int businessid,String type);//改变事务状态
     public Map<String,Object> getApplyForm(int businessid);//获取提交信息
     public ArrayList<Map<String,Object>> getAffixfilebybid(int businessid);//获取提交附件信息
