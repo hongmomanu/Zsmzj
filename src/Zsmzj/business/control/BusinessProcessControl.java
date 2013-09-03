@@ -26,11 +26,29 @@ public class BusinessProcessControl {
     private static final Logger log = Logger.getLogger(BusinessProcessControl.class);
     private final String BusinessTable="business";
     private final String ApprovalTable="approvalprocess";
+    private final String FamilyTable="familymembers";
     private final String UserTable="users";
 
     public int getNeedTodoCounts(int roleid){
         BusinessProcess bp=new BusinessProcess();
         return bp.getNeedTodoCounts(roleid,null);
+
+    }
+    public String getNeedTodoBusinessList(int start,int limit,String keyword){
+        BusinessProcess bp=new BusinessProcess();
+        ComonDao cd=new ComonDao();
+        int totalnum =cd.getTotalCount(BusinessTable);
+        String sql_list="select a.*,a.rowid as businessid,b.displayname,(select count(*)  from " +
+                FamilyTable+" c  where c.businessid MATCH a.rowid) as familynum" +
+                ",(select d.time from " + ApprovalTable+" d where d.businessid MATCH a.rowid order by desc limit 1"+
+                " ) as approvaltime from "+BusinessTable +" a,"+UserTable+" b " +
+                "where a.userid MATCH b.id Limit "+limit+" Offset "+start;
+
+        ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
+        Map<String,Object>res=new HashMap<String, Object>();
+        res.put("totalCount",totalnum);
+        res.put("results",list);
+        return JSONObject.fromObject(res).toString();
 
     }
     public String getProcessHistorybid(int businessid,int start,int limit){
@@ -39,7 +57,7 @@ public class BusinessProcessControl {
         int totalnum= cd.getTotalCountBySql(sql);
         String sql_list="select a.*,b.displayname from "+ApprovalTable +" a,"+UserTable+" b " +
                 "where businessid  MATCH "+businessid
-                +" and a.userid=b.id Limit "+limit+" Offset "+start;
+                +" and a.userid MATCH b.id Limit "+limit+" Offset "+start;
         ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
         Map<String,Object>res=new HashMap<String, Object>();
         res.put("totalCount",totalnum);

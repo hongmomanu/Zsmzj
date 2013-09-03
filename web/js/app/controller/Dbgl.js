@@ -13,9 +13,13 @@
  */
 Ext.define('ZSMZJ.controller.Dbgl', {
     extend: 'Ext.app.Controller',
-    models: ['dbgl.FamilyMember','dbgl.AffixFilesGrid','dbgl.comboxwidget.ApplyType','dbgl.ProcessHistory'],
+    models: ['dbgl.FamilyMember','dbgl.AffixFilesGrid',
+        'dbgl.comboxwidget.ApplyType','dbgl.ProcessHistory',
+        'dbgl.NeedToDoBusiness'],
 
-    stores: ['dbgl.FamilyMembers','dbgl.AffixFilesGrids','dbgl.comboxwidget.ApplyTypes','dbgl.ProcessHistorys'],
+    stores: ['dbgl.FamilyMembers','dbgl.AffixFilesGrids',
+        'dbgl.comboxwidget.ApplyTypes','dbgl.ProcessHistorys',
+        'dbgl.NeedToDoBusinesses'],
 
     refs: [
         {ref: 'myviewbusinessapplyform', selector: 'dbglbusinessapplyform'},
@@ -38,7 +42,8 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.ProcessVector',
         'dbgl.businessCheck',
         'dbgl.businessAlter',
-        'dbgl.processCheckWin'
+        'dbgl.processCheckWin',
+        'dbgl.NeedToDoBusinessGrid'
 
     ],
 
@@ -68,7 +73,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
          'dbglbusinessalterform button[action=applysubmit]':{
              click: this.applysubmitupdate
          },
-         'dbglbusinessapplyform,dbglbusinesscheckform,dbglbusinessalterform':{
+         'dbglbusinessapplyform,dbglbusinesscheckform,dbglbusinessalterform,needtodobusinesspanel':{
              afterrender: this.afterrenderEvents
          },
 
