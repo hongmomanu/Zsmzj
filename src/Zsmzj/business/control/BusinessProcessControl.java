@@ -41,7 +41,10 @@ public class BusinessProcessControl {
         String sql_list="select a.*,a.rowid as businessid,b.displayname,(select count(*)  from " +
                 FamilyTable+" c  where c.businessid MATCH a.rowid) as familynum" +
                 ",(select d.time from " + ApprovalTable+" d where d.businessid MATCH a.rowid order by d.time desc limit 1"+
-                " ) as approvaltime from "+BusinessTable +" a,"+UserTable+" b " +
+                " ) as approvaltime" +
+                ",(select f.displayname from "+UserTable+" f where f.id=(select e.userid from " + ApprovalTable+" e where e.businessid MATCH a.rowid  order by e.time desc limit 1 "+
+                " )) as approvaluser" +
+                " from "+BusinessTable +" a,"+UserTable+" b " +
                 "where a.userid MATCH b.id Limit "+limit+" Offset "+start;
 
         ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
