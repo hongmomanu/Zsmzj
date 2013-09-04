@@ -56,6 +56,11 @@ public class BusinessProcessControl {
                 "where a.userid MATCH b.id Limit "+limit+" Offset "+start;
 
         ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
+        for(Map<String,Object> map:list){
+            map.put("process", ProcessType.UseProcessType.getNext(ProcessType.UseProcessType.
+                    getProcessFromChinese(map.get("processstatus").toString())));
+        }
+
         Map<String,Object>res=new HashMap<String, Object>();
         res.put("totalCount",totalnum);
         res.put("results",list);

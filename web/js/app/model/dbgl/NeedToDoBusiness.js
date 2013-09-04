@@ -18,6 +18,7 @@ Ext.define('ZSMZJ.model.dbgl.NeedToDoBusiness', {
         {name:'helpedtime'},
         {name:'familynum',type:'int'},
         {name:'processstatus'},
+        {name:'process'},
         {name:'displayname'},
         {name:'approvaltime'},
         {name:'approvaluser'},

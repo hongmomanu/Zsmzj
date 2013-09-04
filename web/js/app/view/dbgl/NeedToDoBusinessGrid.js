@@ -107,6 +107,28 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                             });
                         }, 50);
 
+                        var id5=Ext.id();
+                        Ext.defer(function () {
+                            Ext.widget('button', {
+                                renderTo: id5,
+                                text: '提交',
+                                hidden:!(r.get('processstatus').toString()==processdiction.stepzero),
+                                icon:'img/sp.gif',
+                                width: 55,
+                                listeners: {
+                                    render: function(c){
+                                        c.getEl().on('click', function(){
+                                            me.up('panel').fireEvent('businessclick', c,r,me);
+
+                                        }, c);
+                                    }
+
+                                }
+                            });
+                        }, 50);
+
+
+
 
                         var id3=Ext.id();
                         Ext.defer(function () {
@@ -150,12 +172,11 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                             });
                         }, 50);
 
-
-
                         return Ext.String.format('<span id="{0}" style="padding-left:5px; "></span>' +
                             '<span id="{1}" style="padding-left:5px; "></span><span id="{2}" style="padding-left:5px; "></span>' +
+                            '</span><span id="{5}" style="padding-left:5px; "></span>'+
                             '<span id="{3}" style="padding-left:5px; "></span>'+
-                            '<span id="{4}" style="padding-left:5px; "></span>',id0, id1,id2,id3,id4);
+                            '<span id="{4}" style="padding-left:5px; "></span>',id0, id1,id2,id3,id4,id5);
                     }
                 },
                 //{header: '审批名称', dataIndex: 'rolename',width: 150},

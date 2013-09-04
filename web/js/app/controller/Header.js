@@ -208,14 +208,23 @@ Ext.define('ZSMZJ.controller.Header', {
         });
 
     },
+    widgetdolayout:function(widgetid){
+        function fn(){
+            Ext.getCmp(widgetid).doLayout();
+        }
+        var task = new Ext.util.DelayedTask(fn);
+        task.delay(500);
+    },
     cancelsubmitbybid:function(businessid,store){
-
+        var me=this;
         var params = {
             businessid:businessid,
             status:processdiction.stepzero
         };
         var successFunc = function (form, action) {
-            store.load();
+            store.load({callback:function(){
+                 me.widgetdolayout("mainContent-panel");
+            }});
 
         };
         var failFunc = function (form, action) {
@@ -226,12 +235,14 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
     delapplybybid:function(businessid,store){
-
+        var me=this;
         var params = {
             businessid:businessid
         };
         var successFunc = function (form, action) {
-            store.load();
+            store.load({callback:function(){
+                me.widgetdolayout("mainContent-panel");
+            }});
 
         };
         var failFunc = function (form, action) {
@@ -243,13 +254,15 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
     changeapplystatus:function(businessid,status,store){
-
+        var me=this;
         var params = {
             businessid:businessid,
             status:status
         };
         var successFunc = function (form, action) {
-            store.load();
+            store.load({callback:function(){
+                me.widgetdolayout("mainContent-panel");
+            }});
 
         };
         var failFunc = function (form, action) {
@@ -281,7 +294,6 @@ Ext.define('ZSMZJ.controller.Header', {
     },
 
     showBusinessCheckContent:function(c,r,grid){
-
         if(r.get("process")==processdiction.stepone){
 
              this.showsendapplywin(c,r,grid);
@@ -401,7 +413,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
             mysurface.add({
                 type: "path",
-
+                text:"muhahaaaa",
                 path: "M40 35  L50 45 L65 28",    //路径      L150 50
                 "stroke-width": "4",
                 opacity :0.6,
@@ -466,11 +478,7 @@ Ext.define('ZSMZJ.controller.Header', {
     },
     afterrenderEvents:function(){
         CommonFunc.removeTask(ViewWaitMask,Ext.getCmp('mainContent-panel').getEl());
-        function fn(){
-            Ext.getCmp('mainContent-panel').doLayout();
-        }
-        var task = new Ext.util.DelayedTask(fn);
-        task.delay(500);
+        this.widgetdolayout('mainContent-panel');
     },
     processpictureRenderEvent:function(){
 
