@@ -14,7 +14,9 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
     requires: [
 
     ],
-
+    afterShow: function(animateTarget, cb, scope) {
+        this.fireEvent('alterapplyaftershow',this);
+    },
     initComponent: function() {
         Ext.apply(this, {
             border: false,
@@ -84,15 +86,16 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                                 }
                             });
                         }, 50);
+
                         var id2=Ext.id();
                         Ext.defer(function () {
                             Ext.widget('button', {
                                 renderTo: id2,
                                 text: '查看',
+                                hidden:(r.get('processstatus').toString()==processdiction.stepzero),
                                 icon:'img/sp.gif',
                                 width: 55,
                                 listeners: {
-
                                     render: function(c){
                                         c.getEl().on('click', function(){
                                             me.up('panel').fireEvent('businessinfo', c,r,me);
@@ -127,9 +130,32 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                             });
                         }, 50);
 
+                        var id4=Ext.id();
+                        Ext.defer(function () {
+                            Ext.widget('button', {
+                                renderTo: id4,
+                                text: '取消',
+                                icon:'img/sp.gif',
+                                hidden:!(r.get('processstatus').toString()==processdiction.stepone),
+                                width: 55,
+                                listeners: {
+
+                                    render: function(c){
+                                        c.getEl().on('click', function(){
+                                            me.up('panel').fireEvent('cancelclick', c,r,me);
+                                        }, c);
+                                    }
+
+                                }
+                            });
+                        }, 50);
+
+
+
                         return Ext.String.format('<span id="{0}" style="padding-left:5px; "></span>' +
                             '<span id="{1}" style="padding-left:5px; "></span><span id="{2}" style="padding-left:5px; "></span>' +
-                            '<span id="{3}" style="padding-left:5px; "></span>',id0, id1,id2,id3);
+                            '<span id="{3}" style="padding-left:5px; "></span>'+
+                            '<span id="{4}" style="padding-left:5px; "></span>',id0, id1,id2,id3,id4);
                     }
                 },
                 //{header: '审批名称', dataIndex: 'rolename',width: 150},

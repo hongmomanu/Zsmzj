@@ -90,7 +90,10 @@ Ext.define('ZSMZJ.controller.Header', {
             'needtodopanel,needtodobusinesspanel':{
 
                 afterrender: this.afterrenderEvents,
-                alterapplyaftershow:this.afterrenderEvents,
+                alterapplyaftershow:function(grid){
+                    grid.getStore().load()
+                    this.afterrenderEvents();
+                },
                 processclick:function (c,r,grid){//查看流程
                     this.showProcessWin(c,r,grid);
                 },
@@ -105,6 +108,9 @@ Ext.define('ZSMZJ.controller.Header', {
                 delclick:function(c,r,grid){//未提交前删除
 
                     this.delbusinessapply(c,r,grid);
+                },
+                cancelclick:function(c,r,grid){//未审核前取消提交
+                    this.cancelbusinesssubmit(c,r,grid);
                 }
             }
 
@@ -169,6 +175,23 @@ Ext.define('ZSMZJ.controller.Header', {
         this.showtab("修改信息",'dbglbusinessalterform','widget',objdata);
 
     },
+    cancelbusinesssubmit:function(c,r,grid){
+        var businessid=r.get('businessid');
+        var me=this;
+        Ext.Msg.show({
+            title: '确定要删除此申请?',
+            msg: '你正在试图取消选中的 <a><font color="red">'+ r.get('displayname')+'</font></a> 的提交.你想继续么?',
+            buttons: Ext.Msg.YESNO,
+            fn: function (btn) {
+                if(btn=='yes'){
+                    me.cancelsubmitbybid(businessid,grid.getStore());
+                }
+            },
+            icon: Ext.Msg.QUESTION
+        });
+
+
+    },
     delbusinessapply:function(c,r,grid){
         var businessid=r.get('businessid');
         var me=this;
@@ -183,6 +206,23 @@ Ext.define('ZSMZJ.controller.Header', {
             },
             icon: Ext.Msg.QUESTION
         });
+
+    },
+    cancelsubmitbybid:function(businessid,store){
+
+        var params = {
+            businessid:businessid,
+            status:processdiction.stepzero
+        };
+        var successFunc = function (form, action) {
+            store.load();
+
+        };
+        var failFunc = function (form, action) {
+            Ext.Msg.alert("提示信息", "取消提交失败，检查web服务或数据库服务");
+
+        };
+        this.ajaxSend(params, 'ajax/changestatusbybid.jsp', successFunc, failFunc,'POST');
 
     },
     delapplybybid:function(businessid,store){

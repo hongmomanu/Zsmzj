@@ -34,6 +34,14 @@ public class BusinessProcessControl {
         return bp.getNeedTodoCounts(roleid,null);
 
     }
+    public String changeStatusbybid(int businessid,String status){
+        BusinessProcess bp=new BusinessProcess();
+        int result=bp.changeStatus(businessid,status);
+        if(result>0)return "{success:true}";
+        else  return "{success:false}";
+
+
+    }
     public String getNeedTodoBusinessList(int start,int limit,String keyword){
         BusinessProcess bp=new BusinessProcess();
         ComonDao cd=new ComonDao();

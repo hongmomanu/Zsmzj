@@ -315,7 +315,6 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             isapproval: ajaxform.getForm().getValues().approvalresult==approvalresult.yes,
             approvalname:'街道/乡镇审核'
         };
-        testobj=me;
         var successFunc = function (form, action) {
             btn.up('window').close();
             Ext.Msg.alert("提示信息", "审核成功");

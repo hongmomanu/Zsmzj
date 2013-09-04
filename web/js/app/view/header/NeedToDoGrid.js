@@ -15,7 +15,7 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
 
     ],
     afterShow: function(animateTarget, cb, scope) {
-        this.fireEvent('alterapplyaftershow');
+        this.fireEvent('alterapplyaftershow',this);
     },
     initComponent: function() {
         Ext.apply(this, {
