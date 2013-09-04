@@ -47,6 +47,7 @@ Ext.define('ZSMZJ.controller.Header', {
             'dbglbusinessalterform':{
                 alterapplyaftershow:function(){
                     var form=this.getMydbglbusinessalterform();
+                    //this.widgetdolayout("mainContent-panel");
                     var businessid=form.objdata.businessid;
                     this.clearAlterContent(form);
                     this.getValueBybusinessid(businessid,'ajax/getapplyformbybid.jsp',this.setFormValues,form);
@@ -57,6 +58,7 @@ Ext.define('ZSMZJ.controller.Header', {
             'dbglbusinesscheckform':{
                 alterapplyaftershow:function(){
                     var form=this.getMydbglbusinesscheckform();
+                    //this.widgetdolayout("mainContent-panel");
                     var businessid=form.objdata.businessid;
                     this.clearAlterContent(form);
                     this.getValueBybusinessid(businessid,'ajax/getapplyformbybid.jsp',this.setFormValues,form);
@@ -94,7 +96,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
                 afterrender: this.afterrenderEvents,
                 alterapplyaftershow:function(grid){
-                    grid.getStore().load()
+                    //grid.getStore().load();
                     this.afterrenderEvents();
                 },
                 processclick:function (c,r,grid){//查看流程
@@ -102,7 +104,13 @@ Ext.define('ZSMZJ.controller.Header', {
                 },
                 businessclick:function(c,r,grid){//业务审核处理
 
-                   this.showBusinessCheckContent(c,r,grid);
+                   //me.widgetdolayout("mainContent-panel");
+                    var me=this;
+                    var callback=function fn(){
+                        me.widgetdolayout("mainContent-panel");
+                    };
+
+                   this.showBusinessCheckContent(c,r,grid,callback);
                 },
                 alterclick:function(c,r,grid){//未提交前修改
 
@@ -121,11 +129,16 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
     sendbusiness:function(btn){
+        var me=this;
         var form=btn.up('form');
         var c=form.objdata.item;
         var r=form.objdata.record;
         var grid=form.objdata.grid;
-        this.showBusinessCheckContent(c,r,grid);
+        var callback=function fn(){
+            me.showoldtab(grid.up('panel').id);
+            me.closetab("dbglbusinessalterform");
+        };
+        this.showBusinessCheckContent(c,r,grid,callback);
 
     },
     cancelcheck:function(btn){
@@ -264,7 +277,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
 
     },
-    changeapplystatus:function(businessid,status,store){
+    changeapplystatus:function(businessid,status,store,callback){
         var me=this;
         var params = {
             businessid:businessid,
@@ -272,8 +285,9 @@ Ext.define('ZSMZJ.controller.Header', {
         };
         var successFunc = function (form, action) {
             store.load({callback:function(){
-                me.closetab("dbglbusinessalterform");
-                me.widgetdolayout("mainContent-panel");
+                //me.closetab("dbglbusinessalterform");
+                if(callback)callback();
+
             }});
 
         };
@@ -287,7 +301,7 @@ Ext.define('ZSMZJ.controller.Header', {
     },
 
 
-    showsendapplywin:function(c,r,grid){
+    showsendapplywin:function(c,r,grid,callback){
         var me=this;
         var businessid=r.get('businessid');
         var status= r.get('process');
@@ -297,7 +311,7 @@ Ext.define('ZSMZJ.controller.Header', {
             buttons: Ext.Msg.YESNO,
             fn: function (btn) {
                 if(btn=='yes'){
-                    me.changeapplystatus(businessid, status,grid.getStore());
+                    me.changeapplystatus(businessid, status,grid.getStore(),callback);
                 }
             },
             icon: Ext.Msg.QUESTION
@@ -305,10 +319,10 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
 
-    showBusinessCheckContent:function(c,r,grid){
+    showBusinessCheckContent:function(c,r,grid,callback){
         if(r.get("process")==processdiction.stepone){
 
-             this.showsendapplywin(c,r,grid);
+             this.showsendapplywin(c,r,grid,callback);
         }
         else if(r.get("process")==processdiction.steptwo){
            //var businessid=r.get('businessid');
@@ -539,12 +553,16 @@ Ext.define('ZSMZJ.controller.Header', {
         }
 
     },
+    showoldtab:function(id){
+        var tabs = Ext.getCmp('mainContent-panel');
+        tabs.getComponent(id).show();
+    },
     showtab:function(label,value,type,objdata){
         this.closemask();
         ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
         var tabs = Ext.getCmp('mainContent-panel');
         if (tabs.getComponent('tab' + value)) {
-            tabs.getComponent('tab' + value).objdata=objdata;
+            if(objdata)tabs.getComponent('tab' + value).objdata=objdata;
             if(tabs.getComponent('tab' + value).isHidden()){
                 tabs.getComponent('tab' + value).show();
             }
