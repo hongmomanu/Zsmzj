@@ -73,7 +73,12 @@ Ext.define('ZSMZJ.controller.Navigation', {
     treeclick: function (record, item, index, e, eOpts) {
         if (item.data.leaf) {
             this.showtab(item.data.text,item.data.value,item.data.type);
+
         }
+    },
+    tabdolayout:function(value){
+
+        Ext.getCmp('tab' + value).doLayout();
     },
     showtab:function(label,value,type){
         if(ViewWaitMask){

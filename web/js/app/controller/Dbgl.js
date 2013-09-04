@@ -73,7 +73,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
          'dbglbusinessalterform button[action=applysubmit]':{
              click: this.applysubmitupdate
          },
-         'dbglbusinessapplyform,dbglbusinesscheckform,dbglbusinessalterform,needtodobusinesspanel':{
+         'dbglbusinessapplyform,dbglbusinesscheckform,dbglbusinessalterform':{
              afterrender: this.afterrenderEvents
          },
 
@@ -123,7 +123,15 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
     },
     afterrenderEvents:function(){
+        //alert(1);
+
         CommonFunc.removeTask(ViewWaitMask,Ext.getCmp('mainContent-panel').getEl());
+        function fn(){
+            Ext.getCmp('mainContent-panel').doLayout();
+        }
+        var task = new Ext.util.DelayedTask(fn);
+        task.delay(500);
+
     },
     affixgridrendered:function(grid,e){
         var view = grid.getView();

@@ -59,8 +59,8 @@ public class BusinessProcessControl {
         String sql="select count(*) from "+ApprovalTable +" where businessid MATCH "+businessid;
         int totalnum= cd.getTotalCountBySql(sql);
         String sql_list="select a.*,b.displayname from "+ApprovalTable +" a,"+UserTable+" b " +
-                "where businessid  MATCH "+businessid
-                +" and a.userid MATCH b.id Limit "+limit+" Offset "+start;
+                "where a.businessid  MATCH "+businessid
+                +" and a.userid = b.id Limit "+limit+" Offset "+start;
         ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
         Map<String,Object>res=new HashMap<String, Object>();
         res.put("totalCount",totalnum);

@@ -25,14 +25,17 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                 enableTextSelection:true,
                 stripeRows: true
             },
-
-            //view: new Ext.grid.GridView({ scrollToTop: Ext.emptyFn }),
-            //行政区划 户主姓名 户主身份证 申请类别 家庭类别 救助金额 救助开始日期 救助结束日期 家庭人数 享受人数 状态 状态描述 审核人 审核日期 制单人
+            features: [{
+                ftype: 'summary'//Ext.grid.feature.Summary表格汇总特性
+            }],
             //hideHeaders:true,
             columns: [
 
 
-                {header: '业务操作', width: 230,locked : true,
+                {header: '业务操作', width: 230,locked : true,summaryType: 'count', align:'center',//求数量
+                    summaryRenderer: function(value){
+                        return '本页合计'
+                    },
                     renderer: function (v, m, r) {
                         var me=this;
                         var id0=Ext.id();
@@ -48,7 +51,7 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
 
                                     render: function(c){
                                         c.getEl().on('click', function(){
-                                            me.fireEvent('alterclick', c,r,me);
+                                            me.up('panel').fireEvent('alterclick', c,r,me);
 
                                         }, c);
                                     }
@@ -72,8 +75,8 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                                     render: function(c){
                                         c.getEl().on('click', function(){
                                             //Ext.Msg.alert('Info', r.get('processstatus'))
-
-                                            me.fireEvent('processclick', c,r,me);
+                                            //me.fireEvent('processclick', c,r,me);
+                                            me.up('panel').fireEvent('processclick', c,r,me);
 
                                         }, c);
                                     }
@@ -92,7 +95,7 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
 
                                     render: function(c){
                                         c.getEl().on('click', function(){
-                                            me.fireEvent('businessinfo', c,r,me);
+                                            me.up('panel').fireEvent('businessinfo', c,r,me);
 
                                         }, c);
                                     }
@@ -115,7 +118,7 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
 
                                     render: function(c){
                                         c.getEl().on('click', function(){
-                                            me.fireEvent('delclick', c,r,me);
+                                            me.up('panel').fireEvent('delclick', c,r,me);
 
                                         }, c);
                                     }
@@ -131,24 +134,30 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                 },
                 //{header: '审批名称', dataIndex: 'rolename',width: 150},
                 ////行政区划 户主姓名 户主身份证 申请类别 家庭类别 救助金额 救助开始日期 救助结束日期 家庭人数 享受人数 状态 状态描述 审核人 审核日期 制单人
-                {header: '行政区划', dataIndex: 'division',width: 150},
-                {header: '户主姓名',dataIndex:'owername'},
-                {header: '户主身份证',dataIndex:'owerid'},
-                {header: '申请类别',dataIndex:'applytype'},
-                {header: '家庭类别',dataIndex:'familytype'},
-                {header: '救助金额',dataIndex:'totalhelpmoney'},
-                {header: '救助开始日期',dataIndex:'helpbgtime'},
-                {header: '救助结束日期',dataIndex:'helpedtime'},
-                {header: '家庭(享受)人数',dataIndex:'familynum'},
-                {header: '状态',dataIndex:'processstatus'},
-                {header: '审核人',dataIndex:'approvaluser'},
-                {header: '审核日期',dataIndex:'approvaltime',width:200,renderer: function (val, obj, record) {
+                {header: '行政区划', dataIndex: 'division',align:'center',width: 250},
+                {header: '户主姓名',align:'center',dataIndex:'owername'},
+                {header: '户主身份证',align:'center',dataIndex:'owerid',width: 250},
+                {header: '申请类别',align:'center',dataIndex:'applytype'},
+                {header: '家庭类别',align:'center',dataIndex:'familytype'},
+                {header: '救助金额',align:'center',dataIndex:'totalhelpmoney',summaryType: 'sum',width:150,//求数量
+                    summaryRenderer: function(value){
+                        return '总金额:'+value
+                    }},
+                {header: '救助开始日期',align:'center',dataIndex:'helpbgtime'},
+                {header: '救助结束日期',align:'center',dataIndex:'helpedtime'},
+                {header: '家庭(享受)人数',align:'center',dataIndex:'familynum',summaryType: 'sum', width:150,//求数量
+                    summaryRenderer: function(value){
+                        return '总人数:'+value
+                    }},
+                {header: '状态',align:'center',dataIndex:'processstatus'},
+                {header: '审核人',align:'center',dataIndex:'approvaluser'},
+                {header: '审核日期',align:'center',dataIndex:'approvaltime',width:200,renderer: function (val, obj, record) {
                     var time =Ext.Date.parse(val, "Y-m-d H:i:s");
                     val = Ext.util.Format.date(time, 'Y-m-d H:i');
                     return val;
                 }},
-                {header: '制单人',dataIndex:'displayname'},
-                {header: '业务id', width: 150,dataIndex:'businessid',hidden:true}
+                {header: '制单人',align:'center',dataIndex:'displayname'},
+                {header: '业务id',align:'center', width: 150,dataIndex:'businessid',hidden:true}
 
             ],
             flex: 1,

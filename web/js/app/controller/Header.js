@@ -87,7 +87,7 @@ Ext.define('ZSMZJ.controller.Header', {
                 afterrender: this.processpictureRenderEvent
 
             },
-            'needtodopanel':{
+            'needtodopanel,needtodobusinesspanel':{
 
                 afterrender: this.afterrenderEvents,
                 alterapplyaftershow:this.afterrenderEvents,
@@ -333,7 +333,6 @@ Ext.define('ZSMZJ.controller.Header', {
     },
 
     showProcessWin:function(c,r,grid){//显示进程窗口
-
        var me=this;
        //窗口初始化显示
        if(!me.processWin){
@@ -427,6 +426,11 @@ Ext.define('ZSMZJ.controller.Header', {
     },
     afterrenderEvents:function(){
         CommonFunc.removeTask(ViewWaitMask,Ext.getCmp('mainContent-panel').getEl());
+        function fn(){
+            Ext.getCmp('mainContent-panel').doLayout();
+        }
+        var task = new Ext.util.DelayedTask(fn);
+        task.delay(500);
     },
     processpictureRenderEvent:function(){
 
