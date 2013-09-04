@@ -73,6 +73,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
          'dbglbusinessalterform button[action=applysubmit]':{
              click: this.applysubmitupdate
          },
+
          'dbglbusinessapplyform,dbglbusinesscheckform,dbglbusinessalterform':{
              afterrender: this.afterrenderEvents
          },

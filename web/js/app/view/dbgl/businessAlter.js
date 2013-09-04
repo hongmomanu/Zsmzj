@@ -836,8 +836,24 @@ Ext.define('ZSMZJ.view.dbgl.businessAlter', {
             ],
             buttons:[
                 {
+                    text: '提交审批',
+                    action:'sendbusiness'
+                },
+                {
+                    text: '电子签章',
+                    action:'signature'
+                },
+                {
+                    text: '删除签章',
+                    action:'unsignature'
+                },
+                {
                     text: '保存',
                     action:'applysubmit'
+                },
+                {
+                    text: '取消',
+                    action:'cancel'
                 }
             ]
 

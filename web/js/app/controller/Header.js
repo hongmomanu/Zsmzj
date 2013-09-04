@@ -65,6 +65,9 @@ Ext.define('ZSMZJ.controller.Header', {
                 }
 
             },
+            'dbglbusinessalterform button[action=sendbusiness]':{
+                click: this.sendbusiness
+            },
             'dbglbusinesscheckform button[action=cancel]':{
                 click: this.cancelcheck
 
@@ -115,6 +118,14 @@ Ext.define('ZSMZJ.controller.Header', {
             }
 
         }, this);
+
+    },
+    sendbusiness:function(btn){
+        var form=btn.up('form');
+        var c=form.objdata.item;
+        var r=form.objdata.record;
+        var grid=form.objdata.grid;
+        this.showBusinessCheckContent(c,r,grid);
 
     },
     cancelcheck:function(btn){
@@ -261,6 +272,7 @@ Ext.define('ZSMZJ.controller.Header', {
         };
         var successFunc = function (form, action) {
             store.load({callback:function(){
+                me.closetab("dbglbusinessalterform");
                 me.widgetdolayout("mainContent-panel");
             }});
 
