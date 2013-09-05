@@ -603,7 +603,24 @@ Ext.define('ZSMZJ.controller.Header', {
         }
 
     },
+    initProcessFromRole:function(){
+        var me=this;
+        var params = {
+            roleid:roleid,
+            type:"流程操作"
+        };
+        var successFunc = function (response, action) {
+            processRoleBtn=Ext.JSON.decode(response.responseText);
+        };
+        var failFunc = function (form, action) {
+            Ext.Msg.alert("提示信息", "取消提交失败，检查web服务或数据库服务");
+
+        };
+        this.ajaxSend(params, 'ajax/getallfuncsbyrule.jsp', successFunc, failFunc,'POST');
+
+    },
     initHeadView:function(){
+        this.initProcessFromRole();
         var me=this;
         var store=this.getHeaderHeaderViewersStore();
 
@@ -611,6 +628,9 @@ Ext.define('ZSMZJ.controller.Header', {
             var viewpanel=me.getMyviewheadViewPanel().items.items[0];
             viewpanel.select(0);
         });
+
+
+
 
 
 

@@ -32,6 +32,11 @@ public class FuncControl {
 
     }
 
+    public String getAllFuncsByRole(int roleid,String type){
+        FuncImplement func=new FuncImplement();
+        ArrayList<Map<String, Object>> result=func.getAllFuncsByRole(roleid,type);
+        return JSONArray.fromObject(result).toString();
+    }
     public String getFuncsByRole(int roleid,String type,String leaf){
 
         FuncImplement func=new FuncImplement();

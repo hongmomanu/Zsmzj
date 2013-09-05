@@ -837,18 +837,30 @@ Ext.define('ZSMZJ.view.dbgl.businessAlter', {
             buttons:[
                 {
                     text: '提交审批',
+                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                        {name:"name",value:this.objdata.record.get("processstatus")}).children,
+                        {name:"name",value:"提交审批"}),
                     action:'sendbusiness'
                 },
                 {
                     text: '电子签章',
+                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                        {name:"name",value:this.objdata.record.get("processstatus")}).children,
+                        {name:"name",value:"电子签章"}),
                     action:'signature'
                 },
                 {
                     text: '删除签章',
+                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                        {name:"name",value:this.objdata.record.get("processstatus")}).children,
+                        {name:"name",value:"删除签章"}),
                     action:'unsignature'
                 },
                 {
                     text: '保存',
+                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                        {name:"name",value:this.objdata.record.get("processstatus")}).children,
+                        {name:"name",value:"保存"}),
                     action:'applysubmit'
                 },
                 {

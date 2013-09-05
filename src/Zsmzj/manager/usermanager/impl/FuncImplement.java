@@ -28,6 +28,12 @@ public class FuncImplement implements FuncMethods {
     }
 
     @Override
+    public ArrayList<Map<String, Object>> getAllFuncsByRole(int roleid, String type) {
+        FuncDao dao=new FuncDao();
+        return dao.getAllFuncsByRole(roleid,type);
+    }
+
+    @Override
     public int addnewFunc(String funcname,String functype) {
         FuncDao dao=new FuncDao();
         return dao.addNewFunc(funcname,functype);

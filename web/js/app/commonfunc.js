@@ -7,6 +7,14 @@
  */
 var CommonFunc={
 
+    lookup:function(arr,item) {
+        var result;
+        for(var i = 0;i<arr.length;i++) {
+            if(arr[i][item.name]=== item.value )result= arr[i];
+        }
+        return result;
+    },
+
     updateitemnum:function(item,count){
         var text=item.el.dom.innerText;
         var before_str=text.slice(0,text.indexOf("(")+1);

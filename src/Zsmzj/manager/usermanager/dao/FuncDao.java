@@ -47,10 +47,39 @@ public class FuncDao {
         }
 
     }
+    public ArrayList <Map<String, Object>> getAllFuncsByRole(int roleid,String type){
+        Connection testConn= JdbcFactory.getConn("sqlite");
+
+        String sql=  "select a.funcname,a.imgurl,a.label from "+FuncTable+" as a,"+
+                FuncToRoleTable+" as b where a.id=b.funcid and b.roleid=? and a.functype=?" +
+                " order by a.sortnum asc";
+        PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
+        ArrayList<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        try {
+            pstmt.setInt(1,roleid);
+            pstmt.setString(2,type);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Map<String,Object> func=new HashMap<String, Object>();
+                func.put("name",rs.getString("funcname"));
+                func.put("children",getAllFuncsByRole(roleid,type+rs.getString("funcname")));
+                func.put("value",rs.getString("label"));
+                func.put("url",rs.getString("imgurl"));
+                func.put("type","widget");
+                list.add(func);
+
+            }
+            return list;
+        }catch (Exception E){
+            log.debug(E.getMessage());
+            return list;
+        }
+
+
+    }
     public ArrayList<Map<String, Object>>   getFuncsByRole(int roleid,String type){
 
         Connection testConn= JdbcFactory.getConn("sqlite");
-        log.debug(type);
 
         String sql=  "select a.funcname,a.imgurl,a.label from "+FuncTable+" as a,"+
                 FuncToRoleTable+" as b where a.id=b.funcid and b.roleid=? and a.functype=?" +
