@@ -13,6 +13,7 @@ import java.util.Map;
 public interface DivisionMethods {
     ArrayList<Map<String, Object>> getDivisions(int parentid); //获取行政区划接口
     ArrayList<Map<String, Object>> getDivisionsByKeyword(String keyword); //更具关键字获取获取行政区划接口
-    int addDivision(String divisionname, String divisionpath, int parentid);
+    int addDivision(String divisionname, String divisionpath, int parentid,String signaturepath);
     int delDivision(int divisionid);
+    int editlDivision(int divisionid,String divisionname, String signaturepath);
 }

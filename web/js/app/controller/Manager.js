@@ -32,12 +32,14 @@ Ext.define('ZSMZJ.controller.Manager', {
         'manager.FuncManager',
         'manager.EnumerateConfigManager',
         'manager.addNewDivisionWin',
+        'manager.editDivisionWin',
         'manager.DivisionTreePanel',
         'manager.RoleFuncGrid',
         'manager.addNewRoleWin',
         'manager.addNewFuncWin',
         'manager.addNewUserWin',
         'manager.addNewEnumWin',
+        'manager.uploadSinatureWin',
         'manager.RoleFuncWin',
         'manager.EditFuncWin',
         'manager.funcMenu',
@@ -87,6 +89,17 @@ Ext.define('ZSMZJ.controller.Manager', {
             'addnewdivisionwin button[action=add]':{
                 click: this.addnewdivisionfrombt
             },
+            'addnewdivisionwin button[action=upload]':{
+                click: this.uploadsinature
+            },
+            'editdivisionwin button[action=upload]':{
+                click: this.uploadsinature
+            },
+            'editdivisionwin button[action=save]':{
+                click: this.savedivision
+            },
+
+
             'editfuncwin button[action=save]': {
                 click: this.saveeditfunc
             },
@@ -96,6 +109,9 @@ Ext.define('ZSMZJ.controller.Manager', {
             },
             'rolefuncgrid button[action=cancel]': {
                 click: this.cancelrolefuncs
+            },
+            'uploadsinaturewin button[action=upload]':{
+                click: this.uploadSinatureFile
             },
             'usermanagerpanel': {
                 itemcontextmenu: this.showUserMenu
@@ -118,7 +134,8 @@ Ext.define('ZSMZJ.controller.Manager', {
                 click: this.rolemanager
             },
             'divisionmenu > menuitem': {
-                click: this.divisionmanager
+                click: this.divisionmanager,
+                mouseover:this.mytest
             },
             'divisiontreepanel': {
                 itemcontextmenu: this.showDivisionMenu
@@ -158,7 +175,6 @@ Ext.define('ZSMZJ.controller.Manager', {
         e.preventDefault();
         e.stopEvent();
         var menu = Ext.widget('divisionmenu');
-        console.log(record);
         menu.divisiondata=record;
         menu.showAt(e.getXY());
     },
@@ -225,6 +241,12 @@ Ext.define('ZSMZJ.controller.Manager', {
         }
 
     },
+    mytest:function(item,e,eopts){
+      alert(1);
+      console.log(item);
+      console.log(e);
+      console.log(eopts);
+    },
     divisionmanager:function(item,e,eOpts){
         //alert(1);
         var store=this.getManagerDivisionTreesStore();
@@ -236,7 +258,19 @@ Ext.define('ZSMZJ.controller.Manager', {
         }else if(item.value=='del'){
             this.deldivisionwin(store,root);
 
+        }else if(item.value=='edit'){
+            this.editdivisionwin(store,root);
+
         }
+
+    },
+    editdivisionwin:function(store,root){
+        if (!this.editDivisionWin)this.editDivisionWin = Ext.widget('editdivisionwin');
+        this.editDivisionWin.show();
+        this.editDivisionWin.store=store;
+        this.editDivisionWin.root=root;
+        var formdata={"divisionname":root.data.text,"signaturepath":root.data.signaturepath};
+        this.editDivisionWin.down('form').getForm().setValues(formdata);
 
     },
     deldivisionwin:function(store,root){
@@ -413,6 +447,29 @@ Ext.define('ZSMZJ.controller.Manager', {
         win.hide();
 
     },
+    uploadSinatureFile:function(btn){
+        var me=this;
+        var params = {
+
+        };
+        //var applyform=this.getMyviewbusinessapplyform();
+        var win=btn.up('window');
+
+        var applyform=win.itemdata.up('window').down('form');
+        var successFunc = function (form, action) {
+            var filepath=action.result.filepath;
+            applyform.down("#signaturepath").setValue(filepath);
+            win.hide();
+
+        };
+        var failFunc = function (form, action) {
+            Ext.Msg.alert("提示信息", "上传文件失败，检查web服务");
+
+        };
+        //var form =btn.up('form');
+        this.formSubmit(btn, params, 'ajax/uploadfile.jsp', successFunc, failFunc,"正在提交数据");
+
+    },
     saveeditfunc:function(btn){
 
         var me=this;
@@ -495,6 +552,30 @@ Ext.define('ZSMZJ.controller.Manager', {
 
 
     },
+
+    savedivision:function(btn){
+
+        var me=this;
+        var node=me.editDivisionWin.root;
+        var store=me.editDivisionWin.store;
+        var id=node.getId();
+        var params = {
+            divisionid:id
+
+        };
+        var successFunc = function (form, action) {
+            store.load({node:node.parentNode});
+            me.editDivisionWin.hide();
+
+        };
+        var failFunc = function (form, action) {
+            Ext.Msg.alert("提示信息", "新增用户失败，检查web服务或数据库服务");
+
+        };
+
+        this.formSubmit(btn, params, 'ajax/editdivision.jsp', successFunc, failFunc,"正在提交数据");
+
+    },
     addnewdivision:function(btn){
         var me=this;
         var node=me.newDivisionWin.root;
@@ -518,6 +599,11 @@ Ext.define('ZSMZJ.controller.Manager', {
 
         this.formSubmit(btn, params, 'ajax/addnewdivision.jsp', successFunc, failFunc,"正在提交数据");
 
+    },
+    uploadsinature:function(btn){
+      if(!this.uploadsinatureWin)this.uploadsinatureWin=Ext.widget('uploadsinaturewin');
+      this.uploadsinatureWin.itemdata= btn;
+      this.uploadsinatureWin.show();
     },
     addnewdivisionfrombt:function(btn){
 

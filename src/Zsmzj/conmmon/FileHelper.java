@@ -25,10 +25,12 @@ public class FileHelper {
         try {
             String savename=""; //保存的路径名
             String customname="";//上传的自定义名
+            Map<String,Object>param_map=new HashMap<String, Object>();
             for (FileItem item : fileitems) {
                 if (item.isFormField()) {
                     String name = item.getFieldName();
                     String value = item.getString();
+                    param_map.put(name,new String(value.getBytes("iso-8859-1"), "utf-8"));
                     // 转换下字符集编码
                     if(name.equals("filename")){
                         value = new String(value.getBytes("iso-8859-1"), "utf-8");
@@ -63,6 +65,7 @@ public class FileHelper {
             }
             result.put("success",true);
             result.put("filepath",savename);
+            result.put("formfield",param_map);
             result.put("filename",customname);
             return result;
         } catch (Exception e) {

@@ -14,10 +14,19 @@ import java.util.Map;
  * To change this template use File | Settings | File Templates.
  */
 public class DivisionControl {
-    public String addNewDivision(String divisionname,String divisionpath,int parentid){
+    public String addNewDivision(String divisionname,String divisionpath,int parentid,String signaturepath){
 
         DivisionImplement di=new DivisionImplement();
-        int returnid=di.addDivision(divisionname,divisionpath,parentid);
+        int returnid=di.addDivision(divisionname,divisionpath,parentid,signaturepath);
+        Map<String,Object> res=new HashMap<String, Object>();
+        if(returnid>=0)res.put("success",true);
+        else res.put("success",false);
+        return JSONObject.fromObject(res).toString();
+
+    }
+    public String editDivision(int divisionid,String divisionname,String signaturepath){
+        DivisionImplement di=new DivisionImplement();
+        int returnid=di.editlDivision(divisionid,divisionname,signaturepath);
         Map<String,Object> res=new HashMap<String, Object>();
         if(returnid>=0)res.put("success",true);
         else res.put("success",false);

@@ -15,6 +15,9 @@ Ext.define('ZSMZJ.view.manager.divisionMenu', {
     },{
         text: '新增',
         value:'add'
+    },{
+        text: '编辑',
+        value:'edit'
     }]
 
 });

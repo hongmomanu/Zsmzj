@@ -5,9 +5,9 @@
  * Time: 下午1:35
  * To change this template use File | Settings | File Templates.
  */
-Ext.define('ZSMZJ.view.manager.addNewDivisionWin' ,{
+Ext.define('ZSMZJ.view.manager.editDivisionWin' ,{
     extend: 'Ext.window.Window',
-    alias : 'widget.addnewdivisionwin',
+    alias : 'widget.editdivisionwin',
     requires: [
         //'Ext.form.*'
         'Ext.Img',
@@ -15,7 +15,7 @@ Ext.define('ZSMZJ.view.manager.addNewDivisionWin' ,{
     ],
     initComponent: function() {
         Ext.apply(this, {
-            title: '新增行政区划',
+            title: '编辑行政区划',
             height: 250,
             width: 400,
             closeAction : 'hide',
@@ -185,10 +185,10 @@ Ext.define('ZSMZJ.view.manager.addNewDivisionWin' ,{
                         xtype: 'button',
                         formBind: true,
                         disabled: true,
-                        text: '提交',
+                        text: '保存',
                         width: 140,
 
-                        action:'add'
+                        action:'save'
 
                     }]
                 }],

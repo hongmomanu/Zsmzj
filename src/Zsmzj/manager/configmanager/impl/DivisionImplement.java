@@ -26,10 +26,10 @@ public class DivisionImplement implements DivisionMethods {
     }
 
     @Override
-    public int addDivision(String divisionname, String divisionpath, int parentid) {
+    public int addDivision(String divisionname, String divisionpath, int parentid,String signaturepath) {
 
         DivisionDao dd=new DivisionDao();
-        return dd.addNewDivision(divisionname,divisionpath,parentid);
+        return dd.addNewDivision(divisionname,divisionpath,parentid,signaturepath);
 
     }
 
@@ -37,5 +37,11 @@ public class DivisionImplement implements DivisionMethods {
     public int delDivision(int divisionid) {
         DivisionDao dd=new DivisionDao();
         return dd.delDivision(divisionid);
+    }
+
+    @Override
+    public int editlDivision(int divisionid, String divisionname, String signaturepath) {
+        DivisionDao dd=new DivisionDao();
+        return dd.editDivision(divisionid,divisionname,signaturepath);
     }
 }

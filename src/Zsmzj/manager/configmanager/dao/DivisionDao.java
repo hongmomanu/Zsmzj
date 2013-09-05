@@ -25,27 +25,50 @@ public class DivisionDao {
 
     public ArrayList<Map<String, Object>>   getDivisions(int parentid){
         Connection testConn= JdbcFactory.getConn("sqlite");
-        String sql=  "select divisionname,divisionpath,rowid from "+DivisionTable+" where parentid=?";
+        String sql=  "select divisionname,divisionpath,rowid,signaturepath from "+DivisionTable+" where parentid=?";
 
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
         ArrayList<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         try {
             pstmt.setInt(1,parentid);
-            log.debug(parentid);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 Map<String,Object> obj=new HashMap<String, Object>();
                 obj.put("text",rs.getString("divisionname"));
                 obj.put("divisionpath",rs.getString("divisionpath"));
                 obj.put("id",rs.getInt("rowid"));
+                obj.put("signaturepath",rs.getString("signaturepath"));
+                if(rs.getString("signaturepath")==null){
+                    obj.put("qtip","无签章图片");
+                }else{
+                    obj.put("qtip","<img width=\"200\" height=\"200\" src=\""+ rs.getString("signaturepath")+"\">");
+                }
                 list.add(obj);
 
             }
-            log.debug(list);
             return list;
         }catch (Exception E){
             log.debug(E.getMessage());
             return list;
+        }
+
+
+    }
+    public int editDivision(int divisionid,String divisionname, String signaturepath){
+        Connection conn= JdbcFactory.getConn("sqlite");
+        String sql = "update  " + DivisionTable +
+                " set  divisionname=?,signaturepath=? where rowid=? ";
+
+        PreparedStatement pstmt = JdbcFactory.getPstmt(conn, sql);
+        try {
+            pstmt.setString(1,divisionname);
+            pstmt.setString(2,signaturepath);
+            pstmt.setInt(3, divisionid);
+            return pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            log.debug(ex.getMessage());
+            return -1;
+
         }
 
 
@@ -66,16 +89,17 @@ public class DivisionDao {
         }
 
     }
-    public int addNewDivision(String divisionname,String divisionpath,int parentid){
+    public int addNewDivision(String divisionname,String divisionpath,int parentid,String signaturepath){
         Connection conn= JdbcFactory.getConn("sqlite");
         String sql = "insert  into " + DivisionTable +
-                " (divisionname,divisionpath,parentid) values (?,?,?)  ";
+                " (divisionname,divisionpath,parentid,signaturepath) values (?,?,?,?)  ";
 
         PreparedStatement pstmt = JdbcFactory.getPstmt(conn, sql);
         try {
             pstmt.setString(1, divisionname);
             pstmt.setString(2, divisionpath);
             pstmt.setInt(3, parentid);
+            pstmt.setString(4, signaturepath);
             return pstmt.executeUpdate();
         } catch (SQLException ex) {
             log.debug(ex.getMessage());

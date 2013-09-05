@@ -10,16 +10,15 @@
 <%@ page language="java"  contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%
-    if(request.getParameter("divisionname")==null){
-       out.print("缺少参数divisionname");
+    if(request.getParameter("divisionid")==null){
+       out.print("缺少参数divisionid");
     }
     else{
         String divisionname=request.getParameter("divisionname");
-        String divisionpath=request.getParameter("divisionpath")+divisionname;
-        int parentid=Integer.parseInt(request.getParameter("parentid"));
+        int divisionid=Integer.parseInt(request.getParameter("divisionid"));
         String signaturepath=request.getParameter("signaturepath");
         DivisionControl dc=new DivisionControl();
-        out.print(dc.addNewDivision(divisionname,divisionpath,parentid,signaturepath));
+        out.print(dc.editDivision(divisionid,divisionname,signaturepath));
     }
     //out.print("ok");
 %>

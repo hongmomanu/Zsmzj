@@ -24,6 +24,13 @@ Ext.define('ZSMZJ.model.manager.DivisionTree', {
         },{
             name: 'divisionpath',
             type:'string'
+        },{
+            name: 'signaturepath',
+            type:'string'
+        }
+        ,{
+            name: 'qtip',
+            type:'string'
         }
     ]
 });
