@@ -70,6 +70,9 @@ Ext.define('ZSMZJ.controller.Header', {
             'dbglbusinessalterform button[action=sendbusiness]':{
                 click: this.sendbusiness
             },
+            'dbglbusinessalterform button[action=cancel]':{
+                click: this.cancelcheck
+            },
             'dbglbusinesscheckform button[action=cancel]':{
                 click: this.cancelcheck
 
@@ -137,14 +140,15 @@ Ext.define('ZSMZJ.controller.Header', {
         var grid=form.objdata.grid;
         var callback=function fn(){
             me.showoldtab(grid.up('panel').id);
-            me.closetab("dbglbusinessalterform");
+            me.closetab(form.id);
         };
         this.showBusinessCheckContent(c,r,grid,callback);
 
     },
-    cancelcheck:function(btn){
 
-       this.closetab("dbglbusinesscheckform");
+    cancelcheck:function(btn){
+        var form=btn.up('form');
+       this.closetab(form.id);
     },
     showcheckwin:function(btn){
 
@@ -422,7 +426,6 @@ Ext.define('ZSMZJ.controller.Header', {
        }else{
            me.processWin.show();
        }
-
        //清空流程图
        var mysurface=me.getMyprocessvector().surface;
        for(var i=me.vectornums;i<mysurface.items.items.length;i++){
@@ -434,7 +437,6 @@ Ext.define('ZSMZJ.controller.Header', {
             businessid: r.get('businessid')
         };
         store.load();
-
         //绘制流程图
         if(r.get("processstatus")==processdiction.stepzero){
 
@@ -547,7 +549,7 @@ Ext.define('ZSMZJ.controller.Header', {
     },
     closetab:function(value){
         var tabs = Ext.getCmp('mainContent-panel');
-        var tab=tabs.getComponent('tab' + value)
+        var tab=tabs.getComponent(value)
         if (tab) {
 
             tab.close();

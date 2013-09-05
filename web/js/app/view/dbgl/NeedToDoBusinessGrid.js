@@ -164,6 +164,7 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
 
                                     render: function(c){
                                         c.getEl().on('click', function(){
+
                                             me.up('panel').fireEvent('cancelclick', c,r,me);
                                         }, c);
                                     }
