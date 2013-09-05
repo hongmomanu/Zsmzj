@@ -806,7 +806,7 @@ Ext.define('ZSMZJ.view.dbgl.businessAlter', {
                             defaultType: 'textfield',
 
                             items:[*/
-                                {
+                                /*{
                                     fieldLabel: '制表时间',
                                     name:'mktime',
                                     //columnWidth:.5,
@@ -829,8 +829,66 @@ Ext.define('ZSMZJ.view.dbgl.businessAlter', {
 
 
                                 }
-                         /*   ]
+                         *//*   ]
                         }*/
+                    ]
+                },
+                {
+                    xtype: 'fieldset',
+                    title: '<a>审批记录</a>',
+                    defaultType: 'textfield',
+
+                    //layout: 'anchor',
+                    layout: {
+                        type: 'table',
+
+                        // The total column count must be specified here
+                        columns: 3,
+                        tableAttrs: {
+                            border: 1,
+                            cellpadding: 5,
+                            cellspacing: 1,
+                            width: '100%',
+                            align: 'center',
+                            style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:center;"
+                            /*style: {
+                             width: '100%'
+                             }*/
+                        }
+                    },
+
+                    items:[
+
+                        {
+                            itemId:'processhistorypanel',
+                            xtype:'processhistorygrid',
+                            colspan:3
+                        },
+                        {
+                            fieldLabel: '制表时间',
+                            name:'time',
+                            //itemId: 'personbirthday',
+                            //columnWidth:.5,
+                            readOnly: true
+                            //value:Ext.Date.format(new Date(), 'Y-m-d')
+
+                        }
+                        ,{
+                            xtype:'label',
+                            text:''
+
+                        }
+                        ,
+
+                        {
+                            fieldLabel:"制表人",
+                            name:'displayname',
+                            //value:username,
+                            readOnly: true
+
+
+                        }
+
                     ]
                 }
             ],
@@ -841,6 +899,20 @@ Ext.define('ZSMZJ.view.dbgl.businessAlter', {
                         {name:"name",value:this.objdata.record.get("processstatus")}).children,
                         {name:"name",value:"提交审批"}),
                     action:'sendbusiness'
+                },
+                {
+                    text: '取消提交',
+                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                        {name:"name",value:this.objdata.record.get("processstatus")}).children,
+                        {name:"name",value:"取消提交"}),
+                    action:'cancelsendbusiness'
+                },
+                {
+                    text: '审批',
+                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                        {name:"name",value:this.objdata.record.get("processstatus")}).children,
+                        {name:"name",value:"审批"}),
+                    action:'checkbusiness'
                 },
                 {
                     text: '电子签章',
@@ -864,7 +936,10 @@ Ext.define('ZSMZJ.view.dbgl.businessAlter', {
                     action:'applysubmit'
                 },
                 {
-                    text: '取消',
+                    text: '返回',
+                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                        {name:"name",value:this.objdata.record.get("processstatus")}).children,
+                        {name:"name",value:"返回"}),
                     action:'cancel'
                 }
             ]

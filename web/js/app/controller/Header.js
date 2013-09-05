@@ -82,6 +82,14 @@ Ext.define('ZSMZJ.controller.Header', {
             'dbglbusinessalterform button[action=checkbusiness]':{
                 click: this.showcheckwin
             },
+            'dbglbusinessalterform button[action=signature]':{
+                click: this.showsignature
+            },
+            'dbglbusinessalterform button[action=unsignature]':{
+                click: this.delsignature
+            },
+
+
 /*
             'dbglbusinesscheckform button[action=cancel]':{
                 click: this.cancelcheck
@@ -149,7 +157,9 @@ Ext.define('ZSMZJ.controller.Header', {
         var r=form.objdata.record;
         var grid=form.objdata.grid;
         var callback=function fn(){
-            me.showoldtab(grid.up('panel').id);
+
+            if(grid.isLocked)grid=grid.up('panel')
+            me.showoldtab(grid.id);
             me.closetab(form.id);
         };
         this.showBusinessCheckContent(c,r,grid,callback);
@@ -166,6 +176,13 @@ Ext.define('ZSMZJ.controller.Header', {
         this.checkprocessWin.show();
         this.checkprocessWin.dataform=btn.up('form');
 
+    },
+    showsignature:function(btn){
+        alert("ok");
+
+    },
+    delsignature:function(btn){
+       alert("ok2");
     },
     showcheckprocess:function(btn){
         var form=this.getMydbglbusinesscheckform();

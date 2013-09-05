@@ -23,7 +23,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
     refs: [
         {ref: 'myviewbusinessapplyform', selector: 'dbglbusinessapplyform'},
-        {ref: 'mydbglbusinesscheckform', selector: 'dbglbusinesscheckform'},
+        /*{ref: 'mydbglbusinesscheckform', selector: 'dbglbusinesscheckform'},*/
         {ref: 'familymemberage', selector: '#personage'},
         {ref: 'myviewfamilymembergrid', selector: 'familymembergrid'},
         {ref: 'myviewaffixfilesgrid', selector: 'affixfilesgrid'},
@@ -40,7 +40,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.processWin',
         'dbgl.ProcessPicture',
         'dbgl.ProcessVector',
-        'dbgl.businessCheck',
+        /*'dbgl.businessCheck',*/
         'dbgl.businessAlter',
         'dbgl.processCheckWin',
         'dbgl.NeedToDoBusinessGrid'
@@ -320,7 +320,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             btn.up('window').close();
             Ext.Msg.alert("提示信息", "审核成功");
             var hc=me.application.getController("Header");
-            hc.closetab("dbglbusinesscheckform");
+            hc.closetab("tabdbglbusinessalterform");
             grid.getStore().load();
 
         };

@@ -98,7 +98,7 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                                 listeners: {
                                     render: function(c){
                                         c.getEl().on('click', function(){
-                                            me.up('panel').fireEvent('businessinfo', c,r,me);
+                                            me.up('panel').fireEvent('alterclick', c,r,me);
 
                                         }, c);
                                     }
@@ -158,7 +158,8 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                                 renderTo: id4,
                                 text: '取消',
                                 icon:'img/sp.gif',
-                                hidden:!(r.get('processstatus').toString()==processdiction.stepone),
+                                //hidden:!(r.get('processstatus').toString()==processdiction.stepone),
+                                hidden:true,
                                 width: 55,
                                 listeners: {
 
