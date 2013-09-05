@@ -134,8 +134,8 @@ Ext.define('ZSMZJ.controller.Manager', {
                 click: this.rolemanager
             },
             'divisionmenu > menuitem': {
-                click: this.divisionmanager,
-                mouseover:this.mytest
+                click: this.divisionmanager
+
             },
             'divisiontreepanel': {
                 itemcontextmenu: this.showDivisionMenu
@@ -240,12 +240,6 @@ Ext.define('ZSMZJ.controller.Manager', {
 
         }
 
-    },
-    mytest:function(item,e,eopts){
-      alert(1);
-      console.log(item);
-      console.log(e);
-      console.log(eopts);
     },
     divisionmanager:function(item,e,eOpts){
         //alert(1);

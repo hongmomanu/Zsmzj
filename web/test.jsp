@@ -11,11 +11,11 @@
               width: 153,
               height: 306,
               viewBox:true,
-              /*cls: 'cursor-dragme',
+              cls: 'cursor-dragme',
               draggable: {
                   constrain: true,
                   constrainTo: Ext.getBody()
-              },*/
+              },
               floating: {
                   shadow: false
               },
@@ -30,16 +30,16 @@
                       src: "img/2013061301494220876442.gif",
                       width: 153,
                       height: 153
-                  },
+                  }/*,
                   {
                       type: "ellipse",
                       radiusX: 100,
                       radiusY: 50,
                       stroke: 'red',
                       x: 100,
-                      y: 100/*,
+                      y: 100*//*,
                       fill: 'red'
-*/
+*//*
                   },
                   {
                         type: 'circle',
@@ -70,7 +70,7 @@
                       stroke: "#000",
                       fill: "blue"
                   }
-
+*/
               ]
           });
       });

@@ -628,6 +628,7 @@ Ext.define('ZSMZJ.view.dbgl.businessAlter', {
                     xtype: 'fieldset',
                     title: '<a>业务审批信息</a>',
                     defaultType: 'textfield',
+                    itemId:'businesscheckinfo',
 
                     //layout: 'anchor',
                     layout: {

@@ -14,19 +14,9 @@ CREATE TABLE IF NOT EXISTS users
 
 );
 
+
 --行政区划表
 CREATE VIRTUAL TABLE IF NOT EXISTS divisions USING fts3
-(
-
-  id integer primary key autoincrement,            --自增主键
-  parentid integer,                                --父节点
-  divisionname VARCHAR(50),                         --角色名称
-  divisionpath varchar(50)                         --行政区划路径
-
-
-);
---行政区划表
-CREATE VIRTUAL TABLE IF NOT EXISTS divisionstemp USING fts3
   (
 
   id integer primary key autoincrement,            --自增主键

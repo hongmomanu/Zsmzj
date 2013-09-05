@@ -178,7 +178,37 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
     showsignature:function(btn){
-        alert("ok");
+        //alert("ok");
+        testobj=btn.up('form');
+        var tiger = Ext.create('Ext.draw.Component', {
+            width: 153,
+            height: 306,
+            id:'signaturepic',
+            viewBox:true,
+            cls: 'cursor-dragme',
+            draggable: {
+                constrain: true,
+                constrainTo: btn.up('form').getEl()
+            },
+            floating: {
+                shadow: false
+            },
+            layout: {
+                type: 'vbox'
+            },
+            renderTo: btn.up('form').down('#businesscheckinfo').getEl(),
+            items: [
+                {
+                    type: "image",
+                    viewBox:true,
+                    src: "img/2013061301494220876442.gif",
+                    width: 153,
+                    height: 153
+                }
+            ]
+        });
+
+
 
     },
     delsignature:function(btn){
