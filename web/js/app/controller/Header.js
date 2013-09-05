@@ -24,7 +24,7 @@ Ext.define('ZSMZJ.controller.Header', {
         {ref: 'myviewheadViewPanel', selector: 'headviewpanel'} ,
         {ref: 'myprocesspicturePanel', selector: 'processpicturepanel'} ,
         {ref: 'myprocessvector', selector: 'dbglprocessvector'} ,
-        {ref: 'mydbglbusinesscheckform', selector: 'dbglbusinesscheckform'},
+        /*{ref: 'mydbglbusinesscheckform', selector: 'dbglbusinesscheckform'},*/
         {ref: 'mydbglbusinessalterform', selector: 'dbglbusinessalterform'},
         {ref: 'myheaderPanel', selector: 'myheader'}
     ],
@@ -47,15 +47,21 @@ Ext.define('ZSMZJ.controller.Header', {
             'dbglbusinessalterform':{
                 alterapplyaftershow:function(){
                     var form=this.getMydbglbusinessalterform();
-                    //this.widgetdolayout("mainContent-panel");
                     var businessid=form.objdata.businessid;
+                    var store=form.down('#processhistorypanel').getStore();
+                    store.proxy.extraParams = {
+                        businessid:businessid
+                    };
+                    store.load();
+
                     this.clearAlterContent(form);
+                    this.initProcessBtns(form);
                     this.getValueBybusinessid(businessid,'ajax/getapplyformbybid.jsp',this.setFormValues,form);
                     this.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',this.setAffixValue,form);
                     this.getValueBybusinessid(businessid,'ajax/getfamilymembersbybid.jsp',this.setFamilymembers,form);
                 }
             } ,
-            'dbglbusinesscheckform':{
+            /*'dbglbusinesscheckform':{
                 alterapplyaftershow:function(){
                     var form=this.getMydbglbusinesscheckform();
                     //this.widgetdolayout("mainContent-panel");
@@ -66,13 +72,17 @@ Ext.define('ZSMZJ.controller.Header', {
                     this.getValueBybusinessid(businessid,'ajax/getfamilymembersbybid.jsp',this.setFamilymembers,form);
                 }
 
-            },
+            },*/
             'dbglbusinessalterform button[action=sendbusiness]':{
                 click: this.sendbusiness
             },
             'dbglbusinessalterform button[action=cancel]':{
                 click: this.cancelcheck
             },
+            'dbglbusinessalterform button[action=checkbusiness]':{
+                click: this.showcheckwin
+            },
+/*
             'dbglbusinesscheckform button[action=cancel]':{
                 click: this.cancelcheck
 
@@ -85,7 +95,7 @@ Ext.define('ZSMZJ.controller.Header', {
             'dbglbusinesscheckform button[action=showprocess]':{
                 click: this.showcheckprocess
 
-            },
+            },*/
             'myheader component':{
                 needthingsclick:function (c){
                     this.showneedthings(c);
@@ -164,6 +174,14 @@ Ext.define('ZSMZJ.controller.Header', {
         var grid=form.objdata.grid;
         this.showProcessWin(c,r,grid);
 
+    },
+    initProcessBtns:function(form){
+        var btns=form.getDockedItems('toolbar[dock="bottom"]')[0].items.items;
+        Ext.each(btns,function(a){
+            a.setVisible(!!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                {name:"name",value:form.objdata.record.get("processstatus")}).children,
+                {name:"name",value:a.text}))
+        })
     },
     clearAlterContent:function(form){
 
@@ -337,11 +355,10 @@ Ext.define('ZSMZJ.controller.Header', {
                 record:r,
                 grid:grid,
                 item:c
-
             };
 
-           this.showtab(processdiction.steptwo,'dbglbusinesscheckform','widget',objdata);
-
+           //this.showtab(processdiction.steptwo,'dbglbusinesscheckform','widget',objdata);
+            this.showtab(processdiction.steptwo,'dbglbusinessalterform','widget',objdata);
        }
 
     },
