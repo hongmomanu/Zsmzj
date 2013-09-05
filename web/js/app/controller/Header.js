@@ -107,6 +107,7 @@ Ext.define('ZSMZJ.controller.Header', {
                    //me.widgetdolayout("mainContent-panel");
                     var me=this;
                     var callback=function fn(){
+                        me.closemask();
                         me.widgetdolayout("mainContent-panel");
                     };
 
@@ -311,6 +312,7 @@ Ext.define('ZSMZJ.controller.Header', {
             buttons: Ext.Msg.YESNO,
             fn: function (btn) {
                 if(btn=='yes'){
+                    ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
                     me.changeapplystatus(businessid, status,grid.getStore(),callback);
                 }
             },
@@ -425,7 +427,6 @@ Ext.define('ZSMZJ.controller.Header', {
        var mysurface=me.getMyprocessvector().surface;
        for(var i=me.vectornums;i<mysurface.items.items.length;i++){
            mysurface.remove(mysurface.items.items[i]);
-
        }
         //显示历史审批表
         var store=me.processWin.down('grid').getStore();

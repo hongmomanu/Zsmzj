@@ -26,8 +26,6 @@ Ext.define('ZSMZJ.view.dbgl.ProcessHistoryGrid' ,{
 
             //hideHeaders:true,
             columns: [
-
-
                 {header: '审批名称', dataIndex: 'approvalname',width: 150},
                 {header: '审批结果', dataIndex: 'approvalresult',width: 150},
                 {header: '审批人', dataIndex: 'displayname',width: 150},
@@ -36,7 +34,8 @@ Ext.define('ZSMZJ.view.dbgl.ProcessHistoryGrid' ,{
                     //var time = new Date(val);
                     val = Ext.util.Format.date(time, 'Y-m-d H:i');
                     return val;
-        }},{header: '审批意见', dataIndex: 'approvalopinion',flex:1},
+        }},
+                {header: '审批意见', dataIndex: 'approvalopinion',flex:1}
 
             ],
             flex: 1,
