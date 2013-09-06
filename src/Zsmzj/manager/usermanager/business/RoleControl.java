@@ -76,11 +76,8 @@ public class RoleControl {
                         func_item.put("selected",true);
                         result.add(func_item);
                     }
-
                 }
-
             }
-
         }
 
         Map<String,Object>res=new HashMap<String, Object>();
