@@ -758,7 +758,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
             mysurface.add({
                 type: "path",
-                path: "M505 35  L525 45 L530 28",    //路径      L150 50
+                path: "M505 35  L515 45 L530 28",    //路径      L150 50
                 "stroke-width": "4",
                 opacity :0.6,
                 stroke: "red"/*,
@@ -766,21 +766,23 @@ Ext.define('ZSMZJ.controller.Header', {
             }).show(true);
 
             //流程分割符号
-            mysurface.add({
+            /*mysurface.add({
                 type: "path",
-                path: "M575 80  L575 100 L570 100 L680 110 L690 100 L585 100 L585 80 Z",    //路径      L150 50
+                path: "M575 80  L575 100 L570 100 L580 110 L590 100 L585 100 L585 80 Z",    //路径      L150 50
+                //M420 80  L420 100 L415 100 L425 110 L435 100 L430 100 L430 80 Z
                 "stroke-width": "2",
                 //opacity :0.6,
                 stroke: "red",
                 fill: "red"
             }).show(true);
+
             //提交申请人名单
             mysurface.add({
                 type: "text",
                 text:r.get("displayname"),
                 x:485,
                 y:90
-            }).show(true);
+            }).show(true);*/
             me.processWin.doLayout();
         }
 
