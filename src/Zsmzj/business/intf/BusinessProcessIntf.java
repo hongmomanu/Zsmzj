@@ -19,6 +19,7 @@ public interface BusinessProcessIntf {
 
     public int saveFamilyMembers(String membersjson,int businessid);//保存家庭成员信息
     public int updateFamilyMembers(String membersjson,int businessid);//更新家庭成员信息
+    public int updateSignatures(String signatures,int businessid);
 
     public int saveAffixFiles(String filesjson,int businessid);//保存附件信心
     public int updateAffixFiles(String filesjson,int businessid);//更新附件信心

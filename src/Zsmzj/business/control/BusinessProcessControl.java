@@ -28,6 +28,8 @@ public class BusinessProcessControl {
     private final String ApprovalTable="approvalprocess";
     private final String FamilyTable="familymembers";
     private final String UserTable="users";
+    private final String DivisionsTable="divisions";
+    private final String SignatureTable="businesssignature";
 
     public int getNeedTodoCounts(int roleid){
         BusinessProcess bp=new BusinessProcess();
@@ -84,6 +86,14 @@ public class BusinessProcessControl {
         res.put("results",list);
         return JSONObject.fromObject(res).toString();
 
+    }
+    public String getSignaturebybid(int businessid){
+        ComonDao cd=new ComonDao();
+        String sql="select a.*,c.signaturepath from "+SignatureTable +" a," +UserTable+
+                " b,"+DivisionsTable+" c where a.businessid MATCH "+businessid+
+                " and a.userid=b.id and b.divisionid=c.rowid";
+        ArrayList<Map<String,Object>> list=cd.getTableList(sql);
+        return JSONArray.fromObject(list).toString();
     }
     public String makeApproval(Map<String,Object> param,boolean isapproval,String processstatus){
         BusinessProcess bp=new BusinessProcess();
@@ -171,17 +181,19 @@ public class BusinessProcessControl {
     }
 
     public String saveUpdateBusinessApply(int businessid,Map<String,Object> params,String familymembers,
-                                          String affixfiles){
+                                          String affixfiles,String signatures){
         BusinessProcess bp=new BusinessProcess();
         Connection conn= JdbcFactory.getConn("sqlite");
 
         try {
-            //conn.setAutoCommit(false);
+            conn.setAutoCommit(false);
             bp.updateApplyBusiness(businessid,params);
             bp.updateAffixFiles(affixfiles, businessid);
             bp.updateFamilyMembers(familymembers,businessid);
-            //conn.commit();
-            //conn.setAutoCommit(true);
+            bp.updateSignatures(signatures,businessid);
+            conn.commit();
+            conn.setAutoCommit(true);
+
             return "{success:true}";
         } catch (Exception e) {
             log.debug(e.getMessage());

@@ -213,9 +213,10 @@ CREATE VIRTUAL TABLE IF NOT EXISTS businesssignature USING fts3
   (
     id integer primary key autoincrement,            --自增主键
     time DATETIME DEFAULT (datetime(CURRENT_TIMESTAMP,'localtime')),  --提交时间
-    businessid               integer,                --业务信息id
-    path                     VARCHAR(200),           --文件路径
-    userid                    integer,               --用户id
-    x                         integer,               --x
-    y                         integer                --y
+    businessid                integer,                --业务信息id
+    path                      VARCHAR(200),           --文件路径
+    userid                    integer,                --用户id
+    x                         integer,                --x
+    y                         integer                 --y
   );
+

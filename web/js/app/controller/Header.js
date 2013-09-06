@@ -59,6 +59,8 @@ Ext.define('ZSMZJ.controller.Header', {
                     this.getValueBybusinessid(businessid,'ajax/getapplyformbybid.jsp',this.setFormValues,form);
                     this.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',this.setAffixValue,form);
                     this.getValueBybusinessid(businessid,'ajax/getfamilymembersbybid.jsp',this.setFamilymembers,form);
+                    this.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',this.setSignature,form);
+
                 }
             } ,
             /*'dbglbusinesscheckform':{
@@ -195,7 +197,6 @@ Ext.define('ZSMZJ.controller.Header', {
         var formcontent=form.getDefaultContentTarget();
         var target=form.down('#businesscheckinfo').getEl();
         //testobj=form.down('#businesscheckinfo');
-        console.log(this.signaturepicarr.length);
         target.scrollIntoView(formcontent);
         var result=this.issignaturedone(res.signaturepath)
         if(result.isok){
@@ -206,12 +207,9 @@ Ext.define('ZSMZJ.controller.Header', {
     },
     makesignaturepic:function(btn,res){
 
-
         var form=btn.up('form');
         var formcontent=form.getDefaultContentTarget();
         var target=form.down('#businesscheckinfo').getEl();
-        //testobj=form.down('#businesscheckinfo');
-        console.log(this.signaturepicarr.length);
         target.scrollIntoView(formcontent);
         if(!this.issignaturedone(res.signaturepath).isok){
             var signaturepic = Ext.create('Ext.draw.Component', {
@@ -242,6 +240,7 @@ Ext.define('ZSMZJ.controller.Header', {
                 ]
             });
             testobj=signaturepic;
+            signaturepic.userid=userid;
             this.signaturepicarr.push(signaturepic)
 
 
@@ -515,6 +514,52 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
 
+    addSignature:function(item,form){
+        var formcontent=form.getDefaultContentTarget();
+        var target=form.down('#businesscheckinfo').getEl();
+        //target.scrollIntoView(formcontent);
+
+            var signaturepic = Ext.create('Ext.draw.Component', {
+                width: 153,
+                height: 153,
+                //id:'signaturepic',
+                viewBox:true,
+                cls: 'cursor-dragme',
+                draggable: {
+                    constrain: true,
+                    constrainTo: form.getEl()
+                },
+                floating: {
+                    shadow: false
+                },
+                layout: {
+                    type: 'vbox'
+                },
+                renderTo: target,
+                items: [
+                    {
+                        type: "image",
+                        viewBox:true,
+                        src: item.signaturepath,
+                        width: 153,
+                        height: 153
+                    }
+                ]
+            });
+
+            signaturepic.userid=item.userid;
+            signaturepic.setLocalX(item.x);
+            signaturepic.setLocalY(item.y);
+
+            this.signaturepicarr.push(signaturepic)
+
+
+    },
+    setSignature:function(data,me,form){
+          Ext.each(data,function(item){
+              me.addSignature(item,form);
+          });
+    },
     setFamilymembers:function(data,me,form){
 
         var grid=form.down('#familymembergrid');

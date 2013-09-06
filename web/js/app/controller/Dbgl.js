@@ -257,10 +257,22 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         this.formSubmit(form, params, 'ajax/uploadfile.jsp', successFunc, failFunc,"正在提交数据");
     },
     applysubmitupdate:function(btn){
+        var form=btn.up('form');
 
         var head_cl=this.application.getController("Header");
         var s_arr=head_cl.signaturepicarr;
+        var signatures=[];
 
+        Ext.each(s_arr,function(item){
+            var item_obj={};
+            item_obj['businessid']=form.objdata.businessid;
+            item_obj['userid']=item.userid;
+            item_obj['x']=item.x;
+            item_obj['y']=item.y;
+            signatures.push(item_obj);
+        });
+
+       // console.log(signatures);
 
         var store=btn.up('form').down('#familymembergrid').getStore();
         var familymembers=[];
@@ -269,7 +281,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         Ext.each(store.data.items,function(a){
             familymembers.push(a.data);
         });
-        var form=btn.up('form');
+
         var affixpanel=form.down('#affixfilespanel');
         Ext.each(affixpanel.items.items,function(a){
             if(a.xtype=='panel'){
@@ -285,7 +297,8 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         var params = {
             businessid:form.objdata.businessid,
             familymembers:Ext.JSON.encode(familymembers),
-            affixfiles:Ext.JSON.encode(affixfiles)
+            affixfiles:Ext.JSON.encode(affixfiles),
+            signatures:Ext.JSON.encode(signatures)
         };
 
         var successFunc = function (form, action) {

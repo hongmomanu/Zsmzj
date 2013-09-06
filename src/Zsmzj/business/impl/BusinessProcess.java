@@ -28,6 +28,7 @@ public class BusinessProcess implements BusinessProcessIntf {
     private static final Logger log = Logger.getLogger(BusinessProcess.class);
     private static final String  BusinessTable="business";
     private static final String FamilyTable="familymembers" ;
+    private static final String SignatureTable="businesssignature";
     private static final String AttachmentTable="attachment";
     private static final String DivisionTable="divisions";
     private static final String ApprovalTable= "approvalprocess";
@@ -96,6 +97,33 @@ public class BusinessProcess implements BusinessProcessIntf {
             }
 
             result_num=bDao.insertTableVales(mp, FamilyTable);
+
+        }
+        return result_num;
+
+    }
+
+    @Override
+    public int updateSignatures(String signaturesjson, int businessid) {
+        BusinessProcessDao bDao=new BusinessProcessDao();
+        bDao.deldatabyid(businessid,SignatureTable,"businessid",false);
+
+        int result_num=0;
+        JSONArray arr=JSONArray.fromObject(signaturesjson);
+        for(Object item:arr){
+            JSONObject jsonitem=JSONObject.fromObject(item);
+            Iterator<?> it = jsonitem.keys();
+            Map<String,Object> mp=new HashMap<String, Object>();
+            mp.put("businessid",businessid);
+
+            while(it.hasNext()){//遍历JSONObject
+                String name = (String) it.next().toString();
+                String value = jsonitem.getString(name);
+                mp.put(name,value);
+
+            }
+
+            result_num=bDao.insertTableVales(mp, SignatureTable);
 
         }
         return result_num;
@@ -270,6 +298,6 @@ public class BusinessProcess implements BusinessProcessIntf {
     @Override
     public Map<String, Object> getSignaturebybuid(int userid) {
         BusinessProcessDao bpdao=new BusinessProcessDao();
-        return bpdao.getSignaturebybuid(userid,DivisionTable);
+        return bpdao.getSignaturebybuid(userid, DivisionTable);
     }
 }
