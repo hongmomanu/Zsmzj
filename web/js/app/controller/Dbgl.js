@@ -255,11 +255,13 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         };
         var form =btn.up('form');
         this.formSubmit(form, params, 'ajax/uploadfile.jsp', successFunc, failFunc,"正在提交数据");
-
-
-
     },
     applysubmitupdate:function(btn){
+
+        var head_cl=this.application.getController("Header");
+        var s_arr=head_cl.signaturepicarr;
+
+
         var store=btn.up('form').down('#familymembergrid').getStore();
         var familymembers=[];
         var affixfiles=[];
@@ -275,9 +277,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
                 var affixfileitem={};
                 affixfileitem[a.down('panel').type]=formdata;
                 if(formdata)affixfiles.push(affixfileitem);
-
             }
-
         });
 
         affixfiles.push({"accountimgpath":[{'attachmentname':'照片','attachmentpath':form.down('#dbglaccountimg').value}]});
@@ -298,8 +298,6 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         };
         var form =btn.up('form');
         this.formSubmit(form, params, 'ajax/updateapply.jsp', successFunc, failFunc,"正在提交数据");
-
-
 
     },
 

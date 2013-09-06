@@ -177,40 +177,75 @@ Ext.define('ZSMZJ.controller.Header', {
         this.checkprocessWin.dataform=btn.up('form');
 
     },
-    makesignaturepic:function(btn,res){
+    signaturepicarr:[],
+    issignaturedone:function(path){
+      var result={isok:false};
+      for(var i=0;i<this.signaturepicarr.length;i++){
+         if(this.signaturepicarr[i].items[0].src==path){
+             result.isok=true;
+             result.item=this.signaturepicarr[i];
+             break;
+         }
+      }
+        return result;
 
+    },
+    clearsignaturepic:function(btn,res){
         var form=btn.up('form');
-        testobj=form;
         var formcontent=form.getDefaultContentTarget();
         var target=form.down('#businesscheckinfo').getEl();
+        //testobj=form.down('#businesscheckinfo');
+        console.log(this.signaturepicarr.length);
         target.scrollIntoView(formcontent);
-        var signaturepic = Ext.create('Ext.draw.Component', {
-            width: 153,
-            height: 153,
-            itemId:'signaturepic',
-            viewBox:true,
-            cls: 'cursor-dragme',
-            draggable: {
-                constrain: true,
-                constrainTo: form.getEl()
-            },
-            floating: {
-                shadow: false
-            },
-            layout: {
-                type: 'vbox'
-            },
-            renderTo: target,
-            items: [
-                {
-                    type: "image",
-                    viewBox:true,
-                    src: res.signaturepath,
-                    width: 153,
-                    height: 153
-                }
-            ]
-        });
+        var result=this.issignaturedone(res.signaturepath)
+        if(result.isok){
+            result.item.destroy();
+            Ext.Array.remove(this.signaturepicarr,result.item);
+        }
+
+    },
+    makesignaturepic:function(btn,res){
+
+
+        var form=btn.up('form');
+        var formcontent=form.getDefaultContentTarget();
+        var target=form.down('#businesscheckinfo').getEl();
+        //testobj=form.down('#businesscheckinfo');
+        console.log(this.signaturepicarr.length);
+        target.scrollIntoView(formcontent);
+        if(!this.issignaturedone(res.signaturepath).isok){
+            var signaturepic = Ext.create('Ext.draw.Component', {
+                width: 153,
+                height: 153,
+                //id:'signaturepic',
+                viewBox:true,
+                cls: 'cursor-dragme',
+                draggable: {
+                    constrain: true,
+                    constrainTo: form.getEl()
+                },
+                floating: {
+                    shadow: false
+                },
+                layout: {
+                    type: 'vbox'
+                },
+                renderTo: target,
+                items: [
+                    {
+                        type: "image",
+                        viewBox:true,
+                        src: res.signaturepath,
+                        width: 153,
+                        height: 153
+                    }
+                ]
+            });
+            testobj=signaturepic;
+            this.signaturepicarr.push(signaturepic)
+
+
+        }
 
 
     },
@@ -234,10 +269,38 @@ Ext.define('ZSMZJ.controller.Header', {
         };
         this.ajaxSend(params, 'ajax/getsignaturebyuid.jsp', successFunc, failFunc,'POST');
 
-
     },
     delsignature:function(btn){
-       alert("ok2");
+        var me=this;
+        var params = {
+            userid:userid
+        };
+        var successFunc = function (response, action) {
+            var res = Ext.JSON.decode(response.responseText);
+            if(res.isok){
+                Ext.Msg.show({
+                    title: '确定要删除签章么?',
+                    msg: '你正在试图删除签章.你想继续么?',
+                    buttons: Ext.Msg.YESNO,
+                    fn: function (confirmbtn) {
+                        if(confirmbtn=='yes'){
+                            me.clearsignaturepic(btn,res);
+                        }
+                    },
+                    icon: Ext.Msg.QUESTION
+                });
+
+            }
+            else{
+                Ext.Msg.alert("提示信息", "该行政区域暂无签章");
+            }
+        };
+        var failFunc = function (res, action) {
+            Ext.Msg.alert("提示信息", "删除签章失败，检查web服务或数据库服务");
+
+        };
+        this.ajaxSend(params, 'ajax/getsignaturebyuid.jsp', successFunc, failFunc,'POST');
+
     },
     showcheckprocess:function(btn){
         var form=this.getMydbglbusinesscheckform();
@@ -717,11 +780,6 @@ Ext.define('ZSMZJ.controller.Header', {
             var viewpanel=me.getMyviewheadViewPanel().items.items[0];
             viewpanel.select(0);
         });
-
-
-
-
-
 
     },
     onLaunch: function() {
