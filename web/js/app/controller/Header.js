@@ -78,6 +78,9 @@ Ext.define('ZSMZJ.controller.Header', {
             'dbglbusinessalterform button[action=sendbusiness]':{
                 click: this.sendbusiness
             },
+            'dbglbusinessalterform button[action=process]':{
+                click: this.formprocess
+            },
             'dbglbusinessalterform button[action=cancel]':{
                 click: this.cancelcheck
             },
@@ -150,6 +153,14 @@ Ext.define('ZSMZJ.controller.Header', {
             }
 
         }, this);
+
+    },
+    formprocess:function(btn){
+        var form=btn.up('form');
+        var c=form.objdata.item;
+        var r=form.objdata.record;
+        var grid=form.objdata.grid;
+        this.showProcessWin(c,r,grid);
 
     },
     sendbusiness:function(btn){
@@ -341,7 +352,11 @@ Ext.define('ZSMZJ.controller.Header', {
         //清空窗口
         var dbgl_cl=this.application.getController("Dbgl");
         dbgl_cl.cleanuploadWin();
-
+        //清空签章
+        Ext.each(this.signaturepicarr,function(item){
+           item.destroy();
+        });
+        this.signaturepicarr=[];
 
     },
     showAlterContent:function(c,r,grid){
@@ -493,7 +508,18 @@ Ext.define('ZSMZJ.controller.Header', {
 
            //this.showtab(processdiction.steptwo,'dbglbusinesscheckform','widget',objdata);
             this.showtab(processdiction.steptwo,'dbglbusinessalterform','widget',objdata);
-       }
+       }else if(r.get("process")==processdiction.stepthree){
+            //var businessid=r.get('businessid');
+            var objdata={
+                businessid:r.get('businessid'),
+                record:r,
+                grid:grid,
+                item:c
+            };
+
+            //this.showtab(processdiction.steptwo,'dbglbusinesscheckform','widget',objdata);
+            this.showtab(processdiction.stepthree,'dbglbusinessalterform','widget',objdata);
+        }
 
     },
 
@@ -613,6 +639,7 @@ Ext.define('ZSMZJ.controller.Header', {
         divisiontype.setRawValue(data.division);
     },
 
+
     showProcessWin:function(c,r,grid){//显示进程窗口
        var me=this;
        //窗口初始化显示
@@ -623,6 +650,7 @@ Ext.define('ZSMZJ.controller.Header', {
        }else{
            me.processWin.show();
        }
+
        //清空流程图
        var mysurface=me.getMyprocessvector().surface;
        for(var i=me.vectornums;i<mysurface.items.items.length;i++){
@@ -696,10 +724,65 @@ Ext.define('ZSMZJ.controller.Header', {
 
             me.processWin.doLayout();
 
+        }else if(r.get("processstatus")==processdiction.steptwo){
+
+            mysurface.add({
+                type: "path",
+                path: "M350 35  L360 45 L375 28",    //路径      L150 50
+                "stroke-width": "4",
+                opacity :0.6,
+                stroke: "red"/*,
+                 fill: "blue"*/
+            }).show(true);
+
+            //流程分割符号
+            mysurface.add({
+                type: "path",
+                path: "M420 80  L420 100 L415 100 L425 110 L435 100 L430 100 L430 80 Z",    //路径      L150 50
+                "stroke-width": "2",
+                //opacity :0.6,
+                stroke: "red",
+                fill: "red"
+            }).show(true);
+
+            //提交申请人名单
+            mysurface.add({
+                type: "text",
+                text:r.get("displayname"),
+                x:330,
+                y:90
+            }).show(true);
+            me.processWin.doLayout();
+
+        }else if(r.get("processstatus")==processdiction.stepthree){
+
+            mysurface.add({
+                type: "path",
+                path: "M505 35  L525 45 L530 28",    //路径      L150 50
+                "stroke-width": "4",
+                opacity :0.6,
+                stroke: "red"/*,
+                 fill: "blue"*/
+            }).show(true);
+
+            //流程分割符号
+            mysurface.add({
+                type: "path",
+                path: "M575 80  L575 100 L570 100 L680 110 L690 100 L585 100 L585 80 Z",    //路径      L150 50
+                "stroke-width": "2",
+                //opacity :0.6,
+                stroke: "red",
+                fill: "red"
+            }).show(true);
+            //提交申请人名单
+            mysurface.add({
+                type: "text",
+                text:r.get("displayname"),
+                x:485,
+                y:90
+            }).show(true);
+            me.processWin.doLayout();
         }
-
-
-
 
     },
     afterrenderEvents:function(){

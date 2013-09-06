@@ -47,7 +47,7 @@ public class RoleDao {
 
     public ArrayList<Map<String, Object>> getRoleFuncs(int start, int limit, String keyword,int roleid) {
         Connection testConn= JdbcFactory.getConn("sqlite");
-        String sql=  "select funcid,roleid,id from "+RoleFuncTable+" where roleid=? Limit "+limit+" Offset "+ start;
+        String sql=  "select funcid,roleid,id from "+RoleFuncTable+" where roleid=? ";//Limit "+limit+" Offset "+ start
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
         ArrayList<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         try {

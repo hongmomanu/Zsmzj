@@ -58,6 +58,7 @@ public class RoleControl {
                 for(Map<String,Object> rolefunc_item:role_funcs){
                     if(rolefunc_item.get("funcid").toString().equals(func_item.get("funcid").toString())){
                         //func_item.put("rolefuncid",rolefunc_item.get("rolefuncid"));
+                        System.out.println("ok");
                         func_item.put("selected",true);
                     }
 
@@ -72,6 +73,7 @@ public class RoleControl {
                     if(rolefunc_item.get("funcid").toString().equals(func_item.get("funcid").toString())
                           && func_item.get("functype").toString().equals(type)
                             ){
+                        System.out.println("ok2");
                         //func_item.put("rolefuncid",rolefunc_item.get("rolefuncid"));
                         func_item.put("selected",true);
                         result.add(func_item);
