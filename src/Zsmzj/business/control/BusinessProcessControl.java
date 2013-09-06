@@ -67,6 +67,10 @@ public class BusinessProcessControl {
         return JSONObject.fromObject(res).toString();
 
     }
+
+
+
+
     public String getProcessHistorybid(int businessid,int start,int limit){
         ComonDao cd=new ComonDao();
         String sql="select count(*) from "+ApprovalTable +" where businessid MATCH "+businessid;
@@ -125,6 +129,12 @@ public class BusinessProcessControl {
         Map<String,Object>res =bp.getApplyForm(businessid);
         return JSONObject.fromObject(res).toString();
 
+    }
+
+    public String getSignaturebybuid(int userid){
+        BusinessProcess bp=new BusinessProcess();
+        Map<String,Object> res =bp.getSignaturebybuid(userid);
+        return JSONObject.fromObject(res).toString();
     }
     public String getAffixfilebybid(int businessid){
         BusinessProcess bp=new BusinessProcess();

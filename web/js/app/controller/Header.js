@@ -177,18 +177,22 @@ Ext.define('ZSMZJ.controller.Header', {
         this.checkprocessWin.dataform=btn.up('form');
 
     },
-    showsignature:function(btn){
-        //alert("ok");
-        testobj=btn.up('form');
-        var tiger = Ext.create('Ext.draw.Component', {
+    makesignaturepic:function(btn,res){
+
+        var form=btn.up('form');
+        testobj=form;
+        var formcontent=form.getDefaultContentTarget();
+        var target=form.down('#businesscheckinfo').getEl();
+        target.scrollIntoView(formcontent);
+        var signaturepic = Ext.create('Ext.draw.Component', {
             width: 153,
-            height: 306,
-            id:'signaturepic',
+            height: 153,
+            itemId:'signaturepic',
             viewBox:true,
             cls: 'cursor-dragme',
             draggable: {
                 constrain: true,
-                constrainTo: btn.up('form').getEl()
+                constrainTo: form.getEl()
             },
             floating: {
                 shadow: false
@@ -196,18 +200,39 @@ Ext.define('ZSMZJ.controller.Header', {
             layout: {
                 type: 'vbox'
             },
-            renderTo: btn.up('form').down('#businesscheckinfo').getEl(),
+            renderTo: target,
             items: [
                 {
                     type: "image",
                     viewBox:true,
-                    src: "img/2013061301494220876442.gif",
+                    src: res.signaturepath,
                     width: 153,
                     height: 153
                 }
             ]
         });
 
+
+    },
+    showsignature:function(btn){
+        var me=this;
+        var params = {
+            userid:userid
+        };
+        var successFunc = function (response, action) {
+            var res = Ext.JSON.decode(response.responseText);
+            if(res.isok){
+                me.makesignaturepic(btn,res);
+            }
+            else{
+                Ext.Msg.alert("提示信息", "该行政区域暂无签章");
+            }
+        };
+        var failFunc = function (res, action) {
+            Ext.Msg.alert("提示信息", "取消提交失败，检查web服务或数据库服务");
+
+        };
+        this.ajaxSend(params, 'ajax/getsignaturebyuid.jsp', successFunc, failFunc,'POST');
 
 
     },

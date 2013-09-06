@@ -20,9 +20,29 @@ import java.util.Map;
  */
 public class BusinessProcessDao {
     private static final Logger log = Logger.getLogger(BusinessProcessDao.class);
-    private static final String UserTable="users";
+    private final String UserTable="users";
 
-
+    public Map<String,Object> getSignaturebybuid(int userid,String tablename){
+        Connection testConn= JdbcFactory.getConn("sqlite");
+        String sql=  "select b.signaturepath from "+tablename+" b,"+UserTable+
+                " a where  b.rowid = a.divisionid  and a.id = ?";
+        Map<String,Object> map=new HashMap<String, Object>();
+        map.put("isok",false);
+        PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
+        try {
+            pstmt.setInt(1, userid);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                map.put("signaturepath",rs.getString("signaturepath"));
+                map.put("isok",true);
+            }
+        }catch (Exception E){
+            log.debug(E.getMessage());
+        }
+        finally {
+            return map;
+        }
+    }
     public  ArrayList<Map<String, Object>> getAffixfilebybid(int businessid,String tablename){
         Connection testConn= JdbcFactory.getConn("sqlite");
         String sql=  "select attachmenttype from "+tablename+" where businessid MATCH ? group by attachmenttype";

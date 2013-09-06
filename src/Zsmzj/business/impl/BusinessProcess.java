@@ -29,6 +29,7 @@ public class BusinessProcess implements BusinessProcessIntf {
     private static final String  BusinessTable="business";
     private static final String FamilyTable="familymembers" ;
     private static final String AttachmentTable="attachment";
+    private static final String DivisionTable="divisions";
     private static final String ApprovalTable= "approvalprocess";
     private static final String NeedKey="待办事务";
     @Override
@@ -264,5 +265,11 @@ public class BusinessProcess implements BusinessProcessIntf {
     public int makeApproval(Map<String,Object> map) {
         BusinessProcessDao bpdao=new BusinessProcessDao();
         return bpdao.insertTableVales(map,ApprovalTable);
+    }
+
+    @Override
+    public Map<String, Object> getSignaturebybuid(int userid) {
+        BusinessProcessDao bpdao=new BusinessProcessDao();
+        return bpdao.getSignaturebybuid(userid,DivisionTable);
     }
 }

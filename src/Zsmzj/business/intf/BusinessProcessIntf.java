@@ -32,4 +32,5 @@ public interface BusinessProcessIntf {
     public ArrayList<Map<String,Object>> getFamilymembersbybid(int businessid); //获取家庭成员
     public int delBusinessbybid(int businessid);//删除申请的业务
     public int makeApproval(Map<String,Object> param);//插入审批流程
+    public Map<String,Object>getSignaturebybuid(int userid);//根据操作用户获取签章图片
 }

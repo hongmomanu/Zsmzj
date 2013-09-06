@@ -58,7 +58,7 @@ Ext.define('ZSMZJ.view.Viewport', {
                     Ext.create('Ext.tab.Panel', {
                         region: 'center', // a center region is ALWAYS required for border layout
                         deferredRender: false,
-			            layout:'border',
+			            layout:'fit',
                         id: 'mainContent-panel',
                         activeTab: 0,     // first tab initially active
                         items: [
