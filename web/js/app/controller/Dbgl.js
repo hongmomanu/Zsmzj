@@ -47,9 +47,18 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
     ],
 
+    initStrore:function(){
+        var store=this.getDbglNeedToDoBusinessesStore();
+        var header_cl=this.application.getController("Header");
+        store.on('load', function (store, options) {
+            header_cl.widgetdolayout("mainContent-panel");
+        });
+
+
+    },
     init: function() {
         var me = this;
-
+         this.initStrore();
          this.control({
          'dbglbusinessapplyform component':{
             imgclick:function (c){

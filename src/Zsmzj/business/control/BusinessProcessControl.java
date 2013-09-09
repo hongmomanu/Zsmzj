@@ -55,7 +55,11 @@ public class BusinessProcessControl {
                 ",(select f.displayname from "+UserTable+" f where f.id=(select e.userid from " + ApprovalTable+" e where e.businessid MATCH a.rowid  order by e.time desc limit 1 "+
                 " )) as approvaluser" +
                 " from "+BusinessTable +" a,"+UserTable+" b " +
-                "where a.userid MATCH b.id Limit "+limit+" Offset "+start;
+                "where a.userid = b.id ";
+        if (keyword!=null&&!keyword.equals("")){
+            sql_list+=" and "+BusinessTable+" MATCH '"+keyword+"*' ";
+        }
+        sql_list+="Limit "+limit+" Offset "+start;
 
         ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
         for(Map<String,Object> map:list){
