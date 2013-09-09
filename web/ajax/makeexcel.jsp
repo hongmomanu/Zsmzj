@@ -28,12 +28,14 @@
         String headers=request.getParameter("headers");
         String rows=request.getParameter("rows");
         String sum=request.getParameter("sum");
+        String title=request.getParameter("title");
+
         ServletContext context = request.getServletContext();
         Config dbconfig = Config.getConfig("config.properties");
         String filedir = dbconfig.getValue("tempdirname");
         String filepath=context.getRealPath(filedir);
         String savename= StringHelper.getTimeStr()+".xls";
-        Map<String,Object> map=ExcelHelper.writeExcel(filepath +"/"+ savename,headers,rows,sum);
+        Map<String,Object> map=ExcelHelper.writeExcel(filepath +"/"+ savename,headers,rows,sum,title);
         //result.put("filepath",filedir+"/"+result.get("filepath"));
         map.put("path",filedir+"/"+savename);
         out.print(JSONObject.fromObject(map).toString());

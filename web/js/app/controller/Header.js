@@ -290,31 +290,44 @@ Ext.define('ZSMZJ.controller.Header', {
     outexcel:function(btn){
         var store=btn.up('panel').getStore();
         var rows=[];
+        console.log(store.data.items);
         Ext.each(store.data.items,function(item){
-            rows.push(item.data);
+            rows.push(item.raw);
         });
         var sum={"totalhelpmoney":store.sum("totalhelpmoney"),"familynum":store.sum("familynum")};
+        if(rows.length==0){
+            Ext.Msg.alert("提示信息", "无相关数据可导出");
+            return ;
+        }
 
         var me=this;
         var params = {
             rows:Ext.JSON.encode(rows),
             sum:Ext.JSON.encode(sum),
-            headers:Ext.JSON.encode(["序号","行政区划名称","户主姓名","户主身份证","申请类别","家庭类别",
-                "救助金额","救助开始日期","救助结束日期","家庭人数","享受人数","低保户类型","状态描述",
-                "审核人","审核日期",	"制单人","制单日期"
+            title:'低保业务办理列表',
+            headers:Ext.JSON.encode([{name:"序号",value:"index"},{name:"行政区划名称",value:"division"},
+                {name:"户主姓名",value:"owername"},{name:"户主身份证",value:"owerid"},{name:"申请类别",value:"applytype"},
+                {name:"家庭类别",value:"familytype"},{name:"救助金额",value:"totalhelpmoney"},
+                {name:"救助开始日期",value:"helpbgtime"},{name:"救助结束日期",value:"helpedtime"},
+                {name:"家庭人数",value:"familynum"},{name:"享受人数",value:"familynum"},
+                {name:"低保户类型",value:"poorfamilytype"},{name:"状态描述",value:"processstatus"},
+                {name:"审核人",value:"approvaluser"},{name:"审核日期",value:"approvaltime"},
+                {name:"制单人",value:"displayname"},{name:"制单日期",value:"time"}
             ])
         };
         var successFunc = function (response, action) {
             var res = Ext.JSON.decode(response.responseText);
-            window.location.href = res.path;
+            if(res.isok){
+                window.location.href = res.path;
+            }
+            else{
+                Ext.Msg.alert("提示信息", "导出excel文件失败");
+            }
         };
         var failFunc = function (res, action) {
             Ext.Msg.alert("提示信息", "导出excel文件失败");
-
         };
         this.ajaxSend(params, 'ajax/makeexcel.jsp', successFunc, failFunc,'POST');
-
-
     },
     formprint:function(btn){
         var form=btn.up('form');
