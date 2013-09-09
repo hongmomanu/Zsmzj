@@ -210,41 +210,36 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
 
             ],
             flex: 1,
-            tbar:[
-                '->',
-                {
-                    xtype: 'textfield',
-                    hidden: false,
-                    width:200,
-                    //size:40,
-                    listeners: {
+            /*tbar:[
 
-                        "specialkey": function (field, e) {
-                            if (e.keyCode == 13) {
-                                var keyword = field.getValue().replace(/\s+/g, "");
-                                var store=this.up('panel').getStore();
-                                store.proxy.extraParams.keyword = keyword;
-                                store.load();
-                            }
-                        }
-
-                    },
-                    emptyText: '输入搜索关键字'
-
-                }
-
-            ],
+            ],*/
             bbar: Ext.create('Ext.PagingToolbar', {
                 store: 'dbgl.NeedToDoBusinesses',
                 displayInfo: true,
                 displayMsg: '显示待办事务 {0} - {1} of {2}',
-                emptyMsg: "无待办事务"/*,
+                emptyMsg: "无待办事务",
                 items:[
-                    '-', {
-                        text: '新增用户',
-                        action:'addnewuser'
+                    '-',
+                    {
+                        xtype: 'textfield',
+                        hidden: false,
+                        width:200,
+                        //size:40,
+                        listeners: {
 
-                    }]*/
+                            "specialkey": function (field, e) {
+                                if (e.keyCode == 13) {
+                                    var keyword = field.getValue().replace(/\s+/g, "");
+                                    var store=this.up('panel').getStore();
+                                    store.proxy.extraParams.keyword = keyword;
+                                    store.load();
+                                }
+                            }
+                        },
+                        emptyText: '输入搜索关键字'
+
+                    }
+                ]
             }),
             store: 'dbgl.NeedToDoBusinesses'
 
