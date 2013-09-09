@@ -63,8 +63,17 @@ public class BusinessProcessControl {
                     sql_list+=" and a.rowid in (select rowid from "+BusinessTable+" where "+BusinessTable+" MATCH '"+arr[i]+"*') ";
                 }
             }
+            else if(keyword.indexOf("or")>0){
+                sql_list+=" and "+BusinessTable+" MATCH '";
+
+                String[] arr=keyword.split("and");
+                for(int i=0;i<arr.length;i++){
+                    sql_list+=arr[i]+"* or ";
+                }
+                sql_list=sql_list.substring(0,sql_list.lastIndexOf("or"))+"'";
+            }
             else{
-                sql_list+=" and "+BusinessTable+" MATCH '"+keyword+"*' ";
+                sql_list+=" and "+BusinessTable+" MATCH '"+keyword.toUpperCase()+"*' ";
             }
 
         }
