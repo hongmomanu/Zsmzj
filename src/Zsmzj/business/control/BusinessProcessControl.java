@@ -66,11 +66,11 @@ public class BusinessProcessControl {
             else if(keyword.indexOf("or")>0){
                 sql_list+=" and "+BusinessTable+" MATCH '";
 
-                String[] arr=keyword.split("and");
+                String[] arr=keyword.split("or");
                 for(int i=0;i<arr.length;i++){
-                    sql_list+=arr[i]+"* or ";
+                    sql_list+=arr[i]+"* OR ";
                 }
-                sql_list=sql_list.substring(0,sql_list.lastIndexOf("or"))+"'";
+                sql_list=sql_list.substring(0,sql_list.lastIndexOf("OR"))+"' ";
             }
             else{
                 sql_list+=" and "+BusinessTable+" MATCH '"+keyword.toUpperCase()+"*' ";
