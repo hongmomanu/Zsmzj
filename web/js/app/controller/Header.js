@@ -93,6 +93,9 @@ Ext.define('ZSMZJ.controller.Header', {
             'dbglbusinessalterform button[action=unsignature]':{
                 click: this.delsignature
             },
+            'dbglbusinessalterform button[action=print]':{
+                click: this.formprint
+            },
 
 
 /*
@@ -278,6 +281,25 @@ Ext.define('ZSMZJ.controller.Header', {
 
         };
         this.ajaxSend(params, 'ajax/getsignaturebyuid.jsp', successFunc, failFunc,'POST');
+
+    },
+    formprint:function(btn){
+        var form=btn.up('form');
+        var targetElement = form;
+        testobj=targetElement;
+        var myWindow = window.open('', '', '');
+        myWindow.document.write('<html><head>');
+        myWindow.document.write('<title>' + 'Title' + '</title>');
+       // myWindow.document.write('<link rel="Stylesheet" type="text/css" href="http://dev.sencha.com/deploy/ext-4.0.1/resources/css/ext-all.css" />');
+        //myWindow.document.write('<script type="text/javascript" src="http://dev.sencha.com/deploy/ext-4.0.1/bootstrap.js"></script>');
+        myWindow.document.write('</head><body>');
+        //myWindow.document.write(targetElement.body.dom.innerHTML);
+        myWindow.document.write("hello world!");
+        myWindow.document.write('</body></html>');
+        myWindow.document.close();
+        myWindow.focus();
+        myWindow.print();
+        myWindow.close();
 
     },
     delsignature:function(btn){
