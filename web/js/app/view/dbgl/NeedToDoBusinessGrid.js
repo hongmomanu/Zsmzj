@@ -215,7 +215,8 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                 {
                     xtype: 'textfield',
                     hidden: false,
-                    width:'300',
+                    width:200,
+                    //size:40,
                     listeners: {
 
                         "specialkey": function (field, e) {
@@ -225,7 +226,6 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                                 store.proxy.extraParams.keyword = keyword;
                                 store.load();
                             }
-
                         }
 
                     },

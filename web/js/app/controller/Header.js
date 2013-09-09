@@ -431,7 +431,7 @@ Ext.define('ZSMZJ.controller.Header', {
             Ext.getCmp(widgetid).doLayout();
         }
         var task = new Ext.util.DelayedTask(fn);
-        task.delay(100);
+        task.delay(500);
     },
     cancelsubmitbybid:function(businessid,store){
         var me=this;
