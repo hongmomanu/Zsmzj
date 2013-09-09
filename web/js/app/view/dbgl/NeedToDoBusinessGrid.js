@@ -238,6 +238,11 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                         },
                         emptyText: '输入搜索关键字'
 
+                    },'->',
+                    {
+                        text: '导出Excel',
+                        action:'outexcel'
+
                     }
                 ]
             }),

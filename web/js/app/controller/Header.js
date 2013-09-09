@@ -112,6 +112,10 @@ Ext.define('ZSMZJ.controller.Header', {
                 click: this.showcheckprocess
 
             },*/
+            'needtodobusinesspanel button[action=outexcel]':{
+                click: this.outexcel
+
+            },
             'myheader component':{
                 needthingsclick:function (c){
                     this.showneedthings(c);
@@ -281,6 +285,35 @@ Ext.define('ZSMZJ.controller.Header', {
 
         };
         this.ajaxSend(params, 'ajax/getsignaturebyuid.jsp', successFunc, failFunc,'POST');
+
+    },
+    outexcel:function(btn){
+        var store=btn.up('panel').getStore();
+        var rows=[];
+        Ext.each(store.data.items,function(item){
+            rows.push(item.data);
+        });
+        var sum={"totalhelpmoney":store.sum("totalhelpmoney"),"familynum":store.sum("familynum")};
+
+        var me=this;
+        var params = {
+            rows:Ext.JSON.encode(rows),
+            sum:Ext.JSON.encode(sum),
+            headers:Ext.JSON.encode(["序号","行政区划名称","户主姓名","户主身份证","申请类别","家庭类别",
+                "救助金额","救助开始日期","救助结束日期","家庭人数","享受人数","低保户类型","状态描述",
+                "审核人","审核日期",	"制单人","制单日期"
+            ])
+        };
+        var successFunc = function (response, action) {
+            var res = Ext.JSON.decode(response.responseText);
+            window.location.href = res.path;
+        };
+        var failFunc = function (res, action) {
+            Ext.Msg.alert("提示信息", "导出excel文件失败");
+
+        };
+        this.ajaxSend(params, 'ajax/makeexcel.jsp', successFunc, failFunc,'POST');
+
 
     },
     formprint:function(btn){
