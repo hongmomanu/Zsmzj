@@ -133,7 +133,6 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
     },
     afterrenderEvents:function(){
-        //alert(1);
 
         CommonFunc.removeTask(ViewWaitMask,Ext.getCmp('mainContent-panel').getEl());
         function fn(){

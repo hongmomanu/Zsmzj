@@ -57,7 +57,16 @@ public class BusinessProcessControl {
                 " from "+BusinessTable +" a,"+UserTable+" b " +
                 "where a.userid = b.id ";
         if (keyword!=null&&!keyword.equals("")){
-            sql_list+=" and "+BusinessTable+" MATCH '"+keyword+"*' ";
+            if(keyword.indexOf("and")>0){
+                String[] arr=keyword.split("and");
+                for(int i=0;i<arr.length;i++){
+                    sql_list+=" and a.rowid in (select rowid from "+BusinessTable+" where "+BusinessTable+" MATCH '"+arr[i]+"*') ";
+                }
+            }
+            else{
+                sql_list+=" and "+BusinessTable+" MATCH '"+keyword+"*' ";
+            }
+
         }
         sql_list+="Limit "+limit+" Offset "+start;
 
@@ -145,18 +154,18 @@ public class BusinessProcessControl {
 
     }
 
-    public String getSignaturebybuid(int userid){
+    public String getSignaturebybuid(int userid){//更具userid获取签名
         BusinessProcess bp=new BusinessProcess();
         Map<String,Object> res =bp.getSignaturebybuid(userid);
         return JSONObject.fromObject(res).toString();
     }
-    public String getAffixfilebybid(int businessid){
+    public String getAffixfilebybid(int businessid){//根据businesid获取附件
         BusinessProcess bp=new BusinessProcess();
         ArrayList<Map<String,Object>> res =bp.getAffixfilebybid(businessid);
         return JSONArray.fromObject(res).toString();
 
     }
-    public String getFamilymembersbybid(int businessid){
+    public String getFamilymembersbybid(int businessid){ //根据busineesid获取家庭成员
         BusinessProcess bp=new BusinessProcess();
         ArrayList<Map<String,Object>>  res =bp.getFamilymembersbybid(businessid);
         return JSONArray.fromObject(res).toString();
