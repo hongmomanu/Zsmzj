@@ -46,6 +46,8 @@ Ext.define('ZSMZJ.controller.Header', {
             },
             'dbglbusinessalterform':{
                 alterapplyaftershow:function(){
+                    this.closemask();
+                    ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
                     var form=this.getMydbglbusinessalterform();
                     var businessid=form.objdata.businessid;
                     var store=form.down('#processhistorypanel').getStore();
