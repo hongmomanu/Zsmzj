@@ -33,7 +33,6 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
             //hideHeaders:true,
             columns: [
 
-
                 {header: '业务操作', width: 250,
                     renderer: function (v, m, r) {
                         var me=this;
