@@ -139,6 +139,14 @@ Ext.define('ZSMZJ.controller.Header', {
                 }
 
             },
+            'dbglbusinessprintform button[action=cancel]':{
+                click: function(btn){
+                    var form =btn.up("form");
+                    this.closetab(form.id);
+                }
+
+            },
+
             'needtodopanel,needtodobusinesspanel':{
 
                 afterrender: this.afterrenderEvents,

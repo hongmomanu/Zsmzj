@@ -303,6 +303,9 @@ Ext.define('ZSMZJ.view.dbgl.businessPrint', {
             buttons:[
                 {   text: '打印',
                     action:'print'
+                },
+                {   text: '返回',
+                    action:'cancel'
                 }
             ]
 
