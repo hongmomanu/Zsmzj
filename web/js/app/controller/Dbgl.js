@@ -43,6 +43,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.ProcessVector',
         'dbgl.businessPrint',
         'dbgl.businessAlter',
+        'dbgl.businessChange',
         'dbgl.processCheckWin',
         'dbgl.NeedToDoBusinessGrid'
 

@@ -44,11 +44,11 @@ Ext.define('ZSMZJ.controller.Header', {
                 afterrender: this.headerRenderEvents
 
             },
-            'dbglbusinessalterform':{
-                alterapplyaftershow:function(){
+            'dbglbusinessalterform,dbglbusinesschangeform':{
+                alterapplyaftershow:function(form){
                     this.closemask();
                     ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
-                    var form=this.getMydbglbusinessalterform();
+                    //var form=this.getMydbglbusinessalterform();
                     var businessid=form.objdata.businessid;
                     var store=form.down('#processhistorypanel').getStore();
                     store.proxy.extraParams = {
@@ -291,8 +291,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
     showchangeform:function(btn){
         var form=btn.up('form');
-
-
+        this.showtab("变更操作",'dbglbusinesschangeform','widget',form.objdata);
     },
     showcheckwin:function(btn){
 

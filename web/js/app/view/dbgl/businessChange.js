@@ -7,9 +7,9 @@
  */
 
 
-Ext.define('ZSMZJ.view.dbgl.businessAlter', {
+Ext.define('ZSMZJ.view.dbgl.businessChange', {
     extend : 'Ext.form.Panel',
-    alias : 'widget.dbglbusinessalterform',
+    alias : 'widget.dbglbusinesschangeform',
     requires: [
 
 
