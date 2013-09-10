@@ -44,7 +44,7 @@ Ext.define('ZSMZJ.controller.Header', {
                 afterrender: this.headerRenderEvents
 
             },
-            'dbglbusinessalterform,dbglbusinesschangeform':{
+            'dbglbusinessalterform':{
                 alterapplyaftershow:function(form){
                     this.closemask();
                     ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
@@ -56,8 +56,8 @@ Ext.define('ZSMZJ.controller.Header', {
                     };
                     store.load();
 
-                    this.clearAlterContent(form);
-                    this.initProcessBtns(form);
+                    this.clearAlterContent(form);//清空修改内容
+                    this.initProcessBtns(form); //初始化操作功能键
                     this.getValueBybusinessid(businessid,'ajax/getapplyformbybid.jsp',this.setFormValues,form);
                     this.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',this.setAffixValue,form);
                     this.getValueBybusinessid(businessid,'ajax/getfamilymembersbybid.jsp',this.setFamilymembers,form);
@@ -65,6 +65,27 @@ Ext.define('ZSMZJ.controller.Header', {
 
                 }
             } ,
+            'dbglbusinesschangeform':{
+                alterapplyaftershow:function(form){
+                    this.closemask();
+                    ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
+                    //var form=this.getMydbglbusinessalterform();
+                    var businessid=form.objdata.businessid;
+                    var store=form.down('#processhistorypanel').getStore();
+                    store.proxy.extraParams = {
+                        businessid:businessid
+                    };
+                    store.load();
+                    this.clearAlterContent(form);//清空修改内容
+                    //this.initProcessBtns(form); //初始化操作功能键
+                    this.getValueBybusinessid(businessid,'ajax/getapplyformbybid.jsp',this.setFormValues,form);
+                    this.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',this.setAffixValue,form);
+                    this.getValueBybusinessid(businessid,'ajax/getfamilymembersbybid.jsp',this.setFamilymembers,form);
+                    this.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',this.setSignature,form);
+
+                }
+            } ,
+
             /*'dbglbusinesscheckform':{
                 alterapplyaftershow:function(){
                     var form=this.getMydbglbusinesscheckform();
@@ -101,7 +122,6 @@ Ext.define('ZSMZJ.controller.Header', {
             'dbglbusinessalterform button[action=print]':{
                 click: this.formprint
             },
-
 
 /*
             'dbglbusinesscheckform button[action=cancel]':{

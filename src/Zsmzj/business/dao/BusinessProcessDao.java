@@ -133,6 +133,7 @@ public class BusinessProcessDao {
                 for(int i = 1;i<= colnums;i++){
                     String columnName = data.getColumnName(i);
                     String value=rs.getString(columnName);
+                    if(value==null||value.equals(""))continue;
                     map.put(columnName,value);
 
                 }

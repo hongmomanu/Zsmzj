@@ -756,18 +756,39 @@ Ext.define('ZSMZJ.view.dbgl.businessChange', {
                             emptyText: '输入救助原因',
                             emptyText: '输入救助原因',
                             allowBlank: false
-                        },{
+                        },
+                        {
+                            fieldLabel: '变更时间',
+                            name:'changedate',
+                            afterLabelTextTpl: required,
+                            allowBlank:false,
+                            colspan:3,
+                            value:Ext.Date.format(new Date(), 'Y-m-d')
+
+                        },
+                        {
+                            name: 'changereason',
+                            fieldLabel: '变更原因',
+                            colspan:3,
+                            minWidth:600,
+                            width:800,
+                            anchor : '100%',
+                            xtype : 'textarea',
+                            grow : true,
+                            afterLabelTextTpl: required,
+                            emptyText: '输入变更原因',
+                            emptyText: '输入变更原因',
+                            allowBlank: false
+                        },
+                        {
                             name: 'villageopinion',
                             fieldLabel: '社区/村意见',
                             colspan:3,
                             minWidth:600,
                             width:800,
-                            //draggable :true,
                             anchor : '100%',
-                            //width:800,
                             xtype : 'textarea',
                             grow : true,
-
                             allowBlank: true
                         },{
                             name: 'townopinion',
@@ -775,9 +796,7 @@ Ext.define('ZSMZJ.view.dbgl.businessChange', {
                             colspan:3,
                             minWidth:600,
                             width:800,
-                            //draggable :true,
                             anchor : '100%',
-                            //width:800,
                             xtype : 'textarea',
                             grow : true,
                             allowBlank: true
@@ -787,51 +806,12 @@ Ext.define('ZSMZJ.view.dbgl.businessChange', {
                             colspan:3,
                             minWidth:600,
                             width:800,
-                            //draggable :true,
                             anchor : '100%',
-                            //width:800,
                             xtype : 'textarea',
                             grow : true,
                             allowBlank: true
                         }
-                        ,/*{
-                            colspan:3,
-                            anchor : '100%',
-                            width:'100%',
-                            xtype : 'panel',
-                            border:0,
-                            defaults:{
-                                border:0
-                            },
-                            layout:'column',
-                            defaultType: 'textfield',
 
-                            items:[*/
-                                /*{
-                                    fieldLabel: '制表时间',
-                                    name:'mktime',
-                                    //columnWidth:.5,
-                                    readOnly: true,
-                                    value:Ext.Date.format(new Date(), 'Y-m-d')
-
-                                }
-                                 ,{
-                                xtype:'label',
-                                text:''
-
-                        }
-                                 ,
-
-                                {
-                                    fieldLabel:"制表人",
-                                    name:'displayname',
-                                    //value:username,
-                                    readOnly: true
-
-
-                                }
-                         *//*   ]
-                        }*/
                     ]
                 },
                 {
@@ -894,80 +874,12 @@ Ext.define('ZSMZJ.view.dbgl.businessChange', {
                 }
             ],
             buttons:[
-                {text: '打印预览',
-                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
-                        {name:"name",value:this.objdata.record.get("processstatus")}).children,
-                        {name:"name",value:"打印预览"}),
-                    action:'print'
-                },
-                {
-                    text: '流程跟踪',
-                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
-                        {name:"name",value:this.objdata.record.get("processstatus")}).children,
-                        {name:"name",value:"流程跟踪"}),
-                    action:'process'
-                },
-                {
-                    text: '注销',
-                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
-                        {name:"name",value:this.objdata.record.get("processstatus")}).children,
-                        {name:"name",value:"注销"}),
-                    action:'logout'
-                },
-                {
-                    text: '变更',
-                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
-                        {name:"name",value:this.objdata.record.get("processstatus")}).children,
-                        {name:"name",value:"变更"}),
-                    action:'change'
-                },
-                {
-                    text: '提交审批',
-                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
-                        {name:"name",value:this.objdata.record.get("processstatus")}).children,
-                        {name:"name",value:"提交审批"}),
-                    action:'sendbusiness'
-                },
-                {
-                    text: '取消提交',
-                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
-                        {name:"name",value:this.objdata.record.get("processstatus")}).children,
-                        {name:"name",value:"取消提交"}),
-                    action:'cancelsendbusiness'
-                },
-                {
-                    text: '审批',
-                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
-                        {name:"name",value:this.objdata.record.get("processstatus")}).children,
-                        {name:"name",value:"审批"}),
-                    action:'checkbusiness'
-                },
-                {
-                    text: '电子签章',
-                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
-                        {name:"name",value:this.objdata.record.get("processstatus")}).children,
-                        {name:"name",value:"电子签章"}),
-                    action:'signature'
-                },
-                {
-                    text: '删除签章',
-                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
-                        {name:"name",value:this.objdata.record.get("processstatus")}).children,
-                        {name:"name",value:"删除签章"}),
-                    action:'unsignature'
-                },
                 {
                     text: '保存',
-                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
-                        {name:"name",value:this.objdata.record.get("processstatus")}).children,
-                        {name:"name",value:"保存"}),
                     action:'applysubmit'
                 },
                 {
                     text: '返回',
-                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
-                        {name:"name",value:this.objdata.record.get("processstatus")}).children,
-                        {name:"name",value:"返回"}),
                     action:'cancel'
                 }
             ]
