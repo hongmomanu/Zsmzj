@@ -155,9 +155,9 @@ CREATE VIRTUAL TABLE IF NOT EXISTS business USING fts3
   villageopinion          VARCHAR(500),                             --社区/村意见
   townopinion             VARCHAR(500),                             --街道/乡镇意见
   civilopinion            VARCHAR(500),                             --民政局意见
-processstatustype       VARCHAR(50),                              --业务流程类型（正常，变更，注销）
-changedate              VARCHAR(50),                              --变更日期
-changereason            VARCHAR(50)                              --变更原因
+  processstatustype       VARCHAR(50),                              --业务流程类型（正常，变更，注销）
+  changedate               VARCHAR(50),                              --变更日期
+  changereason             VARCHAR(50)                              --变更原因
 
 );
 

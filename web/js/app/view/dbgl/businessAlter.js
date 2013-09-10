@@ -908,6 +908,20 @@ Ext.define('ZSMZJ.view.dbgl.businessAlter', {
                     action:'process'
                 },
                 {
+                    text: '注销',
+                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                        {name:"name",value:this.objdata.record.get("processstatus")}).children,
+                        {name:"name",value:"注销"}),
+                    action:'logout'
+                },
+                {
+                    text: '变更',
+                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                        {name:"name",value:this.objdata.record.get("processstatus")}).children,
+                        {name:"name",value:"变更"}),
+                    action:'change'
+                },
+                {
                     text: '提交审批',
                     hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
                         {name:"name",value:this.objdata.record.get("processstatus")}).children,

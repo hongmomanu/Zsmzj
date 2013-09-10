@@ -83,6 +83,9 @@ Ext.define('ZSMZJ.controller.Header', {
             'dbglbusinessalterform button[action=process]':{
                 click: this.formprocess
             },
+            'dbglbusinessalterform button[action=change]':{
+                click: this.showchangeform
+            },
             'dbglbusinessalterform button[action=cancel]':{
                 click: this.cancelcheck
             },
@@ -283,7 +286,13 @@ Ext.define('ZSMZJ.controller.Header', {
 
     cancelcheck:function(btn){
         var form=btn.up('form');
-       this.closetab(form.id);
+        this.closetab(form.id);
+    },
+
+    showchangeform:function(btn){
+        var form=btn.up('form');
+
+
     },
     showcheckwin:function(btn){
 
