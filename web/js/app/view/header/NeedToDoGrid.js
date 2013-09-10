@@ -42,6 +42,7 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
                             Ext.widget('button', {
                                 renderTo: id0,
                                 text: '修改',
+                                margin: '0 5 0 5',
                                 icon:'img/sp.gif',
                                 hidden:!(r.get('processstatus').toString()==processdiction.stepzero
                                     ||r.get('processstatus').toString()==processdiction.stepback),
@@ -64,6 +65,7 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
                         Ext.defer(function () {
                             Ext.widget('button', {
                                 renderTo: id1,
+                                margin: '0 5 0 5',
                                 icon:'img/process.gif',
                                 text: '流程' ,
                                 width: 55,
@@ -87,6 +89,7 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
                         Ext.defer(function () {
                             Ext.widget('button', {
                                 renderTo: id2,
+                                margin: '0 5 0 5',
                                 text: r.get('process'),
                                 icon:'img/sp.gif',
                                 width: 55,
@@ -109,6 +112,7 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
                             Ext.widget('button', {
                                 renderTo: id3,
                                 text: '删除',
+                                margin: '0 5 0 5',
                                 icon:'img/sp.gif',
                                 hidden:!(r.get('processstatus').toString()==processdiction.stepzero
                                     ||r.get('processstatus').toString()==processdiction.stepback),
@@ -126,9 +130,9 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
                             });
                         }, 50);
 
-                        return Ext.String.format('<span id="{0}" style="padding-left:5px; "></span>' +
-                            '<span id="{1}" style="padding-left:5px; "></span><span id="{2}" style="padding-left:5px; "></span>' +
-                            '<span id="{3}" style="padding-left:5px; "></span>',id0, id1,id2,id3);
+                        return Ext.String.format('<span id="{0}"></span>' +
+                            '<span id="{1}"></span><span id="{2}"></span>' +
+                            '<span id="{3}" ></span>',id0, id1,id2,id3);
                     }
                 },
                 //{header: '审批名称', dataIndex: 'rolename',width: 150},

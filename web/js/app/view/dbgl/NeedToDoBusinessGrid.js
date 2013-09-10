@@ -44,6 +44,7 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                         Ext.defer(function () {
                             Ext.widget('button', {
                                 renderTo: id0,
+                                margin: '0 5 0 5',
                                 text: '修改',
                                 icon:'img/sp.gif',
                                 hidden:!(r.get('processstatus').toString()==processdiction.stepzero
@@ -67,6 +68,7 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                         Ext.defer(function () {
                             Ext.widget('button', {
                                 renderTo: id1,
+                                margin: '0 5 0 5',
                                 icon:'img/process.gif',
                                 text: '流程' ,
                                 width: 55,
@@ -92,6 +94,7 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                             Ext.widget('button', {
                                 renderTo: id2,
                                 text: '查看',
+                                margin: '0 5 0 5',
                                 hidden:(r.get('processstatus').toString()==processdiction.stepzero),
                                 icon:'img/sp.gif',
                                 width: 55,
@@ -111,6 +114,7 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                         Ext.defer(function () {
                             Ext.widget('button', {
                                 renderTo: id5,
+                                margin: '0 5 0 5',
                                 text: '提交',
                                 hidden:!(r.get('processstatus').toString()==processdiction.stepzero),
                                 icon:'img/sp.gif',
@@ -135,6 +139,7 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                             Ext.widget('button', {
                                 renderTo: id3,
                                 text: '删除',
+                                margin: '0 5 0 5',
                                 icon:'img/sp.gif',
                                 hidden:!(r.get('processstatus').toString()==processdiction.stepzero
                                     ||r.get('processstatus').toString()==processdiction.stepback),
@@ -161,6 +166,7 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                                 //hidden:!(r.get('processstatus').toString()==processdiction.stepone),
                                 hidden:true,
                                 width: 55,
+                                margin: '0 5 0 5',
                                 listeners: {
 
                                     render: function(c){
@@ -174,11 +180,11 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                             });
                         }, 50);
 
-                        return Ext.String.format('<span id="{0}" style="padding-left:5px; "></span>' +
-                            '<span id="{1}" style="padding-left:5px; "></span><span id="{2}" style="padding-left:5px; "></span>' +
-                            '</span><span id="{5}" style="padding-left:5px; "></span>'+
-                            '<span id="{3}" style="padding-left:5px; "></span>'+
-                            '<span id="{4}" style="padding-left:5px; "></span>',id0, id1,id2,id3,id4,id5);
+                        return Ext.String.format('<span id="{0}"></span>' +
+                            '<span id="{1}"></span><span id="{2}"></span>' +
+                            '</span><span id="{5}"></span>'+
+                            '<span id="{3}" ></span>'+
+                            '<span id="{4}" ></span>',id0, id1,id2,id3,id4,id5);
                     }
                 },
                 //{header: '审批名称', dataIndex: 'rolename',width: 150},
