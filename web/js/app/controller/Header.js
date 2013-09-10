@@ -125,6 +125,20 @@ Ext.define('ZSMZJ.controller.Header', {
                 afterrender: this.processpictureRenderEvent
 
             },
+            'dbglbusinessprintform':{
+
+                printapplyaftershow:function(form){
+                    this.afterrenderEvents();
+                    //this.printformFn(form);
+                }
+            },
+            'dbglbusinessprintform button[action=print]':{
+                click: function(btn){
+                       var form =btn.up("form");
+                       this.printformFn(form);
+                }
+
+            },
             'needtodopanel,needtodobusinesspanel':{
 
                 afterrender: this.afterrenderEvents,
@@ -329,9 +343,38 @@ Ext.define('ZSMZJ.controller.Header', {
         };
         this.ajaxSend(params, 'ajax/makeexcel.jsp', successFunc, failFunc,'POST');
     },
+    printformFn:function(form){
+        var el = form;
+
+        var win = window.open('', '', '');
+        if (win==null){
+            alert("Pop-up is blocked!");
+            return;
+        }
+
+        win.document.write('<html><head>');
+        win.document.write('<title>' + document.title + '</title>');
+        win.document.write('<link rel="stylesheet" type="text/css" href="'+extLocation+
+            'resources/ext-theme-neptune/ext-theme-neptune-all.css"><\/>');
+
+        win.document.write('<link rel="stylesheet" type="text/css" href="css/main.css" />');
+        win.document.write('<link rel="stylesheet" type="text/css" href="css/data-view.css" />');
+        win.document.write('</head><body>');
+        win.document.write(el.body.dom.innerHTML);
+        win.document.write('</body></html>');
+        win.document.close();
+        win.focus();
+        win.print();
+        win.close();
+
+
+
+
+    },
     formprint:function(btn){
         var form=btn.up('form');
-        var targetElement = form;
+        this.showtab("打印","dbglbusinessprintform","widget",form);
+        /*var targetElement = form;
         testobj=targetElement;
         var myWindow = window.open('', '', '');
         myWindow.document.write('<html><head>');
@@ -345,7 +388,7 @@ Ext.define('ZSMZJ.controller.Header', {
         myWindow.document.close();
         myWindow.focus();
         myWindow.print();
-        myWindow.close();
+        myWindow.close();*/
 
     },
     delsignature:function(btn){

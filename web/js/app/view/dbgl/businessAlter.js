@@ -894,10 +894,10 @@ Ext.define('ZSMZJ.view.dbgl.businessAlter', {
                 }
             ],
             buttons:[
-                {text: '打印',
+                {text: '打印预览',
                     hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
                         {name:"name",value:this.objdata.record.get("processstatus")}).children,
-                        {name:"name",value:"打印"}),
+                        {name:"name",value:"打印预览"}),
                     action:'print'
                 },
                 {
