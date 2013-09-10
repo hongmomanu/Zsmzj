@@ -560,7 +560,7 @@ Ext.define('ZSMZJ.controller.Header', {
             item:c
 
         };
-        this.showtab("修改信息",'dbglbusinessalterform','widget',objdata);
+        this.showtab("业务操作",'dbglbusinessalterform','widget',objdata);
 
     },
     cancelbusinesssubmit:function(c,r,grid){

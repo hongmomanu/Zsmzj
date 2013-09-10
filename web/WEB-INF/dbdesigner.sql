@@ -93,8 +93,8 @@ CREATE VIRTUAL TABLE IF NOT EXISTS business USING fts3
 
   id integer primary key autoincrement,                             --自增主键
   time DATETIME DEFAULT (datetime(CURRENT_TIMESTAMP,'localtime')),  --业务提交时间
-  businesstype            VARCHAR(50),                                  --业务表类型（低保，低保边缘，临时救助等）
-  processstatus           VARCHAR(50),                                  --流程状态
+  businesstype            VARCHAR(50),                              --业务表类型（低保，低保边缘，临时救助等）
+  processstatus           VARCHAR(50),                              --流程状态
   division                VARCHAR(50),                              --行政区划
   applytype               VARCHAR(50),                              --申请类别
   familytype              VARCHAR(50),                              --家庭类别*
@@ -154,8 +154,10 @@ CREATE VIRTUAL TABLE IF NOT EXISTS business USING fts3
   helpreason              VARCHAR(500),                             --救助原因*
   villageopinion          VARCHAR(500),                             --社区/村意见
   townopinion             VARCHAR(500),                             --街道/乡镇意见
-  civilopinion            VARCHAR(500)                             --民政局意见
-
+  civilopinion            VARCHAR(500),                             --民政局意见
+processstatustype       VARCHAR(50),                              --业务流程类型（正常，变更，注销）
+changedate              VARCHAR(50),                              --变更日期
+changereason            VARCHAR(50)                              --变更原因
 
 );
 
