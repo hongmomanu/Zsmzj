@@ -129,7 +129,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
                 printapplyaftershow:function(form){
                     this.afterrenderEvents();
-                    //this.printformFn(form);
+                    this.initprintform(form);
                 }
             },
             'dbglbusinessprintform button[action=print]':{
@@ -176,6 +176,77 @@ Ext.define('ZSMZJ.controller.Header', {
         }, this);
 
     },
+    initprintform:function(form){
+        var me=this;
+        var formvalues=form.objdata.getValues();
+        for(var key in formvalues){
+            if(form.down('#'+key)){
+                form.down('#'+key).setText(formvalues[key]);
+            }
+        }
+
+
+        Ext.each(this.signaturepicprintarr,function(a){
+
+            Ext.Array.remove(me.signaturepicprintarr,a);
+        });
+
+        Ext.each(this.signaturepicarr,function(a){
+            var target=form.down('#businesscheckinfo').getEl();
+            //target.scrollIntoView(formcontent);
+            var signaturepic = Ext.create('Ext.draw.Component', {
+                width: 153,
+                height: 153,
+                //id:'signaturepic',
+                viewBox:true,
+                cls: 'cursor-dragme',
+                draggable: {
+                    constrain: true,
+                    constrainTo: form.getEl()
+                },
+                floating: {
+                    shadow: false
+                },
+                layout: {
+                    type: 'vbox'
+                },
+                renderTo: target,
+                items: [
+                    {
+                        type: "image",
+                        viewBox:true,
+                        src: a.items[0].src,
+                        width: 153,
+                        height: 153
+                    }
+                ]
+            });
+
+            //signaturepic.userid=item.userid;
+            signaturepic.setLocalX(a.x);
+            signaturepic.setLocalY(a.y);
+
+            me.signaturepicprintarr.push(signaturepic);
+
+
+        });
+
+        var base_grid=form.objdata.down('#familymembergrid');
+
+        var grid=form.down('#familymembergrid');
+        Ext.each(base_grid.getStore().data.items,function(b){
+            var r = Ext.create('ZSMZJ.model.dbgl.FamilyMember', b.data);
+            grid.getStore().insert(0, r);
+        });
+        //me.closemask();
+        /*var countitem=form.down('#FamilyPersons');
+        var enjoyitem=form.down('#enjoyPersons');
+        countitem.setValue(data.length);
+        enjoyitem.setValue(data.length);
+        */
+
+
+    },
     formprocess:function(btn){
         var form=btn.up('form');
         var c=form.objdata.item;
@@ -212,6 +283,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
     signaturepicarr:[],
+    signaturepicprintarr:[],
     issignaturedone:function(path){
       var result={isok:false};
       for(var i=0;i<this.signaturepicarr.length;i++){
@@ -304,7 +376,6 @@ Ext.define('ZSMZJ.controller.Header', {
     outexcel:function(btn){
         var store=btn.up('panel').getStore();
         var rows=[];
-        console.log(store.data.items);
         Ext.each(store.data.items,function(item){
             rows.push(item.raw);
         });

@@ -32,6 +32,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
     views: [
         'dbgl.businessApply',
         'dbgl.FamilyMemberGrid',
+        'dbgl.FamilyMemberPrintGrid',
         'dbgl.uploadImgFileWin',
         'dbgl.uploadAffixFileWin',
         'dbgl.AffixFilesGrid',

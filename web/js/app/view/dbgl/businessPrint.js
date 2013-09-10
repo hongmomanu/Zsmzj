@@ -123,8 +123,9 @@ Ext.define('ZSMZJ.view.dbgl.businessPrint', {
                                     itemId: 'applytype',
                                     text: ''
                                 },
-                                ,{
+                                {
                                     text: '致贫原因'
+
                                 },{
                                     itemId: 'poorreason',
                                     text: ''
@@ -143,7 +144,7 @@ Ext.define('ZSMZJ.view.dbgl.businessPrint', {
                             items:[
 
                                 {
-                                    xtype:'familymembergrid',
+                                    xtype:'familymemberprintgrid',
                                     itemId:'familymembergrid'
                                 }
 
@@ -154,7 +155,9 @@ Ext.define('ZSMZJ.view.dbgl.businessPrint', {
                         {
                             xtype: 'fieldset',
                             title: '<a>低保业务办理信息</a>',
+                            itemId:'businesscheckinfo',
                             defaultType: 'label',
+                            height: 350,
                             //layout: 'anchor',
                             layout: {
                                 type: 'table',
@@ -166,10 +169,8 @@ Ext.define('ZSMZJ.view.dbgl.businessPrint', {
                                     cellspacing: 1,
                                     width: '100%',
                                     align: 'center',
-                                    style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:center;"
-                                    /*style: {
-                                     width: '100%'
-                                     }*/
+                                    style: "width:100%;height:100%;border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:center;"
+
                                 }
                             },
 
@@ -220,12 +221,12 @@ Ext.define('ZSMZJ.view.dbgl.businessPrint', {
                                 ,
 
                                 {
-                                    name: 'poorstandard',
-                                    fieldLabel: '低保标准(元)'
+
+                                    text: '低保标准(元)'
                                 },
                                 {
                                     itemId: 'poorstandard',
-                                    fieldLabel: '低保标准(元)'
+                                    text: ''
                                 },
                                 {
                                     text: '享受人数'
@@ -250,11 +251,13 @@ Ext.define('ZSMZJ.view.dbgl.businessPrint', {
                                 },
                                 {
                                     text: '救助原因',
+                                    height:180,
                                     colspan:1
                                 },
                                 {
                                     itemId: 'helpreason',
                                     text: '',
+                                    height:180,
                                     colspan:5
 
                                 },
@@ -278,10 +281,14 @@ Ext.define('ZSMZJ.view.dbgl.businessPrint', {
                                     colspan:2,
                                     text: ''
                                 },{
-                                    text: '民政局意见'
+                                    text: '民政局意见',
+                                    rowspan:3,
+                                    height:100
                                 },{
                                     itemId: 'civilopinion',
                                     colspan:5,
+                                    rowspan:3,
+                                    height:100,
                                     text: ''
                                 }
                             ]
