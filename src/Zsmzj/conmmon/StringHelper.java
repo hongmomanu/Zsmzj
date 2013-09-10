@@ -28,4 +28,10 @@ public class StringHelper {
         return df.format(calendar.getTime());
 
     }
+    public static String getTimeStrFormat(String format){
+        DateFormat df = new SimpleDateFormat(format);
+        Calendar calendar = Calendar.getInstance();
+        return df.format(calendar.getTime());
+
+    }
 }

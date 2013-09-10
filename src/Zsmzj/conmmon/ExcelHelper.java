@@ -128,7 +128,8 @@ public class ExcelHelper {
                     if(j==0){
                         sumrow_index++;
                         ws.mergeCells(0, sumrow_index, headers.size()/2-1, sumrow_index);
-                        ws.mergeCells(headers.size()/2-1, sumrow_index, headers.size()-1, sumrow_index);
+                        log.debug(headers.size()/2+"========"+(headers.size()-1));
+                        ws.mergeCells(headers.size()/2, sumrow_index, headers.size()-1, sumrow_index);
                         Label labelLast_head_C=new Label(0, sumrow_index,"填表人:          分管领导:");
                         WritableCellFormat cellLastRowHeaderFormat=new WritableCellFormat();
                         cellLastRowHeaderFormat.setAlignment(Alignment.LEFT);
@@ -136,7 +137,8 @@ public class ExcelHelper {
                         labelLast_head_C.setCellFormat(cellLastRowHeaderFormat);
                         ws.addCell(labelLast_head_C);
 
-                        Label labelLast_tail_C=new Label(1, sumrow_index,"填表日期: 2013-09-09");
+                        String date_str=StringHelper.getTimeStrFormat("yyyy-MM-dd");
+                        Label labelLast_tail_C=new Label(headers.size()/2, sumrow_index,"填表日期: "+date_str);
                         WritableCellFormat cellLastRowTailFormat=new WritableCellFormat();
                         cellLastRowTailFormat.setAlignment(Alignment.RIGHT);
                         cellLastRowTailFormat.setFont(font);
