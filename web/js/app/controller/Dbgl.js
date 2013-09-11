@@ -44,6 +44,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.businessPrint',
         'dbgl.businessAlter',
         'dbgl.businessChange',
+        'dbgl.businessLogout',
         'dbgl.processCheckWin',
         'dbgl.NeedToDoBusinessGrid'
 
@@ -83,6 +84,9 @@ Ext.define('ZSMZJ.controller.Dbgl', {
          },
          'dbglbusinesschangeform button[action=saveapplysubmit]':{
              click: this.applysubmitchange
+         },
+         'dbglbusinesschangeform button[action=savelogoutapplysubmit]':{
+             click: this.savelogoutapplysubmit
          },
          'dbglbusinessalterform button[action=applysubmit],dbglbusinesschangeform button[action=applysubmit]':{
              click: this.applysubmitupdate
@@ -268,6 +272,10 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         };
         var form =btn.up('form');
         this.formSubmit(form, params, 'ajax/uploadfile.jsp', successFunc, failFunc,"正在提交数据");
+    },
+
+    savelogoutapplysubmit:function(btn){
+        this.updateformbyurl(btn,'ajax/logoutapply.jsp',processstatustype.logout);
     },
     applysubmitchange:function(btn){
         this.updateformbyurl(btn,'ajax/changeapply.jsp',processstatustype.change);

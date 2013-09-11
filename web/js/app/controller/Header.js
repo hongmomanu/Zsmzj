@@ -47,6 +47,7 @@ Ext.define('ZSMZJ.controller.Header', {
             'dbglbusinessalterform':{
                 alterapplyaftershow:function(form){
                     this.closemask();
+                    //this.initchangelogoutbtns(form);
                     ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
                     //var form=this.getMydbglbusinessalterform();
                     var businessid=form.objdata.businessid;
@@ -68,6 +69,29 @@ Ext.define('ZSMZJ.controller.Header', {
             'dbglbusinesschangeform':{
                 alterapplyaftershow:function(form){
                     this.closemask();
+
+                    ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
+                    var businessid=form.objdata.businessid;
+                    var store=form.down('#processhistorypanel').getStore();
+                    store.proxy.extraParams = {
+                        businessid:businessid
+                    };
+                    store.load();
+                    this.clearAlterContent(form);//清空修改内容
+                    this.initProcessBtns(form); //初始化操作功能键
+                    this.initchangelogoutbtns(form);//更具是否操作来过滤按钮
+                    this.getValueBybusinessid(businessid,'ajax/getapplyformbybid.jsp',this.setFormValues,form);
+
+
+                   /* this.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',this.setAffixValue,form);
+                    this.getValueBybusinessid(businessid,'ajax/getfamilymembersbybid.jsp',this.setFamilymembers,form);
+                    this.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',this.setSignature,form);*/
+
+                }
+            } ,
+            'dbglbusinesslogoutform':{
+                alterapplyaftershow:function(form){
+                    this.closemask();
                     ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
                     //var form=this.getMydbglbusinessalterform();
                     var businessid=form.objdata.businessid;
@@ -78,16 +102,16 @@ Ext.define('ZSMZJ.controller.Header', {
                     store.load();
                     this.clearAlterContent(form);//清空修改内容
                     this.initProcessBtns(form); //初始化操作功能键
+                    this.initchangelogoutbtns(form);//更具是否操作来过滤按钮
                     this.getValueBybusinessid(businessid,'ajax/getapplyformbybid.jsp',this.setFormValues,form);
 
 
-                   /* this.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',this.setAffixValue,form);
-                    this.getValueBybusinessid(businessid,'ajax/getfamilymembersbybid.jsp',this.setFamilymembers,form);
-                    this.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',this.setSignature,form);*/
+                    /* this.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',this.setAffixValue,form);
+                     this.getValueBybusinessid(businessid,'ajax/getfamilymembersbybid.jsp',this.setFamilymembers,form);
+                     this.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',this.setSignature,form);*/
 
                 }
             } ,
-
             /*'dbglbusinesscheckform':{
                 alterapplyaftershow:function(){
                     var form=this.getMydbglbusinesscheckform();
@@ -126,6 +150,9 @@ Ext.define('ZSMZJ.controller.Header', {
             },
             'dbglbusinessalterform button[action=cancelsendbusiness],dbglbusinesschangeform button[action=cancelsendbusiness]':{
                 click: this.cancelsendbusiness
+            },
+            'dbglbusinessalterform button[action=logout],dbglbusinesschangeform button[action=logout]':{
+                click: this.logoutbusiness
             },
 
 /*
@@ -214,6 +241,16 @@ Ext.define('ZSMZJ.controller.Header', {
         }, this);
 
     },
+
+    initchangelogoutbtns:function(form){
+        if(this.ischangeclick){
+            this.showchangebtn(form);
+        }
+        if(this.islogoutclick){
+            this.showlogoutbtn(form);
+        }
+    }
+    ,
     initprintform:function(form){
         var me=this;
         var formvalues=form.objdata.getValues();
@@ -322,13 +359,36 @@ Ext.define('ZSMZJ.controller.Header', {
     },
 
     showchangeform:function(btn){
+        this.ischangeclick=true;
         var form=btn.up('form');
         this.showtab("变更操作",'dbglbusinesschangeform','widget',form.objdata);
+
+
+    },
+    ischangeclick:false,
+    islogoutclick:false,
+    showchangebtn:function(form){
+
         var btns=form.getDockedItems('toolbar[dock="bottom"]')[0].items.items;
         Ext.each(btns,function(a){
             a.setVisible(a.text=="保存变更"||a.text=="返回")
         });
-        //this.initProcessBtns(form); //初始化操作功能键
+        this.ischangeclick=false;
+    },
+    showlogoutbtn:function(form){
+        var btns=form.getDockedItems('toolbar[dock="bottom"]')[0].items.items;
+        Ext.each(btns,function(a){
+            a.setVisible(a.text=="保存注销"||a.text=="返回")
+        });
+        this.islogoutclick=false;
+    },
+
+    logoutbusiness:function(btn){
+        this.islogoutclick=true;
+        var form=btn.up('form');
+        this.showtab("注销操作",'dbglbusinesslogoutform','widget',form.objdata);
+
+
     },
     showcheckwin:function(btn){
 
@@ -1103,6 +1163,7 @@ Ext.define('ZSMZJ.controller.Header', {
                 tabs.getComponent('tab' + value).show();
             }
             else{
+                this.initchangelogoutbtns(tabs.getComponent('tab' + value));
 
                 CommonFunc.removeTask(ViewWaitMask,Ext.getCmp('mainContent-panel').getEl());
             }

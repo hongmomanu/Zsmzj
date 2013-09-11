@@ -33,6 +33,7 @@ Ext.define('ZSMZJ.view.dbgl.businessLogout', {
                 xtype: 'fieldset',
                 title: '<a>【低保业务办理】家庭基本信息</a>',
                 defaultType: 'textfield',
+                disabled:true,
 
                 //layout: 'anchor',
                 layout: {
@@ -40,6 +41,7 @@ Ext.define('ZSMZJ.view.dbgl.businessLogout', {
 
                     // The total column count must be specified here
                     columns: 3,
+
                     tableAttrs: {
                         border: 1,
                         cellpadding: 5,
@@ -230,6 +232,7 @@ Ext.define('ZSMZJ.view.dbgl.businessLogout', {
                 {
                     xtype: 'fieldset',
                     title: '<a>家庭房产信息</a>',
+                    disabled:true,
                     defaultType: 'textfield',
                     bodyStyle: 'padding:5px 5px 5px 5px',
                     //layout: 'anchor',
@@ -287,6 +290,7 @@ Ext.define('ZSMZJ.view.dbgl.businessLogout', {
                 {
                     xtype: 'fieldset',
                     title: '<a>家庭收入信息</a>',
+                    disabled:true,
                     defaultType: 'textfield',
                     bodyStyle: 'padding:5px 5px 5px 5px',
                     //layout: 'anchor',
@@ -389,6 +393,7 @@ Ext.define('ZSMZJ.view.dbgl.businessLogout', {
                 {
                     xtype: 'fieldset',
                     title: '<a>家庭财产信息</a>',
+                    disabled:true,
                     defaultType: 'textfield',
                     bodyStyle: 'padding:5px 5px 5px 5px',
                     //layout: 'anchor',
@@ -561,6 +566,7 @@ Ext.define('ZSMZJ.view.dbgl.businessLogout', {
                 {
                     xtype: 'fieldset',
                     title: '<a>业务申请信息</a>',
+                    disabled:true,
                     defaultType: 'textfield',
 
                     //layout: 'anchor',
@@ -627,6 +633,7 @@ Ext.define('ZSMZJ.view.dbgl.businessLogout', {
                 {
                     xtype: 'fieldset',
                     title: '<a>业务审批信息</a>',
+                    disabled:false,
                     defaultType: 'textfield',
                     itemId:'businesscheckinfo',
 
@@ -768,7 +775,7 @@ Ext.define('ZSMZJ.view.dbgl.businessLogout', {
                         },
                         {
                             name: 'logoutreason',
-                            fieldLabel: '变更原因',
+                            fieldLabel: '注销原因',
                             colspan:3,
                             minWidth:600,
                             width:800,
@@ -875,11 +882,11 @@ Ext.define('ZSMZJ.view.dbgl.businessLogout', {
             ],
             buttons:[
                 {
-                    text: '保存变更',
+                    text: '保存注销',
                     hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
                         {name:"name",value:this.objdata.record.get("processstatus")}).children,
-                        {name:"name",value:"保存变更"}),
-                    action:'saveapplysubmit'
+                        {name:"name",value:"保存注销"}),
+                    action:'savelogoutapplysubmit'
                 },
 
                 {text: '打印预览',
@@ -895,20 +902,20 @@ Ext.define('ZSMZJ.view.dbgl.businessLogout', {
                         {name:"name",value:"流程跟踪"}),
                     action:'process'
                 },
-                {
+                /*{
                     text: '注销',
                     hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
                         {name:"name",value:this.objdata.record.get("processstatus")}).children,
                         {name:"name",value:"注销"}),
                     action:'logout'
-                },
-                {
+                },*/
+                /*{
                     text: '变更',
                     hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
                         {name:"name",value:this.objdata.record.get("processstatus")}).children,
                         {name:"name",value:"变更"}),
                     action:'change'
-                },
+                },*/
                 {
                     text: '提交审批',
                     hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
