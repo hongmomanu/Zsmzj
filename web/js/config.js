@@ -21,4 +21,5 @@ var ViewWaitMask=null;
 var processdiction={"stepzero":"申请","stepone":"提交","steptwo":"审核","stepthree":"审批","stepback":"退回"};
 var approvalresult={"yes":"同意","no":"不同意"};
 var processRoleBtn=null;
+var processstatustype={"ok":"正常","change":"变更","logout":"注销"};
 

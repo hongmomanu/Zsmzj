@@ -12,6 +12,7 @@ Ext.define('ZSMZJ.model.header.NeedToDo', {
         {name: 'url'},
         {name: 'businessid'},
         {name: 'processstatus', type: 'string'},
+        {name:'processstatustype'},
         {name: 'process', type: 'string'},
         {name: 'displayname', type: 'string'},
         {name: 'time',type:'string'},

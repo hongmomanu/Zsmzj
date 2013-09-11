@@ -79,6 +79,8 @@ Ext.define('ZSMZJ.controller.Header', {
                     this.clearAlterContent(form);//清空修改内容
                     //this.initProcessBtns(form); //初始化操作功能键
                     this.getValueBybusinessid(businessid,'ajax/getapplyformbybid.jsp',this.setFormValues,form);
+
+
                    /* this.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',this.setAffixValue,form);
                     this.getValueBybusinessid(businessid,'ajax/getfamilymembersbybid.jsp',this.setFamilymembers,form);
                     this.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',this.setSignature,form);*/
@@ -588,7 +590,11 @@ Ext.define('ZSMZJ.controller.Header', {
             item:c
 
         };
-        this.showtab("业务操作",'dbglbusinessalterform','widget',objdata);
+        if(r.get('processstatustype')==processstatustype.ok){
+            this.showtab("业务操作",'dbglbusinessalterform','widget',objdata);
+        }else if(r.get('processstatustype')==processstatustype.change){
+            this.showtab("业务操作",'dbglbusinesschangeform','widget',objdata);
+        }
 
     },
     cancelbusinesssubmit:function(c,r,grid){

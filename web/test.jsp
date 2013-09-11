@@ -2,9 +2,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
-      <script type="text/javascript" src="http://localhost/ext-4.2.1/examples/shared/include-ext.js"></script>
-      <script type="text/javascript" src="http://localhost/ext-4.2.1/examples/shared/options-toolbar.js"></script>
-
+      <script type="text/javascript" src="http://192.168.2.112/ext-4.2.1/examples/shared/include-ext.js"></script>
+      <script type="text/javascript" src="http://192.168.2.112/ext-4.2.1/examples/shared/options-toolbar.js"></script>
+      <link rel="stylesheet" type="text/css" href="css/main.css" />
+      <link rel="stylesheet" type="text/css" href="css/data-view.css" />
       <script>
       Ext.onReady(function() {
           var tiger = Ext.create('Ext.draw.Component', {

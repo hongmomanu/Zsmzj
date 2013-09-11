@@ -1,5 +1,6 @@
 package Zsmzj.business.dao;
 
+import Zsmzj.conmmon.StringHelper;
 import Zsmzj.enums.ProcessType;
 import Zsmzj.jdbc.JdbcFactory;
 import org.apache.log4j.Logger;
@@ -22,6 +23,8 @@ public class BusinessProcessDao {
     private static final Logger log = Logger.getLogger(BusinessProcessDao.class);
     private final String UserTable="users";
 
+
+
     public Map<String,Object> getSignaturebybuid(int userid,String tablename){
         Connection testConn= JdbcFactory.getConn("sqlite");
         String sql=  "select b.signaturepath from "+tablename+" b,"+UserTable+
@@ -43,6 +46,25 @@ public class BusinessProcessDao {
             return map;
         }
     }
+
+    public int insertBusinessChange(int businessid,String businesstable,String changetable){
+        Connection testConn= JdbcFactory.getConn("sqlite");
+        String sql=  "insert into "+changetable+"  select *,"+businessid+" as businessid,'"+
+                StringHelper.getTimeStrFormat("yyyy-MM-dd HH:mm:ss")+"' as insertdate from "+
+                businesstable+" where rowid=?";
+        PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
+        try {
+            pstmt.setInt(1,businessid);
+            return pstmt.executeUpdate();
+
+        }catch (Exception E){
+            log.debug(E.getMessage());
+            return -1;
+        }
+
+
+    }
+
     public  ArrayList<Map<String, Object>> getAffixfilebybid(int businessid,String tablename){
         Connection testConn= JdbcFactory.getConn("sqlite");
         String sql=  "select attachmenttype from "+tablename+" where businessid MATCH ? group by attachmenttype";

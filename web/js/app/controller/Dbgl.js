@@ -81,6 +81,9 @@ Ext.define('ZSMZJ.controller.Dbgl', {
          'dbglbusinessapplyform button[action=applysubmit]':{
              click: this.applysubmit
          },
+         'dbglbusinesschangeform button[action=saveapplysubmit]':{
+             click: this.applysubmitchange
+         },
          'dbglbusinessalterform button[action=applysubmit]':{
              click: this.applysubmitupdate
          },
@@ -266,7 +269,10 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         var form =btn.up('form');
         this.formSubmit(form, params, 'ajax/uploadfile.jsp', successFunc, failFunc,"正在提交数据");
     },
-    applysubmitupdate:function(btn){
+    applysubmitchange:function(btn){
+        this.updateformbyurl(btn,'ajax/changeapply.jsp',processstatustype.change);
+    },
+    updateformbyurl:function(btn,url,processtype){
         var form=btn.up('form');
 
         var head_cl=this.application.getController("Header");
@@ -282,7 +288,6 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             signatures.push(item_obj);
         });
 
-       // console.log(signatures);
 
         var store=btn.up('form').down('#familymembergrid').getStore();
         var familymembers=[];
@@ -310,17 +315,24 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             affixfiles:Ext.JSON.encode(affixfiles),
             signatures:Ext.JSON.encode(signatures)
         };
+        if(processtype){
+            params['processstatustype']=processtype;
+        }
 
         var successFunc = function (form, action) {
-            Ext.Msg.alert("提示信息", "提交申请成功");
+            Ext.Msg.alert("提示信息", "更新数据成功");
 
         };
         var failFunc = function (form, action) {
-            Ext.Msg.alert("提示信息", "提交申请失败,检查web服务");
+            Ext.Msg.alert("提示信息", "提交更新失败,检查web服务");
 
         };
         var form =btn.up('form');
-        this.formSubmit(form, params, 'ajax/updateapply.jsp', successFunc, failFunc,"正在提交数据");
+        this.formSubmit(form, params, url, successFunc, failFunc,"正在提交数据");
+
+    },
+    applysubmitupdate:function(btn){
+        this.updateformbyurl(btn,'ajax/updateapply.jsp');
 
     },
 
@@ -387,6 +399,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             businesstype:businessTableType.dbgl,
             userid:userid,
             familymembers:Ext.JSON.encode(familymembers),
+            processstatustype:processstatustype.ok,
             affixfiles:Ext.JSON.encode(affixfiles)
         };
         var successFunc = function (form, action) {
@@ -441,6 +454,11 @@ Ext.define('ZSMZJ.controller.Dbgl', {
                 failure: failFunc
             });
 
+        }else{
+            var invaliditem=form.getFields().findBy(function(c){if(!c.isValid()){return c}});
+            var formcontent=myform.getDefaultContentTarget();
+            var target=invaliditem.getEl();
+            target.scrollIntoView(formcontent,true,true,true);
         }
 
 

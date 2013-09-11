@@ -27,6 +27,7 @@ import java.util.Map;
 public class BusinessProcess implements BusinessProcessIntf {
     private static final Logger log = Logger.getLogger(BusinessProcess.class);
     private static final String  BusinessTable="business";
+    private static final String  BusinessChangeTable="businesschange";
     private static final String FamilyTable="familymembers" ;
     private static final String SignatureTable="businesssignature";
     private static final String AttachmentTable="attachment";
@@ -42,6 +43,13 @@ public class BusinessProcess implements BusinessProcessIntf {
 
 
     }
+
+    @Override
+    public int insertBusinessChange(int businessid) {
+        BusinessProcessDao bDao=new BusinessProcessDao();
+        return bDao.insertBusinessChange(businessid, BusinessTable,BusinessChangeTable);
+    }
+
 
     @Override
     public int updateApplyBusiness(int businessid, Map<String, Object> param) {
