@@ -206,7 +206,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
             },
 
-            'needtodopanel,needtodobusinesspanel':{
+            'needtodopanel,needtodobusinesspanel,changedbusinesspanel':{
 
                 afterrender: this.afterrenderEvents,
                 alterapplyaftershow:function(grid){

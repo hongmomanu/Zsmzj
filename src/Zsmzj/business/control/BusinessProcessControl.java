@@ -44,10 +44,15 @@ public class BusinessProcessControl {
 
 
     }
-    public String getNeedTodoBusinessList(int start,int limit,String keyword){
+    public String getNeedTodoBusinessList(int start,int limit,String keyword,String type){
         BusinessProcess bp=new BusinessProcess();
         ComonDao cd=new ComonDao();
-        int totalnum =cd.getTotalCount(BusinessTable);
+        int totalnum =0;
+        if(type!=null&&!type.equals("")){
+            totalnum=cd.getTotalCountBySql("select count(*) from "+BusinessTable+" where processstatustype MATCH '"+type+"'");
+        }else{
+            totalnum=cd.getTotalCount(BusinessTable);
+        }
         String sql_list="select a.*,a.rowid as businessid,b.displayname,(select count(*)  from " +
                 FamilyTable+" c  where c.businessid MATCH a.rowid) as familynum" +
                 ",(select d.time from " + ApprovalTable+" d where d.businessid MATCH a.rowid order by d.time desc limit 1"+
@@ -56,6 +61,11 @@ public class BusinessProcessControl {
                 " )) as approvaluser" +
                 " from "+BusinessTable +" a,"+UserTable+" b " +
                 "where a.userid = b.id ";
+
+        if(type!=null&&!type.equals("")){
+            sql_list+=" and a.processstatustype  MATCH '"+type+"'";
+
+        }
         if (keyword!=null&&!keyword.equals("")){
             if(keyword.indexOf("and")>0){
                 String[] arr=keyword.split("and");

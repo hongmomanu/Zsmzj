@@ -104,7 +104,8 @@ Ext.define('ZSMZJ.controller.Dbgl', {
          'dbglbusinesslogoutform button[action=savelogoutapplysubmit]':{
              click: this.savelogoutapplysubmit
          },
-         'dbglbusinessalterform button[action=applysubmit],dbglbusinesschangeform button[action=applysubmit]':{
+
+         'dbglbusinessalterform button[action=applysubmit],dbglbusinesschangeform button[action=applysubmit],dbglbusinesslogoutform button[action=applysubmit]':{
              click: this.applysubmitupdate
          },
 

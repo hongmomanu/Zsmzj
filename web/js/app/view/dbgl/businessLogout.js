@@ -33,7 +33,7 @@ Ext.define('ZSMZJ.view.dbgl.businessLogout', {
                 xtype: 'fieldset',
                 title: '<a>【低保业务办理】家庭基本信息</a>',
                 defaultType: 'textfield',
-                disabled:true,
+                //disabled:true,
 
                 //layout: 'anchor',
                 layout: {
@@ -232,7 +232,7 @@ Ext.define('ZSMZJ.view.dbgl.businessLogout', {
                 {
                     xtype: 'fieldset',
                     title: '<a>家庭房产信息</a>',
-                    disabled:true,
+                    //disabled:true,
                     defaultType: 'textfield',
                     bodyStyle: 'padding:5px 5px 5px 5px',
                     //layout: 'anchor',
@@ -290,7 +290,7 @@ Ext.define('ZSMZJ.view.dbgl.businessLogout', {
                 {
                     xtype: 'fieldset',
                     title: '<a>家庭收入信息</a>',
-                    disabled:true,
+                    //disabled:true,
                     defaultType: 'textfield',
                     bodyStyle: 'padding:5px 5px 5px 5px',
                     //layout: 'anchor',
@@ -393,7 +393,7 @@ Ext.define('ZSMZJ.view.dbgl.businessLogout', {
                 {
                     xtype: 'fieldset',
                     title: '<a>家庭财产信息</a>',
-                    disabled:true,
+                    //disabled:true,
                     defaultType: 'textfield',
                     bodyStyle: 'padding:5px 5px 5px 5px',
                     //layout: 'anchor',
@@ -566,7 +566,7 @@ Ext.define('ZSMZJ.view.dbgl.businessLogout', {
                 {
                     xtype: 'fieldset',
                     title: '<a>业务申请信息</a>',
-                    disabled:true,
+                    //disabled:true,
                     defaultType: 'textfield',
 
                     //layout: 'anchor',
