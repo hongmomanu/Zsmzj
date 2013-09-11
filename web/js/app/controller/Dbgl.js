@@ -274,6 +274,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
     },
     updateformbyurl:function(btn,url,processtype){
         var form=btn.up('form');
+        var me=this;
 
         var head_cl=this.application.getController("Header");
         var s_arr=head_cl.signaturepicarr;
@@ -319,8 +320,12 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             params['processstatustype']=processtype;
         }
 
-        var successFunc = function (form, action) {
-            Ext.Msg.alert("提示信息", "更新数据成功");
+        var successFunc = function (myform, action) {
+            Ext.Msg.alert("提示信息", "操作成功");
+            var hc=me.application.getController("Header");
+            hc.closetab(form.id);
+            var grid=form.objdata.grid;
+            grid.getStore().load();
 
         };
         var failFunc = function (form, action) {
@@ -349,11 +354,11 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             isapproval: ajaxform.getForm().getValues().approvalresult==approvalresult.yes,
             approvalname:'街道/乡镇审核'
         };
-        var successFunc = function (form, action) {
+        var successFunc = function (myform, action) {
             btn.up('window').close();
             Ext.Msg.alert("提示信息", "审核成功");
             var hc=me.application.getController("Header");
-            hc.closetab("tabdbglbusinessalterform");
+            hc.closetab(form.id);
             grid.getStore().load();
 
         };
