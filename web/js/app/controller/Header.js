@@ -77,7 +77,7 @@ Ext.define('ZSMZJ.controller.Header', {
                     };
                     store.load();
                     this.clearAlterContent(form);//清空修改内容
-                    //this.initProcessBtns(form); //初始化操作功能键
+                    this.initProcessBtns(form); //初始化操作功能键
                     this.getValueBybusinessid(businessid,'ajax/getapplyformbybid.jsp',this.setFormValues,form);
 
 
@@ -100,28 +100,28 @@ Ext.define('ZSMZJ.controller.Header', {
                 }
 
             },*/
-            'dbglbusinessalterform button[action=sendbusiness]':{
+            'dbglbusinessalterform button[action=sendbusiness],dbglbusinesschangeform button[action=sendbusiness]':{
                 click: this.sendbusiness
             },
-            'dbglbusinessalterform button[action=process]':{
+            'dbglbusinessalterform button[action=process],dbglbusinesschangeform button[action=process]':{
                 click: this.formprocess
             },
-            'dbglbusinessalterform button[action=change]':{
+            'dbglbusinessalterform button[action=change],dbglbusinesschangeform button[action=change]':{
                 click: this.showchangeform
             },
-            'dbglbusinessalterform button[action=cancel]':{
+            'dbglbusinessalterform button[action=cancel],dbglbusinesschangeform button[action=cancel]':{
                 click: this.cancelcheck
             },
-            'dbglbusinessalterform button[action=checkbusiness]':{
+            'dbglbusinessalterform button[action=checkbusiness],dbglbusinesschangeform button[action=checkbusiness]':{
                 click: this.showcheckwin
             },
-            'dbglbusinessalterform button[action=signature]':{
+            'dbglbusinessalterform button[action=signature],dbglbusinesschangeform button[action=signature]':{
                 click: this.showsignature
             },
-            'dbglbusinessalterform button[action=unsignature]':{
+            'dbglbusinessalterform button[action=unsignature],dbglbusinesschangeform button[action=unsignature]':{
                 click: this.delsignature
             },
-            'dbglbusinessalterform button[action=print]':{
+            'dbglbusinessalterform button[action=print],dbglbusinesschangeform button[action=print]':{
                 click: this.formprint
             },
 
@@ -314,6 +314,11 @@ Ext.define('ZSMZJ.controller.Header', {
     showchangeform:function(btn){
         var form=btn.up('form');
         this.showtab("变更操作",'dbglbusinesschangeform','widget',form.objdata);
+        var btns=form.getDockedItems('toolbar[dock="bottom"]')[0].items.items;
+        Ext.each(btns,function(a){
+            a.setVisible(a.text=="保存变更"||a.text=="返回")
+        });
+        //this.initProcessBtns(form); //初始化操作功能键
     },
     showcheckwin:function(btn){
 
@@ -1090,6 +1095,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
                 CommonFunc.removeTask(ViewWaitMask,Ext.getCmp('mainContent-panel').getEl());
             }
+
 
 
         } else {
