@@ -5,7 +5,7 @@
  * Time: 下午5:40
  * To change this template use File | Settings | File Templates.
  */
-Ext.define('ZSMZJ.model.dbgl.ChanedBusiness', {
+Ext.define('ZSMZJ.model.dbgl.ChangedBusiness', {
     extend: 'Ext.data.Model',
     fields: [
         {name: 'division'},

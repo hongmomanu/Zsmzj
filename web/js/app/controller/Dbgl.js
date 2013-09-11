@@ -15,11 +15,11 @@ Ext.define('ZSMZJ.controller.Dbgl', {
     extend: 'Ext.app.Controller',
     models: ['dbgl.FamilyMember','dbgl.AffixFilesGrid',
         'dbgl.comboxwidget.ApplyType','dbgl.ProcessHistory',
-        'dbgl.NeedToDoBusiness'],
+        'dbgl.NeedToDoBusiness','dbgl.ChangedBusiness'],
 
     stores: ['dbgl.FamilyMembers','dbgl.AffixFilesGrids',
         'dbgl.comboxwidget.ApplyTypes','dbgl.ProcessHistorys',
-        'dbgl.NeedToDoBusinesses'],
+        'dbgl.NeedToDoBusinesses','dbgl.ChangedBusinesses'],
 
     refs: [
         {ref: 'myviewbusinessapplyform', selector: 'dbglbusinessapplyform'},
@@ -46,7 +46,8 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.businessChange',
         'dbgl.businessLogout',
         'dbgl.processCheckWin',
-        'dbgl.NeedToDoBusinessGrid'
+        'dbgl.NeedToDoBusinessGrid',
+        'dbgl.ChangedBusinessGrid'
 
     ],
 
