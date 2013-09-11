@@ -201,7 +201,34 @@ public class BusinessProcessControl {
         else  return "{success:false}";
 
     }
+    public String logoutUpdateBusinessApply(int businessid,Map<String,Object> params,String familymembers,
+                                            String affixfiles,String signatures){
+        BusinessProcess bp=new BusinessProcess();
+        Connection conn= JdbcFactory.getConn("sqlite");
+        try {
+            conn.setAutoCommit(false);
+            this.changeStatusbybid(businessid,ProcessType.UseProcessType.getChineseSeason(ProcessType.Apply));
+            bp.updateApplyBusiness(businessid,params);
+            //bp.updateAffixFiles(affixfiles, businessid);
+            //bp.updateFamilyMembers(familymembers,businessid);
+            //bp.updateSignatures(signatures,businessid);
+            conn.commit();
+            conn.setAutoCommit(true);
+            return "{success:true}";
+        } catch (Exception e) {
+            log.debug(e.getMessage());
+            try {
+                conn.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }finally {
+                return"{success:false}";
+            }
+            //e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
 
+
+    }
     public String changeUpdateBusinessApply(int businessid,Map<String,Object> params,String familymembers,
                                             String affixfiles,String signatures){
         BusinessProcess bp=new BusinessProcess();
