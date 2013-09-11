@@ -157,7 +157,9 @@ CREATE VIRTUAL TABLE IF NOT EXISTS business USING fts3
   civilopinion            VARCHAR(500),                             --民政局意见
   processstatustype       VARCHAR(50),                              --业务流程类型（正常，变更，注销）
   changedate               VARCHAR(50),                              --变更日期
-  changereason             VARCHAR(50)                              --变更原因
+  changereason             VARCHAR(50),                              --变更原因
+ logoutdate                VARCHAR(50),                              --注销日期
+logoutreason                VARCHAR(50)                              --注销原因
 
 );
 
@@ -233,6 +235,8 @@ CREATE VIRTUAL TABLE IF NOT EXISTS businesschange USING fts3
   processstatustype       VARCHAR(50),                              --业务流程类型（正常，变更，注销）
   changedate               VARCHAR(50),                             --变更日期
   changereason             VARCHAR(50),                             --变更原因
+  logoutdate                VARCHAR(50),                              --注销日期
+  logoutreason              VARCHAR(50),                              --注销原因
   businessid               integer,                                 --业务id
   insertdate               VARCHAR(50)                              --charuriq
   );

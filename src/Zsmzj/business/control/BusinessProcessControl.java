@@ -210,7 +210,7 @@ public class BusinessProcessControl {
         try {
             conn.setAutoCommit(false);
             bp.insertBusinessChange(businessid);
-            this.changeStatusbybid(businessid,ProcessType.UseProcessType.getChineseSeason(ProcessType.Submit));
+            this.changeStatusbybid(businessid,ProcessType.UseProcessType.getChineseSeason(ProcessType.Apply));
             bp.updateApplyBusiness(businessid,params);
             bp.updateAffixFiles(affixfiles, businessid);
             bp.updateFamilyMembers(familymembers,businessid);

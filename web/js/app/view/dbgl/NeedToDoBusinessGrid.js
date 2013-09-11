@@ -204,7 +204,18 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                     summaryRenderer: function(value){
                         return '总人数:'+value
                     }},
-                {header: '状态',align:'center',dataIndex:'processstatus'},
+                {header: '状态',align:'center',dataIndex:'processstatus',renderer:function(val, obj, record){
+                    if(record.get('processstatustype')==processstatustype.ok){
+                        if(val==processdiction.steptwo)return val+"中";
+                        else return "已"+val;
+                    }
+                    else{
+                        if(val==processdiction.stepzero)return "已审批"
+                        else if(val==processdiction.steptwo)return val+"中";
+                        else return "已"+val;
+                    }
+
+                }},
                 {header: '审核人',align:'center',dataIndex:'approvaluser'},
                 {header: '审核日期',align:'center',dataIndex:'approvaltime',width:200,renderer: function (val, obj, record) {
                     var time =Ext.Date.parse(val, "Y-m-d H:i:s");
