@@ -79,7 +79,23 @@ Ext.define('ZSMZJ.controller.Dbgl', {
                  this.showAlteraffixWindow(c);
              }
          },
-         'dbglbusinessapplyform button[action=applysubmit]':{
+         'dbglbusinesslogoutform component':{
+             imgclick:function (c){
+                 this.showAlterUploadImgWin(c);
+             },
+             affixclick:function (c){
+                 this.showAlteraffixWindow(c);
+             }
+         },
+         'dbglbusinesschangeform component':{
+             imgclick:function (c){
+                 this.showAlterUploadImgWin(c);
+             },
+             affixclick:function (c){
+                 this.showAlteraffixWindow(c);
+             }
+         },
+             'dbglbusinessapplyform button[action=applysubmit]':{
              click: this.applysubmit
          },
          'dbglbusinesschangeform button[action=saveapplysubmit]':{
@@ -92,7 +108,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
              click: this.applysubmitupdate
          },
 
-         'dbglbusinessapplyform,dbglbusinesscheckform,dbglbusinessalterform':{
+         'dbglbusinessapplyform,dbglbusinesscheckform,dbglbusinessalterform,dbglbusinesschangeform,dbglbusinesslogoutform':{
              afterrender: this.afterrenderEvents
          },
 
