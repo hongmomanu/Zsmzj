@@ -79,7 +79,7 @@ Ext.define('ZSMZJ.controller.Header', {
                     store.load();
                     this.clearAlterContent(form);//清空修改内容
                     this.initProcessBtns(form); //初始化操作功能键
-                    this.initchangelogoutbtns(form);//更具是否操作来过滤按钮
+                    //this.initchangelogoutbtns(form);//更具是否操作来过滤按钮
                     this.getValueBybusinessid(businessid,'ajax/getapplyformbybid.jsp',this.setFormValues,form);
 
 
@@ -93,7 +93,9 @@ Ext.define('ZSMZJ.controller.Header', {
                 alterapplyaftershow:function(form){
                     this.closemask();
                     ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
-                    //var form=this.getMydbglbusinessalterform();
+
+
+
                     var businessid=form.objdata.businessid;
                     var store=form.down('#processhistorypanel').getStore();
                     store.proxy.extraParams = {
@@ -102,7 +104,7 @@ Ext.define('ZSMZJ.controller.Header', {
                     store.load();
                     this.clearAlterContent(form);//清空修改内容
                     this.initProcessBtns(form); //初始化操作功能键
-                    this.initchangelogoutbtns(form);//更具是否操作来过滤按钮
+                    //this.initchangelogoutbtns(form);//更具是否操作来过滤按钮
                     this.getValueBybusinessid(businessid,'ajax/getapplyformbybid.jsp',this.setFormValues,form);
 
 
@@ -124,34 +126,34 @@ Ext.define('ZSMZJ.controller.Header', {
                 }
 
             },*/
-            'dbglbusinessalterform button[action=sendbusiness],dbglbusinesschangeform button[action=sendbusiness]':{
+            'dbglbusinessalterform button[action=sendbusiness],dbglbusinesschangeform button[action=sendbusiness],dbglbusinesslogoutform button[action=sendbusiness]':{
                 click: this.sendbusiness
             },
-            'dbglbusinessalterform button[action=process],dbglbusinesschangeform button[action=process]':{
+            'dbglbusinessalterform button[action=process],dbglbusinesschangeform button[action=process],dbglbusinesslogoutform button[action=process]':{
                 click: this.formprocess
             },
-            'dbglbusinessalterform button[action=change],dbglbusinesschangeform button[action=change]':{
+            'dbglbusinessalterform button[action=change],dbglbusinesschangeform button[action=change],dbglbusinesslogoutform button[action=change]':{
                 click: this.showchangeform
             },
-            'dbglbusinessalterform button[action=cancel],dbglbusinesschangeform button[action=cancel]':{
+            'dbglbusinessalterform button[action=cancel],dbglbusinesschangeform button[action=cancel],dbglbusinesslogoutform button[action=cancel]':{
                 click: this.cancelcheck
             },
-            'dbglbusinessalterform button[action=checkbusiness],dbglbusinesschangeform button[action=checkbusiness]':{
+            'dbglbusinessalterform button[action=checkbusiness],dbglbusinesschangeform button[action=checkbusiness],dbglbusinesslogoutform button[action=checkbusiness]':{
                 click: this.showcheckwin
             },
-            'dbglbusinessalterform button[action=signature],dbglbusinesschangeform button[action=signature]':{
+            'dbglbusinessalterform button[action=signature],dbglbusinesschangeform button[action=signature],dbglbusinesslogoutform button[action=signature]':{
                 click: this.showsignature
             },
-            'dbglbusinessalterform button[action=unsignature],dbglbusinesschangeform button[action=unsignature]':{
+            'dbglbusinessalterform button[action=unsignature],dbglbusinesschangeform button[action=unsignature],dbglbusinesslogoutform button[action=unsignature]':{
                 click: this.delsignature
             },
-            'dbglbusinessalterform button[action=print],dbglbusinesschangeform button[action=print]':{
+            'dbglbusinessalterform button[action=print],dbglbusinesschangeform button[action=print],dbglbusinesslogoutform button[action=print]':{
                 click: this.formprint
             },
-            'dbglbusinessalterform button[action=cancelsendbusiness],dbglbusinesschangeform button[action=cancelsendbusiness]':{
+            'dbglbusinessalterform button[action=cancelsendbusiness],dbglbusinesschangeform button[action=cancelsendbusiness],dbglbusinesslogoutform button[action=cancelsendbusiness]':{
                 click: this.cancelsendbusiness
             },
-            'dbglbusinessalterform button[action=logout],dbglbusinesschangeform button[action=logout]':{
+            'dbglbusinessalterform button[action=logout],dbglbusinesschangeform button[action=logout],dbglbusinesslogoutform button[action=logout]':{
                 click: this.logoutbusiness
             },
 
@@ -245,9 +247,17 @@ Ext.define('ZSMZJ.controller.Header', {
     initchangelogoutbtns:function(form){
         if(this.ischangeclick){
             this.showchangebtn(form);
+            var invaliditem=form.down('#businesscheckinfo');
+            var formcontent=form.getDefaultContentTarget();
+            var target=invaliditem.getEl();
+            target.scrollIntoView(formcontent,true,true,true);
         }
         if(this.islogoutclick){
             this.showlogoutbtn(form);
+            var invaliditem=form.down('#businesscheckinfo');
+            var formcontent=form.getDefaultContentTarget();
+            var target=invaliditem.getEl();
+            target.scrollIntoView(formcontent,true,true,true);
         }
     }
     ,
@@ -887,6 +897,10 @@ Ext.define('ZSMZJ.controller.Header', {
           Ext.each(data,function(item){
               me.addSignature(item,form);
           });
+        //初始化位置
+        me.initchangelogoutbtns(form);
+        me.closemask();
+
     },
     setFamilymembers:function(data,me,form){
         var businessid=form.objdata.businessid;
@@ -895,7 +909,7 @@ Ext.define('ZSMZJ.controller.Header', {
             var r = Ext.create('ZSMZJ.model.dbgl.FamilyMember',a);
             grid.getStore().insert(0, r);
         });
-        me.closemask();
+
         var countitem=form.down('#FamilyPersons');
         var enjoyitem=form.down('#enjoyPersons');
         countitem.setValue(data.length);
