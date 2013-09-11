@@ -23,7 +23,6 @@
         String keyword=request.getParameter("keyword");
         String type=request.getParameter("type");
         out.print(bp.getNeedTodoBusinessList(start,limit,keyword,type));
-
     }
     //out.print("ok");
 %>
