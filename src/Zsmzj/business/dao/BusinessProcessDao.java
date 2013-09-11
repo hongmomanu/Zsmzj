@@ -178,7 +178,7 @@ public class BusinessProcessDao {
             match_str+=item.get("name").toString()+" OR ";
         }
         match_str=match_str.substring(0,match_str.lastIndexOf("OR"));
-        String sql=  "select a.processstatus,b.displayname,a.time,a.rowid   from "+
+        String sql=  "select a.processstatus,b.displayname,a.time,a.rowid,a.processstatustype   from "+
                 tablename+" a,"+UserTable+" b where processstatus  MATCH ? ";
         if(keyword!=null)sql+="AND ? ";
         sql+="and a.userid=b.id Limit ? Offset ?";
@@ -200,6 +200,7 @@ public class BusinessProcessDao {
                 Map<String,Object> map=new HashMap<String, Object>();
                 String processstatus=rs.getString("processstatus");
                 map.put("processstatus",processstatus);
+                map.put("processstatustype",rs.getString("processstatustype"));
                 map.put("process", ProcessType.UseProcessType.getNext(ProcessType.UseProcessType.getProcessFromChinese(processstatus)));
                 map.put("businessid",rs.getInt("rowid"));
                 map.put("displayname",rs.getString("displayname"));
