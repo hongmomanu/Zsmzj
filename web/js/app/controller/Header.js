@@ -124,6 +124,9 @@ Ext.define('ZSMZJ.controller.Header', {
             'dbglbusinessalterform button[action=print],dbglbusinesschangeform button[action=print]':{
                 click: this.formprint
             },
+            'dbglbusinessalterform button[action=cancelsendbusiness],dbglbusinesschangeform button[action=cancelsendbusiness]':{
+                click: this.cancelsendbusiness
+            },
 
 /*
             'dbglbusinesscheckform button[action=cancel]':{
@@ -289,6 +292,13 @@ Ext.define('ZSMZJ.controller.Header', {
         var grid=form.objdata.grid;
         this.showProcessWin(c,r,grid);
 
+    },
+    cancelsendbusiness:function(btn){
+        var form=btn.up('form');
+        var c=form.objdata.item;
+        var r=form.objdata.record;
+        var grid=form.objdata.grid;
+        this.cancelbusinesssubmit(c,r,grid,form);
     },
     sendbusiness:function(btn){
         var me=this;
@@ -602,7 +612,7 @@ Ext.define('ZSMZJ.controller.Header', {
         }
 
     },
-    cancelbusinesssubmit:function(c,r,grid){
+    cancelbusinesssubmit:function(c,r,grid,form){
         var businessid=r.get('businessid');
         var me=this;
         Ext.Msg.show({
@@ -611,7 +621,7 @@ Ext.define('ZSMZJ.controller.Header', {
             buttons: Ext.Msg.YESNO,
             fn: function (btn) {
                 if(btn=='yes'){
-                    me.cancelsubmitbybid(businessid,grid.getStore());
+                    me.cancelsubmitbybid(businessid,grid.getStore(),form);
                 }
             },
             icon: Ext.Msg.QUESTION
@@ -642,13 +652,14 @@ Ext.define('ZSMZJ.controller.Header', {
         var task = new Ext.util.DelayedTask(fn);
         task.delay(500);
     },
-    cancelsubmitbybid:function(businessid,store){
+    cancelsubmitbybid:function(businessid,store,form){
         var me=this;
         var params = {
             businessid:businessid,
             status:processdiction.stepzero
         };
-        var successFunc = function (form, action) {
+        var successFunc = function (myform, action) {
+            me.closetab(form.id);
             store.load({callback:function(){
                  me.widgetdolayout("mainContent-panel");
             }});
