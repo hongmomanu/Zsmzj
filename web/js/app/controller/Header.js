@@ -679,6 +679,8 @@ Ext.define('ZSMZJ.controller.Header', {
             this.showtab("业务操作",'dbglbusinessalterform','widget',objdata);
         }else if(r.get('processstatustype')==processstatustype.change){
             this.showtab("业务操作",'dbglbusinesschangeform','widget',objdata);
+        }else if(r.get('processstatustype')==processstatustype.logout){
+            this.showtab("业务操作",'dbglbusinesslogoutform','widget',objdata);
         }
 
     },

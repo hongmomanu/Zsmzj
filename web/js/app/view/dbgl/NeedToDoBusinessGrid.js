@@ -47,8 +47,11 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                                 margin: '0 5 0 5',
                                 text: '修改',
                                 icon:'img/sp.gif',
-                                hidden:!(r.get('processstatus').toString()==processdiction.stepzero
-                                    ||r.get('processstatus').toString()==processdiction.stepback),
+                                /*hidden:!(r.get('processstatus').toString()==processdiction.stepzero
+                                    ||r.get('processstatus').toString()==processdiction.stepback),*/
+                                hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                                    {name:"name",value:r.get("processstatus")}).children,
+                                    {name:"name",value:"修改"}),
                                 width: 55,
                                 listeners: {
 
@@ -72,8 +75,11 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                                 icon:'img/process.gif',
                                 text: '流程' ,
                                 width: 55,
-                                hidden: r.get('processstatus').toString()==processdiction.stepzero||
-                                    r.get('processstatus').toString()==processdiction.stepback,
+                               /* hidden: r.get('processstatus').toString()==processdiction.stepzero||
+                                    r.get('processstatus').toString()==processdiction.stepback,*/
+                                hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                                    {name:"name",value:r.get("processstatus")}).children,
+                                    {name:"name",value:"流程"}),
                                 listeners: {
 
                                     render: function(c){
@@ -95,7 +101,10 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                                 renderTo: id2,
                                 text: '查看',
                                 margin: '0 5 0 5',
-                                hidden:(r.get('processstatus').toString()==processdiction.stepzero),
+                               /* hidden:(r.get('processstatus').toString()==processdiction.stepzero),*/
+                                hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                                    {name:"name",value:r.get("processstatus")}).children,
+                                    {name:"name",value:"查看"}),
                                 icon:'img/sp.gif',
                                 width: 55,
                                 listeners: {
@@ -116,7 +125,10 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                                 renderTo: id5,
                                 margin: '0 5 0 5',
                                 text: '提交',
-                                hidden:!(r.get('processstatus').toString()==processdiction.stepzero),
+                                //hidden:!(r.get('processstatus').toString()==processdiction.stepzero),
+                                hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                                    {name:"name",value:r.get("processstatus")}).children,
+                                    {name:"name",value:"提交"}),
                                 icon:'img/sp.gif',
                                 width: 55,
                                 listeners: {
@@ -141,8 +153,11 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                                 text: '删除',
                                 margin: '0 5 0 5',
                                 icon:'img/sp.gif',
-                                hidden:!(r.get('processstatus').toString()==processdiction.stepzero
-                                    ||r.get('processstatus').toString()==processdiction.stepback),
+                                /*hidden:!(r.get('processstatus').toString()==processdiction.stepzero
+                                    ||r.get('processstatus').toString()==processdiction.stepback),*/
+                                hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                                        {name:"name",value:r.get("processstatus")}).children,
+                                        {name:"name",value:"删除"}),
                                 width: 55,
                                 listeners: {
 
@@ -164,7 +179,9 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                                 text: '取消',
                                 icon:'img/sp.gif',
                                 //hidden:!(r.get('processstatus').toString()==processdiction.stepone),
-                                hidden:true,
+                                hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                                    {name:"name",value:r.get("processstatus")}).children,
+                                    {name:"name",value:"取消"}),
                                 width: 55,
                                 margin: '0 5 0 5',
                                 listeners: {
