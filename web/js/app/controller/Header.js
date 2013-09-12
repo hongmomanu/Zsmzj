@@ -214,7 +214,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
             },
 
-            'needtodopanel,needtodobusinesspanel,changedbusinesspanel,logoutbusinesspanel,peoplequerypanel,familyquerypanel':{
+            'needtodopanel,needtodobusinesspanel,changedbusinesspanel,logoutbusinesspanel,peoplequerypanel,familyquerypanel,dbglstatisticsfullpanel':{
 
                 afterrender: this.afterrenderEvents,
                 alterapplyaftershow:function(grid){
@@ -540,7 +540,8 @@ Ext.define('ZSMZJ.controller.Header', {
         var successFunc = function (response, action) {
             var res = Ext.JSON.decode(response.responseText);
             if(res.isok){
-                window.location.href = res.path;
+                //window.location.href = res.path;
+                var win = window.open(res.path);
             }
             else{
                 Ext.Msg.alert("提示信息", "导出excel文件失败");
@@ -662,9 +663,6 @@ Ext.define('ZSMZJ.controller.Header', {
         win.focus();
         win.print();
         win.close();
-
-
-
 
     },
     formprint:function(btn){

@@ -52,7 +52,8 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.ChangedBusinessGrid',
         'dbgl.LogoutBusinessGrid',
         'dbgl.PeopleQueryGrid',
-        'dbgl.FamilyQueryGrid'
+        'dbgl.FamilyQueryGrid',
+        'dbgl.StatisticsFullGrid'
     ],
 
     initStrore:function(){
