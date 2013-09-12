@@ -209,22 +209,25 @@ Ext.define('ZSMZJ.view.dbgl.ChangedBusinessGrid' ,{
                 {header: '行政区划', dataIndex: 'division',align:'center',width: 250},
                 {header: '户主姓名',align:'center',dataIndex:'owername'},
                 {header: '户主身份证',align:'center',dataIndex:'owerid',width: 250},
-                {header: '申请类别',align:'center',dataIndex:'applytype'},
-                {header: '家庭类别',align:'center',dataIndex:'familytype'},
-                {header: '救助金额',align:'center',dataIndex:'totalhelpmoney',summaryType: 'sum',width:150,//求数量
-                    summaryRenderer: function(value){
-                        return '总金额:'+value
-                    }},
-                {header: '救助开始日期',align:'center',dataIndex:'helpbgtime'},
-                {header: '救助结束日期',align:'center',dataIndex:'helpedtime'},
-                {header: '家庭(享受)人数',align:'center',dataIndex:'familynum',summaryType: 'sum', width:150,//求数量
+                //变更前人数	变更前金额	变更后人数	变更后金额	变更日期	变更原因	状态	状态描述	审核人	审核日期	制单人	制单日期
+
+                {header: '变更前人数',align:'center',dataIndex:'beforepeople'},
+                {header: '变更前金额',align:'center',dataIndex:'beforetotalhelpmoney'},
+                {header: '变更后人数',align:'center',dataIndex:'familynum',summaryType: 'sum',width:150,//求数量
                     summaryRenderer: function(value){
                         return '总人数:'+value
                     }},
+
+                {header: '变更后金额',align:'center',dataIndex:'aftertotalhelpmoney',summaryType: 'sum', width:150,//求数量
+                    summaryRenderer: function(value){
+                        return '总金额:'+value
+                    }},
+                {header: '变更日期',align:'center',dataIndex:'changedate'},
+                {header: '变更原因',align:'center',dataIndex:'changereason'},
+
                 {header: '状态',align:'center',dataIndex:'processstatus',renderer:function(val, obj, record){
 
-                        /*if(val==processdiction.stepzero)return "已审批"
-                        else */
+
                         if (val==processdiction.stepzero) return "未提交";
                         else if(val==processdiction.steptwo)return val+"中";
                         else return "已"+val;

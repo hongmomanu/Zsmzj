@@ -12,6 +12,12 @@ Ext.define('ZSMZJ.model.dbgl.ChangedBusiness', {
         {name:'owername'},
         {name:'owerid'},
         {name:'applytype'},
+        {name:'changedate'},
+        {name:'changereason'},
+        {name:'aftertotalhelpmoney'},
+        {name:'afterpeople'},
+        {name:'beforetotalhelpmoney'},
+        {name:'beforepeople',type:'int'},
         {name:'familytype'},
         {name:'totalhelpmoney',type:'float'},
         {name:'helpbgtime'},
@@ -24,7 +30,6 @@ Ext.define('ZSMZJ.model.dbgl.ChangedBusiness', {
         {name:'approvaltime'},
         {name:'approvaluser'},
         {name:'businessid'}
-
 
     ]
 });

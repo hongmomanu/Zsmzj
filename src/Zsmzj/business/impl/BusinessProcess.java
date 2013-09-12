@@ -29,6 +29,7 @@ public class BusinessProcess implements BusinessProcessIntf {
     private static final String  BusinessTable="business";
     private static final String  BusinessChangeTable="businesschange";
     private static final String FamilyTable="familymembers" ;
+    private final String FamilyHistoryTable="familymembershistory";
     private static final String SignatureTable="businesssignature";
     private static final String AttachmentTable="attachment";
     private static final String DivisionTable="divisions";
@@ -50,6 +51,12 @@ public class BusinessProcess implements BusinessProcessIntf {
         return bDao.insertBusinessChange(businessid, BusinessTable,BusinessChangeTable);
     }
 
+    @Override
+    public int insertFamilyChange(int businessid) {
+        BusinessProcessDao bDao=new BusinessProcessDao();
+        return bDao.insertFamilyChange(businessid, FamilyTable,FamilyHistoryTable);
+    }
+
 
     @Override
     public int updateApplyBusiness(int businessid, Map<String, Object> param) {
@@ -58,7 +65,7 @@ public class BusinessProcess implements BusinessProcessIntf {
     }
 
     @Override
-    public int saveFamilyMembers(String membersjson,int businessid) {
+    public int saveFamilyMembers(String membersjson,int businessid,String familytablename) {
 
         int result_num=0;
         JSONArray arr=JSONArray.fromObject(membersjson);
@@ -76,7 +83,7 @@ public class BusinessProcess implements BusinessProcessIntf {
 
             }
             BusinessProcessDao bDao=new BusinessProcessDao();
-            result_num=bDao.insertTableVales(mp, FamilyTable);
+            result_num=bDao.insertTableVales(mp, familytablename);
 
         }
         return result_num;

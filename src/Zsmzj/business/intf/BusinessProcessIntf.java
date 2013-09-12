@@ -17,10 +17,11 @@ public interface BusinessProcessIntf {
     public int saveApplyBusiness(Map<String,Object> param);//提交业务信息
 
     public int insertBusinessChange(int businessid);//保存变更信息
+    public int insertFamilyChange(int businessid);//保存家庭人员变更信息
 
     public int updateApplyBusiness(int businessid,Map<String,Object> param);//更新业务信息
 
-    public int saveFamilyMembers(String membersjson,int businessid);//保存家庭成员信息
+    public int saveFamilyMembers(String membersjson,int businessid,String tablename);//保存家庭成员信息
     public int updateFamilyMembers(String membersjson,int businessid);//更新家庭成员信息
     public int updateSignatures(String signatures,int businessid);
 

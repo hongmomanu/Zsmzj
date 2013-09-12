@@ -27,6 +27,7 @@ public class BusinessProcessControl {
     private final String BusinessTable="business";
     private final String ApprovalTable="approvalprocess";
     private final String FamilyTable="familymembers";
+    private final String FamilyHistoryTable="familymembershistory";
     private final String UserTable="users";
     private final String DivisionsTable="divisions";
     private final String SignatureTable="businesssignature";
@@ -55,7 +56,9 @@ public class BusinessProcessControl {
         }
         String sql_list="select a.*,a.rowid as businessid,b.displayname,(select count(*)  from " +
                 FamilyTable+" c  where c.businessid MATCH a.rowid) as familynum" +
-                ",(select d.time from " + ApprovalTable+" d where d.businessid MATCH a.rowid order by d.time desc limit 1"+
+                ",(select count(*)  from " +
+                FamilyHistoryTable+" g  where g.businessid MATCH a.rowid) as beforepeople"+
+        ",(select d.time from " + ApprovalTable+" d where d.businessid MATCH a.rowid order by d.time desc limit 1"+
                 " ) as approvaltime" +
                 ",(select f.displayname from "+UserTable+" f where f.id=(select e.userid from " + ApprovalTable+" e where e.businessid MATCH a.rowid  order by e.time desc limit 1 "+
                 " )) as approvaluser" +
@@ -63,7 +66,7 @@ public class BusinessProcessControl {
                 "where a.userid = b.id ";
 
         if(type!=null&&!type.equals("")){
-            sql_list+=" and a.processstatustype  MATCH '"+type+"'";
+            sql_list+=" and a.rowid in  (select rowid from "+BusinessTable+" where processstatustype MATCH '"+type+"')";
 
         }
         if (keyword!=null&&!keyword.equals("")){
@@ -247,6 +250,7 @@ public class BusinessProcessControl {
         try {
             conn.setAutoCommit(false);
             bp.insertBusinessChange(businessid);
+            bp.insertFamilyChange(businessid);
             this.changeStatusbybid(businessid,ProcessType.UseProcessType.getChineseSeason(ProcessType.Apply));
             bp.updateApplyBusiness(businessid,params);
             bp.updateAffixFiles(affixfiles, businessid);
@@ -310,8 +314,7 @@ public class BusinessProcessControl {
             conn.setAutoCommit(false);
             int businessid=bp.saveApplyBusiness(params);
             bp.saveAffixFiles(affixfiles, businessid);
-            bp.saveFamilyMembers(familymembers,businessid);
-            log.debug(businessType);
+            bp.saveFamilyMembers(familymembers,businessid,FamilyTable);
             conn.commit();
             conn.setAutoCommit(true);
             return "{success:true}";

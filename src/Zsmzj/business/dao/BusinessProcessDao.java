@@ -46,7 +46,26 @@ public class BusinessProcessDao {
             return map;
         }
     }
+    public int insertFamilyChange(int businessid,String table,String changetable){
+        Connection testConn= JdbcFactory.getConn("sqlite");
+        String sql_update=  "update "+changetable+"  set isnewest=0 "
+                +" where businessid MATCH ?";
+        PreparedStatement pstmt_update = JdbcFactory.getPstmt(testConn, sql_update);
 
+        String sql=  "insert into "+changetable+"  select *,1 as isnewest from "+
+                table+" where businessid MATCH ?";
+        PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
+        try {
+            pstmt_update.setInt(1,businessid);
+            pstmt.setInt(1,businessid);
+            pstmt_update.executeUpdate();
+            return pstmt.executeUpdate();
+
+        }catch (Exception E){
+            log.debug(E.getMessage());
+            return -1;
+        }
+    }
     public int insertBusinessChange(int businessid,String businesstable,String changetable){
         Connection testConn= JdbcFactory.getConn("sqlite");
         String sql=  "insert into "+changetable+"  select *,"+businessid+" as businessid,'"+
