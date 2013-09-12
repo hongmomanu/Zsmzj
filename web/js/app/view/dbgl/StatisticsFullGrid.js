@@ -127,7 +127,7 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsFullGrid' ,{
                 emptyMsg: "无统计结果",
                 items:[
                     '-',
-                    {
+                    /*{
                         xtype: 'textfield',
                         hidden: false,
                         width:200,
@@ -145,11 +145,21 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsFullGrid' ,{
                         },
                         emptyText: '输入搜索关键字'
 
-                    },'->',
+                    },*/
+                    {
+                        xtype: 'datefield',
+                        fieldLabel: '选择年月',
+                        displayField: 'name',
+                        valueField: 'value',
+                        width: 500,
+                        labelWidth: 80,
+                        store: bookStore
+
+                    },
+                    '->',
                     {
                         text: '导出Excel',
                         action:'outexcel'
-
                     }
                 ]
             })/*,
@@ -160,7 +170,6 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsFullGrid' ,{
         this.callParent(arguments);
         // store singleton selection model instance
         ZSMZJ.view.dbgl.StatisticsFullGrid.selectionModel = this.getSelectionModel();
-
     }
     /*,
 
