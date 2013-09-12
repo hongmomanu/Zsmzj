@@ -58,6 +58,11 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             header_cl.widgetdolayout("mainContent-panel");
         });
 
+        var changed_store=this.getDbglChangedBusinessesStore();
+        changed_store.on('load', function (store, options) {
+            header_cl.widgetdolayout("mainContent-panel");
+        });
+
 
     },
     init: function() {

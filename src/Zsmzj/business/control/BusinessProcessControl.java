@@ -25,6 +25,7 @@ public class BusinessProcessControl {
 
     private static final Logger log = Logger.getLogger(BusinessProcessControl.class);
     private final String BusinessTable="business";
+    private final String BusinessChangeTable="businesschange";
     private final String ApprovalTable="approvalprocess";
     private final String FamilyTable="familymembers";
     private final String FamilyHistoryTable="familymembershistory";
@@ -58,6 +59,8 @@ public class BusinessProcessControl {
                 FamilyTable+" c  where c.businessid MATCH a.rowid) as familynum" +
                 ",(select count(*)  from " +
                 FamilyHistoryTable+" g  where g.businessid MATCH a.rowid) as beforepeople"+
+                ",(select totalhelpmoney  from " +
+                BusinessChangeTable+" h  where h.businessid MATCH a.rowid order by time desc limit 1) as beforetotalhelpmoney"+
         ",(select d.time from " + ApprovalTable+" d where d.businessid MATCH a.rowid order by d.time desc limit 1"+
                 " ) as approvaltime" +
                 ",(select f.displayname from "+UserTable+" f where f.id=(select e.userid from " + ApprovalTable+" e where e.businessid MATCH a.rowid  order by e.time desc limit 1 "+

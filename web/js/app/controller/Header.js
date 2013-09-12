@@ -175,6 +175,10 @@ Ext.define('ZSMZJ.controller.Header', {
                 click: this.outexcel
 
             },
+            'changedbusinesspanel button[action=outexcel]':{
+                click: this.outexcel_changed
+
+            },
             'myheader component':{
                 needthingsclick:function (c){
                     this.showneedthings(c);
@@ -496,6 +500,52 @@ Ext.define('ZSMZJ.controller.Header', {
 
         };
         this.ajaxSend(params, 'ajax/getsignaturebyuid.jsp', successFunc, failFunc,'POST');
+
+    },
+    outexcel_changed:function(btn){
+        var store=btn.up('panel').getStore();
+        var rows=[];
+        Ext.each(store.data.items,function(item){
+            rows.push(item.raw);
+        });
+        var sum={"totalhelpmoney":store.sum("totalhelpmoney"),"familynum":store.sum("familynum")};
+        if(rows.length==0){
+            Ext.Msg.alert("提示信息", "无相关数据可导出");
+            return ;
+        }
+
+        var me=this;
+        var params = {
+            rows:Ext.JSON.encode(rows),
+            sum:Ext.JSON.encode(sum),
+            title:'低保业务变更列表',
+            headers:Ext.JSON.encode([{name:"序号",value:"index"},{name:"行政区划名称",value:"division"},
+                {name:"户主姓名",value:"owername"},{name:"户主身份证",value:"owerid"},{name:"申请类别",value:"applytype"},
+                {name:"家庭类别",value:"familytype"},
+                {name:"变更原因",value:"changereason"},
+                {name:"变更日期",value:"changedate"},
+                {name:"变更前金额",value:"beforetotalhelpmoney"},
+                {name:"变更后金额",value:"totalhelpmoney"},
+                /*{name:"救助开始日期",value:"helpbgtime"},{name:"救助结束日期",value:"helpedtime"},*/
+                {name:"变更前人数",value:"beforepeople"},{name:"变更后人数",value:"familynum"},
+               /* {name:"低保户类型",value:"poorfamilytype"},*/{name:"状态描述",value:"processstatus"},
+                {name:"审核人",value:"approvaluser"},{name:"审核日期",value:"approvaltime"},
+                {name:"制单人",value:"displayname"},{name:"制单日期",value:"time"}
+            ])
+        };
+        var successFunc = function (response, action) {
+            var res = Ext.JSON.decode(response.responseText);
+            if(res.isok){
+                window.location.href = res.path;
+            }
+            else{
+                Ext.Msg.alert("提示信息", "导出excel文件失败");
+            }
+        };
+        var failFunc = function (res, action) {
+            Ext.Msg.alert("提示信息", "导出excel文件失败");
+        };
+        this.ajaxSend(params, 'ajax/makeexcel.jsp', successFunc, failFunc,'POST');
 
     },
     outexcel:function(btn){

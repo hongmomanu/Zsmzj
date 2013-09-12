@@ -218,7 +218,7 @@ Ext.define('ZSMZJ.view.dbgl.ChangedBusinessGrid' ,{
                         return '总人数:'+value
                     }},
 
-                {header: '变更后金额',align:'center',dataIndex:'aftertotalhelpmoney',summaryType: 'sum', width:150,//求数量
+                {header: '变更后金额',align:'center',dataIndex:'totalhelpmoney',summaryType: 'sum', width:150,//求数量
                     summaryRenderer: function(value){
                         return '总金额:'+value
                     }},
