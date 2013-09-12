@@ -47,6 +47,52 @@ public class BusinessProcessControl {
 
     }
 
+    public String getFamilyInfoList(int start,int limit,String keyword){
+        BusinessProcess bp=new BusinessProcess();
+        ComonDao cd=new ComonDao();
+        int totalnum =cd.getTotalCount(BusinessTable);
+
+        String sql_list="select a.rowid as businessid,a.*,(select count(*)  from "+ FamilyTable+" b where " +
+                "b.businessid MATCH a.rowid)  as familynum," +
+                "(select count(*)  from "+ FamilyTable+" b where " +
+                "b.businessid = a.rowid and isenjoyed MATCH '享受')  as enjoynum"+
+                " from "+BusinessTable +" a where a.rowid>0 ";
+
+        if (keyword!=null&&!keyword.equals("")){
+            if(keyword.indexOf("and")>0){
+                String[] arr=keyword.split("and");
+                for(int i=0;i<arr.length;i++){
+                    sql_list+=" and a.rowid in (select rowid from "+BusinessTable+" where "+BusinessTable+" MATCH '"+arr[i]+"*') ";
+                }
+            }
+            else if(keyword.indexOf("or")>0){
+                sql_list+=" and "+BusinessTable+" MATCH '";
+
+                String[] arr=keyword.split("or");
+                for(int i=0;i<arr.length;i++){
+                    sql_list+=arr[i]+"* OR ";
+                }
+                sql_list=sql_list.substring(0,sql_list.lastIndexOf("OR"))+"' ";
+            }
+            else{
+                sql_list+=" and "+BusinessTable+" MATCH '"+keyword+"*' ";
+                /*sql_list+=" and (b.rowid in (select rowid from "+FamilyTable+" where "+FamilyTable+" MATCH '"+keyword+"*')" +
+                        " or b.rowid in (select d.rowid from "+BusinessTable+" c,"+FamilyTable+" d where " +
+                        " c.rowid=d.businessid and "+BusinessTable+" MATCH '"+keyword+"*')) ";*/
+            }
+
+        }
+        sql_list+="Limit "+limit+" Offset "+start;
+
+        ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
+
+        Map<String,Object>res=new HashMap<String, Object>();
+        res.put("totalCount",totalnum);
+        res.put("results",list);
+        return JSONObject.fromObject(res).toString();
+
+
+    }
     public String getPeopleInfoList(int start ,int limit,String keyword){
         BusinessProcess bp=new BusinessProcess();
         ComonDao cd=new ComonDao();

@@ -16,12 +16,12 @@ Ext.define('ZSMZJ.controller.Dbgl', {
     models: ['dbgl.FamilyMember','dbgl.AffixFilesGrid',
         'dbgl.comboxwidget.ApplyType','dbgl.ProcessHistory',
         'dbgl.NeedToDoBusiness','dbgl.ChangedBusiness',
-        'dbgl.LogoutBusiness','dbgl.PeopleQuery'],
+        'dbgl.LogoutBusiness','dbgl.PeopleQuery','dbgl.FamilyQuery'],
 
     stores: ['dbgl.FamilyMembers','dbgl.AffixFilesGrids',
         'dbgl.comboxwidget.ApplyTypes','dbgl.ProcessHistorys',
         'dbgl.NeedToDoBusinesses','dbgl.ChangedBusinesses',
-        'dbgl.LogoutBusinesses','dbgl.PeopleQuerys'],
+        'dbgl.LogoutBusinesses','dbgl.PeopleQuerys','dbgl.FamilyQuerys'],
 
     refs: [
         {ref: 'myviewbusinessapplyform', selector: 'dbglbusinessapplyform'},
@@ -51,8 +51,8 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.NeedToDoBusinessGrid',
         'dbgl.ChangedBusinessGrid',
         'dbgl.LogoutBusinessGrid',
-        'dbgl.PeopleQueryGrid'
-
+        'dbgl.PeopleQueryGrid',
+        'dbgl.FamilyQueryGrid'
     ],
 
     initStrore:function(){

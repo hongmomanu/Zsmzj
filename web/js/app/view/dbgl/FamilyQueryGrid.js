@@ -7,9 +7,9 @@
  * To change this template use File | Settings | File Templates.
  */
 
-Ext.define('ZSMZJ.view.dbgl.PeopleQueryGrid' ,{
+Ext.define('ZSMZJ.view.dbgl.FamilyQueryGrid' ,{
     extend: 'Ext.grid.Panel',
-    alias : 'widget.peoplequerypanel',
+    alias : 'widget.familyquerypanel',
     cls:'navigation-grid',
     requires: [
 
@@ -39,31 +39,35 @@ Ext.define('ZSMZJ.view.dbgl.PeopleQueryGrid' ,{
                     summaryRenderer: function(value){
                     return '本页合计'
                 }},
-                //行政区划名称	户主姓名	户主身份证	与户主关系	姓名	身份证	性别	年龄	户口性质	文化程度	政治面貌
-                // 健康状况	婚姻状况	月人均收入	人员类别	是否享受
+
+                //行政区划名称	户主姓名	户主身份证	申请类别	家庭户口性质	家庭类别	低保户类型
+                // 家庭人数	享受人数	救助开始日期	救助金额	开户人	银行帐号	救助证编号
+
                 {header: '行政区划', dataIndex: 'division',align:'center',width: 250},
                 {header: '户主身份证',align:'center',dataIndex:'owerid',width: 250},
-                {header: '与户主关系',align:'center',dataIndex:'relationship'},
-                {header: '姓名',align:'center',dataIndex:'name'},
-
-                {header: '身份证',align:'center',dataIndex:'personid'},
-                {header: '性别',align:'center',dataIndex:'sex'},
-
-                {header: '年龄',align:'center',dataIndex:'age'},
-
-                {header: '户口性质',align:'center',dataIndex:'accounttype'},
-                {header: '文化程度',align:'center',dataIndex:'education'},
-                {header: '政治面貌',align:'center',dataIndex:'political'},
-                {header: '健康状况',align:'center',dataIndex:'bodystatus'},
-                {header: '婚姻状况',align:'center',dataIndex:'maritalstatus'},
-                {header: '月人均收入',align:'center',dataIndex:'monthlyincome',summaryType: 'sum',
+                {header: '申请类别',align:'center',dataIndex:'applytype'},
+                {header: '家庭类别',align:'center',dataIndex:'familytype'},
+                {header: '救助金额',align:'center',dataIndex:'totalhelpmoney',summaryType: 'sum',width:150,//求数量
                     summaryRenderer: function(value){
                         return '总金额:'+value
                     }},
-                {header: '人员类别',align:'center',dataIndex:'persontype'},
-                {header: '是否享受',align:'center',dataIndex:'isenjoyed'},
+                {header: '救助开始日期',align:'center',dataIndex:'helpbgtime'},
+                {header: '救助结束日期',align:'center',dataIndex:'helpedtime'},
+                {header: '家庭人数',align:'center',dataIndex:'familynum',summaryType: 'sum', width:150,//求数量
+                    summaryRenderer: function(value){
+                        return '总人数:'+value
+                    }},
 
-                {header: '人员id',align:'center', width: 150,dataIndex:'rowid',hidden:true}
+                {header: '家庭户口性质',align:'center',dataIndex:'familyaccount'},
+
+                {header: '低保户类型',align:'center',dataIndex:'poorfamilytype'},
+
+                {header: '享受人数',align:'center',dataIndex:'enjoynum'},
+                {header: '开户人',align:'center',dataIndex:'bankower'},
+                {header: '银行帐号',align:'center',dataIndex:'bankid'},
+                {header: '救助证编号',align:'center',dataIndex:'aidnum'},
+
+                {header: '人员id',align:'center', width: 150,dataIndex:'businessid',hidden:true}
 
             ],
             flex: 1,
@@ -71,7 +75,7 @@ Ext.define('ZSMZJ.view.dbgl.PeopleQueryGrid' ,{
 
             ],*/
             bbar: Ext.create('Ext.PagingToolbar', {
-                store: 'dbgl.PeopleQuerys',
+                store: 'dbgl.FamilyQuerys',
                 displayInfo: true,
                 displayMsg: '显示待办事务 {0} - {1} of {2}',
                 emptyMsg: "无待办事务",
@@ -103,7 +107,7 @@ Ext.define('ZSMZJ.view.dbgl.PeopleQueryGrid' ,{
                     }
                 ]
             }),
-            store: 'dbgl.PeopleQuerys'
+            store: 'dbgl.FamilyQuerys'
 
 
         });

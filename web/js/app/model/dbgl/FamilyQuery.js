@@ -5,7 +5,7 @@
  * Time: 下午5:40
  * To change this template use File | Settings | File Templates.
  */
-Ext.define('ZSMZJ.model.dbgl.PeopleQuery', {
+Ext.define('ZSMZJ.model.dbgl.FamilyQuery', {
     extend: 'Ext.data.Model',
     fields: [
         {name:'owername'},
@@ -13,19 +13,19 @@ Ext.define('ZSMZJ.model.dbgl.PeopleQuery', {
         // 健康状况	婚姻状况	月人均收入	人员类别	是否享受
         {name: 'division'},
         {name:'owerid'},
-        {name:'relationship'},
-        {name:'name'},
-        {name:'personid'},
-        {name:'sex'},
-        {name:'age'},
-        {name:'accounttype'},
-        {name:'education'},
-        {name:'political'},
-        {name:'bodystatus'},
-        {name:'maritalstatus'},
-        {name:'monthlyincome',type:'float'},
-        {name:'persontype'},
-        {name:'isenjoyed'},
-        {name:'rowid'}
+        {name:'applytype'},
+        {name:'familytype'},
+        {name:'totalhelpmoney',type:'float'},
+        {name:'helpbgtime'},
+        {name:'helpedtime'},
+        {name:'familynum',type:'int'},
+        {name:'familyaccount'},
+        {name:'poorfamilytype'},
+        {name:'enjoynum'},
+        {name:'bankower'},
+        {name:'bankid'},
+        {name:'aidnum'},
+        {name:'businessid'}
+
     ]
 });
