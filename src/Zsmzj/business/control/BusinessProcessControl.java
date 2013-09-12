@@ -46,6 +46,50 @@ public class BusinessProcessControl {
 
 
     }
+
+    public String getPeopleInfoList(int start ,int limit,String keyword){
+        BusinessProcess bp=new BusinessProcess();
+        ComonDao cd=new ComonDao();
+        int totalnum =cd.getTotalCount(FamilyTable);
+
+        String sql_list="select a.division,a.owername,b.rowid,a.owerid,b.* "+
+                " from "+BusinessTable +" a,"+FamilyTable+" b " +
+                "where a.rowid = b.businessid ";
+
+        if (keyword!=null&&!keyword.equals("")){
+            if(keyword.indexOf("and")>0){
+                String[] arr=keyword.split("and");
+                for(int i=0;i<arr.length;i++){
+                    sql_list+=" and b.rowid in (select rowid from "+FamilyTable+" where "+FamilyTable+" MATCH '"+arr[i]+"*') ";
+                }
+            }
+            else if(keyword.indexOf("or")>0){
+                sql_list+=" and "+FamilyTable+" MATCH '";
+
+                String[] arr=keyword.split("or");
+                for(int i=0;i<arr.length;i++){
+                    sql_list+=arr[i]+"* OR ";
+                }
+                sql_list=sql_list.substring(0,sql_list.lastIndexOf("OR"))+"' ";
+            }
+            else{
+                //sql_list+=" and "+FamilyTable+" MATCH '"+keyword.toUpperCase()+"*' ";
+                sql_list+=" and (b.rowid in (select rowid from "+FamilyTable+" where "+FamilyTable+" MATCH '"+keyword+"*')" +
+                        " or b.rowid in (select d.rowid from "+BusinessTable+" c,"+FamilyTable+" d where " +
+                        " c.rowid=d.businessid and "+BusinessTable+" MATCH '"+keyword+"*')) ";
+            }
+
+        }
+        sql_list+="Limit "+limit+" Offset "+start;
+
+        ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
+
+        Map<String,Object>res=new HashMap<String, Object>();
+        res.put("totalCount",totalnum);
+        res.put("results",list);
+        return JSONObject.fromObject(res).toString();
+
+    }
     public String getNeedTodoBusinessList(int start,int limit,String keyword,String type){
         BusinessProcess bp=new BusinessProcess();
         ComonDao cd=new ComonDao();
