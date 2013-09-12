@@ -149,11 +149,7 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsFullGrid' ,{
                     {
                         xtype: 'datefield',
                         fieldLabel: '选择年月',
-                        displayField: 'name',
-                        valueField: 'value',
-                        width: 500,
-                        labelWidth: 80,
-                        store: bookStore
+                        format: 'Y-m'
 
                     },
                     '->',
