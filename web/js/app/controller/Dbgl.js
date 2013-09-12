@@ -15,11 +15,11 @@ Ext.define('ZSMZJ.controller.Dbgl', {
     extend: 'Ext.app.Controller',
     models: ['dbgl.FamilyMember','dbgl.AffixFilesGrid',
         'dbgl.comboxwidget.ApplyType','dbgl.ProcessHistory',
-        'dbgl.NeedToDoBusiness','dbgl.ChangedBusiness'],
+        'dbgl.NeedToDoBusiness','dbgl.ChangedBusiness','dbgl.LogoutBusiness'],
 
     stores: ['dbgl.FamilyMembers','dbgl.AffixFilesGrids',
         'dbgl.comboxwidget.ApplyTypes','dbgl.ProcessHistorys',
-        'dbgl.NeedToDoBusinesses','dbgl.ChangedBusinesses'],
+        'dbgl.NeedToDoBusinesses','dbgl.ChangedBusinesses','dbgl.LogoutBusinesses'],
 
     refs: [
         {ref: 'myviewbusinessapplyform', selector: 'dbglbusinessapplyform'},
@@ -47,7 +47,8 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.businessLogout',
         'dbgl.processCheckWin',
         'dbgl.NeedToDoBusinessGrid',
-        'dbgl.ChangedBusinessGrid'
+        'dbgl.ChangedBusinessGrid',
+        'dbgl.LogoutBusinessGrid'
 
     ],
 
@@ -60,6 +61,11 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
         var changed_store=this.getDbglChangedBusinessesStore();
         changed_store.on('load', function (store, options) {
+            header_cl.widgetdolayout("mainContent-panel");
+        });
+
+        var logout_store=this.getDbglLogoutBusinessesStore();
+        logout_store.on('load', function (store, options) {
             header_cl.widgetdolayout("mainContent-panel");
         });
 

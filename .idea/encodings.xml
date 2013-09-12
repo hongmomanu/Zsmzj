@@ -2,11 +2,13 @@
 <project version="4">
   <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
     <file url="file://$PROJECT_DIR$/web/js/app/model/dbgl/ChangedBusiness.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/web/js/app/model/dbgl/LogoutBusiness.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/model/dbgl/NeedToDoBusiness.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/model/dbgl/ProcessHistory.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/model/header/HeaderViewer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/model/header/NeedToDo.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/store/dbgl/ChangedBusinesses.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/web/js/app/store/dbgl/LogoutBusinesses.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/store/dbgl/NeedToDoBusinesses.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/store/dbgl/ProcessHistorys.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/store/header/HeaderViewers.js" charset="UTF-8" />
