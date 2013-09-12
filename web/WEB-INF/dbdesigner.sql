@@ -343,3 +343,4 @@ CREATE VIRTUAL TABLE IF NOT EXISTS businesssignature USING fts3
     y                         integer                 --y
   );
 
+----技巧说明 日期比较 time Between '2008-06-10' and  '2013-09-11'   数值比较CAST(totalhelpmoney AS real)
