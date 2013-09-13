@@ -3,6 +3,7 @@ package Zsmzj.business.control;
 import Zsmzj.business.impl.BusinessProcess;
 import Zsmzj.conmmon.ComonDao;
 import Zsmzj.enums.ProcessType;
+import Zsmzj.enums.StatisticsType;
 import Zsmzj.jdbc.JdbcFactory;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -10,9 +11,9 @@ import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -44,6 +45,39 @@ public class BusinessProcessControl {
         if(result>0)return "{success:true}";
         else  return "{success:false}";
 
+
+    }
+
+    public String getStatisticsBytype(String type,String bgmonth,int divisionpid){
+        SimpleDateFormat sDateFormat   =   new SimpleDateFormat("yyyy-MM");
+        String edmonth="";
+        if(bgmonth==null||bgmonth.equals("")) bgmonth=sDateFormat.format(new   java.util.Date());
+        try {
+            Date date = sDateFormat.parse( bgmonth);
+            java.util.Calendar   calendar=java.util.Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.MONTH, +1);    //得到上一个月
+            //calendar.set(Calendar.MONTH,calendar.get(Calendar.DAY_OF_MONTH)+1);
+            edmonth=sDateFormat.format(calendar.getTime());
+
+        } catch (ParseException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+        Map<String,Object>res=new HashMap<String, Object>();
+        if(type.equals(StatisticsType.UseStatisticsType.getChineseSeason(StatisticsType.Full))){
+            BusinessProcess bp=new BusinessProcess();
+            ComonDao cd=new ComonDao();
+
+            String sql_list="select a.divisionname as text ,a.rowid as id from "+DivisionsTable+" a where a.parentid MATCH "+divisionpid;
+
+            ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
+
+            res.put("text","");
+            res.put("children",list);
+
+        }
+        return JSONObject.fromObject(res).toString();
 
     }
 

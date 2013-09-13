@@ -16,12 +16,14 @@ Ext.define('ZSMZJ.controller.Dbgl', {
     models: ['dbgl.FamilyMember','dbgl.AffixFilesGrid',
         'dbgl.comboxwidget.ApplyType','dbgl.ProcessHistory',
         'dbgl.NeedToDoBusiness','dbgl.ChangedBusiness',
-        'dbgl.LogoutBusiness','dbgl.PeopleQuery','dbgl.FamilyQuery'],
+        'dbgl.LogoutBusiness','dbgl.PeopleQuery',
+        'dbgl.FamilyQuery','dbgl.StatisticsFull'],
 
     stores: ['dbgl.FamilyMembers','dbgl.AffixFilesGrids',
         'dbgl.comboxwidget.ApplyTypes','dbgl.ProcessHistorys',
         'dbgl.NeedToDoBusinesses','dbgl.ChangedBusinesses',
-        'dbgl.LogoutBusinesses','dbgl.PeopleQuerys','dbgl.FamilyQuerys'],
+        'dbgl.LogoutBusinesses','dbgl.PeopleQuerys',
+        'dbgl.FamilyQuerys','dbgl.StatisticsFulls'],
 
     refs: [
         {ref: 'myviewbusinessapplyform', selector: 'dbglbusinessapplyform'},

@@ -8,7 +8,8 @@
  */
 
 Ext.define('ZSMZJ.view.dbgl.StatisticsFullGrid' ,{
-    extend: 'Ext.grid.Panel',
+    //extend: 'Ext.grid.Panel',
+    extend: 'Ext.tree.Panel',
     alias : 'widget.dbglstatisticsfullpanel',
     cls:'navigation-grid',
     requires: [
@@ -19,74 +20,83 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsFullGrid' ,{
     },
     initComponent: function() {
         Ext.apply(this, {
-            border: false,
-            viewConfig: {
-                trackOver: false,
-                loadMask: true,
-                scrollToTop: Ext.emptyFn,
-                enableTextSelection:true,
-                stripeRows: true
-            },
-            features: [{
+            //border: false,
+            layout: 'fit',
+            //anchor: '100% 60%',
+            useArrows: true,
+            rootVisible: false,
+            multiSelect: false,
+            xtype: 'tree-grid',
+            /*features: [{
                 ftype: 'summary'//Ext.grid.feature.Summary表格汇总特性
-            }],
+            }],*/
             //hideHeaders:true,
 
             columns: [
                 {
                     text     : '地区',
-                    flex     : 1,
-                    sortable : false,
-                    dataIndex: 'company'
+                    xtype: 'treecolumn',
+                    //flex:1,
+                    width:200,
+                    locked:true,
+                    dataIndex: 'text'
                 }, {
                     text: '合计',
                     columns: [{
                         text     : '总户数',
                         width    : 75,
                         sortable : true,
-                        dataIndex: 'price'
+                        align:   'center',
+                        dataIndex: 'totalfamily'
                     }, {
                         text     : '总人数',
                         width    : 80,
-
-                        dataIndex: 'change'
+                        align:   'center',
+                        dataIndex: 'totalperson'
                     }, {
                         text     : '男',
                         width    : 50,
-                        dataIndex: 'pctChange'
+                        align:   'center',
+                        dataIndex: 'totalmen'
                     }, {
                         text     : '女',
                         width    : 50,
-                        dataIndex: 'pctChange'
+                        align:   'center',
+                        dataIndex: 'totalgirls'
                     }, {
                         text     : '总金额',
                         width    : 100,
-                        dataIndex: 'pctChange'
+                        align:   'center',
+                        dataIndex: 'totalmoney'
                     }]
                 },  {
                     text: '城镇',
                     columns: [{
                         text     : '户数',
                         width    : 75,
-                        sortable : true,
-                        dataIndex: 'price'
+                        //sortable : true,
+                        align:   'center',
+                        dataIndex: 'cityfamily'
                     }, {
                         text     : '人数',
+                        align:   'center',
                         width    : 80,
-
-                        dataIndex: 'change'
+                        dataIndex: 'cityperson'
                     }, {
                         text     : '男',
                         width    : 50,
-                        dataIndex: 'pctChange'
+                        align:   'center',
+                        dataIndex: 'citymen'
                     }, {
                         text     : '女',
                         width    : 50,
-                        dataIndex: 'pctChange'
+                        align:   'center',
+                        dataIndex: 'citygirls'
                     }, {
                         text     : '金额',
                         width    : 100,
-                        dataIndex: 'pctChange'
+                        align:   'center',
+                        dataIndex: 'citymoney'
                     }]
                 },{
                     text: '农村',
@@ -94,58 +104,38 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsFullGrid' ,{
                         text     : '户数',
                         width    : 75,
                         sortable : true,
-                        dataIndex: 'price'
+                        dataIndex: 'villagefamily'
                     }, {
                         text     : '人数',
                         width    : 80,
-
-                        dataIndex: 'change'
+                        align:   'center',
+                        dataIndex: 'villageperson'
                     }, {
                         text     : '男',
                         width    : 50,
-                        dataIndex: 'pctChange'
+                        align:   'center',
+                        dataIndex: 'villagemen'
                     }, {
                         text     : '女',
                         width    : 50,
-                        dataIndex: 'pctChange'
+                        align:   'center',
+                        dataIndex: 'villagegirls'
                     }, {
                         text     : '金额',
                         width    : 100,
-                        dataIndex: 'pctChange'
+                        align:   'center',
+                        dataIndex: 'villagemoney'
                     }]
                 }
 
             ],
-            flex: 1,
             /*tbar:[
 
             ],*/
-            bbar: Ext.create('Ext.PagingToolbar', {
-                /*store: 'dbgl.StatisticsFulls',*/
-                displayInfo: true,
-                displayMsg: '显示统计结果 {0} - {1} of {2}',
-                emptyMsg: "无统计结果",
+            bbar: {
                 items:[
                     '-',
-                    /*{
-                        xtype: 'textfield',
-                        hidden: false,
-                        width:200,
-                        //size:40,
-                        listeners: {
 
-                            "specialkey": function (field, e) {
-                                if (e.keyCode == 13) {
-                                    var keyword = field.getValue().replace(/\s+/g, "");
-                                    var store=this.up('panel').getStore();
-                                    store.proxy.extraParams.keyword = keyword;
-                                    store.load();
-                                }
-                            }
-                        },
-                        emptyText: '输入搜索关键字'
-
-                    },*/
                     {
                         xtype: 'monthfield',
                         fieldLabel: '选择年月',
@@ -159,8 +149,8 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsFullGrid' ,{
                         action:'outexcel'
                     }
                 ]
-            })/*,
-            store: 'dbgl.StatisticsFulls'*/
+            },
+            store: 'dbgl.StatisticsFulls'
 
 
         });

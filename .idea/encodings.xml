@@ -7,6 +7,7 @@
     <file url="file://$PROJECT_DIR$/web/js/app/model/dbgl/NeedToDoBusiness.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/model/dbgl/PeopleQuery.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/model/dbgl/ProcessHistory.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/web/js/app/model/dbgl/StatisticsFull.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/model/header/HeaderViewer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/model/header/NeedToDo.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/store/dbgl/ChangedBusinesses.js" charset="UTF-8" />
@@ -15,6 +16,7 @@
     <file url="file://$PROJECT_DIR$/web/js/app/store/dbgl/NeedToDoBusinesses.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/store/dbgl/PeopleQuerys.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/store/dbgl/ProcessHistorys.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/web/js/app/store/dbgl/StatisticsFulls.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/store/header/HeaderViewers.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/store/header/NeedToDos.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/view/Header.js" charset="UTF-8" />
