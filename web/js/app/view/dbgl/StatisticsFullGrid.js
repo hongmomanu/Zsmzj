@@ -140,6 +140,17 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsFullGrid' ,{
                         xtype: 'monthfield',
                         fieldLabel: '选择年月',
                         value: Ext.Date.format(new Date(), 'Y-m'),
+                        listeners: {
+
+                            "specialkey": function (field, e) {
+                                if (e.keyCode == 13) {
+                                    var month = field.getRawValue().replace(/\s+/g, "");
+                                    var store=this.up('panel').getStore();
+                                    store.proxy.extraParams.bgmonth = month;
+                                    store.load();
+                                }
+                            }
+                        },
                         format: 'Y-m'
 
                     },
