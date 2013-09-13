@@ -547,64 +547,81 @@ Ext.define('ZSMZJ.controller.Header', {
             sum:Ext.JSON.encode(sum),
             title:'低保汇总表',
             headerheight:2,
-            headers:Ext.JSON.encode([{name:"序号",value:"index"},
+            headers:Ext.JSON.encode([{name:"序号",value:"index",columns:[]},
                 {
                     name: '地区',
                     columns:[],
                     value: 'divisionname'
                 }, {
                     name: '合计',
+                    value:'',
                     columns: [{
                         name     : '总户数',
+                        columns:[],
                         value: 'totalfamily'
                     }, {
                         name     : '总人数',
+                        columns:[],
                         value: 'totalperson'
                     }, {
                         name     : '男',
+                        columns:[],
                         value: 'totalmen'
                     }, {
                         name     : '女',
+                        columns:[],
                         value: 'totalgirls'
                     }, {
                         name     : '总金额',
+                        columns:[],
                         value: 'totalmoney'
                     }]
                 },  {
                     name: '城镇',
+                    value:'',
                     columns: [{
                         name     : '户数',
+                        columns:[],
                         value: 'cityfamily'
                     }, {
                         name     : '人数',
+                        columns:[],
                         value: 'cityperson'
                     }, {
                         name     : '男',
+                        columns:[],
                         value: 'citymen'
                     }, {
                         name     : '女',
+                        columns:[],
                         value: 'citygirls'
                     }, {
                         name     : '金额',
+                        columns:[],
                         value: 'citymoney'
                     }]
                 },{
                     name: '农村',
+                    value:'',
                     columns: [{
                         name     : '户数',
+                        columns:[],
                         value: 'villagefamily'
                     }, {
                         name     : '人数',
-
+                        columns:[],
                         value: 'villageperson'
                     }, {
                         name     : '男',
+                        columns:[],
                         value: 'villagemen'
                     }, {
                         name     : '女',
+                        columns:[],
                         value: 'villagegirls'
                     }, {
                         name     : '金额',
+                        columns:[],
                         value: 'villagemoney'
                     }]
                 }

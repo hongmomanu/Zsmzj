@@ -67,7 +67,8 @@ public class ExcelHelper {
                     WritableFont.BOLD,
                     false,
                     UnderlineStyle.NO_UNDERLINE);
-            for (int j = 0; j < headers.size(); j++) {
+            makemultiheader(ws, headers, 0, rowdatas, sum_item, sumrow_index);
+            /*for (int j = 0; j < headers.size(); j++) {
 
 
                 try {
@@ -156,7 +157,7 @@ public class ExcelHelper {
                     e.printStackTrace();
                 }
 
-            }
+            }*/
             try {
                 //从内存中写入文件中
                 wwb.write();
@@ -175,15 +176,18 @@ public class ExcelHelper {
     }
 
 
-    private void makemultiheader(WritableSheet ws, JSONArray headers,
-                                 int colindex, JSONArray rowdatas, JSONObject sum_item, int sumrow_index) {
+    public static void makemultiheader(WritableSheet ws, JSONArray headers,
+                                       int colindex, JSONArray rowdatas, JSONObject sum_item, int sumrow_index) {
         WritableFont font = new WritableFont(WritableFont.createFont("宋体"),
                 10,
                 WritableFont.BOLD,
                 false,
                 UnderlineStyle.NO_UNDERLINE);
-        for (int j = 0; j < headers.size(); j++) {
-
+        for (int j = colindex; j < headers.size(); j++) {
+            log.debug(headers.getJSONObject(j));
+            if(headers.getJSONObject(j).getJSONArray("columns").size()>0){
+                makemultiheader(ws,headers.getJSONObject(j).getJSONArray("columns"),j+1,rowdatas,sum_item,sumrow_index);
+            }
 
             try {
                 String col_name = headers.getJSONObject(j).getString("value");
@@ -266,9 +270,9 @@ public class ExcelHelper {
 
 
             } catch (RowsExceededException e) {
-                e.printStackTrace();
+                log.debug(e.getMessage());
             } catch (WriteException e) {
-                e.printStackTrace();
+                log.debug(e.getMessage());
             }
 
         }
