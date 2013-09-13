@@ -112,7 +112,6 @@ public class ExcelHelper {
 
                     }else{
                         for(Object sum_name:sum_item.names()){
-                            log.debug(sum_name+"---"+col_name);
 
                             if(col_name.equals(sum_name.toString())){
                                 labelSumC = new Label(j, sumrow_index,sum_item.get(sum_name).toString());

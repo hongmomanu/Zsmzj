@@ -20,7 +20,7 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsFullGrid' ,{
     },
     initComponent: function() {
         Ext.apply(this, {
-            //border: false,
+            border: true,
             layout: 'fit',
             //anchor: '100% 60%',
             useArrows: true,
@@ -36,8 +36,9 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsFullGrid' ,{
                 {
                     text     : '地区',
                     xtype: 'treecolumn',
+                    align:   'center',
                     //flex:1,
-                    width:200,
+                    width:160,
                     locked:true,
                     dataIndex: 'divisionname'
                 }, {

@@ -191,6 +191,10 @@ Ext.define('ZSMZJ.controller.Header', {
                 click: this.outexcel_person
 
             },
+            'dbglstatisticsfullpanel button[action=outexcel]':{
+                click: this.outexcel_statistics
+
+            },
 
 
             'myheader component':{
@@ -514,6 +518,103 @@ Ext.define('ZSMZJ.controller.Header', {
 
         };
         this.ajaxSend(params, 'ajax/getsignaturebyuid.jsp', successFunc, failFunc,'POST');
+
+    },
+    outexcel_statistics:function(btn){
+        var store=btn.up('panel').getStore();
+        var rows=[];
+        Ext.each(store.data.items,function(item){
+            rows.push(item.raw);
+        });
+        var sum={};
+        if(rows.length==0){
+            Ext.Msg.alert("提示信息", "无相关数据可导出");
+            return ;
+        }
+        var me=this;
+        var params = {
+            rows:Ext.JSON.encode(rows),
+            sum:Ext.JSON.encode(sum),
+            title:'低保人员列表',
+            headers:Ext.JSON.encode([{name:"序号",value:"index"},
+                {
+                    name: '地区',
+                    columns:[],
+                    value: 'divisionname'
+                }, {
+                    name: '合计',
+                    columns: [{
+                        name     : '总户数',
+                        value: 'totalfamily'
+                    }, {
+                        name     : '总人数',
+                        value: 'totalperson'
+                    }, {
+                        name     : '男',
+                        value: 'totalmen'
+                    }, {
+                        name     : '女',
+                        value: 'totalgirls'
+                    }, {
+                        name     : '总金额',
+                        value: 'totalmoney'
+                    }]
+                },  {
+                    name: '城镇',
+                    columns: [{
+                        name     : '户数',
+                        value: 'cityfamily'
+                    }, {
+                        name     : '人数',
+                        value: 'cityperson'
+                    }, {
+                        name     : '男',
+                        value: 'citymen'
+                    }, {
+                        name     : '女',
+                        value: 'citygirls'
+                    }, {
+                        name     : '金额',
+                        value: 'citymoney'
+                    }]
+                },{
+                    name: '农村',
+                    columns: [{
+                        name     : '户数',
+                        value: 'villagefamily'
+                    }, {
+                        name     : '人数',
+
+                        value: 'villageperson'
+                    }, {
+                        name     : '男',
+                        value: 'villagemen'
+                    }, {
+                        name     : '女',
+                        value: 'villagegirls'
+                    }, {
+                        name     : '金额',
+                        value: 'villagemoney'
+                    }]
+                }
+            ])
+        };
+        var successFunc = function (response, action) {
+            var res = Ext.JSON.decode(response.responseText);
+            if(res.isok){
+                //window.location.href = res.path;
+                var win = window.open(res.path);
+            }
+            else{
+                Ext.Msg.alert("提示信息", "导出excel文件失败");
+            }
+        };
+        var failFunc = function (res, action) {
+            Ext.Msg.alert("提示信息", "导出excel文件失败");
+        };
+        this.ajaxSend(params, 'ajax/makeexcel.jsp', successFunc, failFunc,'POST');
+
+
 
     },
     outexcel_person:function(btn){
