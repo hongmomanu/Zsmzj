@@ -520,22 +520,33 @@ Ext.define('ZSMZJ.controller.Header', {
         this.ajaxSend(params, 'ajax/getsignaturebyuid.jsp', successFunc, failFunc,'POST');
 
     },
+    treeToarr:function(node,arr){
+        for(var i=0;i<node.childNodes.length;i++){
+            arr.push(node.childNodes[i].raw);
+            if(node.childNodes[i].hasChildNodes()){
+                this.treeToarr(node.childNodes[i],arr);
+            }
+        }
+        return arr;
+
+    },
     outexcel_statistics:function(btn){
-        var store=btn.up('panel').getStore();
-        var rows=[];
-        Ext.each(store.data.items,function(item){
-            rows.push(item.raw);
-        });
+
+        var root=btn.up('panel').getRootNode();
+        var rows=this.treeToarr(root,[]);
+
         var sum={};
         if(rows.length==0){
             Ext.Msg.alert("提示信息", "无相关数据可导出");
             return ;
         }
         var me=this;
+
         var params = {
             rows:Ext.JSON.encode(rows),
             sum:Ext.JSON.encode(sum),
-            title:'低保人员列表',
+            title:'低保汇总表',
+            headerheight:2,
             headers:Ext.JSON.encode([{name:"序号",value:"index"},
                 {
                     name: '地区',
@@ -634,6 +645,7 @@ Ext.define('ZSMZJ.controller.Header', {
             rows:Ext.JSON.encode(rows),
             sum:Ext.JSON.encode(sum),
             title:'低保人员列表',
+            headerheight:1,
             headers:Ext.JSON.encode([{name:"序号",value:"index"},
                 {name:"户主姓名",value:"owername"},
                 {name: '行政区划', value: 'division'},
@@ -686,6 +698,7 @@ Ext.define('ZSMZJ.controller.Header', {
             rows:Ext.JSON.encode(rows),
             sum:Ext.JSON.encode(sum),
             title:'低保家庭列表',
+            headerheight:1,
             headers:Ext.JSON.encode([{name:"序号",value:"index"},
                 {name:"户主姓名",value:"owername"},
                 {name: '行政区划', value: 'division'},
@@ -740,6 +753,7 @@ Ext.define('ZSMZJ.controller.Header', {
             rows:Ext.JSON.encode(rows),
             sum:Ext.JSON.encode(sum),
             title:'低保业务注销列表',
+            headerheight:1,
             headers:Ext.JSON.encode([{name:"序号",value:"index"},{name:"行政区划名称",value:"division"},
                 {name:"户主姓名",value:"owername"},{name:"户主身份证",value:"owerid"},{name:"申请类别",value:"applytype"},
                 {name:"家庭类别",value:"familytype"},
@@ -786,6 +800,7 @@ Ext.define('ZSMZJ.controller.Header', {
             rows:Ext.JSON.encode(rows),
             sum:Ext.JSON.encode(sum),
             title:'低保业务变更列表',
+            headerheight:1,
             headers:Ext.JSON.encode([{name:"序号",value:"index"},{name:"行政区划名称",value:"division"},
                 {name:"户主姓名",value:"owername"},{name:"户主身份证",value:"owerid"},{name:"申请类别",value:"applytype"},
                 {name:"家庭类别",value:"familytype"},
@@ -832,6 +847,7 @@ Ext.define('ZSMZJ.controller.Header', {
             rows:Ext.JSON.encode(rows),
             sum:Ext.JSON.encode(sum),
             title:'低保业务办理列表',
+            headerheight:1,
             headers:Ext.JSON.encode([{name:"序号",value:"index"},{name:"行政区划名称",value:"division"},
                 {name:"户主姓名",value:"owername"},{name:"户主身份证",value:"owerid"},{name:"申请类别",value:"applytype"},
                 {name:"家庭类别",value:"familytype"},{name:"救助金额",value:"totalhelpmoney"},

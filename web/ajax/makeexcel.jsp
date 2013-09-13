@@ -23,19 +23,23 @@
     else if(request.getParameter("sum")==null){
         out.print("{sucess:false,msg:\"缺少参数sum\"}");
     }
+    else if(request.getParameter("headerheight")==null){
+        out.print("{sucess:false,msg:\"缺少参数headerheight\"}");
+    }
     else{
 
         String headers=request.getParameter("headers");
         String rows=request.getParameter("rows");
         String sum=request.getParameter("sum");
         String title=request.getParameter("title");
+        int headerheight=Integer.parseInt(request.getParameter("headerheight"));
 
         ServletContext context = request.getServletContext();
         Config dbconfig = Config.getConfig("config.properties");
         String filedir = dbconfig.getValue("tempdirname");
         String filepath=context.getRealPath(filedir);
         String savename= StringHelper.getTimeStr()+".xls";
-        Map<String,Object> map=ExcelHelper.writeExcel(filepath +"/"+ savename,headers,rows,sum,title);
+        Map<String,Object> map=ExcelHelper.writeExcel(filepath +"/"+ savename,headers,rows,sum,title,headerheight);
         //result.put("filepath",filedir+"/"+result.get("filepath"));
         map.put("path",filedir+"/"+savename);
         out.print(JSONObject.fromObject(map).toString());
