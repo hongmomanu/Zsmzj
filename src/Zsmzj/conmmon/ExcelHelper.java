@@ -88,8 +88,9 @@ public class ExcelHelper {
                             labelRowC = new Label(j, sumrow_index,String.valueOf(row_index+1) );
 
                         }else{
-                            labelRowC = new Label(j, sumrow_index, rowdatas.getJSONObject(row_index).
-                                    getString(col_name));
+                            labelRowC = new Label(j, sumrow_index, rowdatas.getJSONObject(row_index).has(col_name)
+                                    ?rowdatas.getJSONObject(row_index).
+                                    getString(col_name):"");
 
                         }
                         labelRowC.setCellFormat(cellRowFormat);
