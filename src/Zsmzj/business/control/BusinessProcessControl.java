@@ -72,7 +72,34 @@ public class BusinessProcessControl {
             String sql_list="select a.divisionname  ,a.rowid as id," +
                     "(select count(*) from "+BusinessTable+" where division MATCH (a.divisionpath||'*')) as totalfamily ,"
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where c.businessid=b.rowid and b.division MATCH (a.divisionpath||'*')) as totalperson "
+                    "c where c.businessid=b.rowid and b.division MATCH (a.divisionpath||'*')) as totalperson, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where c.businessid=b.rowid and c.sex ='男' and b.division MATCH (a.divisionpath||'*')) as totalmen, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where c.businessid=b.rowid and c.sex ='女' and b.division MATCH (a.divisionpath||'*')) as totalgirls,"
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where division MATCH (a.divisionpath||'*')) as totalmoney, "
+
+            +"(select count(*) from "+BusinessTable+" where familyaccount='城镇' and division MATCH (a.divisionpath||'*')) as cityfamily ,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where c.businessid=b.rowid and b.familyaccount='城镇' and b.division MATCH (a.divisionpath||'*')) as cityperson, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where c.businessid=b.rowid and b.familyaccount='城镇' and c.sex ='男' and b.division MATCH (a.divisionpath||'*')) as citymen, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where c.businessid=b.rowid and b.familyaccount='城镇' and c.sex ='女' and b.division MATCH (a.divisionpath||'*')) as citygirls,"
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where familyaccount='城镇' and division MATCH (a.divisionpath||'*')) as citymoney,"
+
+
+            +"(select count(*) from "+BusinessTable+" where familyaccount='农村' and division MATCH (a.divisionpath||'*')) as villagefamily ,"
+            +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+            "c where c.businessid=b.rowid and b.familyaccount='农村' and b.division MATCH (a.divisionpath||'*')) as villageperson, "
+            +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+            "c where c.businessid=b.rowid and b.familyaccount='农村' and c.sex ='男' and b.division MATCH (a.divisionpath||'*')) as villagemen, "
+            +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+            "c where c.businessid=b.rowid and b.familyaccount='农村' and c.sex ='女' and b.division MATCH (a.divisionpath||'*')) as villagegirls,"
+            +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where familyaccount='农村' and division MATCH (a.divisionpath||'*')) as villagemoney "
+
+
+
                     +"  from "+DivisionsTable+" a where a.parentid MATCH "+divisionpid;
 
             ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
