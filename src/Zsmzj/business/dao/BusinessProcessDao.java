@@ -129,7 +129,7 @@ public class BusinessProcessDao {
     public ArrayList<Map<String,Object>> getFamilymembersbybid(int businessid,String tablename){
 
         Connection testConn= JdbcFactory.getConn("sqlite");
-        String sql=  "select *  from "+
+        String sql=  "select * ,(strftime('%Y',date('now'))-strftime('%Y',birthday)) as age from "+
                 tablename+"  where businessid MATCH ?";
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
 
@@ -238,7 +238,21 @@ public class BusinessProcessDao {
 
 
     }
+    public int changeProcessStatustype(int businessid,String processstatustype,String processstatus,String tablename){
+        Connection testConn= JdbcFactory.getConn("sqlite");
+        String sql=  "update  "+tablename+" set processstatustype=? , processstatus=? where rowid=?";
+        PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
+        try {
+            pstmt.setString(1,processstatustype);
+            pstmt.setString(2,processstatus);
+            pstmt.setInt(3,businessid);
+            return pstmt.executeUpdate();
+        }catch (Exception E){
+            log.debug(E.getMessage());
+            return -1;
+        }
 
+    }
     public int changeStatus(int businessid,String status,String tablename){
         Connection testConn= JdbcFactory.getConn("sqlite");
         String sql=  "update  "+tablename+" set processstatus=?  where rowid=?";

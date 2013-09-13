@@ -101,7 +101,7 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                 {
                     header: '年龄',
                     dataIndex: 'age',
-                    renderer: function (val, obj, record) {
+                    /*renderer: function (val, obj, record) {
                         //console.log(obj);
                         if(record.get('birthday')&&record.get('birthday')!=""){
                             var birthday =Ext.Date.parse(record.get('birthday'), "Y-m-dTH:i:s");
@@ -112,11 +112,11 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                         else{
                             return "";
                         }
-
-                    },
+                    },*/
                     editor: {
                         itemId: 'personage',
                         xtype:'textfield',
+                        //disabled:true,
                         allowBlank: false
                         //vtype: 'email'
                     }

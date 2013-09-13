@@ -261,6 +261,12 @@ public class BusinessProcess implements BusinessProcessIntf {
     }
 
     @Override
+    public int changeProcessStatustype(int businessid, String processstatustype,String processstatus) {
+        BusinessProcessDao bpDao=new BusinessProcessDao();
+        return bpDao.changeProcessStatustype(businessid,processstatustype,processstatus,BusinessTable);
+    }
+
+    @Override
     public Map<String, Object> getApplyForm(int businessid) {
         BusinessProcessDao bpDao=new BusinessProcessDao();
         return bpDao.getApplyForm(businessid,BusinessTable);

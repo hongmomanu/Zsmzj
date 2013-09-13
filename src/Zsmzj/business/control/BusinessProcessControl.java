@@ -45,6 +45,14 @@ public class BusinessProcessControl {
         if(result>0)return "{success:true}";
         else  return "{success:false}";
     }
+    public String changeProcessStatustype(int businessid,String processstatustype,String processstatus){
+        BusinessProcess bp=new BusinessProcess();
+        int result=bp.changeProcessStatustype(businessid,processstatustype,processstatus);
+        if(result>0)return "{success:true}";
+        else  return "{success:false}";
+
+
+    }
 
     public String getStatisticsBytype(String type,String bgmonth,int divisionpid){
         SimpleDateFormat sDateFormat   =   new SimpleDateFormat("yyyy-MM");

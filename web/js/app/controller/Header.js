@@ -916,6 +916,7 @@ Ext.define('ZSMZJ.controller.Header', {
     },
     delbusinessapply:function(c,r,grid){
         var businessid=r.get('businessid');
+        console.log(r.get('processstatustype'));
         var me=this;
         Ext.Msg.show({
             title: '确定要删除此申请?',
@@ -923,7 +924,13 @@ Ext.define('ZSMZJ.controller.Header', {
             buttons: Ext.Msg.YESNO,
             fn: function (btn) {
                 if(btn=='yes'){
-                    me.delapplybybid(businessid,grid.getStore());
+                    testobj=r.get('processstatustype');
+                    if(r.get('processstatustype')===processstatustype.ok){
+                        me.delapplybybid(businessid,grid.getStore());
+                    }else{
+                        me.recoverapplybybid(businessid,grid.getStore());
+                    }
+
                 }
             },
             icon: Ext.Msg.QUESTION
@@ -955,6 +962,26 @@ Ext.define('ZSMZJ.controller.Header', {
 
         };
         this.ajaxSend(params, 'ajax/changestatusbybid.jsp', successFunc, failFunc,'POST');
+
+    },
+    recoverapplybybid:function(businessid,store){
+        var me=this;
+        var params = {
+            businessid:businessid,
+            processstatustype:processstatustype.ok,
+            processstatus:processdiction.stepthree
+        };
+        var successFunc = function (form, action) {
+            store.load({callback:function(){
+                me.widgetdolayout("mainContent-panel");
+            }});
+
+        };
+        var failFunc = function (form, action) {
+            Ext.Msg.alert("提示信息", "删除失败，检查web服务或数据库服务");
+
+        };
+        this.ajaxSend(params, 'ajax/changeprocessstatustype.jsp', successFunc, failFunc,'POST');
 
     },
     delapplybybid:function(businessid,store){
