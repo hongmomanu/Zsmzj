@@ -147,8 +147,9 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsFullGrid' ,{
 
                     },*/
                     {
-                        xtype: 'datefield',
+                        xtype: 'monthfield',
                         fieldLabel: '选择年月',
+                        value: Ext.Date.format(new Date(), 'Y-m'),
                         format: 'Y-m'
 
                     },
