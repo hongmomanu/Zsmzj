@@ -12,24 +12,19 @@ Ext.define('ZSMZJ.model.dbgl.StatisticsFull', {
             name: 'divisionname'
         },
         {
-
             name: 'totalfamily'
         },
         {
-
             name: 'totalperson'
         },
         {
-
             name: 'totalmen'
         },
         {
-
             name: 'totalgirls'
         },
         {
-
-            name: 'totalmoney'
+            name: 'totalmoney',defadefaultValue: 0
         },
         {
             name: 'cityfamily'
@@ -44,7 +39,7 @@ Ext.define('ZSMZJ.model.dbgl.StatisticsFull', {
             name: 'citygirls'
         },
         {
-            name: 'citymoney'
+            name: 'citymoney' ,defadefaultValue: 0
 
         },
         {
@@ -60,7 +55,7 @@ Ext.define('ZSMZJ.model.dbgl.StatisticsFull', {
             name: 'villagegirls'
         },
         {
-            name: 'villagemoney'
+            name: 'villagemoney' ,defadefaultValue: 0
         }
     ]
 });
