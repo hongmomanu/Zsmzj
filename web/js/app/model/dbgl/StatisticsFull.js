@@ -9,7 +9,7 @@ Ext.define('ZSMZJ.model.dbgl.StatisticsFull', {
     extend: 'Ext.data.Model',
     fields: [
         {
-            name: 'text'
+            name: 'divisionname'
         },
         {
 

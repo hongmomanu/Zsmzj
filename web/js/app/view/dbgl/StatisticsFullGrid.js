@@ -39,7 +39,7 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsFullGrid' ,{
                     //flex:1,
                     width:200,
                     locked:true,
-                    dataIndex: 'text'
+                    dataIndex: 'divisionname'
                 }, {
                     text: '合计',
                     columns: [{

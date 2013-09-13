@@ -69,11 +69,15 @@ public class BusinessProcessControl {
             BusinessProcess bp=new BusinessProcess();
             ComonDao cd=new ComonDao();
 
-            String sql_list="select a.divisionname as text ,a.rowid as id from "+DivisionsTable+" a where a.parentid MATCH "+divisionpid;
+            String sql_list="select a.divisionname  ,a.rowid as id," +
+                    "(select count(*) from "+BusinessTable+" where division MATCH (a.divisionpath||'*')) as totalfamily ,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where c.businessid=b.rowid and b.division MATCH (a.divisionpath||'*')) as totalperson "
+                    +"  from "+DivisionsTable+" a where a.parentid MATCH "+divisionpid;
 
             ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
 
-            res.put("text","");
+            res.put("divisionname","");
             res.put("children",list);
 
         }
