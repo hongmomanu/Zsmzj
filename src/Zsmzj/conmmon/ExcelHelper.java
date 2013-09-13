@@ -176,7 +176,7 @@ public class ExcelHelper {
 
 
     private void makemultiheader(WritableSheet ws, JSONArray headers,
-                                 int colindex,JSONArray rowdatas,JSONObject sum_item,int sumrow_index) {
+                                 int colindex, JSONArray rowdatas, JSONObject sum_item, int sumrow_index) {
         WritableFont font = new WritableFont(WritableFont.createFont("宋体"),
                 10,
                 WritableFont.BOLD,
