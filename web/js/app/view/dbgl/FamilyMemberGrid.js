@@ -53,6 +53,8 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     },
                     editor: {
                         // defaults to textfield if no xtype is supplied
+                        xtype:'dbglaplytype',
+                        searchtype:"dbglrelationship",
                         allowBlank: false
                     }
                 }, {
@@ -77,6 +79,8 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     dataIndex: 'sex',
                     //width: 160,
                     editor: {
+                        xtype:'dbglaplytype',
+                        searchtype:"dbglsex",
                         allowBlank: false
                         //vtype: 'email'
                     }
@@ -126,7 +130,9 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     dataIndex: 'isenjoyed',
                     //width: 160,
                     editor: {
-                        allowBlank: false
+                        allowBlank: false,
+                        xtype:'dbglaplytype',
+                        searchtype:"isenjoyed"
                         //vtype: 'email'
                     }
                 },
@@ -135,7 +141,9 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     dataIndex: 'persontype',
                     //width: 160,
                     editor: {
-                        allowBlank: false
+                        allowBlank: false,
+                        xtype:'dbglaplytype',
+                        searchtype:"persontype"
                         //vtype: 'email'
                     }
                 },
@@ -144,7 +152,9 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     dataIndex: 'jobstatus',
                     //width: 160,
                     editor: {
-                        allowBlank: false
+                        allowBlank: false,
+                        xtype:'dbglaplytype',
+                        searchtype:"jobstatus"
                         //vtype: 'email'
                     }
                 },
@@ -153,7 +163,9 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     dataIndex: 'bodystatus',
                     //width: 160,
                     editor: {
-                        allowBlank: false
+                        allowBlank: false,
+                        xtype:'dbglaplytype',
+                        searchtype:"bodystatus"
                         //vtype: 'email'
                     }
                 },
