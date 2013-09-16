@@ -540,34 +540,38 @@ Ext.define('ZSMZJ.controller.Dbgl', {
     },
 
     showaffixWindow:function(c){
+        var store=null;
         if(!this.uploadaffixWin){
             this.uploadaffixWin=Ext.widget('uploadaffixfilewin');
-            this.uploadaffixWin.itemdata=c;
+            store=this.uploadaffixWin.down('panel').down('panel').getStore();
         }
+        else{
+            var store=this.uploadaffixWin.down('panel').down('panel').getStore();
+            store.removeAll();
+        }
+        this.uploadaffixWin.itemdata=c;
+        Ext.each(c.formdata,function(a){
+            var r = Ext.create('ZSMZJ.model.dbgl.AffixFilesGrid',a);
+            store.insert(0, r);
+        });
         this.uploadaffixWin.show();
 
     },
     showAlteraffixWindow:function(c){
+        var store=null;
         if(!this.alteruploadaffixWin){
             this.alteruploadaffixWin=Ext.widget('uploadaffixfilewin');
-            this.alteruploadaffixWin.itemdata=c;
-            //alert(1);
-            var store=this.alteruploadaffixWin.down('panel').down('panel').getStore();
-
-            Ext.each(c.formdata,function(a){
-                var r = Ext.create('ZSMZJ.model.dbgl.AffixFilesGrid',a);
-                store.insert(0, r);
-            });
+            store=this.alteruploadaffixWin.down('panel').down('panel').getStore();
 
         }else{
-            var store=this.alteruploadaffixWin.down('panel').down('panel').getStore();
-            this.alteruploadaffixWin.itemdata=c;
+            store=this.alteruploadaffixWin.down('panel').down('panel').getStore();
             store.removeAll();
-            Ext.each(c.formdata,function(a){
-                var r = Ext.create('ZSMZJ.model.dbgl.AffixFilesGrid',a);
-                store.insert(0, r);
-            });
         }
+        this.alteruploadaffixWin.itemdata=c;
+        Ext.each(c.formdata,function(a){
+            var r = Ext.create('ZSMZJ.model.dbgl.AffixFilesGrid',a);
+            store.insert(0, r);
+        });
         this.alteruploadaffixWin.show();
 
     },
