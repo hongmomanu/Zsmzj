@@ -12,6 +12,18 @@ Ext.define('ZSMZJ.model.dbgl.StatisticsComplexOne', {
             name: 'divisionname'
         },
         {
+            name: 'oldperson'
+        },
+        {
+            name: 'loginnojob'
+        },
+        {
+            name: 'logoutnojob'
+        },
+        {
+            name: 'student'
+        },
+        {
             name: 'totalfamily',defadefaultValue: 0
         },
         {

@@ -200,6 +200,10 @@ Ext.define('ZSMZJ.controller.Header', {
                 click: this.outexcel_statistics
 
             },
+            'dbglstatisticscomplexonepanel button[action=outexcel]':{
+                click: this.outexcel_complex
+
+            },
 
 
             'myheader component':{
@@ -533,6 +537,223 @@ Ext.define('ZSMZJ.controller.Header', {
             }
         }
         return arr;
+
+    },
+    outexcel_complex:function(btn){
+        var root=btn.up('panel').getRootNode();
+        var rows=this.treeToarr(root,[]);
+
+        var sum={};
+        if(rows.length==0){
+            Ext.Msg.alert("提示信息", "无相关数据可导出");
+            return ;
+        }
+        var me=this;
+
+        var params = {
+            rows:Ext.JSON.encode(rows),
+            sum:Ext.JSON.encode(sum),
+            title:'低保综合表',
+            headerheight:3,
+            headercols:15,
+            headers:Ext.JSON.encode([
+                {
+                    name:"序号",
+                    value:"index",
+                    col:[0,0],
+                    row:[1,1],
+                    columns:[]
+                },
+                {
+                    name: '地区',
+                    columns:[],
+                    col:[1,1],
+                    row:[1,3],
+                    value: 'divisionname'
+                },
+                {
+                    name     : '低保户数',
+                    columns:[],
+                    col:[2,2],
+                    row:[1,3],
+                    value: 'totalfamily'
+                },
+                {
+                    name     : '低保人数',
+                    align:   'center',
+                    columns:[],
+                    //flex:1,
+                    col:[3,3],
+                    row:[1,3],
+                    width:160,
+                    value: 'totalperson'
+                },
+                {
+                    name: '低保人数(按类别分)',
+
+                    col:[4,10],
+                    row:[1,1],
+                    value:'',
+                    columns: [{
+                        name     : '老年人',
+                        col:[4,4],
+                        row:[2,3],
+                        columns:[],
+                        width    : 75,
+                        sortable : true,
+                        align:   'center',
+                        value: 'oldperson'
+                    }, {
+                        name     : '成年人',
+                        col:[5,8],
+                        row:[2,2],
+                        value:'',
+                        columns: [
+                            {
+                                name     : '在职职工',
+                                width    : 80,
+                                col:[5,5],
+                                row:[3,3],
+                                columns:[],
+                                align:   'center',
+                                value: 'jobers'
+                            },
+                            {
+                                name     : '灵活就业人员',
+                                width    : 80,
+                                col:[6,6],
+                                row:[3,3],
+                                columns:[],
+                                align:   'center',
+                                value: 'freejobers'
+                            } ,
+                            {
+                                name     : '登记失业人员',
+                                width    : 80,
+                                col:[7,7],
+                                row:[3,3],
+                                columns:[],
+                                align:   'center',
+                                value: 'loginnojob'
+                            } ,
+                            {
+                                name     : '登记未失业人员',
+                                width    : 80,
+                                col:[8,8],
+                                row:[3,3],
+                                columns:[],
+                                align:   'center',
+                                value: 'logoutnojob'
+                            }
+
+                        ],
+                        width    : 80,
+                        align:   'center'
+                    }, {
+                        name     : '未成年人',
+                        col:[9,10],
+                        row:[2,2],
+                        value:'',
+                        columns: [
+                            {
+                                name     : '在校生',
+                                width    : 80,
+                                columns:[],
+                                col:[9,9],
+                                row:[3,3],
+                                align:   'center',
+                                value: 'student'
+                            },
+                            {
+                                name     : '其他人员',
+                                col:[10,10],
+                                row:[3,3],
+                                columns:[],
+                                width    : 80,
+                                align:   'center',
+                                value: 'otherperson'
+                            }
+                        ],
+                        width    : 50,
+                        align:   'center',
+                        value: 'totalmen'
+                    }]
+                },  {
+                    name: '残疾人',
+                    col:[11,12],
+                    row:[1,1],
+                    value:'',
+                    columns: [{
+                        name     : '总人数',
+                        columns:[],
+                        col:[11,11],
+                        row:[2,3],
+                        width    : 75,
+                        //sortable : true,
+                        align:   'center',
+                        value: 'disabilitynum'
+                    }, {
+                        name     : '其中',
+                        col:[12,12],
+                        row:[2,2],
+                        value:'',
+                        align:   'center',
+                        width    : 80,
+                        columns: [{
+                            name     : '重残疾人数',
+                            col:[12,12],
+                            row:[3,3],
+                            columns:[],
+                            width    : 75,
+                            sortable : true,
+                            value: 'harddisabilitynum'
+                        }]
+
+
+                    }]
+                },{
+                    name: '资金支出',
+                    col:[13,14],
+                    row:[1,1],
+                    value:'',
+                    columns: [{
+                        name     : '当月支出',
+                        col:[13,13],
+                        row:[2,3],
+                        columns:[],
+                        width    : 75,
+                        sortable : true,
+                        value: 'totalmoney'
+                    }, {
+                        name     : '当月累计',
+                        col:[14,14],
+                        row:[2,3],
+                        columns:[],
+                        width    : 80,
+                        align:   'center',
+                        value: 'totalmoney'
+                    }]
+                }
+
+            ])
+        };
+        var successFunc = function (response, action) {
+            var res = Ext.JSON.decode(response.responseText);
+            if(res.isok){
+                //window.location.href = res.path;
+                var win = window.open(res.path);
+            }
+            else{
+                Ext.Msg.alert("提示信息", "导出excel文件失败");
+            }
+        };
+        var failFunc = function (res, action) {
+            Ext.Msg.alert("提示信息", "导出excel文件失败");
+        };
+        this.ajaxSend(params, 'ajax/makeexcel.jsp', successFunc, failFunc,'POST');
+
+
+
 
     },
     outexcel_statistics:function(btn){

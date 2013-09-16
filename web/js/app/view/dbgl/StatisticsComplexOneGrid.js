@@ -41,14 +41,29 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsComplexOneGrid' ,{
                     width:160,
                     locked:true,
                     dataIndex: 'divisionname'
-                }, {
+                },
+                {
+                    text     : '低保户数',
+                    align:   'center',
+                    //flex:1,
+                    width:160,
+                    dataIndex: 'totalfamily'
+                },
+                {
+                    text     : '低保人数',
+                    align:   'center',
+                    //flex:1,
+                    width:160,
+                    dataIndex: 'totalperson'
+                },
+                {
                     text: '低保人数(按类别分)',
                     columns: [{
                         text     : '老年人',
                         width    : 75,
                         sortable : true,
                         align:   'center',
-                        dataIndex: 'totalfamily'
+                        dataIndex: 'oldperson'
                     }, {
                         text     : '成年人',
                         columns: [
@@ -56,31 +71,30 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsComplexOneGrid' ,{
                                 text     : '在职职工',
                                 width    : 80,
                                 align:   'center',
-                                dataIndex: 'totalperson1'
+                                dataIndex: 'jobers'
                             },
                             {
                                 text     : '灵活就业人员',
                                 width    : 80,
                                 align:   'center',
-                                dataIndex: 'totalperson1'
+                                dataIndex: 'freejobers'
                             } ,
                             {
                                 text     : '登记失业人员',
                                 width    : 80,
                                 align:   'center',
-                                dataIndex: 'totalperson1'
+                                dataIndex: 'loginnojob'
                             } ,
                             {
                                 text     : '登记未失业人员',
                                 width    : 80,
                                 align:   'center',
-                                dataIndex: 'totalperson1'
+                                dataIndex: 'logoutnojob'
                             }
 
                         ],
                         width    : 80,
-                        align:   'center',
-                        dataIndex: 'totalperson'
+                        align:   'center'
                     }, {
                         text     : '未成年人',
                         columns: [
@@ -88,13 +102,13 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsComplexOneGrid' ,{
                                 text     : '在校生',
                                 width    : 80,
                                 align:   'center',
-                                dataIndex: 'totalperson1'
+                                dataIndex: 'student'
                             },
                             {
                                 text     : '其他人员',
                                 width    : 80,
                                 align:   'center',
-                                dataIndex: 'totalperson1'
+                                dataIndex: 'otherperson'
                             }
                         ],
                         width    : 50,
@@ -108,7 +122,7 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsComplexOneGrid' ,{
                         width    : 75,
                         //sortable : true,
                         align:   'center',
-                        dataIndex: 'cityfamily'
+                        dataIndex: 'disabilitynum'
                     }, {
                         text     : '其中',
                         align:   'center',
@@ -117,10 +131,10 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsComplexOneGrid' ,{
                             text     : '重残疾人数',
                             width    : 75,
                             sortable : true,
-                            dataIndex: 'villagefamily'
-                        }],
+                            dataIndex: 'harddisabilitynum'
+                        }]
 
-                        dataIndex: 'cityperson'
+
                     }]
                 },{
                     text: '资金支出',
@@ -128,12 +142,12 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsComplexOneGrid' ,{
                         text     : '当月支出',
                         width    : 75,
                         sortable : true,
-                        dataIndex: 'villagefamily'
+                        dataIndex: 'totalmoney'
                     }, {
                         text     : '当月累计',
                         width    : 80,
                         align:   'center',
-                        dataIndex: 'villageperson'
+                        dataIndex: 'totalmoney'
                     }]
                 }
 
@@ -144,7 +158,6 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsComplexOneGrid' ,{
             bbar: {
                 items:[
                     '-',
-
                     {
                         xtype: 'monthfield',
                         fieldLabel: '选择年月',
@@ -161,7 +174,6 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsComplexOneGrid' ,{
                             }
                         },
                         format: 'Y-m'
-
                     },
                     '->',
                     {
@@ -172,15 +184,9 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsComplexOneGrid' ,{
             },
             store: 'dbgl.StatisticsComplexOnes'
 
-
         });
         this.callParent(arguments);
-        // store singleton selection model instance
-        ZSMZJ.view.dbgl.StatisticsFullGrid.selectionModel = this.getSelectionModel();
+        ZSMZJ.view.dbgl.StatisticsComplexOneGrid.selectionModel = this.getSelectionModel();
     }
-    /*,
 
-     formatLable:function(value, p, record) {
-     return Ext.String.format('<div class="navitem-div"><span class="author">{0}</span></div>', value);
-     }*/
 });
