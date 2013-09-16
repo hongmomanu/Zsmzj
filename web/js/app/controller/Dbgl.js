@@ -232,8 +232,10 @@ Ext.define('ZSMZJ.controller.Dbgl', {
        var countitem=applyform.down('#FamilyPersons');
        var enjoyitem=applyform.down('#enjoyPersons');
        var count=parseInt(countitem.getValue())-1;
+       var enjoyednum= r.get("isenjoyed")==isenjoyedtype.yes?parseInt(enjoyitem.getValue())-1:parseInt(enjoyitem.getValue());
+
        countitem.setValue(count);
-       enjoyitem.setValue(count)
+       enjoyitem.setValue(enjoyednum);
 
     },
     addnewperson:function(btn){
@@ -263,9 +265,12 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         var countitem=applyform.down('#FamilyPersons');
         var enjoyitem=applyform.down('#enjoyPersons');
         var count=parseInt(countitem.getValue())+1;
+        testobj=r;
+        var enjoyednum= r.get("isenjoyed")==isenjoyedtype.yes?(parseInt(enjoyitem.getValue())+1):parseInt(enjoyitem.getValue());
+        console.log(enjoyednum);
 
         countitem.setValue(count);
-        enjoyitem.setValue(count);
+        enjoyitem.setValue(enjoyednum);
     },
     uploadAffixFileConfirm:function(btn){
         var win=btn.up('window');

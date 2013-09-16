@@ -14,6 +14,17 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
     initComponent: function() {
         var rowEditing = Ext.create('Ext.grid.plugin.RowEditing', {
             clicksToMoveEditor: 1,
+            listeners: {
+                edit: function(grid,obj){
+                    console.log(grid);
+                    console.log(obj);
+                    testobj=obj;
+                    console.log(obj.get("isenjoyed"));
+                },
+                canceledit: function(grid,obj){
+                }
+
+            },
             autoCancel: false
         });
         var strore=Ext.widget('familymembers');

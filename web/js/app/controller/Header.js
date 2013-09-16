@@ -1729,15 +1729,19 @@ Ext.define('ZSMZJ.controller.Header', {
     setFamilymembers:function(data,me,form){
         var businessid=form.objdata.businessid;
         var grid=form.down('#familymembergrid');
+        var enjoyednum=0;
         Ext.each(data,function(a){
             var r = Ext.create('ZSMZJ.model.dbgl.FamilyMember',a);
+            if(a.isenjoyed==isenjoyedtype.yes){
+                enjoyednum++;
+            }
             grid.getStore().insert(0, r);
         });
 
         var countitem=form.down('#FamilyPersons');
         var enjoyitem=form.down('#enjoyPersons');
         countitem.setValue(data.length);
-        enjoyitem.setValue(data.length);
+        enjoyitem.setValue(enjoyednum);
 
         me.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',me.setSignature,form);
 
