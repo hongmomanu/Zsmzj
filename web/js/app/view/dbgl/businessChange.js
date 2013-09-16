@@ -500,7 +500,6 @@ Ext.define('ZSMZJ.view.dbgl.businessChange', {
                     },
                     itemId: 'affixfilespanel',
                     items:[
-
                         {
                             xtype:'panel',
                             border:0,
@@ -533,27 +532,197 @@ Ext.define('ZSMZJ.view.dbgl.businessChange', {
                                 border:0
                             },
                             items:[
-                                {html: '  <a>【申请人】户口本(0)<a>'}
+                                {
+                                    html: '  <a>【申请人】户口本(0)<a>',
+                                    cls:'mouseover',
+                                    type:'accountbook',
+                                    itemId:'accountbook',
+                                    listeners: {
+                                        /*click: {
+                                         element: 'el', //bind to the underlying el property on the panel
+                                         fn: function(){ alert('click el'); }
+                                         }*/
+                                        render: function(c){
+                                            c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
+                                        }
+
+                                    }
+
+                                }
                             ]
 
                         },
                         {
-                            html: '  <a>【申请人】残疾证(0)<a>'
+                            xtype:'panel',
+                            border:0,
+                            defaults:{
+                                border:0
+                            },
+                            items:[
+                                {
+                                    html: '  <a>【申请人】残疾证(0)<a>',
+                                    cls:'mouseover',
+                                    type:'disabilitybook',
+                                    itemId:'disabilitybook',
+                                    listeners: {
+                                        /*click: {
+                                         element: 'el', //bind to the underlying el property on the panel
+                                         fn: function(){ alert('click el'); }
+                                         }*/
+                                        render: function(c){
+                                            c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
+                                        }
+
+                                    }
+
+                                }
+                            ]
+
+
                         },
                         {
-                            html: '  <a>【申请人】疾病诊断书(0)<a>'
+
+                            xtype:'panel',
+                            border:0,
+                            defaults:{
+                                border:0
+                            },
+                            items:[
+                                {
+                                    html: '  <a>【申请人】疾病诊断书(0)<a>',
+                                    cls:'mouseover',
+                                    type:'illbook',
+                                    itemId:'illbook',
+                                    listeners: {
+                                        /*click: {
+                                         element: 'el', //bind to the underlying el property on the panel
+                                         fn: function(){ alert('click el'); }
+                                         }*/
+                                        render: function(c){
+                                            c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
+                                        }
+
+                                    }
+
+                                }
+                            ]
+
+
+
                         },
                         {
-                            html: '  <a >【申请人】婚姻状况证明(0)<a>'
+
+                            xtype:'panel',
+                            border:0,
+                            defaults:{
+                                border:0
+                            },
+                            items:[
+                                {
+                                    html: '  <a >【申请人】婚姻状况证明(0)<a>',
+                                    cls:'mouseover',
+                                    type:'marrybook',
+                                    itemId:'marrybook',
+                                    listeners: {
+                                        /*click: {
+                                         element: 'el', //bind to the underlying el property on the panel
+                                         fn: function(){ alert('click el'); }
+                                         }*/
+                                        render: function(c){
+                                            c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
+                                        }
+
+                                    }
+
+                                }
+                            ]
+
+
+
                         },
                         {
-                            html: '  <a>【申请人】房产证明(0) <a>'
+
+                            xtype:'panel',
+                            border:0,
+                            defaults:{
+                                border:0
+                            },
+                            items:[
+                                {
+                                    html: '  <a>【申请人】房产证明(0) <a>',
+                                    cls:'mouseover',
+                                    type:'housebook',
+                                    itemId:'housebook',
+                                    listeners: {
+                                        /*click: {
+                                         element: 'el', //bind to the underlying el property on the panel
+                                         fn: function(){ alert('click el'); }
+                                         }*/
+                                        render: function(c){
+                                            c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
+                                        }
+
+                                    }
+
+                                }
+                            ]
+
+
                         },
                         {
-                            html: '  <a>【申请人】经济收入证明(0)  <a>'
+                            xtype:'panel',
+                            border:0,
+                            defaults:{
+                                border:0
+                            },
+                            items:[
+                                {
+                                    html: '  <a>【申请人】经济收入证明(0)  <a>',
+                                    cls:'mouseover',
+                                    type:'incomebook',
+                                    itemId:'incomebook',
+                                    listeners: {
+                                        /*click: {
+                                         element: 'el', //bind to the underlying el property on the panel
+                                         fn: function(){ alert('click el'); }
+                                         }*/
+                                        render: function(c){
+                                            c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
+                                        }
+
+                                    }
+
+                                }
+                            ]
+
                         },
                         {
-                            html: '  <a>【申请人】家庭财产证明(0) <a>'
+                            xtype:'panel',
+                            border:0,
+                            defaults:{
+                                border:0
+                            },
+                            items:[
+                                {
+                                    html: '  <a>【申请人】家庭财产证明(0) <a>',
+                                    cls:'mouseover',
+                                    type:'familypropertybook',
+                                    itemId:'familypropertybook',
+                                    listeners: {
+                                        /*click: {
+                                         element: 'el', //bind to the underlying el property on the panel
+                                         fn: function(){ alert('click el'); }
+                                         }*/
+                                        render: function(c){
+                                            c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
+                                        }
+
+                                    }
+
+                                }
+                            ]
+
+
                         }
                     ]
                 }

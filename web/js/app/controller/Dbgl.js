@@ -559,6 +559,14 @@ Ext.define('ZSMZJ.controller.Dbgl', {
                 store.insert(0, r);
             });
 
+        }else{
+            var store=this.alteruploadaffixWin.down('panel').down('panel').getStore();
+            this.alteruploadaffixWin.itemdata=c;
+            store.removeAll();
+            Ext.each(c.formdata,function(a){
+                var r = Ext.create('ZSMZJ.model.dbgl.AffixFilesGrid',a);
+                store.insert(0, r);
+            });
         }
         this.alteruploadaffixWin.show();
 

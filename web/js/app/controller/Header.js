@@ -1755,6 +1755,7 @@ Ext.define('ZSMZJ.controller.Header', {
             if(data[i].attachmenttype!='accountimgpath'){
                 var item=form.down('#'+data[i].attachmenttype);
                 var count=data[i].results.length;
+
                 CommonFunc.updateitemnum(item,count);
                 var formdata=[];
                 Ext.each(data[i].results,function(a){
