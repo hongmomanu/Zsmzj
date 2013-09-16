@@ -19,7 +19,7 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     console.log(grid);
                     console.log(obj);
                     testobj=obj;
-                    console.log(obj.get("isenjoyed"));
+                    console.log(obj.record.get("isenjoyed"));
                 },
                 canceledit: function(grid,obj){
                 }
