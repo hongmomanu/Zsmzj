@@ -19,6 +19,7 @@ Ext.define('ZSMZJ.view.Viewport', {
         Ext.apply(me, {
             items: [{
                 xtype: 'panel',
+                //id:'wholepanel',
                 border: false,
                 layout: 'border',
                 dockedItems: [

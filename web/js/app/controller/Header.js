@@ -48,7 +48,9 @@ Ext.define('ZSMZJ.controller.Header', {
                 alterapplyaftershow:function(form){
                     this.closemask();
                     //this.initchangelogoutbtns(form);
-                    ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
+                    //ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
+                    ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
+                    ViewWaitMask.show();
                     //var form=this.getMydbglbusinessalterform();
                     var businessid=form.objdata.businessid;
                     var store=form.down('#processhistorypanel').getStore();
@@ -70,7 +72,9 @@ Ext.define('ZSMZJ.controller.Header', {
                 alterapplyaftershow:function(form){
                     this.closemask();
 
-                    ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
+                    //ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
+                    ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
+                    ViewWaitMask.show();
                     var businessid=form.objdata.businessid;
                     var store=form.down('#processhistorypanel').getStore();
                     store.proxy.extraParams = {
@@ -92,8 +96,9 @@ Ext.define('ZSMZJ.controller.Header', {
             'dbglbusinesslogoutform':{
                 alterapplyaftershow:function(form){
                     this.closemask();
-                    ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
-
+                    //ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
+                    ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
+                    ViewWaitMask.show();
 
 
                     var businessid=form.objdata.businessid;
@@ -1115,10 +1120,13 @@ Ext.define('ZSMZJ.controller.Header', {
             return;
         }
 
+
+
         win.document.write('<html><head>');
         win.document.write('<title>' + document.title + '</title>');
         win.document.write('<link rel="stylesheet" type="text/css" href="'+extLocation+
             'resources/ext-theme-neptune/ext-theme-neptune-all.css"><\/>');
+
 
         win.document.write('<link rel="stylesheet" type="text/css" href="css/main.css" />');
         win.document.write('<link rel="stylesheet" type="text/css" href="css/data-view.css" />');
@@ -1388,7 +1396,9 @@ Ext.define('ZSMZJ.controller.Header', {
             buttons: Ext.Msg.YESNO,
             fn: function (btn) {
                 if(btn=='yes'){
-                    ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
+                    //ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
+                    ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
+                    ViewWaitMask.show();
                     me.changeapplystatus(businessid, status,grid.getStore(),callback);
                 }
             },
@@ -1762,7 +1772,9 @@ Ext.define('ZSMZJ.controller.Header', {
     },
     showtab:function(label,value,type,objdata){
         this.closemask();
-        ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
+        //ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
+        ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
+        ViewWaitMask.show();
         var tabs = Ext.getCmp('mainContent-panel');
         if (tabs.getComponent('tab' + value)) {
             if(objdata)tabs.getComponent('tab' + value).objdata=objdata;

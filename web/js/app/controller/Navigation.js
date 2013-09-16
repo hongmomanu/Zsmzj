@@ -96,8 +96,9 @@ Ext.define('ZSMZJ.controller.Navigation', {
         } else {
             if (type == 'widget') {
 
-                ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
-
+                //ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
+                ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
+                ViewWaitMask.show();
                 tabs.add({
                     closable: true,
                     id: 'tab' + value,

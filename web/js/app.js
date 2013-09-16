@@ -29,7 +29,9 @@ var splashscreen;
 
 Ext.onReady(function() {
     // Start the mask on the body and get a reference to the mask
-    splashscreen = Ext.getBody().mask('页面加载中', 'splashscreen');
+    //splashscreen = Ext.getBody().mask('页面加载中', 'splashscreen');
+    splashscreen = new Ext.LoadMask(Ext.getBody().el, {msg:"页面加载中..."});//{useMsg: false}
+    splashscreen.show();
     //splashscreen.addCls('splashscreen');
 
    /* Ext.DomHelper.insertFirst(Ext.query('.x-mask-msg')[0], {
@@ -64,7 +66,7 @@ Ext.application({
 
     launch: function() {
         // Setup a task to fadeOut the splashscreen
-        var task = new Ext.util.DelayedTask(function() {
+        /*var task = new Ext.util.DelayedTask(function() {
             // Fade out the body mask
             splashscreen.fadeOut({
                 duration: 1000,
@@ -87,7 +89,8 @@ Ext.application({
             });
         });
         // Run the fade 500 milliseconds after launch.
-        task.delay(500);
+        task.delay(500);*/
+        splashscreen.hide();
     },
 
     autoCreateViewport: true

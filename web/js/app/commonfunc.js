@@ -24,7 +24,8 @@ var CommonFunc={
 
     },
     removeTask:function(mask,el){
-        var task = new Ext.util.DelayedTask(function() {
+        mask.hide();
+       /* var task = new Ext.util.DelayedTask(function() {
             // Fade out the body mask
             try{
                 mask.fadeOut({
@@ -53,7 +54,7 @@ var CommonFunc={
         });
         // Run the fade 500 milliseconds after launch.
         task.delay(500);
-
+*/
 
     }
 
