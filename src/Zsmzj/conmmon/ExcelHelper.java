@@ -25,7 +25,7 @@ public class ExcelHelper {
     private static final Logger log = Logger.getLogger(ExcelHelper.class);
 
     public static Map<String, Object> writeExcel(String fileName, String header_arr, String rowdata, String sum,
-                                                 String title, int headerheight) {
+                                                 String title, int headerheight,int headercols) {
         WritableWorkbook wwb = null;
         Map<String, Object> map = new HashMap<String, Object>();
         int sumrow_index = 0;
@@ -52,7 +52,7 @@ public class ExcelHelper {
                         WritableFont.BOLD,
                         false,
                         UnderlineStyle.NO_UNDERLINE);
-                ws.mergeCells(0, 0, headers.size() - 1, 0);
+                ws.mergeCells(0, 0, headercols - 1, 0);
                 Label labelTitle = new Label(0, 0, title);
                 WritableCellFormat cellFormat = new WritableCellFormat();
                 cellFormat.setAlignment(jxl.format.Alignment.CENTRE);
@@ -67,97 +67,8 @@ public class ExcelHelper {
                     WritableFont.BOLD,
                     false,
                     UnderlineStyle.NO_UNDERLINE);
-            makemultiheader(ws, headers, 0, rowdatas, sum_item, sumrow_index);
-            /*for (int j = 0; j < headers.size(); j++) {
+            makemultiheader(ws, headers, 0, rowdatas, sum_item, sumrow_index,headerheight);
 
-
-                try {
-                    String col_name = headers.getJSONObject(j).getString("value");
-                    //添加表头
-                    WritableCellFormat cellFormat = new WritableCellFormat();
-                    cellFormat.setAlignment(jxl.format.Alignment.CENTRE);
-                    cellFormat.setFont(font);
-                    Label labelC = new Label(j, 1, headers.getJSONObject(j).getString("name"));
-                    labelC.setCellFormat(cellFormat);
-                    ws.addCell(labelC);
-
-                    //添加行数据
-                    for (int row_index = 0; row_index < rowdatas.size(); row_index++) {
-                        WritableCellFormat cellRowFormat = new WritableCellFormat();
-                        cellRowFormat.setAlignment(jxl.format.Alignment.CENTRE);
-                        sumrow_index = row_index + 2;
-                        Label labelRowC = null;
-                        if (col_name.equals("index")) {
-                            labelRowC = new Label(j, sumrow_index, String.valueOf(row_index + 1));
-
-                        } else {
-                            labelRowC = new Label(j, sumrow_index, rowdatas.getJSONObject(row_index).has(col_name)
-                                    ? rowdatas.getJSONObject(row_index).
-                                    getString(col_name) : "");
-
-                        }
-                        labelRowC.setCellFormat(cellRowFormat);
-                        ws.addCell(labelRowC);
-
-                    }
-
-                    //添加合计数据
-                    //JSONObject sum_item = JSONObject.fromObject(sum);
-                    sumrow_index++;
-                    Label labelSumC = null;
-                    WritableCellFormat cellRowFormat = new WritableCellFormat();
-                    cellRowFormat.setAlignment(jxl.format.Alignment.CENTRE);
-
-                    if (j == 0) {
-                        labelSumC = new Label(j, sumrow_index, "合计");
-                        labelSumC.setCellFormat(cellRowFormat);
-                        ws.addCell(labelSumC);
-
-                    } else {
-                        for (Object sum_name : sum_item.names()) {
-
-                            if (col_name.equals(sum_name.toString())) {
-                                labelSumC = new Label(j, sumrow_index, sum_item.get(sum_name).toString());
-                                labelSumC.setCellFormat(cellRowFormat);
-                                ws.addCell(labelSumC);
-                                break;
-                            }
-                        }
-                    }
-
-
-                    //添加表单数据
-                    if (j == 0) {
-                        sumrow_index++;
-                        ws.mergeCells(0, sumrow_index, headers.size() / 2 - 1, sumrow_index);
-                        log.debug(headers.size() / 2 + "========" + (headers.size() - 1));
-                        ws.mergeCells(headers.size() / 2, sumrow_index, headers.size() - 1, sumrow_index);
-                        Label labelLast_head_C = new Label(0, sumrow_index, "填表人:          分管领导:");
-                        WritableCellFormat cellLastRowHeaderFormat = new WritableCellFormat();
-                        cellLastRowHeaderFormat.setAlignment(Alignment.LEFT);
-                        cellLastRowHeaderFormat.setFont(font);
-                        labelLast_head_C.setCellFormat(cellLastRowHeaderFormat);
-                        ws.addCell(labelLast_head_C);
-
-                        String date_str = StringHelper.getTimeStrFormat("yyyy-MM-dd");
-                        Label labelLast_tail_C = new Label(headers.size() / 2, sumrow_index, "填表日期: " + date_str);
-                        WritableCellFormat cellLastRowTailFormat = new WritableCellFormat();
-                        cellLastRowTailFormat.setAlignment(Alignment.RIGHT);
-                        cellLastRowTailFormat.setFont(font);
-                        labelLast_tail_C.setCellFormat(cellLastRowTailFormat);
-                        ws.addCell(labelLast_tail_C);
-
-
-                    }
-
-
-                } catch (RowsExceededException e) {
-                    e.printStackTrace();
-                } catch (WriteException e) {
-                    e.printStackTrace();
-                }
-
-            }*/
             try {
                 //从内存中写入文件中
                 wwb.write();
@@ -177,41 +88,50 @@ public class ExcelHelper {
 
 
     public static void makemultiheader(WritableSheet ws, JSONArray headers,
-                                       int colindex, JSONArray rowdatas, JSONObject sum_item, int sumrow_index) {
+                                       int colindex, JSONArray rowdatas, JSONObject sum_item, int sumrow_index,int headerheight) {
         WritableFont font = new WritableFont(WritableFont.createFont("宋体"),
                 10,
                 WritableFont.BOLD,
                 false,
                 UnderlineStyle.NO_UNDERLINE);
-        for (int j = colindex; j < headers.size(); j++) {
-            log.debug(headers.getJSONObject(j));
-            if(headers.getJSONObject(j).getJSONArray("columns").size()>0){
-                makemultiheader(ws,headers.getJSONObject(j).getJSONArray("columns"),j+1,rowdatas,sum_item,sumrow_index);
+        for (int j = colindex; j < headers.size()+colindex; j++) {
+            if(headers.getJSONObject(j-colindex).getJSONArray("columns").size()>0){
+                makemultiheader(ws,headers.getJSONObject(j-colindex).getJSONArray("columns"),j,rowdatas,sum_item,sumrow_index,headerheight);
             }
 
             try {
-                String col_name = headers.getJSONObject(j).getString("value");
+                String col_name = headers.getJSONObject(j-colindex).getString("value");
                 //添加表头
                 WritableCellFormat cellFormat = new WritableCellFormat();
                 cellFormat.setAlignment(jxl.format.Alignment.CENTRE);
                 cellFormat.setFont(font);
-                Label labelC = new Label(j, 1, headers.getJSONObject(j).getString("name"));
+
+                JSONArray cols=headers.getJSONObject(j-colindex).getJSONArray("col");
+                JSONArray rows=headers.getJSONObject(j-colindex).getJSONArray("row");
+                ws.mergeCells(cols.getInt(0), rows.getInt(0), cols.getInt(1), rows.getInt(1));
+
+                Label labelC = new Label(cols.getInt(0), rows.getInt(0), headers.getJSONObject(j-colindex).getString("name"));
                 labelC.setCellFormat(cellFormat);
                 ws.addCell(labelC);
+
 
                 //添加行数据
                 for (int row_index = 0; row_index < rowdatas.size(); row_index++) {
                     WritableCellFormat cellRowFormat = new WritableCellFormat();
                     cellRowFormat.setAlignment(jxl.format.Alignment.CENTRE);
-                    sumrow_index = row_index + 2;
+                    sumrow_index = row_index + headerheight+1;
                     Label labelRowC = null;
+
                     if (col_name.equals("index")) {
-                        labelRowC = new Label(j, sumrow_index, String.valueOf(row_index + 1));
+                        labelRowC = new Label(cols.getInt(0), sumrow_index, String.valueOf(row_index + 1));
 
                     } else {
-                        labelRowC = new Label(j, sumrow_index, rowdatas.getJSONObject(row_index).has(col_name)
-                                ? rowdatas.getJSONObject(row_index).
-                                getString(col_name) : "");
+
+                            if(rowdatas.getJSONObject(row_index).has(col_name)){
+                                labelRowC = new Label(cols.getInt(0), sumrow_index,rowdatas.getJSONObject(row_index).
+                                        getString(col_name));
+                            }
+                            else continue;
 
                     }
                     labelRowC.setCellFormat(cellRowFormat);
@@ -220,7 +140,6 @@ public class ExcelHelper {
                 }
 
                 //添加合计数据
-                //JSONObject sum_item = JSONObject.fromObject(sum);
                 sumrow_index++;
                 Label labelSumC = null;
                 WritableCellFormat cellRowFormat = new WritableCellFormat();
@@ -248,7 +167,6 @@ public class ExcelHelper {
                 if (j == 0) {
                     sumrow_index++;
                     ws.mergeCells(0, sumrow_index, headers.size() / 2 - 1, sumrow_index);
-                    log.debug(headers.size() / 2 + "========" + (headers.size() - 1));
                     ws.mergeCells(headers.size() / 2, sumrow_index, headers.size() - 1, sumrow_index);
                     Label labelLast_head_C = new Label(0, sumrow_index, "填表人:          分管领导:");
                     WritableCellFormat cellLastRowHeaderFormat = new WritableCellFormat();
