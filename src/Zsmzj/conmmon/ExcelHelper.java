@@ -129,6 +129,7 @@ public class ExcelHelper {
 
                             if(rowdatas.getJSONObject(row_index).has(col_name)){
                                 labelRowC = new Label(cols.getInt(0), sumrow_index,rowdatas.getJSONObject(row_index).
+                                        getString(col_name).equals("null")?"0":rowdatas.getJSONObject(row_index).
                                         getString(col_name));
                             }
                             else continue;
