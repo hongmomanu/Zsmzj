@@ -232,7 +232,7 @@ Ext.define('ZSMZJ.controller.Manager', {
                         var params = {
                             userid:userid
                         };
-                        var userstore=this.getManagerUserManagersStore();
+                        var userstore=me.getManagerUserManagersStore();
                         var successFunc = function (form, action) {
 
                             userstore.load();

@@ -740,8 +740,8 @@ Ext.define('ZSMZJ.controller.Header', {
         var successFunc = function (response, action) {
             var res = Ext.JSON.decode(response.responseText);
             if(res.isok){
-                //window.location.href = res.path;
-                var win = window.open(res.path);
+                window.location.href = res.path;
+                //var win = window.open(res.path);
             }
             else{
                 Ext.Msg.alert("提示信息", "导出excel文件失败");
@@ -902,8 +902,8 @@ Ext.define('ZSMZJ.controller.Header', {
         var successFunc = function (response, action) {
             var res = Ext.JSON.decode(response.responseText);
             if(res.isok){
-                //window.location.href = res.path;
-                var win = window.open(res.path);
+                window.location.href = res.path;
+                //var win = window.open(res.path);
             }
             else{
                 Ext.Msg.alert("提示信息", "导出excel文件失败");
@@ -995,8 +995,8 @@ Ext.define('ZSMZJ.controller.Header', {
         var successFunc = function (response, action) {
             var res = Ext.JSON.decode(response.responseText);
             if(res.isok){
-                //window.location.href = res.path;
-                var win = window.open(res.path);
+                window.location.href = res.path;
+                //var win = window.open(res.path);
             }
             else{
                 Ext.Msg.alert("提示信息", "导出excel文件失败");
@@ -1081,8 +1081,8 @@ Ext.define('ZSMZJ.controller.Header', {
         var successFunc = function (response, action) {
             var res = Ext.JSON.decode(response.responseText);
             if(res.isok){
-                //window.location.href = res.path;
-                var win = window.open(res.path);
+                window.location.href = res.path;
+                //var win = window.open(res.path);
             }
             else{
                 Ext.Msg.alert("提示信息", "导出excel文件失败");
@@ -1160,8 +1160,8 @@ Ext.define('ZSMZJ.controller.Header', {
         var successFunc = function (response, action) {
             var res = Ext.JSON.decode(response.responseText);
             if(res.isok){
-                //window.location.href = res.path;
-                var win = window.open(res.path);
+                window.location.href = res.path;
+                //var win = window.open(res.path);
             }
             else{
                 Ext.Msg.alert("提示信息", "导出excel文件失败");
@@ -1496,7 +1496,7 @@ Ext.define('ZSMZJ.controller.Header', {
     },
     delbusinessapply:function(c,r,grid){
         var businessid=r.get('businessid');
-        console.log(r.get('processstatustype'));
+        //console.log(r.get('processstatustype'));
         var me=this;
         Ext.Msg.show({
             title: '确定要删除此申请?',

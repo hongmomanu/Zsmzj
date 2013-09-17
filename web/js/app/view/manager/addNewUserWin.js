@@ -16,8 +16,8 @@ Ext.define('ZSMZJ.view.manager.addNewUserWin' ,{
     initComponent: function() {
         Ext.apply(this, {
             title: '新增用户',
-            height: 385,
-            width: 400,
+            height: 400,
+            width: 430,
             closeAction : 'hide',
             resizable:false,
             layout: 'fit',

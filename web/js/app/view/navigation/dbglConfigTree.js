@@ -23,10 +23,10 @@ Ext.define('ZSMZJ.view.navigation.dbglConfigTree' ,{
     initComponent: function() {
         Ext.apply(this, {
             viewConfig: {
-                plugins: {
+                /*plugins: {
                     ptype: 'treeviewdragdrop',
                     containerScroll: true
-                }
+                }*/
             },
 
             store: 'navigation.DbglTreeConfigs'

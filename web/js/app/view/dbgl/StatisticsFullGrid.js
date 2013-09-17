@@ -150,6 +150,14 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsFullGrid' ,{
                                     store.proxy.extraParams.bgmonth = month;
                                     store.load();
                                 }
+                            },
+                            "change":function(field,e){
+                                var month = field.getRawValue().replace(/\s+/g, "");
+                                var store=this.up('panel').getStore();
+                                store.proxy.extraParams.bgmonth = month;
+                                store.load();
+                                //alert(1);
+                                //console.log(field);
                             }
                         },
                         format: 'Y-m'
