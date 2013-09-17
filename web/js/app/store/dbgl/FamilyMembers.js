@@ -4,16 +4,11 @@ Ext.define('ZSMZJ.store.dbgl.FamilyMembers', {
     alias : 'widget.familymembers',
     //pageSize: 100,
 
-    /*autoLoad:false,
+    autoLoad:false,
     proxy:{
         type: 'ajax',
-        url: 'ajax/getrolefuncs.jsp'
+        url: 'ajax/getfamilymembersbybid.jsp'
     },
-    listeners: {
-        load: function(store, records, success) {
-
-        }
-    }*/
     data: []
 
 });

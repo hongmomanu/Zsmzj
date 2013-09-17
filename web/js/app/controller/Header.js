@@ -59,6 +59,14 @@ Ext.define('ZSMZJ.controller.Header', {
                     };
                     store.load();
 
+
+                    var familystore=form.down('#familymembergrid').getStore();
+                    familystore.proxy.extraParams = {
+                        businessid:businessid
+                    };
+                    familystore.load();
+
+
                     this.clearAlterContent(form);//清空修改内容
                     this.initProcessBtns(form); //初始化操作功能键
                     this.getValueBybusinessid(businessid,'ajax/getapplyformbybid.jsp',this.setFormValues,form);
@@ -81,6 +89,13 @@ Ext.define('ZSMZJ.controller.Header', {
                         businessid:businessid
                     };
                     store.load();
+
+                    var familystore=form.down('#familymembergrid').getStore();
+                    familystore.proxy.extraParams = {
+                        businessid:businessid
+                    };
+                    familystore.load();
+
                     this.clearAlterContent(form);//清空修改内容
                     this.initProcessBtns(form); //初始化操作功能键
                     //this.initchangelogoutbtns(form);//更具是否操作来过滤按钮
@@ -107,6 +122,13 @@ Ext.define('ZSMZJ.controller.Header', {
                         businessid:businessid
                     };
                     store.load();
+
+                    var familystore=form.down('#familymembergrid').getStore();
+                    familystore.proxy.extraParams = {
+                        businessid:businessid
+                    };
+                    familystore.load();
+
                     this.clearAlterContent(form);//清空修改内容
                     this.initProcessBtns(form); //初始化操作功能键
                     //this.initchangelogoutbtns(form);//更具是否操作来过滤按钮
@@ -1777,8 +1799,8 @@ Ext.define('ZSMZJ.controller.Header', {
 
 
         }
-
-        me.getValueBybusinessid(businessid,'ajax/getfamilymembersbybid.jsp',me.setFamilymembers,form);
+        me.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',me.setSignature,form);
+        //me.getValueBybusinessid(businessid,'ajax/getfamilymembersbybid.jsp',me.setFamilymembers,form);
         //this.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',this.setSignature,form);
 
     },
