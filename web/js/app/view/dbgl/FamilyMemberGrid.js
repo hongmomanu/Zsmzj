@@ -102,6 +102,7 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     header: '出生日期',
                     dataIndex: 'birthday',
                     format: 'Y-m-d',
+                    //dateFormat: 'c',
 
                     //width: 105,
 

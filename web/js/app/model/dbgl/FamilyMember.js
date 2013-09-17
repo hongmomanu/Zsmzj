@@ -28,7 +28,7 @@ Ext.define('ZSMZJ.model.dbgl.FamilyMember', {
         'disabledtype',
         'disabledlevel',
         'disablenum',
-        { name: 'birthday' },// type: 'date', dateFormat: 'Y-n-j'
+        { name: 'birthday', type: 'date',dateFormat: 'Y-m-dTH:i:s' },// type: 'date', dateFormat: 'Y-n-j'
         { name: 'monthlyincome', type: 'float' }
 
     ]
