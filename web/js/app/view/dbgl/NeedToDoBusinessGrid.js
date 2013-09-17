@@ -217,7 +217,11 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                     }},
                 {header: '救助开始日期',align:'center',dataIndex:'helpbgtime'},
                 {header: '救助结束日期',align:'center',dataIndex:'helpedtime'},
-                {header: '家庭(享受)人数',align:'center',dataIndex:'familynum',summaryType: 'sum', width:150,//求数量
+                {header: '家庭人数',align:'center',dataIndex:'familynum',summaryType: 'sum', width:150,//求数量
+                    summaryRenderer: function(value){
+                        return '总人数:'+value
+                    }},
+                {header: '享受人数',align:'center',dataIndex:'enjoyednum',summaryType: 'sum', width:150,//求数量
                     summaryRenderer: function(value){
                         return '总人数:'+value
                     }},

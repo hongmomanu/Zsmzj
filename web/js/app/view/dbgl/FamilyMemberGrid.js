@@ -16,10 +16,12 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
             clicksToMoveEditor: 1,
             listeners: {
                 edit: function(grid,obj){
-                    console.log(grid);
-                    console.log(obj);
-                    testobj=obj;
-                    console.log(obj.record.get("isenjoyed"));
+
+                    var form=grid.grid.up('form');
+                    var enjoyitem=form.down('#enjoyPersons');
+                    var enjoyednum=obj.record.get("isenjoyed")==isenjoyedtype.yes?(parseInt(enjoyitem.getValue())+1):parseInt(enjoyitem.getValue());
+                    enjoyitem.setValue(enjoyednum);
+
                 },
                 canceledit: function(grid,obj){
                 }
@@ -107,7 +109,12 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                         xtype: 'datefield',
                         allowBlank: false,
                         itemId: 'personbirthday',
-                        format: 'Y-m-d',
+                        //format: 'Y-m-d',
+                        renderer: function (val, obj, record) {
+                            var time =Ext.Date.parse(val, "Y-m-dTH:i:s");
+                            val = Ext.util.Format.date(time, 'Y-m-d');
+                            return val;
+                        },
                         minValue: '1900-01-01',
                         minText: 'Cannot have a start date before the company existed!',
                         maxValue: Ext.Date.format(new Date(), 'Y-m-d')

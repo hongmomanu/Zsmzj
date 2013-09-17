@@ -262,6 +262,7 @@ public class BusinessProcessControl {
         }
         String sql_list="select a.*,a.rowid as businessid,b.displayname,(select count(*)  from " +
                 FamilyTable+" c  where c.businessid MATCH a.rowid) as familynum" +
+                ",(select count(*)  from " +FamilyTable+" i  where i.businessid = a.rowid and i.isenjoyed MATCH '享受') as enjoyednum" +
                 ",(select count(*)  from " +
                 FamilyHistoryTable+" g  where g.businessid MATCH a.rowid) as beforepeople"+
                 ",(select totalhelpmoney  from " +

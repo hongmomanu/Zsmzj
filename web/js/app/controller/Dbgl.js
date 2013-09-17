@@ -154,14 +154,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
          'processcheckwin button[action=send]':{
              click:this.sendCheckForm
          },
-         /*'familymembergrid':{
 
-             selectionchange:this.personselected
-         },*/
-         /*'affixfilesgrid':{
-
-             itemmouseenter:this.affixgridprew
-         },*/
          'affixfilesgrid':{
 
              afterrender:this.affixgridrendered
@@ -212,9 +205,9 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
     },*/
     birthdaychange:function(obj,newValue, oldValue, eOpts ){
-
         var age=(new Date()).getFullYear()-newValue.getFullYear();
-        this.getFamilymemberage().setValue(age);
+        var ageitem=obj.up('panel').down('#personage');
+        ageitem.setValue(age);
     },
 
     delperson:function(btn){
@@ -223,6 +216,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         var rowEditing=gridpanel.editingPlugin;
         var sm = gridpanel.getSelectionModel();
         rowEditing.cancelEdit();
+        var removeitem=sm.getSelection();
         gridpanel.getStore().remove(sm.getSelection());
         if (gridpanel.getStore().getCount() > 0) {
             sm.select(0);
@@ -232,7 +226,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
        var countitem=applyform.down('#FamilyPersons');
        var enjoyitem=applyform.down('#enjoyPersons');
        var count=parseInt(countitem.getValue())-1;
-       var enjoyednum= r.get("isenjoyed")==isenjoyedtype.yes?parseInt(enjoyitem.getValue())-1:parseInt(enjoyitem.getValue());
+       var enjoyednum= removeitem[0].get("isenjoyed")==isenjoyedtype.yes?parseInt(enjoyitem.getValue())-1:parseInt(enjoyitem.getValue());
 
        countitem.setValue(count);
        enjoyitem.setValue(enjoyednum);
@@ -263,14 +257,9 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         //var applyform=this.getMyviewbusinessapplyform();
         var applyform=gridpanel.up('form');
         var countitem=applyform.down('#FamilyPersons');
-        var enjoyitem=applyform.down('#enjoyPersons');
         var count=parseInt(countitem.getValue())+1;
-        testobj=r;
-        var enjoyednum= r.get("isenjoyed")==isenjoyedtype.yes?(parseInt(enjoyitem.getValue())+1):parseInt(enjoyitem.getValue());
-        console.log(enjoyednum);
 
         countitem.setValue(count);
-        enjoyitem.setValue(enjoyednum);
     },
     uploadAffixFileConfirm:function(btn){
         var win=btn.up('window');
