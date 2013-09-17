@@ -418,7 +418,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
       if (form.isValid()) {
        familymembers,affixfiles,
       }*/
-
+        var me=this;
         //var store=this.getMyviewfamilymembergrid().getStore();
         var store=btn.up('form').down('#familymembergrid').getStore();
         var familymembers=[];
@@ -448,7 +448,11 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             processstatustype:processstatustype.ok,
             affixfiles:Ext.JSON.encode(affixfiles)
         };
-        var successFunc = function (form, action) {
+        var successFunc = function (myform, action) {
+
+            var hc=me.application.getController("Header");
+            hc.closetab(form.id);
+
             Ext.Msg.alert("提示信息", "提交申请成功");
 
         };

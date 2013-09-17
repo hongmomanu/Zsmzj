@@ -1985,7 +1985,7 @@ Ext.define('ZSMZJ.controller.Header', {
     },
     closetab:function(value){
         var tabs = Ext.getCmp('mainContent-panel');
-        var tab=tabs.getComponent(value)
+        var tab=tabs.getComponent(value);
         if (tab) {
 
             tab.close();
