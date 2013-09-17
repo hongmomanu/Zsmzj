@@ -56,6 +56,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.LogoutBusinessGrid',
         'dbgl.PeopleQueryGrid',
         'dbgl.FamilyQueryGrid',
+        'dbgl.GrantMoneyGrid',
         'dbgl.StatisticsFullGrid',
         'common.MonthField',
         'dbgl.StatisticsComplexOneGrid'
