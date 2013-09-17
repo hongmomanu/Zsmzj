@@ -670,7 +670,7 @@ Ext.define('ZSMZJ.view.dbgl.businessCheck', {
                          name: 'poorstandard',
                          fieldLabel: '低保标准(元)',
                          afterLabelTextTpl: required,
-                         emptyText: '请输入低保包尊',
+                         emptyText: '请输入低保标准',
                          blankText : '请输入低保标准',
                          allowBlank: false
                          }

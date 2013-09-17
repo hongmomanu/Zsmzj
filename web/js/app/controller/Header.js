@@ -988,7 +988,7 @@ Ext.define('ZSMZJ.controller.Header', {
                     row:[1,1]},
                 {name: '是否享受',value:'isenjoyed',columns:[],
                     col:[16,16],
-                    row:[1,1]},
+                    row:[1,1]}
 
             ])
         };
@@ -1980,7 +1980,7 @@ Ext.define('ZSMZJ.controller.Header', {
     },
     showneedthings:function(c){
 
-        this.showtab('代办业务','needtodopanel','widget');
+        this.showtab('待办业务','needtodopanel','widget');
 
     },
     closetab:function(value){
