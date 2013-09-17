@@ -42,6 +42,7 @@ Ext.define('ZSMZJ.controller.Manager', {
         'manager.uploadSinatureWin',
         'manager.RoleFuncWin',
         'manager.EditFuncWin',
+        'manager.EditUserWin',
         'manager.funcMenu',
         'manager.userMenu',
         'manager.divisionMenu',
@@ -102,6 +103,9 @@ Ext.define('ZSMZJ.controller.Manager', {
 
             'editfuncwin button[action=save]': {
                 click: this.saveeditfunc
+            },
+            'edituserwin button[action=save]': {
+                click: this.saveedituser
             },
 
             'rolefuncgrid button[action=save]': {
@@ -218,24 +222,38 @@ Ext.define('ZSMZJ.controller.Manager', {
         var userid=item.parentMenu.userdata.data.userid;
 
         if(item.text=='删除用户'){
-            var params = {
-                userid:userid
-            };
-            var userstore=this.getManagerUserManagersStore();
-            var successFunc = function (form, action) {
+            var me=this;
+            Ext.Msg.show({
+                title: '确定要删除此用户么?',
+                msg: '你正在试图删除选中的用户.你想继续么?',
+                buttons: Ext.Msg.YESNO,
+                fn: function (btn) {
+                    if(btn=='yes'){
+                        var params = {
+                            userid:userid
+                        };
+                        var userstore=this.getManagerUserManagersStore();
+                        var successFunc = function (form, action) {
 
-                userstore.load();
+                            userstore.load();
 
-            };
-            var failFunc = function (form, action) {
-                Ext.Msg.alert("提示信息", "删除角色失败，检查web服务或数据库服务");
+                        };
+                        var failFunc = function (form, action) {
+                            Ext.Msg.alert("提示信息", "删除角色失败，检查web服务或数据库服务");
 
-            };
-            this.ajaxSend(params, 'ajax/deluser.jsp', successFunc, failFunc,'POST');
+                        };
+                        me.ajaxSend(params, 'ajax/deluser.jsp', successFunc, failFunc,'POST');
+
+                    }
+                },
+                icon: Ext.Msg.QUESTION
+            });
+
 
         }
         else if(item.text=='修改密码'){
 
+            this.edituserwin(userid,item.parentMenu.userdata.raw);
             //this.rolefuncwin(roleid);
 
         }
@@ -360,6 +378,13 @@ Ext.define('ZSMZJ.controller.Manager', {
         this.rolefuncstoreLoad(rolefuncstore);
 
     },
+    edituserwin:function(userid,data){
+        if (!this.edit_user_win)this.edit_user_win =Ext.widget('edituserwin');
+        this.edit_user_win.down('form').getForm().reset();
+        this.edit_user_win.down('form').getForm().setValues(data);
+        this.edit_user_win.show();
+        this.edit_user_win.editdata=data;
+    },
     editfuncwin:function(funcid,data){
 
 
@@ -462,6 +487,28 @@ Ext.define('ZSMZJ.controller.Manager', {
         };
         //var form =btn.up('form');
         this.formSubmit(btn, params, 'ajax/uploadfile.jsp', successFunc, failFunc,"正在提交数据");
+
+    },
+    saveedituser:function(btn){
+        var me=this;
+        var params = {
+            userid:btn.up('window').editdata.userid
+        };
+        var userstore=this.getManagerUserManagersStore();
+        var successFunc = function (form, action) {
+            userstore.load();
+            me.edit_user_win.hide();
+
+        };
+        var failFunc = function (form, action) {
+            Ext.Msg.alert("提示信息", "修改失败，检查web服务或数据库服务");
+
+        };
+
+        this.formSubmit(btn, params, 'ajax/edituser.jsp', successFunc, failFunc,"正在提交数据");
+
+
+
 
     },
     saveeditfunc:function(btn){

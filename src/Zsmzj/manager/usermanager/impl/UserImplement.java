@@ -33,6 +33,12 @@ public class UserImplement implements UserMethods {
     }
 
     @Override
+    public int editUser(int userid, String username, String displayname, String password) {
+        UserDao dao=new UserDao();
+        return dao.editUser(userid,username,displayname,password);
+    }
+
+    @Override
     public Map<String, Object> login(String username, String password) {
         UserDao dao=new UserDao();
         return dao.login(username,password);

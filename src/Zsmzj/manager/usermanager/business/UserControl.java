@@ -22,6 +22,16 @@ public class UserControl {
         return JSONArray.fromObject(user.getUsers(start, limit, keyword)).toString();
 
     }
+    public String EditUser(int userid,String username,String displayname,String password){
+        UserImplement user=new UserImplement();
+        Map<String,Object> res=new HashMap<String, Object>();
+        int resultid=user.editUser(userid,username,displayname,password);
+        if(resultid>=0)res.put("success",true);
+        else res.put("success",false);
+        return JSONObject.fromObject(res).toString();
+
+
+    }
     public String addNewUser(String username,String password,int roleid,int divisionid,String displayname){
         UserImplement user=new UserImplement();
         Map<String,Object> res=new HashMap<String, Object>();

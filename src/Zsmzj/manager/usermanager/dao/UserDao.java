@@ -24,7 +24,7 @@ public class UserDao {
     private static String  RoleTable="roles";
     public ArrayList<Map<String, Object>> getUsers(int start, int limit, String keyword) {
         Connection testConn= JdbcFactory.getConn("sqlite");
-        String sql=  "select a.username,a.time,a.id,b.rolename from "+UserTable+" as a,"+RoleTable+" as b " +
+        String sql=  "select a.username,a.time,a.id,a.displayname,b.rolename from "+UserTable+" as a,"+RoleTable+" as b " +
                 " where a.roleid=b.id Limit "+limit+" Offset "+ start;
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
         ArrayList<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
@@ -36,6 +36,7 @@ public class UserDao {
                 user.put("rolename",rs.getString("rolename"));
                 user.put("time",rs.getString("time"));
                 user.put("userid",rs.getInt("id"));
+                user.put("displayname",rs.getString("displayname"));
                 list.add(user);
 
             }
@@ -108,6 +109,24 @@ public class UserDao {
 
         }
 
+
+    }
+    public int editUser(int userid,String username,String displayname,String password){
+        Connection conn= JdbcFactory.getConn("sqlite");
+        String sql = "update " + UserTable + " set username=?,displayname=?,password=? where id=? ";
+        PreparedStatement pstmt = JdbcFactory.getPstmt(conn, sql);
+
+        try {
+            pstmt.setString(1,username);
+            pstmt.setString(2,displayname);
+            pstmt.setString(3,password);
+            pstmt.setInt(4, userid);
+            return pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            log.debug(ex.getMessage());
+            return -1;
+
+        }
 
     }
     public int delUser(int userid){
