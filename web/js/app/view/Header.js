@@ -25,6 +25,8 @@ Ext.define('ZSMZJ.view.Header', {
             baseCls: 'main-header-all',
             layout: 'column',
             border:0,
+            collapsible: true,
+            collapsed: false,
             height:91,
             defaults:{
                 //columnWidth:0.5
