@@ -11,7 +11,7 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsComplexOneGrid' ,{
     //extend: 'Ext.grid.Panel',
     extend: 'Ext.tree.Panel',
     alias : 'widget.dbglstatisticscomplexonepanel',
-    cls:'navigation-grid',
+    //cls:'navigation-grid',
     requires: [
 
     ],
@@ -199,7 +199,7 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsComplexOneGrid' ,{
 
         });
         this.callParent(arguments);
-        ZSMZJ.view.dbgl.StatisticsComplexOneGrid.selectionModel = this.getSelectionModel();
+        //ZSMZJ.view.dbgl.StatisticsComplexOneGrid.selectionModel = this.getSelectionModel();
     }
 
 });

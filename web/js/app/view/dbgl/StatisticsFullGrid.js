@@ -11,7 +11,7 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsFullGrid' ,{
     //extend: 'Ext.grid.Panel',
     extend: 'Ext.tree.Panel',
     alias : 'widget.dbglstatisticsfullpanel',
-    cls:'navigation-grid',
+    //cls:'navigation-grid',
     requires: [
 
     ],
@@ -162,6 +162,7 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsFullGrid' ,{
                     }),
 
 
+
                     '->',
                     {
                         text: '导出Excel',
@@ -175,7 +176,7 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsFullGrid' ,{
         });
         this.callParent(arguments);
         // store singleton selection model instance
-        ZSMZJ.view.dbgl.StatisticsFullGrid.selectionModel = this.getSelectionModel();
+        //ZSMZJ.view.dbgl.StatisticsFullGrid.selectionModel = this.getSelectionModel();
     }
     /*,
 

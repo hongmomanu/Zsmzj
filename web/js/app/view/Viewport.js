@@ -9,6 +9,7 @@ Ext.define('ZSMZJ.view.Viewport', {
         'Ext.layout.container.Border',
         'Ext.layout.container.Accordion',
         'Ext.tab.*',
+        'Ext.ux.TabCloseMenu',
         'Ext.resizer.Splitter'
 
     ],
@@ -61,6 +62,42 @@ Ext.define('ZSMZJ.view.Viewport', {
                         deferredRender: false,
 			            layout:'fit',
                         id: 'mainContent-panel',
+                        plugins: Ext.create('Ext.ux.TabCloseMenu', {
+                            extraItemsTail: [
+                                '-',
+                                {
+                                    text: 'Closable',
+                                    checked: true,
+                                    hideOnClick: true,
+                                    handler: function (item) {
+                                        currentItem.tab.setClosable(item.checked);
+                                    }
+                                },
+                                '-',
+                                {
+                                    text: 'Enabled',
+                                    checked: true,
+                                    hideOnClick: true,
+                                    handler: function(item) {
+                                        currentItem.tab.setDisabled(!item.checked);
+                                    }
+                                }
+                            ],
+                            listeners: {
+                                beforemenu: function (menu, item) {
+                                    var enabled = menu.child('[text="Enabled"]');
+                                    menu.child('[text="Closable"]').setChecked(item.closable);
+                                    if (item.tab.active) {
+                                        enabled.disable();
+                                    } else {
+                                        enabled.enable();
+                                        enabled.setChecked(!item.tab.isDisabled());
+                                    }
+
+                                    currentItem = item;
+                                }
+                            }
+                        }),
                         activeTab: 0,     // first tab initially active
                         items: [
                             {

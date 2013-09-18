@@ -20,7 +20,7 @@ Ext.define('Ext.ux.TabCloseMenu', {
      * @cfg {Boolean} showCloseOthers
      * Indicates whether to show the 'Close Others' option.
      */
-    showCloseOthers: true,
+    showCloseOthers: false,
 
     /**
      * @cfg {String} closeOthersTabsText
@@ -38,7 +38,7 @@ Ext.define('Ext.ux.TabCloseMenu', {
      * @cfg {String} closeAllTabsText
      * The text for closing all tabs.
      */
-    closeAllTabsText: 'Close All Tabs',
+    closeAllTabsText: '全部关闭',
 
     /**
      * @cfg {Array} extraItemsHead
