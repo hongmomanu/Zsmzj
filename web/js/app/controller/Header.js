@@ -64,15 +64,29 @@ Ext.define('ZSMZJ.controller.Header', {
                     familystore.proxy.extraParams = {
                         businessid:businessid
                     };
-                    familystore.load();
+                    familystore.load({callback:function(){
+                        var enjoyednum=0;
+                        testobj=familystore;
+                        Ext.each(familystore.data.items,function(a){
+                            if(a.get("isenjoyed")==isenjoyedtype.yes){
+                                enjoyednum++;
+                            }
+                        });
+
+                        var countitem=form.down('#FamilyPersons');
+                        var enjoyitem=form.down('#enjoyPersons');
+                        countitem.setValue(familystore.data.items.length);
+                        enjoyitem.setValue(enjoyednum);
+
+                    }});
 
 
                     this.clearAlterContent(form);//清空修改内容
                     this.initProcessBtns(form); //初始化操作功能键
                     this.getValueBybusinessid(businessid,'ajax/getapplyformbybid.jsp',this.setFormValues,form);
-                    /*this.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',this.setAffixValue,form);
-                    this.getValueBybusinessid(businessid,'ajax/getfamilymembersbybid.jsp',this.setFamilymembers,form);
-                    this.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',this.setSignature,form);*/
+                    this.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',this.setAffixValue,form);
+                    //this.getValueBybusinessid(businessid,'ajax/getfamilymembersbybid.jsp',this.setFamilymembers,form);
+                    this.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',this.setSignature,form);
 
                 }
             } ,
@@ -94,7 +108,19 @@ Ext.define('ZSMZJ.controller.Header', {
                     familystore.proxy.extraParams = {
                         businessid:businessid
                     };
-                    familystore.load();
+                    familystore.load({callback:function(){
+                        var enjoyednum=0;
+                        Ext.each(familystore.data.items,function(a){
+                            if(a.get("isenjoyed")==isenjoyedtype.yes){
+                                enjoyednum++;
+                            }
+                        });
+                        var countitem=form.down('#FamilyPersons');
+                        var enjoyitem=form.down('#enjoyPersons');
+                        countitem.setValue(familystore.data.items.length);
+                        enjoyitem.setValue(enjoyednum);
+
+                    }});
 
                     this.clearAlterContent(form);//清空修改内容
                     this.initProcessBtns(form); //初始化操作功能键
@@ -102,9 +128,9 @@ Ext.define('ZSMZJ.controller.Header', {
                     this.getValueBybusinessid(businessid,'ajax/getapplyformbybid.jsp',this.setFormValues,form);
 
 
-                   /* this.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',this.setAffixValue,form);
-                    this.getValueBybusinessid(businessid,'ajax/getfamilymembersbybid.jsp',this.setFamilymembers,form);
-                    this.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',this.setSignature,form);*/
+                    this.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',this.setAffixValue,form);
+                    //this.getValueBybusinessid(businessid,'ajax/getfamilymembersbybid.jsp',this.setFamilymembers,form);
+                    this.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',this.setSignature,form);
 
                 }
             } ,
@@ -127,7 +153,21 @@ Ext.define('ZSMZJ.controller.Header', {
                     familystore.proxy.extraParams = {
                         businessid:businessid
                     };
-                    familystore.load();
+                    familystore.load({callback:function(){
+                        var enjoyednum=0;
+                        testobj=familystore;
+                        Ext.each(familystore.data.items,function(a){
+                            if(a.get("isenjoyed")==isenjoyedtype.yes){
+                                enjoyednum++;
+                            }
+                        });
+
+                        var countitem=form.down('#FamilyPersons');
+                        var enjoyitem=form.down('#enjoyPersons');
+                        countitem.setValue(familystore.data.items.length);
+                        enjoyitem.setValue(enjoyednum);
+
+                    }});
 
                     this.clearAlterContent(form);//清空修改内容
                     this.initProcessBtns(form); //初始化操作功能键
@@ -135,9 +175,9 @@ Ext.define('ZSMZJ.controller.Header', {
                     this.getValueBybusinessid(businessid,'ajax/getapplyformbybid.jsp',this.setFormValues,form);
 
 
-                    /* this.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',this.setAffixValue,form);
-                     this.getValueBybusinessid(businessid,'ajax/getfamilymembersbybid.jsp',this.setFamilymembers,form);
-                     this.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',this.setSignature,form);*/
+                     this.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',this.setAffixValue,form);
+                     //this.getValueBybusinessid(businessid,'ajax/getfamilymembersbybid.jsp',this.setFamilymembers,form);
+                     this.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',this.setSignature,form);
 
                 }
             } ,
@@ -1799,7 +1839,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
 
         }
-        me.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',me.setSignature,form);
+        //me.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',me.setSignature,form);
         //me.getValueBybusinessid(businessid,'ajax/getfamilymembersbybid.jsp',me.setFamilymembers,form);
         //this.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',this.setSignature,form);
 
@@ -1811,7 +1851,7 @@ Ext.define('ZSMZJ.controller.Header', {
         divisiontype.setValue(data.division);
         divisiontype.setRawValue(data.division);
 
-        me.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',me.setAffixValue,form);
+        //me.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',me.setAffixValue,form);
 
     },
 
