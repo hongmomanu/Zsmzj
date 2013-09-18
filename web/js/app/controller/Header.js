@@ -93,7 +93,7 @@ Ext.define('ZSMZJ.controller.Header', {
             'dbglbusinesschangeform':{
                 alterapplyaftershow:function(form){
                     //this.closemask();
-
+                    var me =this;
                     //ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
                     ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
                     ViewWaitMask.show();
@@ -102,30 +102,52 @@ Ext.define('ZSMZJ.controller.Header', {
                     store.proxy.extraParams = {
                         businessid:businessid
                     };
-                    store.load();
+
+                    setTimeout(function() {
+                        store.load();
+                    }, 500);
 
                     var familystore=form.down('#familymembergrid').getStore();
                     familystore.proxy.extraParams = {
                         businessid:businessid
                     };
-                    familystore.load({callback:function(){
-                        var enjoyednum=0;
-                        Ext.each(familystore.data.items,function(a){
-                            if(a.get("isenjoyed")==isenjoyedtype.yes){
-                                enjoyednum++;
-                            }
-                        });
-                        var countitem=form.down('#FamilyPersons');
-                        var enjoyitem=form.down('#enjoyPersons');
-                        countitem.setValue(familystore.data.items.length);
-                        enjoyitem.setValue(enjoyednum);
 
-                    }});
+                    setTimeout(function() {
+                        familystore.load({callback:function(){
+                            var enjoyednum=0;
+                            Ext.each(familystore.data.items,function(a){
+                                if(a.get("isenjoyed")==isenjoyedtype.yes){
+                                    enjoyednum++;
+                                }
+                            });
+                            var countitem=form.down('#FamilyPersons');
+                            var enjoyitem=form.down('#enjoyPersons');
+                            countitem.setValue(familystore.data.items.length);
+                            enjoyitem.setValue(enjoyednum);
+
+                        }});
+                    }, 900);
+
 
                     this.clearAlterContent(form);//清空修改内容
                     this.initProcessBtns(form); //初始化操作功能键
                     //this.initchangelogoutbtns(form);//更具是否操作来过滤按钮
-                    this.getValueBybusinessid(businessid,'ajax/getapplyformbybid.jsp',this.setFormValues,form);
+
+                    setTimeout(function() {
+                        me.getValueBybusinessid(businessid,'ajax/getapplyformbybid.jsp',me.setFormValues,form);
+                    }, 1300);
+
+                    setTimeout(function() {
+                        me.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',me.setAffixValue,form);
+                    }, 1500);
+
+                    setTimeout(function() {
+                        me.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',me.setSignature,form);
+                    }, 1800);
+
+
+
+                    //this.getValueBybusinessid(businessid,'ajax/getapplyformbybid.jsp',this.setFormValues,form);
 
 
                     //this.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',this.setAffixValue,form);
@@ -1840,7 +1862,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
 
         }
-        me.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',me.setSignature,form);
+        //me.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',me.setSignature,form);
 
 
     },
@@ -1851,7 +1873,7 @@ Ext.define('ZSMZJ.controller.Header', {
         divisiontype.setValue(data.division);
         divisiontype.setRawValue(data.division);
 
-        me.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',me.setAffixValue,form);
+        //me.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',me.setAffixValue,form);
 
     },
 
