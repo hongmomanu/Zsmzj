@@ -30,6 +30,7 @@ var CommonFunc={
     },
     removeTask:function(mask,el){
         mask.hide();
+
        /* var task = new Ext.util.DelayedTask(function() {
             // Fade out the body mask
             try{

@@ -14,9 +14,9 @@ Ext.define('ZSMZJ.view.dbgl.FamilyQueryGrid' ,{
     requires: [
 
     ],
-    afterShow: function(animateTarget, cb, scope) {
+    /*afterShow: function(animateTarget, cb, scope) {
         this.fireEvent('alterapplyaftershow',this);
-    },
+    },*/
     initComponent: function() {
         Ext.apply(this, {
             border: false,

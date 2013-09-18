@@ -45,8 +45,9 @@ Ext.define('ZSMZJ.controller.Header', {
 
             },
             'dbglbusinessalterform':{
+
                 alterapplyaftershow:function(form){
-                    this.closemask();
+                    //this.closemask();
                     //this.initchangelogoutbtns(form);
                     //ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
                     ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
@@ -84,15 +85,14 @@ Ext.define('ZSMZJ.controller.Header', {
                     this.clearAlterContent(form);//清空修改内容
                     this.initProcessBtns(form); //初始化操作功能键
                     this.getValueBybusinessid(businessid,'ajax/getapplyformbybid.jsp',this.setFormValues,form);
-                    this.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',this.setAffixValue,form);
-                    //this.getValueBybusinessid(businessid,'ajax/getfamilymembersbybid.jsp',this.setFamilymembers,form);
-                    this.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',this.setSignature,form);
+                    //this.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',this.setAffixValue,form);
+                    //this.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',this.setSignature,form);
 
                 }
             } ,
             'dbglbusinesschangeform':{
                 alterapplyaftershow:function(form){
-                    this.closemask();
+                    //this.closemask();
 
                     //ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
                     ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
@@ -128,15 +128,15 @@ Ext.define('ZSMZJ.controller.Header', {
                     this.getValueBybusinessid(businessid,'ajax/getapplyformbybid.jsp',this.setFormValues,form);
 
 
-                    this.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',this.setAffixValue,form);
+                    //this.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',this.setAffixValue,form);
                     //this.getValueBybusinessid(businessid,'ajax/getfamilymembersbybid.jsp',this.setFamilymembers,form);
-                    this.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',this.setSignature,form);
+                    //this.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',this.setSignature,form);
 
                 }
             } ,
             'dbglbusinesslogoutform':{
                 alterapplyaftershow:function(form){
-                    this.closemask();
+                    //this.closemask();
                     //ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
                     ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
                     ViewWaitMask.show();
@@ -175,9 +175,9 @@ Ext.define('ZSMZJ.controller.Header', {
                     this.getValueBybusinessid(businessid,'ajax/getapplyformbybid.jsp',this.setFormValues,form);
 
 
-                     this.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',this.setAffixValue,form);
+                     //this.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',this.setAffixValue,form);
                      //this.getValueBybusinessid(businessid,'ajax/getfamilymembersbybid.jsp',this.setFamilymembers,form);
-                     this.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',this.setSignature,form);
+                     //this.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',this.setSignature,form);
 
                 }
             } ,
@@ -302,10 +302,11 @@ Ext.define('ZSMZJ.controller.Header', {
             'needtodopanel,needtodobusinesspanel,changedbusinesspanel,logoutbusinesspanel,peoplequerypanel,familyquerypanel,dbglstatisticsfullpanel,grantmoneypanel,dbglstatisticscomplexonepanel':{
 
                 afterrender: this.afterrenderEvents,
-                alterapplyaftershow:function(grid){
+                /*alterapplyaftershow:function(grid){
                     //grid.getStore().load();
+                    //testobj=grid;
                     this.afterrenderEvents();
-                },
+                },*/
                 processclick:function (c,r,grid){//查看流程
                     this.showProcessWin(c,r,grid);
                 },
@@ -1780,9 +1781,9 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
     setSignature:function(data,me,form){
-          Ext.each(data,function(item){
-              me.addSignature(item,form);
-          });
+        Ext.each(data,function(item){
+           me.addSignature(item,form);
+        });
         //初始化位置
         me.initchangelogoutbtns(form);
         me.closemask();
@@ -1839,9 +1840,8 @@ Ext.define('ZSMZJ.controller.Header', {
 
 
         }
-        //me.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',me.setSignature,form);
-        //me.getValueBybusinessid(businessid,'ajax/getfamilymembersbybid.jsp',me.setFamilymembers,form);
-        //this.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',this.setSignature,form);
+        me.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',me.setSignature,form);
+
 
     },
     setFormValues:function(data,me,form){
@@ -1851,7 +1851,7 @@ Ext.define('ZSMZJ.controller.Header', {
         divisiontype.setValue(data.division);
         divisiontype.setRawValue(data.division);
 
-        //me.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',me.setAffixValue,form);
+        me.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',me.setAffixValue,form);
 
     },
 
@@ -2059,7 +2059,7 @@ Ext.define('ZSMZJ.controller.Header', {
         tabs.getComponent(id).show();
     },
     showtab:function(label,value,type,objdata){
-        this.closemask();
+        //this.closemask();
         //ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
         ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
         ViewWaitMask.show();
@@ -2071,7 +2071,6 @@ Ext.define('ZSMZJ.controller.Header', {
             }
             else{
                 this.initchangelogoutbtns(tabs.getComponent('tab' + value));
-
                 CommonFunc.removeTask(ViewWaitMask,Ext.getCmp('mainContent-panel').getEl());
             }
 

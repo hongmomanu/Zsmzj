@@ -14,9 +14,14 @@ Ext.define('ZSMZJ.view.dbgl.businessLogout', {
 
 
     ],
-    afterShow: function(animateTarget, cb, scope) {
-        this.fireEvent('alterapplyaftershow',this);
+    listeners: {
+        show: function(panel) {
+            this.fireEvent('alterapplyaftershow',this);
+        }
     },
+   /* afterShow: function(animateTarget, cb, scope) {
+        this.fireEvent('alterapplyaftershow',this);
+    },*/
     initComponent: function() {
         var required = '<span style="color:red;font-weight:bold" data-qtip="必填字段">*</span>';
         Ext.apply(this, {

@@ -59,7 +59,7 @@ Ext.define('ZSMZJ.view.Viewport', {
 
                     Ext.create('Ext.tab.Panel', {
                         region: 'center', // a center region is ALWAYS required for border layout
-                        deferredRender: false,
+                        //deferredRender: false,
 			            layout:'fit',
                         id: 'mainContent-panel',
                         plugins: Ext.create('Ext.ux.TabCloseMenu', {
@@ -98,6 +98,7 @@ Ext.define('ZSMZJ.view.Viewport', {
                                 }
                             }
                         }),
+                        //hideMode:"visibility",
                         activeTab: 0,     // first tab initially active
                         items: [
                             {
