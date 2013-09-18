@@ -136,9 +136,7 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsFullGrid' ,{
             bbar: {
                 items:[
                     '-',
-
-                    {
-                        xtype: 'monthfield',
+                    Ext.widget('monthfield', {
                         fieldLabel: '选择年月',
                         value: Ext.Date.format(new Date(), 'Y-m'),
                         listeners: {
@@ -161,8 +159,9 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsFullGrid' ,{
                             }
                         },
                         format: 'Y-m'
+                    }),
 
-                    },
+
                     '->',
                     {
                         text: '导出Excel',

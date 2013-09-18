@@ -158,8 +158,8 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsComplexOneGrid' ,{
             bbar: {
                 items:[
                     '-',
-                    {
-                        xtype: 'monthfield',
+
+                    Ext.widget('monthfield', {
                         fieldLabel: '选择年月',
                         value: Ext.Date.format(new Date(), 'Y-m'),
                         listeners: {
@@ -182,7 +182,12 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsComplexOneGrid' ,{
                             }
                         },
                         format: 'Y-m'
-                    },
+                    }),
+
+                    /*{
+                        xtype: 'monthfield',
+
+                    },*/
                     '->',
                     {
                         text: '导出Excel',

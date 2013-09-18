@@ -11,7 +11,7 @@ Ext.define('ZSMZJ.view.common.MonthField' ,{
     extend: 'Ext.form.field.Date',
     alias: 'widget.monthfield',
     requires: ['Ext.picker.Month'],
-    alternateClassName: ['Ext.form.MonthField', 'Ext.form.Month'],
+    //alternateClassName: ['Ext.form.MonthField', 'Ext.form.Month'],
     selectMonth: null,
     createPicker: function () {
         var me = this,
