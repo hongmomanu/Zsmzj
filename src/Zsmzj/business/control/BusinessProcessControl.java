@@ -542,6 +542,15 @@ public class BusinessProcessControl {
         return JSONObject.fromObject(res).toString();
 
     }
+    public String getApplyFormAll(int businessid){
+        BusinessProcess bp=new BusinessProcess();
+        Map<String,Object>res =new HashMap<String, Object>();
+        res.put("form",bp.getApplyForm(businessid));
+        res.put("signature",JSONArray.fromObject(this.getSignaturebybid(businessid)));
+        res.put("affixfile",bp.getAffixfilebybid(businessid));
+        return JSONObject.fromObject(res).toString();
+
+    }
 
     public String getSignaturebybuid(int userid){//更具userid获取签名
         BusinessProcess bp=new BusinessProcess();

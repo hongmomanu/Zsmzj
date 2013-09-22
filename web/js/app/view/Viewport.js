@@ -99,6 +99,7 @@ Ext.define('ZSMZJ.view.Viewport', {
                             }
                         }),
                         //hideMode:"visibility",
+                        closeAction:'hide',
                         activeTab: 0,     // first tab initially active
                         items: [
                             {
