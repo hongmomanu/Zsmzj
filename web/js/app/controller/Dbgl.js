@@ -17,14 +17,15 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.comboxwidget.ApplyType','dbgl.ProcessHistory',
         'dbgl.NeedToDoBusiness','dbgl.ChangedBusiness',
         'dbgl.LogoutBusiness','dbgl.PeopleQuery',
-        'dbgl.FamilyQuery','dbgl.StatisticsFull','dbgl.StatisticsComplexOne'],
+        'dbgl.FamilyQuery','dbgl.StatisticsFull',
+        'dbgl.StatisticsComplexOne','dbgl.GrantMoneyModel'],
 
     stores: ['dbgl.FamilyMembers','dbgl.AffixFilesGrids',
         'dbgl.comboxwidget.ApplyTypes','dbgl.ProcessHistorys',
         'dbgl.NeedToDoBusinesses','dbgl.ChangedBusinesses',
         'dbgl.LogoutBusinesses','dbgl.PeopleQuerys',
         'dbgl.FamilyQuerys','dbgl.StatisticsFulls',
-        'dbgl.StatisticsComplexOnes'],
+        'dbgl.StatisticsComplexOnes','dbgl.GrantMoneyStore'],
 
     refs: [
         {ref: 'myviewbusinessapplyform', selector: 'dbglbusinessapplyform'},
@@ -80,6 +81,10 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             header_cl.widgetdolayout("mainContent-panel");
         });
 
+        var grant_store=this.getDbglGrantMoneyStoreStore();
+        grant_store.on('load', function (store, options) {
+            header_cl.widgetdolayout("mainContent-panel");
+        });
 
     },
     init: function() {

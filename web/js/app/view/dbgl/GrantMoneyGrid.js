@@ -100,7 +100,7 @@ Ext.define('ZSMZJ.view.dbgl.GrantMoneyGrid' ,{
 
             ],*/
             bbar: Ext.create('Ext.PagingToolbar', {
-                /*store: 'dbgl.LogoutBusinesses',*/
+                store: 'dbgl.GrantMoneyStore',
                 displayInfo: true,
                 displayMsg: '显示待办事务 {0} - {1} of {2}',
                 emptyMsg: "无待办事务",
@@ -118,7 +118,7 @@ Ext.define('ZSMZJ.view.dbgl.GrantMoneyGrid' ,{
                                     var keyword = field.getValue().replace(/\s+/g, "");
                                     var store=this.up('panel').getStore();
                                     store.proxy.extraParams.keyword = keyword;
-                                    store.load();
+                                    store.loadPage(1);
                                 }
                             }
                         },
@@ -136,7 +136,8 @@ Ext.define('ZSMZJ.view.dbgl.GrantMoneyGrid' ,{
                                     var month = field.getRawValue().replace(/\s+/g, "");
                                     var store=this.up('panel').getStore();
                                     store.proxy.extraParams.bgmonth = month;
-                                    store.load();
+
+                                    store.loadPage(1);
                                 }
                             }
                         },
@@ -156,8 +157,8 @@ Ext.define('ZSMZJ.view.dbgl.GrantMoneyGrid' ,{
 
                     }
                 ]
-            })/*,
-            store: 'dbgl.LogoutBusinesses'*/
+            }),
+            store: 'dbgl.GrantMoneyStore'
 
 
         });

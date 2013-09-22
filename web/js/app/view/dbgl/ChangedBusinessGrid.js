@@ -266,7 +266,7 @@ Ext.define('ZSMZJ.view.dbgl.ChangedBusinessGrid' ,{
                                     var keyword = field.getValue().replace(/\s+/g, "");
                                     var store=this.up('panel').getStore();
                                     store.proxy.extraParams.keyword = keyword;
-                                    store.load();
+                                    store.loadPage(1);
                                 }
                             }
                         },

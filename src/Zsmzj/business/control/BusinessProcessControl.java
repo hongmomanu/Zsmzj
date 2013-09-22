@@ -80,7 +80,51 @@ public class BusinessProcessControl {
 
 
     }
+    public String getGrantMoneyBytype(String type,String bgmonth,String keyword){
+        SimpleDateFormat sDateFormat   =   new SimpleDateFormat("yyyy-MM");
 
+
+        String sql_list="select a.*,b.businessid,b.bgdate,b.eddate,b.grantdate,b.time as granttime," +
+                "c.displayname as grantuser,(select count(*)  from "+ FamilyTable+" d where " +
+                "  d.businessid MATCH a.rowid)  as familynum," +
+                " (select count(*)  from "+ FamilyTable+" e where " +
+                " e.businessid = a.rowid and e.isenjoyed MATCH '享受')  as enjoynum from "+BusinessTable +" a,"+GrantTable+" b,"+UserTable+" c where a.rowid=b.businessid "
+                +" and b.userid =c.rowid and a.businesstype MATCH '"+type+"'";
+
+        String sql_count="select count(*) from "+GrantTable+" b,"+BusinessTable+
+                " a where a.rowid=b.businessid and a.businesstype MATCH '"+type+"'";
+        if(bgmonth!=null&&!bgmonth.equals("")){
+            Date date = null;
+            try {
+                date = sDateFormat.parse( bgmonth);
+            } catch (ParseException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            java.util.Calendar   calendar=java.util.Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.MONTH, +1);    //得到下一个月
+            String edmonth=sDateFormat.format(calendar.getTime());
+
+            sql_list+=" and b.rowid in (select rowid from "+GrantTable+" d where d.time Between '"+bgmonth
+                    +"' and  '"+edmonth+"') ";
+            sql_count+=" and b.rowid in (select rowid from "+GrantTable+" d where d.time Between '"+bgmonth
+                    +"' and  '"+edmonth+"') ";
+        }
+        if(keyword!=null&&!keyword.equals("")){
+            sql_list+=" and a.rowid in (select rowid from "+BusinessTable+"  where "+BusinessTable+" MATCH '"+keyword+"') ";
+            sql_count+=" and a.rowid in (select rowid from "+BusinessTable+"  where "+BusinessTable+" MATCH '"+keyword+"') ";
+
+        }
+
+        ComonDao cd=new ComonDao();
+        int totalnum=cd.getTotalCountBySql(sql_count);
+        ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
+
+        Map<String,Object>res=new HashMap<String, Object>();
+        res.put("totalCount",totalnum);
+        res.put("results",list);
+        return JSONObject.fromObject(res).toString();
+    }
     public String getStatisticsBytype(String type,String bgmonth,int divisionpid){
         SimpleDateFormat sDateFormat   =   new SimpleDateFormat("yyyy-MM");
         String edmonth="";

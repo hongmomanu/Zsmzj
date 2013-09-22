@@ -89,7 +89,8 @@ Ext.define('ZSMZJ.view.dbgl.PeopleQueryGrid' ,{
                                     var keyword = field.getValue().replace(/\s+/g, "");
                                     var store=this.up('panel').getStore();
                                     store.proxy.extraParams.keyword = keyword;
-                                    store.load();
+                                    //store.load();
+                                    store.loadPage(1);
                                 }
                             }
                         },

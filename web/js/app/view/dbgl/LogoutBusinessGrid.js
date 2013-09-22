@@ -258,7 +258,7 @@ Ext.define('ZSMZJ.view.dbgl.LogoutBusinessGrid' ,{
                                     var keyword = field.getValue().replace(/\s+/g, "");
                                     var store=this.up('panel').getStore();
                                     store.proxy.extraParams.keyword = keyword;
-                                    store.load();
+                                    store.loadPage(1);
                                 }
                             }
                         },
