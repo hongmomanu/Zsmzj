@@ -110,9 +110,45 @@ public class BusinessProcessControl {
             sql_count+=" and b.rowid in (select rowid from "+GrantTable+" d where d.time Between '"+bgmonth
                     +"' and  '"+edmonth+"') ";
         }
-        if(keyword!=null&&!keyword.equals("")){
+
+        /*if(keyword!=null&&!keyword.equals("")){
             sql_list+=" and a.rowid in (select rowid from "+BusinessTable+"  where "+BusinessTable+" MATCH '"+keyword+"*') ";
             sql_count+=" and a.rowid in (select rowid from "+BusinessTable+"  where "+BusinessTable+" MATCH '"+keyword+"*') ";
+
+        }*/
+        if (keyword!=null&&!keyword.equals("")){
+            if(keyword.indexOf("and")>0){
+                String[] arr=keyword.split("and");
+                for(int i=0;i<arr.length;i++){
+                    sql_list+=" and a.rowid in (select rowid from "+BusinessTable+" where "+BusinessTable+" MATCH '"+arr[i]+"*') ";
+                    sql_count+=" and a.rowid in (select rowid from "+BusinessTable+" where "+BusinessTable+" MATCH '"+arr[i]+"*') ";
+
+                }
+            }
+            else if(keyword.indexOf("or")>0){
+
+                String[] arr=keyword.split("or");
+                sql_list+=" and a.rowid IN (";
+                sql_count+=" and a.rowid IN (";
+                for(int i=0;i<arr.length;i++){
+                    //sql_list+=arr[i]+"* OR ";
+                    sql_list+=
+                            "    SELECT ROWID FROM "+BusinessTable+" WHERE "+BusinessTable+" MATCH '"+arr[i]+"*' " +
+                                    "UNION ";
+
+                    sql_count+=
+                            "    SELECT ROWID FROM "+BusinessTable+" WHERE "+BusinessTable+" MATCH '"+arr[i]+"*' " +
+                                    "UNION ";
+
+                }
+                sql_list=sql_list.substring(0,sql_list.lastIndexOf("UNION"))+") ";
+                sql_count=sql_count.substring(0,sql_count.lastIndexOf("UNION"))+") ";
+            }
+            else{
+                sql_list+=" and a.rowid in (select rowid from "+BusinessTable+" where "+BusinessTable+" MATCH '"+keyword+"*') ";
+                sql_count+=" and a.rowid in (select rowid from "+BusinessTable+" where "+BusinessTable+" MATCH '"+keyword+"*') ";
+
+            }
 
         }
 
