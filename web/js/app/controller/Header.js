@@ -92,6 +92,12 @@ Ext.define('ZSMZJ.controller.Header', {
                 }
             } ,
             'dbglbusinesschangeform':{
+                render: function(p){
+                    /*p.body.on('scroll', function(e,t){
+                        //console.log(e);
+                        //console.log(t);
+                    }, p);*/
+                },
                 alterapplyaftershow:function(form){
                     //this.closemask();
                     var me =this;
