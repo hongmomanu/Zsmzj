@@ -343,4 +343,18 @@ CREATE VIRTUAL TABLE IF NOT EXISTS businesssignature USING fts3
     y                         integer                 --y
   );
 
+--资金发放表
+CREATE VIRTUAL TABLE IF NOT EXISTS grantmoney USING fts3
+  (
+  id integer primary key autoincrement,            --自增主键
+  time DATETIME DEFAULT (datetime(CURRENT_TIMESTAMP,'localtime')),  --提交时间
+  businessid                integer,                --业务信息id
+  userid                    integer,                --用户id
+  bgdate                    VARCHAR(100),           --开始日期
+  eddate                    VARCHAR(100),           --结束日期
+  grantdate                 VARCHAR(100)            --结束日期
+  );
+
+
+
 ----技巧说明 日期比较 time Between '2008-06-10' and  '2013-09-11'   数值比较CAST(totalhelpmoney AS real)

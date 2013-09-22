@@ -156,7 +156,9 @@ Ext.define('ZSMZJ.controller.Dbgl', {
          'processcheckwin button[action=send]':{
              click:this.sendCheckForm
          },
-
+         'addnewgrantwin button[action=grant]':{
+             click: this.grantmoney
+         },
          'affixfilesgrid':{
 
              afterrender:this.affixgridrendered
@@ -262,6 +264,31 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         var count=parseInt(countitem.getValue())+1;
 
         countitem.setValue(count);
+    },
+    grantmoney:function(btn){
+        var me=this;
+        var win=btn.up('window');
+        var ajaxform=win.down('form');
+        var grid=win.dataobj;
+        var params = {
+            userid:userid,
+            businesstype:businessTableType.dbgl
+        };
+        var successFunc = function (myform, action) {
+            console.log(myform);
+            console.log(action);
+            btn.up('window').close();
+            grid.getStore().load();
+
+        };
+        var failFunc = function (myform, action) {
+            Ext.Msg.alert("提示信息", "发放资金失败,检查web服务");
+
+        };
+
+        this.formSubmit(ajaxform, params, 'ajax/grantmoneyform.jsp', successFunc, failFunc,"正在提交数据");
+
+
     },
     uploadAffixFileConfirm:function(btn){
         var win=btn.up('window');

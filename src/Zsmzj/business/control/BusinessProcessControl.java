@@ -1,5 +1,6 @@
 package Zsmzj.business.control;
 
+import Zsmzj.business.dao.BusinessProcessDao;
 import Zsmzj.business.impl.BusinessProcess;
 import Zsmzj.conmmon.ComonDao;
 import Zsmzj.enums.ProcessType;
@@ -33,10 +34,36 @@ public class BusinessProcessControl {
     private final String UserTable="users";
     private final String DivisionsTable="divisions";
     private final String SignatureTable="businesssignature";
-
+    private  final String GrantTable="grantmoney";
     public int getNeedTodoCounts(int roleid){
         BusinessProcess bp=new BusinessProcess();
         return bp.getNeedTodoCounts(roleid,null);
+
+    }
+    public String grantmoneybytype(int userid,String bgdate,String eddate,String grantdate,String businesstype){
+        BusinessProcess bp=new BusinessProcess();
+        ComonDao cd=new ComonDao();
+        int totalnum=cd.getTotalCountBySql("select count(*) from "+GrantTable+" a,"+BusinessTable+
+                " b where b.rowid=a.businessid and b.businesstype MATCH '"+businesstype+"'");
+        if(totalnum>0){
+           return "{success:true,msg:\"资金已发\"}";
+        }
+        else{
+            String sql_list="select rowid as businessid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"'";
+            ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
+            BusinessProcessDao bDao=new BusinessProcessDao();
+
+            for(Map<String,Object> item:list){
+                Map<String,Object> param=new HashMap<String, Object>();
+                param.put("businessid",item.get("businessid"));
+                param.put("eddate",eddate);
+                param.put("bgdate",bgdate);
+                param.put("grantdate",grantdate);
+                param.put("userid",userid);
+                bDao.insertTableVales(param, GrantTable);
+            }
+            return "{success:true,msg:\"资金已发\"}";
+        }
 
     }
     public String changeStatusbybid(int businessid,String status){

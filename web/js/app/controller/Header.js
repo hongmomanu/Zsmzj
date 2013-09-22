@@ -626,9 +626,11 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
     new_grant:function(btn){
+        var grid=btn.up('panel');
         if(!this.newGrantWin)this.newGrantWin=Ext.widget('addnewgrantwin');
         this.newGrantWin.show();
-        //this.newGrantWin.dataform=btn.up('form');
+
+        this.newGrantWin.dataobj=grid;
 
     },
     outexcel_complex:function(btn){

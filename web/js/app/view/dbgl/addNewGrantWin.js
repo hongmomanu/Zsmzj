@@ -66,12 +66,12 @@ Ext.define('ZSMZJ.view.dbgl.addNewGrantWin' ,{
         },
 
                 items: [
-                    {
+                    /*{
                         fieldLabel: '行政区划',
                         //id:'testcombox',
                         name: 'divisionid',
                         //width:'200',
-                        /*xtype: 'combo',*/
+                        *//*xtype: 'combo',*//*
                         xtype:'dbgldivsioncombtree',
                         //xtype:,
                         allowBlank: false,
@@ -80,7 +80,7 @@ Ext.define('ZSMZJ.view.dbgl.addNewGrantWin' ,{
                         valueField: 'id',
                         emptyText: '请选择行政区划'
 
-                    },
+                    },*/
                     {
                         xtype:'panel',
                         layout: 'column',
@@ -89,6 +89,8 @@ Ext.define('ZSMZJ.view.dbgl.addNewGrantWin' ,{
                             {
                                 columnWidth: 0.5,
                                 xtype: 'monthfield',
+                                allowBlank: false,
+                                blankText: "不能为空",
                                 name:'bgdate',
                                 fieldLabel: '本次发放从',
                                 value: Ext.Date.format(Ext.Date.getFirstDateOfMonth(new Date()), 'Y-m-d'),
@@ -98,6 +100,8 @@ Ext.define('ZSMZJ.view.dbgl.addNewGrantWin' ,{
                             {
                                 columnWidth: 0.5,
                                 xtype: 'monthfield',
+                                allowBlank: false,
+                                blankText: "不能为空",
                                 name:'eddate',
                                 fieldLabel: '到',
                                 value: Ext.Date.format(Ext.Date.getLastDateOfMonth(new Date()), 'Y-m-d'),
@@ -108,7 +112,7 @@ Ext.define('ZSMZJ.view.dbgl.addNewGrantWin' ,{
                     },
                     {
                         xtype: 'monthfield',
-                        name:'bgdate',
+                        name:'grantdate',
                         fieldLabel: '发放日期',
                         value: Ext.Date.format(new Date(), 'Y-m-d'),
                         format: 'Y-m-d'
