@@ -233,44 +233,60 @@ public class BusinessProcessControl {
 
     }
 
-    public String getFamilyInfoList(int start,int limit,String keyword){
+    public String getFamilyInfoList(int start,int limit,String keyword,String businesstype){
         BusinessProcess bp=new BusinessProcess();
         ComonDao cd=new ComonDao();
-        int totalnum =cd.getTotalCount(BusinessTable);
+        String sql_count="select count(*)"+
+                " from "+BusinessTable +" a where a.rowid>0 and a.businesstype MATCH '"+businesstype+"'";
+
+
+        //int totalnum =cd.getTotalCount(BusinessTable);
 
         String sql_list="select a.rowid as businessid,a.*,(select count(*)  from "+ FamilyTable+" b where " +
                 "b.businessid MATCH a.rowid)  as familynum," +
                 "(select count(*)  from "+ FamilyTable+" b where " +
                 "b.businessid = a.rowid and isenjoyed MATCH '享受')  as enjoynum"+
-                " from "+BusinessTable +" a where a.rowid>0 ";
+                " from "+BusinessTable +" a where a.rowid>0 and a.businesstype MATCH '"+businesstype+"'";
 
         if (keyword!=null&&!keyword.equals("")){
             if(keyword.indexOf("and")>0){
                 String[] arr=keyword.split("and");
                 for(int i=0;i<arr.length;i++){
                     sql_list+=" and a.rowid in (select rowid from "+BusinessTable+" where "+BusinessTable+" MATCH '"+arr[i]+"*') ";
+                    sql_count+=" and a.rowid in (select rowid from "+BusinessTable+" where "+BusinessTable+" MATCH '"+arr[i]+"*') ";
+
                 }
             }
             else if(keyword.indexOf("or")>0){
-                sql_list+=" and "+BusinessTable+" MATCH '";
 
                 String[] arr=keyword.split("or");
+                sql_list+=" and a.rowid IN (";
+                sql_count+=" and a.rowid IN (";
                 for(int i=0;i<arr.length;i++){
-                    sql_list+=arr[i]+"* OR ";
+                    //sql_list+=arr[i]+"* OR ";
+                    sql_list+=
+                            "    SELECT ROWID FROM "+BusinessTable+" WHERE "+BusinessTable+" MATCH '"+arr[i]+"*' " +
+                            "UNION ";
+
+                    sql_count+=
+                            "    SELECT ROWID FROM "+BusinessTable+" WHERE "+BusinessTable+" MATCH '"+arr[i]+"*' " +
+                                    "UNION ";
+
                 }
-                sql_list=sql_list.substring(0,sql_list.lastIndexOf("OR"))+"' ";
+                sql_list=sql_list.substring(0,sql_list.lastIndexOf("UNION"))+") ";
+                sql_count=sql_count.substring(0,sql_count.lastIndexOf("UNION"))+") ";
             }
             else{
-                sql_list+=" and "+BusinessTable+" MATCH '"+keyword+"*' ";
-                /*sql_list+=" and (b.rowid in (select rowid from "+FamilyTable+" where "+FamilyTable+" MATCH '"+keyword+"*')" +
-                        " or b.rowid in (select d.rowid from "+BusinessTable+" c,"+FamilyTable+" d where " +
-                        " c.rowid=d.businessid and "+BusinessTable+" MATCH '"+keyword+"*')) ";*/
+                sql_list+=" and a.rowid in (select rowid from "+BusinessTable+" where "+BusinessTable+" MATCH '"+keyword+"*') ";
+                sql_count+=" and a.rowid in (select rowid from "+BusinessTable+" where "+BusinessTable+" MATCH '"+keyword+"*') ";
+
             }
 
         }
         sql_list+="Limit "+limit+" Offset "+start;
 
         ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
+        int totalnum=cd.getTotalCountBySql(sql_count);
 
         Map<String,Object>res=new HashMap<String, Object>();
         res.put("totalCount",totalnum);
@@ -279,36 +295,57 @@ public class BusinessProcessControl {
 
 
     }
-    public String getPeopleInfoList(int start ,int limit,String keyword){
+    public String getPeopleInfoList(int start ,int limit,String keyword,String businesstype){
         BusinessProcess bp=new BusinessProcess();
         ComonDao cd=new ComonDao();
-        int totalnum =cd.getTotalCount(FamilyTable);
+        String sql_count="select count(*)"+
+                " from "+BusinessTable +" a,"+FamilyTable+" b " +
+                "where a.rowid = b.businessid  and a.businesstype MATCH '"+businesstype+"'";
+        //int totalnum =cd.getTotalCount(FamilyTable);
 
         String sql_list="select a.division,a.owername,b.rowid,a.owerid,b.* "+
                 " from "+BusinessTable +" a,"+FamilyTable+" b " +
-                "where a.rowid = b.businessid ";
+                "where a.rowid = b.businessid  and a.businesstype MATCH '"+businesstype+"'";
 
         if (keyword!=null&&!keyword.equals("")){
             if(keyword.indexOf("and")>0){
                 String[] arr=keyword.split("and");
                 for(int i=0;i<arr.length;i++){
                     sql_list+=" and b.rowid in (select rowid from "+FamilyTable+" where "+FamilyTable+" MATCH '"+arr[i]+"*') ";
+                    sql_count+=" and b.rowid in (select rowid from "+FamilyTable+" where "+FamilyTable+" MATCH '"+arr[i]+"*') ";
                 }
             }
             else if(keyword.indexOf("or")>0){
-                sql_list+=" and "+FamilyTable+" MATCH '";
-
+                //sql_list+=" and "+FamilyTable+" MATCH '";
+                sql_list+=" and b.rowid IN (";
+                sql_count+=" and b.rowid IN (";
                 String[] arr=keyword.split("or");
                 for(int i=0;i<arr.length;i++){
-                    sql_list+=arr[i]+"* OR ";
+                    sql_list+=
+                            "    SELECT ROWID FROM "+FamilyTable+" WHERE "+FamilyTable+" MATCH '"+arr[i]+"*' " +
+                                    "UNION ";
+
+                    sql_count+=
+                            "    SELECT ROWID FROM "+FamilyTable+" WHERE "+FamilyTable+" MATCH '"+arr[i]+"*' " +
+                                    "UNION ";
+
+
                 }
-                sql_list=sql_list.substring(0,sql_list.lastIndexOf("OR"))+"' ";
+                sql_list=sql_list.substring(0,sql_list.lastIndexOf("UNION"))+") ";
+                sql_count=sql_count.substring(0,sql_count.lastIndexOf("UNION"))+") ";
             }
             else{
                 //sql_list+=" and "+FamilyTable+" MATCH '"+keyword.toUpperCase()+"*' ";
-                sql_list+=" and (b.rowid in (select rowid from "+FamilyTable+" where "+FamilyTable+" MATCH '"+keyword+"*')" +
-                        " or b.rowid in (select d.rowid from "+BusinessTable+" c,"+FamilyTable+" d where " +
-                        " c.rowid=d.businessid and "+BusinessTable+" MATCH '"+keyword+"*')) ";
+                sql_list+=" and b.rowid in (select rowid from "+FamilyTable+" where "+FamilyTable+" MATCH '"+keyword+"*'" +
+                        " UNION select d.rowid from "+BusinessTable+" c,"+FamilyTable+" d where " +
+                        " c.rowid=d.businessid and "+BusinessTable+" MATCH '"+keyword+"*') ";
+
+                sql_count+=" and b.rowid in (select rowid from "+FamilyTable+" where "+FamilyTable+" MATCH '"+keyword+"*'" +
+                        " UNION select d.rowid from "+BusinessTable+" c,"+FamilyTable+" d where " +
+                        " c.rowid=d.businessid and "+BusinessTable+" MATCH '"+keyword+"*') ";
+
+
+
             }
 
         }
@@ -317,6 +354,7 @@ public class BusinessProcessControl {
         ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
 
         Map<String,Object>res=new HashMap<String, Object>();
+        int totalnum=cd.getTotalCountBySql(sql_count);
         res.put("totalCount",totalnum);
         res.put("results",list);
         return JSONObject.fromObject(res).toString();

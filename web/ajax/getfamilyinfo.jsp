@@ -20,7 +20,8 @@
         int start=Integer.parseInt(request.getParameter("start"));
         int limit=Integer.parseInt(request.getParameter("limit"));
         String keyword=request.getParameter("keyword");
+        String type=request.getParameter("type");
 
-        out.print(bp.getFamilyInfoList(start,limit,keyword));
+        out.print(bp.getFamilyInfoList(start,limit,keyword,type));
     }
 %>

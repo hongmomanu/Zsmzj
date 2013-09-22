@@ -15,9 +15,9 @@ Ext.define('ZSMZJ.store.dbgl.FamilyQuerys', {
         type: 'ajax',
         url: 'ajax/getfamilyinfo.jsp',
         getMethod:function(request){ return 'POST'; },
-        /*extraParams:{
-            type:processstatustype.logout
-        },*/
+        extraParams:{
+            type:businessTableType.dbgl
+        },
         reader: {
             type: 'json',
             root: 'results',

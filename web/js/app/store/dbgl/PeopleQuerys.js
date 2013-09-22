@@ -15,9 +15,9 @@ Ext.define('ZSMZJ.store.dbgl.PeopleQuerys', {
         type: 'ajax',
         url: 'ajax/getpeopleinfo.jsp',
         getMethod:function(request){ return 'POST'; },
-        /*extraParams:{
-            type:processstatustype.logout
-        },*/
+        extraParams:{
+            type:businessTableType.dbgl
+        },
         reader: {
             type: 'json',
             root: 'results',

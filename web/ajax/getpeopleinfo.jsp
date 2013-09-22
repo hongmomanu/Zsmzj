@@ -20,7 +20,7 @@
         int start=Integer.parseInt(request.getParameter("start"));
         int limit=Integer.parseInt(request.getParameter("limit"));
         String keyword=request.getParameter("keyword");
-
-        out.print(bp.getPeopleInfoList(start,limit,keyword));
+        String type=request.getParameter("type");
+        out.print(bp.getPeopleInfoList(start,limit,keyword,type));
     }
 %>
