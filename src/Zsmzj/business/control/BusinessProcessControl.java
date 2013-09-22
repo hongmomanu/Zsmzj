@@ -111,8 +111,8 @@ public class BusinessProcessControl {
                     +"' and  '"+edmonth+"') ";
         }
         if(keyword!=null&&!keyword.equals("")){
-            sql_list+=" and a.rowid in (select rowid from "+BusinessTable+"  where "+BusinessTable+" MATCH '"+keyword+"') ";
-            sql_count+=" and a.rowid in (select rowid from "+BusinessTable+"  where "+BusinessTable+" MATCH '"+keyword+"') ";
+            sql_list+=" and a.rowid in (select rowid from "+BusinessTable+"  where "+BusinessTable+" MATCH '"+keyword+"*') ";
+            sql_count+=" and a.rowid in (select rowid from "+BusinessTable+"  where "+BusinessTable+" MATCH '"+keyword+"*') ";
 
         }
 
