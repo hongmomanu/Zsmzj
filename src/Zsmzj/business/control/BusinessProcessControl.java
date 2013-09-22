@@ -396,15 +396,12 @@ public class BusinessProcessControl {
         return JSONObject.fromObject(res).toString();
 
     }
-    public String getNeedTodoBusinessList(int start,int limit,String keyword,String type){
+    public String getNeedTodoBusinessList(int start,int limit,String keyword,String type,String businesstype){
         BusinessProcess bp=new BusinessProcess();
         ComonDao cd=new ComonDao();
         int totalnum =0;
-        if(type!=null&&!type.equals("")){
-            totalnum=cd.getTotalCountBySql("select count(*) from "+BusinessTable+" where processstatustype MATCH '"+type+"'");
-        }else{
-            totalnum=cd.getTotalCount(BusinessTable);
-        }
+        String sql_count="select count(*) from "+BusinessTable+" a where a.businesstype  MATCH '"+businesstype+"' ";
+
         String sql_list="select a.*,a.rowid as businessid,b.displayname,(select count(*)  from " +
                 FamilyTable+" c  where c.businessid MATCH a.rowid) as familynum" +
                 ",(select count(*)  from " +FamilyTable+" i  where i.businessid = a.rowid and i.isenjoyed MATCH '享受') as enjoyednum" +
@@ -417,10 +414,11 @@ public class BusinessProcessControl {
                 ",(select f.displayname from "+UserTable+" f where f.id=(select e.userid from " + ApprovalTable+" e where e.businessid MATCH a.rowid  order by e.time desc limit 1 "+
                 " )) as approvaluser" +
                 " from "+BusinessTable +" a,"+UserTable+" b " +
-                "where a.userid = b.id ";
+                "where a.userid = b.id  and a.businesstype MATCH '"+businesstype+"' ";
 
         if(type!=null&&!type.equals("")){
             sql_list+=" and a.rowid in  (select rowid from "+BusinessTable+" where processstatustype MATCH '"+type+"')";
+            sql_count+=" and a.rowid in  (select rowid from "+BusinessTable+" where processstatustype MATCH '"+type+"')";
 
         }
         if (keyword!=null&&!keyword.equals("")){
@@ -428,19 +426,33 @@ public class BusinessProcessControl {
                 String[] arr=keyword.split("and");
                 for(int i=0;i<arr.length;i++){
                     sql_list+=" and a.rowid in (select rowid from "+BusinessTable+" where "+BusinessTable+" MATCH '"+arr[i]+"*') ";
+                    sql_count+=" and a.rowid in (select rowid from "+BusinessTable+" where "+BusinessTable+" MATCH '"+arr[i]+"*') ";
                 }
             }
             else if(keyword.indexOf("or")>0){
-                sql_list+=" and "+BusinessTable+" MATCH '";
 
                 String[] arr=keyword.split("or");
+                sql_list+=" and a.rowid IN (";
+                sql_count+=" and a.rowid IN (";
                 for(int i=0;i<arr.length;i++){
-                    sql_list+=arr[i]+"* OR ";
+                    //sql_list+=arr[i]+"* OR ";
+                    sql_list+=
+                            "    SELECT ROWID FROM "+BusinessTable+" WHERE "+BusinessTable+" MATCH '"+arr[i]+"*' " +
+                                    "UNION ";
+
+                    sql_count+=
+                            "    SELECT ROWID FROM "+BusinessTable+" WHERE "+BusinessTable+" MATCH '"+arr[i]+"*' " +
+                                    "UNION ";
+
                 }
-                sql_list=sql_list.substring(0,sql_list.lastIndexOf("OR"))+"' ";
+                sql_list=sql_list.substring(0,sql_list.lastIndexOf("UNION"))+") ";
+                sql_count=sql_count.substring(0,sql_count.lastIndexOf("UNION"))+") ";
+
             }
             else{
-                sql_list+=" and "+BusinessTable+" MATCH '"+keyword.toUpperCase()+"*' ";
+                sql_list+=" and a.rowid in (select rowid from "+BusinessTable+" where "+BusinessTable+" MATCH '"+keyword+"*') ";
+                sql_count+=" and a.rowid in (select rowid from "+BusinessTable+" where "+BusinessTable+" MATCH '"+keyword+"*') ";
+
             }
 
         }
@@ -452,6 +464,7 @@ public class BusinessProcessControl {
                     getProcessFromChinese(map.get("processstatus").toString())));
         }
 
+        totalnum=cd.getTotalCountBySql(sql_count);
         Map<String,Object>res=new HashMap<String, Object>();
         res.put("totalCount",totalnum);
         res.put("results",list);

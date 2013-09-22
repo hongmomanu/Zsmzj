@@ -16,7 +16,8 @@ Ext.define('ZSMZJ.store.dbgl.LogoutBusinesses', {
         url: 'ajax/getneedtodobusinesses.jsp',
         getMethod:function(request){ return 'POST'; },
         extraParams:{
-            type:processstatustype.logout
+            type:processstatustype.logout,
+            businesstype:businessTableType.dbgl
         },
         reader: {
             type: 'json',

@@ -22,7 +22,8 @@
         int limit=Integer.parseInt(request.getParameter("limit"));
         String keyword=request.getParameter("keyword");
         String type=request.getParameter("type");
-        out.print(bp.getNeedTodoBusinessList(start,limit,keyword,type));
+        String businesstype=request.getParameter("businesstype");
+        out.print(bp.getNeedTodoBusinessList(start,limit,keyword,type,businesstype));
     }
     //out.print("ok");
 %>

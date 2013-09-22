@@ -16,7 +16,8 @@ Ext.define('ZSMZJ.store.dbgl.ChangedBusinesses', {
         url: 'ajax/getneedtodobusinesses.jsp',
         getMethod:function(request){ return 'POST'; },
         extraParams:{
-            type:processstatustype.change
+            type:processstatustype.change,
+            businesstype:businessTableType.dbgl
         },
         reader: {
             type: 'json',

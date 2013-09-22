@@ -69,7 +69,11 @@ Ext.define('ZSMZJ.view.dbgl.GrantMoneyGrid' ,{
                 },
                 //发放年月	行政区划	户主姓名	户主身份证	申请类别	家庭类别	救助金额	家庭人数	享受人数	发放人	发放日期	数据生成日期
 
-                {header: '发放年月', dataIndex: 'grantmonth',width: 150},
+                {header: '发放年月', dataIndex: 'grantdate',width: 150,renderer: function (val, obj, record) {
+                    var time =Ext.Date.parse(val, "Y-m-d");
+                    val = Ext.util.Format.date(time, 'Y-m');
+                    return val;
+                }},
                 {header: '行政区划', dataIndex: 'division',align:'center',width: 250},
                 {header: '户主姓名',align:'center',dataIndex:'owername'},
                 {header: '户主身份证',align:'center',dataIndex:'owerid',width: 250},
@@ -83,7 +87,7 @@ Ext.define('ZSMZJ.view.dbgl.GrantMoneyGrid' ,{
                 {header: '享受人数',align:'center',dataIndex:'enjoynum'},
                 {header: '发放人',align:'center',dataIndex:'grantuser'},
                 {header: '发放日期',align:'center',dataIndex:'grantdate',width:200,renderer: function (val, obj, record) {
-                    var time =Ext.Date.parse(val, "Y-m-d H:i:s");
+                    var time =Ext.Date.parse(val, "Y-m-d");
                     val = Ext.util.Format.date(time, 'Y-m-d');
                     return val;
                 }},

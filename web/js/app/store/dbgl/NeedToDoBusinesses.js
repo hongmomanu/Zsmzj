@@ -15,10 +15,9 @@ Ext.define('ZSMZJ.store.dbgl.NeedToDoBusinesses', {
         type: 'ajax',
         url: 'ajax/getneedtodobusinesses.jsp',
         getMethod:function(request){ return 'POST'; },
-        /*extraParams:{
-            roleid:roleid,
-            type:"list"
-        },*/
+        extraParams:{
+            businesstype:businessTableType.dbgl
+        },
         reader: {
             type: 'json',
             root: 'results',

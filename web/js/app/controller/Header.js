@@ -291,6 +291,10 @@ Ext.define('ZSMZJ.controller.Header', {
             'dbglgrantmoneypanel button[action=newgrant]':{
                 click:this.new_grant
             },
+            'dbglgrantmoneypanel button[action=outexcel]':{
+                click:this.grant_outexcel
+            },
+
             'myheader component':{
                 needthingsclick:function (c){
                     this.showneedthings(c);
@@ -631,6 +635,9 @@ Ext.define('ZSMZJ.controller.Header', {
         this.newGrantWin.show();
 
         this.newGrantWin.dataobj=grid;
+
+    },
+    grant_outexcel:function(btn){
 
     },
     outexcel_complex:function(btn){
