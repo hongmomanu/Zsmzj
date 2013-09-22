@@ -38,6 +38,33 @@ Ext.define('ZSMZJ.view.dbgl.FamilyQueryGrid' ,{
                 {header: '户主姓名',align:'center',dataIndex:'owername',locked : true,
                     summaryRenderer: function(value){
                     return '本页合计'
+                },renderer: function (v, m, r) {
+                    var me=this;
+                    var id0=Ext.id();
+                    Ext.defer(function () {
+                        Ext.widget('label', {
+                            renderTo: id0,
+                            //margin: '0 5 0 5',
+                            border:0,
+                            text: v,
+                            overCls:'mouseover',
+                            width: 55,
+                            listeners: {
+
+                                render: function(c){
+                                    c.getEl().on('click', function(){
+                                        testobj=me.up('panel');
+                                        me.up('panel').fireEvent('alterclick', c,r,me);
+                                    }, c);
+                                }
+
+                            }
+                        });
+                    }, 50);
+
+
+
+                    return Ext.String.format('<span id="{0}"></span>',id0);
                 }},
 
                 //行政区划名称	户主姓名	户主身份证	申请类别	家庭户口性质	家庭类别	低保户类型

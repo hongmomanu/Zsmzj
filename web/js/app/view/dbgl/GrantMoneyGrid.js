@@ -53,8 +53,8 @@ Ext.define('ZSMZJ.view.dbgl.GrantMoneyGrid' ,{
 
                                     render: function(c){
                                         c.getEl().on('click', function(){
-                                            me.up('panel').fireEvent('showclick', c,r,me);
-
+                                            testobj=me.up('panel');
+                                            me.up('panel').fireEvent('alterclick', c,r,me);
                                         }, c);
                                     }
 

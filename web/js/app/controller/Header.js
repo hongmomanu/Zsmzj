@@ -340,6 +340,11 @@ Ext.define('ZSMZJ.controller.Header', {
                     //testobj=grid;
                     this.afterrenderEvents();
                 },*/
+                /*cellclick:function(iView, iCellEl, iColIdx, iRecord, iRowEl, iRowIdx, iEvent) {
+                    alert(1);
+                    var fieldName = iView.getGridColumns()[iColIdx].dataIndex;
+                    alert(fieldName);
+                },*/
                 processclick:function (c,r,grid){//查看流程
                     this.showProcessWin(c,r,grid);
                 },
@@ -358,6 +363,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
                     this.showAlterContent(c,r,grid);
                 },
+
                 delclick:function(c,r,grid){//未提交前删除
 
                     this.delbusinessapply(c,r,grid);
@@ -1566,6 +1572,7 @@ Ext.define('ZSMZJ.controller.Header', {
         this.signaturepicarr=[];
 
     },
+
     showAlterContent:function(c,r,grid){
         //var businessid=r.get('businessid');
         var objdata={

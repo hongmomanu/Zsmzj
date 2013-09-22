@@ -77,7 +77,7 @@
         padding:10px;
  }
 .x-tree-icon { display: none !important; }
-.mouseover{cursor: hand;font-size: 10;}
+.mouseover{cursor: hand;font-size: 10;text-decoration:underline;}
 /*.my-header .x-fieldset-header-text {
     color: red;
 }*/

@@ -9,6 +9,8 @@ Ext.define('ZSMZJ.model.dbgl.GrantMoneyModel', {
     extend: 'Ext.data.Model',
     fields: [
         {name: 'grantmonth'},
+        {name: 'processstatustype'},
+        {name: 'processstatus'},
         {name: 'division'},
         {name:'owername'},
         {name:'owerid'},
