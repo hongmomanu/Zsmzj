@@ -288,8 +288,9 @@ Ext.define('ZSMZJ.controller.Header', {
                 click: this.outexcel_complex
 
             },
-
-
+            'dbglgrantmoneypanel button[action=newgrant]':{
+                click:this.new_grant
+            },
             'myheader component':{
                 needthingsclick:function (c){
                     this.showneedthings(c);
@@ -321,7 +322,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
             },
 
-            'needtodopanel,needtodobusinesspanel,changedbusinesspanel,logoutbusinesspanel,peoplequerypanel,familyquerypanel,dbglstatisticsfullpanel,grantmoneypanel,dbglstatisticscomplexonepanel':{
+            'needtodopanel,needtodobusinesspanel,changedbusinesspanel,logoutbusinesspanel,peoplequerypanel,familyquerypanel,dbglstatisticsfullpanel,dbglgrantmoneypanel,dbglstatisticscomplexonepanel':{
 
                 afterrender: this.afterrenderEvents,
                 /*alterapplyaftershow:function(grid){
@@ -622,6 +623,12 @@ Ext.define('ZSMZJ.controller.Header', {
             }
         }
         return arr;
+
+    },
+    new_grant:function(btn){
+        if(!this.newGrantWin)this.newGrantWin=Ext.widget('addnewgrantwin');
+        this.newGrantWin.show();
+        //this.newGrantWin.dataform=btn.up('form');
 
     },
     outexcel_complex:function(btn){

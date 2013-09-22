@@ -9,7 +9,7 @@
 
 Ext.define('ZSMZJ.view.dbgl.GrantMoneyGrid' ,{
     extend: 'Ext.grid.Panel',
-    alias : 'widget.grantmoneypanel',
+    alias : 'widget.dbglgrantmoneypanel',
     cls:'navigation-grid',
     requires: [
 
@@ -67,34 +67,31 @@ Ext.define('ZSMZJ.view.dbgl.GrantMoneyGrid' ,{
                         return Ext.String.format('<span id="{0}"></span>',id0);
                     }
                 },
-                //{header: '审批名称', dataIndex: 'rolename',width: 150},
-                ////行政区划 户主姓名 户主身份证 申请类别 家庭类别 救助金额 救助开始日期 救助结束日期 家庭人数 享受人数 状态 状态描述 审核人 审核日期 制单人
+                //发放年月	行政区划	户主姓名	户主身份证	申请类别	家庭类别	救助金额	家庭人数	享受人数	发放人	发放日期	数据生成日期
+
+                {header: '发放年月', dataIndex: 'grantmonth',width: 150},
                 {header: '行政区划', dataIndex: 'division',align:'center',width: 250},
                 {header: '户主姓名',align:'center',dataIndex:'owername'},
                 {header: '户主身份证',align:'center',dataIndex:'owerid',width: 250},
-                //变更前人数	变更前金额	变更后人数	变更后金额	变更日期	变更原因	状态	状态描述	审核人	审核日期	制单人	制单日期
-                //家庭类别	注销日期	注销原因
+
                 {header: '申请类别',align:'center',dataIndex:'applytype'},
                 {header: '家庭类别',align:'center',dataIndex:'familytype'},
 
-                {header: '注销日期',align:'center',dataIndex:'logoutdate'},
-                {header: '注销原因',align:'center',dataIndex:'logoutreason'},
-
-                {header: '状态',align:'center',dataIndex:'processstatus',renderer:function(val, obj, record){
-
-
-                        if (val==processdiction.stepzero) return "未提交";
-                        else if(val==processdiction.steptwo)return val+"中";
-                        else return "已"+val;
-
+                {header: '家庭类别',align:'center',dataIndex:'familytype'},
+                {header: '救助金额',align:'center',dataIndex:'totalhelpmoney'},
+                {header: '家庭人数',align:'center',dataIndex:'familynum'},
+                {header: '享受人数',align:'center',dataIndex:'enjoynum'},
+                {header: '发放人',align:'center',dataIndex:'grantuser'},
+                {header: '发放日期',align:'center',dataIndex:'grantdate',width:200,renderer: function (val, obj, record) {
+                    var time =Ext.Date.parse(val, "Y-m-d H:i:s");
+                    val = Ext.util.Format.date(time, 'Y-m-d');
+                    return val;
                 }},
-                {header: '审核人',align:'center',dataIndex:'approvaluser'},
-                {header: '审核日期',align:'center',dataIndex:'approvaltime',width:200,renderer: function (val, obj, record) {
+                {header: '数据生成日期',align:'center',dataIndex:'granttime',width:200,renderer: function (val, obj, record) {
                     var time =Ext.Date.parse(val, "Y-m-d H:i:s");
                     val = Ext.util.Format.date(time, 'Y-m-d H:i');
                     return val;
                 }},
-                {header: '制单人',align:'center',dataIndex:'displayname'},
                 {header: '业务id',align:'center', width: 150,dataIndex:'businessid',hidden:true}
 
             ],
@@ -150,6 +147,12 @@ Ext.define('ZSMZJ.view.dbgl.GrantMoneyGrid' ,{
                     {
                         text: '导出Excel',
                         action:'outexcel'
+
+                    },
+                    '-',
+                    {
+                        text: '新增',
+                        action:'newgrant'
 
                     }
                 ]
