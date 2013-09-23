@@ -29,7 +29,18 @@ Ext.define('ZSMZJ.view.navigation.dbglConfigTree' ,{
                 }*/
             },
 
-            store: 'navigation.DbglTreeConfigs'
+            store: (function (me) {
+                var s = Ext.widget('dbgltreeconfigs');
+                s.proxy.extraParams = {
+                    type: me.searchtype,
+                    roleid:roleid
+
+                };
+                //s.root.text=me.searchtype;
+                s.getRootNode().set('text', me.searchtype);
+                s.load();
+                return s;
+            })(this)
 
         });
         this.callParent(arguments);

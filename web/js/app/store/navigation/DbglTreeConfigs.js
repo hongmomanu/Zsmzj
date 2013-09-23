@@ -12,7 +12,8 @@
 Ext.define('ZSMZJ.store.navigation.DbglTreeConfigs', {
     extend: 'Ext.data.TreeStore',
     model: 'ZSMZJ.model.navigation.DbglTreeConfig',
-    autoLoad:true,
+    alias:'widget.dbgltreeconfigs',
+    autoLoad:false,
     proxy: {
         type: 'ajax',
         getMethod:function(request){ return 'POST'; },
@@ -20,15 +21,10 @@ Ext.define('ZSMZJ.store.navigation.DbglTreeConfigs', {
             type: 'json'
             //root: 'images'
         },
-        extraParams:{
-            roleid:roleid,
-            type:"低保管理"
-
-        },
         url: 'ajax/gettreefuncsbyrule.jsp'
     },
     root: {
-        text: '低保管理',
+
         expanded: true
     }
 
