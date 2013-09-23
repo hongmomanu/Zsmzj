@@ -106,9 +106,35 @@ Ext.define('ZSMZJ.view.Viewport', {
                                 xtype: 'cf_mappanel',
                                 title: '首页',
                                 autoScroll: true
+                            },
+                            {
+                                title: "业务操作",
+                                closable: true,
+                                autoScroll: true,
+                                objdata:(function(){var a={record:{get:function(i){return processdiction.stepzero;}}};return a})(),
+                                id: 'tab' + 'dbglbusinessalterform',
+                                xtype:'dbglbusinessalterform',
+                                hidden: true
+                            },
+                            {
+                                title: "业务操作",
+                                closable: true,
+                                autoScroll: true,
+                                objdata:(function(){var a={record:{get:function(i){return processdiction.stepzero;}}};return a})(),
+                                id: 'tab' + 'dbglbusinesschangeform',
+                                xtype:'dbglbusinesschangeform',
+                                hidden: true
+                            },
+                            {
+                                title: "业务操作",
+                                closable: true,
+                                autoScroll: true,
+                                objdata:(function(){var a={record:{get:function(i){return processdiction.stepzero;}}};return a})(),
+                                id: 'tab' + 'dbglbusinesslogoutform',
+                                xtype:'dbglbusinesslogoutform',
+                                hidden: true
                             }
 
-			    
 				    ]
                    })
 		   ]

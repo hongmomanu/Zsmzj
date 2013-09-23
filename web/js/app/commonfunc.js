@@ -8,10 +8,14 @@
 var CommonFunc={
 
     lookup:function(arr,item) {
-        var result;
-        for(var i = 0;i<arr.length;i++) {
-            if(arr[i][item.name]=== item.value )result= arr[i];
+
+        var result=null;
+        if(arr){
+            for(var i = 0;i<arr.length;i++) {
+                if(arr[i][item.name]=== item.value )result= arr[i];
+            }
         }
+
         return result;
     },
 

@@ -2127,9 +2127,14 @@ Ext.define('ZSMZJ.controller.Header', {
         ViewWaitMask.show();
         var tabs = Ext.getCmp('mainContent-panel');
         if (tabs.getComponent('tab' + value)) {
-            if(objdata)tabs.getComponent('tab' + value).objdata=objdata;
-            if(tabs.getComponent('tab' + value).isHidden()){
-                tabs.getComponent('tab' + value).show();
+            var tab=tabs.getComponent('tab' + value);
+            if(objdata)tab.objdata=objdata;
+
+            if(tab.isHidden()){
+                tab.tab.show();
+                //tab.show();
+
+                tabs.setActiveTab(tab);
             }
             else{
                 this.initchangelogoutbtns(tabs.getComponent('tab' + value));
