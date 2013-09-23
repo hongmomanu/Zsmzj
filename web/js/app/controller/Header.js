@@ -650,6 +650,97 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
     grant_outexcel:function(btn){
+        var store=btn.up('panel').getStore();
+        var rows=[];
+        Ext.each(store.data.items,function(item){
+            var row=item.raw;
+            var grantdate=row.grantdate;
+            row.grantmonth=Ext.util.Format.date(Ext.Date.parse(grantdate, "Y-m-d"), 'Y-m');
+            //row.grantdate=Ext.util.Format.date(Ext.Date.parse(grantdate, "Y-m-d"), 'Y-m');
+            row.granttime=Ext.util.Format.date(Ext.Date.parse(row.granttime, "Y-m-d H:i:s"), 'Y-m-d H:i');
+            rows.push(item.raw);
+        });
+        var sum={"monthlyincome":store.sum("monthlyincome")};
+        if(rows.length==0){
+            Ext.Msg.alert("提示信息", "无相关数据可导出");
+            return ;
+        }
+        var me=this;
+        var params = {
+            rows:Ext.JSON.encode(rows),
+            sum:Ext.JSON.encode(sum),
+            title:'低保人员列表',
+            //headerheight:1,
+            headerheight:1,
+            headercols:17,
+            headers:Ext.JSON.encode([
+
+
+
+
+                {name:"序号",value:"index",columns:[],
+                    col:[0,0],
+                    row:[1,1]},
+                {name: '发放年月', value: 'grantmonth',columns:[],
+                    col:[1,1],
+                    row:[1,1]},
+                {name: '行政区划', value: 'division',columns:[],
+                    col:[2,2],
+                    row:[1,1]},
+                {name: '户主姓名',value:'owername',columns:[],
+                    col:[3,3],
+                    row:[1,1]},
+                {name: '户主身份证',value:'owerid',columns:[],
+                    col:[4,4],
+                    row:[1,1]},
+
+                {name: '申请类别',value:'applytype',columns:[],
+                    col:[5,5],
+                    row:[1,1]},
+                {name: '家庭类别',value:'familytype',columns:[],
+                    col:[6,6],
+                    row:[1,1]},
+
+                {name: '家庭类别',value:'familytype',columns:[],
+                    col:[7,7],
+                    row:[1,1]},
+                {name: '救助金额',value:'totalhelpmoney',columns:[],
+                    col:[8,8],
+                    row:[1,1]},
+                {name: '家庭人数',value:'familynum',columns:[],
+                    col:[9,9],
+                    row:[1,1]},
+                {name: '享受人数',value:'enjoynum',columns:[],
+                    col:[10,10],
+                    row:[1,1]},
+                {name: '发放人',value:'grantuser',columns:[],
+                    col:[11,11],
+                    row:[1,1]},
+                {name: '发放日期',value:'grantdate',columns:[],
+                    col:[12,12],
+                    row:[1,1]},
+                {name: '数据生成日期',value:'granttime',columns:[],
+                    col:[13,13],
+                    row:[1,1]
+                }
+
+            ])
+        };
+        var successFunc = function (response, action) {
+            var res = Ext.JSON.decode(response.responseText);
+            if(res.isok){
+                window.location.href = res.path;
+                //var win = window.open(res.path);
+            }
+            else{
+                Ext.Msg.alert("提示信息", "导出excel文件失败");
+            }
+        };
+        var failFunc = function (res, action) {
+            Ext.Msg.alert("提示信息", "导出excel文件失败");
+        };
+        this.ajaxSend(params, 'ajax/makeexcel.jsp', successFunc, failFunc,'POST');
+
 
     },
     outexcel_complex:function(btn){
