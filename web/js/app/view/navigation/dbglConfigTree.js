@@ -28,7 +28,7 @@ Ext.define('ZSMZJ.view.navigation.dbglConfigTree' ,{
                     containerScroll: true
                 }*/
             },
-
+            loadMask: {msg: '加载中...'},
             store: (function (me) {
                 var s = Ext.widget('dbgltreeconfigs');
                 s.proxy.extraParams = {

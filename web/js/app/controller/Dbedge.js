@@ -50,10 +50,17 @@ Ext.define('ZSMZJ.controller.Dbedge', {
                 affixclick:function (c){
                     dbgl_cl.showaffixWindow(c);
                 }
+            },
+            'dbedgebusinessapplyform button[action=applysubmit]':{
+                click: this.applysubmit
             }
         }, this);
 
 
+    },
+    applysubmit:function(btn){
+        var dbgl_cl=this.application.getController("Dbgl");
+        dbgl_cl.submitcommon(btn,businessTableType.dbbyh);
     },
     onLaunch: function() {
         var me = this;

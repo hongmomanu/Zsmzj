@@ -808,22 +808,13 @@ Ext.define('ZSMZJ.view.dbedge.businessApply', {
                     },
 
                     items: [
-                        {
-                         xtype:'dbglaplytype',
-                         searchtype:"dbglpoortype",
-                         name: 'poortype',
-                         fieldLabel: '低保类型',
-                         afterLabelTextTpl: required,
-                         emptyText: '请输入低保类型',
-                         blankText : '请输入低保类型',
-                         allowBlank: false
-                         },
+
                          {
                          name: 'poorstandard',
-                         fieldLabel: '低保标准(元)',
+                         fieldLabel: '低保边缘户标准(元)',
                          afterLabelTextTpl: required,
-                         emptyText: '请输入低保标准',
-                         blankText : '请输入低保标准',
+                         emptyText: '请输入低保边缘户标准',
+                         blankText : '请输入低保边缘户标准',
                          allowBlank: false
                          }
                          ,
@@ -862,28 +853,6 @@ Ext.define('ZSMZJ.view.dbedge.businessApply', {
                             allowBlank: false
                         },
                         {
-                            name: 'disabledpersons',
-                            fieldLabel: '重残人数',
-                            value:0,
-                            afterLabelTextTpl: required,
-                            emptyText: '请输入重残人数',
-                            blankText : '请输入重残人数',
-                            allowBlank: false
-                        },
-                        {
-                            name: 'disabledmoney',
-                            fieldLabel: '重残低保金(元)',
-                            value:0,
-                            allowBlank: true
-                        },
-                        {
-                            name: 'othershelpmoney',
-                            fieldLabel: '其他人员低保金(元)',
-                            value:0,
-                            allowBlank: true
-                        }
-                        ,
-                        {
                             name: 'totalhelpmoney',
                             fieldLabel: '总救助金额(元/月/户)',
                             value:0,
@@ -895,7 +864,7 @@ Ext.define('ZSMZJ.view.dbedge.businessApply', {
                             fieldLabel: '公示结束日期',
                             xtype: 'datefield',
                             format: 'Y-m-d',
-                            colspan:2,
+                            colspan:3,
                             allowBlank: true
                         }
                         ,{
