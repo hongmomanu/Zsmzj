@@ -14,6 +14,7 @@ Ext.define('ZSMZJ.model.dbgl.ChangedBusiness', {
         {name:'applytype'},
         {name:'changedate'},
         {name:'changereason'},
+        {name:'businesstype'},
         {name:'aftertotalhelpmoney'},
         {name:'afterpeople'},
         {name:'beforetotalhelpmoney'},

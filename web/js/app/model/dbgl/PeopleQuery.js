@@ -11,6 +11,7 @@ Ext.define('ZSMZJ.model.dbgl.PeopleQuery', {
         {name:'owername'},
         {name:'processstatus'},
         {name:'processstatustype'},
+        {name:'businesstype'},
         {name:'businessid'},
         {name: 'division'},
         {name:'owerid'},

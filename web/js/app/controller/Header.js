@@ -349,7 +349,6 @@ Ext.define('ZSMZJ.controller.Header', {
                     this.showProcessWin(c,r,grid);
                 },
                 businessclick:function(c,r,grid){//业务审核处理
-
                    //me.widgetdolayout("mainContent-panel");
                     var me=this;
                     var callback=function fn(){
@@ -1673,13 +1672,33 @@ Ext.define('ZSMZJ.controller.Header', {
             item:c
 
         };
+        var widgetname="";
         if(r.get('processstatustype')==processstatustype.ok){
-            this.showtab("业务操作",'dbglbusinessalterform','widget',objdata);
+            console.log(r.get('businesstype'));
+            if(r.get('businesstype')==businessTableType.dbgl){
+                widgetname='dbglbusinessalterform';
+            }else if(r.get('businesstype')==businessTableType.dbbyh){
+                widgetname='dbedgebusinessalterform';
+            }
+
         }else if(r.get('processstatustype')==processstatustype.change){
-            this.showtab("业务操作",'dbglbusinesschangeform','widget',objdata);
+            console.log(r.get('businesstype'));
+            if(r.get('businesstype')==businessTableType.dbgl){
+                widgetname='dbglbusinesschangeform';
+            }else if(r.get('businesstype')==businessTableType.dbbyh){
+                widgetname='dbedgebusinesschangeform';
+            }
+
         }else if(r.get('processstatustype')==processstatustype.logout){
-            this.showtab("业务操作",'dbglbusinesslogoutform','widget',objdata);
+            console.log(r.get('businesstype'));
+            if(r.get('businesstype')==businessTableType.dbgl){
+                widgetname='dbglbusinesslogoutform';
+            }else if(r.get('businesstype')==businessTableType.dbbyh){
+                widgetname='dbedgebusinesslogoutform';
+            }
         }
+        console.log(widgetname);
+        this.showtab("业务操作",widgetname,'widget',objdata);
 
     },
     cancelbusinesssubmit:function(c,r,grid,form){

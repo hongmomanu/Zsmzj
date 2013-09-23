@@ -159,7 +159,8 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
                     return val;
                 }},
                 {header: '提交人',dataIndex:'displayname'},
-                {header: '业务id', width: 150,dataIndex:'businessid',hidden:true}
+                {header: '业务id', width: 150,dataIndex:'businessid',hidden:true},
+                {header: 'businesstype', width: 150,dataIndex:'businesstype',hidden:true}
 
 
             ],

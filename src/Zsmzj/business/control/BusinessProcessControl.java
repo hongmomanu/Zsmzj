@@ -339,7 +339,7 @@ public class BusinessProcessControl {
                 "where a.rowid = b.businessid  and a.businesstype MATCH '"+businesstype+"'";
         //int totalnum =cd.getTotalCount(FamilyTable);
 
-        String sql_list="select a.division,a.owername,a.processstatus,a.processstatustype,b.rowid,a.owerid,b.* "+
+        String sql_list="select a.division,a.owername,a.processstatus,a.processstatustype,a.businesstype,b.rowid,a.owerid,b.* "+
                 " from "+BusinessTable +" a,"+FamilyTable+" b " +
                 "where a.rowid = b.businessid  and a.businesstype MATCH '"+businesstype+"'";
 

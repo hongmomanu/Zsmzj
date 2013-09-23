@@ -11,6 +11,7 @@ Ext.define('ZSMZJ.model.dbgl.GrantMoneyModel', {
         {name: 'grantmonth'},
         {name: 'processstatustype'},
         {name: 'processstatus'},
+        {name:'businesstype'},
         {name: 'division'},
         {name:'owername'},
         {name:'owerid'},
