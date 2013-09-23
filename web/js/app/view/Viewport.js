@@ -106,7 +106,7 @@ Ext.define('ZSMZJ.view.Viewport', {
                                 xtype: 'cf_mappanel',
                                 title: '首页',
                                 autoScroll: true
-                            },
+                            }/*,
                             {
                                 title: "业务操作",
                                 closable: true,
@@ -133,7 +133,7 @@ Ext.define('ZSMZJ.view.Viewport', {
                                 id: 'tab' + 'dbglbusinesslogoutform',
                                 xtype:'dbglbusinesslogoutform',
                                 hidden: true
-                            }
+                            }*/
 
 				    ]
                    })
