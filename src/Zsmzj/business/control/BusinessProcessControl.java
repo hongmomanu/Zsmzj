@@ -684,27 +684,11 @@ public class BusinessProcessControl {
 
         BusinessProcess bp=new BusinessProcess();
         params.put("businesstype",businessType);
-        Connection conn= JdbcFactory.getConn("sqlite");
-
-        try {
-            conn.setAutoCommit(false);
-            int businessid=bp.saveApplyBusiness(params);
-            bp.saveAffixFiles(affixfiles, businessid);
-            bp.saveFamilyMembers(familymembers,businessid,FamilyTable);
-            conn.commit();
-            conn.setAutoCommit(true);
-            return "{success:true}";
-        } catch (SQLException e) {
-            try {
-                conn.rollback();
-            } catch (SQLException e1) {
-                e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            }finally {
-                return"{success:false}";
-            }
-
-            //e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
+        int businessid=bp.saveApplyBusiness(params);
+        bp.saveAffixFiles(affixfiles, businessid);
+        bp.saveFamilyMembers(familymembers,businessid,FamilyTable);
+        if(businessid>0)return "{success:true}";
+        else  return "{success:false}";
 
     }
 

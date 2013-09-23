@@ -56,15 +56,14 @@ Ext.define('ZSMZJ.controller.Dbedge', {
             }
         }, this);
 
-
     },
     applysubmit:function(btn){
         var dbgl_cl=this.application.getController("Dbgl");
         dbgl_cl.submitcommon(btn,businessTableType.dbbyh);
     },
+
     onLaunch: function() {
         var me = this;
-
         // for dev purpose
         //ctrl = this;
     }

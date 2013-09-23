@@ -397,8 +397,6 @@ public class BusinessProcessDao {
         String sql = "insert  into " + tablename +
                 " ("+col_str+") values " +"("+val_str+")";
 
-        log.debug(sql);
-        log.debug(val_arr);
         PreparedStatement pstmt = JdbcFactory.getPstmt(conn, sql);
         try {
             int i=0;
@@ -413,7 +411,14 @@ public class BusinessProcessDao {
             //pstmt.addBatch();
             //int[] ret = pstmt.executeBatch();
             //pstmt.clearBatch();
-            return pstmt.executeUpdate();
+            pstmt.executeUpdate();
+            ResultSet keys = pstmt.getGeneratedKeys(); // equivalent to "SELECT last_insert_id();"
+            int result =0;
+            if(keys.next()) {
+                result=keys.getInt(1);
+            }
+
+            return result;
         } catch (SQLException ex) {
             try {
                 conn.close();
