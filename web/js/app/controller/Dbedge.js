@@ -30,6 +30,7 @@ Ext.define('ZSMZJ.controller.Dbedge', {
     ],
     views: [
         'dbedge.businessApply',
+        'dbedge.businessChange',
         'dbedge.businessAlter'
 
 
@@ -42,7 +43,7 @@ Ext.define('ZSMZJ.controller.Dbedge', {
         this.initStrore();
         var dbgl_cl=this.application.getController("Dbgl");
         this.control({
-            'dbedgebusinessapplyform':{
+            'dbedgebusinessapplyform,dbedgebusinessalterform,dbedgebusinesschangeform,dbedgebusinesslogoutform':{
                 afterrender: dbgl_cl.afterrenderEvents
             },
             'dbedgebusinessapplyform component,dbedgebusinessalterform component':{
@@ -54,8 +55,23 @@ Ext.define('ZSMZJ.controller.Dbedge', {
                 }
             },
             'dbedgebusinessapplyform button[action=applysubmit]':{
-                click: this.applysubmit
+                click: Ext.bind(dbgl_cl.applysubmit, dbgl_cl)
+            },
+            'dbedgebusinessalterform button[action=applysubmit],dbedgebusinesschangeform button[action=applysubmit],dbedgebusinesslogoutform button[action=applysubmit]':{
+                click: Ext.bind(dbgl_cl.applysubmitupdate,dbgl_cl)
+            },
+            'dbedgebusinesschangeform button[action=saveapplysubmit]':{
+                click: Ext.bind(dbgl_cl.applysubmitchange,dbgl_cl)
+            },
+            'dbedgebusinesslogoutform button[action=savelogoutapplysubmit]':{
+                click: Ext.bind(dbgl_cl.savelogoutapplysubmit,dbgl_cl)
+            },
+
+            'dbedgebusinessalterform button[action=applysubmit],dbedgebusinesschangeform button[action=applysubmit],dbedgebusinesslogoutform button[action=applysubmit]':{
+                click: Ext.bind(dbgl_cl.applysubmitupdate,dbgl_cl)
             }
+
+
         }, this);
 
     },
@@ -63,6 +79,11 @@ Ext.define('ZSMZJ.controller.Dbedge', {
         var dbgl_cl=this.application.getController("Dbgl");
         dbgl_cl.submitcommon(btn,businessTableType.dbbyh);
     },
+    applysubmitupdate:function(btn){
+        var dbgl_cl=this.application.getController("Dbgl");
+        dbgl_cl.applysubmitupdate(btn);
+    },
+
 
     onLaunch: function() {
         var me = this;
