@@ -14,12 +14,18 @@ Ext.define('ZSMZJ.view.dbgl.GrantMoneyGrid' ,{
     requires: [
 
     ],
+    listeners: {
+        show: function(panel) {
+            this.fireEvent('gridshowfresh',this);
+        }
+    },
     /*afterShow: function(animateTarget, cb, scope) {
         this.fireEvent('alterapplyaftershow',this);
     },*/
     initComponent: function() {
         Ext.apply(this, {
             border: false,
+            stype:businessTableType.dbgl,
             viewConfig: {
                 trackOver: false,
                 loadMask: true,

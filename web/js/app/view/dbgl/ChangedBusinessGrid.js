@@ -14,12 +14,18 @@ Ext.define('ZSMZJ.view.dbgl.ChangedBusinessGrid' ,{
     requires: [
 
     ],
+    listeners: {
+        show: function(panel) {
+            this.fireEvent('gridshowfresh',this);
+        }
+    },
     /*afterShow: function(animateTarget, cb, scope) {
         this.fireEvent('alterapplyaftershow',this);
     },*/
     initComponent: function() {
         Ext.apply(this, {
             border: false,
+            stype:processstatustype.change,
             viewConfig: {
                 trackOver: false,
                 loadMask: true,

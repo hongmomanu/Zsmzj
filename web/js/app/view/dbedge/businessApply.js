@@ -200,7 +200,7 @@ Ext.define('ZSMZJ.view.dbedge.businessApply', {
                     },{
                         name: 'bankid',
                         fieldLabel: '银行账号',
-                        colspan:2,
+                        colspan:3,
                         //afterLabelTextTpl: required,
                         //emptyText: '低保户类型',
                         allowBlank: true

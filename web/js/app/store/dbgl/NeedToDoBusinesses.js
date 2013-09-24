@@ -7,9 +7,9 @@
  */
 Ext.define('ZSMZJ.store.dbgl.NeedToDoBusinesses', {
     extend: 'Ext.data.Store',
-    //alias : 'widget.headerviewers',
+    alias : 'widget.needtodobusinessesstore',
     model: 'ZSMZJ.model.dbgl.NeedToDoBusiness',
-    autoLoad:true,
+    autoLoad:false,
     pageSize: 20,
     proxy: {
         type: 'ajax',

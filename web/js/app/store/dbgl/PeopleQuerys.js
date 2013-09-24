@@ -7,9 +7,9 @@
  */
 Ext.define('ZSMZJ.store.dbgl.PeopleQuerys', {
     extend: 'Ext.data.Store',
-    //alias : 'widget.headerviewers',
+    alias : 'widget.peoplequerysstore',
     model: 'ZSMZJ.model.dbgl.PeopleQuery',
-    autoLoad:true,
+    autoLoad:false,
     pageSize: 20,
     proxy: {
         type: 'ajax',

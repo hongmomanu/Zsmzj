@@ -71,8 +71,13 @@ Ext.define('ZSMZJ.controller.Navigation', {
 
     },
     treeclick: function (record, item, index, e, eOpts) {
+
+
+
         if (item.data.leaf) {
-            this.showtab(item.data.text,item.data.value,item.data.type);
+            testobj=record;
+            var businesstype=record.panel.businesstype;
+            this.showtab(item.data.text,item.data.value,item.data.type,businesstype);
 
         }
     },
@@ -80,7 +85,7 @@ Ext.define('ZSMZJ.controller.Navigation', {
 
         Ext.getCmp('tab' + value).doLayout();
     },
-    showtab:function(label,value,type){
+    showtab:function(label,value,type,businesstype){
         if(ViewWaitMask){
              try{
                  Ext.getCmp('mainContent-panel').getEl().unmask();
@@ -91,8 +96,12 @@ Ext.define('ZSMZJ.controller.Navigation', {
 
         }
         var tabs = Ext.getCmp('mainContent-panel');
-        if (tabs.getComponent('tab' + value)) {
-            tabs.getComponent('tab' + value).show();
+        var tab=tabs.getComponent('tab' + value)
+        if (tab) {
+            tab.businesstype=businesstype;
+            if(!tab.isHidden())tab.fireEvent('gridshowfresh',tab);
+            tab.show();
+
         } else {
             if (type == 'widget') {
 
@@ -103,6 +112,7 @@ Ext.define('ZSMZJ.controller.Navigation', {
                     closable: true,
                     id: 'tab' + value,
                     xtype: value,
+                    businesstype:businesstype,
                     autoScroll: true,
                     iconCls: 'tabs',
                     title: label

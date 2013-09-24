@@ -9,7 +9,7 @@ Ext.define('ZSMZJ.store.dbgl.FamilyQuerys', {
     extend: 'Ext.data.Store',
     //alias : 'widget.headerviewers',
     model: 'ZSMZJ.model.dbgl.FamilyQuery',
-    autoLoad:true,
+    autoLoad:false,
     pageSize: 20,
     proxy: {
         type: 'ajax',

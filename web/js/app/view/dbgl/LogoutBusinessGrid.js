@@ -14,12 +14,15 @@ Ext.define('ZSMZJ.view.dbgl.LogoutBusinessGrid' ,{
     requires: [
 
     ],
-    /*afterShow: function(animateTarget, cb, scope) {
-        this.fireEvent('alterapplyaftershow',this);
-    },*/
+    listeners: {
+        show: function(panel) {
+            this.fireEvent('gridshowfresh',this);
+        }
+    },
     initComponent: function() {
         Ext.apply(this, {
             border: false,
+            stype:processstatustype.logout,
             viewConfig: {
                 trackOver: false,
                 loadMask: true,

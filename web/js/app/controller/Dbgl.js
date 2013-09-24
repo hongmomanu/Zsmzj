@@ -280,8 +280,8 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             businesstype:businessTableType.dbgl
         };
         var successFunc = function (myform, action) {
-            console.log(myform);
-            console.log(action);
+            //console.log(myform);
+            //console.log(action);
             btn.up('window').close();
             grid.getStore().load();
 
@@ -398,8 +398,9 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             Ext.Msg.alert("提示信息", "操作成功");
             var hc=me.application.getController("Header");
             hc.closetab(form.id);
-            var grid=form.objdata.grid;
-            grid.getStore().load();
+            //alert(111);
+            //var grid=form.objdata.grid;
+            //grid.getStore().load();
 
         };
         var failFunc = function (form, action) {
@@ -433,7 +434,11 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             Ext.Msg.alert("提示信息", "审核成功");
             var hc=me.application.getController("Header");
             hc.closetab(form.id);
-            grid.getStore().load();
+            //alert(22);
+            /*grid.getStore().load({callback:function(){
+                CommonFunc.widgetdolayout("mainContent-panel",500);
+
+            }});*/
 
         };
         var failFunc = function (form, action) {

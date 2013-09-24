@@ -7,6 +7,14 @@
  */
 var CommonFunc={
 
+    widgetdolayout:function(widgetid,time){
+        function fn(){
+            Ext.getCmp(widgetid).doLayout();
+        }
+        var task = new Ext.util.DelayedTask(fn);
+        if(!time)time=500;
+        task.delay(time);
+    },
     lookup:function(arr,item) {
 
         var result=null;

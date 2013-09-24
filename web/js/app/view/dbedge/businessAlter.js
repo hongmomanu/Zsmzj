@@ -7,9 +7,9 @@
  */
 
 
-Ext.define('ZSMZJ.view.dbgl.businessAlter', {
+Ext.define('ZSMZJ.view.dbedge.businessAlter', {
     extend : 'Ext.form.Panel',
-    alias : 'widget.dbglbusinessalterform',
+    alias : 'widget.dbedgebusinessalterform',
     requires: [
 
 
@@ -36,7 +36,7 @@ Ext.define('ZSMZJ.view.dbgl.businessAlter', {
             autoScroll: true,
             items: [{
                 xtype: 'fieldset',
-                title: '<a>【低保业务办理】家庭基本信息</a>',
+                title: '<a>【低保边缘户业务办理】家庭基本信息</a>',
                 defaultType: 'textfield',
 
                 //layout: 'anchor',
@@ -97,22 +97,22 @@ Ext.define('ZSMZJ.view.dbgl.businessAlter', {
                     ,{
                         xtype:'dbglaplytype',
                         name: 'applytype',
-                        searchtype:"dbglapplytype",
+                        searchtype:"dbedgeapplytype",
                         fieldLabel: '申请类别',
                         emptyText: '请输入申请类别',
                         blankText: '请输入申请类别',
                         afterLabelTextTpl: required
 
                         /*name: 'applytype',
-                        afterLabelTextTpl: required,
-                        fieldLabel: '申请类别',
-                        emptyText: '请输入申请类别',
-                        blankText: '请输入申请类别',
-                        allowBlank: false*/
+                         afterLabelTextTpl: required,
+                         fieldLabel: '申请类别',
+                         emptyText: '请输入申请类别',
+                         blankText: '请输入申请类别',
+                         allowBlank: false*/
                     },{
                         xtype:'dbglaplytype',
                         name: 'familytype',
-                        searchtype:"dbglfamilytype",
+                        searchtype:"dbedgefamilytype",
                         fieldLabel: '家庭类别',
                         afterLabelTextTpl: required,
                         emptyText: '请输入家庭类别',
@@ -135,12 +135,12 @@ Ext.define('ZSMZJ.view.dbgl.businessAlter', {
                         allowBlank: false
                     },{
                         xtype:'dbglaplytype',
-                        searchtype:"dbglpoorfamilytype",
+                        searchtype:"dbedgepoorfamilytype",
                         name: 'poorfamilytype',
-                        fieldLabel: '低保户类型',
+                        fieldLabel: '致贫原因',
                         afterLabelTextTpl: required,
-                        blankText: '低保户类型',
-                        emptyText: '低保户类型',
+                        blankText: '致贫原因',
+                        emptyText: '致贫原因',
                         allowBlank: false
                     },{
                         xtype:'dbglaplytype',
@@ -209,22 +209,7 @@ Ext.define('ZSMZJ.view.dbgl.businessAlter', {
                     },{
                         name: 'bankid',
                         fieldLabel: '银行账号',
-                        colspan:2,
-                        //afterLabelTextTpl: required,
-                        //emptyText: '低保户类型',
-                        allowBlank: true
-                    },{
-                        name: 'otherfamilyinfo',
-                        fieldLabel: '家庭备注',
                         colspan:3,
-                        minWidth:600,
-                        width:800,
-                        //draggable :true,
-                        anchor : '100%',
-                        //width:800,
-                        xtype : 'textarea',
-                        grow : true,
-
                         //afterLabelTextTpl: required,
                         //emptyText: '低保户类型',
                         allowBlank: true
@@ -826,23 +811,13 @@ Ext.define('ZSMZJ.view.dbgl.businessAlter', {
 
                     items: [
                         {
-                         xtype:'dbglaplytype',
-                         searchtype:"dbglpoortype",
-                         name: 'poortype',
-                         fieldLabel: '低保类型',
-                         afterLabelTextTpl: required,
-                         emptyText: '请输入低保类型',
-                         blankText : '请输入低保类型',
-                         allowBlank: false
-                         },
-                         {
-                         name: 'poorstandard',
-                         fieldLabel: '低保标准(元)',
-                         afterLabelTextTpl: required,
-                         emptyText: '请输入低保标准',
-                         blankText : '请输入低保标准',
-                         allowBlank: false
-                         }
+                            name: 'poorstandard',
+                            fieldLabel: '低保边缘户标准(元)',
+                            afterLabelTextTpl: required,
+                            emptyText: '请输入低保边缘户标准',
+                            blankText : '请输入低保边缘户标准',
+                            allowBlank: false
+                        }
                          ,
                          {
                          name: 'aidnum',
@@ -878,28 +853,7 @@ Ext.define('ZSMZJ.view.dbgl.businessAlter', {
                             disabled:true,
                             allowBlank: false
                         },
-                        {
-                            name: 'disabledpersons',
-                            fieldLabel: '重残人数',
-                            value:0,
-                            afterLabelTextTpl: required,
-                            emptyText: '请输入重残人数',
-                            blankText : '请输入重残人数',
-                            allowBlank: false
-                        },
-                        {
-                            name: 'disabledmoney',
-                            fieldLabel: '重残低保金(元)',
-                            value:0,
-                            allowBlank: true
-                        },
-                        {
-                            name: 'othershelpmoney',
-                            fieldLabel: '其他人员低保金(元)',
-                            value:0,
-                            allowBlank: true
-                        }
-                        ,
+
                         {
                             name: 'totalhelpmoney',
                             fieldLabel: '总救助金额(元/月/户)',
@@ -912,7 +866,7 @@ Ext.define('ZSMZJ.view.dbgl.businessAlter', {
                             fieldLabel: '公示结束日期',
                             xtype: 'datefield',
                             format: 'Y-m-d',
-                            colspan:2,
+                            colspan:3,
                             allowBlank: true
                         }
                         ,{

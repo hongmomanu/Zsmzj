@@ -15,12 +15,18 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsFullGrid' ,{
     requires: [
 
     ],
+    listeners: {
+        show: function(panel) {
+            this.fireEvent('gridshowfresh',this);
+        }
+    },
     /*afterShow: function(animateTarget, cb, scope) {
         this.fireEvent('alterapplyaftershow',this);
     },*/
     initComponent: function() {
         Ext.apply(this, {
             border: true,
+            stype:'full',
             layout: 'fit',
             //anchor: '100% 60%',
             useArrows: true,

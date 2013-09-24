@@ -29,7 +29,9 @@ Ext.define('ZSMZJ.controller.Dbedge', {
 
     ],
     views: [
-        'dbedge.businessApply'
+        'dbedge.businessApply',
+        'dbedge.businessAlter'
+
 
     ],
 
@@ -43,7 +45,7 @@ Ext.define('ZSMZJ.controller.Dbedge', {
             'dbedgebusinessapplyform':{
                 afterrender: dbgl_cl.afterrenderEvents
             },
-            'dbedgebusinessapplyform component':{
+            'dbedgebusinessapplyform component,dbedgebusinessalterform component':{
                 imgclick:function (c){
                     dbgl_cl.showUploadImgWin(c);
                 },

@@ -14,6 +14,11 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
     requires: [
 
     ],
+    listeners: {
+        show: function(panel) {
+            this.fireEvent('gridshowfresh',this);
+        }
+    },
     /*afterShow: function(animateTarget, cb, scope) {
         this.fireEvent('alterapplyaftershow',this);
     },*/
@@ -270,6 +275,7 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                                     var keyword = field.getValue().replace(/\s+/g, "");
                                     var store=this.up('panel').getStore();
                                     store.proxy.extraParams.keyword = keyword;
+                                    //store.on('load', function (store, options){CommonFunc.widgetdolayout("mainContent-panel",1);});
                                     store.loadPage(1);
                                 }
                             }
@@ -284,7 +290,7 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                     }
                 ]
             }),
-            store: 'dbgl.NeedToDoBusinesses'
+            store: 'dbgl.NeedToDoBusinesses'//'dbgl.NeedToDoBusinesses'
 
 
         });
