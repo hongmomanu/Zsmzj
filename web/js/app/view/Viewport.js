@@ -43,7 +43,7 @@ Ext.define('ZSMZJ.view.Viewport', {
                         id: 'west-panel', // see Ext.getCmp() below
                         title: '导航栏',
                         split: false,
-                        width: 200,
+                        width: 204,
                         style: {
                              border: 'none'
                         },
