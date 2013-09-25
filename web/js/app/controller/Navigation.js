@@ -86,6 +86,7 @@ Ext.define('ZSMZJ.controller.Navigation', {
         Ext.getCmp('tab' + value).doLayout();
     },
     showtab:function(label,value,type,businesstype){
+
         if(ViewWaitMask){
              try{
                  Ext.getCmp('mainContent-panel').getEl().unmask();

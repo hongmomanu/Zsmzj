@@ -6,14 +6,34 @@
  * To change this template use File | Settings | File Templates.
  */
 var extLocation="http://192.168.2.112/extjs4.2/";
-var businessTableType={'dbgl':"低保",'dbbyh':"边缘户"};
+var businessTableType={'dbgl':"低保",'dbbyh':"边缘户",'temporaryhelp':'临时救助'};
 
-var menu_shjz=[{layout: 'fit',title: '低保管理',items:[
-    {xtype:'dbglconfigtree',searchtype:"低保管理",businesstype:businessTableType.dbgl}],iconCls: 'nav' },
-    {layout: 'fit',title: '低保边缘户',items:[
-        {xtype:'dbglconfigtree',searchtype:"低保边缘户",businesstype:businessTableType.dbbyh}
-    ],iconCls: 'nav'}, {layout: 'fit',
-    title: '临时救助',iconCls: 'nav'}, {layout: 'fit',title: '医疗救助',iconCls: 'nav'}, {layout: 'fit',title: '孤儿救助',iconCls: 'nav'},
+var menu_shjz=[
+    {
+        layout: 'fit',
+        title: '低保管理',
+        items:[
+            {xtype:'dbglconfigtree',searchtype:"低保管理",businesstype:businessTableType.dbgl}
+        ],
+        iconCls: 'nav'
+    },
+    {
+        layout: 'fit',
+        title: '低保边缘户',
+        items:[
+            {xtype:'dbglconfigtree',searchtype:"低保边缘户",businesstype:businessTableType.dbbyh}
+        ],
+        iconCls: 'nav'
+    },
+    {
+        layout: 'fit',
+        title: '临时救助',
+        items:[
+            {xtype:'dbglconfigtree',searchtype:"临时救助",businesstype:businessTableType.temporaryhelp}
+        ],
+        iconCls: 'nav'
+    },
+    {layout: 'fit',title: '医疗救助',iconCls: 'nav'}, {layout: 'fit',title: '孤儿救助',iconCls: 'nav'},
     {layout: 'fit',title: '慈善救助',iconCls: 'nav'},  {layout: 'fit',title: '综合查询',iconCls: 'nav'}];
 
 var menu_qxgl=[{layout: 'fit',title: '权限设置',items:[{xtype:'userconfiggrid'}],iconCls: 'nav' },

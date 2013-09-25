@@ -61,7 +61,7 @@ Ext.application({
         'Ext.ux.TreeCombo'
     ],
     controllers: [
-        'Navigation','Header','Manager','Dbgl','Dbedge'
+        'Navigation','Header','Manager','Dbgl','Dbedge','Temporaryhelp'
     ],
 
     launch: function() {
