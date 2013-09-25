@@ -74,6 +74,24 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     editor: {
                         // defaults to textfield if no xtype is supplied
                         xtype:'dbglaplytype',
+                        listeners: {
+                            change: function (combo,newValue, oldValue, eOpts) {
+
+                                var store=this.up('grid').getStore();
+                                var hasower=false;
+                                Ext.each(store.data.items,function(item){
+                                    if(item.get('relationship')=='户主'){
+                                        hasower=true;
+                                    }
+                                });
+                                if(hasower&&newValue=='户主'){
+                                    Ext.Msg.alert("提示信息", "户主必须唯一");
+                                    this.setValue(oldValue  );
+                                }
+                                testobj=this;
+
+                            }
+                        },
                         searchtype:"dbglrelationship",
                         allowBlank: false
                     }

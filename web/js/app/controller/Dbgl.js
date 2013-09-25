@@ -261,7 +261,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         // Create a model instance
         var r = Ext.create('ZSMZJ.model.dbgl.FamilyMember', {
             name: '赵某',
-            relationship:'户主',
+            relationship:'其它',
             personid:'xxxxxxxxxxxxxxxxxx',
             isenjoyed:'不享受',
             persontype:'五保对象',
