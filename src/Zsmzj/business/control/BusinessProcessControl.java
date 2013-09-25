@@ -49,7 +49,7 @@ public class BusinessProcessControl {
                 " b where b.rowid=a.businessid and b.rowid in (select rowid from "+GrantTable+" d where d.time Between '"
                 +bgdate+"' and  '"+eddate+"')  and b.businesstype MATCH '"+businesstype+"'");
         if(totalnum>0){
-           return "{success:true,msg:\"资金已发\"}";
+            return "{success:true,msg:\"资金已发\"}";
         }
         else{
             String sql_list="select rowid as businessid from "+BusinessTable+" a where a.businesstype MATCH '"+businesstype+"' " +
@@ -168,7 +168,7 @@ public class BusinessProcessControl {
         res.put("results",list);
         return JSONObject.fromObject(res).toString();
     }
-    public String getStatisticsBytype(String type,String bgmonth,int divisionpid){
+    public String getStatisticsBytype(String type,String bgmonth,int divisionpid,String businesstype){
         SimpleDateFormat sDateFormat   =   new SimpleDateFormat("yyyy-MM");
         String edmonth="";
         if(bgmonth==null||bgmonth.equals("")) bgmonth=sDateFormat.format(new   java.util.Date());
@@ -187,33 +187,33 @@ public class BusinessProcessControl {
             BusinessProcess bp=new BusinessProcess();
             ComonDao cd=new ComonDao();
             String sql_list="select a.divisionname  ,a.rowid as id," +
-                    "(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and  division MATCH (a.divisionpath||'*')) as totalfamily ,"
+                    "(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and  division MATCH (a.divisionpath||'*')) as totalfamily ,"
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and b.division MATCH (a.divisionpath||'*')) as totalperson, "
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and c.businessid=b.rowid and b.division MATCH (a.divisionpath||'*')) as totalperson, "
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and c.sex ='男' and b.division MATCH (a.divisionpath||'*')) as totalmen, "
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and c.businessid=b.rowid and c.sex ='男' and b.division MATCH (a.divisionpath||'*')) as totalmen, "
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and c.sex ='女' and b.division MATCH (a.divisionpath||'*')) as totalgirls,"
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and c.businessid=b.rowid and c.sex ='女' and b.division MATCH (a.divisionpath||'*')) as totalgirls,"
                     +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and division MATCH (a.divisionpath||'*')) as totalmoney, "
 
-            +"(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and familyaccount='城镇' and division MATCH (a.divisionpath||'*')) as cityfamily ,"
+                    +"(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='城镇' and division MATCH (a.divisionpath||'*')) as cityfamily ,"
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and b.familyaccount='城镇' and b.division MATCH (a.divisionpath||'*')) as cityperson, "
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and businesstype='"+businesstype+"' and b.familyaccount='城镇' and b.division MATCH (a.divisionpath||'*')) as cityperson, "
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and b.familyaccount='城镇' and c.sex ='男' and b.division MATCH (a.divisionpath||'*')) as citymen, "
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and businesstype='"+businesstype+"' and b.familyaccount='城镇' and c.sex ='男' and b.division MATCH (a.divisionpath||'*')) as citymen, "
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and b.familyaccount='城镇' and c.sex ='女' and b.division MATCH (a.divisionpath||'*')) as citygirls,"
-                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and familyaccount='城镇' and division MATCH (a.divisionpath||'*')) as citymoney,"
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and businesstype='"+businesstype+"' and b.familyaccount='城镇' and c.sex ='女' and b.division MATCH (a.divisionpath||'*')) as citygirls,"
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='城镇' and division MATCH (a.divisionpath||'*')) as citymoney,"
 
 
-            +"(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and familyaccount='农村' and division MATCH (a.divisionpath||'*')) as villagefamily ,"
-            +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-            "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and b.familyaccount='农村' and b.division MATCH (a.divisionpath||'*')) as villageperson, "
-            +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-            "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and b.familyaccount='农村' and c.sex ='男' and b.division MATCH (a.divisionpath||'*')) as villagemen, "
-            +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-            "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and b.familyaccount='农村' and c.sex ='女' and b.division MATCH (a.divisionpath||'*')) as villagegirls,"
-            +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and familyaccount='农村' and division MATCH (a.divisionpath||'*')) as villagemoney "
+                    +"(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='农村' and division MATCH (a.divisionpath||'*')) as villagefamily ,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and b.familyaccount='农村' and businesstype='"+businesstype+"' and b.division MATCH (a.divisionpath||'*')) as villageperson, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and b.familyaccount='农村' and businesstype='"+businesstype+"' and c.sex ='男' and b.division MATCH (a.divisionpath||'*')) as villagemen, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and b.familyaccount='农村' and businesstype='"+businesstype+"' and c.sex ='女' and b.division MATCH (a.divisionpath||'*')) as villagegirls,"
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='农村' and division MATCH (a.divisionpath||'*')) as villagemoney "
 
 
 
@@ -230,35 +230,35 @@ public class BusinessProcessControl {
             BusinessProcess bp=new BusinessProcess();
             ComonDao cd=new ComonDao();
             String sql_list="select a.divisionname  ,a.rowid as id," +
-                    "(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and  division MATCH (a.divisionpath||'*')) as totalfamily ,"
+                    "(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and  division MATCH (a.divisionpath||'*')) as totalfamily ,"
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and b.division MATCH (a.divisionpath||'*')) as totalperson, "
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and businesstype='"+businesstype+"' and b.division MATCH (a.divisionpath||'*')) as totalperson, "
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and c.jobstatus ='老年人' and b.division MATCH (a.divisionpath||'*')) as oldperson, "
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and businesstype='"+businesstype+"' and c.jobstatus ='老年人' and b.division MATCH (a.divisionpath||'*')) as oldperson, "
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and c.jobstatus ='登记失业' and b.division MATCH (a.divisionpath||'*')) as loginnojob,"
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and businesstype='"+businesstype+"' and  c.jobstatus ='登记失业' and b.division MATCH (a.divisionpath||'*')) as loginnojob,"
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and c.jobstatus ='在校生' and b.division MATCH (a.divisionpath||'*')) as student,"
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and businesstype='"+businesstype+"' and c.jobstatus ='在校生' and b.division MATCH (a.divisionpath||'*')) as student,"
                     +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and division MATCH (a.divisionpath||'*')) as totalmoney, "
 
-                    +"(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and familyaccount='城镇' and division MATCH (a.divisionpath||'*')) as cityfamily ,"
+                    +"(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='城镇' and division MATCH (a.divisionpath||'*')) as cityfamily ,"
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and b.familyaccount='城镇' and b.division MATCH (a.divisionpath||'*')) as cityperson, "
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and businesstype='"+businesstype+"' and b.familyaccount='城镇' and b.division MATCH (a.divisionpath||'*')) as cityperson, "
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and b.familyaccount='城镇' and c.sex ='男' and b.division MATCH (a.divisionpath||'*')) as citymen, "
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and businesstype='"+businesstype+"' and b.familyaccount='城镇' and c.sex ='男' and b.division MATCH (a.divisionpath||'*')) as citymen, "
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and b.familyaccount='城镇' and c.sex ='女' and b.division MATCH (a.divisionpath||'*')) as citygirls,"
-                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and familyaccount='城镇' and division MATCH (a.divisionpath||'*')) as citymoney,"
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and businesstype='"+businesstype+"' and b.familyaccount='城镇' and c.sex ='女' and b.division MATCH (a.divisionpath||'*')) as citygirls,"
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='城镇' and division MATCH (a.divisionpath||'*')) as citymoney,"
 
 
-                    +"(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and familyaccount='农村' and division MATCH (a.divisionpath||'*')) as villagefamily ,"
+                    +"(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and familyaccount='农村' and businesstype='"+businesstype+"' and division MATCH (a.divisionpath||'*')) as villagefamily ,"
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and b.familyaccount='农村' and b.division MATCH (a.divisionpath||'*')) as villageperson, "
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and b.familyaccount='农村' and businesstype='"+businesstype+"' and b.division MATCH (a.divisionpath||'*')) as villageperson, "
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and b.familyaccount='农村' and c.sex ='男' and b.division MATCH (a.divisionpath||'*')) as villagemen, "
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and b.familyaccount='农村' and businesstype='"+businesstype+"' and c.sex ='男' and b.division MATCH (a.divisionpath||'*')) as villagemen, "
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and b.familyaccount='农村' and c.sex ='女' and b.division MATCH (a.divisionpath||'*')) as villagegirls,"
-                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and familyaccount='农村' and division MATCH (a.divisionpath||'*')) as villagemoney "
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and b.familyaccount='农村' and businesstype='"+businesstype+"' and c.sex ='女' and b.division MATCH (a.divisionpath||'*')) as villagegirls,"
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='农村' and division MATCH (a.divisionpath||'*')) as villagemoney "
 
 
 
@@ -309,7 +309,7 @@ public class BusinessProcessControl {
                     //sql_list+=arr[i]+"* OR ";
                     sql_list+=
                             "    SELECT ROWID FROM "+BusinessTable+" WHERE "+BusinessTable+" MATCH '"+arr[i]+"*' " +
-                            "UNION ";
+                                    "UNION ";
 
                     sql_count+=
                             "    SELECT ROWID FROM "+BusinessTable+" WHERE "+BusinessTable+" MATCH '"+arr[i]+"*' " +
@@ -416,7 +416,7 @@ public class BusinessProcessControl {
                 FamilyHistoryTable+" g  where g.businessid MATCH a.rowid) as beforepeople"+
                 ",(select totalhelpmoney  from " +
                 BusinessChangeTable+" h  where h.businessid MATCH a.rowid order by time desc limit 1) as beforetotalhelpmoney"+
-        ",(select d.time from " + ApprovalTable+" d where d.businessid MATCH a.rowid order by d.time desc limit 1"+
+                ",(select d.time from " + ApprovalTable+" d where d.businessid MATCH a.rowid order by d.time desc limit 1"+
                 " ) as approvaltime" +
                 ",(select f.displayname from "+UserTable+" f where f.id=(select e.userid from " + ApprovalTable+" e where e.businessid MATCH a.rowid  order by e.time desc limit 1 "+
                 " )) as approvaluser" +
