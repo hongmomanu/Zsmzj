@@ -274,10 +274,11 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         var me=this;
         var win=btn.up('window');
         var ajaxform=win.down('form');
+
         var grid=win.dataobj;
         var params = {
             userid:userid,
-            businesstype:businessTableType.dbgl
+            businesstype:grid.businesstype
         };
         var successFunc = function (myform, action) {
             //console.log(myform);

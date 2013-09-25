@@ -161,7 +161,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
                 }
             } ,
-            'dbglbusinesslogoutform':{
+            'dbglbusinesslogoutform,dbedgebusinesslogoutform':{
                 alterapplyaftershow:function(form){
                     //this.closemask();
                     //ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
@@ -221,34 +221,34 @@ Ext.define('ZSMZJ.controller.Header', {
                 }
 
             },*/
-            'dbglbusinessalterform button[action=sendbusiness],dbedgebusinessalterform button[action=sendbusiness],dbglbusinesschangeform button[action=sendbusiness],dbedgebusinesschangeform button[action=sendbusiness],dbglbusinesslogoutform button[action=sendbusiness]':{
+            'dbglbusinessalterform button[action=sendbusiness],dbedgebusinessalterform button[action=sendbusiness],dbglbusinesschangeform button[action=sendbusiness],dbedgebusinesschangeform button[action=sendbusiness],dbglbusinesslogoutform button[action=sendbusiness],dbedgebusinesslogoutform button[action=sendbusiness]':{
                 click: this.sendbusiness
             },
-            'dbglbusinessalterform button[action=process],dbedgebusinessalterform button[action=process],dbglbusinesschangeform button[action=process],dbedgebusinesschangeform button[action=process],dbglbusinesslogoutform button[action=process]':{
+            'dbglbusinessalterform button[action=process],dbedgebusinessalterform button[action=process],dbglbusinesschangeform button[action=process],dbedgebusinesschangeform button[action=process],dbglbusinesslogoutform button[action=process],dbedgebusinesslogoutform button[action=process]':{
                 click: this.formprocess
             },
-            'dbglbusinessalterform button[action=change],dbedgebusinessalterform button[action=change],dbglbusinesschangeform button[action=change],dbedgebusinesschangeform button[action=change],dbglbusinesslogoutform button[action=change]':{
+            'dbglbusinessalterform button[action=change],dbedgebusinessalterform button[action=change],dbglbusinesschangeform button[action=change],dbedgebusinesschangeform button[action=change],dbglbusinesslogoutform button[action=change],dbedgebusinesslogoutform button[action=change]':{
                 click: this.showchangeform
             },
-            'dbglbusinessalterform button[action=cancel],dbedgebusinessalterform button[action=cancel],dbglbusinesschangeform button[action=cancel],dbedgebusinesschangeform button[action=cancel],dbglbusinesslogoutform button[action=cancel]':{
+            'dbglbusinessalterform button[action=cancel],dbedgebusinessalterform button[action=cancel],dbglbusinesschangeform button[action=cancel],dbedgebusinesschangeform button[action=cancel],dbglbusinesslogoutform button[action=cancel],dbedgebusinesslogoutform button[action=cancel]':{
                 click: this.cancelcheck
             },
-            'dbglbusinessalterform button[action=checkbusiness],dbedgebusinessalterform button[action=checkbusiness],dbglbusinesschangeform button[action=checkbusiness],dbedgebusinesschangeform button[action=checkbusiness],dbglbusinesslogoutform button[action=checkbusiness]':{
+            'dbglbusinessalterform button[action=checkbusiness],dbedgebusinessalterform button[action=checkbusiness],dbglbusinesschangeform button[action=checkbusiness],dbedgebusinesschangeform button[action=checkbusiness],dbglbusinesslogoutform button[action=checkbusiness],dbedgebusinesslogoutform button[action=checkbusiness]':{
                 click: this.showcheckwin
             },
-            'dbglbusinessalterform button[action=signature],dbedgebusinessalterform button[action=signature],dbglbusinesschangeform button[action=signature],dbedgebusinesschangeform button[action=signature],dbglbusinesslogoutform button[action=signature]':{
+            'dbglbusinessalterform button[action=signature],dbedgebusinessalterform button[action=signature],dbglbusinesschangeform button[action=signature],dbedgebusinesschangeform button[action=signature],dbglbusinesslogoutform button[action=signature],dbedgebusinesslogoutform button[action=signature]':{
                 click: this.showsignature
             },
-            'dbglbusinessalterform button[action=unsignature],dbedgebusinessalterform button[action=unsignature],dbglbusinesschangeform button[action=unsignature],dbedgebusinesschangeform button[action=unsignature],dbglbusinesslogoutform button[action=unsignature]':{
+            'dbglbusinessalterform button[action=unsignature],dbedgebusinessalterform button[action=unsignature],dbglbusinesschangeform button[action=unsignature],dbedgebusinesschangeform button[action=unsignature],dbglbusinesslogoutform button[action=unsignature],dbedgebusinesslogoutform button[action=unsignature]':{
                 click: this.delsignature
             },
-            'dbglbusinessalterform button[action=print],dbedgebusinessalterform button[action=print],dbglbusinesschangeform button[action=print],dbedgebusinesschangeform button[action=print],dbglbusinesslogoutform button[action=print]':{
+            'dbglbusinessalterform button[action=print],dbedgebusinessalterform button[action=print],dbglbusinesschangeform button[action=print],dbedgebusinesschangeform button[action=print],dbglbusinesslogoutform button[action=print],dbedgebusinesslogoutform button[action=print]':{
                 click: this.formprint
             },
-            'dbglbusinessalterform button[action=cancelsendbusiness],dbedgebusinessalterform button[action=cancelsendbusiness],dbglbusinesschangeform button[action=cancelsendbusiness],dbedgebusinesschangeform button[action=cancelsendbusiness],dbglbusinesslogoutform button[action=cancelsendbusiness]':{
+            'dbglbusinessalterform button[action=cancelsendbusiness],dbedgebusinessalterform button[action=cancelsendbusiness],dbglbusinesschangeform button[action=cancelsendbusiness],dbedgebusinesschangeform button[action=cancelsendbusiness],dbglbusinesslogoutform button[action=cancelsendbusiness],dbedgebusinesslogoutform button[action=cancelsendbusiness]':{
                 click: this.cancelsendbusiness
             },
-            'dbglbusinessalterform button[action=logout],dbedgebusinessalterform button[action=logout],dbglbusinesschangeform button[action=logout],dbedgebusinesschangeform button[action=logout],dbglbusinesslogoutform button[action=logout]':{
+            'dbglbusinessalterform button[action=logout],dbedgebusinessalterform button[action=logout],dbglbusinesschangeform button[action=logout],dbedgebusinesschangeform button[action=logout],dbglbusinesslogoutform button[action=logout],dbedgebusinesslogoutform button[action=logout]':{
                 click: this.logoutbusiness
             },
 
@@ -543,7 +543,16 @@ Ext.define('ZSMZJ.controller.Header', {
     logoutbusiness:function(btn){
         this.islogoutclick=true;
         var form=btn.up('form');
-        this.showtab("注销操作",'dbglbusinesslogoutform','widget',form.objdata);
+        var widgetname="";
+        testobj=form.objdata.record;
+        var businesstype=form.objdata.record.get('businesstype');
+        if(businesstype==businessTableType.dbgl){
+            widgetname='dbglbusinesslogoutform';
+        }else if(businesstype==businessTableType.dbbyh){
+            widgetname='dbedgebusinesslogoutform';
+        }
+
+        this.showtab("注销操作",widgetname,'widget',form.objdata);
 
 
     },
@@ -659,7 +668,7 @@ Ext.define('ZSMZJ.controller.Header', {
         var grid=btn.up('panel');
         if(!this.newGrantWin)this.newGrantWin=Ext.widget('addnewgrantwin');
         this.newGrantWin.show();
-
+        testobj=grid;
         this.newGrantWin.dataobj=grid;
 
     },

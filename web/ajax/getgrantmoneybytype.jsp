@@ -10,13 +10,13 @@
 <%@ page language="java"  contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%
-    if(request.getParameter("type")==null){
-       out.print("缺少参数type");
+    if(request.getParameter("businesstype")==null){
+       out.print("缺少参数businesstype");
     }
     else{
         BusinessProcessControl bp=new BusinessProcessControl();
 
-        String type=request.getParameter("type");
+        String type=request.getParameter("businesstype");
         String bgmonth=request.getParameter("bgmonth");
         String keyword=request.getParameter("keyword");
         out.print(bp.getGrantMoneyBytype(type,bgmonth,keyword));
