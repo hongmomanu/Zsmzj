@@ -67,7 +67,6 @@ Ext.define('ZSMZJ.controller.Header', {
                     };
                     familystore.load({callback:function(){
                         var enjoyednum=0;
-                        testobj=familystore;
                         Ext.each(familystore.data.items,function(a){
                             if(a.get("isenjoyed")==isenjoyedtype.yes){
                                 enjoyednum++;
@@ -182,7 +181,6 @@ Ext.define('ZSMZJ.controller.Header', {
                     };
                     familystore.load({callback:function(){
                         var enjoyednum=0;
-                        testobj=familystore;
                         Ext.each(familystore.data.items,function(a){
                             if(a.get("isenjoyed")==isenjoyedtype.yes){
                                 enjoyednum++;
@@ -344,16 +342,7 @@ Ext.define('ZSMZJ.controller.Header', {
                   }});
                 },
                 afterrender: this.afterrenderEvents,
-                /*alterapplyaftershow:function(grid){
-                    //grid.getStore().load();
-                    //testobj=grid;
-                    this.afterrenderEvents();
-                },*/
-                /*cellclick:function(iView, iCellEl, iColIdx, iRecord, iRowEl, iRowIdx, iEvent) {
-                    alert(1);
-                    var fieldName = iView.getGridColumns()[iColIdx].dataIndex;
-                    alert(fieldName);
-                },*/
+
                 processclick:function (c,r,grid){//查看流程
                     this.showProcessWin(c,r,grid);
                 },
@@ -544,7 +533,6 @@ Ext.define('ZSMZJ.controller.Header', {
         this.islogoutclick=true;
         var form=btn.up('form');
         var widgetname="";
-        testobj=form.objdata.record;
         var businesstype=form.objdata.record.get('businesstype');
         if(businesstype==businessTableType.dbgl){
             widgetname='dbglbusinesslogoutform';
@@ -581,7 +569,6 @@ Ext.define('ZSMZJ.controller.Header', {
         var form=btn.up('form');
         var formcontent=form.getDefaultContentTarget();
         var target=form.down('#businesscheckinfo').getEl();
-        //testobj=form.down('#businesscheckinfo');
         target.scrollIntoView(formcontent);
         var result=this.issignaturedone(res.signaturepath)
         if(result.isok){
@@ -624,7 +611,6 @@ Ext.define('ZSMZJ.controller.Header', {
                     }
                 ]
             });
-            testobj=signaturepic;
             signaturepic.userid=userid;
             this.signaturepicarr.push(signaturepic)
 
@@ -668,7 +654,6 @@ Ext.define('ZSMZJ.controller.Header', {
         var grid=btn.up('panel');
         if(!this.newGrantWin)this.newGrantWin=Ext.widget('addnewgrantwin');
         this.newGrantWin.show();
-        testobj=grid;
         this.newGrantWin.dataobj=grid;
 
     },
@@ -1590,21 +1575,7 @@ Ext.define('ZSMZJ.controller.Header', {
     formprint:function(btn){
         var form=btn.up('form');
         this.showtab("打印","dbglbusinessprintform","widget",form);
-        /*var targetElement = form;
-        testobj=targetElement;
-        var myWindow = window.open('', '', '');
-        myWindow.document.write('<html><head>');
-        myWindow.document.write('<title>' + 'Title' + '</title>');
-       // myWindow.document.write('<link rel="Stylesheet" type="text/css" href="http://dev.sencha.com/deploy/ext-4.0.1/resources/css/ext-all.css" />');
-        //myWindow.document.write('<script type="text/javascript" src="http://dev.sencha.com/deploy/ext-4.0.1/bootstrap.js"></script>');
-        myWindow.document.write('</head><body>');
-        //myWindow.document.write(targetElement.body.dom.innerHTML);
-        myWindow.document.write("hello world!");
-        myWindow.document.write('</body></html>');
-        myWindow.document.close();
-        myWindow.focus();
-        myWindow.print();
-        myWindow.close();*/
+
 
     },
     delsignature:function(btn){
@@ -1740,7 +1711,6 @@ Ext.define('ZSMZJ.controller.Header', {
     },
     delbusinessapply:function(c,r,grid){
         var businessid=r.get('businessid');
-        //console.log(r.get('processstatustype'));
         var me=this;
         Ext.Msg.show({
             title: '确定要删除此申请?',
@@ -1748,7 +1718,6 @@ Ext.define('ZSMZJ.controller.Header', {
             buttons: Ext.Msg.YESNO,
             fn: function (btn) {
                 if(btn=='yes'){
-                    testobj=r.get('processstatustype');
                     if(r.get('processstatustype')===processstatustype.ok){
                         me.delapplybybid(businessid,grid.getStore());
                     }else{
@@ -2032,7 +2001,6 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
     setFormAllValues:function(data,me,form){
-        //console.log(data);
         var businessid=form.objdata.businessid;
         form.getForm().setValues(data.form);
         var divisiontype=form.down('#divisiontype');

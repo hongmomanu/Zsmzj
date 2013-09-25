@@ -281,8 +281,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             businesstype:grid.businesstype
         };
         var successFunc = function (myform, action) {
-            //console.log(myform);
-            //console.log(action);
+
             btn.up('window').close();
             grid.getStore().load();
 
@@ -308,7 +307,6 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         CommonFunc.updateitemnum(win.itemdata,count);
         win.itemdata.formdata=formdata;
         win.hide();
-        //console.log(store);
 
 
     },

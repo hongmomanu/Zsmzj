@@ -41,15 +41,22 @@ public class BusinessProcessControl {
 
     }
     public String grantmoneybytype(int userid,String bgdate,String eddate,String grantdate,String businesstype){
+        SimpleDateFormat sDateFormat   =   new SimpleDateFormat("yyyy-MM");
+
         BusinessProcess bp=new BusinessProcess();
         ComonDao cd=new ComonDao();
         int totalnum=cd.getTotalCountBySql("select count(*) from "+GrantTable+" a,"+BusinessTable+
-                " b where b.rowid=a.businessid and b.businesstype MATCH '"+businesstype+"'");
+                " b where b.rowid=a.businessid and b.rowid in (select rowid from "+GrantTable+" d where d.time Between '"
+                +bgdate+"' and  '"+eddate+"')  and b.businesstype MATCH '"+businesstype+"'");
         if(totalnum>0){
            return "{success:true,msg:\"资金已发\"}";
         }
         else{
-            String sql_list="select rowid as businessid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"'";
+            String sql_list="select rowid as businessid from "+BusinessTable+" a where a.businesstype MATCH '"+businesstype+"' " +
+                    "and a.rowid in (select rowid from "+BusinessTable+" b where b.processstatus MATCH'"
+                    +ProcessType.UseProcessType.getChineseSeason(ProcessType.Approval)+"')";
+            log.debug("资金发放开始::"+sql_list);
+
             ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
             BusinessProcessDao bDao=new BusinessProcessDao();
 

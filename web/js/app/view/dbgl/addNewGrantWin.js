@@ -88,7 +88,7 @@ Ext.define('ZSMZJ.view.dbgl.addNewGrantWin' ,{
                         items:[
                             {
                                 columnWidth: 0.5,
-                                xtype: 'monthfield',
+                                xtype: 'datefield',
                                 allowBlank: false,
                                 blankText: "不能为空",
                                 name:'bgdate',
@@ -99,7 +99,7 @@ Ext.define('ZSMZJ.view.dbgl.addNewGrantWin' ,{
                             },
                             {
                                 columnWidth: 0.5,
-                                xtype: 'monthfield',
+                                xtype: 'datefield',
                                 allowBlank: false,
                                 blankText: "不能为空",
                                 name:'eddate',
@@ -111,7 +111,7 @@ Ext.define('ZSMZJ.view.dbgl.addNewGrantWin' ,{
                         ]
                     },
                     {
-                        xtype: 'monthfield',
+                        xtype: 'datefield',
                         name:'grantdate',
                         fieldLabel: '发放日期',
                         value: Ext.Date.format(new Date(), 'Y-m-d'),
