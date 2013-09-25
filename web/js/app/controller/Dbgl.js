@@ -97,6 +97,9 @@ Ext.define('ZSMZJ.controller.Dbgl', {
            },
             affixclick:function (c){
                this.showaffixWindow(c);
+            },
+            owerchange:function(c){
+                this.owerchanged(c);
             }
          },
          'dbglbusinessalterform component':{
@@ -105,6 +108,9 @@ Ext.define('ZSMZJ.controller.Dbgl', {
              },
              affixclick:function (c){
                  this.showAlteraffixWindow(c);
+             },
+             owerchange:function(c){
+                 this.owerchanged(c);
              }
          },
          'dbglbusinesslogoutform component':{
@@ -113,6 +119,9 @@ Ext.define('ZSMZJ.controller.Dbgl', {
              },
              affixclick:function (c){
                  this.showAlteraffixWindow(c);
+             },
+             owerchange:function(c){
+                 this.owerchanged(c);
              }
          },
          'dbglbusinesschangeform component':{
@@ -121,6 +130,9 @@ Ext.define('ZSMZJ.controller.Dbgl', {
              },
              affixclick:function (c){
                  this.showAlteraffixWindow(c);
+             },
+             owerchange:function(c){
+                 this.owerchanged(c);
              }
          },
              'dbglbusinessapplyform button[action=applysubmit]':{
@@ -140,6 +152,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
          'dbglbusinessapplyform,dbglbusinesscheckform,dbglbusinessalterform,dbglbusinesschangeform,dbglbusinesslogoutform':{
              afterrender: this.afterrenderEvents
          },
+
 
          'uploadimgfilewin button[action=upload]':{
              click: this.uploadImgFile
@@ -260,8 +273,8 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             monthlyincome: 0
 
         });
-
         gridpanel.getStore().insert(0, r);
+        //testobj=gridpanel;
         rowEditing.startEdit(0, 0);
         //var applyform=this.getMyviewbusinessapplyform();
         var applyform=gridpanel.up('form');
@@ -574,7 +587,45 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         this.alteruploadimgWin.show();
 
     },
+    owerchanged:function(c){
 
+      var familygrid= c.up('form').down('familymembergrid');
+      var store=familygrid.getStore();
+      if(store.getCount()==0){
+          //var rowEditing=familygrid.editingPlugin;
+          //rowEditing.cancelEdit();
+
+          // Create a model instance
+          var r = Ext.create('ZSMZJ.model.dbgl.FamilyMember', {
+              name: c.name=="owername"?c.getRawValue().replace(/\s+/g, ""):"某某",
+              relationship:'户主',
+              personid: c.name=='owerid'?c.getRawValue().replace(/\s+/g, ""):'xxxxxxx',
+              isenjoyed:'不享受',
+              persontype:'五保对象',
+              jobstatus:'登记失业',
+              bodystatus:'健康',
+              sex: '男',
+              birthday: Ext.Date.clearTime(new Date()),
+              age:0,
+              monthlyincome: 0
+
+          });
+          familygrid.getStore().insert(0, r);
+          //testobj=gridpanel;
+          //rowEditing.startEdit(0, 0);
+
+
+      }else{
+          Ext.each(store.data.items,function(item){
+             if(item.get('relationship')=='户主'){
+                 if(c.name=="owername")item.set("name",c.getRawValue().replace(/\s+/g, ""));
+                 else if(c.name=="owerid")item.set("personid",c.getRawValue().replace(/\s+/g, ""));
+             }
+          });
+
+      }
+      //alert(1);
+    },
     showaffixWindow:function(c){
         var store=null;
         if(!this.uploadaffixWin){

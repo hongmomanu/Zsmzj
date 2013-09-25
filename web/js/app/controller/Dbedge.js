@@ -45,6 +45,9 @@ Ext.define('ZSMZJ.controller.Dbedge', {
                 },
                 affixclick: function (c) {
                     dbgl_cl.showaffixWindow(c);
+                },
+                owerchange:function(c){
+                    dbgl_cl.owerchanged(c);
                 }
             },
             'dbedgebusinessapplyform button[action=applysubmit]': {

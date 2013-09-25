@@ -21,6 +21,13 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     var enjoyitem=form.down('#enjoyPersons');
                     var enjoyednum=obj.record.get("isenjoyed")==isenjoyedtype.yes?(parseInt(enjoyitem.getValue())+1):parseInt(enjoyitem.getValue());
                     enjoyitem.setValue(enjoyednum);
+                    if(obj.record.get('relationship')=='户主'){
+                        var owernameitem=form.down('#owername');
+                        var oweriditem=form.down('#owerid');
+                        owernameitem.setValue(obj.record.get("name"));
+                        oweriditem.setValue(obj.record.get("personid"));
+                    }
+
 
                 },
                 canceledit: function(grid,obj){
@@ -72,17 +79,21 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     }
                 }, {
                     header: '姓名*',
+                    //itemId:'name',
                     dataIndex: 'name',
                     //width: 160,
                     editor: {
+
                         allowBlank: false
                         //vtype: 'email'
                     }
                 },  {
-                    header: '身份证*',
+                    header: '身份证号*',
+                    //itemId:'userpersonid',
                     dataIndex: 'personid',
                     //width: 160,
                     editor: {
+
                         allowBlank: false
                         //vtype: 'email'
                     }

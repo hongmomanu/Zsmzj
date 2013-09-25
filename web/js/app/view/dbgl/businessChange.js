@@ -125,13 +125,31 @@ Ext.define('ZSMZJ.view.dbgl.businessChange', {
                     }
                     ,{
                         name: 'owername',
+                        itemId:'owername',
                         fieldLabel: '户主姓名',
                         afterLabelTextTpl: required,
+                        listeners: {
+
+                            "blur":function(field,e){
+                                var name = field.getRawValue().replace(/\s+/g, "");
+                                this.fireEvent('owerchange', field);
+
+                            }
+                        },
                         blankText: '请输入户主姓名',
                         emptyText: '请输入户主姓名',
                         allowBlank: false
                     },{
                         name: 'owerid',
+                        itemId:'owerid',
+                        listeners: {
+
+                            "blur":function(field,e){
+                                var name = field.getRawValue().replace(/\s+/g, "");
+                                this.fireEvent('owerchange', field);
+
+                            }
+                        },
                         fieldLabel: '户主身份证',
                         afterLabelTextTpl: required,
                         blankText: '请输入身份证号',
