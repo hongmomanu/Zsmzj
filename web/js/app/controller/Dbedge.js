@@ -6,18 +6,11 @@
  * To change this template use File | Settings | File Templates.
  */
 
-/**
- * Created with IntelliJ IDEA.
- * User: jack
- * Date: 13-8-16
- * Time: 下午1:38
- * To change this template use File | Settings | File Templates.
- */
 
 
 /**
- * Dbgl controller
- * 低保管理业务控制层，描述低保各种业务信息
+ * Dbedge controller
+ * 低保边缘户管理业务控制层，描述低保各种业务信息
  */
 Ext.define('ZSMZJ.controller.Dbedge', {
     extend: 'Ext.app.Controller',
