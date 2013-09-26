@@ -6,7 +6,14 @@
  * To change this template use File | Settings | File Templates.
  */
 var extLocation="http://192.168.2.112/extjs4.2/";
-var businessTableType={'dbgl':"低保",'dbbyh':"边缘户",'temporaryhelp':'临时救助'};
+var businessTableType=
+        {   'dbgl':"低保",
+            'dbbyh':"边缘户",
+            'temporaryhelp':'临时救助',
+            'studyhelp':'助学救助',
+            'charitablehelp':'慈善救助',
+            'medicalhelp':'医疗救助'
+        };
 
 var menu_shjz=[
     {
@@ -33,8 +40,32 @@ var menu_shjz=[
         ],
         iconCls: 'nav'
     },
-    {layout: 'fit',title: '医疗救助',iconCls: 'nav'}, {layout: 'fit',title: '孤儿救助',iconCls: 'nav'},
-    {layout: 'fit',title: '慈善救助',iconCls: 'nav'},  {layout: 'fit',title: '综合查询',iconCls: 'nav'}];
+    {
+        layout: 'fit',
+        title: '医疗救助',
+        items:[
+            {xtype:'dbglconfigtree',searchtype:"医疗救助",businesstype:businessTableType.medicalhelp}
+        ],
+        iconCls: 'nav'
+    },
+    {
+        layout: 'fit',
+        title: '助学救助',
+        items:[
+            {xtype:'dbglconfigtree',searchtype:"助学救助",businesstype:businessTableType.studyhelp}
+        ],
+        iconCls: 'nav'
+    },
+    {
+        layout: 'fit',
+        title: '慈善救助',
+        items:[
+            {xtype:'dbglconfigtree',searchtype:"慈善救助",businesstype:businessTableType.charitablehelp}
+        ],
+        iconCls: 'nav'
+    },
+    {layout: 'fit',title: '综合查询',iconCls: 'nav'}
+];
 
 var menu_qxgl=[{layout: 'fit',title: '权限设置',items:[{xtype:'userconfiggrid'}],iconCls: 'nav' },
     {title: '系统配置',items:[{xtype:'systemconfiggrid'}],iconCls: 'nav'}, {
