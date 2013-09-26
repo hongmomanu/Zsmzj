@@ -888,8 +888,12 @@ Ext.define('ZSMZJ.view.dbedge.businessLogout', {
                         {
                             name: 'totalhelpmoney',
                             fieldLabel: '总救助金额(元/月/户)',
+                            afterLabelTextTpl: required,
+                            emptyText: '请输入救助金额',
+                            blankText : '请输入救助金额',
+                            afterLabelTextTpl: required,
                             value:0,
-                            allowBlank: true
+                            allowBlank: false
                         }
                         ,
                         {
