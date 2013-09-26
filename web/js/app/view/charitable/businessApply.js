@@ -283,7 +283,6 @@ Ext.define('ZSMZJ.view.charitable.businessApply', {
                     //layout: 'anchor',
                     layout: {
                         type: 'table',
-
                         // The total column count must be specified here
                         columns: 3,
                         tableAttrs: {
@@ -821,7 +820,6 @@ Ext.define('ZSMZJ.view.charitable.businessApply', {
                     //layout: 'anchor',
                     layout: {
                         type: 'table',
-
                         // The total column count must be specified here
                         columns: 3,
                         tableAttrs: {
@@ -881,7 +879,16 @@ Ext.define('ZSMZJ.view.charitable.businessApply', {
                          ,
                         {
                             name: 'medicalmoney',
+                            itemId:'medicalmoney',
                             fieldLabel:'医疗费用总额',
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    var name = field.getRawValue().replace(/\s+/g, "");
+                                    this.fireEvent('medicalexpenseschange', field);
+
+                                }
+                            },
                             value:0,
                             afterLabelTextTpl: required,
                             emptyText: '请输入医疗费用总额',
@@ -889,7 +896,16 @@ Ext.define('ZSMZJ.view.charitable.businessApply', {
                             allowBlank: false
                         },{
                             name: 'medicalselfmoney',
+                            itemId:'medicalselfmoney',
                             fieldLabel:'自理金额',
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    var name = field.getRawValue().replace(/\s+/g, "");
+                                    this.fireEvent('medicalexpenseschange', field);
+
+                                }
+                            },
                             value:0,
                             afterLabelTextTpl: required,
                             emptyText: '请输入自理金额',
@@ -898,8 +914,17 @@ Ext.define('ZSMZJ.view.charitable.businessApply', {
                         },
                         {
                             name: 'writeoffmoney',
+                            itemId:'writeoffmoney',
                             fieldLabel:'已报销金额',
                             value:0,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    var name = field.getRawValue().replace(/\s+/g, "");
+                                    this.fireEvent('medicalexpenseschange', field);
+
+                                }
+                            },
                             afterLabelTextTpl: required,
                             emptyText: '请输入已报销金额',
                             blankText :'请输入已报销金额',
@@ -907,6 +932,7 @@ Ext.define('ZSMZJ.view.charitable.businessApply', {
                         },
                         {
                             name: 'responsiblemoney',
+                            itemId:'responsiblemoney',
                             fieldLabel:'自负金额',
                             value:0,
                             afterLabelTextTpl: required,

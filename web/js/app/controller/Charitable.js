@@ -45,6 +45,9 @@ Ext.define('ZSMZJ.controller.Charitable', {
                 },
                 owerchange:function(c){
                     dbgl_cl.owerchanged(c);
+                },
+                medicalexpenseschange:function(c){
+                    this.medicalexpenseschange(c);
                 }
             },
             'charitablebusinessapplyform button[action=applysubmit]': {
@@ -85,6 +88,11 @@ Ext.define('ZSMZJ.controller.Charitable', {
             }
 
         }, this);
+
+    },
+    medicalexpenseschange:function(item){
+
+        testobj=item;
 
     },
     applysubmit: function (btn) {
