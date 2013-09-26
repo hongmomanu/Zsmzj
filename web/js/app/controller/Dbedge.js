@@ -51,7 +51,7 @@ Ext.define('ZSMZJ.controller.Dbedge', {
                 }
             },
             'dbedgebusinessapplyform button[action=applysubmit]': {
-                click: Ext.bind(dbgl_cl.applysubmit, dbgl_cl)
+                click: this.applysubmit
             },
             'dbedgebusinessalterform button[action=applysubmit],dbedgebusinesschangeform button[action=applysubmit],dbedgebusinesslogoutform button[action=applysubmit]': {
                 click: Ext.bind(dbgl_cl.applysubmitupdate, dbgl_cl)

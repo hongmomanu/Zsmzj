@@ -32,6 +32,7 @@ Ext.define('ZSMZJ.controller.Temporaryhelp', {
         var me = this;
         this.initStrore();
         var dbgl_cl = this.application.getController("Dbgl");
+        var header_cl=this.application.getController("Header");
         this.control({
             'temporaryhelpbusinessapplyform,temporaryhelpbusinessalterform': {
                 afterrender: dbgl_cl.afterrenderEvents
@@ -48,12 +49,41 @@ Ext.define('ZSMZJ.controller.Temporaryhelp', {
                 }
             },
             'temporaryhelpbusinessapplyform button[action=applysubmit]': {
-                click: Ext.bind(dbgl_cl.applysubmit, dbgl_cl)
+                click: this.applysubmit
             },
             'temporaryhelpbusinessalterform button[action=applysubmit]': {
                 click: Ext.bind(dbgl_cl.applysubmitupdate, dbgl_cl)
+            },
+            'temporaryhelpbusinessalterform button[action=sendbusiness]':{
+                click: Ext.bind(header_cl.sendbusiness,header_cl)
+            },
+            'temporaryhelpbusinessalterform button[action=process]':{
+                click: Ext.bind(header_cl.formprocess,header_cl)
+            },
+            'temporaryhelpbusinessalterform button[action=change]':{
+                click: Ext.bind(header_cl.showchangeform,header_cl)
+            },
+            'temporaryhelpbusinessalterform button[action=cancel]':{
+                click: Ext.bind(header_cl.cancelcheck,header_cl)
+            },
+            'temporaryhelpbusinessalterform button[action=checkbusiness]':{
+                click: Ext.bind(header_cl.showcheckwin,header_cl)
+            },
+            'temporaryhelpbusinessalterform button[action=signature]':{
+                click: Ext.bind(header_cl.showsignature,header_cl)
+            },
+            'temporaryhelpbusinessalterform button[action=unsignature]':{
+                click: Ext.bind(header_cl.delsignature,header_cl)
+            },
+            'temporaryhelpbusinessalterform button[action=print]':{
+                click: Ext.bind(header_cl.formprint,header_cl)
+            },
+            'temporaryhelpbusinessalterform button[action=cancelsendbusiness]':{
+                click: Ext.bind(header_cl.cancelsendbusiness,header_cl)
+            },
+            'temporaryhelpbusinessalterform button[action=logout]':{
+                click: Ext.bind(header_cl.logoutbusiness,header_cl)
             }
-
 
         }, this);
 

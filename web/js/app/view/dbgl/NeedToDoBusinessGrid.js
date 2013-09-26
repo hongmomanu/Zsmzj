@@ -214,7 +214,8 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                 {header: '行政区划', dataIndex: 'division',align:'center',width: 250},
                 {header: '户主姓名',align:'center',dataIndex:'owername'},
                 {header: '户主身份证',align:'center',dataIndex:'owerid',width: 250},
-                {header: '申请类别',align:'center',dataIndex:'applytype'},
+                {header: '申请类别',align:'center',dataIndex:'applytype',itemId:'applytype'},
+                {header: '致贫原因',align:'center',dataIndex:'poorfamilytype',itemId:'poorfamilytype'},
                 {header: '家庭类别',align:'center',dataIndex:'familytype'},
                 {header: '救助金额',align:'center',dataIndex:'totalhelpmoney',summaryType: 'sum',width:150,//求数量
                     summaryRenderer: function(value){

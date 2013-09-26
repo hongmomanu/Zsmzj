@@ -822,7 +822,7 @@ Ext.define('ZSMZJ.view.temporaryhelp.businessApply', {
                         {
                             xtype:'dbglaplytype',
                             searchtype:"temporaryhelpway",
-                            name: 'temporaryhelpway',
+                            name: 'helpway',
 
                             fieldLabel: '救助方式',
                             afterLabelTextTpl: required,
@@ -834,7 +834,10 @@ Ext.define('ZSMZJ.view.temporaryhelp.businessApply', {
                         {
                             name: 'losemoney',
                             fieldLabel: '受损金额(元)',
-                            allowBlank: true
+                            afterLabelTextTpl: required,
+                            emptyText: '请输入受损金额',
+                            blankText : '请输入搜损金额',
+                            allowBlank: false
                         }
                          ,
                          {
@@ -852,6 +855,7 @@ Ext.define('ZSMZJ.view.temporaryhelp.businessApply', {
                             xtype: 'datefield',
                             //itemId: 'personbirthday',
                             format: 'Y-m-d',
+
                             value: Ext.Date.format(new Date(), 'Y-m-d'),
                             allowBlank: false
                         },
@@ -866,10 +870,15 @@ Ext.define('ZSMZJ.view.temporaryhelp.businessApply', {
                         {
                             name: 'damagetime',
                             fieldLabel: '受灾日期',
+                            afterLabelTextTpl: required,
                             xtype: 'datefield',
+                            emptyText: '请选择受灾日期',
+                            blankText : '请选择受灾日期',
+                            //itemId: 'personbirthday',
+                            value: Ext.Date.format(new Date(), 'Y-m-d'),
                             //itemId: 'personbirthday',
                             format: 'Y-m-d',
-                            allowBlank: true
+                            allowBlank: false
                         },
                         {
                             fieldLabel: '享受人数',

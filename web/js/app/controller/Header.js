@@ -44,7 +44,7 @@ Ext.define('ZSMZJ.controller.Header', {
                 afterrender: this.headerRenderEvents
 
             },
-            'dbglbusinessalterform,dbedgebusinessalterform':{
+            'dbglbusinessalterform,dbedgebusinessalterform,temporaryhelpbusinessalterform':{
 
                 alterapplyaftershow:function(form){
                     //this.closemask();
@@ -333,6 +333,19 @@ Ext.define('ZSMZJ.controller.Header', {
             'needtodopanel,needtodobusinesspanel,changedbusinesspanel,logoutbusinesspanel,peoplequerypanel,familyquerypanel,dbglstatisticsfullpanel,dbglgrantmoneypanel,dbglstatisticscomplexonepanel':{
 
                 gridshowfresh:function(grid){
+
+                  if(grid.businesstype==businessTableType.temporaryhelp){
+                      grid.down('#applytype')?grid.down('#applytype').hide():'';
+                      grid.down('#poorfamilytype')?grid.down('#poorfamilytype').show():'';
+
+                  }else if(grid.businesstype==businessTableType.dbbyh){
+                      grid.down('#poorfamilytype')?grid.down('#poorfamilytype').hide():'';
+                      grid.down('#applytype')?grid.down('#applytype').show():''
+
+                  }else if(grid.businesstype==businessTableType.dbgl){
+                      grid.down('#poorfamilytype')?grid.down('#poorfamilytype').hide():'';
+                      grid.down('#applytype')?grid.down('#applytype').show():'';
+                  }
 
                   var store=grid.getStore();
                   store.proxy.extraParams.businesstype = grid.businesstype;

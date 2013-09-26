@@ -159,8 +159,32 @@ CREATE VIRTUAL TABLE IF NOT EXISTS business USING fts3
   changedate               VARCHAR(50),                              --变更日期
   changereason             VARCHAR(50),                              --变更原因
  logoutdate                VARCHAR(50),                              --注销日期
-logoutreason                VARCHAR(50)                              --注销原因
-
+logoutreason                VARCHAR(50),                             --注销原因
+helpway            VARCHAR(50),                             --救助方式
+losemoney                   VARCHAR(50),                             --受损金额
+damagetime                  VARCHAR(50),                             --受灾日期
+hospitalname                VARCHAR(50),                             --就诊医院*
+illnessname                 VARCHAR(50),                            --疾病名称*
+medicarenature              VARCHAR(50),                            --医保性质*
+helpnature                 VARCHAR(50),                             --救助性质*
+medicarenum                 VARCHAR(50),                            --医保卡号
+writeofftype                 VARCHAR(50),                            --报销类型*
+doctordate                  VARCHAR(50),                            --就诊日期*
+outhospitaldate             VARCHAR(50),                             --出院日期*
+medicalmoney               VARCHAR(50),                              --医疗费用总额*
+medicalselfmoney          VARCHAR(50),                                --自理金额*
+writeoffmoney             VARCHAR(50),                                --已报销金额*
+responsiblemoney           VARCHAR(50),                                --自负金额
+                                                                      --本次救助金额
+writeoffcardinalnumberyear     VARCHAR(50),                               --本年度已报销基数
+helpedmoneyyear               VARCHAR(50),                            --本年度已救助金额
+helpedtimesyear               VARCHAR(50),                            --本年度已救助次数
+hospitalizedwriteoffcardinalnumberyear        VARCHAR(50),            --本年度住院累计报销基数
+hospitalizedhelpedmoneyyear    VARCHAR(50),                            --本年度住院累计救助金额
+hospitalizedhelpedtimesyear    VARCHAR(50),                            --本年度住院累计救助次数
+outpatientwriteoffcardinalnumberyear           VARCHAR(50),            --本年度门诊累计报销基数
+outpatienthelpedmoneyyear         VARCHAR(50),                         --本年度门诊累计救助金额
+outpatienthelpedtimesyear      VARCHAR(50)                              --本年度门诊累计救助次数
 );
 
 
@@ -237,6 +261,33 @@ CREATE VIRTUAL TABLE IF NOT EXISTS businesschange USING fts3
   changereason             VARCHAR(50),                             --变更原因
   logoutdate                VARCHAR(50),                              --注销日期
   logoutreason              VARCHAR(50),                              --注销原因
+
+  helpway            VARCHAR(50),                             --救助方式
+  losemoney                   VARCHAR(50),                             --受损金额
+  damagetime                  VARCHAR(50),                             --受灾日期
+  hospitalname                VARCHAR(50),                             --就诊医院*
+  illnessname                 VARCHAR(50),                            --疾病名称*
+  medicarenature              VARCHAR(50),                            --医保性质*
+  helpnature                 VARCHAR(50),                             --救助性质*
+  medicarenum                 VARCHAR(50),                            --医保卡号
+  writeofftype                 VARCHAR(50),                            --报销类型*
+  doctordate                  VARCHAR(50),                            --就诊日期*
+  outhospitaldate             VARCHAR(50),                             --出院日期*
+  medicalmoney               VARCHAR(50),                              --医疗费用总额*
+  medicalselfmoney          VARCHAR(50),                                --自理金额*
+  writeoffmoney             VARCHAR(50),                                --已报销金额*
+  responsiblemoney           VARCHAR(50),                                --自负金额
+                                                                      --本次救助金额
+  writeoffcardinalnumberyear     VARCHAR(50),                               --本年度已报销基数
+  helpedmoneyyear               VARCHAR(50),                            --本年度已救助金额
+  helpedtimesyear               VARCHAR(50),                            --本年度已救助次数
+  hospitalizedwriteoffcardinalnumberyear        VARCHAR(50),            --本年度住院累计报销基数
+  hospitalizedhelpedmoneyyear    VARCHAR(50),                            --本年度住院累计救助金额
+  hospitalizedhelpedtimesyear    VARCHAR(50),                            --本年度住院累计救助次数
+  outpatientwriteoffcardinalnumberyear           VARCHAR(50),            --本年度门诊累计报销基数
+  outpatienthelpedmoneyyear         VARCHAR(50),                         --本年度门诊累计救助金额
+  outpatienthelpedtimesyear      VARCHAR(50),                              --本年度门诊累计救助次数
+
   businessid               integer,                                 --业务id
   insertdate               VARCHAR(50)                              --charuriq
   );

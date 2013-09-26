@@ -36,7 +36,7 @@ Ext.define('ZSMZJ.view.temporaryhelp.businessAlter', {
             autoScroll: true,
             items: [{
                 xtype: 'fieldset',
-                title: '<a>【低保边缘户业务办理】家庭基本信息</a>',
+                title: '<a>【临时救助业务办理】家庭基本信息</a>',
                 defaultType: 'textfield',
 
                 //layout: 'anchor',
@@ -94,31 +94,7 @@ Ext.define('ZSMZJ.view.temporaryhelp.businessAlter', {
                             src : "img/noperson.gif"
                         }
                     }
-                    ,{
-                        xtype:'dbglaplytype',
-                        name: 'applytype',
-                        searchtype:"dbedgeapplytype",
-                        fieldLabel: '申请类别',
-                        emptyText: '请输入申请类别',
-                        blankText: '请输入申请类别',
-                        afterLabelTextTpl: required
 
-                        /*name: 'applytype',
-                         afterLabelTextTpl: required,
-                         fieldLabel: '申请类别',
-                         emptyText: '请输入申请类别',
-                         blankText: '请输入申请类别',
-                         allowBlank: false*/
-                    },{
-                        xtype:'dbglaplytype',
-                        name: 'familytype',
-                        searchtype:"dbedgefamilytype",
-                        fieldLabel: '家庭类别',
-                        afterLabelTextTpl: required,
-                        emptyText: '请输入家庭类别',
-                        blankText: '请输入家庭类别',
-                        allowBlank: false
-                    }
                     ,{
                         name: 'owername',
                         itemId:'owername',
@@ -227,7 +203,23 @@ Ext.define('ZSMZJ.view.temporaryhelp.businessAlter', {
                     },{
                         name: 'bankid',
                         fieldLabel: '银行账号',
+                        colspan:2,
+                        //afterLabelTextTpl: required,
+                        //emptyText: '低保户类型',
+                        allowBlank: true
+                    },
+                    {
+                        name: 'otherfamilyinfo',
+                        fieldLabel: '家庭备注',
                         colspan:3,
+                        minWidth:600,
+                        width:800,
+                        //draggable :true,
+                        anchor : '100%',
+                        //width:800,
+                        xtype : 'textarea',
+                        grow : true,
+
                         //afterLabelTextTpl: required,
                         //emptyText: '低保户类型',
                         allowBlank: true
@@ -789,16 +781,7 @@ Ext.define('ZSMZJ.view.temporaryhelp.businessAlter', {
                             blankText : '请输入家庭总收入',
                             allowBlank: false
                         }
-                        ,
-                        {
-                            name: 'applymoney',
-                            fieldLabel: '申请救济金(元/月/人)',
-                            afterLabelTextTpl: required,
-                            value:0,
-                            emptyText: '请输入家庭总收入',
-                            blankText : '请输入家庭总收入',
-                            allowBlank: false
-                        }
+
 
                     ]
                 },
@@ -829,19 +812,31 @@ Ext.define('ZSMZJ.view.temporaryhelp.businessAlter', {
 
                     items: [
                         {
-                            name: 'poorstandard',
-                            fieldLabel: '低保边缘户标准(元)',
+                            xtype:'dbglaplytype',
+                            searchtype:"temporaryhelpway",
+                            name: 'helpway',
+
+                            fieldLabel: '救助方式',
                             afterLabelTextTpl: required,
-                            emptyText: '请输入低保边缘户标准',
-                            blankText : '请输入低保边缘户标准',
+                            emptyText: '请选择救助方式',
+                            blankText : '请选择救助方式',
                             allowBlank: false
                         }
-                         ,
-                         {
-                         name: 'aidnum',
-                         fieldLabel: '救助证编号',
-                         allowBlank: true
-                         }
+                        ,
+                        {
+                            name: 'losemoney',
+                            fieldLabel: '受损金额(元)',
+                            afterLabelTextTpl: required,
+                            emptyText: '请输入受损金额',
+                            blankText : '请输入搜损金额',
+                            allowBlank: false
+                        }
+                        ,
+                        {
+                            name: 'aidnum',
+                            fieldLabel: '救助证编号',
+                            allowBlank: true
+                        }
                         ,
                         {
                             name: 'helpbgtime',
@@ -852,6 +847,7 @@ Ext.define('ZSMZJ.view.temporaryhelp.businessAlter', {
                             xtype: 'datefield',
                             //itemId: 'personbirthday',
                             format: 'Y-m-d',
+
                             value: Ext.Date.format(new Date(), 'Y-m-d'),
                             allowBlank: false
                         },
@@ -864,6 +860,19 @@ Ext.define('ZSMZJ.view.temporaryhelp.businessAlter', {
                             allowBlank: true
                         },
                         {
+                            name: 'damagetime',
+                            fieldLabel: '受灾日期',
+                            afterLabelTextTpl: required,
+                            xtype: 'datefield',
+                            emptyText: '请选择受灾日期',
+                            blankText : '请选择受灾日期',
+                            //itemId: 'personbirthday',
+                            value: Ext.Date.format(new Date(), 'Y-m-d'),
+                            //itemId: 'personbirthday',
+                            format: 'Y-m-d',
+                            allowBlank: false
+                        },
+                        {
                             fieldLabel: '享受人数',
                             value:0,
                             itemId: 'enjoyPersons',
@@ -871,7 +880,6 @@ Ext.define('ZSMZJ.view.temporaryhelp.businessAlter', {
                             disabled:true,
                             allowBlank: false
                         },
-
                         {
                             name: 'totalhelpmoney',
                             fieldLabel: '总救助金额(元/月/户)',
@@ -1056,7 +1064,7 @@ Ext.define('ZSMZJ.view.temporaryhelp.businessAlter', {
                         {name:"name",value:"流程跟踪"}),
                     action:'process'
                 },
-                {
+                /*{
                     text: '注销',
                     hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
                         {name:"name",value:this.objdata.record.get("processstatus")})?CommonFunc.lookup(processRoleBtn,
@@ -1071,7 +1079,7 @@ Ext.define('ZSMZJ.view.temporaryhelp.businessAlter', {
                         {name:"name",value:this.objdata.record.get("processstatus")}).children:null,
                         {name:"name",value:"变更"}),
                     action:'change'
-                },
+                },*/
                 {
                     text: '提交审批',
                     hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,

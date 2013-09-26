@@ -16,6 +16,7 @@ Ext.define('ZSMZJ.model.dbgl.NeedToDoBusiness', {
         {name:'totalhelpmoney',type:'float'},
         {name:'helpbgtime'},
         {name:'helpedtime'},
+        {name:'poorfamilytype'},
         {name:'processstatustype'},
         {name:'businesstype'},
         {name:'familynum',type:'int'},
