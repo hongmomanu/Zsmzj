@@ -28,15 +28,10 @@ Ext.Loader.setConfig({
 var splashscreen;
 
 Ext.onReady(function() {
-    // Start the mask on the body and get a reference to the mask
-    //splashscreen = Ext.getBody().mask('页面加载中', 'splashscreen');
+
     splashscreen = new Ext.LoadMask(Ext.getBody().el, {msg:"页面加载中..."});//{useMsg: false}
     splashscreen.show();
-    //splashscreen.addCls('splashscreen');
 
-   /* Ext.DomHelper.insertFirst(Ext.query('.x-mask-msg')[0], {
-        cls: 'x-splash-icon'
-    });*/
 });
 
 
@@ -61,35 +56,11 @@ Ext.application({
         'Ext.ux.TreeCombo'
     ],
     controllers: [
-        'Navigation','Header','Manager','Dbgl','Dbedge','Temporaryhelp'
+        'Navigation','Header','Manager','Dbgl','Dbedge','Temporaryhelp','Charitable'
     ],
 
     launch: function() {
-        // Setup a task to fadeOut the splashscreen
-        /*var task = new Ext.util.DelayedTask(function() {
-            // Fade out the body mask
-            splashscreen.fadeOut({
-                duration: 1000,
-                remove:true
-            });
-            // Fade out the icon and message
-            splashscreen.next().fadeOut({
-                duration: 1000,
-                remove:true,
-                listeners: {
-                    afteranimate: function() {
-                        // Set the body as unmasked after the animation
-                        try{
-                            Ext.getBody().unmask();
-                        }catch(e){
 
-                        }
-                    }
-                }
-            });
-        });
-        // Run the fade 500 milliseconds after launch.
-        task.delay(500);*/
         splashscreen.hide();
     },
 

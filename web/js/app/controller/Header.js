@@ -44,7 +44,7 @@ Ext.define('ZSMZJ.controller.Header', {
                 afterrender: this.headerRenderEvents
 
             },
-            'dbglbusinessalterform,dbedgebusinessalterform,temporaryhelpbusinessalterform':{
+            'dbglbusinessalterform,dbedgebusinessalterform,temporaryhelpbusinessalterform,charitablebusinessapplyform':{
 
                 alterapplyaftershow:function(form){
                     //this.closemask();
@@ -1692,6 +1692,8 @@ Ext.define('ZSMZJ.controller.Header', {
             }
             else if(r.get('businesstype')==businessTableType.temporaryhelp){
                 widgetname='temporaryhelpbusinessalterform';
+            }else if(r.get('businesstype')==businessTableType.charitablehelp){
+                widgetname='charitablebusinessalterform';
             }
 
         }else if(r.get('processstatustype')==processstatustype.change){
