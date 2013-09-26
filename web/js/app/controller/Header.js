@@ -336,14 +336,17 @@ Ext.define('ZSMZJ.controller.Header', {
 
                   if(grid.businesstype==businessTableType.temporaryhelp){
                       grid.down('#applytype')?grid.down('#applytype').hide():'';
+                      grid.down('#familytype')?grid.down('#familytype').hide():'';
                       grid.down('#poorfamilytype')?grid.down('#poorfamilytype').show():'';
 
                   }else if(grid.businesstype==businessTableType.dbbyh){
                       grid.down('#poorfamilytype')?grid.down('#poorfamilytype').hide():'';
+                      grid.down('#familytype')?grid.down('#familytype').show():'';
                       grid.down('#applytype')?grid.down('#applytype').show():''
 
                   }else if(grid.businesstype==businessTableType.dbgl){
                       grid.down('#poorfamilytype')?grid.down('#poorfamilytype').hide():'';
+                      grid.down('#familytype')?grid.down('#familytype').show():'';
                       grid.down('#applytype')?grid.down('#applytype').show():'';
                   }
 
@@ -1686,6 +1689,9 @@ Ext.define('ZSMZJ.controller.Header', {
                 widgetname='dbglbusinessalterform';
             }else if(r.get('businesstype')==businessTableType.dbbyh){
                 widgetname='dbedgebusinessalterform';
+            }
+            else if(r.get('businesstype')==businessTableType.temporaryhelp){
+                widgetname='temporaryhelpbusinessalterform';
             }
 
         }else if(r.get('processstatustype')==processstatustype.change){
