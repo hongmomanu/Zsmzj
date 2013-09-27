@@ -405,6 +405,18 @@ public class BusinessProcessControl {
 
     }
 
+    public String delCommonbyid(int id,String idname,String tablename,boolean isrowid){
+        BusinessProcessDao bpdao=new BusinessProcessDao();
+        int result=bpdao.deldatabyid(id,tablename,idname,isrowid);
+        if(result>0){
+            return "{isok:true}";
+        }
+        else{
+            return "{isok:false}";
+        }
+
+    }
+
     public String getMedicalStandardList(int start,int limit,String keyword,String type,String businesstype){
 
         BusinessProcess bp=new BusinessProcess();
@@ -413,7 +425,7 @@ public class BusinessProcessControl {
 
         String sql_count="select count(*) from "+MeidicalStandard+" a,"+DivisionsTable+" b where a.divisionid=b.rowid ";
 
-        String sql_list="select a.*,b.divisionname as division from " +
+        String sql_list="select a.*,b.divisionname as division,a.rowid as rid from " +
                 MeidicalStandard +" a,"+DivisionsTable+" b " +
                 "where a.divisionid = b.rowid";
 

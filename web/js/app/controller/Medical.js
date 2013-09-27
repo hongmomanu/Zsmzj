@@ -127,14 +127,14 @@ Ext.define('ZSMZJ.controller.Medical', {
             grid.getStore().load();
         };
         var failFunc = function (myform, action) {
-            Ext.Msg.alert("提示信息", "发放资金失败,检查web服务");
+            Ext.Msg.alert("提示信息", "添加标准失败,检查web服务");
         };
         var dbgl_cl = this.application.getController("Dbgl");
         Ext.bind(dbgl_cl.formSubmit(ajaxform, params, 'ajax/sendformcommon.jsp', successFunc, failFunc,"正在提交数据"),dbgl_cl);
 
     },
     delmedicalstandard:function(btn){
-        //console.log(btn);
+        var me=this;
         var grid=btn.up('grid');
         var selModel = grid.getSelectionModel() ;
         var isGridSelected = selModel.hasSelection() ;
@@ -142,8 +142,41 @@ Ext.define('ZSMZJ.controller.Medical', {
             Ext.MessageBox.alert("提示","请选则要删除的数据") ;
             return ;
         }
-        var lstSelRec = selModel.getLastSelected() ; //获取最后一个选择的一行的数据
-        console.log(lstSelRec);
+        Ext.Msg.show({
+            title: '确定要删除所选项么?',
+            msg: '你正在试图删除所选项.你想继续么?',
+            buttons: Ext.Msg.YESNO,
+            fn: function (confirmbtn) {
+                if(confirmbtn=='yes'){
+                    var lstSelRec = selModel.getLastSelected() ; //获取最后一个选择的一行的数据
+
+                    var params = {
+                        id:lstSelRec.get('rid'),
+                        idname:'rowid',
+                        isrowid:true,
+                        tablename:'medicalstandard'
+                    };
+                    var successFunc = function (response, action) {
+                        var res = Ext.JSON.decode(response.responseText);
+                        if(res.isok){
+                            grid.getStore().load();
+                        }
+                        else{
+                            Ext.Msg.alert("提示信息", "删除失败，检查web服务或数据库服务");
+                        }
+                    };
+                    var failFunc = function (res, action) {
+                        Ext.Msg.alert("提示信息", "删除失败，检查web服务或数据库服务");
+                    };
+                    var header_cl=me.application.getController("Header");
+                    Ext.bind(header_cl.ajaxSend(params, 'ajax/delcommonbyid.jsp', successFunc, failFunc,'POST'),header_cl);
+
+                }
+            },
+            icon: Ext.Msg.QUESTION
+        });
+
+
 
     },
     outexcel:function(btn){
