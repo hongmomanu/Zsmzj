@@ -17,11 +17,9 @@ Ext.define('ZSMZJ.controller.Medical', {
     models: [
         'medicalhelp.MedicalStandard'
     ],
-
     stores: [
         'medicalhelp.MedicalStandards'
     ],
-
     refs: [
 
     ],
@@ -94,16 +92,13 @@ Ext.define('ZSMZJ.controller.Medical', {
             },
             'medicalstandardgridpanel button[action=addnew]':{
                 click:this.addnewmedicalstandard
-
             },'medicalstandardgridpanel button[action=del]':{
                 click:this.delmedicalstandard
-
             },'medicalstandardgridpanel button[action=outexcel]':{
                 click:this.outexcel
             },'addnewmedicalstandardwin button[action=add]':{
                 click:this.addnewmedicalstandardrecord
             }
-
         }, this);
 
     },
