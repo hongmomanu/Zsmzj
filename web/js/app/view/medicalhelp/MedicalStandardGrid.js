@@ -45,6 +45,7 @@ Ext.define('ZSMZJ.view.medicalhelp.MedicalStandardGrid' ,{
 
             ],
             flex: 1,
+
             /*tbar:[
 
             ],*/
@@ -78,7 +79,7 @@ Ext.define('ZSMZJ.view.medicalhelp.MedicalStandardGrid' ,{
                         action:'addnew'
 
                     }, {
-                        itemId: 'removePerson',
+                        itemId: 'removeStandard',
                         text: '删除',
                         action:'del',
                         disabled: true
@@ -90,6 +91,7 @@ Ext.define('ZSMZJ.view.medicalhelp.MedicalStandardGrid' ,{
                     }
                 ]
             }),
+
             store: 'medicalhelp.MedicalStandards'
         });
         this.callParent(arguments);

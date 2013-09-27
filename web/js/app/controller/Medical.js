@@ -98,7 +98,12 @@ Ext.define('ZSMZJ.controller.Medical', {
                 click:this.outexcel
             },'addnewmedicalstandardwin button[action=add]':{
                 click:this.addnewmedicalstandardrecord
+            },'medicalstandardgridpanel':{
+                selectionchange:function(view, records){
+                    view.view.up('panel').down('#removeStandard').setDisabled(!records.length);
+                }
             }
+
         }, this);
 
     },
@@ -129,7 +134,17 @@ Ext.define('ZSMZJ.controller.Medical', {
 
     },
     delmedicalstandard:function(btn){
-        console.log(btn);
+        //console.log(btn);
+        var grid=btn.up('grid');
+        var selModel = grid.getSelectionModel() ;
+        var isGridSelected = selModel.hasSelection() ;
+        if (!isGridSelected) { //没有被选中
+            Ext.MessageBox.alert("提示","请选则要删除的数据") ;
+            return ;
+        }
+        var lstSelRec = selModel.getLastSelected() ; //获取最后一个选择的一行的数据
+        console.log(lstSelRec);
+
     },
     outexcel:function(btn){
         console.log(btn);
