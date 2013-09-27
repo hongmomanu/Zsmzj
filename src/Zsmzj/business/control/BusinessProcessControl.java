@@ -35,6 +35,7 @@ public class BusinessProcessControl {
     private final String DivisionsTable="divisions";
     private final String SignatureTable="businesssignature";
     private  final String GrantTable="grantmoney";
+    private final String MeidicalStandard="medicalstandard";
     public int getNeedTodoCounts(int roleid){
         BusinessProcess bp=new BusinessProcess();
         return bp.getNeedTodoCounts(roleid,null);
@@ -403,6 +404,86 @@ public class BusinessProcessControl {
         return JSONObject.fromObject(res).toString();
 
     }
+
+    public String getMedicalStandardList(int start,int limit,String keyword,String type,String businesstype){
+
+        BusinessProcess bp=new BusinessProcess();
+        ComonDao cd=new ComonDao();
+        int totalnum =0;
+        String sql_count="select count(*) from "+MeidicalStandard+" where 1=1 ";
+
+        String sql_list="select a.*,b.divisionname as division from " +
+                MeidicalStandard +" a,"+DivisionsTable+" b " +
+                "where a.divisionid = b.rowid";
+
+        if (keyword!=null&&!keyword.equals("")){
+            if(keyword.indexOf("and")>0){
+                String[] arr=keyword.split("and");
+                for(int i=0;i<arr.length;i++){
+                    sql_list+=" and a.rowid in (select c.rowid from "+MeidicalStandard+" c,"+DivisionsTable+" d " +
+                            "where c.divisionid=d.rowid and "+MeidicalStandard+" MATCH '"+arr[i]+"*'" +
+                            "UNION " +
+                            "select c.rowid from "+MeidicalStandard+" c,"+DivisionsTable+" d " +
+                    "where c.divisionid=d.rowid and "+DivisionsTable+" MATCH '"+arr[i]+"*'" +
+                            ") ";
+                    sql_count+=" and a.rowid in (select c.rowid from "+MeidicalStandard+" c,"+DivisionsTable+" d " +
+                            "where c.divisionid=d.rowid and "+MeidicalStandard+" MATCH '"+arr[i]+"*'" +
+                            "UNION " +
+                            "select c.rowid from "+MeidicalStandard+" c,"+DivisionsTable+" d " +
+                            "where c.divisionid=d.rowid and "+DivisionsTable+" MATCH '"+arr[i]+"*'" +
+                            ") ";
+                }
+            }
+            else if(keyword.indexOf("or")>0){
+
+                String[] arr=keyword.split("or");
+                sql_list+=" and a.rowid IN (";
+                sql_count+=" and a.rowid IN (";
+                for(int i=0;i<arr.length;i++){
+                    //sql_list+=arr[i]+"* OR ";
+                    sql_list+=
+                            "    SELECT ROWID FROM "+MeidicalStandard+" WHERE "+MeidicalStandard+" MATCH '"+arr[i]+"*' " +
+                                    "UNION ";
+                    sql_list+=
+                            " select c.rowid from "+MeidicalStandard+" c,"+DivisionsTable+" d " +
+                                    "where c.divisionid=d.rowid and "+DivisionsTable+" MATCH '"+arr[i]+"*'"+"UNION " ;
+
+                    sql_count+=
+                            "    SELECT ROWID FROM "+MeidicalStandard+" WHERE "+MeidicalStandard+" MATCH '"+arr[i]+"*' " +
+                                    "UNION ";
+                    sql_count+=
+                            " select c.rowid from "+MeidicalStandard+" c,"+DivisionsTable+" d " +
+                            "where c.divisionid=d.rowid and "+DivisionsTable+" MATCH '"+arr[i]+"*'"+"UNION " ;
+
+                }
+                sql_list=sql_list.substring(0,sql_list.lastIndexOf("UNION"))+") ";
+                sql_count=sql_count.substring(0,sql_count.lastIndexOf("UNION"))+") ";
+
+            }
+            else{
+                sql_list+=" and a.rowid in (select rowid from "+MeidicalStandard+" where "+MeidicalStandard+" MATCH '"+keyword+"*'"
+                        +" UNION select c.rowid from "+MeidicalStandard+" c,"+DivisionsTable+" d " +
+                        "where c.divisionid=d.rowid and "+DivisionsTable+" MATCH '"+keyword+"*'"+
+                        ") ";
+                sql_count+=" and a.rowid in (select rowid from "+MeidicalStandard+" where "+MeidicalStandard+" MATCH '"+keyword+"*'"
+                        +" UNION select c.rowid from "+MeidicalStandard+" c,"+DivisionsTable+" d " +
+                        "where c.divisionid=d.rowid and "+DivisionsTable+" MATCH '"+keyword+"*'"+
+                        ") ";
+
+            }
+
+        }
+        sql_list+=" Limit "+limit+" Offset "+start;
+
+        ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
+        totalnum=cd.getTotalCountBySql(sql_count);
+        Map<String,Object>res=new HashMap<String, Object>();
+        res.put("totalCount",totalnum);
+        res.put("results",list);
+        return JSONObject.fromObject(res).toString();
+
+    }
+
     public String getNeedTodoBusinessList(int start,int limit,String keyword,String type,String businesstype){
         BusinessProcess bp=new BusinessProcess();
         ComonDao cd=new ComonDao();
@@ -685,7 +766,13 @@ public class BusinessProcessControl {
         }
 
     }
+    public String saveCommonForm(Map<String,Object> params,String tablename){
+        BusinessProcessDao bDao=new BusinessProcessDao();
+        int result= bDao.insertTableVales(params, tablename);
+        if(result>0)return "{success:true}";
+        else  return "{success:false}";
 
+    }
     public String saveNewBusinessApply(Map<String,Object> params,String familymembers,
                                        String affixfiles,String businessType){
 

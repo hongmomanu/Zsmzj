@@ -14,9 +14,13 @@
  */
 Ext.define('ZSMZJ.controller.Medical', {
     extend: 'Ext.app.Controller',
-    models: [],
+    models: [
+        'medicalhelp.MedicalStandard'
+    ],
 
-    stores: [],
+    stores: [
+        'medicalhelp.MedicalStandards'
+    ],
 
     refs: [
 
@@ -96,16 +100,37 @@ Ext.define('ZSMZJ.controller.Medical', {
 
             },'medicalstandardgridpanel button[action=outexcel]':{
                 click:this.outexcel
-
+            },'addnewmedicalstandardwin button[action=add]':{
+                click:this.addnewmedicalstandardrecord
             }
-
 
         }, this);
 
     },
     addnewmedicalstandard:function(btn){
         if (!this.newaddMedicalstandardWin)this.newaddMedicalstandardWin = Ext.widget('addnewmedicalstandardwin');
+        this.newaddMedicalstandardWin.dataobj=btn.up('grid');
         this.newaddMedicalstandardWin.show();
+
+    },
+    addnewmedicalstandardrecord:function(btn){
+
+        var win=btn.up('window');
+        var ajaxform=win.down('form');
+
+        var grid=win.dataobj;
+        var params = {
+            tablename:"medicalstandard"
+        };
+        var successFunc = function (myform, action) {
+            btn.up('window').close();
+            grid.getStore().load();
+        };
+        var failFunc = function (myform, action) {
+            Ext.Msg.alert("提示信息", "发放资金失败,检查web服务");
+        };
+        var dbgl_cl = this.application.getController("Dbgl");
+        Ext.bind(dbgl_cl.formSubmit(ajaxform, params, 'ajax/sendformcommon.jsp', successFunc, failFunc,"正在提交数据"),dbgl_cl);
 
     },
     delmedicalstandard:function(btn){

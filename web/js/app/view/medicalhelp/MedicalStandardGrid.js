@@ -40,7 +40,8 @@ Ext.define('ZSMZJ.view.medicalhelp.MedicalStandardGrid' ,{
                 {header: '医疗金额范围(止)',align:'center',dataIndex:'edmoney',width: 200},
                 {header: '救助比例',align:'center',dataIndex:'helppercent'},
                 {header: '救助类别',align:'center',dataIndex:'helptype'},
-                {header: '医疗性质',align:'center',dataIndex:'helpnature'}
+                {header: '医疗性质',align:'center',dataIndex:'helpnature'},
+                {header: 'rowid',align:'center',dataIndex:'rid',hidden:true}
 
             ],
             flex: 1,
@@ -48,10 +49,10 @@ Ext.define('ZSMZJ.view.medicalhelp.MedicalStandardGrid' ,{
 
             ],*/
             bbar: Ext.create('Ext.PagingToolbar', {
-                /*store: 'dbgl.NeedToDoBusinesses',*/
+                store: 'medicalhelp.MedicalStandards',
                 displayInfo: true,
-                displayMsg: '显示待办事务 {0} - {1} of {2}',
-                emptyMsg: "无待办事务",
+                displayMsg: '显示标准 {0} - {1} of {2}',
+                emptyMsg: "无标准",
                 items:[
                     '-',
                     {
@@ -60,7 +61,6 @@ Ext.define('ZSMZJ.view.medicalhelp.MedicalStandardGrid' ,{
                         width:200,
                         //size:40,
                         listeners: {
-
                             "specialkey": function (field, e) {
                                 if (e.keyCode == 13) {
                                     var keyword = field.getValue().replace(/\s+/g, "");
@@ -72,9 +72,7 @@ Ext.define('ZSMZJ.view.medicalhelp.MedicalStandardGrid' ,{
                             }
                         },
                         emptyText: '输入搜索关键字'
-
                     },'->',
-
                     {
                         text: '新增',
                         action:'addnew'
@@ -91,9 +89,8 @@ Ext.define('ZSMZJ.view.medicalhelp.MedicalStandardGrid' ,{
                         action:'outexcel'
                     }
                 ]
-            })/*,
-            store: 'dbgl.NeedToDoBusinesses'*/
-
+            }),
+            store: 'medicalhelp.MedicalStandards'
         });
         this.callParent(arguments);
         ZSMZJ.view.medicalhelp.MedicalStandardGrid.selectionModel = this.getSelectionModel();
