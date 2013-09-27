@@ -411,7 +411,7 @@ public class BusinessProcessControl {
         ComonDao cd=new ComonDao();
         int totalnum =0;
 
-        String sql_count="select count(*) from "+MeidicalStandard+" where 1=1 ";
+        String sql_count="select count(*) from "+MeidicalStandard+" a,"+DivisionsTable+" b where a.divisionid=b.rowid ";
 
         String sql_list="select a.*,b.divisionname as division from " +
                 MeidicalStandard +" a,"+DivisionsTable+" b " +

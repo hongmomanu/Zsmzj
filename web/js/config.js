@@ -24,6 +24,7 @@ var menu_shjz=[
         ],
         iconCls: 'nav'
     },
+
     {
         layout: 'fit',
         title: '低保边缘户',
@@ -32,6 +33,7 @@ var menu_shjz=[
         ],
         iconCls: 'nav'
     },
+
     {
         layout: 'fit',
         title: '临时救助',
@@ -40,6 +42,7 @@ var menu_shjz=[
         ],
         iconCls: 'nav'
     },
+
     {
         layout: 'fit',
         title: '医疗救助',
