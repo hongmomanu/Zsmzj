@@ -405,6 +405,20 @@ public class BusinessProcessControl {
 
     }
 
+    public String getCommonList(String querystr ,String tablename){
+        JSONObject queryobj=JSONObject.fromObject(querystr);
+        String sql="select * from "+tablename+" where rowid in(";
+        for(Object name  :queryobj.names()){
+
+            sql+="select rowid from "+tablename+" where "+name.toString()+" MATCH '"
+                    +queryobj.get(name.toString())+"') and rowid in(";
+        }
+        sql=sql.substring(0,sql.lastIndexOf("and rowid"));
+        ComonDao cd= new ComonDao();
+        ArrayList<Map<String,Object>> list=cd.getTableList(sql);
+        return  JSONArray.fromObject(list).toString();
+
+    }
     public String delCommonbyid(int id,String idname,String tablename,boolean isrowid){
         BusinessProcessDao bpdao=new BusinessProcessDao();
         int result=bpdao.deldatabyid(id,tablename,idname,isrowid);

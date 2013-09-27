@@ -755,7 +755,7 @@ Ext.define('ZSMZJ.view.medicalhelp.businessApply', {
                         xtype:'dbglaplytype',
                         searchtype:"helptype",
                         name: 'familytype',
-
+                        itemId:'helptype',
                         fieldLabel: '救助类别',
                         afterLabelTextTpl: required,
                         emptyText: '请选救助类别',
@@ -766,6 +766,7 @@ Ext.define('ZSMZJ.view.medicalhelp.businessApply', {
                         xtype:'dbglaplytype',
                         searchtype:"helpnature",
                         name: 'helpnature',
+                        itemId:'helpnature',
 
                         fieldLabel: '救助性质',
                         afterLabelTextTpl: required,
@@ -979,6 +980,7 @@ Ext.define('ZSMZJ.view.medicalhelp.businessApply', {
                         },
                         {
                             name: 'totalhelpmoney',
+                            itemId:'totalhelpmoney',
                             fieldLabel: '总救助金额',
                             afterLabelTextTpl: required,
                             emptyText: '请输入救助金额',

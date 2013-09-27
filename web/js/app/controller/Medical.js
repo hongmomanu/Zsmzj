@@ -185,13 +185,37 @@ Ext.define('ZSMZJ.controller.Medical', {
     medicalexpenseschange:function(item){
 
         testobj=item;
+        var panel=item.up('panel');
+        var helptype=panel.down('#helptype');
+        var helpnature=panel.down('#helpnature');
+        var medicalmoney=panel.down('#medicalmoney');
+        var medicalselfmoney=panel.down('#medicalselfmoney');
+        var writeoffmoney=panel.down('#writeoffmoney');
+        var responsiblemoney=panel.down('#responsiblemoney');
+        var totalhelpmoney=panel.down('#totalhelpmoney');
+        if(helptype&&helpnature){
+            var params = {
+                querystr:Ext.JSON.encode({helpnature:helpnature.getValue(),helptype:helptype.getValue()}),
+                tablename:'medicalstandard'
+            };
+            var successFunc = function (response, action) {
+                var res = Ext.JSON.decode(response.responseText);
+                console.log(res);
+            };
+            var failFunc = function (res, action) {
+                Ext.Msg.alert("提示信息", "删除失败，检查web服务或数据库服务");
+            };
+            var header_cl=this.application.getController("Header");
+            Ext.bind(header_cl.ajaxSend(params, 'ajax/getcommonlist.jsp', successFunc, failFunc,'POST'),header_cl);
+
+        }
+
 
     },
     applysubmit: function (btn) {
         var dbgl_cl = this.application.getController("Dbgl");
         dbgl_cl.submitcommon(btn, businessTableType.medicalhelp);
     },
-
 
     onLaunch: function () {
         var me = this;
