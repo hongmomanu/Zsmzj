@@ -7,9 +7,9 @@
  */
 
 
-Ext.define('ZSMZJ.view.charitable.businessApply', {
+Ext.define('ZSMZJ.view.medicalhelp.businessApply', {
     extend : 'Ext.form.Panel',
-    alias : 'widget.charitablebusinessapplyform',
+    alias : 'widget.medicalhelpbusinessapplyform',
     requires: [
 
 
@@ -753,7 +753,7 @@ Ext.define('ZSMZJ.view.charitable.businessApply', {
 
                     items: [{
                         xtype:'dbglaplytype',
-                        searchtype:"jzhelptype",
+                        searchtype:"helptype",
                         name: 'familytype',
 
                         fieldLabel: '救助类别',
@@ -775,7 +775,7 @@ Ext.define('ZSMZJ.view.charitable.businessApply', {
                     },
                     {
                         xtype:'dbglaplytype',
-                        searchtype:"helpnature",
+                        searchtype:"medicarenature",
                         name: 'medicarenature',
 
                         fieldLabel: '医保性质',

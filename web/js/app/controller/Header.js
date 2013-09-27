@@ -44,7 +44,7 @@ Ext.define('ZSMZJ.controller.Header', {
                 afterrender: this.headerRenderEvents
 
             },
-            'dbglbusinessalterform,dbedgebusinessalterform,temporaryhelpbusinessalterform,charitablebusinessapplyform':{
+            'dbglbusinessalterform,dbedgebusinessalterform,temporaryhelpbusinessalterform,medicalhelpbusinessapplyform':{
 
                 alterapplyaftershow:function(form){
                     //this.closemask();
@@ -330,7 +330,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
             },
 
-            'needtodopanel,needtodobusinesspanel,changedbusinesspanel,logoutbusinesspanel,peoplequerypanel,familyquerypanel,dbglstatisticsfullpanel,dbglgrantmoneypanel,dbglstatisticscomplexonepanel':{
+            'needtodopanel,needtodobusinesspanel,changedbusinesspanel,logoutbusinesspanel,peoplequerypanel,familyquerypanel,dbglstatisticsfullpanel,dbglgrantmoneypanel,dbglstatisticscomplexonepanel,medicalstandardgridpanel':{
 
                 gridshowfresh:function(grid){
 
@@ -351,11 +351,14 @@ Ext.define('ZSMZJ.controller.Header', {
                   }
 
                   var store=grid.getStore();
-                  store.proxy.extraParams.businesstype = grid.businesstype;
-                  store.proxy.extraParams.type=grid.stype
-                  store.load({callback:function(){
-                        CommonFunc.widgetdolayout("mainContent-panel",100);
-                  }});
+                  if(store.proxy.extraParams){
+                      store.proxy.extraParams.businesstype = grid.businesstype;
+                      store.proxy.extraParams.type=grid.stype
+                      store.load({callback:function(){
+                          CommonFunc.widgetdolayout("mainContent-panel",100);
+                      }});
+                  }
+
                 },
                 afterrender: this.afterrenderEvents,
 
@@ -1694,6 +1697,8 @@ Ext.define('ZSMZJ.controller.Header', {
                 widgetname='temporaryhelpbusinessalterform';
             }else if(r.get('businesstype')==businessTableType.charitablehelp){
                 widgetname='charitablebusinessalterform';
+            }else if(r.get('businesstype')==businessTableType.medicalhelp){
+                widgetname='medicalhelpbusinessalterform';
             }
 
         }else if(r.get('processstatustype')==processstatustype.change){

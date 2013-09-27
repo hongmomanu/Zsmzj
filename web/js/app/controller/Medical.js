@@ -12,7 +12,7 @@
  * Dbedge controller
  * 低保边缘户管理业务控制层，描述低保各种业务信息
  */
-Ext.define('ZSMZJ.controller.Charitable', {
+Ext.define('ZSMZJ.controller.Medical', {
     extend: 'Ext.app.Controller',
     models: [],
 
@@ -22,7 +22,9 @@ Ext.define('ZSMZJ.controller.Charitable', {
 
     ],
     views: [
-        'charitable.businessApply'
+        'medicalhelp.businessApply',
+        'medicalhelp.addNewMedicalStandardWin',
+        'medicalhelp.MedicalStandardGrid'
     ],
 
     initStrore: function () {
@@ -33,10 +35,10 @@ Ext.define('ZSMZJ.controller.Charitable', {
         var dbgl_cl = this.application.getController("Dbgl");
         var header_cl=this.application.getController("Header");
         this.control({
-            'charitablebusinessapplyform,charitablebusinessalterform': {
+            'medicalhelpbusinessapplyform,medicalhelpbusinessalterform': {
                 afterrender: dbgl_cl.afterrenderEvents
             },
-            'charitablebusinessapplyform component,charitablebusinessalterform component': {
+            'medicalhelpbusinessapplyform component,medicalhelpbusinessalterform component': {
                 imgclick: function (c) {
                     dbgl_cl.showUploadImgWin(c);
                 },
@@ -50,45 +52,67 @@ Ext.define('ZSMZJ.controller.Charitable', {
                     this.medicalexpenseschange(c);
                 }
             },
-            'charitablebusinessapplyform button[action=applysubmit]': {
+            'medicalhelpbusinessapplyform button[action=applysubmit]': {
                 click: this.applysubmit
             },
-            'charitablebusinessalterform button[action=applysubmit]': {
+            'medicalhelpbusinessalterform button[action=applysubmit]': {
                 click: Ext.bind(dbgl_cl.applysubmitupdate, dbgl_cl)
             },
-            'charitablebusinessalterform button[action=sendbusiness]':{
+            'medicalhelpbusinessalterform button[action=sendbusiness]':{
                 click: Ext.bind(header_cl.sendbusiness,header_cl)
             },
-            'charitablebusinessalterform button[action=process]':{
+            'medicalhelpbusinessalterform button[action=process]':{
                 click: Ext.bind(header_cl.formprocess,header_cl)
             },
-            'charitablebusinessalterform button[action=change]':{
+            'medicalhelpbusinessalterform button[action=change]':{
                 click: Ext.bind(header_cl.showchangeform,header_cl)
             },
-            'charitablebusinessalterform button[action=cancel]':{
+            'medicalhelpbusinessalterform button[action=cancel]':{
                 click: Ext.bind(header_cl.cancelcheck,header_cl)
             },
-            'charitablebusinessalterform button[action=checkbusiness]':{
+            'medicalhelpbusinessalterform button[action=checkbusiness]':{
                 click: Ext.bind(header_cl.showcheckwin,header_cl)
             },
-            'charitablebusinessalterform button[action=signature]':{
+            'medicalhelpbusinessalterform button[action=signature]':{
                 click: Ext.bind(header_cl.showsignature,header_cl)
             },
-            'charitablebusinessalterform button[action=unsignature]':{
+            'medicalhelpbusinessalterform button[action=unsignature]':{
                 click: Ext.bind(header_cl.delsignature,header_cl)
             },
-            'charitablebusinessalterform button[action=print]':{
+            'medicalhelpbusinessalterform button[action=print]':{
                 click: Ext.bind(header_cl.formprint,header_cl)
             },
-            'charitablebusinessalterform button[action=cancelsendbusiness]':{
+            'medicalhelpbusinessalterform button[action=cancelsendbusiness]':{
                 click: Ext.bind(header_cl.cancelsendbusiness,header_cl)
             },
-            'charitablebusinessalterform button[action=logout]':{
+            'medicalhelpbusinessalterform button[action=logout]':{
                 click: Ext.bind(header_cl.logoutbusiness,header_cl)
+            },
+            'medicalstandardgridpanel button[action=addnew]':{
+                click:this.addnewmedicalstandard
+
+            },'medicalstandardgridpanel button[action=del]':{
+                click:this.delmedicalstandard
+
+            },'medicalstandardgridpanel button[action=outexcel]':{
+                click:this.outexcel
+
             }
+
 
         }, this);
 
+    },
+    addnewmedicalstandard:function(btn){
+        if (!this.newaddMedicalstandardWin)this.newaddMedicalstandardWin = Ext.widget('addnewmedicalstandardwin');
+        this.newaddMedicalstandardWin.show();
+
+    },
+    delmedicalstandard:function(btn){
+        console.log(btn);
+    },
+    outexcel:function(btn){
+        console.log(btn);
     },
     medicalexpenseschange:function(item){
 
@@ -97,7 +121,7 @@ Ext.define('ZSMZJ.controller.Charitable', {
     },
     applysubmit: function (btn) {
         var dbgl_cl = this.application.getController("Dbgl");
-        dbgl_cl.submitcommon(btn, businessTableType.charitablehelp);
+        dbgl_cl.submitcommon(btn, businessTableType.medicalhelp);
     },
 
 

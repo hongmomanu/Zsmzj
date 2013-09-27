@@ -406,6 +406,19 @@ CREATE VIRTUAL TABLE IF NOT EXISTS grantmoney USING fts3
   grantdate                 VARCHAR(100)            --结束日期
   );
 
+--资金发放表
+CREATE VIRTUAL TABLE IF NOT EXISTS medicalstandard USING fts3
+  (
+  id integer primary key autoincrement,            --自增主键
+  time DATETIME DEFAULT (datetime(CURRENT_TIMESTAMP,'localtime')),  --提交时间
+  divisionid                integer,                --行政区划id
+  helppercent               integer,                --救助比例
+  helptype                  VARCHAR(100),           --救助类别
+  bgmoney                    VARCHAR(100),          --起始金额
+  edmoney                    VARCHAR(100),          --结束金额
+  helpnature                 VARCHAR(100)           --医疗救助性质
+  );
+
 
 
 ----技巧说明 日期比较 time Between '2008-06-10' and  '2013-09-11'   数值比较CAST(totalhelpmoney AS real)
