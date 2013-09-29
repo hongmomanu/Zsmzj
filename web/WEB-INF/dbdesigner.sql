@@ -184,7 +184,13 @@ hospitalizedhelpedmoneyyear    VARCHAR(50),                            --本年�
 hospitalizedhelpedtimesyear    VARCHAR(50),                            --本年度住院累计救助次数
 outpatientwriteoffcardinalnumberyear           VARCHAR(50),            --本年度门诊累计报销基数
 outpatienthelpedmoneyyear         VARCHAR(50),                         --本年度门诊累计救助金额
-outpatienthelpedtimesyear      VARCHAR(50)                              --本年度门诊累计救助次数
+outpatienthelpedtimesyear      VARCHAR(50),                              --本年度门诊累计救助次数
+studyyear                      VARCHAR(50),                            --就读学年
+studyclass                     VARCHAR(50),                            --就读班级
+studytime                      VARCHAR(50),                            --学习时段
+admission                      VARCHAR(50),                            --录取分数
+schoolenrollment               VARCHAR(50),                            --录取学校
+ticketnumber                    VARCHAR(50)                           --准考证号
 );
 
 
@@ -287,6 +293,14 @@ CREATE VIRTUAL TABLE IF NOT EXISTS businesschange USING fts3
   outpatientwriteoffcardinalnumberyear           VARCHAR(50),            --本年度门诊累计报销基数
   outpatienthelpedmoneyyear         VARCHAR(50),                         --本年度门诊累计救助金额
   outpatienthelpedtimesyear      VARCHAR(50),                              --本年度门诊累计救助次数
+
+  studyyear                      VARCHAR(50),                            --就读学年
+  studyclass                     VARCHAR(50),                            --就读班级
+  studytime                      VARCHAR(50),                            --学习时段
+  admission                      VARCHAR(50),                            --录取分数
+  schoolenrollment               VARCHAR(50),                            --录取学校
+  ticketnumber                   VARCHAR(50),                           --准考证号
+
 
   businessid               integer,                                 --业务id
   insertdate               VARCHAR(50)                              --charuriq
