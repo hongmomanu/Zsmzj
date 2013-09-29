@@ -12,7 +12,8 @@ var businessTableType=
             'temporaryhelp':'临时救助',
             'studyhelp':'助学救助',
             'charitablehelp':'慈善救助',
-            'medicalhelp':'医疗救助'
+            'medicalhelp':'医疗救助',
+            'allquery':''
         };
 
 var menu_shjz=[
@@ -67,7 +68,14 @@ var menu_shjz=[
         ],
         iconCls: 'nav'
     },
-    {layout: 'fit',title: '综合查询',iconCls: 'nav'}
+    {
+        layout: 'fit',
+        title: '综合查询',
+        items:[
+            {xtype:'dbglconfigtree',searchtype:"综合查询",businesstype:businessTableType.allquery}
+        ],
+        iconCls: 'nav'
+    }
 ];
 
 var menu_qxgl=[{layout: 'fit',title: '权限设置',items:[{xtype:'userconfiggrid'}],iconCls: 'nav' },

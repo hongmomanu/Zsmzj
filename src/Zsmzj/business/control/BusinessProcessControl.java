@@ -344,12 +344,16 @@ public class BusinessProcessControl {
         ComonDao cd=new ComonDao();
         String sql_count="select count(*)"+
                 " from "+BusinessTable +" a,"+FamilyTable+" b " +
-                "where a.rowid = b.businessid  and a.businesstype MATCH '"+businesstype+"'";
+                "where a.rowid = b.businessid ";
         //int totalnum =cd.getTotalCount(FamilyTable);
 
         String sql_list="select a.division,a.owername,a.processstatus,a.processstatustype,a.businesstype,b.rowid,a.owerid,b.* "+
                 " from "+BusinessTable +" a,"+FamilyTable+" b " +
-                "where a.rowid = b.businessid  and a.businesstype MATCH '"+businesstype+"'";
+                "where a.rowid = b.businessid ";
+        if(!businesstype.equals("all")){
+            sql_list+=" and a.businesstype MATCH '"+businesstype+"'";
+            sql_count+=" and a.businesstype MATCH '"+businesstype+"'";
+        }
 
         if (keyword!=null&&!keyword.equals("")){
             if(keyword.indexOf("and")>0){
