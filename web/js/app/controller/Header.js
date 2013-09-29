@@ -44,7 +44,7 @@ Ext.define('ZSMZJ.controller.Header', {
                 afterrender: this.headerRenderEvents
 
             },
-            'dbglbusinessalterform,dbedgebusinessalterform,temporaryhelpbusinessalterform,medicalhelpbusinessalterform':{
+            'dbglbusinessalterform,dbedgebusinessalterform,temporaryhelpbusinessalterform,medicalhelpbusinessalterform,studyhelpbusinessalterform':{
 
                 alterapplyaftershow:function(form){
                     ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
@@ -1708,6 +1708,8 @@ Ext.define('ZSMZJ.controller.Header', {
                 widgetname='charitablebusinessalterform';
             }else if(r.get('businesstype')==businessTableType.medicalhelp){
                 widgetname='medicalhelpbusinessalterform';
+            }else if(r.get('businesstype')==businessTableType.studyhelp){
+                widgetname='studyhelpbusinessalterform';
             }
 
         }else if(r.get('processstatustype')==processstatustype.change){
