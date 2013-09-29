@@ -99,7 +99,7 @@ Ext.define('ZSMZJ.view.dbgl.FamilyQueryGrid' ,{
 
                 {header: '家庭户口性质',align:'center',dataIndex:'familyaccount'},
 
-                {header: '低保户类型',align:'center',dataIndex:'poorfamilytype'},
+                {header: '低保户类型',align:'center',dataIndex:'poorfamilytype',itemId:'dbpoorfamilytype'},
 
                 {header: '享受人数',align:'center',dataIndex:'enjoynum'},
                 {header: '开户人',align:'center',dataIndex:'bankower'},
