@@ -611,6 +611,11 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
           });
           familygrid.getStore().insert(0, r);
+          var applyform=familygrid.up('form');
+          var countitem=applyform.down('#FamilyPersons');
+
+          countitem.setValue(1);
+
           //testobj=gridpanel;
           //rowEditing.startEdit(0, 0);
 

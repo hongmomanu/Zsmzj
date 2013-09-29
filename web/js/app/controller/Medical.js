@@ -25,6 +25,7 @@ Ext.define('ZSMZJ.controller.Medical', {
     ],
     views: [
         'medicalhelp.businessApply',
+        'medicalhelp.businessAlter',
         'medicalhelp.addNewMedicalStandardWin',
         'medicalhelp.MedicalStandardGrid'
     ],
@@ -184,7 +185,7 @@ Ext.define('ZSMZJ.controller.Medical', {
     },
     medicalexpenseschange:function(item){
 
-        testobj=item;
+        //testobj=item;
         var panel=item.up('panel');
         var helptype=panel.down('#helptype');
         var helpnature=panel.down('#helpnature');
@@ -200,7 +201,23 @@ Ext.define('ZSMZJ.controller.Medical', {
             };
             var successFunc = function (response, action) {
                 var res = Ext.JSON.decode(response.responseText);
-                console.log(res);
+                responsiblemoney.setValue(medicalmoney.getValue()- medicalselfmoney.getValue()-writeoffmoney.getValue());
+                if(res.length>0){
+                    var rem=responsiblemoney.getValue();
+                    for(var i=0;i<res.length;i++){
+                        if(parseInt(res[i].bgmoney)<=rem&&rem<=parseInt(res[i].edmoney)){
+                            var percent=res[i].helppercent;
+                            totalhelpmoney.setValue(rem*(parseInt(percent)/100));
+                            break;
+                        }
+
+                    }
+
+
+                }else{
+                    Ext.Msg.alert("提示信息", "缺少对应的医疗标准，不能自动计算医保金额!");
+                }
+
             };
             var failFunc = function (res, action) {
                 Ext.Msg.alert("提示信息", "删除失败，检查web服务或数据库服务");
