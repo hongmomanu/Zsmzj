@@ -36,7 +36,7 @@ Ext.define('ZSMZJ.view.studyhelp.businessAlter', {
             autoScroll: true,
             items: [{
                 xtype: 'fieldset',
-                title: '<a>【医疗救助业务办理】家庭基本信息</a>',
+                title: '<a>【助学救助业务办理】家庭基本信息</a>',
                 defaultType: 'textfield',
 
                 //layout: 'anchor',
@@ -759,39 +759,15 @@ Ext.define('ZSMZJ.view.studyhelp.businessAlter', {
 
                     items: [{
                         xtype:'dbglaplytype',
-                        searchtype:"helptype",
-                        name: 'familytype',
-                        itemId:'helptype',
-                        fieldLabel: '救助类别',
+                        searchtype:"dbglicomemonth",
+                        name: 'icomemonth',
+
+                        fieldLabel: '收入累计月份',
                         afterLabelTextTpl: required,
-                        emptyText: '请选救助类别',
-                        blankText : '请选择救助类别',
+                        emptyText: '请选择累计月份',
+                        blankText : '请选择累计月份',
                         allowBlank: false
                     },
-                        {
-                            xtype:'dbglaplytype',
-                            searchtype:"helpnature",
-                            name: 'helpnature',
-                            itemId:'helpnature',
-
-                            fieldLabel: '救助性质',
-                            afterLabelTextTpl: required,
-                            emptyText: '请选择救助性质',
-                            blankText : '请选择救助性质',
-                            allowBlank: false
-                        },
-                        {
-                            xtype:'dbglaplytype',
-                            searchtype:"medicarenature",
-                            name: 'medicarenature',
-
-                            fieldLabel: '医保性质',
-                            afterLabelTextTpl: required,
-                            emptyText: '请选择医保性质',
-                            blankText : '请选择医保性质',
-                            allowBlank: false
-                        },
-
                         {
                             name: 'familyincome',
                             fieldLabel: '家庭总收入',
@@ -800,22 +776,48 @@ Ext.define('ZSMZJ.view.studyhelp.businessAlter', {
                             emptyText: '请输入家庭总收入',
                             blankText : '请输入家庭总收入',
                             allowBlank: false
-                        } ,
+                        }
+                        ,
                         {
-                            xtype:'dbglaplytype',
-                            searchtype:"writeofftype",
-                            name: 'writeofftype',
-                            fieldLabel: '报销类型',
+                            name: 'averageincome',
+                            fieldLabel: '月人均收入',
                             afterLabelTextTpl: required,
-                            emptyText: '请选择报销类型',
-                            blankText : '请选择报销类型',
+                            value:0,
+                            emptyText: '请输入家庭总收入',
+                            blankText : '请输入家庭总收入',
                             allowBlank: false
                         },
                         {
-                            name: 'medicarenum',
-                            fieldLabel: '医保卡号',
+                            name: 'studyyear',
+                            fieldLabel: '就读学年',
+                            allowBlank: true
+                        },
+                        {
+                            name: 'studyclass',
+                            fieldLabel: '就读班级',
+                            allowBlank: true
+                        },
+                        {
+                            name: 'studytime',
+                            fieldLabel: '时段',
+                            allowBlank: true
+                        },
+                        {
+                            name: 'admission',
+                            fieldLabel: '录取分数',
+                            allowBlank: true
+                        },
+                        {
+                            name: 'schoolenrollment',
+                            fieldLabel: '录取学校',
+                            allowBlank: true
+                        },
+                        {
+                            name: 'ticketnumber',
+                            fieldLabel: '准考证号',
                             allowBlank: true
                         }
+
 
                     ]
                 },
@@ -846,116 +848,6 @@ Ext.define('ZSMZJ.view.studyhelp.businessAlter', {
 
                     items: [
                         {
-                            name: 'hospitalname',
-                            fieldLabel: '就诊医院',
-                            afterLabelTextTpl: required,
-                            emptyText: '请输入就诊医院',
-                            blankText : '请输入就诊医院',
-                            allowBlank: false
-                        }
-                        ,
-                        {
-                            name: 'illnessname',
-                            fieldLabel: '疾病名称',
-                            afterLabelTextTpl: required,
-                            emptyText: '请输入疾病名称',
-                            blankText : '请输入疾病名称',
-                            allowBlank: false
-                        },
-                        {
-                            name: 'doctordate',
-                            fieldLabel: '就诊日期',
-                            afterLabelTextTpl: required,
-                            emptyText: '请输入就诊日期',
-                            blankText : '请输入就诊日期',
-                            xtype: 'datefield',
-                            format: 'Y-m-d',
-                            //value: Ext.Date.format(new Date(), 'Y-m-d'),
-                            allowBlank: false
-                        },
-                        {
-                            name: 'outhospitaldate',
-                            fieldLabel: '出院日期',
-                            afterLabelTextTpl: required,
-                            emptyText: '请输入就诊日期',
-                            blankText : '请输入就诊日期',
-                            xtype: 'datefield',
-                            format: 'Y-m-d',
-                            //value: Ext.Date.format(new Date(), 'Y-m-d'),
-                            allowBlank: false
-                        }
-                        ,
-                        {
-                            name: 'medicalmoney',
-                            itemId:'medicalmoney',
-                            fieldLabel:'医疗费用总额',
-                            listeners: {
-
-                                "blur":function(field,e){
-                                    var name = field.getRawValue().replace(/\s+/g, "");
-                                    this.fireEvent('medicalexpenseschange', field);
-
-                                }
-                            },
-                            value:0,
-                            afterLabelTextTpl: required,
-                            emptyText: '请输入医疗费用总额',
-                            blankText :'请输入医疗费用总额',
-                            allowBlank: false
-                        },{
-                            name: 'medicalselfmoney',
-                            itemId:'medicalselfmoney',
-                            fieldLabel:'自理金额',
-                            listeners: {
-
-                                "blur":function(field,e){
-                                    var name = field.getRawValue().replace(/\s+/g, "");
-                                    this.fireEvent('medicalexpenseschange', field);
-
-                                }
-                            },
-                            value:0,
-                            afterLabelTextTpl: required,
-                            emptyText: '请输入自理金额',
-                            blankText :'请输入自理金额',
-                            allowBlank: false
-                        },
-                        {
-                            name: 'writeoffmoney',
-                            itemId:'writeoffmoney',
-                            fieldLabel:'已报销金额',
-                            value:0,
-                            listeners: {
-
-                                "blur":function(field,e){
-                                    var name = field.getRawValue().replace(/\s+/g, "");
-                                    this.fireEvent('medicalexpenseschange', field);
-
-                                }
-                            },
-                            afterLabelTextTpl: required,
-                            emptyText: '请输入已报销金额',
-                            blankText :'请输入已报销金额',
-                            allowBlank: false
-                        },
-                        {
-                            name: 'responsiblemoney',
-                            itemId:'responsiblemoney',
-                            fieldLabel:'自负金额',
-                            value:0,
-                            afterLabelTextTpl: required,
-                            emptyText: '请输入已报销金额',
-                            blankText :'请输入已报销金额',
-                            allowBlank: false
-                        },
-
-                        {
-                            name: 'aidnum',
-                            fieldLabel: '救助证编号',
-                            allowBlank: true
-                        }
-                        ,
-                        {
                             name: 'helpbgtime',
                             fieldLabel: '救助开始日期',
                             afterLabelTextTpl: required,
@@ -976,7 +868,6 @@ Ext.define('ZSMZJ.view.studyhelp.businessAlter', {
                             format: 'Y-m-d',
                             allowBlank: true
                         },
-
                         {
                             fieldLabel: '享受人数',
                             value:0,
@@ -1002,7 +893,7 @@ Ext.define('ZSMZJ.view.studyhelp.businessAlter', {
                             fieldLabel: '公示结束日期',
                             xtype: 'datefield',
                             format: 'Y-m-d',
-                            colspan:3,
+                            colspan:2,
                             allowBlank: true
                         }
                         ,{

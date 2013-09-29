@@ -866,7 +866,6 @@ Ext.define('ZSMZJ.view.studyhelp.businessApply', {
                             format: 'Y-m-d',
                             allowBlank: true
                         },
-
                         {
                             fieldLabel: '享受人数',
                             value:0,
