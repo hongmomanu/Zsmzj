@@ -44,7 +44,7 @@ Ext.define('ZSMZJ.controller.Header', {
                 afterrender: this.headerRenderEvents
 
             },
-            'dbglbusinessalterform,dbedgebusinessalterform,temporaryhelpbusinessalterform,medicalhelpbusinessalterform,studyhelpbusinessalterform':{
+            'dbglbusinessalterform,dbedgebusinessalterform,temporaryhelpbusinessalterform,medicalhelpbusinessalterform,studyhelpbusinessalterform,charitablehelpbusinessalterform':{
 
                 alterapplyaftershow:function(form){
                     ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
@@ -361,6 +361,15 @@ Ext.define('ZSMZJ.controller.Header', {
                       grid.down('#dbpoorfamilytype')?grid.down('#poorfamilytype').hide():'';
 
                   }else if(grid.businesstype==businessTableType.studyhelp){
+                      grid.down('#applytype')?grid.down('#applytype').hide():'';
+                      grid.down('#familytype')?grid.down('#familytype').hide():'';
+                      grid.down('#helpnature')?grid.down('#helpnature').hide():'';
+                      grid.down('#medicarenature')?grid.down('#medicarenature').hide():'';
+                      grid.down('#poorfamilytype')?grid.down('#poorfamilytype').show():'';
+                      grid.down('#dbpoorfamilytype')?grid.down('#poorfamilytype').hide():'';
+
+
+                  }else if(grid.businesstype==businessTableType.charitablehelp){
                       grid.down('#applytype')?grid.down('#applytype').hide():'';
                       grid.down('#familytype')?grid.down('#familytype').hide():'';
                       grid.down('#helpnature')?grid.down('#helpnature').hide():'';
@@ -1717,7 +1726,7 @@ Ext.define('ZSMZJ.controller.Header', {
             else if(r.get('businesstype')==businessTableType.temporaryhelp){
                 widgetname='temporaryhelpbusinessalterform';
             }else if(r.get('businesstype')==businessTableType.charitablehelp){
-                widgetname='charitablebusinessalterform';
+                widgetname='charitablehelpbusinessalterform';
             }else if(r.get('businesstype')==businessTableType.medicalhelp){
                 widgetname='medicalhelpbusinessalterform';
             }else if(r.get('businesstype')==businessTableType.studyhelp){
@@ -2084,7 +2093,8 @@ Ext.define('ZSMZJ.controller.Header', {
 
        //清空流程图
        var mysurface=me.getMyprocessvector().surface;
-       for(var i=me.vectornums;i<mysurface.items.items.length;i++){
+       var numsize=me.vectornums;
+       for(var i=numsize;i<mysurface.items.items.length;i++){
            mysurface.remove(mysurface.items.items[i]);
        }
         //显示历史审批表
