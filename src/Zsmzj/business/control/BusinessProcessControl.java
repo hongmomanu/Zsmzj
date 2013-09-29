@@ -281,7 +281,7 @@ public class BusinessProcessControl {
         BusinessProcess bp=new BusinessProcess();
         ComonDao cd=new ComonDao();
         String sql_count="select count(*)"+
-                " from "+BusinessTable +" a where a.rowid>0 and a.businesstype MATCH '"+businesstype+"'";
+                " from "+BusinessTable +" a where a.rowid>0 ";
 
 
         //int totalnum =cd.getTotalCount(BusinessTable);
@@ -290,7 +290,13 @@ public class BusinessProcessControl {
                 "b.businessid MATCH a.rowid)  as familynum," +
                 "(select count(*)  from "+ FamilyTable+" b where " +
                 "b.businessid = a.rowid and isenjoyed MATCH '享受')  as enjoynum"+
-                " from "+BusinessTable +" a where a.rowid>0 and a.businesstype MATCH '"+businesstype+"'";
+                " from "+BusinessTable +" a where a.rowid>0 ";
+
+        if(!businesstype.equals("all")){
+            sql_list+=" and a.businesstype MATCH '"+businesstype+"'";
+            sql_count+=" and a.businesstype MATCH '"+businesstype+"'";
+        }
+
 
         if (keyword!=null&&!keyword.equals("")){
             if(keyword.indexOf("and")>0){

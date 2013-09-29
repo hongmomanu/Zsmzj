@@ -78,11 +78,17 @@ Ext.define('ZSMZJ.view.dbgl.PeopleQueryGrid' ,{
                 {header: '户主身份证',align:'center',dataIndex:'owerid',width: 250},
                 {header: '与户主关系',align:'center',dataIndex:'relationship'},
                 {header: '姓名',align:'center',dataIndex:'name'},
-
+                {header: '业务类型',align:'center',dataIndex:'businesstype',itemId:'businesstype'},
                 {header: '身份证',align:'center',dataIndex:'personid'},
                 {header: '性别',align:'center',dataIndex:'sex'},
 
-                {header: '年龄',align:'center',dataIndex:'age'},
+                {header: '年龄',align:'center',dataIndex:'age',renderer: function (v, m, r) {
+                    var time =Ext.Date.parse(r.get('birthday'), "Y-m-dTH:i:s");
+                    var now =new Date();
+                    var val =now.getFullYear()-time.getFullYear();
+                    return val;
+
+                }},
 
                 {header: '户口性质',align:'center',dataIndex:'accounttype'},
                 {header: '文化程度',align:'center',dataIndex:'education'},

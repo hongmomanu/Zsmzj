@@ -79,7 +79,9 @@ Ext.define('ZSMZJ.view.dbgl.FamilyQueryGrid' ,{
                 {header: '行政区划', dataIndex: 'division',align:'center',width: 250},
                 {header: '户主身份证',align:'center',dataIndex:'owerid',width: 250},
 
+
                 {header: '申请类别',align:'center',dataIndex:'applytype',itemId:'applytype'},
+                {header: '业务类型',align:'center',dataIndex:'businesstype',itemId:'businesstype'},
                 {header: '致贫原因',align:'center',dataIndex:'poorfamilytype',itemId:'poorfamilytype'},
                 {header: '救助性质',align:'center',dataIndex:'helpnature',itemId:'helpnature'},
                 {header: '医保性质',align:'center',dataIndex:'medicarenature',itemId:'medicarenature'},

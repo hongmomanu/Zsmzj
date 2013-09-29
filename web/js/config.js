@@ -13,7 +13,7 @@ var businessTableType=
             'studyhelp':'助学救助',
             'charitablehelp':'慈善救助',
             'medicalhelp':'医疗救助',
-            'allquery':''
+            'allquery':'all'
         };
 
 var menu_shjz=[

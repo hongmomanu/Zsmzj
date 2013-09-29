@@ -337,11 +337,14 @@ Ext.define('ZSMZJ.controller.Header', {
                       grid.down('#medicarenature')?grid.down('#medicarenature').hide():'';
                       grid.down('#poorfamilytype')?grid.down('#poorfamilytype').show():'';
                       grid.down('#dbpoorfamilytype')?grid.down('#poorfamilytype').hide():'';
+                      grid.down('#businesstype')?grid.down('#businesstype').hide():'';
+
 
                   }else if(grid.businesstype==businessTableType.dbbyh){
                       grid.down('#poorfamilytype')?grid.down('#poorfamilytype').hide():'';
                       grid.down('#helpnature')?grid.down('#helpnature').hide():'';
                       grid.down('#medicarenature')?grid.down('#medicarenature').hide():'';
+                      grid.down('#businesstype')?grid.down('#businesstype').hide():'';
                       grid.down('#familytype')?grid.down('#familytype').show():'';
                       grid.down('#applytype')?grid.down('#applytype').show():''
 
@@ -349,12 +352,14 @@ Ext.define('ZSMZJ.controller.Header', {
                       grid.down('#poorfamilytype')?grid.down('#poorfamilytype').hide():'';
                       grid.down('#helpnature')?grid.down('#helpnature').hide():'';
                       grid.down('#medicarenature')?grid.down('#medicarenature').hide():'';
+                      grid.down('#businesstype')?grid.down('#businesstype').hide():'';
                       grid.down('#familytype')?grid.down('#familytype').show():'';
                       grid.down('#applytype')?grid.down('#applytype').show():'';
 
                   }else if(grid.businesstype==businessTableType.medicalhelp){
                       grid.down('#applytype')?grid.down('#applytype').hide():'';
                       grid.down('#familytype')?grid.down('#familytype').hide():'';
+                      grid.down('#businesstype')?grid.down('#businesstype').hide():'';
                       grid.down('#helpnature')?grid.down('#helpnature').show():'';
                       grid.down('#medicarenature')?grid.down('#medicarenature').show():'';
                       grid.down('#poorfamilytype')?grid.down('#poorfamilytype').show():'';
@@ -365,6 +370,7 @@ Ext.define('ZSMZJ.controller.Header', {
                       grid.down('#familytype')?grid.down('#familytype').hide():'';
                       grid.down('#helpnature')?grid.down('#helpnature').hide():'';
                       grid.down('#medicarenature')?grid.down('#medicarenature').hide():'';
+                      grid.down('#businesstype')?grid.down('#businesstype').hide():'';
                       grid.down('#poorfamilytype')?grid.down('#poorfamilytype').show():'';
                       grid.down('#dbpoorfamilytype')?grid.down('#poorfamilytype').hide():'';
 
@@ -373,8 +379,19 @@ Ext.define('ZSMZJ.controller.Header', {
                       grid.down('#applytype')?grid.down('#applytype').hide():'';
                       grid.down('#familytype')?grid.down('#familytype').hide():'';
                       grid.down('#helpnature')?grid.down('#helpnature').hide():'';
+                      grid.down('#businesstype')?grid.down('#businesstype').hide():'';
                       grid.down('#medicarenature')?grid.down('#medicarenature').hide():'';
                       grid.down('#poorfamilytype')?grid.down('#poorfamilytype').show():'';
+                      grid.down('#dbpoorfamilytype')?grid.down('#poorfamilytype').hide():'';
+
+
+                  }else if(grid.businesstype==businessTableType.allquery){
+                      grid.down('#applytype')?grid.down('#applytype').hide():'';
+                      grid.down('#familytype')?grid.down('#familytype').hide():'';
+                      grid.down('#helpnature')?grid.down('#helpnature').hide():'';
+                      grid.down('#businesstype')?grid.down('#businesstype').show():'';
+                      grid.down('#medicarenature')?grid.down('#medicarenature').hide():'';
+                      grid.down('#poorfamilytype')?grid.down('#poorfamilytype').hide():'';
                       grid.down('#dbpoorfamilytype')?grid.down('#poorfamilytype').hide():'';
 
 
