@@ -326,7 +326,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
             },
 
-            'needtodopanel,needtodobusinesspanel,changedbusinesspanel,logoutbusinesspanel,peoplequerypanel,familyquerypanel,dbglstatisticsfullpanel,dbglgrantmoneypanel,dbglstatisticscomplexonepanel,medicalstandardgridpanel':{
+            'needtodopanel,enumerateconfigmanager,usermanagerpanel,rolemanagerpanel,funcmanagerpanel,needtodobusinesspanel,changedbusinesspanel,logoutbusinesspanel,peoplequerypanel,familyquerypanel,dbglstatisticsfullpanel,dbglgrantmoneypanel,dbglstatisticscomplexonepanel,medicalstandardgridpanel':{
 
                 gridshowfresh:function(grid){
 

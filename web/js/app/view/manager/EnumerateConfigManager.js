@@ -12,6 +12,11 @@ Ext.define('ZSMZJ.view.manager.EnumerateConfigManager' ,{
     requires: [
         'Ext.PagingToolbar'
     ],
+    listeners: {
+        show: function(panel) {
+            this.fireEvent('gridshowfresh',this);
+        }
+    },
     initComponent: function() {
         Ext.apply(this, {
             border: false,

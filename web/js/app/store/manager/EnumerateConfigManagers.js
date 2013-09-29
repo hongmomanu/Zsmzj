@@ -2,9 +2,9 @@ Ext.define('ZSMZJ.store.manager.EnumerateConfigManagers', {
     extend: 'Ext.data.Store',
     model: 'ZSMZJ.model.manager.EnumerateConfigManager',
     alias : 'widget.enumerateconfigmanagers',
-    pageSize: 100,
+    pageSize: 10000,
 
-    autoLoad:true,
+    autoLoad:false,
     proxy:{
         type: 'ajax',
 

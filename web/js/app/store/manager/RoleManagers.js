@@ -4,7 +4,7 @@ Ext.define('ZSMZJ.store.manager.RoleManagers', {
     alias : 'widget.rolemanagers',
 
 
-    autoLoad:true,
+    autoLoad:false,
     proxy:{
         type: 'ajax',
 

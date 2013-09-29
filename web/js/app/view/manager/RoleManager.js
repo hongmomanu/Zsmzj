@@ -11,6 +11,11 @@ Ext.define('ZSMZJ.view.manager.RoleManager' ,{
     cls:'navigation-grid',
     requires: [
     ],
+    listeners: {
+        show: function(panel) {
+            this.fireEvent('gridshowfresh',this);
+        }
+    },
     initComponent: function() {
         Ext.apply(this, {
             border: false,
