@@ -49,7 +49,6 @@ Ext.define('ZSMZJ.controller.Header', {
                 alterapplyaftershow:function(form){
                     ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
                     ViewWaitMask.show();
-                    //var form=this.getMydbglbusinessalterform();
                     var businessid=form.objdata.businessid;
                     var store=form.down('#processhistorypanel').getStore();
                     store.proxy.extraParams = {

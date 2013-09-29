@@ -154,10 +154,12 @@ Ext.define('ZSMZJ.view.dbedge.businessApply', {
                     },{
                         xtype:'dbglaplytype',
                         searchtype:"dbglfamilyaccount",
+                        afterLabelTextTpl: required,
                         name: 'familyaccount',
                         fieldLabel: '家庭户口',
+                        blankText: '请选择家庭户口',
                         emptyText: '请选择家庭户口',
-                        allowBlank: true
+                        allowBlank: false
                     }
                     ,{
                         name: 'accountaddress',
