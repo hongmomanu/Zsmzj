@@ -81,6 +81,9 @@ Ext.define('ZSMZJ.view.dbgl.FamilyQueryGrid' ,{
 
                 {header: '申请类别',align:'center',dataIndex:'applytype',itemId:'applytype'},
                 {header: '致贫原因',align:'center',dataIndex:'poorfamilytype',itemId:'poorfamilytype'},
+                {header: '救助性质',align:'center',dataIndex:'helpnature',itemId:'helpnature'},
+                {header: '医保性质',align:'center',dataIndex:'medicarenature',itemId:'medicarenature'},
+
 
                 {header: '家庭类别',align:'center',dataIndex:'familytype',itemId:'familytype'},
                 {header: '救助金额',align:'center',dataIndex:'totalhelpmoney',summaryType: 'sum',width:150,//求数量

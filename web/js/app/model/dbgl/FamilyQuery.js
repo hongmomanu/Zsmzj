@@ -21,6 +21,9 @@ Ext.define('ZSMZJ.model.dbgl.FamilyQuery', {
         {name:'familytype'},
         {name:'totalhelpmoney',type:'float'},
         {name:'helpbgtime'},
+        {name:'helpnature'},
+        {name:'medicarenature'},
+
         {name:'helpedtime'},
         {name:'familynum',type:'int'},
         {name:'familyaccount'},

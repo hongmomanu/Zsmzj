@@ -333,17 +333,30 @@ Ext.define('ZSMZJ.controller.Header', {
                   if(grid.businesstype==businessTableType.temporaryhelp){
                       grid.down('#applytype')?grid.down('#applytype').hide():'';
                       grid.down('#familytype')?grid.down('#familytype').hide():'';
+                      grid.down('#helpnature')?grid.down('#helpnature').hide():'';
+                      grid.down('#medicarenature')?grid.down('#medicarenature').hide():'';
                       grid.down('#poorfamilytype')?grid.down('#poorfamilytype').show():'';
 
                   }else if(grid.businesstype==businessTableType.dbbyh){
                       grid.down('#poorfamilytype')?grid.down('#poorfamilytype').hide():'';
+                      grid.down('#helpnature')?grid.down('#helpnature').hide():'';
+                      grid.down('#medicarenature')?grid.down('#medicarenature').hide():'';
                       grid.down('#familytype')?grid.down('#familytype').show():'';
                       grid.down('#applytype')?grid.down('#applytype').show():''
 
                   }else if(grid.businesstype==businessTableType.dbgl){
                       grid.down('#poorfamilytype')?grid.down('#poorfamilytype').hide():'';
+                      grid.down('#helpnature')?grid.down('#helpnature').hide():'';
+                      grid.down('#medicarenature')?grid.down('#medicarenature').hide():'';
                       grid.down('#familytype')?grid.down('#familytype').show():'';
                       grid.down('#applytype')?grid.down('#applytype').show():'';
+                  }else if(grid.businesstype==businessTableType.medicalhelp){
+                      grid.down('#applytype')?grid.down('#applytype').hide():'';
+                      grid.down('#familytype')?grid.down('#familytype').hide():'';
+                      grid.down('#helpnature')?grid.down('#helpnature').show():'';
+                      grid.down('#medicarenature')?grid.down('#medicarenature').show():'';
+                      grid.down('#poorfamilytype')?grid.down('#poorfamilytype').show():'';
+
                   }
 
                   var store=grid.getStore();
