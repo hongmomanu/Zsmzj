@@ -724,7 +724,8 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
     grant_outexcel:function(btn){
-        var store=btn.up('panel').getStore();
+        var grid=btn.up('panel');
+        var store=grid.getStore();
         var rows=[];
         Ext.each(store.data.items,function(item){
             var row=item.raw;
@@ -740,65 +741,15 @@ Ext.define('ZSMZJ.controller.Header', {
             return ;
         }
         var me=this;
+        var headers=this.makecommon_headers(grid);
         var params = {
             rows:Ext.JSON.encode(rows),
             sum:Ext.JSON.encode(sum),
-            title:'低保人员列表',
+            title:grid.title,
             //headerheight:1,
             headerheight:1,
-            headercols:17,
-            headers:Ext.JSON.encode([
-
-
-
-
-                {name:"序号",value:"index",columns:[],
-                    col:[0,0],
-                    row:[1,1]},
-                {name: '发放年月', value: 'grantmonth',columns:[],
-                    col:[1,1],
-                    row:[1,1]},
-                {name: '行政区划', value: 'division',columns:[],
-                    col:[2,2],
-                    row:[1,1]},
-                {name: '户主姓名',value:'owername',columns:[],
-                    col:[3,3],
-                    row:[1,1]},
-                {name: '户主身份证',value:'owerid',columns:[],
-                    col:[4,4],
-                    row:[1,1]},
-
-                {name: '申请类别',value:'applytype',columns:[],
-                    col:[5,5],
-                    row:[1,1]},
-                {name: '家庭类别',value:'familytype',columns:[],
-                    col:[6,6],
-                    row:[1,1]},
-
-                {name: '家庭类别',value:'familytype',columns:[],
-                    col:[7,7],
-                    row:[1,1]},
-                {name: '救助金额',value:'totalhelpmoney',columns:[],
-                    col:[8,8],
-                    row:[1,1]},
-                {name: '家庭人数',value:'familynum',columns:[],
-                    col:[9,9],
-                    row:[1,1]},
-                {name: '享受人数',value:'enjoynum',columns:[],
-                    col:[10,10],
-                    row:[1,1]},
-                {name: '发放人',value:'grantuser',columns:[],
-                    col:[11,11],
-                    row:[1,1]},
-                {name: '发放日期',value:'grantdate',columns:[],
-                    col:[12,12],
-                    row:[1,1]},
-                {name: '数据生成日期',value:'granttime',columns:[],
-                    col:[13,13],
-                    row:[1,1]
-                }
-
-            ])
+            headercols:headers.length,
+            headers:Ext.JSON.encode(headers)
         };
         var successFunc = function (response, action) {
             var res = Ext.JSON.decode(response.responseText);
@@ -818,7 +769,8 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
     outexcel_complex:function(btn){
-        var root=btn.up('panel').getRootNode();
+        var grid=btn.up('panel');
+        var root=grid.getRootNode();
         var rows=this.treeToarr(root,[]);
 
         var sum={};
@@ -831,7 +783,7 @@ Ext.define('ZSMZJ.controller.Header', {
         var params = {
             rows:Ext.JSON.encode(rows),
             sum:Ext.JSON.encode(sum),
-            title:'低保综合表',
+            title:grid.title,
             headerheight:3,
             headercols:15,
             headers:Ext.JSON.encode([
@@ -1035,8 +987,8 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
     outexcel_statistics:function(btn){
-
-        var root=btn.up('panel').getRootNode();
+        var grid=btn.up('panel');
+        var root=grid.getRootNode();
         var rows=this.treeToarr(root,[]);
 
         var sum={};
@@ -1049,7 +1001,7 @@ Ext.define('ZSMZJ.controller.Header', {
         var params = {
             rows:Ext.JSON.encode(rows),
             sum:Ext.JSON.encode(sum),
-            title:'低保汇总表',
+            title:grid.title,
             headerheight:2,
             headercols:16,
             headers:Ext.JSON.encode([
@@ -1195,9 +1147,29 @@ Ext.define('ZSMZJ.controller.Header', {
 
 
     },
+    makecommon_headers:function(grid){
+
+        var columns=grid.columns;
+        var index=1;
+        var headers=[
+            {name:"序号",value:"index",columns:[],
+                col:[0,0],
+                row:[1,1]}];
+        Ext.each(columns,function(column){
+              if(!(column.xtype=='rownumberer'||column.isHidden()||column.text=='操作栏'||column.text=='业务操作')){
+                  var item={name:column.text,value:column.dataIndex,columns:[],col:[index,index],row:[1,1]};
+                  headers.push(item);
+                  index++;
+              }
+        });
+        //testobj=columns;
+        //console.log(headers);
+        return headers;
+    },
     outexcel_person:function(btn){
 
-        var store=btn.up('panel').getStore();
+        var grid=btn.up('panel');
+        var store=grid.getStore();
         var rows=[];
         Ext.each(store.data.items,function(item){
             var time =Ext.Date.parse(item.raw['birthday'], "Y-m-dTH:i:s");
@@ -1212,67 +1184,15 @@ Ext.define('ZSMZJ.controller.Header', {
             return ;
         }
         var me=this;
+        var headers=this.makecommon_headers(grid);
         var params = {
             rows:Ext.JSON.encode(rows),
             sum:Ext.JSON.encode(sum),
-            title:'低保人员列表',
+            title:grid.title,
             //headerheight:1,
             headerheight:1,
-            headercols:17,
-            headers:Ext.JSON.encode([
-                {name:"序号",value:"index",columns:[],
-                    col:[0,0],
-                    row:[1,1]},
-                {name:"户主姓名",value:"owername",columns:[],
-                    col:[1,1],
-                    row:[1,1]},
-                {name: '行政区划', value: 'division',columns:[],
-                    col:[2,2],
-                    row:[1,1]},
-                {name: '户主身份证',value:'owerid',columns:[],
-                    col:[3,3],
-                    row:[1,1]},
-                {name: '与户主关系',value:'relationship',columns:[],
-                    col:[4,4],
-                    row:[1,1]},
-                {name: '姓名',value:'name',columns:[],
-                    col:[5,5],
-                    row:[1,1]},
-                {name: '身份证',value:'personid',columns:[],
-                    col:[6,6],
-                    row:[1,1]},
-                {name: '性别',value:'sex',columns:[],
-                    col:[7,7],
-                    row:[1,1]},
-                {name: '年龄',value:'age',columns:[],
-                    col:[8,8],
-                    row:[1,1]},
-                {name: '户口性质',value:'accounttype',columns:[],
-                    col:[9,9],
-                    row:[1,1]},
-                {name: '文化程度',value:'education',columns:[],
-                    col:[10,10],
-                    row:[1,1]},
-                {name: '政治面貌',value:'political',columns:[],
-                    col:[11,11],
-                    row:[1,1]},
-                {name: '健康状况',value:'bodystatus',columns:[],
-                    col:[12,12],
-                    row:[1,1]},
-                {name: '婚姻状况',value:'maritalstatus',columns:[],
-                    col:[13,13],
-                    row:[1,1]},
-                {name: '月人均收入',value:'monthlyincome',columns:[],
-                    col:[14,14],
-                    row:[1,1]},
-                {name: '人员类别',value:'persontype',columns:[],
-                    col:[15,15],
-                    row:[1,1]},
-                {name: '是否享受',value:'isenjoyed',columns:[],
-                    col:[16,16],
-                    row:[1,1]}
-
-            ])
+            headercols:headers.length,
+            headers:Ext.JSON.encode(headers)
         };
         var successFunc = function (response, action) {
             var res = Ext.JSON.decode(response.responseText);
@@ -1291,7 +1211,8 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
     outexcel_family:function(btn){
-        var store=btn.up('panel').getStore();
+        var grid=btn.up('panel');
+        var store=grid.getStore();
         var rows=[];
         Ext.each(store.data.items,function(item){
             rows.push(item.raw);
@@ -1302,63 +1223,15 @@ Ext.define('ZSMZJ.controller.Header', {
             return ;
         }
         var me=this;
+        var headers=this.makecommon_headers(grid);
+        //console.log(headers);
         var params = {
             rows:Ext.JSON.encode(rows),
             sum:Ext.JSON.encode(sum),
-            title:'低保家庭列表',
+            title:grid.title,
             headerheight:1,
-            headercols:16,
-            headers:Ext.JSON.encode([{name:"序号",value:"index",columns:[],
-                col:[0,0],
-                row:[1,1]},
-                {name:"户主姓名",value:"owername",columns:[],
-                    col:[1,1],
-                    row:[1,1]},
-                {name: '行政区划', value: 'division',columns:[],
-                    col:[2,2],
-                    row:[1,1]},
-                {name: '户主身份证',value:'owerid',columns:[],
-                    col:[3,3],
-                    row:[1,1]},
-                {name: '申请类别',value:'applytype',columns:[],
-                    col:[4,4],
-                    row:[1,1]},
-                {name: '家庭类别',value:'familytype',columns:[],
-                    col:[5,5],
-                    row:[1,1]},
-                {name: '救助金额',value:'totalhelpmoney',columns:[],
-                    col:[6,6],
-                    row:[1,1]},
-                {name: '救助开始日期',value:'helpbgtime',columns:[],
-                    col:[7,7],
-                    row:[1,1]},
-                {name: '救助结束日期',value:'helpedtime',columns:[],
-                    col:[8,8],
-                    row:[1,1]},
-                {name: '家庭人数',value:'familynum',columns:[],
-                    col:[9,9],
-                    row:[1,1]},
-                {name: '家庭户口性质',value:'familyaccount',columns:[],
-                    col:[10,10],
-                    row:[1,1]},
-                {name: '低保户类型',value:'poorfamilytype',columns:[],
-                    col:[11,11],
-                    row:[1,1]},
-                {name: '享受人数',value:'enjoynum',columns:[],
-                    col:[12,12],
-                    row:[1,1]},
-                {name: '开户人',value:'bankower',columns:[],
-                    col:[13,13],
-                    row:[1,1]},
-                {name: '银行帐号',value:'bankid',columns:[],
-                    col:[14,14],
-                    row:[1,1]},
-                {name: '救助证编号',value:'aidnum',columns:[],
-                    col:[15,15],
-                    row:[1,1]}
-
-
-            ])
+            headercols:headers.length,
+            headers:Ext.JSON.encode(headers)
         };
         var successFunc = function (response, action) {
             var res = Ext.JSON.decode(response.responseText);
@@ -1377,7 +1250,8 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
     outexcel_logout:function(btn){
-        var store=btn.up('panel').getStore();
+        var grid=btn.up('panel');
+        var store=grid.getStore();
         var rows=[];
         Ext.each(store.data.items,function(item){
             rows.push(item.raw);
@@ -1389,55 +1263,14 @@ Ext.define('ZSMZJ.controller.Header', {
         }
 
         var me=this;
-
+        var headers=this.makecommon_headers(grid);
         var params = {
             rows:Ext.JSON.encode(rows),
             sum:Ext.JSON.encode(sum),
-            title:'低保业务注销列表',
+            title:grid.title,
             headerheight:1,
-            headercols:15,
-            headers:Ext.JSON.encode([{name:"序号",value:"index",columns:[],
-                col:[0,0],
-                row:[1,1]},{name:"行政区划名称",value:"division",columns:[],
-                col:[1,1],
-                row:[1,1]},
-                {name:"户主姓名",value:"owername",columns:[],
-                    col:[2,2],
-                    row:[1,1]},{name:"户主身份证",value:"owerid",columns:[],
-                    col:[3,3],
-                    row:[1,1]},{name:"申请类别",value:"applytype",columns:[],
-                    col:[4,4],
-                    row:[1,1]},
-                {name:"家庭类别",value:"familytype",columns:[],
-                    col:[5,5],
-                    row:[1,1]},
-                {name:"注销原因",value:"logoutreason",columns:[],
-                    col:[6,6],
-                    row:[1,1]},
-                {name:"注销日期",value:"changedate",columns:[],
-                    col:[7,7],
-                    row:[1,1]},
-                {name:"救助金额",value:"totalhelpmoney",columns:[],
-                    col:[8,8],
-                    row:[1,1]},
-                {name:"家庭人口",value:"familynum",columns:[],
-                    col:[9,9],
-                    row:[1,1]},
-                /*{name:"救助开始日期",value:"helpbgtime"},{name:"救助结束日期",value:"helpedtime"},*/
-                /* {name:"低保户类型",value:"poorfamilytype"},*/{name:"状态描述",value:"processstatus",columns:[],
-                    col:[10,10],
-                    row:[1,1]},
-                {name:"审核人",value:"approvaluser",columns:[],
-                    col:[11,11],
-                    row:[1,1]},{name:"审核日期",value:"approvaltime",columns:[],
-                    col:[12,12],
-                    row:[1,1]},
-                {name:"制单人",value:"displayname",columns:[],
-                    col:[13,13],
-                    row:[1,1]},{name:"制单日期",value:"time",columns:[],
-                    col:[14,14],
-                    row:[1,1]}
-            ])
+            headercols:headers.length,
+            headers:Ext.JSON.encode(headers)
         };
         var successFunc = function (response, action) {
             var res = Ext.JSON.decode(response.responseText);
@@ -1456,7 +1289,8 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
     outexcel_changed:function(btn){
-        var store=btn.up('panel').getStore();
+        var grid=btn.up('panel');
+        var store=grid.getStore();
         var rows=[];
         Ext.each(store.data.items,function(item){
             rows.push(item.raw);
@@ -1468,59 +1302,14 @@ Ext.define('ZSMZJ.controller.Header', {
         }
 
         var me=this;
+        var headers=this.makecommon_headers(grid);
         var params = {
             rows:Ext.JSON.encode(rows),
             sum:Ext.JSON.encode(sum),
-            title:'低保业务变更列表',
+            title:grid.title,
             headerheight:1,
-            headercols:17,
-            headers:Ext.JSON.encode([{name:"序号",value:"index",columns:[],
-                col:[0,0],
-                row:[1,1]},{name:"行政区划名称",value:"division",columns:[],
-                col:[1,1],
-                row:[1,1]},
-                {name:"户主姓名",value:"owername",columns:[],
-                    col:[2,2],
-                    row:[1,1]},{name:"户主身份证",value:"owerid",columns:[],
-                    col:[3,3],
-                    row:[1,1]},{name:"申请类别",value:"applytype",columns:[],
-                    col:[4,4],
-                    row:[1,1]},
-                {name:"家庭类别",value:"familytype",columns:[],
-                    col:[5,5],
-                    row:[1,1]},
-                {name:"变更原因",value:"changereason",columns:[],
-                    col:[6,6],
-                    row:[1,1]},
-                {name:"变更日期",value:"changedate",columns:[],
-                    col:[7,7],
-                    row:[1,1]},
-                {name:"变更前金额",value:"beforetotalhelpmoney",columns:[],
-                    col:[8,8],
-                    row:[1,1]},
-                {name:"变更后金额",value:"totalhelpmoney",columns:[],
-                    col:[9,9],
-                    row:[1,1]},
-                /*{name:"救助开始日期",value:"helpbgtime"},{name:"救助结束日期",value:"helpedtime"},*/
-                {name:"变更前人数",value:"beforepeople",columns:[],
-                    col:[10,10],
-                    row:[1,1]},{name:"变更后人数",value:"familynum",columns:[],
-                    col:[11,11],
-                    row:[1,1]},
-               /* {name:"低保户类型",value:"poorfamilytype"},*/{name:"状态描述",value:"processstatus",columns:[],
-                    col:[12,12],
-                    row:[1,1]},
-                {name:"审核人",value:"approvaluser",columns:[],
-                    col:[13,13],
-                    row:[1,1]},{name:"审核日期",value:"approvaltime",columns:[],
-                    col:[14,14],
-                    row:[1,1]},
-                {name:"制单人",value:"displayname",columns:[],
-                    col:[15,15],
-                    row:[1,1]},{name:"制单日期",value:"time",columns:[],
-                    col:[16,16],
-                    row:[1,1]}
-            ])
+            headercols:headers.length,
+            headers:Ext.JSON.encode(headers)
         };
         var successFunc = function (response, action) {
             var res = Ext.JSON.decode(response.responseText);
@@ -1538,7 +1327,8 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
     outexcel:function(btn){
-        var store=btn.up('panel').getStore();
+        var grid=btn.up('panel');
+        var store=grid.getStore();
         var rows=[];
         Ext.each(store.data.items,function(item){
             rows.push(item.raw);
@@ -1550,55 +1340,14 @@ Ext.define('ZSMZJ.controller.Header', {
         }
 
         var me=this;
+        var headers=this.makecommon_headers(grid);
         var params = {
             rows:Ext.JSON.encode(rows),
             sum:Ext.JSON.encode(sum),
-            title:'低保业务办理列表',
+            title:grid.title,
             headerheight:1,
-            headercols:17,
-            headers:Ext.JSON.encode([{name:"序号",value:"index",columns:[],
-                col:[0,0],
-                row:[1,1]},{name:"行政区划名称",value:"division",columns:[],
-                col:[1,1],
-                row:[1,1]},
-                {name:"户主姓名",value:"owername",columns:[],
-                    col:[2,2],
-                    row:[1,1]},{name:"户主身份证",value:"owerid",columns:[],
-                    col:[3,3],
-                    row:[1,1]},{name:"申请类别",value:"applytype",columns:[],
-                    col:[4,4],
-                    row:[1,1]},
-                {name:"家庭类别",value:"familytype",columns:[],
-                    col:[5,5],
-                    row:[1,1]},{name:"救助金额",value:"totalhelpmoney",columns:[],
-                    col:[6,6],
-                    row:[1,1]},
-                {name:"救助开始日期",value:"helpbgtime",columns:[],
-                    col:[7,7],
-                    row:[1,1]},{name:"救助结束日期",value:"helpedtime",columns:[],
-                    col:[8,8],
-                    row:[1,1]},
-                {name:"家庭人数",value:"familynum",columns:[],
-                    col:[9,9],
-                    row:[1,1]},{name:"享受人数",value:"familynum",columns:[],
-                    col:[10,10],
-                    row:[1,1]},
-                {name:"低保户类型",value:"poorfamilytype",columns:[],
-                    col:[11,11],
-                    row:[1,1]},{name:"状态描述",value:"processstatus",columns:[],
-                    col:[12,12],
-                    row:[1,1]},
-                {name:"审核人",value:"approvaluser",columns:[],
-                    col:[13,13],
-                    row:[1,1]},{name:"审核日期",value:"approvaltime",columns:[],
-                    col:[14,14],
-                    row:[1,1]},
-                {name:"制单人",value:"displayname",columns:[],
-                    col:[15,15],
-                    row:[1,1]},{name:"制单日期",value:"time",columns:[],
-                    col:[16,16],
-                    row:[1,1]}
-            ])
+            headercols:headers.length,
+            headers:Ext.JSON.encode(headers)
         };
         var successFunc = function (response, action) {
             var res = Ext.JSON.decode(response.responseText);
