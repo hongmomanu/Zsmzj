@@ -629,26 +629,36 @@ public class BusinessProcessControl {
                 (ProcessType.UseProcessType.getProcessFromChinese(processstatus));
         else staus= ProcessType.UseProcessType.getChineseSeason(ProcessType.Callback);
 
-        Connection conn= JdbcFactory.getConn("sqlite");
+        String businessid=param.get("businessid").toString();
+        ComonDao cd=new ComonDao();
+        if(cd.getSingleCol("select processstatus from business where rowid="+businessid).equals(processstatus)){
+            Connection conn= JdbcFactory.getConn("sqlite");
 
-        try {
-            conn.setAutoCommit(false);
-            bp.makeApproval(param);
-            bp.changeStatus(Integer.parseInt(param.get("businessid").toString()), staus);
-            conn.commit();
-            conn.setAutoCommit(true);
-            return "{success:true}";
-        } catch (Exception e) {
-            log.debug(e.getMessage());
             try {
-                conn.rollback();
-            } catch (SQLException e1) {
-                e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            }finally {
-                return"{success:false}";
+                conn.setAutoCommit(false);
+                bp.makeApproval(param);
+                bp.changeStatus(Integer.parseInt(businessid), staus);
+                conn.commit();
+                conn.setAutoCommit(true);
+                return "{success:true}";
+            } catch (Exception e) {
+                log.debug(e.getMessage());
+                try {
+                    conn.rollback();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                }finally {
+                    return"{success:false}";
+                }
+                //e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }
-            //e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+
+        }else{
+            return"{success:false,msg:\"已操作\"}";
+
         }
+
+
 
 
 

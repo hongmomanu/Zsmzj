@@ -444,19 +444,15 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             approvalname:win.approvalname
         };
         var successFunc = function (myform, action) {
+
             btn.up('window').close();
-            Ext.Msg.alert("提示信息", "审核成功");
+            Ext.Msg.alert("提示信息", "操作成功");
             var hc=me.application.getController("Header");
             hc.closetab(form.id);
-            //alert(22);
-            /*grid.getStore().load({callback:function(){
-                CommonFunc.widgetdolayout("mainContent-panel",500);
-
-            }});*/
 
         };
         var failFunc = function (form, action) {
-            Ext.Msg.alert("提示信息", "提交审核失败,检查web服务");
+            Ext.Msg.alert("提示信息", action.result.msg);
 
         };
 

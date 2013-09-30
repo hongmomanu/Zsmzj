@@ -86,6 +86,22 @@ public class ComonDao {
 
 
     }
+    public String getSingleCol(String sql){
+        Connection testConn= JdbcFactory.getConn("sqlite");
+        PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
+        String result="";
+        try {
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                result=rs.getString(1);
+            }
+        }catch (Exception e){
+            log.debug(e.getMessage());
+        }finally {
+            return result;
+        }
+
+    }
 
 
 

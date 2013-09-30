@@ -616,7 +616,7 @@ Ext.define('ZSMZJ.controller.Header', {
         this.checkprocessWin.show();
         this.checkprocessWin.dataform=btn.up('form');
         this.checkprocessWin.approvalname=btn.namevalue;
-        testobj=this.checkprocessWin;
+        //testobj=this.checkprocessWin;
 
     },
     signaturepicarr:[],
