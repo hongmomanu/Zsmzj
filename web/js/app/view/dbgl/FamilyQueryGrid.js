@@ -118,8 +118,8 @@ Ext.define('ZSMZJ.view.dbgl.FamilyQueryGrid' ,{
             bbar: Ext.create('Ext.PagingToolbar', {
                 store: 'dbgl.FamilyQuerys',
                 displayInfo: true,
-                displayMsg: '显示待办事务 {0} - {1} of {2}',
-                emptyMsg: "无待办事务",
+                displayMsg: '显示待家庭 {0} - {1} of {2}',
+                emptyMsg: "无家庭数据",
                 items:[
                     '-',
                     {
