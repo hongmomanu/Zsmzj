@@ -1200,6 +1200,10 @@ Ext.define('ZSMZJ.controller.Header', {
         var store=btn.up('panel').getStore();
         var rows=[];
         Ext.each(store.data.items,function(item){
+            var time =Ext.Date.parse(item.raw['birthday'], "Y-m-dTH:i:s");
+            var now =new Date();
+            var val =now.getFullYear()-time.getFullYear();
+            item.raw.age=val;
             rows.push(item.raw);
         });
         var sum={"monthlyincome":store.sum("monthlyincome")};
