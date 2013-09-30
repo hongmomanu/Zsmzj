@@ -365,8 +365,15 @@ public class BusinessProcessControl {
             if(keyword.indexOf("and")>0){
                 String[] arr=keyword.split("and");
                 for(int i=0;i<arr.length;i++){
-                    sql_list+=" and b.rowid in (select rowid from "+FamilyTable+" where "+FamilyTable+" MATCH '"+arr[i]+"*') ";
-                    sql_count+=" and b.rowid in (select rowid from "+FamilyTable+" where "+FamilyTable+" MATCH '"+arr[i]+"*') ";
+                    sql_list+=" and b.rowid in (select rowid from "+FamilyTable+" where "+FamilyTable+" MATCH '"+arr[i]+"*'"+
+                            " UNION   SELECT a.ROWID FROM "+FamilyTable+" a,"+BusinessTable+" b WHERE a.businessid=b.rowid and "
+                            +BusinessTable+" MATCH '"+arr[i]+"*' " +
+
+                            ") ";
+                    sql_count+=" and b.rowid in (select rowid from "+FamilyTable+" where "+FamilyTable+" MATCH '"+arr[i]+"*'"+
+                            " UNION   SELECT a.ROWID FROM "+FamilyTable+" a,"+BusinessTable+" b WHERE a.businessid=b.rowid and "
+                            +BusinessTable+" MATCH '"+arr[i]+"*' " +
+                            ") ";
                 }
             }
             else if(keyword.indexOf("or")>0){
@@ -377,10 +384,16 @@ public class BusinessProcessControl {
                 for(int i=0;i<arr.length;i++){
                     sql_list+=
                             "    SELECT ROWID FROM "+FamilyTable+" WHERE "+FamilyTable+" MATCH '"+arr[i]+"*' " +
+                                    "UNION "//;
+                                    +"    SELECT a.ROWID FROM "+FamilyTable+" a,"+BusinessTable+" b WHERE a.businessid=b.rowid and "
+                                    +BusinessTable+" MATCH '"+arr[i]+"*' " +
                                     "UNION ";
 
                     sql_count+=
                             "    SELECT ROWID FROM "+FamilyTable+" WHERE "+FamilyTable+" MATCH '"+arr[i]+"*' " +
+                                    "UNION "
+                            +"    SELECT a.ROWID FROM "+FamilyTable+" a,"+BusinessTable+" b WHERE a.businessid=b.rowid and "
+                                    +BusinessTable+" MATCH '"+arr[i]+"*' " +
                                     "UNION ";
 
 
