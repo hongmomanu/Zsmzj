@@ -181,7 +181,44 @@ Ext.define('ZSMZJ.controller.Medical', {
 
     },
     outexcel:function(btn){
-        console.log(btn);
+        var grid=btn.up('panel');
+        var store=grid.getStore();
+        var header_cl=this.application.getController("Header");
+        var rows=[];
+        Ext.each(store.data.items,function(item){
+            rows.push(item.raw);
+        });
+        var sum={};
+        if(rows.length==0){
+            Ext.Msg.alert("提示信息", "无相关数据可导出");
+            return ;
+        }
+
+        var me=this;
+        var headers=header_cl.makecommon_headers(grid);
+        var params = {
+            rows:Ext.JSON.encode(rows),
+            sum:Ext.JSON.encode(sum),
+            title:grid.title,
+            headerheight:1,
+            headercols:headers.length,
+            headers:Ext.JSON.encode(headers)
+        };
+        var successFunc = function (response, action) {
+            var res = Ext.JSON.decode(response.responseText);
+            if(res.isok){
+                window.location.href = res.path;
+            }
+            else{
+                Ext.Msg.alert("提示信息", "导出excel文件失败");
+            }
+        };
+        var failFunc = function (res, action) {
+            Ext.Msg.alert("提示信息", "导出excel文件失败");
+        };
+
+        Ext.bind(header_cl.ajaxSend(params, 'ajax/makeexcel.jsp', successFunc, failFunc,'POST'),header_cl);
+
     },
     medicalexpenseschange:function(item){
 
