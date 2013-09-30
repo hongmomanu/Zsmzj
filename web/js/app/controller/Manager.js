@@ -5,6 +5,10 @@
  * Time: 下午1:04
  * To change this template use File | Settings | File Templates.
  */
+/**
+ * Manager controller
+ * 系统管理模块，显示各种信息
+ */
 Ext.define('ZSMZJ.controller.Manager', {
     extend: 'Ext.app.Controller',
 

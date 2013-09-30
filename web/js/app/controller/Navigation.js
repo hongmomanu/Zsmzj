@@ -8,8 +8,7 @@
 
 
 /**
- * Map controller
- * Used to manage map layers and showing their related views
+ * Navigation controller
  * 导航栏，显示各种信息
  */
 Ext.define('ZSMZJ.controller.Navigation', {
