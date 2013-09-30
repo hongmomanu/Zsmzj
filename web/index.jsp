@@ -40,7 +40,7 @@
 
       <script type="text/javascript" src="js/app.js"></script>
       <script type="text/javascript" src="js/app/commonfunc.js"></script>
-    <title></title>
+    <title>欢迎使用舟山市民政救助系统</title>
   </head>
   <body>
   </body>
