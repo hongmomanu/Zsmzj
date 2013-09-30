@@ -14,12 +14,18 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
     requires: [
 
     ],
-    afterShow: function(animateTarget, cb, scope) {
+    /*afterShow: function(animateTarget, cb, scope) {
         this.fireEvent('alterapplyaftershow',this);
+    },*/
+    listeners: {
+        show: function(panel) {
+            this.fireEvent('gridshowfresh',this);
+        }
     },
     initComponent: function() {
         Ext.apply(this, {
             border: false,
+            stype:'list',
             viewConfig: {
                 trackOver: false,
                 loadMask: true,
