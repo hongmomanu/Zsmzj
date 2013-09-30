@@ -1164,8 +1164,7 @@ Ext.define('ZSMZJ.controller.Header', {
                   index++;
               }
         });
-        //testobj=columns;
-        //console.log(headers);
+
         return headers;
     },
     outexcel_person:function(btn){
@@ -1226,7 +1225,6 @@ Ext.define('ZSMZJ.controller.Header', {
         }
         var me=this;
         var headers=this.makecommon_headers(grid);
-        //console.log(headers);
         var params = {
             rows:Ext.JSON.encode(rows),
             sum:Ext.JSON.encode(sum),

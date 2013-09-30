@@ -9,8 +9,8 @@
 
 
 /**
- * Dbedge controller
- * 低保边缘户管理业务控制层，描述低保各种业务信息
+ * Medical controller
+ * 医疗业务控制层，描述低保各种业务信息
  */
 Ext.define('ZSMZJ.controller.Medical', {
     extend: 'Ext.app.Controller',
