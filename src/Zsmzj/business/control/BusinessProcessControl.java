@@ -648,7 +648,7 @@ public class BusinessProcessControl {
                 } catch (SQLException e1) {
                     e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                 }finally {
-                    return"{success:false}";
+                    return"{success:false,msg:\""+e.getMessage()+"\"}";
                 }
                 //e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }
