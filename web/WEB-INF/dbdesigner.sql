@@ -420,7 +420,7 @@ CREATE VIRTUAL TABLE IF NOT EXISTS grantmoney USING fts3
   grantdate                 VARCHAR(100)            --结束日期
   );
 
---资金发放表
+--医疗标准表
 CREATE VIRTUAL TABLE IF NOT EXISTS medicalstandard USING fts3
   (
   id integer primary key autoincrement,            --自增主键

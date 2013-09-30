@@ -47,7 +47,6 @@ Ext.define('ZSMZJ.controller.Navigation', {
 
 
         }, this);
-        //this.initLoadStore(this.getNavigationDbglTreeConfigsStore(),"低保管理");
 
     },
     initLoadStore:function(store,type){
