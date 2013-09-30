@@ -1089,7 +1089,17 @@ Ext.define('ZSMZJ.view.dbedge.businessChange', {
                     action:'cancelsendbusiness'
                 },
                 {
+                    text: '审核',
+                    namevalue:'街道/乡镇审核',
+                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                        {name:"name",value:this.objdata.record.get("processstatus")})?CommonFunc.lookup(processRoleBtn,
+                        {name:"name",value:this.objdata.record.get("processstatus")}).children:null,
+                        {name:"name",value:"审核"}),
+                    action:'checkbusiness'
+                },
+                {
                     text: '审批',
+                    namevalue:'区/县/市审批',
                     hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
                         {name:"name",value:this.objdata.record.get("processstatus")})?CommonFunc.lookup(processRoleBtn,
                         {name:"name",value:this.objdata.record.get("processstatus")}).children:null,

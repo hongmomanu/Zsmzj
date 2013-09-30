@@ -77,7 +77,7 @@ Ext.define('ZSMZJ.view.dbgl.ProcessVector' ,{
                 },
                 {
                     type: "text",
-                    text: '区/县/市审核',
+                    text: '区/县/市审批',
                     x:317,
                     y:30
 

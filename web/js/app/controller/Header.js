@@ -615,6 +615,8 @@ Ext.define('ZSMZJ.controller.Header', {
         if(!this.checkprocessWin)this.checkprocessWin=Ext.widget('processcheckwin');
         this.checkprocessWin.show();
         this.checkprocessWin.dataform=btn.up('form');
+        this.checkprocessWin.approvalname=btn.namevalue;
+        testobj=this.checkprocessWin;
 
     },
     signaturepicarr:[],
@@ -1863,9 +1865,10 @@ Ext.define('ZSMZJ.controller.Header', {
 
        //清空流程图
        var mysurface=me.getMyprocessvector().surface;
+       var length=mysurface.items.items.length;
        var numsize=me.vectornums;
-       for(var i=numsize;i<mysurface.items.items.length;i++){
-           mysurface.remove(mysurface.items.items[i]);
+       for(var i=length;i>numsize;i--){
+           mysurface.remove(mysurface.items.items[i-1]);
        }
         //显示历史审批表
         var store=me.processWin.down('grid').getStore();

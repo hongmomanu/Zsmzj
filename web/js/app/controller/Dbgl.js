@@ -429,9 +429,11 @@ Ext.define('ZSMZJ.controller.Dbgl', {
     },
 
     sendCheckForm:function(btn){
+
         var me=this;
-        var form=btn.up('window').dataform;
-        var ajaxform=btn.up('window').down('form');
+        var win=btn.up('window');
+        var form=win.dataform;
+        var ajaxform=win.down('form');
         var grid=form.objdata.grid;
         var businessid=form.objdata.businessid;
         var params = {
@@ -439,7 +441,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             businessid:businessid,
             processstatus:form.objdata.record.get('processstatus'),
             isapproval: ajaxform.getForm().getValues().approvalresult==approvalresult.yes,
-            approvalname:'街道/乡镇审核'
+            approvalname:win.approvalname
         };
         var successFunc = function (myform, action) {
             btn.up('window').close();
