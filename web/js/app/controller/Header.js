@@ -2055,10 +2055,20 @@ Ext.define('ZSMZJ.controller.Header', {
         tabs.getComponent(id).show();
     },
     showtab:function(label,value,type,objdata){
-        //this.closemask();
-        //ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
-        ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
-        ViewWaitMask.show();
+
+        //ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
+        //ViewWaitMask.show();
+        if(ViewWaitMask){
+            try{
+                Ext.getCmp('mainContent-panel').getEl().unmask();
+            }catch (e){
+
+            }
+
+
+        }
+
+
         var tabs = Ext.getCmp('mainContent-panel');
         if (tabs.getComponent('tab' + value)) {
             var tab=tabs.getComponent('tab' + value);
