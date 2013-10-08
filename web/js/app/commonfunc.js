@@ -41,38 +41,7 @@ var CommonFunc={
 
     },
     removeTask:function(mask,el){
-        mask.hide();
-
-       /* var task = new Ext.util.DelayedTask(function() {
-            // Fade out the body mask
-            try{
-                mask.fadeOut({
-                    duration: 1000,
-                    remove:true
-                });
-                mask.next().fadeOut({
-                    duration: 1000,
-                    remove:true,
-                    listeners: {
-                        afteranimate: function() {
-                            try{
-                                el.unmask();
-                            }catch (e){
-
-                            }
-
-                        }
-                    }
-                });
-
-            }catch (e){
-
-            }
-
-        });
-        // Run the fade 500 milliseconds after launch.
-        task.delay(500);
-*/
+        if(mask)mask.hide();
 
     }
 
