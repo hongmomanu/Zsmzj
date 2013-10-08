@@ -163,6 +163,8 @@ Ext.define('ZSMZJ.view.dbgl.GrantMoneyGrid' ,{
                     '-',
                     {
                         text: '新增',
+                        hidden:!CommonFunc.lookup(processRoleBtn,
+                            {name:"name",value:"资金发放"}),
                         action:'newgrant'
 
                     }

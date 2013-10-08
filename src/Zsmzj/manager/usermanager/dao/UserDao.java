@@ -50,7 +50,7 @@ public class UserDao {
 
     public Map<String,Object> login(String username,String password){
         Connection testConn= JdbcFactory.getConn("sqlite");
-        String sql=  "select id,roleid from "+UserTable+" " +
+        String sql=  "select id,roleid,displayname from "+UserTable+" " +
                 " where password=? and username=? ";
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
         Map<String,Object> res=new HashMap<String, Object>();
@@ -66,6 +66,7 @@ public class UserDao {
                 res.put("msg", "用户验证成功");
                 res.put("userid", rs.getInt(1));
                 res.put("roleid", rs.getInt(2));
+                res.put("displayname", rs.getString(3));
 
 
             }
