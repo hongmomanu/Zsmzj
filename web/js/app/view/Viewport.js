@@ -103,7 +103,9 @@ Ext.define('ZSMZJ.view.Viewport', {
                         activeTab: 0,     // first tab initially active
                         items: [
                             {
-                                xtype: 'cf_mappanel',
+                                /*xtype: 'cf_mappanel',*/
+                                html:'',
+                                bodyCls : ['indexbackground','welcome-title'],
                                 title: '首页',
                                 autoScroll: true
                             }/*,

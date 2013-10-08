@@ -550,10 +550,13 @@ Ext.define('ZSMZJ.controller.Header', {
         var r=form.objdata.record;
         var grid=form.objdata.grid;
         var callback=function fn(){
-
-            if(grid.isLocked)grid=grid.up('panel')
-            me.showoldtab(grid.id);
             me.closetab(form.id);
+            me.closemask();
+            //me.widgetdolayout("mainContent-panel");
+            //console.log(grid.id);
+            /*if(grid.isLocked)grid=grid.up('panel')
+            me.showoldtab(grid.id);*/
+
         };
         this.showBusinessCheckContent(c,r,grid,callback);
 
@@ -1688,9 +1691,8 @@ Ext.define('ZSMZJ.controller.Header', {
                 grid:grid,
                 item:c
             };
-
-           //this.showtab(processdiction.steptwo,'dbglbusinesscheckform','widget',objdata);
-            this.showtab(processdiction.steptwo,'dbglbusinessalterform','widget',objdata);
+            this.showAlterContent(c,r,grid);
+            //this.showtab(processdiction.steptwo,'dbglbusinessalterform','widget',objdata);
        }else if(r.get("process")==processdiction.stepthree){
             //var businessid=r.get('businessid');
             var objdata={
@@ -1699,9 +1701,8 @@ Ext.define('ZSMZJ.controller.Header', {
                 grid:grid,
                 item:c
             };
-
-            //this.showtab(processdiction.steptwo,'dbglbusinesscheckform','widget',objdata);
-            this.showtab(processdiction.stepthree,'dbglbusinessalterform','widget',objdata);
+            this.showAlterContent(c,r,grid);
+            //this.showtab(processdiction.stepthree,'dbglbusinessalterform','widget',objdata);
         }
 
     },
