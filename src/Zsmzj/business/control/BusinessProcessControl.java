@@ -640,8 +640,9 @@ public class BusinessProcessControl {
         String staus="";
         if(isapproval)staus= ProcessType.UseProcessType.getNext
                 (ProcessType.UseProcessType.getProcessFromChinese(processstatus));
-        else staus= ProcessType.UseProcessType.getChineseSeason(ProcessType.Callback);
-
+        else staus=staus= ProcessType.UseProcessType.getPrevious
+                (ProcessType.UseProcessType.getProcessFromChinese(processstatus));
+        //else staus= ProcessType.UseProcessType.getChineseSeason(ProcessType.Callback);
         String businessid=param.get("businessid").toString();
         ComonDao cd=new ComonDao();
         if(cd.getSingleCol("select processstatus from business where rowid="+businessid).equals(processstatus)){
