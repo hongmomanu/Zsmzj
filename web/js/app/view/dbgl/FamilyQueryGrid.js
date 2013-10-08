@@ -123,9 +123,10 @@ Ext.define('ZSMZJ.view.dbgl.FamilyQueryGrid' ,{
                 items:[
                     '-',
                     {
+                        fieldLabel:'快速全文检索',
                         xtype: 'textfield',
                         hidden: false,
-                        width:200,
+                        width:250,
                         //size:40,
                         listeners: {
 
@@ -145,6 +146,13 @@ Ext.define('ZSMZJ.view.dbgl.FamilyQueryGrid' ,{
                         text: '导出Excel',
                         action:'outexcel'
 
+                    },
+                    '-'
+                    ,
+                    {
+                        text: '高级检索',
+                        action:'moresearch'
+
                     }
                 ]
             }),
@@ -153,13 +161,8 @@ Ext.define('ZSMZJ.view.dbgl.FamilyQueryGrid' ,{
 
         });
         this.callParent(arguments);
-        // store singleton selection model instance
         ZSMZJ.view.dbgl.PeopleQueryGrid.selectionModel = this.getSelectionModel();
 
     }
-    /*,
 
-     formatLable:function(value, p, record) {
-     return Ext.String.format('<div class="navitem-div"><span class="author">{0}</span></div>', value);
-     }*/
 });

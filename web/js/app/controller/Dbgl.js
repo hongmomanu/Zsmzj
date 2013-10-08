@@ -60,6 +60,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.GrantMoneyGrid',
         'dbgl.StatisticsFullGrid',
         'dbgl.addNewGrantWin',
+        'dbgl.moreSearchFamilyWin',
         'common.MonthField',
         'dbgl.StatisticsComplexOneGrid'
     ],

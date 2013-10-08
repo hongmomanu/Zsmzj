@@ -276,6 +276,10 @@ Ext.define('ZSMZJ.controller.Header', {
                 click: this.outexcel_family
 
             },
+            'familyquerypanel button[action=moresearch]':{
+                click: this.moresearch_family
+
+            },
             'peoplequerypanel button[action=outexcel]':{
                 click: this.outexcel_person
 
@@ -1213,6 +1217,13 @@ Ext.define('ZSMZJ.controller.Header', {
         };
         this.ajaxSend(params, 'ajax/makeexcel.jsp', successFunc, failFunc,'POST');
 
+    },
+    moresearch_family:function(btn){
+        var grid=btn.up('panel');
+        if(!this.newMoreSearchWin)this.newMoreSearchWin=Ext.widget('moresearchfamilywin');
+        this.newMoreSearchWin.show();
+        this.newMoreSearchWin.dataobj=grid;
+        //console.log(11);
     },
     outexcel_family:function(btn){
         var grid=btn.up('panel');
