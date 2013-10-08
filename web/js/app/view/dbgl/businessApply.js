@@ -1023,7 +1023,7 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                                 {
                                     fieldLabel:"制表人",
                                     name:'mkperson',
-                                    value:username,
+                                    value:displayname,
                                     readOnly: true
 
 

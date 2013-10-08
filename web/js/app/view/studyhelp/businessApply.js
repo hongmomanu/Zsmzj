@@ -979,7 +979,7 @@ Ext.define('ZSMZJ.view.studyhelp.businessApply', {
                                 {
                                     fieldLabel:"制表人",
                                     name:'mkperson',
-                                    value:username,
+                                    value:displayname,
                                     readOnly: true
 
 
