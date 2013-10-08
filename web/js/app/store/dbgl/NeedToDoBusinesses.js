@@ -10,7 +10,7 @@ Ext.define('ZSMZJ.store.dbgl.NeedToDoBusinesses', {
     alias : 'widget.needtodobusinessesstore',
     model: 'ZSMZJ.model.dbgl.NeedToDoBusiness',
     autoLoad:false,
-    pageSize: 20,
+    pageSize: 15,
     proxy: {
         type: 'ajax',
         url: 'ajax/getneedtodobusinesses.jsp',

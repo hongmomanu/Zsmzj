@@ -10,7 +10,7 @@ Ext.define('ZSMZJ.store.dbgl.ProcessHistorys', {
     alias : 'widget.processhistorys',
     model: 'ZSMZJ.model.dbgl.ProcessHistory',
     autoLoad:false,
-    pageSize: 20,
+    pageSize: 15,
     proxy: {
         type: 'ajax',
         url: 'ajax/getprocesshistorys.jsp',

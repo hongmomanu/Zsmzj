@@ -10,7 +10,7 @@ Ext.define('ZSMZJ.store.dbgl.PeopleQuerys', {
     alias : 'widget.peoplequerysstore',
     model: 'ZSMZJ.model.dbgl.PeopleQuery',
     autoLoad:false,
-    pageSize: 20,
+    pageSize: 15,
     proxy: {
         type: 'ajax',
         url: 'ajax/getpeopleinfo.jsp',

@@ -10,7 +10,7 @@ Ext.define('ZSMZJ.store.dbgl.LogoutBusinesses', {
     //alias : 'widget.headerviewers',
     model: 'ZSMZJ.model.dbgl.LogoutBusiness',
     autoLoad:false,
-    pageSize: 20,
+    pageSize: 15,
     proxy: {
         type: 'ajax',
         url: 'ajax/getneedtodobusinesses.jsp',

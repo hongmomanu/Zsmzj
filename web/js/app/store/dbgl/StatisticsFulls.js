@@ -10,7 +10,7 @@ Ext.define('ZSMZJ.store.dbgl.StatisticsFulls', {
     //alias : 'widget.headerviewers',
     model: 'ZSMZJ.model.dbgl.StatisticsFull',
     autoLoad:false,
-    pageSize: 20,
+    pageSize: 15,
     proxy: {
         type: 'ajax',
         url: 'ajax/getstatisticsbytype.jsp',
