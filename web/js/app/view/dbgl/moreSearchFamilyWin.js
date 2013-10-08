@@ -75,28 +75,31 @@ Ext.define('ZSMZJ.view.dbgl.moreSearchFamilyWin' ,{
 
                             {
                                 columnWidth: 0.33,
-                                xtype: 'combo',
+                                xtype:'dbglaplytype',
+                                searchtype:(function(me){testobj=me;return me.searchtype;})(this),
                                 allowBlank: false,
                                 blankText: "不能为空",
-                                name:'bgdate',
+                                name:'name',
                                 fieldLabel: '查询字段'
 
                             },
                             {
                                 columnWidth: 0.33,
-                                xtype: 'combo',
+                                xtype:'dbglaplytype',
+                                searchtype:this.searchtype,
                                 allowBlank: false,
                                 blankText: "不能为空",
-                                name:'eddate',
+                                name:'compare',
                                 fieldLabel: '逻辑符'
 
                             },
                             {
                                 columnWidth: 0.33,
-                                xtype: 'combo',
+                                xtype:'textfield',
+                                //searchtype:this.searchtype,
                                 allowBlank: false,
                                 blankText: "不能为空",
-                                name:'bgdate',
+                                name:'value',
                                 fieldLabel: '值'
 
                             }

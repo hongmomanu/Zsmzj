@@ -1220,9 +1220,13 @@ Ext.define('ZSMZJ.controller.Header', {
     },
     moresearch_family:function(btn){
         var grid=btn.up('panel');
-        if(!this.newMoreSearchWin)this.newMoreSearchWin=Ext.widget('moresearchfamilywin');
-        this.newMoreSearchWin.show();
+        if(!this.newMoreSearchWin)this.newMoreSearchWin=Ext.widget('moresearchfamilywin',{ // Equivalent to Ext.create('widget.panel')
+            searchtype: 'moresearchfamily'
+        });
+        //this.newMoreSearchWin.searchtype="moresearchfamily";
         this.newMoreSearchWin.dataobj=grid;
+        this.newMoreSearchWin.show();
+
         //console.log(11);
     },
     outexcel_family:function(btn){
