@@ -36,8 +36,15 @@ public class BusinessProcessDao {
             pstmt.setInt(1, userid);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                map.put("signaturepath",rs.getString("signaturepath"));
-                map.put("isok",true);
+                String path=rs.getString("signaturepath");
+                if(path!=null && (!path.equals(""))){
+                    map.put("signaturepath",path);
+                    map.put("isok",true);
+                }else{
+                    map.put("isok",false);
+                }
+
+
             }
         }catch (Exception E){
             log.debug(E.getMessage());
