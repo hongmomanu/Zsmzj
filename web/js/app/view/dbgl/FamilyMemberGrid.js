@@ -112,6 +112,8 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     //width: 160,
                     editor: {
                         vtype:'personid',
+                        emptyText: '输入身份证号',
+                        blankText: '输入身份证号',
                         allowBlank: false
                         //vtype: 'email'
                     }
@@ -185,13 +187,14 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                             'select': function (combo, records) {
                                 var value=combo.getValue();
                                 if(value==='不享受'){
-                                    console.log(value);
-                                    testobj=combo;
-                                    testobjs=this;
-                                    //combo.nextNode().setEditable(true)
+                                    combo.nextNode().setDisabled(false);
+                                    combo.nextNode().setReadOnly(false);
                                 }
                                 else{
-                                    //combo.nextNode().setEditable(false);
+                                    combo.nextNode().setValue("");
+                                    combo.nextNode().setReadOnly(true);
+
+                                    //combo.nextNode().setDisabled(true);
                                 }
 
                             }

@@ -12,6 +12,7 @@ Ext.define('ZSMZJ.model.dbgl.FamilyMember', {
 
         'name',
         'relationship',
+        'noenjoyedreason',
         'personid',
         'sex',
         'isenjoyed',

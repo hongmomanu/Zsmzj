@@ -90,7 +90,16 @@ Ext.define('ZSMZJ.controller.Dbgl', {
     },
     init: function() {
         var me = this;
-         this.initStrore();
+        this.initStrore();
+        Ext.apply(Ext.form.field.VTypes, {
+            personid:  function(v) {
+                //规则区号（3-4位数字）-电话号码（7-8位数字）
+                //console.log(v);
+                return CommonFunc.IdentityCodeValid(v).isok;
+                //return /^(\d{3}-|\d{4}-)?(\d{8}|\d{7})$/.test(v);
+            },
+            personidText: '请输入有效的身份证'
+        });
          this.control({
          'dbglbusinessapplyform component':{
             imgclick:function (c){
@@ -699,10 +708,11 @@ Ext.define('ZSMZJ.controller.Dbgl', {
                   personid: c.name=='owerid'?c.getRawValue().replace(/\s+/g, ""):'',
                   isenjoyed:'享受',
                   persontype:'五保对象',
-                  jobstatus:'登记失业',
+                  jobstatus:'否',
                   bodystatus:'健康',
                   sex: '男',
                   birthday: Ext.Date.clearTime(new Date()),
+                  //birthday:'',
                   age:0,
                   monthlyincome: 0
 

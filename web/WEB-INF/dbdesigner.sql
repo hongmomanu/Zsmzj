@@ -341,7 +341,8 @@ CREATE VIRTUAL TABLE IF NOT EXISTS familymembers  USING fts3
   name                    VARCHAR(50),                              --姓名
   personid                VARCHAR(50),                              --身份证*
   sex                     VARCHAR(50),                              --性别
-  other                   VARCHAR(50)                               --备注
+  other                   VARCHAR(50),                               --备注
+  noenjoyedreason         VARCHAR(50)                              --不享受原因
 );
 
 
@@ -378,6 +379,7 @@ CREATE VIRTUAL TABLE IF NOT EXISTS familymembershistory  USING fts3
   personid                VARCHAR(50),                              --身份证*
   sex                     VARCHAR(50),                              --性别
   other                   VARCHAR(50),                              --备注
+  noenjoyedreason         VARCHAR(50),                              --不享受原因
   isnewest                integer                                   --是否为最新历史数据
   );
 

@@ -16,15 +16,7 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
     ],
     initComponent: function() {
         var required = '<span style="color:red;font-weight:bold" data-qtip="必填字段">*</span>';
-        Ext.apply(Ext.form.field.VTypes, {
-            personid:  function(v) {
-                //规则区号（3-4位数字）-电话号码（7-8位数字）
-                //console.log(v);
-                return CommonFunc.IdentityCodeValid(v).isok;
-                //return /^(\d{3}-|\d{4}-)?(\d{8}|\d{7})$/.test(v);
-            },
-            personidText: '请输入有效的身份证'
-        });
+
         Ext.apply(this, {
             bodyPadding: 10,
             cls: 'shadowdiv',
@@ -311,13 +303,25 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                             allowBlank: true
                         },{
                             name: 'housearea',
-                            fieldLabel: '住房总面积(㎡)',
+                            fieldLabel: '住房总建筑面积(㎡)',
+                            //afterLabelTextTpl: required,
+                            //emptyText: '低保户类型',
+                            allowBlank: true
+                        },{
+                            name: 'houseusearea',
+                            fieldLabel: '住房总使用面积(㎡)',
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         },{
                             name: 'houseaveragearea',
-                            fieldLabel: '住房人均面积',
+                            fieldLabel: '住房人均建筑面积',
+                            //afterLabelTextTpl: required,
+                            //emptyText: '低保户类型',
+                            allowBlank: true
+                        },{
+                            name: 'houseaverageusearea',
+                            fieldLabel: '住房人均使用面积',
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
@@ -805,7 +809,7 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                         searchtype:"dbglicomemonth",
                         name: 'icomemonth',
 
-                        fieldLabel: '收入累计月份',
+                        fieldLabel: '现金收入累计月份',
                         afterLabelTextTpl: required,
                         emptyText: '请选择累计月份',
                         blankText : '请选择累计月份',
