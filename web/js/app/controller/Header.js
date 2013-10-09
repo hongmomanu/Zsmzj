@@ -410,7 +410,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
                           CommonFunc.widgetdolayout("mainContent-panel",100);
                       }});
-
+                      //清空高级搜索
                       store.on('load', function (store, options) {
                           store.proxy.extraParams.name=null;
                           store.proxy.extraParams.logic=null;

@@ -111,7 +111,7 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     dataIndex: 'personid',
                     //width: 160,
                     editor: {
-
+                        vtype:'personid',
                         allowBlank: false
                         //vtype: 'email'
                     }
@@ -180,29 +180,57 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     editor: {
                         allowBlank: false,
                         xtype:'dbglaplytype',
+                        listeners:{
+                            //scope: this,
+                            'select': function (combo, records) {
+                                var value=combo.getValue();
+                                if(value==='不享受'){
+                                    console.log(value);
+                                    testobj=combo;
+                                    testobjs=this;
+                                    //combo.nextNode().setEditable(true)
+                                }
+                                else{
+                                    //combo.nextNode().setEditable(false);
+                                }
+
+                            }
+                        },
                         searchtype:"isenjoyed"
                         //vtype: 'email'
                     }
                 },
                 {
-                    header: '人员类别*',
+                    header: '不享受原因*',
+                    //hidden:true,
+                    //disabled :true,
+                    dataIndex: 'noenjoyedreason',
+                    //width: 160,
+                    editor: {
+                        disabled:true,
+                        allowBlank: true
+                    }
+                },
+
+                {
+                    header: '分类管理*',
                     dataIndex: 'persontype',
                     //width: 160,
                     editor: {
                         allowBlank: false,
                         xtype:'dbglaplytype',
-                        searchtype:"persontype"
+                        searchtype:"poortype"
                         //vtype: 'email'
                     }
                 },
                 {
-                    header: '职业状况*',
+                    header: '是否可推荐就业*',
                     dataIndex: 'jobstatus',
                     //width: 160,
                     editor: {
                         allowBlank: false,
                         xtype:'dbglaplytype',
-                        searchtype:"jobstatus"
+                        searchtype:"isjobstatus"
                         //vtype: 'email'
                     }
                 },
@@ -217,7 +245,7 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                         //vtype: 'email'
                     }
                 },
-                {
+                /*{
                     header: '特定救助对象',
                     dataIndex: 'specialobject',
                     //width: 160,
@@ -225,7 +253,7 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                         allowBlank: true
                         //vtype: 'email'
                     }
-                },
+                },*/
                 {
                     header: '工作单位',
                     dataIndex: 'workunits',
@@ -269,11 +297,13 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     }
                 },
                 {
-                    header: '文化程度',
+                    header: '就学阶段',//'文化程度',
                     dataIndex: 'education',
                     //width: 160,
                     editor: {
-                        allowBlank: true
+                        allowBlank: true,
+                        xtype:'dbglaplytype',
+                        searchtype:"education"
                         //vtype: 'email'
                     }
                 },
@@ -290,8 +320,11 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     header: '残疾类别',
                     dataIndex: 'disabledtype',
                     //width: 160,
+
                     editor: {
-                        allowBlank: true
+                        allowBlank: true,
+                        xtype:'dbglaplytype',
+                        searchtype:"disabledtype"
                         //vtype: 'email'
                     }
                 },
@@ -300,10 +333,23 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     dataIndex: 'disabledlevel',
                     //width: 160,
                     editor: {
-                        allowBlank: true
+                        allowBlank: true,
+                        xtype:'dbglaplytype',
+                        searchtype:"disabledlevel"
                         //vtype: 'email'
                     }
                 },
+                /*{
+                    header: '就学阶段',
+                    dataIndex: 'studylevel',
+                    //width: 160,
+                    editor: {
+                        allowBlank: false,
+                        xtype:'dbglaplytype',
+                        searchtype:"studylevel"
+                        //vtype: 'email'
+                    }
+                },*/
                 {
                     header: '残疾证号',
                     dataIndex: 'disablenum',

@@ -16,6 +16,15 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
     ],
     initComponent: function() {
         var required = '<span style="color:red;font-weight:bold" data-qtip="必填字段">*</span>';
+        Ext.apply(Ext.form.field.VTypes, {
+            personid:  function(v) {
+                //规则区号（3-4位数字）-电话号码（7-8位数字）
+                //console.log(v);
+                return CommonFunc.IdentityCodeValid(v).isok;
+                //return /^(\d{3}-|\d{4}-)?(\d{8}|\d{7})$/.test(v);
+            },
+            personidText: '请输入有效的身份证'
+        });
         Ext.apply(this, {
             bodyPadding: 10,
             cls: 'shadowdiv',
@@ -102,9 +111,9 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                         allowBlank: false*/
                     },{
                         xtype:'dbglaplytype',
-                        name: 'familytype',
-                        searchtype:"dbglfamilytype",
-                        fieldLabel: '家庭类别',
+                        name: 'poortype',
+                        searchtype:"dbglpoortype",
+                        fieldLabel: '分类管理',
                         afterLabelTextTpl: required,
                         emptyText: '请输入家庭类别',
                         blankText: '请输入家庭类别',
@@ -131,6 +140,7 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                         name: 'owerid',
                         itemId:'owerid',
                         fieldLabel: '户主身份证',
+                        vtype:'personid',
                         listeners: {
 
                             "blur":function(field,e){
@@ -143,7 +153,7 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                         blankText: '请输入身份证号',
                         emptyText: '请输入身份证号',
                         allowBlank: false
-                    },{
+                    },/*{
                         xtype:'dbglaplytype',
                         searchtype:"dbglpoorfamilytype",
                         name: 'poorfamilytype',
@@ -152,19 +162,20 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                         blankText: '低保户类型',
                         emptyText: '低保户类型',
                         allowBlank: false
-                    },{
+                    },*/{
                         xtype:'dbglaplytype',
                         searchtype:"dbglfamilyaccount",
                         afterLabelTextTpl: required,
                         name: 'familyaccount',
                         fieldLabel: '家庭户口',
+                        colspan:2,
                         blankText: '请选择家庭户口',
                         emptyText: '请选择家庭户口',
                         allowBlank: false
                     }
                     ,{
                         name: 'accountaddress',
-                        fieldLabel: '户口所在地',
+                        fieldLabel: '户主户口所在地',
                         colspan:2,
                         //afterLabelTextTpl: required,
                         //emptyText: '低保户类型',
@@ -273,6 +284,19 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                             searchtype:"dbglhouseproperties",
                             name: 'houseproperties',
                             fieldLabel: '住房性质',
+                            listeners:{
+                                scope: this,
+                                'select': function (combo, records) {
+                                    var value=combo.getValue();
+                                    if(value==='自有'){
+                                        combo.nextNode().setEditable(true)
+                                    }
+                                    else{
+                                        combo.nextNode().setEditable(false);
+                                    }
+
+                                }
+                            },
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
@@ -405,7 +429,7 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                 ,
                 {
                     xtype: 'fieldset',
-                    title: '<a>家庭财产信息</a>',
+                    title: '<a>家庭闲置财产信息</a>',
                     defaultType: 'textfield',
                     bodyStyle: 'padding:5px 5px 5px 5px',
                     //layout: 'anchor',
@@ -448,13 +472,13 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                             allowBlank: true
                         },{
                             name: 'vehicle',
-                            fieldLabel: '机动车辆',
+                            fieldLabel: '非生活机动车折价',
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         },{
                             name: 'nonresidentialhouse',
-                            fieldLabel: '非居住类房屋',
+                            fieldLabel: '闲置房产折价',
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
@@ -848,12 +872,12 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                          xtype:'dbglaplytype',
                          searchtype:"dbglpoortype",
                          name: 'poortype',
-                         fieldLabel: '低保类型',
+                         fieldLabel: '分类管理',
                          afterLabelTextTpl: required,
-                         emptyText: '请输入低保类型',
-                         blankText : '请输入低保类型',
+                         emptyText: '请选择分类管理',
+                         blankText : '请选择分类管理',
                          allowBlank: false
-                         },
+                         }/*,
                          {
                          name: 'poorstandard',
                          fieldLabel: '低保标准(元)',
@@ -861,7 +885,7 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                          emptyText: '请输入低保标准',
                          blankText : '请输入低保标准',
                          allowBlank: false
-                         }
+                         }*/
                          ,
                          {
                          name: 'aidnum',
@@ -935,7 +959,7 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                             fieldLabel: '公示结束日期',
                             xtype: 'datefield',
                             format: 'Y-m-d',
-                            colspan:2,
+                            colspan:3,
                             allowBlank: true
                         }
                         ,{
