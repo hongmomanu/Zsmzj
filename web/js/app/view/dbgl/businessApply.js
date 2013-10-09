@@ -355,76 +355,215 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                     items:[
                         {
                             name: 'interest',
+                            value:0,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+
                             fieldLabel: '利息、股息、红利',
+                            regex :/^-?\d+$/,
+
+                            regexText  : "只能输入数值",
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         }
                         ,{
                             name: 'wages',
+                            value:0,
                             fieldLabel: '工资、薪金',
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regex :/^-?\d+$/,
+
+                            regexText  : "只能输入数值",
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         },{
                             name: 'planting',
+                            value:0,
                             fieldLabel: '种植、养殖、捕捞',
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         },{
                             name: 'pension',
+                            value:0,
                             fieldLabel: '离退休金、养老保险等',
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         },{
                             name: 'management',
+                            value:0,
                             fieldLabel: '承包经营',
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         },{
                             name: 'alimony',
+                            value:0,
                             fieldLabel: '赡（抚、扶）养费',
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         },{
                             name: 'incidentalincome',
+                            value:0,
                             fieldLabel: '赔偿、继承、赠与、偶然所得',
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         },{
                             name: 'remuneration',
                             fieldLabel: '劳务报酬',
+                            value:0,
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         },{
                             name: 'allowance',
                             fieldLabel: '各类生活补助',
+                            value:0,
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         },{
                             name: 'paidservices',
                             fieldLabel: '生产经营、有偿服务',
+                            value:0,
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         },{
                             name: 'propertylease',
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
                             fieldLabel: '财产租赁、转让',
+                            value:0,
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         },{
                             name: 'otherincome',
                             fieldLabel: '其他',
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
+                            value:0,
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
+                            allowBlank: true
+                        },{
+                            name: 'incomesum',
+                            value:0,
+                            regex :/^-?\d+$/,
+
+                            regexText  : "只能输入数值",
+                            fieldLabel: '合计',
+                            itemId:'incomesum',
+                            allowBlank: true
+                        },{
+                            name: 'incomesumarea',
+                            regex :/^-?\d+$/,
+
+                            regexText  : "只能输入数值",
+                            fieldLabel: '家庭上年度月平均现金收入信息',
+                            itemId:'incomesumarea',
+                            value:0,
+                            allowBlank: true
+                        },
+                        {
+                            name: 'incomesumareaperson',
+                            regex :/^-?\d+$/,
+
+                            regexText  : "只能输入数值",
+                            value:0,
+                            fieldLabel: '家庭上年度月平均现金收入信息',
+                            itemId:'incomesumareaperson',
                             allowBlank: true
                         }
 
@@ -458,6 +597,15 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                         {
                             name: 'cash',
                             fieldLabel: '现金',
+                            value:0,
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
@@ -465,36 +613,110 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                         ,{
                             name: 'banksecurities',
                             fieldLabel: '银行存款及有价证券',
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
+                            value:0,
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         },{
                             name: 'debt',
                             fieldLabel: '债权',
+                            value:0,
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         },{
                             name: 'vehicle',
                             fieldLabel: '非生活机动车折价',
-                            //afterLabelTextTpl: required,
-                            //emptyText: '低保户类型',
+                            value:0,
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
                             allowBlank: true
                         },{
                             name: 'nonresidentialhouse',
                             fieldLabel: '闲置房产折价',
+                            value:0,
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
+                            allowBlank: true
+                        },{
+                            name: 'nolifeneededmachine',
+                            fieldLabel: '非生活必须船只等机械类折价',
+                            value:0,
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         },{
                             name: 'insurance',
                             fieldLabel: '商业保险',
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
+                            value:0,
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         },{
                             name: 'registeredcapital',
                             fieldLabel: '工商注册资金（资本）',
+                            value:0,
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
+                            allowBlank: true
+                        },{
+                            name: 'propertysum',
+                            itemId:'propertysum',
+                            regex :/^-?\d+$/,
+
+                            regexText  : "只能输入数值",
+                            fieldLabel: '合计',
+                            value:0,
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true

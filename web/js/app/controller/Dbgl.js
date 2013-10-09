@@ -110,6 +110,9 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             },
             owerchange:function(c){
                 this.owerchanged(c);
+            },
+            moneychane:function(c){
+                this.moneychane(c);
             }
          },
          'dbglbusinessalterform component':{
@@ -692,6 +695,29 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
         this.alteruploadimgWin.show();
 
+    },
+    moneychane:function(c){
+      //var value=
+        //alert(c.getValue());
+        var formpanel=c.up('panel');
+        var incomesum=formpanel.down('#incomesum');
+        var incomesum_value=0;
+        var incomeitems=incomesum.up('fieldset').items.items;
+        for(var i=0;i<incomeitems.length;i++){
+            if(incomeitems[i]==incomesum)break;
+            incomesum_value+=parseFloat(incomeitems[i].getValue());
+        }
+        incomesum.setValue(incomesum_value);
+
+        var propertysum=formpanel.down('#propertysum');
+        var propertysum_value=0;
+        var propertyitems=propertysum.up('fieldset').items.items;
+        for(var i=0;i<propertyitems.length;i++){
+            if(propertyitems[i]==propertysum)break;
+            propertysum_value+=parseFloat(propertyitems[i].getValue());
+        }
+        propertysum.setValue(propertysum_value);
+        //console.log(testobj);
     },
     owerchanged:function(c){
       if(c.getRawValue()!=""){
