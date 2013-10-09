@@ -139,6 +139,13 @@ Ext.define('ZSMZJ.controller.Dbgl', {
              'dbglbusinessapplyform button[action=applysubmit]':{
              click: this.applysubmit
          },
+         'moresearchfamilywin button[action=add]':{
+             click: this.addnewcondition
+
+         },'moresearchfamilywin button[action=search]':{
+             click: this.searchcondition
+
+         },
          'dbglbusinesschangeform button[action=saveapplysubmit]':{
              click: this.applysubmitchange
          },
@@ -283,6 +290,97 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         var count=parseInt(countitem.getValue())+1;
 
         countitem.setValue(count);
+    },
+    addnewcondition:function(btn){
+        var form=btn.up('form');
+        var win=btn.up('window');
+        form.add({
+            xtype:'panel',
+            layout: 'column',
+            border:0,
+            items:[
+
+                {
+                    columnWidth: 0.23,
+                    xtype:'dbglaplytype',
+                    searchtype:win.searchtype,
+                    allowBlank: false,
+                    blankText: "不能为空",
+                    name:'name',
+                    fieldLabel: '查询字段'
+
+                },
+                {
+                    columnWidth: 0.23,
+                    xtype:'dbglaplytype',
+                    searchtype:'comparelabel',
+                    allowBlank: false,
+                    blankText: "不能为空",
+                    name:'compare',
+                    fieldLabel: '操作符'
+
+                },
+                {
+                    columnWidth: 0.23,
+                    xtype:'textfield',
+                    //searchtype:this.searchtype,
+                    allowBlank: false,
+                    blankText: "不能为空",
+                    name:'value',
+                    fieldLabel: '值'
+
+                },
+                {
+                    columnWidth: 0.23,
+                    xtype:'dbglaplytype',
+                    searchtype:'logiclabel',
+                    allowBlank: false,
+                    blankText: "不能为空",
+                    name:'logic',
+                    fieldLabel: '逻辑符'
+
+                },
+                {
+                    xtype: 'container',
+                    columnWidth: 0.08,
+                    padding :'20 0 0 0',
+                    layout: {
+                        type: 'hbox',
+                        align: 'middle'
+                    },
+                    items: [
+                        {
+                            xtype:'button',
+                            text : 'X',
+                            listeners: {
+                                click: function() {
+                                    var item=this.up('panel');
+                                    form.remove(item);
+                                }
+                            }
+
+                        }
+                    ]
+                }
+
+            ]
+        });
+
+    },
+    searchcondition:function(btn){
+
+        var me=this;
+        var win=btn.up('window');
+        var ajaxform=win.down('form');
+        var grid=win.dataobj;
+        var values=ajaxform.getValues();
+        var store=grid.getStore();
+        store.proxy.extraParams.name = values.name;
+        store.proxy.extraParams.value = values.value;
+        store.proxy.extraParams.logic = values.logic;
+        store.proxy.extraParams.compare = values.compare;
+        store.loadPage(1);
+
     },
     grantmoney:function(btn){
         var me=this;

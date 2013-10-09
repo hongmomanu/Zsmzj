@@ -280,6 +280,7 @@ Ext.define('ZSMZJ.controller.Header', {
                 click: this.moresearch_family
 
             },
+
             'peoplequerypanel button[action=outexcel]':{
                 click: this.outexcel_person
 
@@ -406,8 +407,16 @@ Ext.define('ZSMZJ.controller.Header', {
                       store.proxy.extraParams.businesstype = grid.businesstype;
                       store.proxy.extraParams.type=grid.stype
                       store.load({callback:function(){
+
                           CommonFunc.widgetdolayout("mainContent-panel",100);
                       }});
+
+                      store.on('load', function (store, options) {
+                          store.proxy.extraParams.name=null;
+                          store.proxy.extraParams.logic=null;
+                          store.proxy.extraParams.compare=null;
+                          store.proxy.extraParams.value=null;
+                      });
                   }
 
                 },
@@ -1218,6 +1227,8 @@ Ext.define('ZSMZJ.controller.Header', {
         this.ajaxSend(params, 'ajax/makeexcel.jsp', successFunc, failFunc,'POST');
 
     },
+
+
     moresearch_family:function(btn){
         var grid=btn.up('panel');
         if(!this.newMoreSearchWin)this.newMoreSearchWin=Ext.widget('moresearchfamilywin',{ // Equivalent to Ext.create('widget.panel')

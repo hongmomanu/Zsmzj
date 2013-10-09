@@ -23,7 +23,7 @@ Ext.define('ZSMZJ.view.dbgl.moreSearchFamilyWin' ,{
             layout: 'fit',
             items: {  // Let's put an empty grid in just to illustrate fit layout
                 xtype: 'form',
-
+                autoScroll: true,
                 layout: {
                     type: 'vbox',
 
@@ -74,9 +74,9 @@ Ext.define('ZSMZJ.view.dbgl.moreSearchFamilyWin' ,{
                         items:[
 
                             {
-                                columnWidth: 0.33,
+                                columnWidth: 0.25,
                                 xtype:'dbglaplytype',
-                                searchtype:(function(me){testobj=me;return me.searchtype;})(this),
+                                searchtype:this.searchtype,
                                 allowBlank: false,
                                 blankText: "不能为空",
                                 name:'name',
@@ -84,23 +84,33 @@ Ext.define('ZSMZJ.view.dbgl.moreSearchFamilyWin' ,{
 
                             },
                             {
-                                columnWidth: 0.33,
+                                columnWidth: 0.25,
                                 xtype:'dbglaplytype',
-                                searchtype:this.searchtype,
+                                searchtype:'comparelabel',
                                 allowBlank: false,
                                 blankText: "不能为空",
                                 name:'compare',
-                                fieldLabel: '逻辑符'
+                                fieldLabel: '操作符'
 
                             },
                             {
-                                columnWidth: 0.33,
+                                columnWidth: 0.25,
                                 xtype:'textfield',
                                 //searchtype:this.searchtype,
                                 allowBlank: false,
                                 blankText: "不能为空",
                                 name:'value',
                                 fieldLabel: '值'
+
+                            },
+                            {
+                                columnWidth: 0.25,
+                                xtype:'dbglaplytype',
+                                searchtype:'logiclabel',
+                                allowBlank: false,
+                                blankText: "不能为空",
+                                name:'logic',
+                                fieldLabel: '逻辑符'
 
                             }
 

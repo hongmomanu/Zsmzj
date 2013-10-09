@@ -21,7 +21,11 @@
         int limit=Integer.parseInt(request.getParameter("limit"));
         String keyword=request.getParameter("keyword");
         String type=request.getParameter("businesstype");
+        String[] name=request.getParameterValues("name");
+        String[] compare=request.getParameterValues("compare");
+        String[] value=request.getParameterValues("value");
+        String[] logic=request.getParameterValues("logic");
 
-        out.print(bp.getFamilyInfoList(start,limit,keyword,type));
+        out.print(bp.getFamilyInfoList(start,limit,keyword,type,name,compare,value,logic));
     }
 %>

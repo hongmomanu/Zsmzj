@@ -277,7 +277,8 @@ public class BusinessProcessControl {
 
     }
 
-    public String getFamilyInfoList(int start,int limit,String keyword,String businesstype){
+    public String getFamilyInfoList(int start,int limit,String keyword,String businesstype,String[]name,
+                                    String[]compare,String[]value,String[]logic){
         BusinessProcess bp=new BusinessProcess();
         ComonDao cd=new ComonDao();
         String sql_count="select count(*)"+
@@ -297,6 +298,24 @@ public class BusinessProcessControl {
             sql_count+=" and a.businesstype MATCH '"+businesstype+"'";
         }
 
+        if(name!=null&&name.length>0){
+            for(int i=0;i<name.length;i++){
+                if(logic[i].equals("and")){
+                    if(compare[i].equals(">=")){
+                        sql_list+=" and a.rowid in (select rowid from "+BusinessTable+" where CAST("+name[i]+" AS real) >= "+value[i]+") ";
+                        sql_count+=" and a.rowid in (select rowid from "+BusinessTable+" where CAST("+name[i]+" AS real) >= "+value[i]+") ";
+
+                    }else if(compare[i].equals("<=")){
+                        sql_list+=" and a.rowid in (select rowid from "+BusinessTable+" where CAST("+name[i]+" AS real) <= "+value[i]+") ";
+                        sql_count+=" and a.rowid in (select rowid from "+BusinessTable+" where CAST("+name[i]+" AS real) <= "+value[i]+") ";
+                    }else{
+                        sql_list+=" and a.rowid in (select rowid from "+BusinessTable+" where "+name[i]+" MATCH '"+value[i]+"*') ";
+                        sql_count+=" and a.rowid in (select rowid from "+BusinessTable+" where "+name[i]+" MATCH '"+value[i]+"*') ";
+                    }
+                }
+            }
+
+        }
 
         if (keyword!=null&&!keyword.equals("")){
             if(keyword.indexOf("and")>0){
