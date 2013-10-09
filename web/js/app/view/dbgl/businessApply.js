@@ -1040,6 +1040,7 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                     {
                         name: 'familyincome',
                         fieldLabel: '家庭总收入',
+                        itemId:'familyincome',
                         afterLabelTextTpl: required,
                         value:0,
                         emptyText: '请输入家庭总收入',

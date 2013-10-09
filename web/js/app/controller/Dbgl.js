@@ -717,6 +717,9 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             propertysum_value+=parseFloat(propertyitems[i].getValue());
         }
         propertysum.setValue(propertysum_value);
+
+        var familyincome=formpanel.down('#familyincome');
+        familyincome.setValue(propertysum_value+incomesum_value);
         //console.log(testobj);
     },
     owerchanged:function(c){
