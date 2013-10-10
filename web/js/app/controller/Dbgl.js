@@ -272,6 +272,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
        countitem.setValue(count);
        enjoyitem.setValue(enjoyednum);
+       this.moneychane(gridpanel);
 
     },
     addnewperson:function(btn){
@@ -282,10 +283,10 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         var r = Ext.create('ZSMZJ.model.dbgl.FamilyMember', {
             name: '赵某',
             relationship:'其它',
-            personid:'xxxxxxxxxxxxxxxxxx',
+            personid:'',
             isenjoyed:'不享受',
             persontype:'五保对象',
-            jobstatus:'登记失业',
+            jobstatus:'否',
             bodystatus:'健康',
             sex: '男',
             birthday: Ext.Date.clearTime(new Date()),
@@ -294,14 +295,16 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
         });
         gridpanel.getStore().insert(0, r);
-        //testobj=gridpanel;
-        rowEditing.startEdit(0, 0);
-        //var applyform=this.getMyviewbusinessapplyform();
         var applyform=gridpanel.up('form');
         var countitem=applyform.down('#FamilyPersons');
         var count=parseInt(countitem.getValue())+1;
 
         countitem.setValue(count);
+        this.moneychane(gridpanel);
+        //testobj=gridpanel;
+        rowEditing.startEdit(0, 0);
+        //var applyform=this.getMyviewbusinessapplyform();
+
     },
     addnewcondition:function(btn){
         var form=btn.up('form');
@@ -703,11 +706,18 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         var incomesum=formpanel.down('#incomesum');
         var incomesum_value=0;
         var incomeitems=incomesum.up('fieldset').items.items;
+        var person_nums=parseInt(formpanel.down('#FamilyPersons').getValue());
+
         for(var i=0;i<incomeitems.length;i++){
             if(incomeitems[i]==incomesum)break;
             incomesum_value+=parseFloat(incomeitems[i].getValue());
         }
         incomesum.setValue(incomesum_value);
+        var incomesumarea=formpanel.down('#incomesumarea');
+        incomesumarea.setValue(parseInt(incomesum_value/12));
+
+        var incomesumareaperson=formpanel.down('#incomesumareaperson');
+        incomesumareaperson.setValue(parseInt(person_nums==0?incomesum_value/12:incomesum_value/12/person_nums));
 
         var propertysum=formpanel.down('#propertysum');
         var propertysum_value=0;
@@ -720,6 +730,12 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
         var familyincome=formpanel.down('#familyincome');
         familyincome.setValue(propertysum_value+incomesum_value);
+
+        var averageincome=formpanel.down('#averageincome');
+
+
+        averageincome.setValue(parseInt(person_nums==0?parseInt(familyincome.getValue())/12:parseInt(familyincome.getValue())/12/person_nums));
+
         //console.log(testobj);
     },
     owerchanged:function(c){
@@ -758,7 +774,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
               var formcontent=applyform.getDefaultContentTarget();
               var target=familygrid.getEl();
               target.scrollIntoView(formcontent,true,true,true);
-
+              this.moneychane(gridpanel);
 
 
           }else{

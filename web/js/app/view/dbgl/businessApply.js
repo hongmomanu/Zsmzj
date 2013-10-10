@@ -559,10 +559,11 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                         {
                             name: 'incomesumareaperson',
                             regex :/^-?\d+$/,
+                            itemId:'incomesumareaperson',
 
                             regexText  : "只能输入数值",
                             value:0,
-                            fieldLabel: '家庭上年度月平均现金收入信息',
+                            fieldLabel: '家庭上年度人平均现金收入信息',
                             itemId:'incomesumareaperson',
                             allowBlank: true
                         }
@@ -1050,6 +1051,7 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                         ,
                         {
                             name: 'averageincome',
+                            itemId:'averageincome',
                             fieldLabel: '月人均收入',
                             afterLabelTextTpl: required,
                             value:0,
