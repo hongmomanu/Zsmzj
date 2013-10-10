@@ -304,18 +304,31 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                         },{
                             name: 'housearea',
                             fieldLabel: '住房总建筑面积(㎡)',
-                            //afterLabelTextTpl: required,
-                            //emptyText: '低保户类型',
-                            allowBlank: true
-                        },{
-                            name: 'houseusearea',
-                            fieldLabel: '住房总使用面积(㎡)',
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('houseareachane', field);
+                                }
+                            },
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         },{
                             name: 'houseaveragearea',
                             fieldLabel: '住房人均建筑面积',
+
+                            //afterLabelTextTpl: required,
+                            //emptyText: '低保户类型',
+                            allowBlank: true
+                        },{
+                            name: 'houseusearea',
+                            fieldLabel: '住房总使用面积(㎡)',
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('houseareachane', field);
+                                }
+                            },
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
@@ -1097,7 +1110,7 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                     },
 
                     items: [
-                        {
+                        /*{
                          xtype:'dbglaplytype',
                          searchtype:"dbglpoortype",
                          name: 'poortype',
@@ -1106,7 +1119,7 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                          emptyText: '请选择分类管理',
                          blankText : '请选择分类管理',
                          allowBlank: false
-                         }/*,
+                         }*//*,
                          {
                          name: 'poorstandard',
                          fieldLabel: '低保标准(元)',
@@ -1188,7 +1201,7 @@ Ext.define('ZSMZJ.view.dbgl.businessApply', {
                             fieldLabel: '公示结束日期',
                             xtype: 'datefield',
                             format: 'Y-m-d',
-                            colspan:3,
+                            //colspan:3,
                             allowBlank: true
                         }
                         ,{

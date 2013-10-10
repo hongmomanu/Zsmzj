@@ -113,6 +113,9 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             },
             moneychane:function(c){
                 this.moneychane(c);
+            },
+            houseareachane:function(c){
+                this.houseareachane(c);
             }
          },
          'dbglbusinessalterform component':{
@@ -124,6 +127,12 @@ Ext.define('ZSMZJ.controller.Dbgl', {
              },
              owerchange:function(c){
                  this.owerchanged(c);
+             },
+             moneychane:function(c){
+                 this.moneychane(c);
+             },
+             houseareachane:function(c){
+                 this.houseareachane(c);
              }
          },
          'dbglbusinesslogoutform component':{
@@ -135,6 +144,12 @@ Ext.define('ZSMZJ.controller.Dbgl', {
              },
              owerchange:function(c){
                  this.owerchanged(c);
+             },
+             moneychane:function(c){
+                 this.moneychane(c);
+             },
+             houseareachane:function(c){
+                 this.houseareachane(c);
              }
          },
          'dbglbusinesschangeform component':{
@@ -146,6 +161,12 @@ Ext.define('ZSMZJ.controller.Dbgl', {
              },
              owerchange:function(c){
                  this.owerchanged(c);
+             },
+             moneychane:function(c){
+                 this.moneychane(c);
+             },
+             houseareachane:function(c){
+                 this.houseareachane(c);
              }
          },
              'dbglbusinessapplyform button[action=applysubmit]':{
@@ -281,10 +302,10 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         rowEditing.cancelEdit();
         // Create a model instance
         var r = Ext.create('ZSMZJ.model.dbgl.FamilyMember', {
-            name: '赵某',
+            name: '',
             relationship:'其它',
             personid:'',
-            isenjoyed:'不享受',
+            isenjoyed:'享受',
             persontype:'五保对象',
             jobstatus:'否',
             bodystatus:'健康',
@@ -697,6 +718,13 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         this.alteruploadimgWin.itemdata= c;
 
         this.alteruploadimgWin.show();
+
+    },
+    houseareachane:function(c){
+        var formpanel= c.up('form');
+        var person_nums=parseInt(formpanel.down('#FamilyPersons').getValue());
+        var area= parseInt(c.getValue());
+        c.nextNode().setValue(parseInt(person_nums==0?area:area/person_nums))
 
     },
     moneychane:function(c){
