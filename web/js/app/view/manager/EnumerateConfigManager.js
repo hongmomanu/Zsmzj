@@ -34,9 +34,9 @@ Ext.define('ZSMZJ.view.manager.EnumerateConfigManager' ,{
             columns: [
 
 
-                {header: '枚举标识', dataIndex: 'enumlabel',width:250},
-                {header: '枚举类别', dataIndex: 'enumtype',width:250},
-                {header: '枚举值',   dataIndex: 'enumvalue',width:250},
+                {header: '枚举标识', dataIndex: 'enumeratelabel',width:250},
+                {header: '枚举类别', dataIndex: 'enumeratetype',width:250},
+                {header: '枚举值',   dataIndex: 'enumeratevalue',width:250},
                 {header: '枚举配置id', dataIndex: 'enumid',width: 250,hidden:true}
 
             ],

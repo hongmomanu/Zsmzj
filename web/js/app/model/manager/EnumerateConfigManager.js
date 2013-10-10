@@ -14,15 +14,15 @@ Ext.define('ZSMZJ.model.manager.EnumerateConfigManager', {
             type:'int'
         },
         {
-            name: 'enumtype',
+            name: 'enumeratetype',
             type:'string'
         },
         {
-            name: 'enumlabel',
+            name: 'enumeratelabel',
             type:'string'
         },
         {
-            name: 'enumvalue',
+            name: 'enumeratevalue',
             type:'string'
         }
 

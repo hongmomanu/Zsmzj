@@ -461,6 +461,17 @@ public class BusinessProcessControl {
         return  JSONArray.fromObject(list).toString();
 
     }
+    public String updateCommonbyid(int id,String idname,String tablename,boolean isrowid,Map<String,Object> params){
+        BusinessProcessDao bpdao=new BusinessProcessDao();
+        int result=bpdao.updatedatabyid(id,tablename,idname,isrowid,params);
+        if(result>0){
+            return "{isok:true}";
+        }
+        else{
+            return "{isok:false}";
+        }
+
+    }
     public String delCommonbyid(int id,String idname,String tablename,boolean isrowid){
         BusinessProcessDao bpdao=new BusinessProcessDao();
         int result=bpdao.deldatabyid(id,tablename,idname,isrowid);

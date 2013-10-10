@@ -23,7 +23,7 @@ public class EnumDao {
     private static final Logger log = Logger.getLogger(EnumDao.class);
     public ArrayList<Map<String, Object>>  getEnums(int start, int limit, String keyword){
         Connection testConn= JdbcFactory.getConn("sqlite");
-        String sql=  "select enumeratelabel,enumeratevalue,id,enumeratetype from "+
+        String sql=  "select enumeratelabel,enumeratevalue,rowid,enumeratetype from "+
                 Enum_Table+" Limit "+limit+" Offset "+ start;
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
         ArrayList<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
@@ -31,10 +31,10 @@ public class EnumDao {
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 Map<String,Object> obj=new HashMap<String, Object>();
-                obj.put("enumlabel",rs.getString("enumeratelabel"));
-                obj.put("enumtype",rs.getString("enumeratetype"));
-                obj.put("enumvalue",rs.getString("enumeratevalue"));
-                obj.put("enumid",rs.getInt("id"));
+                obj.put("enumeratelabel",rs.getString("enumeratelabel"));
+                obj.put("enumeratetype",rs.getString("enumeratetype"));
+                obj.put("enumeratevalue",rs.getString("enumeratevalue"));
+                obj.put("enumid",rs.getInt("rowid"));
                 list.add(obj);
 
             }

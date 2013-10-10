@@ -47,7 +47,9 @@ Ext.define('ZSMZJ.controller.Manager', {
         'manager.RoleFuncWin',
         'manager.EditFuncWin',
         'manager.EditUserWin',
+        'manager.EditEnumWin',
         'manager.funcMenu',
+        'manager.enumMenu',
         'manager.userMenu',
         'manager.divisionMenu',
         'dbgl.comboxwidget.divisiontree',
@@ -107,6 +109,8 @@ Ext.define('ZSMZJ.controller.Manager', {
 
             'editfuncwin button[action=save]': {
                 click: this.saveeditfunc
+            },'editenumwin button[action=save]': {
+                click: this.saveenumfunc
             },
             'edituserwin button[action=save]': {
                 click: this.saveedituser
@@ -130,6 +134,9 @@ Ext.define('ZSMZJ.controller.Manager', {
             },
             'funcmanagerpanel': {
                 itemcontextmenu: this.showFuncMenu
+            },
+            'enumerateconfigmanager':{
+                itemcontextmenu: this.showEnumMenu
             }
             ,
             'rolemenu button[action=del]': {
@@ -150,6 +157,9 @@ Ext.define('ZSMZJ.controller.Manager', {
             },
             'funcmenu > menuitem': {
                 click: this.funcmanager
+            },
+            'enummenu > menuitem': {
+                click: this.enummanager
             }
         }, this);
 
@@ -196,6 +206,46 @@ Ext.define('ZSMZJ.controller.Manager', {
         menu.showAt(e.getXY());
     },
 
+    showEnumMenu:function(panelView, record, item, index, e, eOpts) {
+        var me = this;
+        e.preventDefault();
+        e.stopEvent();
+        var menu = Ext.widget('enummenu');
+        menu.enumdata=record;
+        menu.showAt(e.getXY());
+
+    },
+
+    enummanager:function(item,e,eOpts){
+        var enumid=item.parentMenu.enumdata.data.enumid;
+
+        if(item.text=='删除枚举'){
+            var params = {
+                id:enumid,
+                isrowid:true,
+                idname:'rowid',
+                tablename:'enumerate'
+            };
+            var enumstore=this.getManagerEnumerateConfigManagersStore();
+            var successFunc = function (form, action) {
+
+                enumstore.load();
+
+            };
+            var failFunc = function (form, action) {
+                Ext.Msg.alert("提示信息", "删除枚举失败，检查web服务或数据库服务");
+
+            };
+            this.ajaxSend(params, 'ajax/delcommonbyid.jsp', successFunc, failFunc,'POST');
+
+        }
+        else if (item.text=='编辑枚举'){
+            this.editenumwin(enumid,item.parentMenu.enumdata.raw);
+
+        }
+
+
+    },
     funcmanager:function (item, e, eOpts) {
         var funcid=item.parentMenu.funcdata.data.funcid;
 
@@ -389,6 +439,14 @@ Ext.define('ZSMZJ.controller.Manager', {
         this.edit_user_win.show();
         this.edit_user_win.editdata=data;
     },
+
+    editenumwin:function(enumid,data){
+        if (!this.edit_enum_win)this.edit_enum_win =Ext.widget('editenumwin');
+        this.edit_enum_win.down('form').getForm().reset();
+        this.edit_enum_win.down('form').getForm().setValues(data);
+        this.edit_enum_win.show();
+        this.edit_enum_win.editdata=data;
+    },
     editfuncwin:function(funcid,data){
 
 
@@ -511,6 +569,32 @@ Ext.define('ZSMZJ.controller.Manager', {
 
         this.formSubmit(btn, params, 'ajax/edituser.jsp', successFunc, failFunc,"正在提交数据");
 
+
+
+
+    },
+
+    saveenumfunc:function(btn){
+
+        var me=this;
+        var params = {
+            id:btn.up('window').editdata.enumid,
+            isrowid:true,
+            idname:'rowid',
+            tablename:'enumerate'
+        };
+        var enumstore=this.getManagerEnumerateConfigManagersStore();
+        var successFunc = function (form, action) {
+            enumstore.load();
+            me.edit_enum_win.hide();
+
+        };
+        var failFunc = function (form, action) {
+            Ext.Msg.alert("提示信息", "新增功能失败，检查web服务或数据库服务");
+
+        };
+
+        this.formSubmit(btn, params, 'ajax/updatecommonbyid.jsp', successFunc, failFunc,"正在提交数据");
 
 
 

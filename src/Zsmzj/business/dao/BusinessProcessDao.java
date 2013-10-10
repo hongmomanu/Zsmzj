@@ -277,6 +277,48 @@ public class BusinessProcessDao {
 
 
     }
+    public int updatedatabyid (int id,String tablename,String colname,Boolean isrowid,Map<String,Object> params){
+
+        Connection testConn= JdbcFactory.getConn("sqlite");
+
+        String str="";
+        ArrayList<String> val_arr=new ArrayList<String>();
+        Iterator iter = params.keySet().iterator();
+        while (iter.hasNext()) {
+            String key = iter.next().toString();
+            String val = params.get(key).toString();
+            val_arr.add(val);
+            str+=key+"=?,";
+        }
+        str=str.substring(0,str.length()-1);
+        String sql = "update " + tablename +" set "+str+" where "+colname;
+
+        if(isrowid){
+
+            sql+="=?";
+        }else{
+            sql+="  MATCH ? ";
+        }
+        PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
+        try {
+            int i=0;
+            for( i=0;i<val_arr.size();i++){
+
+                pstmt.setString(i+1, val_arr.get(i)==null?"":val_arr.get(i));
+
+            }
+            pstmt.setInt(i+1,id);
+            return pstmt.executeUpdate();
+
+        }catch (Exception E){
+            log.debug(E.getMessage());
+            return -1;
+        }
+
+
+
+
+    }
     public int  deldatabyid (int id,String tablename,String colname,Boolean isrowid){
 
         Connection testConn= JdbcFactory.getConn("sqlite");
