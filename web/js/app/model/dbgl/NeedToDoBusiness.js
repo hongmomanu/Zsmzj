@@ -12,6 +12,7 @@ Ext.define('ZSMZJ.model.dbgl.NeedToDoBusiness', {
         {name:'owername'},
         {name:'owerid'},
         {name:'applytype'},
+        {name:'poortype'},
         {name:'familytype'},
         {name:'familyaccount'},
         {name:'totalhelpmoney',type:'float'},

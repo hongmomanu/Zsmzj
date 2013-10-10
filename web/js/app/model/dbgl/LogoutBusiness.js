@@ -12,6 +12,7 @@ Ext.define('ZSMZJ.model.dbgl.LogoutBusiness', {
         {name:'owername'},
         {name:'owerid'},
         {name:'applytype'},
+        {name:'poortype'},
         {name:'changedate'},
         {name:'changereason'},
         {name:'businesstype'},

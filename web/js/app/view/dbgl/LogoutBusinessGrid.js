@@ -215,7 +215,8 @@ Ext.define('ZSMZJ.view.dbgl.LogoutBusinessGrid' ,{
                 //变更前人数	变更前金额	变更后人数	变更后金额	变更日期	变更原因	状态	状态描述	审核人	审核日期	制单人	制单日期
                 //家庭类别	注销日期	注销原因
                 {header: '申请类别',align:'center',dataIndex:'applytype'},
-                {header: '家庭类别',align:'center',dataIndex:'familytype'},
+                /*{header: '家庭类别',align:'center',dataIndex:'familytype'},*/
+                {header: '分类管理',align:'center',dataIndex:'poortype',itemId:'familytype'},
 
                 {header: '注销日期',align:'center',dataIndex:'logoutdate'},
                 {header: '注销原因',align:'center',dataIndex:'logoutreason'},
