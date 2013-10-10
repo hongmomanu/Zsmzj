@@ -34,7 +34,8 @@ Ext.define('ZSMZJ.view.dbgl.businessAlter', {
                 msgTarget: 'side'
             },
             autoScroll: true,
-            items: [{
+            items: [
+                {
                 xtype: 'fieldset',
                 title: '<a>【低保业务办理】家庭基本信息</a>',
                 defaultType: 'textfield',

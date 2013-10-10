@@ -38,31 +38,32 @@ Ext.define('ZSMZJ.view.dbgl.businessChange', {
                 msgTarget: 'side'
             },
             autoScroll: true,
-            items: [{
-                xtype: 'fieldset',
-                title: '<a>【低保业务办理】家庭基本信息</a>',
-                defaultType: 'textfield',
+            items: [
+                {
+                    xtype: 'fieldset',
+                    title: '<a>【低保业务办理】家庭基本信息</a>',
+                    defaultType: 'textfield',
 
-                //layout: 'anchor',
-                layout: {
-                    type: 'table',
+                    //layout: 'anchor',
+                    layout: {
+                        type: 'table',
 
-                    // The total column count must be specified here
-                    columns: 3,
-                    tableAttrs: {
-                        border: 1,
-                        cellpadding: 5,
-                        cellspacing: 1,
-                        width: '100%',
-                        align: 'center',
-                        style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:center;"
-                        /*style: {
-                            width: '100%'
-                        }*/
-                    }
-                },
+                        // The total column count must be specified here
+                        columns: 3,
+                        tableAttrs: {
+                            border: 1,
+                            cellpadding: 5,
+                            cellspacing: 1,
+                            width: '100%',
+                            align: 'center',
+                            style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:center;"
+                            /*style: {
+                             width: '100%'
+                             }*/
+                        }
+                    },
 
-                items: [{
+                    items: [{
                         name: 'division',
                         fieldLabel: '行政区划',
                         itemId:'divisiontype',
@@ -79,180 +80,183 @@ Ext.define('ZSMZJ.view.dbgl.businessChange', {
                         colspan:2,//合并列
                         allowBlank: false
                     },
-                    {
-                        xtype: 'component',
-                        name:'accountimgpath',
-                        value:"",
-                        width:100,
-                        height:110,
-                        itemId:'dbglaccountimg',
-                        rowspan:4,
-                        listeners: {
-                            render: function(c){
-                                c.getEl().on('click', function(){ this.fireEvent('imgclick', c); }, c);
+                        {
+                            xtype: 'component',
+                            name:'accountimgpath',
+                            value:"",
+                            width:100,
+                            height:110,
+                            itemId:'dbglaccountimg',
+                            rowspan:4,
+                            listeners: {
+                                render: function(c){
+                                    c.getEl().on('click', function(){ this.fireEvent('imgclick', c); }, c);
+                                }
+                            },
+                            autoEl: {
+                                tag: 'img',
+                                cls:'mouseover',
+                                src : "img/noperson.gif"
                             }
-                        },
-                        autoEl: {
-                            tag: 'img',
-                            cls:'mouseover',
-                            src : "img/noperson.gif"
                         }
-                    }
-                    ,{
-                        xtype:'dbglaplytype',
-                        name: 'applytype',
-                        searchtype:"dbglapplytype",
-                        fieldLabel: '申请类别',
-                        emptyText: '请输入申请类别',
-                        blankText: '请输入申请类别',
-                        afterLabelTextTpl: required
+                        ,{
+                            xtype:'dbglaplytype',
+                            name: 'applytype',
+                            searchtype:"dbglapplytype",
+                            fieldLabel: '申请类别',
+                            emptyText: '请输入申请类别',
+                            blankText: '请输入申请类别',
+                            afterLabelTextTpl: required
 
-                        /*name: 'applytype',
-                        afterLabelTextTpl: required,
-                        fieldLabel: '申请类别',
-                        emptyText: '请输入申请类别',
-                        blankText: '请输入申请类别',
-                        allowBlank: false*/
-                    },{
-                        xtype:'dbglaplytype',
-                        name: 'familytype',
-                        searchtype:"dbglfamilytype",
-                        fieldLabel: '家庭类别',
-                        afterLabelTextTpl: required,
-                        emptyText: '请输入家庭类别',
-                        blankText: '请输入家庭类别',
-                        allowBlank: false
-                    }
-                    ,{
-                        name: 'owername',
-                        itemId:'owername',
-                        fieldLabel: '户主姓名',
-                        afterLabelTextTpl: required,
-                        listeners: {
+                            /*name: 'applytype',
+                             afterLabelTextTpl: required,
+                             fieldLabel: '申请类别',
+                             emptyText: '请输入申请类别',
+                             blankText: '请输入申请类别',
+                             allowBlank: false*/
+                        },{
+                            xtype:'dbglaplytype',
+                            name: 'poortype',
+                            searchtype:"dbglpoortype",
+                            fieldLabel: '分类管理',
+                            afterLabelTextTpl: required,
+                            emptyText: '请输入家庭类别',
+                            blankText: '请输入家庭类别',
+                            allowBlank: false
+                        }
+                        ,{
+                            name: 'owername',
+                            itemId:'owername',
+                            fieldLabel: '户主姓名',
+                            listeners: {
 
-                            "blur":function(field,e){
-                                var name = field.getRawValue().replace(/\s+/g, "");
-                                this.fireEvent('owerchange', field);
+                                "blur":function(field,e){
+                                    var name = field.getRawValue().replace(/\s+/g, "");
+                                    this.fireEvent('owerchange', field);
 
-                            }
-                        },
-                        blankText: '请输入户主姓名',
-                        emptyText: '请输入户主姓名',
-                        allowBlank: false
-                    },{
-                        name: 'owerid',
-                        itemId:'owerid',
-                        listeners: {
+                                }
+                            },
 
-                            "blur":function(field,e){
-                                var name = field.getRawValue().replace(/\s+/g, "");
-                                this.fireEvent('owerchange', field);
+                            afterLabelTextTpl: required,
+                            blankText: '请输入户主姓名',
+                            emptyText: '请输入户主姓名',
+                            allowBlank: false
+                        },{
+                            name: 'owerid',
+                            itemId:'owerid',
+                            fieldLabel: '户主身份证',
+                            vtype:'personid',
+                            listeners: {
 
-                            }
-                        },
-                        fieldLabel: '户主身份证',
-                        afterLabelTextTpl: required,
-                        blankText: '请输入身份证号',
-                        emptyText: '请输入身份证号',
-                        allowBlank: false
-                    },{
-                        xtype:'dbglaplytype',
-                        searchtype:"dbglpoorfamilytype",
-                        name: 'poorfamilytype',
-                        fieldLabel: '低保户类型',
-                        afterLabelTextTpl: required,
-                        blankText: '低保户类型',
-                        emptyText: '低保户类型',
-                        allowBlank: false
-                    },{
-                        xtype:'dbglaplytype',
-                        searchtype:"dbglfamilyaccount",
-                        afterLabelTextTpl: required,
-                        name: 'familyaccount',
-                        fieldLabel: '家庭户口',
-                        blankText: '请选择家庭户口',
-                        emptyText: '请选择家庭户口',
-                        allowBlank: false
-                    }
-                    ,{
-                        name: 'accountaddress',
-                        fieldLabel: '户口所在地',
-                        colspan:2,
-                        //afterLabelTextTpl: required,
-                        //emptyText: '低保户类型',
-                        allowBlank: true
-                    },{
-                        name: 'accountzipcode',
-                        fieldLabel: '邮政编码',
-                        //afterLabelTextTpl: required,
-                        //emptyText: '低保户类型',
-                        allowBlank: true
-                    },{
-                        name: 'realaddress',
-                        colspan:2,
-                        fieldLabel: '实际居住地',
-                        allowBlank: true
-                    },{
-                        name: 'realzipcode',
-                        fieldLabel: '邮政编码',
-                        //afterLabelTextTpl: required,
-                        //emptyText: '低保户类型',
-                        allowBlank: true
-                    },{
-                        itemId: 'FamilyPersons',
-                        name: 'households',
-                        fieldLabel: '家庭总人口',
-                        afterLabelTextTpl: required,
-                        blankText:'家庭总人口',
-                        value:0,
-                        disabled:true,
-                        //emptyText: '低保户类型',
-                        allowBlank: false
-                    }
-                    ,{
-                        name: 'telnum',
-                        fieldLabel: '联系电话',
-                        //afterLabelTextTpl: required,
-                        //emptyText: '低保户类型',
-                        allowBlank: true
-                    },{
-                        xtype:'dbglaplytype',
-                        searchtype:"dbglbank",
-                        name: 'bank',
-                        fieldLabel: '开户银行',
-                        //afterLabelTextTpl: required,
-                        //emptyText: '低保户类型',
-                        allowBlank: true
-                    }
-                    ,{
-                        name: 'bankower',
-                        fieldLabel: '开户人',
-                        //afterLabelTextTpl: required,
-                        //emptyText: '低保户类型',
-                        allowBlank: true
-                    },{
-                        name: 'bankid',
-                        fieldLabel: '银行账号',
-                        colspan:2,
-                        //afterLabelTextTpl: required,
-                        //emptyText: '低保户类型',
-                        allowBlank: true
-                    },{
-                        name: 'otherfamilyinfo',
-                        fieldLabel: '家庭备注',
-                        colspan:3,
-                        minWidth:600,
-                        width:800,
-                        //draggable :true,
-                        anchor : '100%',
-                        //width:800,
-                        xtype : 'textarea',
-                        grow : true,
+                                "blur":function(field,e){
+                                    var name = field.getRawValue().replace(/\s+/g, "");
+                                    this.fireEvent('owerchange', field);
 
-                        //afterLabelTextTpl: required,
-                        //emptyText: '低保户类型',
-                        allowBlank: true
-                    }
+                                }
+                            },
+                            afterLabelTextTpl: required,
+                            blankText: '请输入身份证号',
+                            emptyText: '请输入身份证号',
+                            allowBlank: false
+                        },/*{
+                         xtype:'dbglaplytype',
+                         searchtype:"dbglpoorfamilytype",
+                         name: 'poorfamilytype',
+                         fieldLabel: '低保户类型',
+                         afterLabelTextTpl: required,
+                         blankText: '低保户类型',
+                         emptyText: '低保户类型',
+                         allowBlank: false
+                         },*/{
+                            xtype:'dbglaplytype',
+                            searchtype:"dbglfamilyaccount",
+                            afterLabelTextTpl: required,
+                            name: 'familyaccount',
+                            fieldLabel: '家庭户口',
+                            colspan:2,
+                            blankText: '请选择家庭户口',
+                            emptyText: '请选择家庭户口',
+                            allowBlank: false
+                        }
+                        ,{
+                            name: 'accountaddress',
+                            fieldLabel: '户主户口所在地',
+                            colspan:2,
+                            //afterLabelTextTpl: required,
+                            //emptyText: '低保户类型',
+                            allowBlank: true
+                        },{
+                            name: 'accountzipcode',
+                            fieldLabel: '邮政编码',
+                            //afterLabelTextTpl: required,
+                            //emptyText: '低保户类型',
+                            allowBlank: true
+                        },{
+                            name: 'realaddress',
+                            colspan:2,
+                            fieldLabel: '实际居住地',
+                            allowBlank: true
+                        },{
+                            name: 'realzipcode',
+                            fieldLabel: '邮政编码',
+                            //afterLabelTextTpl: required,
+                            //emptyText: '低保户类型',
+                            allowBlank: true
+                        },{
+                            itemId: 'FamilyPersons',
+                            name: 'households',
+                            fieldLabel: '家庭总人口',
+                            afterLabelTextTpl: required,
+                            blankText:'家庭总人口',
+                            value:0,
+                            disabled:true,
+                            //emptyText: '低保户类型',
+                            allowBlank: false
+                        }
+                        ,{
+                            name: 'telnum',
+                            fieldLabel: '联系电话',
+                            //afterLabelTextTpl: required,
+                            //emptyText: '低保户类型',
+                            allowBlank: true
+                        },{
+                            xtype:'dbglaplytype',
+                            searchtype:"dbglbank",
+                            name: 'bank',
+                            fieldLabel: '开户银行',
+                            //afterLabelTextTpl: required,
+                            //emptyText: '低保户类型',
+                            allowBlank: true
+                        }
+                        ,{
+                            name: 'bankower',
+                            fieldLabel: '开户人',
+                            //afterLabelTextTpl: required,
+                            //emptyText: '低保户类型',
+                            allowBlank: true
+                        },{
+                            name: 'bankid',
+                            fieldLabel: '银行账号',
+                            colspan:2,
+                            //afterLabelTextTpl: required,
+                            //emptyText: '低保户类型',
+                            allowBlank: true
+                        },{
+                            name: 'otherfamilyinfo',
+                            fieldLabel: '家庭备注',
+                            colspan:3,
+                            minWidth:600,
+                            width:800,
+                            //draggable :true,
+                            anchor : '100%',
+                            //width:800,
+                            xtype : 'textarea',
+                            grow : true,
+
+                            //afterLabelTextTpl: required,
+                            //emptyText: '低保户类型',
+                            allowBlank: true
+                        }
                     ]
 
                 },
@@ -285,6 +289,19 @@ Ext.define('ZSMZJ.view.dbgl.businessChange', {
                             searchtype:"dbglhouseproperties",
                             name: 'houseproperties',
                             fieldLabel: '住房性质',
+                            listeners:{
+                                scope: this,
+                                'select': function (combo, records) {
+                                    var value=combo.getValue();
+                                    if(value==='自有'){
+                                        combo.nextNode().setEditable(true)
+                                    }
+                                    else{
+                                        combo.nextNode().setEditable(false);
+                                    }
+
+                                }
+                            },
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
@@ -299,13 +316,38 @@ Ext.define('ZSMZJ.view.dbgl.businessChange', {
                             allowBlank: true
                         },{
                             name: 'housearea',
-                            fieldLabel: '住房总面积(㎡)',
+                            fieldLabel: '住房总建筑面积(㎡)',
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('houseareachane', field);
+                                }
+                            },
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         },{
                             name: 'houseaveragearea',
-                            fieldLabel: '住房人均面积',
+                            fieldLabel: '住房人均建筑面积',
+
+                            //afterLabelTextTpl: required,
+                            //emptyText: '低保户类型',
+                            allowBlank: true
+                        },{
+                            name: 'houseusearea',
+                            fieldLabel: '住房总使用面积(㎡)',
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('houseareachane', field);
+                                }
+                            },
+                            //afterLabelTextTpl: required,
+                            //emptyText: '低保户类型',
+                            allowBlank: true
+                        },{
+                            name: 'houseaverageusearea',
+                            fieldLabel: '住房人均使用面积',
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
@@ -339,76 +381,216 @@ Ext.define('ZSMZJ.view.dbgl.businessChange', {
                     items:[
                         {
                             name: 'interest',
+                            value:0,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+
                             fieldLabel: '利息、股息、红利',
+                            regex :/^-?\d+$/,
+
+                            regexText  : "只能输入数值",
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         }
                         ,{
                             name: 'wages',
+                            value:0,
                             fieldLabel: '工资、薪金',
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regex :/^-?\d+$/,
+
+                            regexText  : "只能输入数值",
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         },{
                             name: 'planting',
+                            value:0,
                             fieldLabel: '种植、养殖、捕捞',
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         },{
                             name: 'pension',
+                            value:0,
                             fieldLabel: '离退休金、养老保险等',
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         },{
                             name: 'management',
+                            value:0,
                             fieldLabel: '承包经营',
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         },{
                             name: 'alimony',
+                            value:0,
                             fieldLabel: '赡（抚、扶）养费',
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         },{
                             name: 'incidentalincome',
+                            value:0,
                             fieldLabel: '赔偿、继承、赠与、偶然所得',
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         },{
                             name: 'remuneration',
                             fieldLabel: '劳务报酬',
+                            value:0,
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         },{
                             name: 'allowance',
                             fieldLabel: '各类生活补助',
+                            value:0,
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         },{
                             name: 'paidservices',
                             fieldLabel: '生产经营、有偿服务',
+                            value:0,
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         },{
                             name: 'propertylease',
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
                             fieldLabel: '财产租赁、转让',
+                            value:0,
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         },{
                             name: 'otherincome',
                             fieldLabel: '其他',
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
+                            value:0,
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
+                            allowBlank: true
+                        },{
+                            name: 'incomesum',
+                            value:0,
+                            regex :/^-?\d+$/,
+
+                            regexText  : "只能输入数值",
+                            fieldLabel: '合计',
+                            itemId:'incomesum',
+                            allowBlank: true
+                        },{
+                            name: 'incomesumarea',
+                            regex :/^-?\d+$/,
+
+                            regexText  : "只能输入数值",
+                            fieldLabel: '家庭上年度月平均现金收入信息',
+                            itemId:'incomesumarea',
+                            value:0,
+                            allowBlank: true
+                        },
+                        {
+                            name: 'incomesumareaperson',
+                            regex :/^-?\d+$/,
+                            itemId:'incomesumareaperson',
+
+                            regexText  : "只能输入数值",
+                            value:0,
+                            fieldLabel: '家庭上年度人平均现金收入信息',
+                            itemId:'incomesumareaperson',
                             allowBlank: true
                         }
 
@@ -417,7 +599,7 @@ Ext.define('ZSMZJ.view.dbgl.businessChange', {
                 ,
                 {
                     xtype: 'fieldset',
-                    title: '<a>家庭财产信息</a>',
+                    title: '<a>家庭闲置财产信息</a>',
                     defaultType: 'textfield',
                     bodyStyle: 'padding:5px 5px 5px 5px',
                     //layout: 'anchor',
@@ -442,6 +624,15 @@ Ext.define('ZSMZJ.view.dbgl.businessChange', {
                         {
                             name: 'cash',
                             fieldLabel: '现金',
+                            value:0,
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
@@ -449,36 +640,110 @@ Ext.define('ZSMZJ.view.dbgl.businessChange', {
                         ,{
                             name: 'banksecurities',
                             fieldLabel: '银行存款及有价证券',
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
+                            value:0,
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         },{
                             name: 'debt',
                             fieldLabel: '债权',
+                            value:0,
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         },{
                             name: 'vehicle',
-                            fieldLabel: '机动车辆',
-                            //afterLabelTextTpl: required,
-                            //emptyText: '低保户类型',
+                            fieldLabel: '非生活机动车折价',
+                            value:0,
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
                             allowBlank: true
                         },{
                             name: 'nonresidentialhouse',
-                            fieldLabel: '非居住类房屋',
+                            fieldLabel: '闲置房产折价',
+                            value:0,
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
+                            allowBlank: true
+                        },{
+                            name: 'nolifeneededmachine',
+                            fieldLabel: '非生活必须船只等机械类折价',
+                            value:0,
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         },{
                             name: 'insurance',
                             fieldLabel: '商业保险',
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
+                            value:0,
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         },{
                             name: 'registeredcapital',
                             fieldLabel: '工商注册资金（资本）',
+                            value:0,
+                            regex :/^-?\d+$/,
+                            listeners: {
+
+                                "blur":function(field,e){
+                                    this.fireEvent('moneychane', field);
+                                }
+                            },
+                            regexText  : "只能输入数值",
+                            allowBlank: true
+                        },{
+                            name: 'propertysum',
+                            itemId:'propertysum',
+                            regex :/^-?\d+$/,
+
+                            regexText  : "只能输入数值",
+                            fieldLabel: '合计',
+                            value:0,
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
@@ -496,10 +761,10 @@ Ext.define('ZSMZJ.view.dbgl.businessChange', {
 
                     items:[
 
-                             {
-                                 xtype:'familymembergrid',
-                                 itemId:'familymembergrid'
-                             }
+                        {
+                            xtype:'familymembergrid',
+                            itemId:'familymembergrid'
+                        }
 
                     ]
                 }
@@ -529,6 +794,7 @@ Ext.define('ZSMZJ.view.dbgl.businessChange', {
                     },
                     itemId: 'affixfilespanel',
                     items:[
+
                         {
                             xtype:'panel',
                             border:0,
@@ -784,24 +1050,27 @@ Ext.define('ZSMZJ.view.dbgl.businessChange', {
                         xtype:'dbglaplytype',
                         searchtype:"dbglicomemonth",
                         name: 'icomemonth',
-                        fieldLabel: '收入累计月份',
+
+                        fieldLabel: '现金收入累计月份',
                         afterLabelTextTpl: required,
                         emptyText: '请选择累计月份',
                         blankText : '请选择累计月份',
                         allowBlank: false
                     },
-                    {
-                        name: 'familyincome',
-                        fieldLabel: '家庭总收入',
-                        afterLabelTextTpl: required,
-                        value:0,
-                        emptyText: '请输入家庭总收入',
-                        blankText : '请输入家庭总收入',
-                        allowBlank: false
-                    }
+                        {
+                            name: 'familyincome',
+                            fieldLabel: '家庭总收入',
+                            itemId:'familyincome',
+                            afterLabelTextTpl: required,
+                            value:0,
+                            emptyText: '请输入家庭总收入',
+                            blankText : '请输入家庭总收入',
+                            allowBlank: false
+                        }
                         ,
                         {
                             name: 'averageincome',
+                            itemId:'averageincome',
                             fieldLabel: '月人均收入',
                             afterLabelTextTpl: required,
                             value:0,
@@ -848,16 +1117,16 @@ Ext.define('ZSMZJ.view.dbgl.businessChange', {
                     },
 
                     items: [
-                        {
+                        /*{
                          xtype:'dbglaplytype',
                          searchtype:"dbglpoortype",
                          name: 'poortype',
-                         fieldLabel: '低保类型',
+                         fieldLabel: '分类管理',
                          afterLabelTextTpl: required,
-                         emptyText: '请输入低保类型',
-                         blankText : '请输入低保类型',
+                         emptyText: '请选择分类管理',
+                         blankText : '请选择分类管理',
                          allowBlank: false
-                         },
+                         }*//*,
                          {
                          name: 'poorstandard',
                          fieldLabel: '低保标准(元)',
@@ -865,13 +1134,13 @@ Ext.define('ZSMZJ.view.dbgl.businessChange', {
                          emptyText: '请输入低保标准',
                          blankText : '请输入低保标准',
                          allowBlank: false
-                         }
-                         ,
-                         {
-                         name: 'aidnum',
-                         fieldLabel: '救助证编号',
-                         allowBlank: true
-                         }
+                         }*/
+                        ,
+                        {
+                            name: 'aidnum',
+                            fieldLabel: '救助证编号',
+                            allowBlank: true
+                        }
                         ,
                         {
                             name: 'helpbgtime',
@@ -939,7 +1208,7 @@ Ext.define('ZSMZJ.view.dbgl.businessChange', {
                             fieldLabel: '公示结束日期',
                             xtype: 'datefield',
                             format: 'Y-m-d',
-                            colspan:2,
+                            //colspan:3,
                             allowBlank: true
                         }
                         ,{
