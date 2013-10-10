@@ -48,6 +48,12 @@ Ext.define('ZSMZJ.controller.Dbedge', {
                 },
                 owerchange:function(c){
                     dbgl_cl.owerchanged(c);
+                },
+                moneychane:function(c){
+                    dbgl_cl.moneychane(c);
+                },
+                houseareachane:function(c){
+                    dbgl_cl.houseareachane(c);
                 }
             },
             'dbedgebusinessapplyform button[action=applysubmit]': {

@@ -465,10 +465,10 @@ public class BusinessProcessControl {
         BusinessProcessDao bpdao=new BusinessProcessDao();
         int result=bpdao.updatedatabyid(id,tablename,idname,isrowid,params);
         if(result>0){
-            return "{isok:true}";
+            return "{isok:true,success:true}";
         }
         else{
-            return "{isok:false}";
+            return "{isok:false,success:false}";
         }
 
     }

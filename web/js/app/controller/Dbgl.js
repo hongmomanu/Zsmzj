@@ -732,37 +732,40 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         //alert(c.getValue());
         var formpanel=c.up('panel');
         var incomesum=formpanel.down('#incomesum');
-        var incomesum_value=0;
-        var incomeitems=incomesum.up('fieldset').items.items;
-        var person_nums=parseInt(formpanel.down('#FamilyPersons').getValue());
+        if(incomesum){
+            var incomesum_value=0;
+            var incomeitems=incomesum.up('fieldset').items.items;
+            var person_nums=parseInt(formpanel.down('#FamilyPersons').getValue());
 
-        for(var i=0;i<incomeitems.length;i++){
-            if(incomeitems[i]==incomesum)break;
-            incomesum_value+=parseFloat(incomeitems[i].getValue());
+            for(var i=0;i<incomeitems.length;i++){
+                if(incomeitems[i]==incomesum)break;
+                incomesum_value+=parseFloat(incomeitems[i].getValue());
+            }
+            incomesum.setValue(incomesum_value);
+            var incomesumarea=formpanel.down('#incomesumarea');
+            incomesumarea.setValue(parseInt(incomesum_value/12));
+
+            var incomesumareaperson=formpanel.down('#incomesumareaperson');
+            incomesumareaperson.setValue(parseInt(person_nums==0?incomesum_value/12:incomesum_value/12/person_nums));
+
+            var propertysum=formpanel.down('#propertysum');
+            var propertysum_value=0;
+            var propertyitems=propertysum.up('fieldset').items.items;
+            for(var i=0;i<propertyitems.length;i++){
+                if(propertyitems[i]==propertysum)break;
+                propertysum_value+=parseFloat(propertyitems[i].getValue());
+            }
+            propertysum.setValue(propertysum_value);
+
+            var familyincome=formpanel.down('#familyincome');
+            familyincome.setValue(propertysum_value+incomesum_value);
+
+            var averageincome=formpanel.down('#averageincome');
+
+
+            averageincome.setValue(parseInt(person_nums==0?parseInt(familyincome.getValue())/12:parseInt(familyincome.getValue())/12/person_nums));
+
         }
-        incomesum.setValue(incomesum_value);
-        var incomesumarea=formpanel.down('#incomesumarea');
-        incomesumarea.setValue(parseInt(incomesum_value/12));
-
-        var incomesumareaperson=formpanel.down('#incomesumareaperson');
-        incomesumareaperson.setValue(parseInt(person_nums==0?incomesum_value/12:incomesum_value/12/person_nums));
-
-        var propertysum=formpanel.down('#propertysum');
-        var propertysum_value=0;
-        var propertyitems=propertysum.up('fieldset').items.items;
-        for(var i=0;i<propertyitems.length;i++){
-            if(propertyitems[i]==propertysum)break;
-            propertysum_value+=parseFloat(propertyitems[i].getValue());
-        }
-        propertysum.setValue(propertysum_value);
-
-        var familyincome=formpanel.down('#familyincome');
-        familyincome.setValue(propertysum_value+incomesum_value);
-
-        var averageincome=formpanel.down('#averageincome');
-
-
-        averageincome.setValue(parseInt(person_nums==0?parseInt(familyincome.getValue())/12:parseInt(familyincome.getValue())/12/person_nums));
 
         //console.log(testobj);
     },
