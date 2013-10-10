@@ -769,12 +769,13 @@ Ext.define('ZSMZJ.controller.Dbgl', {
               countitem.setValue(1);
               var rowEditing=familygrid.editingPlugin;
               //testobj=gridpanel;
-              rowEditing.startEdit(0, 0);
+
 
               var formcontent=applyform.getDefaultContentTarget();
               var target=familygrid.getEl();
               target.scrollIntoView(formcontent,true,true,true);
-              this.moneychane(gridpanel);
+              this.moneychane(familygrid);
+              rowEditing.startEdit(0, 0);
 
 
           }else{

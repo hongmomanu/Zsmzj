@@ -190,7 +190,15 @@ studyclass                     VARCHAR(50),                            --就读�
 studytime                      VARCHAR(50),                            --学习时段
 admission                      VARCHAR(50),                            --录取分数
 schoolenrollment               VARCHAR(50),                            --录取学校
-ticketnumber                    VARCHAR(50)                           --准考证号
+ticketnumber                    VARCHAR(50),                           --准考证号
+
+houseusearea                    VARCHAR(50),                           --住房总使用面积
+houseaverageusearea             VARCHAR(50),                         --住房人均使用面积
+incomesum                       VARCHAR(50),                         --收入合计
+incomesumarea                   VARCHAR(50),                         --家庭上年度月平均现金收入信息
+incomesumareaperson             VARCHAR(50),                         --家庭上年度人平均现金收入信息
+nolifeneededmachine             VARCHAR(50),                         --非生活必须船只等机械类折价
+propertysum                     VARCHAR(50)                          --财产合计
 );
 
 
@@ -301,6 +309,13 @@ CREATE VIRTUAL TABLE IF NOT EXISTS businesschange USING fts3
   schoolenrollment               VARCHAR(50),                            --录取学校
   ticketnumber                   VARCHAR(50),                           --准考证号
 
+  houseusearea                    VARCHAR(50),                           --住房总使用面积
+  houseaverageusearea             VARCHAR(50),                         --住房人均使用面积
+  incomesum                       VARCHAR(50),                         --收入合计
+  incomesumarea                   VARCHAR(50),                         --家庭上年度月平均现金收入信息
+  incomesumareaperson             VARCHAR(50),                         --家庭上年度人平均现金收入信息
+  nolifeneededmachine             VARCHAR(50),                         --非生活必须船只等机械类折价
+  propertysum                     VARCHAR(50),                          --财产合计
 
   businessid               integer,                                 --业务id
   insertdate               VARCHAR(50)                              --charuriq
