@@ -41,6 +41,29 @@ public class BusinessProcessControl {
         return bp.getNeedTodoCounts(roleid,null);
 
     }
+    public String getIndexMsg(int roleid,int userid){
+        SimpleDateFormat sDateFormat   =   new SimpleDateFormat("yyyy-MM-dd");
+        String datenow=sDateFormat.format(new   java.util.Date());
+
+        java.util.Calendar   calendar=java.util.Calendar.getInstance();
+        calendar.setTime(new java.util.Date());
+        calendar.add(Calendar.MONTH, +1);    //得到下一个月
+        String eddate=sDateFormat.format(calendar.getTime());
+
+        ArrayList<Map<String,Object>> list=new ArrayList<Map<String, Object>>();
+        ComonDao cd=new ComonDao();
+        int publicinfonum=cd.getTotalCountBySql("select count(*) from "+BusinessTable+" where publicityedtm Between '"
+        +datenow+"' and '"+eddate+"'");
+        Map<String,Object> publicinfo=new HashMap<String, Object>();
+        publicinfo.put("name","公示信息");
+        publicinfo.put("num",publicinfonum);
+        publicinfo.put("value","publicinfogrid");
+        publicinfo.put("type","widget");
+        list.add(publicinfo);
+        return JSONArray.fromObject(list).toString();
+
+
+    }
     public String grantmoneybytype(int userid,String bgdate,String eddate,String grantdate,String businesstype){
         SimpleDateFormat sDateFormat   =   new SimpleDateFormat("yyyy-MM");
 

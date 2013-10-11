@@ -2164,17 +2164,23 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
     initIndexMsg:function(){
+        var me=this;
         function fn(){
             Ext.create('widget.uxNotification', {
-                title: '公示信息',
+                title: '公示公告',
                 position: 'tr',
                 closeAction: 'hide',
+                width:200,
+                height:200,
                 manager: 'tabindex',
                 renderTo :'tabindex',
                 autoClose:false,
                 useXAxis: true,
                 iconCls: 'ux-notification-icon-information',
-                html:'公示信息'
+                items:[
+                    {xtype:'indexmsggrid'}
+
+                ]
             }).show();
         }
         var task = new Ext.util.DelayedTask(fn);

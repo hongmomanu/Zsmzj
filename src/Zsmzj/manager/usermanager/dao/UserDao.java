@@ -21,6 +21,7 @@ import java.util.Map;
 public class UserDao {
     private static final Logger log = Logger.getLogger(UserDao.class);
     private static String  UserTable="users";
+    private static String DivisionTable="divisions";
     private static String  RoleTable="roles";
     public ArrayList<Map<String, Object>> getUsers(int start, int limit, String keyword) {
         Connection testConn= JdbcFactory.getConn("sqlite");
@@ -50,8 +51,8 @@ public class UserDao {
 
     public Map<String,Object> login(String username,String password){
         Connection testConn= JdbcFactory.getConn("sqlite");
-        String sql=  "select id,roleid,displayname from "+UserTable+" " +
-                " where password=? and username=? ";
+        String sql=  "select a.id,a.roleid,a.displayname,b.divisionpath from "+UserTable+" a, " +DivisionTable+" b"+
+                " where password=? and username=?  and a.divisionid=b.rowid";
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
         Map<String,Object> res=new HashMap<String, Object>();
         try {
@@ -67,6 +68,7 @@ public class UserDao {
                 res.put("userid", rs.getInt(1));
                 res.put("roleid", rs.getInt(2));
                 res.put("displayname", rs.getString(3));
+                res.put("divisionpath", rs.getString(4));
 
 
             }

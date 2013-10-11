@@ -11,8 +11,6 @@
   <head>
 
       <script type="text/javascript" src="js/config.js">
-
-
       </script>
       <script type="text/javascript">
           /*session全局变量*/
@@ -21,6 +19,7 @@
           var username="<%=request.getSession().getAttribute("username")%>";
           var roleid=<%=request.getSession().getAttribute("roleid")%>;
           var displayname="<%=request.getSession().getAttribute("displayname")%>";
+          var divisionpath="<%=request.getSession().getAttribute("divisionpath")%>";
 
       </script>
       <script>
