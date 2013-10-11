@@ -577,7 +577,7 @@ Ext.define('ZSMZJ.view.dbgl.businessChange', {
                             regex :/^-?\d+$/,
 
                             regexText  : "只能输入数值",
-                            fieldLabel: '家庭上年度月平均现金收入信息',
+                            fieldLabel: '家庭上年度月平均现金收入',
                             itemId:'incomesumarea',
                             value:0,
                             allowBlank: true
@@ -589,7 +589,7 @@ Ext.define('ZSMZJ.view.dbgl.businessChange', {
 
                             regexText  : "只能输入数值",
                             value:0,
-                            fieldLabel: '家庭上年度人平均现金收入信息',
+                            fieldLabel: '家庭上年度人月平均现金收入',
                             itemId:'incomesumareaperson',
                             allowBlank: true
                         }
@@ -1172,6 +1172,7 @@ Ext.define('ZSMZJ.view.dbgl.businessChange', {
                         },
                         {
                             name: 'disabledpersons',
+                            itemId:'disabledpersons',
                             fieldLabel: '重残人数',
                             value:0,
                             afterLabelTextTpl: required,

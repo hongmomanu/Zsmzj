@@ -89,4 +89,5 @@ var processdiction={"stepzero":"申请","stepone":"提交","steptwo":"审核","s
 var approvalresult={"yes":"同意","no":"不同意"};
 var processRoleBtn=null;
 var processstatustype={"ok":"正常","change":"变更","logout":"注销"};
-var isenjoyedtype={"yes":"享受","no":"不享受"}
+var isenjoyedtype={"yes":"享受","no":"不享受"};
+var disabledtype={"heavy":"||一级,二级||"};

@@ -288,11 +288,13 @@ Ext.define('ZSMZJ.controller.Dbgl', {
        var applyform=gridpanel.up('form');
        var countitem=applyform.down('#FamilyPersons');
        var enjoyitem=applyform.down('#enjoyPersons');
+       var disableditem=applyform.down('#disabledpersons');
        var count=parseInt(countitem.getValue())-1;
        var enjoyednum= removeitem[0].get("isenjoyed")==isenjoyedtype.yes?parseInt(enjoyitem.getValue())-1:parseInt(enjoyitem.getValue());
-
+       var disablednum=disabledtype.heavy.indexOf(removeitem[0].get("disabledlevel"))>0?parseInt(disableditem.getValue())-1:parseInt(disableditem.getValue());
        countitem.setValue(count);
        enjoyitem.setValue(enjoyednum);
+       disableditem.setValue(disablednum);
        this.moneychane(gridpanel);
 
     },
@@ -321,6 +323,9 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         var count=parseInt(countitem.getValue())+1;
 
         countitem.setValue(count);
+        var enjoyitem=applyform.down('#enjoyPersons');
+        enjoyitem.setValue(parseInt(enjoyitem.getValue())+1);
+
         this.moneychane(gridpanel);
         //testobj=gridpanel;
         rowEditing.startEdit(0, 0);

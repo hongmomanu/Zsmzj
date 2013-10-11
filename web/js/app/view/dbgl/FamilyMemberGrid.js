@@ -15,12 +15,21 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
         var rowEditing = Ext.create('Ext.grid.plugin.RowEditing', {
             clicksToMoveEditor: 1,
             listeners: {
-                edit: function(grid,obj){
+                edit: function(editor,obj,objold){
+                    var famlygrid=editor.grid;
+                    var form=famlygrid.up('form');
 
-                    var form=grid.grid.up('form');
+                    var store=famlygrid.getStore();
+                    var enjoyednum=0;
+                    var disablednum=0;
+                    Ext.each(store.data.items,function(a){
+                       if(a.get("isenjoyed")==isenjoyedtype.yes)enjoyednum++;
+                       if(disabledtype.heavy.indexOf(a.get("disabledlevel"))>0)disablednum++;
+                    });
                     var enjoyitem=form.down('#enjoyPersons');
-                    var enjoyednum=obj.record.get("isenjoyed")==isenjoyedtype.yes?(parseInt(enjoyitem.getValue())+1):parseInt(enjoyitem.getValue());
+                    var disableditem=form.down('#disabledpersons');
                     enjoyitem.setValue(enjoyednum);
+                    disableditem.setValue(disablednum);
                     if(obj.record.get('relationship')=='户主'){
                         var owernameitem=form.down('#owername');
                         var oweriditem=form.down('#owerid');
