@@ -36,6 +36,7 @@ Ext.define('ZSMZJ.controller.Header', {
         var me = this;
         this.initHeadView();
 
+
         this.control({
             /*'headviewpanel#headviewitem':{
                 selectionchange: this.selectionchange
@@ -43,6 +44,10 @@ Ext.define('ZSMZJ.controller.Header', {
             'myheader':{
                 afterrender: this.headerRenderEvents
 
+            },
+            'mainpanel':{
+                //indexmsginit:function a(panel){this.initIndexMsg();},
+                afterrender:function a(){this.initIndexMsg();}
             },
             'dbglbusinessalterform,dbedgebusinessalterform,temporaryhelpbusinessalterform,medicalhelpbusinessalterform,studyhelpbusinessalterform,charitablehelpbusinessalterform':{
 
@@ -2156,6 +2161,24 @@ Ext.define('ZSMZJ.controller.Header', {
 
         };
         this.ajaxSend(params, 'ajax/getallfuncsbyrule.jsp', successFunc, failFunc,'POST');
+
+    },
+    initIndexMsg:function(){
+        function fn(){
+            Ext.create('widget.uxNotification', {
+                title: '公示信息',
+                position: 'tr',
+                closeAction: 'hide',
+                manager: 'tabindex',
+                renderTo :'tabindex',
+                autoClose:false,
+                useXAxis: true,
+                iconCls: 'ux-notification-icon-information',
+                html:'公示信息'
+            }).show();
+        }
+        var task = new Ext.util.DelayedTask(fn);
+        task.delay(100);
 
     },
     initHeadView:function(){

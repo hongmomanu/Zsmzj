@@ -14,6 +14,8 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
     initComponent: function() {
         var rowEditing = Ext.create('Ext.grid.plugin.RowEditing', {
             clicksToMoveEditor: 1,
+            saveBtnText  : '确定',
+            cancelBtnText: '取消',
             listeners: {
                 edit: function(editor,obj,objold){
                     var famlygrid=editor.grid;

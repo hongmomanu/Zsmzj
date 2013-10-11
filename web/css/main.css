@@ -111,6 +111,9 @@
 {
     background:#e6f4fc url(../img/mainbg.jpg) bottom center no-repeat;
 }
+.ux-notification-icon-information {
+    background-image: url('../img/icon16_info.png');
+}
 /*
 .welcome-title
 {

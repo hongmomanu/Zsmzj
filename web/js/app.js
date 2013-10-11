@@ -53,6 +53,7 @@ Ext.application({
     requires: [
         'Ext.ux.DataView.DragSelector',
         'Ext.ux.DataView.LabelEditor',
+        'Ext.ux.window.Notification',
         'Ext.ux.TreeCombo'
     ],
     controllers: [
