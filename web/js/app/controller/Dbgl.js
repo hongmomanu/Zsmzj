@@ -580,6 +580,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             userid:userid,
             businessid:businessid,
             processstatus:form.objdata.record.get('processstatus'),
+            submituid:form.objdata.record.get("approvaluserid")?form.objdata.record.get("approvaluserid"):form.objdata.record.get("userid"),
             isapproval: ajaxform.getForm().getValues().approvalresult==approvalresult.yes,
             approvalname:win.approvalname
         };

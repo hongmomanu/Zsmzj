@@ -11,6 +11,7 @@ Ext.define('ZSMZJ.model.dbgl.NeedToDoBusiness', {
         {name: 'division'},
         {name:'owername'},
         {name:'owerid'},
+        {name:'userid'},
         {name:'applytype'},
         {name:'poortype'},
         {name:'familytype'},
@@ -28,6 +29,7 @@ Ext.define('ZSMZJ.model.dbgl.NeedToDoBusiness', {
         {name:'displayname'},
         {name:'approvaltime'},
         {name:'approvaluser'},
+        {name:'approvaluserid'},
         {name:'businessid'}
 
 

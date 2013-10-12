@@ -102,7 +102,29 @@ public class ComonDao {
         }
 
     }
+    public Map<String,Object> getSigleObj (String sql){
+        Connection testConn= JdbcFactory.getConn("sqlite");
+        PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
+        Map<String,Object> map=new HashMap<String, Object>();
+        try {
+            ResultSet rs = pstmt.executeQuery();
+            ResultSetMetaData data=rs.getMetaData();
+            int colnums=data.getColumnCount();
+            while (rs.next()) {
 
+                for(int i = 1;i<= colnums;i++){
+                    String columnName = data.getColumnName(i);
+                    String value=rs.getString(columnName);
+                    map.put(columnName,value);
+                }
+            }
+        }catch (Exception E){
+            log.debug(E.getMessage());
+        }
+        finally {
+            return map;
+        }
 
+    }
 
 }

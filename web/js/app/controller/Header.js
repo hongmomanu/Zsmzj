@@ -15,9 +15,9 @@
 Ext.define('ZSMZJ.controller.Header', {
     extend: 'Ext.app.Controller',
 
-    models: ['header.HeaderViewer','header.NeedToDo'],
+    models: ['header.HeaderViewer','header.NeedToDo','header.Announce'],
 
-    stores: ['header.HeaderViewers','header.NeedToDos'],
+    stores: ['header.HeaderViewers','header.NeedToDos','header.Announces'],
 
 
     refs: [
@@ -29,7 +29,7 @@ Ext.define('ZSMZJ.controller.Header', {
         {ref: 'myheaderPanel', selector: 'myheader'}
     ],
     views: [
-        'Header','header.headViewPanel','header.NeedToDoGrid'
+        'Header','header.headViewPanel','header.NeedToDoGrid','header.AnnounceGrid'
     ],
 
     init: function() {
@@ -336,7 +336,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
             },
 
-            'needtodopanel,enumerateconfigmanager,usermanagerpanel,rolemanagerpanel,funcmanagerpanel,needtodobusinesspanel,changedbusinesspanel,logoutbusinesspanel,peoplequerypanel,familyquerypanel,dbglstatisticsfullpanel,dbglgrantmoneypanel,dbglstatisticscomplexonepanel,medicalstandardgridpanel':{
+            'needtodopanel,announcegridpanel,enumerateconfigmanager,usermanagerpanel,rolemanagerpanel,funcmanagerpanel,needtodobusinesspanel,changedbusinesspanel,logoutbusinesspanel,peoplequerypanel,familyquerypanel,dbglstatisticsfullpanel,dbglgrantmoneypanel,dbglstatisticscomplexonepanel,medicalstandardgridpanel':{
 
                 gridshowfresh:function(grid){
 

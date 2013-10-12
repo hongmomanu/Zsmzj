@@ -410,7 +410,8 @@ CREATE VIRTUAL TABLE IF NOT EXISTS approvalprocess USING fts3
   approvalname            VARCHAR(50),                              --审批名称*
   approvalresult          VARCHAR(50),                              --审批结果
   userid                   integer,                                 --审批人id*
-  approvalopinion         VARCHAR(500)
+  approvalopinion         VARCHAR(500),                             --审批意见
+  submituid               integer                                   --提交人id
 );
 
 --附件表

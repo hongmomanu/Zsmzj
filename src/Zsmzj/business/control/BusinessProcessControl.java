@@ -54,12 +54,22 @@ public class BusinessProcessControl {
         ComonDao cd=new ComonDao();
         int publicinfonum=cd.getTotalCountBySql("select count(*) from "+BusinessTable+" where publicityedtm Between '"
         +datenow+"' and '"+eddate+"'");
+        int announcenum=cd.getTotalCountBySql("select count(*) from "+BusinessTable+" a,"+ApprovalTable+
+                " b where a.rowid=b.businessid and CAST(submituid AS real)>0") ;
         Map<String,Object> publicinfo=new HashMap<String, Object>();
         publicinfo.put("name","公示信息");
         publicinfo.put("num",publicinfonum);
         publicinfo.put("value","needtodobusinesspanel");
         publicinfo.put("type","widget");
+
+        Map<String,Object> announce=new HashMap<String, Object>();
+        announce.put("name","公告消息");
+        announce.put("num",announcenum);
+        announce.put("value","announcegridpanel");
+        announce.put("type","widget");
+
         list.add(publicinfo);
+        list.add(announce);
         return JSONArray.fromObject(list).toString();
 
 
@@ -604,6 +614,8 @@ public class BusinessProcessControl {
                 " ) as approvaltime" +
                 ",(select f.displayname from "+UserTable+" f where f.id=(select e.userid from " + ApprovalTable+" e where e.businessid MATCH a.rowid  order by e.time desc limit 1 "+
                 " )) as approvaluser" +
+                ",(select e.userid from " + ApprovalTable+" e where e.businessid MATCH a.rowid  order by e.time desc limit 1 "+
+                " ) as approvaluserid" +
                 " from "+BusinessTable +" a,"+UserTable+" b " +
                 "where a.userid = b.id  ";
 
@@ -720,6 +732,7 @@ public class BusinessProcessControl {
         //else staus= ProcessType.UseProcessType.getChineseSeason(ProcessType.Callback);
         String businessid=param.get("businessid").toString();
         ComonDao cd=new ComonDao();
+
         if(cd.getSingleCol("select processstatus from business where rowid="+businessid).equals(processstatus)){
             Connection conn= JdbcFactory.getConn("sqlite");
 
