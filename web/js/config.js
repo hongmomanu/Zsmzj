@@ -13,6 +13,8 @@ var businessTableType=
             'studyhelp':'助学救助',
             'charitablehelp':'慈善救助',
             'medicalhelp':'医疗救助',
+            'disasterhelp':'灾害救助',
+            'rangershelp':'流浪救助',
             'allquery':'all'
         };
 
@@ -68,6 +70,22 @@ var menu_shjz=[
         ],
         iconCls: 'nav'
     },
+    {
+        layout: 'fit',
+        title: '灾害救助',
+        items:[
+            {xtype:'dbglconfigtree',searchtype:"灾害救助",businesstype:businessTableType.disasterhelp}
+        ],
+        iconCls: 'nav'
+    },{
+        layout: 'fit',
+        title: '流浪救助',
+        items:[
+            {xtype:'dbglconfigtree',searchtype:"流浪救助",businesstype:businessTableType.rangershelp}
+        ],
+        iconCls: 'nav'
+    },
+
     {
         layout: 'fit',
         title: '综合查询',
