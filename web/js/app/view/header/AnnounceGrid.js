@@ -34,6 +34,19 @@ Ext.define('ZSMZJ.view.header.AnnounceGrid' ,{
                 stripeRows: true
             },
 
+            plugins: [{
+                ptype: 'rowexpander',
+                rowBodyTpl : new Ext.XTemplate(
+                    '<p><b>Company:</b> {company}</p>',
+                    '<p><b>Change:</b> {change:this.formatChange}</p><br>',
+                    '<p><b>Summary:</b> {desc}</p>',
+                    {
+                        formatChange: function(v){
+                            var color = v >= 0 ? 'green' : 'red';
+                            return '<span style="color: ' + color + ';">' + v + '</span>';
+                        }
+                    })
+            }],
             //hideHeaders:true,
             columns: [
 

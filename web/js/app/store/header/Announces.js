@@ -14,6 +14,7 @@ Ext.define('ZSMZJ.store.header.Announces', {
     proxy: {
         type: 'ajax',
         url: 'ajax/getannounces.jsp',
+        //url: 'ajax/getneedtodos.jsp',
         getMethod:function(request){ return 'POST'; },
         extraParams:{
             roleid:roleid,
