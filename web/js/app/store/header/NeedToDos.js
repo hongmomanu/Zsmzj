@@ -17,6 +17,8 @@ Ext.define('ZSMZJ.store.header.NeedToDos', {
         getMethod:function(request){ return 'POST'; },
         extraParams:{
             roleid:roleid,
+            userid:userid,
+            divisionpath:divisionpath,
             type:"list"
         },
         reader: {

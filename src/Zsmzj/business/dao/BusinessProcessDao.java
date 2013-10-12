@@ -22,6 +22,8 @@ import java.util.Map;
 public class BusinessProcessDao {
     private static final Logger log = Logger.getLogger(BusinessProcessDao.class);
     private final String UserTable="users";
+    private final String DivisionTable="divisions";
+
 
 
 
@@ -196,7 +198,7 @@ public class BusinessProcessDao {
 
     }
     public ArrayList<Map<String,Object>> getNeedToDoLists(ArrayList<Map<String,Object>> arr,int start
-                                                          ,int limit,String keyword,String tablename){
+                                                          ,int limit,String keyword,String tablename,int userid,String divisionpath){
 
         Connection testConn= JdbcFactory.getConn("sqlite");
         String match_str="";
@@ -205,7 +207,7 @@ public class BusinessProcessDao {
         }
         match_str=match_str.substring(0,match_str.lastIndexOf("OR"));
         String sql=  "select a.processstatus,b.displayname,a.time,a.rowid,a.processstatustype,a.businesstype   from "+
-                tablename+" a,"+UserTable+" b where processstatus  MATCH ? ";
+                tablename+" a,"+UserTable+" b where processstatus  MATCH ?  and a.rowid in( select rowid from "+tablename+" where division MATCH ( ? ||'*'))";
         if(keyword!=null)sql+="AND ? ";
         sql+="and a.userid=b.id Limit ? Offset ?";
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
@@ -217,8 +219,9 @@ public class BusinessProcessDao {
                 pstmt.setInt(3, limit);
                 pstmt.setInt(4,start);
             }else{
-                pstmt.setInt(2, limit);
-                pstmt.setInt(3,start);
+                pstmt.setString(2, divisionpath);
+                pstmt.setInt(3, limit);
+                pstmt.setInt(4,start);
             }
 
             ResultSet rs = pstmt.executeQuery();
@@ -343,7 +346,7 @@ public class BusinessProcessDao {
 
 
     }
-    public int getNeedToDoCounts (ArrayList<Map<String, Object>> arr,String keyword,String tablename){
+    public int getNeedToDoCounts (ArrayList<Map<String, Object>> arr,String keyword,String tablename,int userid,String divisionpath){
 
 
         Connection testConn= JdbcFactory.getConn("sqlite");
@@ -353,12 +356,13 @@ public class BusinessProcessDao {
         }
         match_str=match_str.substring(0,match_str.lastIndexOf("OR"));
         String sql=  "select count(*)   from "+
-                tablename+" where processstatus  MATCH ? ";
+                tablename+"  where  processstatus  MATCH ?  and rowid in( select rowid from "+tablename+" where division MATCH ( ? ||'*'))";
         if(keyword!=null)sql+="AND ?";
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
         int totalnums=0;
         try {
             pstmt.setString(1,match_str);
+            pstmt.setString(2,divisionpath);
             if(keyword!=null)pstmt.setString(1,keyword);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {

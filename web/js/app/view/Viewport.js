@@ -63,6 +63,7 @@ Ext.define('ZSMZJ.view.Viewport', {
                         //deferredRender: false,
 			            layout:'fit',
                         id: 'mainContent-panel',
+                        //maskOnDisable:false,
                         plugins: Ext.create('Ext.ux.TabCloseMenu', {
                             extraItemsTail: [
                                 '-',

@@ -36,9 +36,9 @@ public class BusinessProcessControl {
     private final String SignatureTable="businesssignature";
     private  final String GrantTable="grantmoney";
     private final String MeidicalStandard="medicalstandard";
-    public int getNeedTodoCounts(int roleid){
+    public int getNeedTodoCounts(int roleid,int userid,String divisionpath){
         BusinessProcess bp=new BusinessProcess();
-        return bp.getNeedTodoCounts(roleid,null);
+        return bp.getNeedTodoCounts(roleid,userid,divisionpath,null);
 
     }
     public String getIndexMsg(int roleid,int userid){
@@ -772,12 +772,12 @@ public class BusinessProcessControl {
 
     }
 
-    public String getNeedTodoList(int roleid,int start,int limit ,String keyword){
+    public String getNeedTodoList(int roleid,int userid,String divisionpath,int start,int limit ,String keyword){
 
         BusinessProcess bp=new BusinessProcess();
-        int totalnum=bp.getNeedTodoCounts(roleid,keyword);
+        int totalnum=bp.getNeedTodoCounts(roleid,userid,divisionpath,keyword);
         ArrayList<Map<String,Object>> list=new ArrayList<Map<String, Object>>();
-        list=bp.getNeedTodoList(roleid,start,limit,keyword);
+        list=bp.getNeedTodoList(roleid,userid,divisionpath,start,limit,keyword);
         Map<String,Object>res=new HashMap<String, Object>();
         res.put("totalCount",totalnum);
         res.put("results",list);

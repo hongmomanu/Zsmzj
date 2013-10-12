@@ -28,8 +28,8 @@ public interface BusinessProcessIntf {
     public int saveAffixFiles(String filesjson,int businessid);//保存附件信心
     public int updateAffixFiles(String filesjson,int businessid);//更新附件信心
 
-    public int getNeedTodoCounts(int roleid,String keyword);//获取待办事务
-    public ArrayList<Map<String,Object>> getNeedTodoList(int roleid,int start,int limit,String keyword);//获取待办事务列表
+    public int getNeedTodoCounts(int roleid,int userid,String divisionpath,String keyword);//获取待办事务
+    public ArrayList<Map<String,Object>> getNeedTodoList(int roleid,int userid,String divisionpath,int start,int limit,String keyword);//获取待办事务列表
     public ArrayList<Map<String,Object>> getProcessHistory(int businessid,int start,int limit);//获取待办事务列表
     public int changeStatus(int businessid,String type);//改变事务状态
     public int changeProcessStatustype(int businessid,String processstatustype,String processstatus);//改变流程类型

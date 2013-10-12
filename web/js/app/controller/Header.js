@@ -2041,6 +2041,8 @@ Ext.define('ZSMZJ.controller.Header', {
     headerRenderEvents:function(){
         var params = {
             roleid:roleid,
+            userid:userid,
+            divisionpath:divisionpath,
             type:'count'
         };
         var changeItem=this.getMyheaderPanel().down('#needtodopanel');
@@ -2120,17 +2122,27 @@ Ext.define('ZSMZJ.controller.Header', {
 
 
         } else {
+            //alert(1);
             if (type == 'widget') {
+                //alert(1);
+                ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
+                ViewWaitMask.show();
+                //alert(1);
+                function fn(){
+                    tabs.add({
+                        closable: true,
+                        id: 'tab' + value,
+                        xtype: value,
+                        objdata:objdata,
+                        autoScroll: true,
+                        iconCls: 'tabs',
+                        title: label
+                    }).show();
+                }
+                var task = new Ext.util.DelayedTask(fn);
+                task.delay(50);
 
-                tabs.add({
-                    closable: true,
-                    id: 'tab' + value,
-                    xtype: value,
-                    objdata:objdata,
-                    autoScroll: true,
-                    iconCls: 'tabs',
-                    title: label
-                }).show();
+
             } else if (type == "url") {
                 tabs.add({
                     closable: true,
@@ -2172,10 +2184,12 @@ Ext.define('ZSMZJ.controller.Header', {
                 closeAction: 'hide',
                 width:200,
                 height:200,
+                draggable:true,
+                shadow:true,
                 manager: 'tabindex',
                 renderTo :'tabindex',
                 autoClose:false,
-                useXAxis: true,
+                //useXAxis: true,
                 iconCls: 'ux-notification-icon-information',
                 items:[
                     {xtype:'indexmsggrid'}

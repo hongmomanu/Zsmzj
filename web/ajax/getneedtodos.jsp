@@ -18,10 +18,12 @@
     }
     else{
         int roleid=Integer.parseInt(request.getParameter("roleid"));
+        int userid=Integer.parseInt(request.getParameter("userid"));
+        String divisionpath=request.getParameter("divisionpath");
         String type=request.getParameter("type");
         if(type.equals("count")){
             BusinessProcessControl bp=new BusinessProcessControl();
-            int count=bp.getNeedTodoCounts(roleid);
+            int count=bp.getNeedTodoCounts(roleid,userid,divisionpath);
             out.print("{count:"+count+"}");
 
         }
@@ -30,7 +32,7 @@
             int start=Integer.parseInt(request.getParameter("start"));
             int limit=Integer.parseInt(request.getParameter("limit"));
             String keyword=request.getParameter("keyword");
-            out.print(bp.getNeedTodoList(roleid,start,limit,keyword));
+            out.print(bp.getNeedTodoList(roleid,userid,divisionpath,start,limit,keyword));
         }
     }
     //out.print("ok");

@@ -37,7 +37,7 @@ Ext.define('ZSMZJ.controller.Navigation', {
         var me = this;
         this.control({
 
-            'userconfiggrid,funcconfiggrid,systemconfiggrid': {
+            'userconfiggrid,funcconfiggrid,systemconfiggrid,indexmsggrid': {
                 itemclick: this.showGridContent
             },
             'dbglconfigtree': {
@@ -75,7 +75,7 @@ Ext.define('ZSMZJ.controller.Navigation', {
 
 
         if (item.data.leaf) {
-            testobj=record;
+            //testobj=record;
             var businesstype=record.panel.businesstype;
             this.showtab(item.data.text,item.data.value,item.data.type,businesstype);
 
@@ -109,15 +109,27 @@ Ext.define('ZSMZJ.controller.Navigation', {
                 //ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
                 ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
                 ViewWaitMask.show();
-                tabs.add({
-                    closable: true,
-                    id: 'tab' + value,
-                    xtype: value,
-                    businesstype:businesstype,
-                    autoScroll: true,
-                    iconCls: 'tabs',
-                    title: label
-                }).show();
+                //alert(1);
+
+
+                function fn(){
+                    var newtab=tabs.add({
+                        closable: true,
+                        id: 'tab' + value,
+                        xtype: value,
+                        businesstype:businesstype,
+                        autoShow:true,
+                        autoScroll: true,
+                        //active:true,
+                        iconCls: 'tabs',
+                        title: label
+                    });
+                    tabs.setActiveTab(newtab);
+                }
+                var task = new Ext.util.DelayedTask(fn);
+                task.delay(1);
+
+
             } else if (type == "url") {
                 tabs.add({
                     closable: true,
@@ -139,6 +151,7 @@ Ext.define('ZSMZJ.controller.Navigation', {
         var label = record.get('label');
         var type = record.get('type');
         var value = record.get('value');
+        console.log(value);
         this.showtab(label,value,type);
 
     },

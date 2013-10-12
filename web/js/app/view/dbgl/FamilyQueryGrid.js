@@ -29,6 +29,7 @@ Ext.define('ZSMZJ.view.dbgl.FamilyQueryGrid' ,{
             viewConfig: {
                 trackOver: false,
                 loadMask: true,
+                loadingText: '读取中...',
                 scrollToTop: Ext.emptyFn,
                 enableTextSelection:true,
                 stripeRows: true
