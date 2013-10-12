@@ -23,7 +23,8 @@
         String keyword=request.getParameter("keyword");
         String type=request.getParameter("type");
         String businesstype=request.getParameter("businesstype");
-        out.print(bp.getNeedTodoBusinessList(start,limit,keyword,type,businesstype));
+        boolean ispublicinfo=request.getParameter("ispublicinfo")!=null?Boolean.parseBoolean(request.getParameter("ispublicinfo")):false;
+        out.print(bp.getNeedTodoBusinessList(start,limit,keyword,type,businesstype,ispublicinfo));
     }
     //out.print("ok");
 %>

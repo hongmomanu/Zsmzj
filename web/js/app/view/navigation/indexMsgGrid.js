@@ -22,7 +22,7 @@ Ext.define('ZSMZJ.view.navigation.indexMsgGrid' ,{
     initComponent: function() {
         Ext.apply(this, {
             border: false,
-
+            ispublicinfo:true,
 
             hideHeaders:true,
             columns: [

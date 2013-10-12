@@ -57,7 +57,7 @@ public class BusinessProcessControl {
         Map<String,Object> publicinfo=new HashMap<String, Object>();
         publicinfo.put("name","公示信息");
         publicinfo.put("num",publicinfonum);
-        publicinfo.put("value","publicinfogrid");
+        publicinfo.put("value","needtodobusinesspanel");
         publicinfo.put("type","widget");
         list.add(publicinfo);
         return JSONArray.fromObject(list).toString();
@@ -587,11 +587,11 @@ public class BusinessProcessControl {
 
     }
 
-    public String getNeedTodoBusinessList(int start,int limit,String keyword,String type,String businesstype){
+    public String getNeedTodoBusinessList(int start,int limit,String keyword,String type,String businesstype,boolean ispublicinfo){
         BusinessProcess bp=new BusinessProcess();
         ComonDao cd=new ComonDao();
         int totalnum =0;
-        String sql_count="select count(*) from "+BusinessTable+" a where a.businesstype  MATCH '"+businesstype+"' ";
+        String sql_count="select count(*) from "+BusinessTable+" a  where 1=1 ";
 
         String sql_list="select a.*,a.rowid as businessid,b.displayname,(select count(*)  from " +
                 FamilyTable+" c  where c.businessid MATCH a.rowid) as familynum" +
@@ -605,7 +605,29 @@ public class BusinessProcessControl {
                 ",(select f.displayname from "+UserTable+" f where f.id=(select e.userid from " + ApprovalTable+" e where e.businessid MATCH a.rowid  order by e.time desc limit 1 "+
                 " )) as approvaluser" +
                 " from "+BusinessTable +" a,"+UserTable+" b " +
-                "where a.userid = b.id  and a.businesstype MATCH '"+businesstype+"' ";
+                "where a.userid = b.id  ";
+
+        if(!businesstype.equals("all")){
+            sql_list+=" and a.businesstype MATCH '"+businesstype+"'";
+            sql_count+=" and a.businesstype MATCH '"+businesstype+"' ";
+        }
+        //log.debug("---------------::"+ispublicinfo);
+        if(ispublicinfo){
+            SimpleDateFormat sDateFormat   =   new SimpleDateFormat("yyyy-MM-dd");
+            String datenow=sDateFormat.format(new   java.util.Date());
+
+            java.util.Calendar   calendar=java.util.Calendar.getInstance();
+            calendar.setTime(new java.util.Date());
+            calendar.add(Calendar.MONTH, +1);    //得到下一个月
+            String eddate=sDateFormat.format(calendar.getTime());
+
+            sql_list+=" and a.rowid in  (select rowid from "+BusinessTable+" where publicityedtm Between '"
+                    +datenow+"' and '"+eddate+"')";
+            sql_count+=" and a.rowid in  (select rowid from "+BusinessTable+" where publicityedtm Between '"
+                    +datenow+"' and '"+eddate+"')";
+
+
+        }
 
         if(type!=null&&!type.equals("")){
             sql_list+=" and a.rowid in  (select rowid from "+BusinessTable+" where processstatustype MATCH '"+type+"')";

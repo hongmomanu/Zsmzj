@@ -85,7 +85,7 @@ Ext.define('ZSMZJ.controller.Navigation', {
 
         Ext.getCmp('tab' + value).doLayout();
     },
-    showtab:function(label,value,type,businesstype){
+    showtab:function(label,value,type,businesstype,ispublicinfo){
 
         if(ViewWaitMask){
              try{
@@ -100,6 +100,7 @@ Ext.define('ZSMZJ.controller.Navigation', {
         var tab=tabs.getComponent('tab' + value)
         if (tab) {
             tab.businesstype=businesstype;
+            tab.ispublicinfo=ispublicinfo;
             if(!tab.isHidden())tab.fireEvent('gridshowfresh',tab);
             tab.show();
 
@@ -118,6 +119,7 @@ Ext.define('ZSMZJ.controller.Navigation', {
                         id: 'tab' + value,
                         xtype: value,
                         businesstype:businesstype,
+                        ispublicinfo:ispublicinfo,
                         autoShow:true,
                         autoScroll: true,
                         //active:true,
@@ -151,8 +153,8 @@ Ext.define('ZSMZJ.controller.Navigation', {
         var label = record.get('label');
         var type = record.get('type');
         var value = record.get('value');
-        console.log(value);
-        this.showtab(label,value,type);
+        var ispublicinfo=grid.up('grid').ispublicinfo;
+        this.showtab(label,value,type,businessTableType.allquery,ispublicinfo);
 
     },
 

@@ -411,6 +411,7 @@ Ext.define('ZSMZJ.controller.Header', {
                   if(store.proxy.extraParams){
                       store.proxy.extraParams.businesstype = grid.businesstype;
                       store.proxy.extraParams.type=grid.stype
+                      store.proxy.extraParams.ispublicinfo=grid.ispublicinfo
                       store.load({callback:function(){
 
                           CommonFunc.widgetdolayout("mainContent-panel",100);
