@@ -50,7 +50,6 @@ Ext.define('ZSMZJ.view.header.AnnounceGrid' ,{
             //enableLocking: true,
             //collapsible: true,
             //animCollapse: false,
-            title:'test',
 
             //hideHeaders:true,
             columns: [

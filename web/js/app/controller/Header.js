@@ -2102,7 +2102,8 @@ Ext.define('ZSMZJ.controller.Header', {
 
 
         }
-
+        ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
+        ViewWaitMask.show();
 
         var tabs = Ext.getCmp('mainContent-panel');
         if (tabs.getComponent('tab' + value)) {
@@ -2110,10 +2111,14 @@ Ext.define('ZSMZJ.controller.Header', {
             if(objdata)tab.objdata=objdata;
 
             if(tab.isHidden()){
-                tab.tab.show();
-                //tab.show();
 
-                tabs.setActiveTab(tab);
+                //function fn(){
+                    tab.tab.show();
+                    tabs.setActiveTab(tab);
+                //}
+
+                //var task = new Ext.util.DelayedTask(fn);
+                //task.delay(10);
             }
             else{
                 this.initchangelogoutbtns(tabs.getComponent('tab' + value));
@@ -2125,10 +2130,6 @@ Ext.define('ZSMZJ.controller.Header', {
         } else {
             //alert(1);
             if (type == 'widget') {
-                //alert(1);
-                ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
-                ViewWaitMask.show();
-                //alert(1);
                 function fn(){
                     tabs.add({
                         closable: true,

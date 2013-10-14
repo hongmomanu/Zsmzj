@@ -23,6 +23,9 @@ Ext.define('ZSMZJ.controller.Disaster', {
     ],
     views: [
         'disaster.businessApply',
+        'disaster.warehouseApply',
+        'disaster.EscapingMemberGrid',
+        'disaster.EscapingSuppliesGrid',
         'disaster.businessAlter'
     ],
 
@@ -34,9 +37,18 @@ Ext.define('ZSMZJ.controller.Disaster', {
         var dbgl_cl = this.application.getController("Dbgl");
         var header_cl=this.application.getController("Header");
         this.control({
-            'disasterhelpbusinessapplyform,disasterhelpbusinessalterform': {
+            'disasterhelpbusinessapplyform,disasterhelpbusinessalterform,disasterhelpwarehouseapplyform': {
                 afterrender: dbgl_cl.afterrenderEvents
             },
+            'escapingmembergrid button[action=addnewperson],escapingsuppliesgrid button[action=addnewperson]':{
+
+                click:Ext.bind(dbgl_cl.addnewperson, dbgl_cl)
+            },
+            'escapingmembergrid button[action=delperson],escapingsuppliesgrid button[action=delperson]':{
+
+                click:Ext.bind(dbgl_cl.delperson, dbgl_cl)
+            },
+
             'disasterhelpbusinessapplyform component,disasterhelpbusinessalterform component': {
                 imgclick: function (c) {
                     dbgl_cl.showUploadImgWin(c);
@@ -48,7 +60,7 @@ Ext.define('ZSMZJ.controller.Disaster', {
                     dbgl_cl.owerchanged(c);
                 }
             },
-            'disasterhelpbusinessapplyform button[action=applysubmit]': {
+            'disasterhelpbusinessapplyform button[action=applysubmit],disasterhelpwarehouseapplyform button[action=applysubmit]': {
                 click: this.applysubmit
             },
             'disasterhelpbusinessalterform button[action=applysubmit]': {
@@ -93,7 +105,7 @@ Ext.define('ZSMZJ.controller.Disaster', {
 
 
     applysubmit: function (btn) {
-        alert(1);
+        //alert(1);
         /*var dbgl_cl = this.application.getController("Dbgl");
         dbgl_cl.submitcommon(btn, businessTableType.disasterhelp);*/
     },
