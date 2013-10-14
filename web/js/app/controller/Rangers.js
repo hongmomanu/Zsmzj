@@ -92,7 +92,6 @@ Ext.define('ZSMZJ.controller.Rangers', {
     },
 
 
-
     applysubmit: function (btn) {
         var dbgl_cl = this.application.getController("Dbgl");
         dbgl_cl.submitcommon(btn, businessTableType.rangershelp);
