@@ -42,7 +42,7 @@ Ext.define('ZSMZJ.view.dbgl.FamilyQueryGrid' ,{
 
 
                 Ext.create('Ext.grid.RowNumberer'),
-                {header: '户主姓名',align:'center',dataIndex:'owername',locked : true,
+                {header: '户主姓名',align:'center',dataIndex:'owername',locked : true, name:'tests',
                     summaryRenderer: function(value){
                     return '本页合计'
                 },renderer: function (v, m, r) {
@@ -77,7 +77,7 @@ Ext.define('ZSMZJ.view.dbgl.FamilyQueryGrid' ,{
                 //行政区划名称	户主姓名	户主身份证	申请类别	家庭户口性质	家庭类别	低保户类型
                 // 家庭人数	享受人数	救助开始日期	救助金额	开户人	银行帐号	救助证编号
 
-                {header: '行政区划', dataIndex: 'division',align:'center',width: 250},
+                {header: '行政区划', dataIndex: 'division',align:'center',width: 250,name:'tests'},
                 {header: '户主身份证',align:'center',dataIndex:'owerid',width: 250},
 
 

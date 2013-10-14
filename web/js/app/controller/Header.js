@@ -339,7 +339,8 @@ Ext.define('ZSMZJ.controller.Header', {
             'needtodopanel,announcegridpanel,enumerateconfigmanager,usermanagerpanel,rolemanagerpanel,funcmanagerpanel,needtodobusinesspanel,changedbusinesspanel,logoutbusinesspanel,peoplequerypanel,familyquerypanel,dbglstatisticsfullpanel,dbglgrantmoneypanel,dbglstatisticscomplexonepanel,medicalstandardgridpanel':{
 
                 gridshowfresh:function(grid){
-
+                    //grid.query('[name="tests"]');
+                    //testobj=grid;
                   if(grid.businesstype==businessTableType.temporaryhelp){
                       grid.down('#applytype')?grid.down('#applytype').hide():'';
                       grid.down('#familytype')?grid.down('#familytype').hide():'';
