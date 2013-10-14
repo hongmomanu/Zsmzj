@@ -8,6 +8,7 @@ import Zsmzj.enums.StatisticsType;
 import Zsmzj.jdbc.JdbcFactory;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.apache.commons.collections.ArrayStack;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -41,6 +42,26 @@ public class BusinessProcessControl {
         return bp.getNeedTodoCounts(roleid,userid,divisionpath,null);
 
     }
+    public String getAnnouce(int start,int limit,int userid,String keyword){
+        ComonDao cd=new ComonDao();
+        int announcenum=cd.getTotalCountBySql("select count(*) from "+BusinessTable+" a,"+ApprovalTable+
+                " b where a.rowid=b.businessid and CAST(submituid AS real)>0 and b.userid MATCH "+userid) ;
+
+        ArrayList<Map<String,Object>>list =cd.getTableList("select a.processstatus,b.* from "+BusinessTable+" a,"+ApprovalTable+
+                " b where a.rowid=b.businessid and CAST(submituid AS real)>0 and b.userid MATCH "+userid);
+
+        for(Map<String,Object> map:list){
+            map.put("process", ProcessType.UseProcessType.getNext(ProcessType.UseProcessType.
+                    getProcessFromChinese(map.get("processstatus").toString())));
+        }
+
+
+        Map<String,Object>res=new HashMap<String, Object>();
+        res.put("totalCount",announcenum);
+        res.put("results",list);
+        return JSONObject.fromObject(res).toString();
+
+    }
     public String getIndexMsg(int roleid,int userid){
         SimpleDateFormat sDateFormat   =   new SimpleDateFormat("yyyy-MM-dd");
         String datenow=sDateFormat.format(new   java.util.Date());
@@ -55,7 +76,7 @@ public class BusinessProcessControl {
         int publicinfonum=cd.getTotalCountBySql("select count(*) from "+BusinessTable+" where publicityedtm Between '"
         +datenow+"' and '"+eddate+"'");
         int announcenum=cd.getTotalCountBySql("select count(*) from "+BusinessTable+" a,"+ApprovalTable+
-                " b where a.rowid=b.businessid and CAST(submituid AS real)>0") ;
+                " b where a.rowid=b.businessid and CAST(submituid AS real)>0 and b.userid MATCH "+userid) ;
         Map<String,Object> publicinfo=new HashMap<String, Object>();
         publicinfo.put("name","公示信息");
         publicinfo.put("num",publicinfonum);

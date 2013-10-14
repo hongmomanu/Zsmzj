@@ -10,13 +10,26 @@
 Ext.define('ZSMZJ.view.header.AnnounceGrid' ,{
     extend: 'Ext.grid.Panel',
     alias : 'widget.announcegridpanel',
-    cls:'navigation-grid',
+    //cls:'navigation-grid',
     requires: [
+        'Ext.grid.plugin.RowExpander'
 
     ],
     /*afterShow: function(animateTarget, cb, scope) {
         this.fireEvent('alterapplyaftershow',this);
     },*/
+    plugins: [{
+        ptype: 'rowexpander',
+        rowBodyTpl :  new Ext.XTemplate(
+            '<p><b>是否同意:</b> {approvalresult}</p>',
+            '<p><b>原因:</b> {approvalopinion}</p><br>',
+            '<p><b>日期:</b> {time}</p>',
+            {
+                formatChange: function(v){
+                    return '<span>' + Ext.util.Format.usMoney(v) + '</span>';
+                }
+            })
+    }],
     listeners: {
         show: function(panel) {
             this.fireEvent('gridshowfresh',this);
@@ -24,7 +37,7 @@ Ext.define('ZSMZJ.view.header.AnnounceGrid' ,{
     },
     initComponent: function() {
         Ext.apply(this, {
-            border: false,
+            //border: false,
             stype:'list',
             viewConfig: {
                 trackOver: false,
@@ -33,20 +46,12 @@ Ext.define('ZSMZJ.view.header.AnnounceGrid' ,{
                 enableTextSelection:true,
                 stripeRows: true
             },
+            columnLines: true,
+            //enableLocking: true,
+            //collapsible: true,
+            //animCollapse: false,
+            title:'test',
 
-            plugins: [{
-                ptype: 'rowexpander',
-                rowBodyTpl : new Ext.XTemplate(
-                    '<p><b>Company:</b> </p>',
-                    '<p><b>Change:</b> </p><br>',
-                    '<p><b>Summary:</b></p>',
-                    {
-                        formatChange: function(v){
-                            //var color = v >= 0 ? 'green' : 'red';
-                            return '<span style="color: ' + color + ';">' + "22" + '</span>';
-                        }
-                    })
-            }],
             //hideHeaders:true,
             columns: [
 
@@ -70,7 +75,7 @@ Ext.define('ZSMZJ.view.header.AnnounceGrid' ,{
 
 
             ],
-            flex: 1,
+            //flex: 1,
             bbar: Ext.create('Ext.PagingToolbar', {
                 store: 'header.Announces',
                 displayInfo: true,

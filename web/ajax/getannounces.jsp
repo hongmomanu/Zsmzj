@@ -15,16 +15,20 @@
        out.print("缺少参数limit");
     }else if(request.getParameter("start")==null){
         out.print("缺少参数start");
+    }else if(request.getParameter("userid")==null){
+        out.print("缺少参数userid");
     }
     else{
         BusinessProcessControl bp=new BusinessProcessControl();
         int start=Integer.parseInt(request.getParameter("start"));
         int limit=Integer.parseInt(request.getParameter("limit"));
         String keyword=request.getParameter("keyword");
-        String type=request.getParameter("type");
-        String businesstype=request.getParameter("businesstype");
-        boolean ispublicinfo=request.getParameter("ispublicinfo")!=null?Boolean.parseBoolean(request.getParameter("ispublicinfo")):false;
-        out.print(bp.getNeedTodoBusinessList(start,limit,keyword,type,businesstype,ispublicinfo));
+        int userid=Integer.parseInt(request.getParameter("userid"));
+
+        //String type=request.getParameter("type");
+        //String businesstype=request.getParameter("businesstype");
+        //boolean ispublicinfo=request.getParameter("ispublicinfo")!=null?Boolean.parseBoolean(request.getParameter("ispublicinfo")):false;
+        out.print(bp.getAnnouce(start,limit,userid,keyword));
     }
     //out.print("ok");
 %>
