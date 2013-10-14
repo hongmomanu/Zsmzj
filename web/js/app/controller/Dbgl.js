@@ -619,18 +619,23 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         })
         var form=btn.up('form');
         var affixpanel=form.down('#affixfilespanel');
-        Ext.each(affixpanel.items.items,function(a){
-            if(a.xtype=='panel'){
-                var formdata=a.down('panel').formdata;
-                var affixfileitem={};
-                affixfileitem[a.down('panel').type]=formdata;
-                if(formdata)affixfiles.push(affixfileitem);
+        if(affixpanel){
+            Ext.each(affixpanel.items.items,function(a){
+                if(a.xtype=='panel'){
+                    var formdata=a.down('panel').formdata;
+                    var affixfileitem={};
+                    affixfileitem[a.down('panel').type]=formdata;
+                    if(formdata)affixfiles.push(affixfileitem);
 
-            }
+                }
 
-        });
+            });
+        }
+        if(form.down('#dbglaccountimg')){
+            affixfiles.push({"accountimgpath":[{'attachmentname':'照片','attachmentpath':form.down('#dbglaccountimg').value}]});
+        }
 
-        affixfiles.push({"accountimgpath":[{'attachmentname':'照片','attachmentpath':form.down('#dbglaccountimg').value}]});
+
         var params = {
             businesstype:businesstype,
             userid:userid,

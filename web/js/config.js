@@ -14,6 +14,8 @@ var businessTableType=
             'charitablehelp':'慈善救助',
             'medicalhelp':'医疗救助',
             'disasterhelp':'灾害救助',
+            'disasterware':'避灾仓库',
+            'disasterplace':'避灾场所',
             'rangershelp':'流浪救助',
             'allquery':'all'
         };

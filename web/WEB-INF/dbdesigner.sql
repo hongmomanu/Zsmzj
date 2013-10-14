@@ -198,7 +198,15 @@ incomesum                       VARCHAR(50),                         --收入合
 incomesumarea                   VARCHAR(50),                         --家庭上年度月平均现金收入信息
 incomesumareaperson             VARCHAR(50),                         --家庭上年度人平均现金收入信息
 nolifeneededmachine             VARCHAR(50),                         --非生活必须船只等机械类折价
-propertysum                     VARCHAR(50)                          --财产合计
+propertysum                     VARCHAR(50),                          --财产合计
+
+coverage                       VARCHAR(50),                          --覆盖范围
+escapingnum                    VARCHAR(50),                          --可避灾人数
+windresistance                 VARCHAR(50),                          --抗风能力
+earthquakeresistance           VARCHAR(50),                          --抗震能力
+conectperson                   VARCHAR(50),                          --联系人1
+conectperson2                   VARCHAR(50),                          --联系人2
+telnum2                        VARCHAR(50)                           --联系人2电话
 );
 
 
@@ -317,6 +325,15 @@ CREATE VIRTUAL TABLE IF NOT EXISTS businesschange USING fts3
   nolifeneededmachine             VARCHAR(50),                         --非生活必须船只等机械类折价
   propertysum                     VARCHAR(50),                          --财产合计
 
+
+  coverage                       VARCHAR(50),                          --覆盖范围
+  escapingnum                    VARCHAR(50),                          --可避灾人数
+  windresistance                 VARCHAR(50),                          --抗风能力
+  earthquakeresistance           VARCHAR(50),                          --抗震能力
+  conectperson                   VARCHAR(50),                          --联系人1
+  conectperson2                  VARCHAR(50),                          --联系人2
+  telnum2                        VARCHAR(50),                           --联系人2电话
+
   businessid               integer,                                 --业务id
   insertdate               VARCHAR(50)                              --charuriq
   );
@@ -357,7 +374,15 @@ CREATE VIRTUAL TABLE IF NOT EXISTS familymembers  USING fts3
   personid                VARCHAR(50),                              --身份证*
   sex                     VARCHAR(50),                              --性别
   other                   VARCHAR(50),                               --备注
-  noenjoyedreason         VARCHAR(50)                              --不享受原因
+  noenjoyedreason         VARCHAR(50),                              --不享受原因
+
+  personresource         VARCHAR(50),                              --人员来源
+  disastertype         VARCHAR(50),                              --避灾种类
+  disasterintime         VARCHAR(50),                              --入场所时间
+  disasterouttime         VARCHAR(50),                              --出场所时间
+  unit                 VARCHAR(50),                              --单位
+suppliesbuytime                 VARCHAR(50),                              --购入时间
+suppliesmoney                 VARCHAR(50)                              --购入资金
 );
 
 
@@ -395,6 +420,15 @@ CREATE VIRTUAL TABLE IF NOT EXISTS familymembershistory  USING fts3
   sex                     VARCHAR(50),                              --性别
   other                   VARCHAR(50),                              --备注
   noenjoyedreason         VARCHAR(50),                              --不享受原因
+
+  personresource         VARCHAR(50),                              --人员来源
+  disastertype         VARCHAR(50),                              --避灾种类
+  disasterintime         VARCHAR(50),                              --入场所时间
+  disasterouttime         VARCHAR(50),                              --出场所时间
+  unit                 VARCHAR(50),                              --单位
+  suppliesbuytime                 VARCHAR(50),                              --购入时间
+  suppliesmoney                 VARCHAR(50),                              --购入资金
+
   isnewest                integer                                   --是否为最新历史数据
   );
 

@@ -9,7 +9,13 @@ Ext.define('ZSMZJ.model.dbgl.FamilyMember', {
     extend: 'Ext.data.Model',
     alias : 'widget.familymember',
     fields: [
-
+        'personresource',
+        'disastertype',
+        'disasterintime',
+        'disasterouttime',
+        'unit',
+        'suppliesbuytime',
+        'suppliesmoney',
         'name',
         'relationship',
         'noenjoyedreason',

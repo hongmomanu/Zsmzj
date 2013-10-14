@@ -67,8 +67,7 @@ Ext.define('ZSMZJ.view.disaster.businessApply', {
                     blankText : '请输入行政区划',
                     colspan:2,//合并列
                     allowBlank: false
-                },
-
+                }
 
                     ,{
                         name: 'owername',
@@ -88,7 +87,7 @@ Ext.define('ZSMZJ.view.disaster.businessApply', {
                         emptyText: '请输入覆盖范围号',
                         allowBlank: false
                     },
-                    ,{
+                    {
                         name: 'housearea',
                         fieldLabel: '建筑面积',
                         //afterLabelTextTpl: required,
