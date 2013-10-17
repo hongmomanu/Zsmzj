@@ -123,13 +123,13 @@ Ext.define('ZSMZJ.view.disaster.EscapingMemberGrid' ,{
                         //vtype: 'email'
                     }              //所避灾害种类 入场所时间，出场所时间
                 },{
-                    header: '所避灾害种类*',
+                    header: '所避灾害种类',
                     dataIndex: 'disastertype',
                     //width: 160,
                     editor: {
                         xtype:'dbglaplytype',
                         searchtype:"disastertype",
-                        allowBlank: false
+                        allowBlank: true
                         //vtype: 'email'
                     }              //入场所时间，出场所时间
                 },{

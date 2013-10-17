@@ -49,17 +49,21 @@ Ext.define('ZSMZJ.controller.Header', {
                 //indexmsginit:function a(panel){this.initIndexMsg();},
                 afterrender:function a(){this.initIndexMsg();}
             },
-            'dbglbusinessalterform,dbedgebusinessalterform,temporaryhelpbusinessalterform,medicalhelpbusinessalterform,studyhelpbusinessalterform,charitablehelpbusinessalterform':{
+            'dbglbusinessalterform,dbedgebusinessalterform,temporaryhelpbusinessalterform,medicalhelpbusinessalterform,studyhelpbusinessalterform,charitablehelpbusinessalterform,disasterhelpwarealterform,disasterhelpbusinessalterform':{
 
                 alterapplyaftershow:function(form){
                     ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
                     ViewWaitMask.show();
                     var businessid=form.objdata.businessid;
-                    var store=form.down('#processhistorypanel').getStore();
-                    store.proxy.extraParams = {
-                        businessid:businessid
-                    };
-                    store.load();
+                    var processpanel=form.down('#processhistorypanel');
+                    if(processpanel){
+                        var store=form.down('#processhistorypanel').getStore();
+                        store.proxy.extraParams = {
+                            businessid:businessid
+                        };
+                        store.load();
+
+                    }
 
 
                     var familystore=form.down('#familymembergrid').getStore();
@@ -76,8 +80,8 @@ Ext.define('ZSMZJ.controller.Header', {
 
                         var countitem=form.down('#FamilyPersons');
                         var enjoyitem=form.down('#enjoyPersons');
-                        countitem.setValue(familystore.data.items.length);
-                        enjoyitem.setValue(enjoyednum);
+                        if(countitem)countitem.setValue(familystore.data.items.length);
+                        if(enjoyitem)enjoyitem.setValue(enjoyednum);
 
                     }});
 
@@ -1427,18 +1431,24 @@ Ext.define('ZSMZJ.controller.Header', {
         grid.getStore().removeAll();
         //照片清空
         var img_item=form.down('#dbglaccountimg');
-        img_item.getEl().dom.src="img/noperson.gif";
-        img_item.value="img/noperson.gif";
+        if(img_item){
+            img_item.getEl().dom.src="img/noperson.gif";
+            img_item.value="img/noperson.gif";
+
+        }
 
         //附件清空
         var affixfilespanel=form.down('#affixfilespanel');
-        Ext.each(affixfilespanel.items.items,function(a){
-            if(a.items){
-                CommonFunc.updateitemnum(a.items.items[0],0);
-                a.items.items[0].formdata=[];
+        if(affixfilespanel){
+            Ext.each(affixfilespanel.items.items,function(a){
+                if(a.items){
+                    CommonFunc.updateitemnum(a.items.items[0],0);
+                    a.items.items[0].formdata=[];
 
-            }
-        });
+                }
+            });
+        }
+
 
         //清空窗口
         var dbgl_cl=this.application.getController("Dbgl");
@@ -1475,6 +1485,10 @@ Ext.define('ZSMZJ.controller.Header', {
                 widgetname='medicalhelpbusinessalterform';
             }else if(r.get('businesstype')==businessTableType.studyhelp){
                 widgetname='studyhelpbusinessalterform';
+            }else if(r.get('businesstype')==businessTableType.disasterware){
+                widgetname='disasterhelpwarealterform';
+            }else if(r.get('businesstype')==businessTableType.disasterplace){
+                widgetname='disasterhelpbusinessalterform';
             }
 
         }else if(r.get('processstatustype')==processstatustype.change){

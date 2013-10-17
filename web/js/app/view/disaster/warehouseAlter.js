@@ -7,9 +7,9 @@
  */
 
 
-Ext.define('ZSMZJ.view.disaster.businessAlter', {
+Ext.define('ZSMZJ.view.disaster.warehouseAlter', {
     extend : 'Ext.form.Panel',
-    alias : 'widget.disasterhelpbusinessalterform',
+    alias : 'widget.disasterhelpwarealterform',
     requires: [
 
 
@@ -37,7 +37,7 @@ Ext.define('ZSMZJ.view.disaster.businessAlter', {
             items: [
                 {
                     xtype: 'fieldset',
-                    title: '<a>【灾害场所信息登记办理】灾害基本信息</a>',
+                    title: '<a>【灾害仓库信息登记办理】灾害基本信息</a>',
                     defaultType: 'textfield',
 
                     //layout: 'anchor',
@@ -75,27 +75,20 @@ Ext.define('ZSMZJ.view.disaster.businessAlter', {
                         blankText : '请输入行政区划',
                         colspan:2,//合并列
                         allowBlank: false
-                    }
+                    },
+
 
                         ,{
                             name: 'owername',
                             itemId:'owername',
-                            fieldLabel: '避灾安置场所名称',
+                            fieldLabel: '救灾仓库名称',
                             afterLabelTextTpl: required,
 
-                            blankText: '请输入避灾安置场所名称',
-                            emptyText: '请输入避灾安置场所名称',
+                            blankText: '请输入救灾仓库名称',
+                            emptyText: '请输入救灾仓库名称',
                             allowBlank: false
-                        },{
-                            name: 'coverage',
-                            fieldLabel: '覆盖范围',
-
-                            afterLabelTextTpl: required,
-                            blankText: '请输入覆盖范围',
-                            emptyText: '请输入覆盖范围号',
-                            allowBlank: false
-                        },
-                        {
+                        }
+                        ,{
                             name: 'housearea',
                             fieldLabel: '建筑面积',
                             //afterLabelTextTpl: required,
@@ -108,30 +101,17 @@ Ext.define('ZSMZJ.view.disaster.businessAlter', {
                             //emptyText: '低保户类型',
                             allowBlank: true
                         },{
-                            name: 'escapingnum',
-                            fieldLabel: '可避灾人数',
-                            allowBlank: true
-                        },{
                             name: 'housestructure',
                             fieldLabel: '结构',
                             //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
                             allowBlank: true
                         },{
-                            name: 'windresistance',
-                            fieldLabel: '抗风能力',
-                            afterLabelTextTpl: required,
-                            blankText:'抗凤能力',
-                            value:0,
-                            allowBlank: false
-                        },{
-                            name: 'earthquakeresistance',
-                            fieldLabel: '抗震能力',
-                            afterLabelTextTpl: required,
-                            blankText:'抗震能力',
-                            value:0,
+                            name: 'realaddress',
+                            fieldLabel: '地址',
+                            //afterLabelTextTpl: required,
                             //emptyText: '低保户类型',
-                            allowBlank: false
+                            allowBlank: true
                         },{
                             name: 'conectperson',
                             fieldLabel: '联系人1',
@@ -175,21 +155,20 @@ Ext.define('ZSMZJ.view.disaster.businessAlter', {
                     items:[
 
                         {
-                            xtype:'escapingmembergrid',
+                            xtype:'escapingsuppliesgrid',
                             itemId:'familymembergrid'
 
                         }
 
-
                     ]
                 }
-
 
             ],
             buttons:[
 
                 {
                     text: '保存',
+
                     action:'applysubmit'
                 },
                 {

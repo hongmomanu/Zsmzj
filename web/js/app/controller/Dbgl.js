@@ -536,16 +536,21 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         });
 
         var affixpanel=form.down('#affixfilespanel');
-        Ext.each(affixpanel.items.items,function(a){
-            if(a.xtype=='panel'){
-                var formdata=a.down('panel').formdata;
-                var affixfileitem={};
-                affixfileitem[a.down('panel').type]=formdata;
-                if(formdata)affixfiles.push(affixfileitem);
-            }
-        });
+        if(affixpanel){
+            Ext.each(affixpanel.items.items,function(a){
+                if(a.xtype=='panel'){
+                    var formdata=a.down('panel').formdata;
+                    var affixfileitem={};
+                    affixfileitem[a.down('panel').type]=formdata;
+                    if(formdata)affixfiles.push(affixfileitem);
+                }
+            });
 
-        affixfiles.push({"accountimgpath":[{'attachmentname':'照片','attachmentpath':form.down('#dbglaccountimg').value}]});
+        };
+        var accountimg=form.down('#dbglaccountimg');
+        if(accountimg){
+            affixfiles.push({"accountimgpath":[{'attachmentname':'照片','attachmentpath':form.down('#dbglaccountimg').value}]});
+        }
 
         var params = {
             businessid:form.objdata.businessid,
