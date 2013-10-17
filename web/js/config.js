@@ -457,13 +457,9 @@ var familyheaders={
         {dataIndex: 'telnum',align:'center',header:'联系人1电话'},
         {dataIndex: 'conectperson2',align:'center',header:'联系人2'},
         {dataIndex: 'telnum2',align:'center',header:'联系人2电话'},
-        {dataIndex: 'windresistance',align:'center',header:'抗风能力'},
-        {dataIndex: 'earthquakeresistance',align:'center',header:'抗震能力'},
         {dataIndex: 'housestructure',align:'center',header:'结构'},
-        {dataIndex: 'escapingnum',align:'center',header:'避灾人数'},
         {dataIndex: 'houseusearea',align:'center',header:'使用面积'},
         {dataIndex: 'housearea',align:'center',header:'建筑面积'},
-        {dataIndex: 'coverage',align:'center',header:'覆盖范围'},
         {header: '人员id',align:'center', width: 150,dataIndex:'businessid',hidden:true}
 
     ],

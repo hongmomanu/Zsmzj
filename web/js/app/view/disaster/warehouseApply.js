@@ -136,26 +136,21 @@ Ext.define('ZSMZJ.view.disaster.warehouseApply', {
             },
                 {
                     xtype: 'fieldset',
-                    //collapsible: true,
-                    //collapsed:false,
-                    title: '<a>救灾物资储备情况</a>',
+                    /*collapsible: true,
+                     collapsed:false,*/
+                    title: '<a>避灾对象信息</a>',
                     defaultType: 'textfield',
                     bodyStyle: 'padding:5px 5px 5px 5px',
                     layout: 'fit',
+                    minHeight:160,
 
                     items:[
-                        /* {
-                         xtype:'panel',
-                         layout: 'fit',
-                         items:[*/
+
                         {
                             xtype:'escapingsuppliesgrid',
                             itemId:'familymembergrid'
 
                         }
-                        /* ]
-
-                         }*/
 
                     ]
                 }

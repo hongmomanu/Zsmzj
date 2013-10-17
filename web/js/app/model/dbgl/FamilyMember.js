@@ -13,6 +13,7 @@ Ext.define('ZSMZJ.model.dbgl.FamilyMember', {
         'disastertype',
         'disasterintime',
         'disasterouttime',
+
         'unit',
         'suppliesbuytime',
         'suppliesmoney',

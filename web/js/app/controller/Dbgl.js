@@ -285,17 +285,23 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             sm.select(0);
         }
        //var applyform=this.getMyviewbusinessapplyform();
+
        var applyform=gridpanel.up('form');
        var countitem=applyform.down('#FamilyPersons');
-       var enjoyitem=applyform.down('#enjoyPersons');
-       var disableditem=applyform.down('#disabledpersons');
-       var count=parseInt(countitem.getValue())-1;
-       var enjoyednum= removeitem[0].get("isenjoyed")==isenjoyedtype.yes?parseInt(enjoyitem.getValue())-1:parseInt(enjoyitem.getValue());
-       var disablednum=disabledtype.heavy.indexOf(removeitem[0].get("disabledlevel"))>0?parseInt(disableditem.getValue())-1:parseInt(disableditem.getValue());
-       countitem.setValue(count);
-       enjoyitem.setValue(enjoyednum);
-       disableditem.setValue(disablednum);
-       this.moneychane(gridpanel);
+       try{
+           var enjoyitem=applyform.down('#enjoyPersons');
+           var disableditem=applyform.down('#disabledpersons');
+           var count=parseInt(countitem.getValue())-1;
+           var enjoyednum= removeitem[0].get("isenjoyed")==isenjoyedtype.yes?parseInt(enjoyitem.getValue())-1:parseInt(enjoyitem.getValue());
+           var disablednum=disabledtype.heavy.indexOf(removeitem[0].get("disabledlevel"))>0?parseInt(disableditem.getValue())-1:parseInt(disableditem.getValue());
+           countitem.setValue(count);
+           enjoyitem.setValue(enjoyednum);
+           disableditem.setValue(disablednum);
+           this.moneychane(gridpanel);
+
+       }catch (e){
+
+       }
 
     },
     addnewperson:function(btn){
