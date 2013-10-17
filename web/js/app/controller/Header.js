@@ -1111,8 +1111,8 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
     makecommon_headers:function(grid){
-
-        var columns=grid.columns;
+        //testobj=grid;
+        var columns=grid.columnManager.getColumns();
         var index=1;
         var headers=[
             {name:"序号",value:"index",columns:[],
