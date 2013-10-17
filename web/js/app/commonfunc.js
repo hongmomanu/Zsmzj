@@ -27,7 +27,16 @@ var CommonFunc = {
 
         return result;
     },
-
+    lookupitemname:function(item,value){
+        var result='';
+        for(var i in item){
+            if(item[i]==value){
+               result=i;
+               break;
+            }
+        }
+        return result;
+    },
     updateitemnum: function (item, count) {
         var text = '';
         if (Ext.isGecko) {

@@ -16,6 +16,17 @@ Ext.define('ZSMZJ.model.dbgl.FamilyQuery', {
         //行政区划名称	户主姓名	户主身份证	与户主关系	姓名	身份证	性别	年龄	户口性质	文化程度	政治面貌
         // 健康状况	婚姻状况	月人均收入	人员类别	是否享受
         {name: 'division'},
+        {name: 'telnum2'},
+        {name: 'telnum'},
+        {name: 'conectperson2'},
+        {name: 'conectperson'},
+        {name: 'windresistance'},
+        {name: 'earthquakeresistance'},
+        {name: 'housestructure'},
+        {name: 'escapingnum'},
+        {name: 'houseusearea'},
+        {name: 'housearea'},
+        {name: 'coverage'},
         {name:'owerid'},
         {name:'applytype'},
         {name:'familytype'},

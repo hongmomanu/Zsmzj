@@ -77,11 +77,12 @@ Ext.define('ZSMZJ.view.dbgl.FamilyQueryGrid' ,{
                 //行政区划名称	户主姓名	户主身份证	申请类别	家庭户口性质	家庭类别	低保户类型
                 // 家庭人数	享受人数	救助开始日期	救助金额	开户人	银行帐号	救助证编号
 
-                {header: '行政区划', dataIndex: 'division',align:'center',width: 250,name:'tests'},
+
+                {header: '行政区划', dataIndex: 'division',align:'center',width: 250},
                 {header: '户主身份证',align:'center',dataIndex:'owerid',width: 250},
 
 
-                {header: '申请类别',align:'center',dataIndex:'applytype',itemId:'applytype'},
+                /*{header: '申请类别',align:'center',dataIndex:'applytype',itemId:'applytype'},
                 {header: '业务类型',align:'center',dataIndex:'businesstype',itemId:'businesstype'},
                 {header: '致贫原因',align:'center',dataIndex:'poorfamilytype',itemId:'poorfamilytype'},
                 {header: '救助性质',align:'center',dataIndex:'helpnature',itemId:'helpnature'},
@@ -109,6 +110,18 @@ Ext.define('ZSMZJ.view.dbgl.FamilyQueryGrid' ,{
                 {header: '银行帐号',align:'center',dataIndex:'bankid'},
                 {header: '救助证编号',align:'center',dataIndex:'aidnum'},
 
+
+                {header: '联系人1',dataIndex: 'conectperson',align:'center'},
+                {dataIndex: 'telnum',align:'center',header:'联系人1电话'},
+                {dataIndex: 'conectperson2',align:'center',header:'联系人2'},
+                {dataIndex: 'telnum2',align:'center',header:'联系人2电话'},
+                {dataIndex: 'windresistance',align:'center',header:'抗风能力'},
+                {dataIndex: 'earthquakeresistance',align:'center',header:'抗震能力'},
+                {dataIndex: 'housestructure',align:'center',header:'结构'},
+                {dataIndex: 'escapingnum',align:'center',header:'避灾人数'},
+                {dataIndex: 'houseusearea',align:'center',header:'使用面积'},
+                {dataIndex: 'housearea',align:'center',header:'建筑面积'},
+                {dataIndex: 'coverage',align:'center',header:'覆盖范围'},*/
                 {header: '人员id',align:'center', width: 150,dataIndex:'businessid',hidden:true}
 
             ],

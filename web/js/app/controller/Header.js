@@ -339,73 +339,10 @@ Ext.define('ZSMZJ.controller.Header', {
             'needtodopanel,announcegridpanel,enumerateconfigmanager,usermanagerpanel,rolemanagerpanel,funcmanagerpanel,needtodobusinesspanel,changedbusinesspanel,logoutbusinesspanel,peoplequerypanel,familyquerypanel,dbglstatisticsfullpanel,dbglgrantmoneypanel,dbglstatisticscomplexonepanel,medicalstandardgridpanel':{
 
                 gridshowfresh:function(grid){
-                    //grid.query('[name="tests"]');
-                    //testobj=grid;
-                  if(grid.businesstype==businessTableType.temporaryhelp){
-                      grid.down('#applytype')?grid.down('#applytype').hide():'';
-                      grid.down('#familytype')?grid.down('#familytype').hide():'';
-                      grid.down('#helpnature')?grid.down('#helpnature').hide():'';
-                      grid.down('#medicarenature')?grid.down('#medicarenature').hide():'';
-                      grid.down('#poorfamilytype')?grid.down('#poorfamilytype').show():'';
-                      grid.down('#dbpoorfamilytype')?grid.down('#poorfamilytype').hide():'';
-                      grid.down('#businesstype')?grid.down('#businesstype').hide():'';
-
-
-                  }else if(grid.businesstype==businessTableType.dbbyh){
-                      grid.down('#poorfamilytype')?grid.down('#poorfamilytype').hide():'';
-                      grid.down('#helpnature')?grid.down('#helpnature').hide():'';
-                      grid.down('#medicarenature')?grid.down('#medicarenature').hide():'';
-                      grid.down('#businesstype')?grid.down('#businesstype').hide():'';
-                      grid.down('#familytype')?grid.down('#familytype').show():'';
-                      grid.down('#applytype')?grid.down('#applytype').show():''
-
-                  }else if(grid.businesstype==businessTableType.dbgl){
-                      grid.down('#poorfamilytype')?grid.down('#poorfamilytype').hide():'';
-                      grid.down('#helpnature')?grid.down('#helpnature').hide():'';
-                      grid.down('#medicarenature')?grid.down('#medicarenature').hide():'';
-                      grid.down('#businesstype')?grid.down('#businesstype').hide():'';
-                      grid.down('#familytype')?grid.down('#familytype').show():'';
-                      grid.down('#applytype')?grid.down('#applytype').show():'';
-
-                  }else if(grid.businesstype==businessTableType.medicalhelp){
-                      grid.down('#applytype')?grid.down('#applytype').hide():'';
-                      grid.down('#familytype')?grid.down('#familytype').hide():'';
-                      grid.down('#businesstype')?grid.down('#businesstype').hide():'';
-                      grid.down('#helpnature')?grid.down('#helpnature').show():'';
-                      grid.down('#medicarenature')?grid.down('#medicarenature').show():'';
-                      grid.down('#poorfamilytype')?grid.down('#poorfamilytype').show():'';
-                      grid.down('#dbpoorfamilytype')?grid.down('#poorfamilytype').hide():'';
-
-                  }else if(grid.businesstype==businessTableType.studyhelp){
-                      grid.down('#applytype')?grid.down('#applytype').hide():'';
-                      grid.down('#familytype')?grid.down('#familytype').hide():'';
-                      grid.down('#helpnature')?grid.down('#helpnature').hide():'';
-                      grid.down('#medicarenature')?grid.down('#medicarenature').hide():'';
-                      grid.down('#businesstype')?grid.down('#businesstype').hide():'';
-                      grid.down('#poorfamilytype')?grid.down('#poorfamilytype').show():'';
-                      grid.down('#dbpoorfamilytype')?grid.down('#poorfamilytype').hide():'';
-
-
-                  }else if(grid.businesstype==businessTableType.charitablehelp){
-                      grid.down('#applytype')?grid.down('#applytype').hide():'';
-                      grid.down('#familytype')?grid.down('#familytype').hide():'';
-                      grid.down('#helpnature')?grid.down('#helpnature').hide():'';
-                      grid.down('#businesstype')?grid.down('#businesstype').hide():'';
-                      grid.down('#medicarenature')?grid.down('#medicarenature').hide():'';
-                      grid.down('#poorfamilytype')?grid.down('#poorfamilytype').show():'';
-                      grid.down('#dbpoorfamilytype')?grid.down('#poorfamilytype').hide():'';
-
-
-                  }else if(grid.businesstype==businessTableType.allquery){
-                      grid.down('#applytype')?grid.down('#applytype').hide():'';
-                      grid.down('#familytype')?grid.down('#familytype').hide():'';
-                      grid.down('#helpnature')?grid.down('#helpnature').hide():'';
-                      grid.down('#businesstype')?grid.down('#businesstype').show():'';
-                      grid.down('#medicarenature')?grid.down('#medicarenature').hide():'';
-                      grid.down('#poorfamilytype')?grid.down('#poorfamilytype').hide():'';
-                      grid.down('#dbpoorfamilytype')?grid.down('#poorfamilytype').hide():'';
-
-
+                  if(grid.xtype=='familyquerypanel'){
+                      var result_arr=Ext.clone(familyheaders[CommonFunc.lookupitemname(businessTableType,grid.businesstype)]);
+                      Ext.Array.insert(result_arr,0,[Ext.create('Ext.grid.RowNumberer')]);
+                      grid.reconfigure(undefined,result_arr);
                   }
 
                   var store=grid.getStore();
@@ -432,6 +369,7 @@ Ext.define('ZSMZJ.controller.Header', {
                 processclick:function (c,r,grid){//查看流程
                     this.showProcessWin(c,r,grid);
                 },
+
                 businessclick:function(c,r,grid){//业务审核处理
                    //me.widgetdolayout("mainContent-panel");
                     var me=this;
@@ -1778,7 +1716,7 @@ Ext.define('ZSMZJ.controller.Header', {
                 layout: {
                     type: 'vbox'
                 },
-                renderTo: target,
+                renderTo:target,
                 items: [
                     {
                         type: "image",

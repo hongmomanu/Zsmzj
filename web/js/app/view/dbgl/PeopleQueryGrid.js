@@ -48,24 +48,27 @@ Ext.define('ZSMZJ.view.dbgl.PeopleQueryGrid' ,{
                     var me=this;
                     var id0=Ext.id();
                     Ext.defer(function () {
-                        Ext.widget('label', {
-                            renderTo: id0,
-                            //margin: '0 5 0 5',
-                            border:0,
-                            text: v,
-                            overCls:'mouseover',
-                            width: 55,
-                            listeners: {
+                        if(Ext.get(id0)){
+                            Ext.widget('label', {
+                                renderTo: id0,
+                                //margin: '0 5 0 5',
+                                border:0,
+                                text: v,
+                                overCls:'mouseover',
+                                width: 55,
+                                listeners: {
 
-                                render: function(c){
-                                    c.getEl().on('click', function(){
-                                        testobj=me.up('panel');
-                                        me.up('panel').fireEvent('alterclick', c,r,me);
-                                    }, c);
+                                    render: function(c){
+                                        c.getEl().on('click', function(){
+                                            //testobj=me.up('panel');
+                                            me.up('panel').fireEvent('alterclick', c,r,me);
+                                        }, c);
+                                    }
+
                                 }
+                            });
+                        }
 
-                            }
-                        });
                     }, 50);
 
 

@@ -75,8 +75,7 @@ Ext.define('ZSMZJ.controller.Navigation', {
 
 
         if (item.data.leaf) {
-            //testobj=record;
-            var businesstype=record.panel.businesstype;
+            var businesstype=item.raw.name==item.raw.url?item.raw.name:record.panel.businesstype;
             this.showtab(item.data.text,item.data.value,item.data.type,businesstype);
 
         }
@@ -97,22 +96,19 @@ Ext.define('ZSMZJ.controller.Navigation', {
 
         }
         var tabs = Ext.getCmp('mainContent-panel');
-        var tab=tabs.getComponent('tab' + value)
+        var tab=tabs.getComponent('tab' + value);
         if (tab) {
             tab.businesstype=businesstype;
             tab.ispublicinfo=ispublicinfo;
+            tab.setTitle(label);
             if(!tab.isHidden())tab.fireEvent('gridshowfresh',tab);
             tab.show();
 
         } else {
             if (type == 'widget') {
-
                 //ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
                 ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
                 ViewWaitMask.show();
-                //alert(1);
-
-
                 function fn(){
                     var newtab=tabs.add({
                         closable: true,

@@ -129,7 +129,7 @@ Ext.define('ZSMZJ.view.disaster.EscapingMemberGrid' ,{
                     editor: {
                         xtype:'dbglaplytype',
                         searchtype:"disastertype",
-                        allowBlank: true
+                        allowBlank: false
                         //vtype: 'email'
                     }              //入场所时间，出场所时间
                 },{
@@ -144,6 +144,7 @@ Ext.define('ZSMZJ.view.disaster.EscapingMemberGrid' ,{
                     editor: {
                         xtype: 'datefield',
                         allowBlank: false,
+                        itemId: 'personbirthday',
                         //format: 'Y-m-d',
                         renderer: function (val, obj, record) {
                             var time =Ext.Date.parse(val, "Y-m-dTH:i:s");
