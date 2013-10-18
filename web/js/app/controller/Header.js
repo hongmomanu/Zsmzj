@@ -312,7 +312,7 @@ Ext.define('ZSMZJ.controller.Header', {
                     store.load();
                 }
                 var task = new Ext.util.DelayedTask(fn1);
-                task.delay(10);
+                task.delay(500);
 
 
             }
@@ -341,14 +341,9 @@ Ext.define('ZSMZJ.controller.Header', {
                     }});
                 }
                 var task = new Ext.util.DelayedTask(fn);
-                task.delay(1);
-
+                task.delay(1000);
 
             }
-
-
-
-
 
     },
     initprintform:function(form){
@@ -1693,7 +1688,8 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
     setSignature:function(data,me,form){
-
+        me.closemask();
+        //alert(22);
         function fn(){
             Ext.each(data,function(item){
                 me.addSignature(item,form);
@@ -1702,7 +1698,7 @@ Ext.define('ZSMZJ.controller.Header', {
         }
         var task = new Ext.util.DelayedTask(fn);
         task.delay(10);
-        me.closemask();
+
 
     },
     setFamilymembers:function(data,me,form){
@@ -1774,10 +1770,12 @@ Ext.define('ZSMZJ.controller.Header', {
         var divisiontype=form.down('#divisiontype');
         divisiontype.setValue(data.form.division);
         divisiontype.setRawValue(data.form.division);
-        me.setAffixValue(data.affixfile,me,form);
         me.setSignature(data.signature,me,form);
-
-
+        function fn(){
+            me.setAffixValue(data.affixfile,me,form);
+        }
+        var task = new Ext.util.DelayedTask(fn);
+        task.delay(100);
 
     },
     setFormValues:function(data,me,form){
