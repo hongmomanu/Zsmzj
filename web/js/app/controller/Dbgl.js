@@ -18,14 +18,19 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.NeedToDoBusiness','dbgl.ChangedBusiness',
         'dbgl.LogoutBusiness','dbgl.PeopleQuery',
         'dbgl.FamilyQuery','dbgl.StatisticsFull',
-        'dbgl.StatisticsComplexOne','dbgl.GrantMoneyModel'],
+        'dbgl.StatisticsComplexOne','dbgl.GrantMoneyModel',
+        'dbgl.SearchCombo'
+
+    ],
 
     stores: ['dbgl.FamilyMembers','dbgl.AffixFilesGrids',
         'dbgl.comboxwidget.ApplyTypes','dbgl.ProcessHistorys',
         'dbgl.NeedToDoBusinesses','dbgl.ChangedBusinesses',
         'dbgl.LogoutBusinesses','dbgl.PeopleQuerys',
         'dbgl.FamilyQuerys','dbgl.StatisticsFulls',
-        'dbgl.StatisticsComplexOnes','dbgl.GrantMoneyStore'],
+        'dbgl.StatisticsComplexOnes','dbgl.GrantMoneyStore',
+        'dbgl.SearchCombos'
+    ],
 
     refs: [
         {ref: 'myviewbusinessapplyform', selector: 'dbglbusinessapplyform'},
@@ -62,7 +67,8 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.addNewGrantWin',
         'dbgl.moreSearchFamilyWin',
         'common.MonthField',
-        'dbgl.StatisticsComplexOneGrid'
+        'dbgl.StatisticsComplexOneGrid',
+        'dbgl.personidSearchCombo'
     ],
 
     initStrore:function(){

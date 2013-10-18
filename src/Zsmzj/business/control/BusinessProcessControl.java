@@ -42,13 +42,28 @@ public class BusinessProcessControl {
         return bp.getNeedTodoCounts(roleid,userid,divisionpath,null);
 
     }
+    public String searchbusinessbypid(int start,int limit,String query){
+        ComonDao cd =new ComonDao();
+        String sql_count= "select count(*)   from "+
+                BusinessTable+" a  where a.owerid MATCH '"+query+"*' ";
+        String sql_list=  "select a.*,b.sex   from "+
+                BusinessTable+" a,"+FamilyTable+" b where a.owerid MATCH '"+query+"*' and a.rowid=b.businessid ";
+        sql_list+="Limit "+limit+" Offset "+start;
+        int totalCount=cd.getTotalCountBySql(sql_count);
+        ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
+        Map<String,Object>res=new HashMap<String, Object>();
+        res.put("totalCount",totalCount);
+        res.put("results",list);
+        return JSONObject.fromObject(res).toString();
+
+    }
     public String getAnnouce(int start,int limit,int userid,String keyword){
         ComonDao cd=new ComonDao();
         int announcenum=cd.getTotalCountBySql("select count(*) from "+BusinessTable+" a,"+ApprovalTable+
                 " b where a.rowid=b.businessid and CAST(submituid AS real)>0 and b.userid MATCH "+userid) ;
 
         ArrayList<Map<String,Object>>list =cd.getTableList("select a.processstatus,b.* from "+BusinessTable+" a,"+ApprovalTable+
-                " b where a.rowid=b.businessid and CAST(submituid AS real)>0 and b.userid MATCH "+userid);
+                " b where a.rowid=b.businessid and CAST(submituid AS real)>0 and b.userid MATCH "+userid +" Limit "+limit+" Offset "+start);
 
         for(Map<String,Object> map:list){
             map.put("process", ProcessType.UseProcessType.getNext(ProcessType.UseProcessType.
