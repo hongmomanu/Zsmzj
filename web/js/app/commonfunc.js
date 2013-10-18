@@ -21,7 +21,9 @@ var CommonFunc = {
         var result = null;
         if (arr) {
             for (var i = 0; i < arr.length; i++) {
-                if (arr[i][item.name] === item.value)result = arr[i];
+                if (arr[i][item.name] === item.value){
+                    result = arr[i];
+                }
             }
         }
 

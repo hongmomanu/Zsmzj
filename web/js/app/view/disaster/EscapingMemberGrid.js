@@ -135,10 +135,16 @@ Ext.define('ZSMZJ.view.disaster.EscapingMemberGrid' ,{
                 },{
                     xtype: 'datecolumn',
                     header: '入场所时间',
+
                     dataIndex: 'disasterintime',
                     format: 'Y-m-d',
                     //dateFormat: 'c',
 
+                    renderer: function (val, obj, record) {
+                        var time =Ext.Date.parse(val, "Y-m-dTH:i:s");
+                        val = Ext.util.Format.date(time, 'Y-m-d');
+                        return val;
+                    },
                     //width: 105,
 
                     editor: {
@@ -161,6 +167,11 @@ Ext.define('ZSMZJ.view.disaster.EscapingMemberGrid' ,{
                     header: '出场所时间',
                     dataIndex: 'disasterouttime',
                     format: 'Y-m-d',
+                    renderer: function (val, obj, record) {
+                        var time =Ext.Date.parse(val, "Y-m-dTH:i:s");
+                        val = Ext.util.Format.date(time, 'Y-m-d');
+                        return val;
+                    },
                     //dateFormat: 'c',
 
                     //width: 105,

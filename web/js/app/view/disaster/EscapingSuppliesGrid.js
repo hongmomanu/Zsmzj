@@ -84,6 +84,11 @@ Ext.define('ZSMZJ.view.disaster.EscapingSuppliesGrid' ,{
                     xtype: 'datecolumn',
                     header: '购入时间',
                     dataIndex: 'suppliesbuytime',
+                    renderer: function (val, obj, record) {
+                        var time =Ext.Date.parse(val, "Y-m-dTH:i:s");
+                        val = Ext.util.Format.date(time, 'Y-m-d');
+                        return val;
+                    },
                     format: 'Y-m-d',
                     //dateFormat: 'c',
 

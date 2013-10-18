@@ -55,43 +55,16 @@ Ext.define('ZSMZJ.controller.Header', {
                     ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
                     ViewWaitMask.show();
                     var businessid=form.objdata.businessid;
-                    var processpanel=form.down('#processhistorypanel');
-                    if(processpanel){
-                        var store=form.down('#processhistorypanel').getStore();
-                        store.proxy.extraParams = {
-                            businessid:businessid
-                        };
-                        store.load();
-
-                    }
-
-
-                    var familystore=form.down('#familymembergrid').getStore();
-                    familystore.proxy.extraParams = {
-                        businessid:businessid
-                    };
-                    familystore.load({callback:function(){
-                        var enjoyednum=0;
-                        Ext.each(familystore.data.items,function(a){
-                            if(a.get("isenjoyed")==isenjoyedtype.yes){
-                                enjoyednum++;
-                            }
-                        });
-
-                        var countitem=form.down('#FamilyPersons');
-                        var enjoyitem=form.down('#enjoyPersons');
-                        if(countitem)countitem.setValue(familystore.data.items.length);
-                        if(enjoyitem)enjoyitem.setValue(enjoyednum);
-
-                    }});
-
 
                     this.clearAlterContent(form);//清空修改内容
                     this.initProcessBtns(form); //初始化操作功能键
                     this.getValueBybusinessid(businessid,'ajax/getapplyformallbybid.jsp',this.setFormAllValues,form);
-                    //this.getValueBybusinessid(businessid,'ajax/getapplyformbybid.jsp',this.setFormValues,form);
-                    //this.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',this.setAffixValue,form);
-                    //this.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',this.setSignature,form);
+
+                    this.formpanelstoreload(businessid,form);
+
+
+
+
 
                 }
             } ,
@@ -109,121 +82,29 @@ Ext.define('ZSMZJ.controller.Header', {
                     ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
                     ViewWaitMask.show();
                     var businessid=form.objdata.businessid;
-                    var store=form.down('#processhistorypanel').getStore();
-                    store.proxy.extraParams = {
-                        businessid:businessid
-                    };
-                    store.load();
-
-
-                    var familystore=form.down('#familymembergrid').getStore();
-                    familystore.proxy.extraParams = {
-                        businessid:businessid
-                    };
-
-
-                    familystore.load({callback:function(){
-                        var enjoyednum=0;
-                        Ext.each(familystore.data.items,function(a){
-                            if(a.get("isenjoyed")==isenjoyedtype.yes){
-                                enjoyednum++;
-                            }
-                        });
-                        var countitem=form.down('#FamilyPersons');
-                        var enjoyitem=form.down('#enjoyPersons');
-                        countitem.setValue(familystore.data.items.length);
-                        enjoyitem.setValue(enjoyednum);
-
-                    }});
-
-
 
                     this.clearAlterContent(form);//清空修改内容
                     this.initProcessBtns(form); //初始化操作功能键
                     //this.initchangelogoutbtns(form);//更具是否操作来过滤按钮
                     this.getValueBybusinessid(businessid,'ajax/getapplyformallbybid.jsp',this.setFormAllValues,form);
-                    /*setTimeout(function() {
-                        me.getValueBybusinessid(businessid,'ajax/getapplyformbybid.jsp',me.setFormValues,form);
-                    }, 1300);
-
-                    setTimeout(function() {
-                        me.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',me.setAffixValue,form);
-                    }, 1500);
-
-                    setTimeout(function() {
-                        me.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',me.setSignature,form);
-                    }, 1800);
-
-*/
-
-                    //this.getValueBybusinessid(businessid,'ajax/getapplyformbybid.jsp',this.setFormValues,form);
-
-
-                    //this.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',this.setAffixValue,form);
-                    //this.getValueBybusinessid(businessid,'ajax/getfamilymembersbybid.jsp',this.setFamilymembers,form);
-                    //this.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',this.setSignature,form);
-
+                    this.formpanelstoreload(businessid,form);
                 }
             } ,
             'dbglbusinesslogoutform,dbedgebusinesslogoutform':{
                 alterapplyaftershow:function(form){
-                    //this.closemask();
                     //ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
                     ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
                     ViewWaitMask.show();
-
-
                     var businessid=form.objdata.businessid;
-                    var store=form.down('#processhistorypanel').getStore();
-                    store.proxy.extraParams = {
-                        businessid:businessid
-                    };
-                    store.load();
-
-                    var familystore=form.down('#familymembergrid').getStore();
-                    familystore.proxy.extraParams = {
-                        businessid:businessid
-                    };
-                    familystore.load({callback:function(){
-                        var enjoyednum=0;
-                        Ext.each(familystore.data.items,function(a){
-                            if(a.get("isenjoyed")==isenjoyedtype.yes){
-                                enjoyednum++;
-                            }
-                        });
-
-                        var countitem=form.down('#FamilyPersons');
-                        var enjoyitem=form.down('#enjoyPersons');
-                        countitem.setValue(familystore.data.items.length);
-                        enjoyitem.setValue(enjoyednum);
-
-                    }});
-
                     this.clearAlterContent(form);//清空修改内容
                     this.initProcessBtns(form); //初始化操作功能键
                     //this.initchangelogoutbtns(form);//更具是否操作来过滤按钮
                     this.getValueBybusinessid(businessid,'ajax/getapplyformallbybid.jsp',this.setFormAllValues,form);
-                    //this.getValueBybusinessid(businessid,'ajax/getapplyformbybid.jsp',this.setFormValues,form);
-
-
-                     //this.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',this.setAffixValue,form);
-                     //this.getValueBybusinessid(businessid,'ajax/getfamilymembersbybid.jsp',this.setFamilymembers,form);
-                     //this.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',this.setSignature,form);
+                    this.formpanelstoreload(businessid,form);
 
                 }
             } ,
-            /*'dbglbusinesscheckform':{
-                alterapplyaftershow:function(){
-                    var form=this.getMydbglbusinesscheckform();
-                    //this.widgetdolayout("mainContent-panel");
-                    var businessid=form.objdata.businessid;
-                    this.clearAlterContent(form);
-                    this.getValueBybusinessid(businessid,'ajax/getapplyformbybid.jsp',this.setFormValues,form);
-                    this.getValueBybusinessid(businessid,'ajax/getaffixfilebybid.jsp',this.setAffixValue,form);
-                    this.getValueBybusinessid(businessid,'ajax/getfamilymembersbybid.jsp',this.setFamilymembers,form);
-                }
 
-            },*/
             'dbglbusinessalterform button[action=sendbusiness],dbedgebusinessalterform button[action=sendbusiness],dbglbusinesschangeform button[action=sendbusiness],dbedgebusinesschangeform button[action=sendbusiness],dbglbusinesslogoutform button[action=sendbusiness],dbedgebusinesslogoutform button[action=sendbusiness]':{
                 click: this.sendbusiness
             },
@@ -419,6 +300,59 @@ Ext.define('ZSMZJ.controller.Header', {
         }
     }
     ,
+    formpanelstoreload:function(businessid,form){
+        function fn(){
+            var processpanel=form.down('#processhistorypanel');
+            if(processpanel){
+                var store=form.down('#processhistorypanel').getStore();
+                store.proxy.extraParams = {
+                    businessid:businessid
+                };
+                function fn(){
+                    store.load();
+                }
+                var task = new Ext.util.DelayedTask(fn);
+                task.delay(10);
+
+
+            }
+
+            var familgrid=form.down('#familymembergrid');
+            if(familgrid){
+                var familystore=familgrid.getStore();
+                familystore.proxy.extraParams = {
+                    businessid:businessid
+                };
+
+                function fn(){
+                    familystore.load({callback:function(){
+                        var enjoyednum=0;
+                        Ext.each(familystore.data.items,function(a){
+                            if(a.get("isenjoyed")==isenjoyedtype.yes){
+                                enjoyednum++;
+                            }
+                        });
+
+                        var countitem=form.down('#FamilyPersons');
+                        var enjoyitem=form.down('#enjoyPersons');
+                        if(countitem)countitem.setValue(familystore.data.items.length);
+                        if(enjoyitem)enjoyitem.setValue(enjoyednum);
+
+                    }});
+                }
+                var task = new Ext.util.DelayedTask(fn);
+                task.delay(1);
+
+
+            }
+        }
+        var task = new Ext.util.DelayedTask(fn);
+        task.delay(10);
+
+
+
+
+    },
     initprintform:function(form){
         var me=this;
         var formvalues=form.objdata.getValues();
@@ -1418,9 +1352,11 @@ Ext.define('ZSMZJ.controller.Header', {
     initProcessBtns:function(form){
         var btns=form.getDockedItems('toolbar[dock="bottom"]')[0].items.items;
         Ext.each(btns,function(a){
-            a.setVisible(!!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
-                {name:"name",value:form.objdata.record.get("processstatus")}).children,
-                {name:"name",value:a.text}))
+            var parent=CommonFunc.lookup(processRoleBtn,
+                {name:"name",value:form.objdata.record.get("processstatus")});
+            var children=parent==null?null:parent.children
+            a.setVisible(!!CommonFunc.lookup(children,
+                {name:"name",value:a.text}));
         })
     },
     clearAlterContent:function(form){
@@ -1428,7 +1364,10 @@ Ext.define('ZSMZJ.controller.Header', {
         form.getForm().reset();
         //家庭成员清空
         var grid=form.down('#familymembergrid');
-        grid.getStore().removeAll();
+        if(grid){
+            grid.getStore().removeAll();
+        }
+
         //照片清空
         var img_item=form.down('#dbglaccountimg');
         if(img_item){
@@ -1803,8 +1742,16 @@ Ext.define('ZSMZJ.controller.Header', {
             else{
                 var filepath=data[i].results[0].attachmentpath;
                 var img_item=form.down('#dbglaccountimg');
-                img_item.getEl().dom.src=filepath;
-                img_item.value=filepath;
+                if(img_item){
+                    function fn(){
+                        img_item.getEl().dom.src=filepath;
+                        img_item.value=filepath;
+                    }
+                    var task = new Ext.util.DelayedTask(fn);
+                    task.delay(10);
+
+                }
+
             }
 
 
