@@ -49,7 +49,7 @@ Ext.define('ZSMZJ.controller.Header', {
                 //indexmsginit:function a(panel){this.initIndexMsg();},
                 afterrender:function a(){this.initIndexMsg();}
             },
-            'dbglbusinessalterform,dbedgebusinessalterform,temporaryhelpbusinessalterform,medicalhelpbusinessalterform,studyhelpbusinessalterform,charitablehelpbusinessalterform,disasterhelpwarealterform,disasterhelpbusinessalterform':{
+            'dbglbusinessalterform,dbedgebusinessalterform,temporaryhelpbusinessalterform,medicalhelpbusinessalterform,studyhelpbusinessalterform,charitablehelpbusinessalterform,disasterhelpwarealterform,disasterhelpbusinessalterform,rangershelpbusinessalterform':{
 
                 alterapplyaftershow:function(form){
                     ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
@@ -301,17 +301,17 @@ Ext.define('ZSMZJ.controller.Header', {
     }
     ,
     formpanelstoreload:function(businessid,form){
-        function fn(){
+
             var processpanel=form.down('#processhistorypanel');
             if(processpanel){
                 var store=form.down('#processhistorypanel').getStore();
                 store.proxy.extraParams = {
                     businessid:businessid
                 };
-                function fn(){
+                function fn1(){
                     store.load();
                 }
-                var task = new Ext.util.DelayedTask(fn);
+                var task = new Ext.util.DelayedTask(fn1);
                 task.delay(10);
 
 
@@ -345,9 +345,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
 
             }
-        }
-        var task = new Ext.util.DelayedTask(fn);
-        task.delay(10);
+
 
 
 
@@ -1431,6 +1429,8 @@ Ext.define('ZSMZJ.controller.Header', {
                 widgetname='disasterhelpwarealterform';
             }else if(r.get('businesstype')==businessTableType.disasterplace){
                 widgetname='disasterhelpbusinessalterform';
+            }else if(r.get('businesstype')==businessTableType.rangershelp){
+                widgetname='rangershelpbusinessalterform';
             }
 
         }else if(r.get('processstatustype')==processstatustype.change){

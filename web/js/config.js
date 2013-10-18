@@ -512,7 +512,47 @@ var familyheaders={
         {dataIndex: 'coverage',align:'center',header:'覆盖范围'},
         {header: '人员id',align:'center', width: 150,dataIndex:'businessid',hidden:true}
     ],
-    'rangershelp':[],
+    'rangershelp':[
+        {header: '流浪人姓名',align:'center',dataIndex:'owername',locked : true,
+            summaryRenderer: function(value){
+                return '本页合计'
+            },renderer: function (v, m, r) {
+            var me=this;
+            var id0=Ext.id();
+
+            Ext.defer(function () {
+                if(Ext.get(id0)){
+                    Ext.widget('label', {
+                        renderTo: id0,
+                        //margin: '0 5 0 5',
+                        border:0,
+                        text: v,
+                        overCls:'mouseover',
+                        width: 55,
+                        listeners: {
+
+                            render: function(c){
+                                c.getEl().on('click', function(){
+                                    testobj=me.up('panel');
+                                    me.up('panel').fireEvent('alterclick', c,r,me);
+                                }, c);
+                            }
+
+                        }
+                    });
+                }
+
+            }, 50);
+
+
+            return Ext.String.format('<span id="{0}"></span>',id0);
+        }},
+        {header: '行政区划', dataIndex: 'division',align:'center',width: 250},
+        {header: '户籍地',align:'center',dataIndex:'accountaddress',width: 250},
+        {header: '救助时间',align:'center',dataIndex:'helpbgtime',width: 250},
+        {header: '救助原因',align:'center',dataIndex:'helpreason',width: 250},
+        {header: '人员id',align:'center', width: 150,dataIndex:'businessid',hidden:true}
+    ],
     'allquery':[
         {header: '户主姓名',align:'center',dataIndex:'owername',locked : true, name:'tests',
             summaryRenderer: function(value){

@@ -526,14 +526,18 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             signatures.push(item_obj);
         });
 
-
-        var store=btn.up('form').down('#familymembergrid').getStore();
         var familymembers=[];
         var affixfiles=[];
 
-        Ext.each(store.data.items,function(a){
-            familymembers.push(a.data);
-        });
+
+        var familygrid=btn.up('form').down('#familymembergrid');
+        if(familygrid){
+            var store=familygrid.getStore();
+            Ext.each(store.data.items,function(a){
+                familymembers.push(a.data);
+            });
+        }
+
 
         var affixpanel=form.down('#affixfilespanel');
         if(affixpanel){
@@ -566,9 +570,6 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             Ext.Msg.alert("提示信息", "操作成功");
             var hc=me.application.getController("Header");
             hc.closetab(form.id);
-            //alert(111);
-            //var grid=form.objdata.grid;
-            //grid.getStore().load();
 
         };
         var failFunc = function (form, action) {
