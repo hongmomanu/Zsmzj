@@ -727,7 +727,7 @@ public class BusinessProcessControl {
         int totalnum= cd.getTotalCountBySql(sql);
         String sql_list="select a.*,b.displayname from "+ApprovalTable +" a,"+UserTable+" b " +
                 "where a.businessid  MATCH "+businessid
-                +" and a.userid = b.id Limit "+limit+" Offset "+start;
+                +" and a.userid = b.id order by a.time desc Limit "+limit+" Offset "+start;
         ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
         Map<String,Object>res=new HashMap<String, Object>();
         res.put("totalCount",totalnum);
