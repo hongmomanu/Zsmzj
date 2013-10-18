@@ -24,6 +24,14 @@ Ext.define('ZSMZJ.model.dbgl.SearchCombo', {
         {
             name: 'helpbgtime',
             type:'string'
+        },
+        {
+            name: 'helpreason',
+            type:'string'
+        },
+        {
+            name: 'businessid',
+            type:'string'
         }
 
     ]

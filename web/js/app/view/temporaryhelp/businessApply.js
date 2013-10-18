@@ -53,6 +53,7 @@ Ext.define('ZSMZJ.view.temporaryhelp.businessApply', {
                 items: [{
                         name: 'division',
                         fieldLabel: '行政区划',
+                        itemId:'divisiontype',
                         //width:300,
                         //id:'testobjcomb',
                         xtype:'dbgldivsioncombtreepath',
@@ -801,6 +802,7 @@ Ext.define('ZSMZJ.view.temporaryhelp.businessApply', {
                     xtype: 'fieldset',
                     title: '<a>业务审批信息</a>',
                     defaultType: 'textfield',
+                    itemId:'businesscheckinfo',
 
                     //layout: 'anchor',
                     layout: {

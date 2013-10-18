@@ -46,7 +46,7 @@ public class BusinessProcessControl {
         ComonDao cd =new ComonDao();
         String sql_count= "select count(*)   from "+
                 BusinessTable+" a  where a.owerid MATCH '"+query+"*' ";
-        String sql_list=  "select a.*,b.sex   from "+
+        String sql_list=  "select a.*,b.sex,b.businessid   from "+
                 BusinessTable+" a,"+FamilyTable+" b where a.owerid MATCH '"+query+"*' and a.rowid=b.businessid ";
         sql_list+="Limit "+limit+" Offset "+start;
         int totalCount=cd.getTotalCountBySql(sql_count);

@@ -124,6 +124,24 @@ Ext.define('ZSMZJ.controller.Dbgl', {
                 this.houseareachane(c);
             }
          },
+          'personidsearchcombo':{
+              select: function (combo, records) {
+
+                  ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
+                  ViewWaitMask.show();
+                  var head_cl=this.application.getController("Header");
+                  var form=combo.up('form');
+                  console.log(records[0].data);
+                  var businessid=records[0].data.businessid;
+                  form.objdata={};
+                  form.objdata.businessid=businessid
+                  head_cl.clearAlterContent(form);//清空修改内容
+                  head_cl.getValueBybusinessid(businessid,'ajax/getapplyformallbybid.jsp',head_cl.setFormAllValues,form);
+                  head_cl.formpanelstoreload(businessid,form);
+
+
+              }
+          },
          'dbglbusinessalterform component':{
              imgclick:function (c){
                  this.showAlterUploadImgWin(c);

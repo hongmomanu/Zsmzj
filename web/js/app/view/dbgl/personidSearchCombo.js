@@ -32,8 +32,10 @@ Ext.define('ZSMZJ.view.dbgl.personidSearchCombo' ,{
 
                     //自定义显示格式
                     getInnerTpl: function() {
+                        //[Ext.Date.format(helpbgtime, "M j, Y")]
                         return '<a class="search-item">' +
-                            '<h3><span><br /> 姓名:{owername}</span>救助时间:{helpbgtime}</h3>' +
+                            '<h3><span>{helpbgtime}<br />性别 {sex}</span>{owername}</h3>' +
+                            '{helpreason}' +
                             '</a>';
                     }
                 },
