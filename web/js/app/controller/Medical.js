@@ -268,7 +268,7 @@ Ext.define('ZSMZJ.controller.Medical', {
     },
     applysubmit: function (btn) {
         var dbgl_cl = this.application.getController("Dbgl");
-        dbgl_cl.submitcommon(btn, businessTableType.medicalhelp);
+        dbgl_cl.submitcommon(btn, businessTableType.medicalhelp,true);
     },
 
     onLaunch: function () {

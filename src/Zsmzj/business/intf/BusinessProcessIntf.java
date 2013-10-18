@@ -14,7 +14,7 @@ public interface BusinessProcessIntf {
     /**
      * saveApplyBusiness  saveFamilyMembers   saveAffixFiles 三个接口属于同一trancsiction
      * ***/
-    public int saveApplyBusiness(Map<String,Object> param);//提交业务信息
+    public int saveApplyBusiness(Map<String,Object> param,boolean isprocess);//提交业务信息
 
     public int insertBusinessChange(int businessid);//保存变更信息
     public int insertFamilyChange(int businessid);//保存家庭人员变更信息

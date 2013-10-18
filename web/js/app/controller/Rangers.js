@@ -55,36 +55,11 @@ Ext.define('ZSMZJ.controller.Rangers', {
             'rangershelpbusinessalterform button[action=applysubmit]': {
                 click: Ext.bind(dbgl_cl.applysubmitupdate, dbgl_cl)
             },
-            'rangershelpbusinessalterform button[action=sendbusiness]':{
-                click: Ext.bind(header_cl.sendbusiness,header_cl)
-            },
-            'rangershelpbusinessalterform button[action=process]':{
-                click: Ext.bind(header_cl.formprocess,header_cl)
-            },
-            'rangershelpbusinessalterform button[action=change]':{
-                click: Ext.bind(header_cl.showchangeform,header_cl)
-            },
+
             'rangershelpbusinessalterform button[action=cancel]':{
                 click: Ext.bind(header_cl.cancelcheck,header_cl)
-            },
-            'rangershelpbusinessalterform button[action=checkbusiness]':{
-                click: Ext.bind(header_cl.showcheckwin,header_cl)
-            },
-            'rangershelpbusinessalterform button[action=signature]':{
-                click: Ext.bind(header_cl.showsignature,header_cl)
-            },
-            'rangershelpbusinessalterform button[action=unsignature]':{
-                click: Ext.bind(header_cl.delsignature,header_cl)
-            },
-            'rangershelpbusinessalterform button[action=print]':{
-                click: Ext.bind(header_cl.formprint,header_cl)
-            },
-            'rangershelpbusinessalterform button[action=cancelsendbusiness]':{
-                click: Ext.bind(header_cl.cancelsendbusiness,header_cl)
-            },
-            'rangershelpbusinessalterform button[action=logout]':{
-                click: Ext.bind(header_cl.logoutbusiness,header_cl)
             }
+
 
 
         }, this);
@@ -94,7 +69,7 @@ Ext.define('ZSMZJ.controller.Rangers', {
 
     applysubmit: function (btn) {
         var dbgl_cl = this.application.getController("Dbgl");
-        dbgl_cl.submitcommon(btn, businessTableType.rangershelp);
+        dbgl_cl.submitcommon(btn, businessTableType.rangershelp,false);
     },
 
     onLaunch: function () {

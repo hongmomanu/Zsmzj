@@ -94,7 +94,7 @@ Ext.define('ZSMZJ.controller.Study', {
 
     applysubmit: function (btn) {
         var dbgl_cl = this.application.getController("Dbgl");
-        dbgl_cl.submitcommon(btn, businessTableType.studyhelp);
+        dbgl_cl.submitcommon(btn, businessTableType.studyhelp,true);
     },
 
     onLaunch: function () {

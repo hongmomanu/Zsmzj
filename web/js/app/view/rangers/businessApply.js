@@ -91,11 +91,15 @@ Ext.define('ZSMZJ.view.rangers.businessApply', {
                     },{
                         name: 'helpbgtime',
                         fieldLabel: '救助时间',
+                        afterLabelTextTpl: required,
+                        emptyText: '请选择救助开始日期',
+                        blankText : '请输选择救助开始日期',
+                        xtype: 'datefield',
+                        //itemId: 'personbirthday',
+                        format: 'Y-m-d',
 
-                        //afterLabelTextTpl: required,
-                        blankText: '请输入救助时间',
-                        emptyText: '请输入救助时间',
-                        allowBlank: true
+                        value: Ext.Date.format(new Date(), 'Y-m-d'),
+                        allowBlank: false
                     },{
                         name: 'helpreason',
                         fieldLabel: '救助原因',

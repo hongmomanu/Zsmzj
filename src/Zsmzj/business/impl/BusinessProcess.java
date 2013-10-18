@@ -36,8 +36,14 @@ public class BusinessProcess implements BusinessProcessIntf {
     private static final String ApprovalTable= "approvalprocess";
     private static final String NeedKey="待办事务";
     @Override
-    public int saveApplyBusiness(Map<String, Object> param) {
-        String proStatus= ProcessType.UseProcessType.getChineseSeason(ProcessType.Apply);
+    public int saveApplyBusiness(Map<String, Object> param,boolean isprocess) {
+        String proStatus="";
+        if(isprocess){
+            proStatus= ProcessType.UseProcessType.getChineseSeason(ProcessType.Apply);
+        }else{
+            proStatus= ProcessType.UseProcessType.getChineseSeason(ProcessType.NoProcess);
+        }
+
         param.put("processstatus",proStatus);
         BusinessProcessDao bDao=new BusinessProcessDao();
         return bDao.insertTableVales(param, BusinessTable);

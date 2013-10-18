@@ -94,7 +94,7 @@ Ext.define('ZSMZJ.controller.Charitable', {
 
     applysubmit: function (btn) {
         var dbgl_cl = this.application.getController("Dbgl");
-        dbgl_cl.submitcommon(btn, businessTableType.charitablehelp);
+        dbgl_cl.submitcommon(btn, businessTableType.charitablehelp,true);
     },
 
     onLaunch: function () {

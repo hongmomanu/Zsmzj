@@ -83,11 +83,11 @@ Ext.define('ZSMZJ.controller.Disaster', {
 
     applysubmit: function (btn) {
         var dbgl_cl = this.application.getController("Dbgl");
-        dbgl_cl.submitcommon(btn, businessTableType.disasterplace);
+        dbgl_cl.submitcommon(btn, businessTableType.disasterplace,false);
     },
     wareapplysubmit:function(btn){
         var dbgl_cl = this.application.getController("Dbgl");
-        dbgl_cl.submitcommon(btn, businessTableType.disasterware);
+        dbgl_cl.submitcommon(btn, businessTableType.disasterware,false);
     },
 
     onLaunch: function () {

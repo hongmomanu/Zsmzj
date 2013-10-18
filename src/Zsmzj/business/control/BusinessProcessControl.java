@@ -944,11 +944,11 @@ public class BusinessProcessControl {
 
     }
     public String saveNewBusinessApply(Map<String,Object> params,String familymembers,
-                                       String affixfiles,String businessType){
+                                       String affixfiles,String businessType,boolean isprocess){
 
         BusinessProcess bp=new BusinessProcess();
         params.put("businesstype",businessType);
-        int businessid=bp.saveApplyBusiness(params);
+        int businessid=bp.saveApplyBusiness(params,isprocess);
         bp.saveAffixFiles(affixfiles, businessid);
         bp.saveFamilyMembers(familymembers,businessid,FamilyTable);
         if(businessid>0)return "{success:true}";

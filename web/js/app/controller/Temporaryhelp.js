@@ -90,7 +90,7 @@ Ext.define('ZSMZJ.controller.Temporaryhelp', {
     },
     applysubmit: function (btn) {
         var dbgl_cl = this.application.getController("Dbgl");
-        dbgl_cl.submitcommon(btn, businessTableType.temporaryhelp);
+        dbgl_cl.submitcommon(btn, businessTableType.temporaryhelp,true);
     },
 
 

@@ -618,16 +618,19 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
 
     },
-    submitcommon:function(btn,businesstype){
+    submitcommon:function(btn,businesstype,isprocess){
         var me=this;
         //var store=this.getMyviewfamilymembergrid().getStore();
-        var store=btn.up('form').down('#familymembergrid').getStore();
+        var familygrid=btn.up('form').down('#familymembergrid')
+
         var familymembers=[];
         var affixfiles=[];
-
-        Ext.each(store.data.items,function(a){
-            familymembers.push(a.data);
-        })
+        if(familygrid){
+            var store=familygrid.getStore();
+            Ext.each(store.data.items,function(a){
+                familymembers.push(a.data);
+            });
+        }
         var form=btn.up('form');
         var affixpanel=form.down('#affixfilespanel');
         if(affixpanel){
@@ -652,6 +655,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             userid:userid,
             familymembers:Ext.JSON.encode(familymembers),
             processstatustype:processstatustype.ok,
+            isprocess:isprocess,
             affixfiles:Ext.JSON.encode(affixfiles)
         };
         var successFunc = function (myform, action) {
@@ -673,7 +677,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
     },
     applysubmit:function(btn){
 
-       this.submitcommon(btn,businessTableType.dbgl);
+       this.submitcommon(btn,businessTableType.dbgl,true);
     },
     uploadImgFile:function(btn){
         var me=this;
