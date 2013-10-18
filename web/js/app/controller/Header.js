@@ -82,7 +82,6 @@ Ext.define('ZSMZJ.controller.Header', {
                     ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
                     ViewWaitMask.show();
                     var businessid=form.objdata.businessid;
-
                     this.clearAlterContent(form);//清空修改内容
                     this.initProcessBtns(form); //初始化操作功能键
                     //this.initchangelogoutbtns(form);//更具是否操作来过滤按钮
@@ -308,11 +307,11 @@ Ext.define('ZSMZJ.controller.Header', {
                 store.proxy.extraParams = {
                     businessid:businessid
                 };
-                function fn1(){
+                //function fn1(){
                     store.load();
-                }
-                var task = new Ext.util.DelayedTask(fn1);
-                task.delay(500);
+                //}
+                //var task = new Ext.util.DelayedTask(fn1);
+                //task.delay(50);
 
 
             }
@@ -324,7 +323,7 @@ Ext.define('ZSMZJ.controller.Header', {
                     businessid:businessid
                 };
 
-                function fn(){
+                //function fn(){
                     familystore.load({callback:function(){
                         var enjoyednum=0;
                         Ext.each(familystore.data.items,function(a){
@@ -339,9 +338,9 @@ Ext.define('ZSMZJ.controller.Header', {
                         if(enjoyitem)enjoyitem.setValue(enjoyednum);
 
                     }});
-                }
-                var task = new Ext.util.DelayedTask(fn);
-                task.delay(1000);
+                //}
+                //var task = new Ext.util.DelayedTask(fn);
+                //task.delay(10);
 
             }
 
@@ -1688,17 +1687,11 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
     setSignature:function(data,me,form){
-        me.closemask();
-        //alert(22);
-        function fn(){
-            Ext.each(data,function(item){
-                me.addSignature(item,form);
-            });
-            me.initchangelogoutbtns(form);
-        }
-        var task = new Ext.util.DelayedTask(fn);
-        task.delay(10);
 
+        Ext.each(data,function(item){
+            me.addSignature(item,form);
+        });
+        me.initchangelogoutbtns(form);
 
     },
     setFamilymembers:function(data,me,form){
@@ -1746,12 +1739,8 @@ Ext.define('ZSMZJ.controller.Header', {
                 var filepath=data[i].results[0].attachmentpath;
                 var img_item=form.down('#dbglaccountimg');
                 if(img_item){
-                    function fn(){
-                        img_item.getEl().dom.src=filepath;
-                        img_item.value=filepath;
-                    }
-                    var task = new Ext.util.DelayedTask(fn);
-                    task.delay(10);
+                    img_item.getEl().dom.src=filepath;
+                    img_item.value=filepath;
 
                 }
 
@@ -1771,11 +1760,8 @@ Ext.define('ZSMZJ.controller.Header', {
         divisiontype.setValue(data.form.division);
         divisiontype.setRawValue(data.form.division);
         me.setSignature(data.signature,me,form);
-        function fn(){
-            me.setAffixValue(data.affixfile,me,form);
-        }
-        var task = new Ext.util.DelayedTask(fn);
-        task.delay(100);
+        me.setAffixValue(data.affixfile,me,form);
+        me.closemask();
 
     },
     setFormValues:function(data,me,form){
