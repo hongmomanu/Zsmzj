@@ -451,7 +451,6 @@ var familyheaders={
             return Ext.String.format('<span id="{0}"></span>',id0);
         }},
         {header: '行政区划', dataIndex: 'division',align:'center',width: 250},
-        {header: '户主身份证',align:'center',dataIndex:'owerid',width: 250},
         {header: '仓库对象数',align:'center',dataIndex:'familynum',width: 250},
         {header: '联系人1',dataIndex: 'conectperson',align:'center'},
         {dataIndex: 'telnum',align:'center',header:'联系人1电话'},
@@ -499,7 +498,6 @@ var familyheaders={
             return Ext.String.format('<span id="{0}"></span>',id0);
         }},
         {header: '行政区划', dataIndex: 'division',align:'center',width: 250},
-        {header: '户主身份证',align:'center',dataIndex:'owerid',width: 250},
         {header: '避灾对象数',align:'center',dataIndex:'familynum',width: 250},
         {header: '联系人1',dataIndex: 'conectperson',align:'center'},
         {dataIndex: 'telnum',align:'center',header:'联系人1电话'},

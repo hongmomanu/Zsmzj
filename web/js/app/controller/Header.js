@@ -1354,9 +1354,12 @@ Ext.define('ZSMZJ.controller.Header', {
         Ext.each(btns,function(a){
             var parent=CommonFunc.lookup(processRoleBtn,
                 {name:"name",value:form.objdata.record.get("processstatus")});
-            var children=parent==null?null:parent.children
-            a.setVisible(!!CommonFunc.lookup(children,
-                {name:"name",value:a.text}));
+            if(parent){
+                var children=parent.children;
+                a.setVisible(!!CommonFunc.lookup(children,
+                    {name:"name",value:a.text}));
+            }
+
         })
     },
     clearAlterContent:function(form){
@@ -1690,11 +1693,15 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
     setSignature:function(data,me,form){
-        Ext.each(data,function(item){
-           me.addSignature(item,form);
-        });
-        //初始化位置
-        me.initchangelogoutbtns(form);
+
+        function fn(){
+            Ext.each(data,function(item){
+                me.addSignature(item,form);
+            });
+            me.initchangelogoutbtns(form);
+        }
+        var task = new Ext.util.DelayedTask(fn);
+        task.delay(10);
         me.closemask();
 
     },
@@ -1769,6 +1776,8 @@ Ext.define('ZSMZJ.controller.Header', {
         divisiontype.setRawValue(data.form.division);
         me.setAffixValue(data.affixfile,me,form);
         me.setSignature(data.signature,me,form);
+
+
 
     },
     setFormValues:function(data,me,form){
