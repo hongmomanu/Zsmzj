@@ -132,7 +132,6 @@ Ext.define('ZSMZJ.controller.Dbgl', {
                      function fn(){
                          var head_cl=me.application.getController("Header");
                          var form=combo.up('form');
-                         console.log(records[0].data);
                          var businessid=records[0].data.businessid;
                          form.objdata={};
                          form.objdata.businessid=businessid

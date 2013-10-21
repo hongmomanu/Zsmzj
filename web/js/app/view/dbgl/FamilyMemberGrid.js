@@ -30,8 +30,8 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     });
                     var enjoyitem=form.down('#enjoyPersons');
                     var disableditem=form.down('#disabledpersons');
-                    enjoyitem.setValue(enjoyednum);
-                    disableditem.setValue(disablednum);
+                    if(enjoyitem)enjoyitem.setValue(enjoyednum);
+                    if(disableditem)disableditem.setValue(disablednum);
                     if(obj.record.get('relationship')=='户主'){
                         var owernameitem=form.down('#owername');
                         var oweriditem=form.down('#owerid');

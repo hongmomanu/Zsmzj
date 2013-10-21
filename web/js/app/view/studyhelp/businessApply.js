@@ -51,6 +51,7 @@ Ext.define('ZSMZJ.view.studyhelp.businessApply', {
                 items: [{
                         name: 'division',
                         fieldLabel: '行政区划',
+                        itemId:'divisiontype',
                         //width:300,
                         //id:'testobjcomb',
                         xtype:'dbgldivsioncombtreepath',
@@ -101,21 +102,12 @@ Ext.define('ZSMZJ.view.studyhelp.businessApply', {
                         emptyText: '请输入户主姓名',
                         allowBlank: false
                     },{
-                        name: 'owerid',
-                        itemId:'owerid',
-                        fieldLabel: '户主身份证',
-                        listeners: {
+                        name: 'accountaddress',
+                        fieldLabel: '户口所在地',
 
-                            "blur":function(field,e){
-                                var name = field.getRawValue().replace(/\s+/g, "");
-                                this.fireEvent('owerchange', field);
-
-                            }
-                        },
-                        afterLabelTextTpl: required,
-                        blankText: '请输入身份证号',
-                        emptyText: '请输入身份证号',
-                        allowBlank: false
+                        //afterLabelTextTpl: required,
+                        //emptyText: '低保户类型',
+                        allowBlank: true
                     },{
                         xtype:'dbglaplytype',
                         searchtype:"dbedgepoorfamilytype",
@@ -135,13 +127,26 @@ Ext.define('ZSMZJ.view.studyhelp.businessApply', {
                         emptyText: '请选择家庭户口',
                         allowBlank: false
                     }
+
                     ,{
-                        name: 'accountaddress',
-                        fieldLabel: '户口所在地',
+                        name: 'owerid',
+                        itemId:'owerid',
+                        fieldLabel: '户主身份证',
+                        xtype:'personidsearchcombo',
+                        vtype:'personid',
+                        listeners: {
+
+                            "blur":function(field,e){
+                                var name = field.getRawValue().replace(/\s+/g, "");
+                                this.fireEvent('owerchange', field);
+
+                            }
+                        },
                         colspan:2,
-                        //afterLabelTextTpl: required,
-                        //emptyText: '低保户类型',
-                        allowBlank: true
+                        afterLabelTextTpl: required,
+                        blankText: '请输入身份证号',
+                        emptyText: '请输入身份证号',
+                        allowBlank: false
                     },{
                         name: 'accountzipcode',
                         fieldLabel: '邮政编码',

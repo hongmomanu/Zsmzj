@@ -131,6 +131,7 @@ Ext.define('ZSMZJ.view.temporaryhelp.businessApply', {
                     ,{
                         name: 'owerid',
                         itemId:'owerid',
+                        vtype:'personid',
                         xtype:'personidsearchcombo',
                         colspan:2,
                         fieldLabel: '户主身份证',

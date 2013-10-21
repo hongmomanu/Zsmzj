@@ -20,6 +20,8 @@
         int start=Integer.parseInt(request.getParameter("start"));
         int limit=Integer.parseInt(request.getParameter("limit"));
         String query=request.getParameter("query");
-        out.print(bp.searchbusinessbypid(start,limit,query));
+        String[]types=request.getParameterValues("type");
+        System.out.println(types);
+        out.print(bp.searchbusinessbypid(start,limit,query,types));
     }
 %>

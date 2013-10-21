@@ -14,11 +14,15 @@ Ext.define('ZSMZJ.store.dbgl.SearchCombos', {
     autoLoad:false,
     proxy:{
         type: 'ajax',
+        extraParams:{
+            type:[businessTableType.dbgl,businessTableType.dbbyh]
+        },
         reader: {
             type: 'json',
             root: 'results',
             totalProperty: 'totalCount'
         },
+        getMethod:function(request){ return 'POST'; },
         url: 'ajax/searchbusinessbypid.jsp'
     }
 

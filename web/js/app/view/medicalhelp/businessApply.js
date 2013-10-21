@@ -50,6 +50,7 @@ Ext.define('ZSMZJ.view.medicalhelp.businessApply', {
 
                 items: [{
                         name: 'division',
+                        itemId:'divisiontype',
                         fieldLabel: '行政区划',
                         //width:300,
                         //id:'testobjcomb',
@@ -101,21 +102,12 @@ Ext.define('ZSMZJ.view.medicalhelp.businessApply', {
                         emptyText: '请输入户主姓名',
                         allowBlank: false
                     },{
-                        name: 'owerid',
-                        itemId:'owerid',
-                        fieldLabel: '户主身份证',
-                        listeners: {
+                        name: 'accountaddress',
+                        fieldLabel: '户口所在地',
 
-                            "blur":function(field,e){
-                                var name = field.getRawValue().replace(/\s+/g, "");
-                                this.fireEvent('owerchange', field);
-
-                            }
-                        },
-                        afterLabelTextTpl: required,
-                        blankText: '请输入身份证号',
-                        emptyText: '请输入身份证号',
-                        allowBlank: false
+                        //afterLabelTextTpl: required,
+                        //emptyText: '低保户类型',
+                        allowBlank: true
                     },{
                         xtype:'dbglaplytype',
                         searchtype:"dbedgepoorfamilytype",
@@ -135,13 +127,26 @@ Ext.define('ZSMZJ.view.medicalhelp.businessApply', {
                         emptyText: '请选择家庭户口',
                         allowBlank: false
                     }
+
                     ,{
-                        name: 'accountaddress',
-                        fieldLabel: '户口所在地',
+                        name: 'owerid',
+                        itemId:'owerid',
+                        vtype:'personid',
+                        xtype:'personidsearchcombo',
+                        fieldLabel: '户主身份证',
                         colspan:2,
-                        //afterLabelTextTpl: required,
-                        //emptyText: '低保户类型',
-                        allowBlank: true
+                        listeners: {
+
+                            "blur":function(field,e){
+                                var name = field.getRawValue().replace(/\s+/g, "");
+                                this.fireEvent('owerchange', field);
+
+                            }
+                        },
+                        afterLabelTextTpl: required,
+                        blankText: '请输入身份证号',
+                        emptyText: '请输入身份证号',
+                        allowBlank: false
                     },{
                         name: 'accountzipcode',
                         fieldLabel: '邮政编码',

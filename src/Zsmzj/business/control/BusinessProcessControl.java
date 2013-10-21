@@ -4,6 +4,7 @@ import Zsmzj.business.dao.BusinessProcessDao;
 import Zsmzj.business.impl.BusinessProcess;
 import Zsmzj.conmmon.ComonDao;
 import Zsmzj.enums.ProcessType;
+import Zsmzj.enums.RelationsType;
 import Zsmzj.enums.StatisticsType;
 import Zsmzj.jdbc.JdbcFactory;
 import net.sf.json.JSONArray;
@@ -42,12 +43,35 @@ public class BusinessProcessControl {
         return bp.getNeedTodoCounts(roleid,userid,divisionpath,null);
 
     }
-    public String searchbusinessbypid(int start,int limit,String query){
+    public String searchbusinessbypid(int start,int limit,String query,String[]types){
         ComonDao cd =new ComonDao();
         String sql_count= "select count(*)   from "+
                 BusinessTable+" a  where a.owerid MATCH '"+query+"*' ";
+
         String sql_list=  "select a.*,b.sex,b.businessid   from "+
-                BusinessTable+" a,"+FamilyTable+" b where a.owerid MATCH '"+query+"*' and a.rowid=b.businessid ";
+                BusinessTable+" a,"+FamilyTable+" b where a.owerid MATCH '"+query+"*' and a.rowid=b.businessid " +
+                "and b.personid=a.owerid ";
+        sql_list+=" and b.rowid in (select rowid from "+FamilyTable+" c where  c.relationship MATCH  '"+
+                RelationsType.UseRelationsType.getChineseSeason(RelationsType.ower)
+                +"') ";
+
+        sql_list+=" and a.rowid IN (";
+        sql_count+=" and a.rowid IN (";
+        for(int i=0;i<types.length;i++){
+            //sql_list+=arr[i]+"* OR ";
+            sql_list+=
+                    "select rowid from "+BusinessTable+"  where  businesstype MATCH  '"+types[i] +"' "+
+            "UNION ";
+
+            sql_count+=
+                    "    SELECT ROWID FROM "+BusinessTable+" WHERE businesstype MATCH '"+types[i]+"' " +
+                            "UNION ";
+
+        }
+        sql_list=sql_list.substring(0,sql_list.lastIndexOf("UNION"))+") ";
+        sql_count=sql_count.substring(0,sql_count.lastIndexOf("UNION"))+") ";
+
+
         sql_list+="Limit "+limit+" Offset "+start;
         int totalCount=cd.getTotalCountBySql(sql_count);
         ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
