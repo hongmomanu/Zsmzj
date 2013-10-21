@@ -55,11 +55,9 @@ Ext.define('ZSMZJ.controller.Header', {
                     ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
                     ViewWaitMask.show();
                     var businessid=form.objdata.businessid;
-
                     this.clearAlterContent(form);//清空修改内容
                     this.initProcessBtns(form); //初始化操作功能键
                     this.getValueBybusinessid(businessid,'ajax/getapplyformallbybid.jsp',this.setFormAllValues,form);
-
                     this.formpanelstoreload(businessid,form);
 
 
@@ -1383,7 +1381,6 @@ Ext.define('ZSMZJ.controller.Header', {
             });
         }
 
-
         //清空窗口
         var dbgl_cl=this.application.getController("Dbgl");
         dbgl_cl.cleanuploadWin();
@@ -1769,11 +1766,9 @@ Ext.define('ZSMZJ.controller.Header', {
         var divisiontype=form.down('#divisiontype');
         divisiontype.setValue(data.form.division);
         divisiontype.setRawValue(data.form.division);
-
         me.setSignature(data.signature,me,form);
         me.setAffixValue(data.affixfile,me,form);
         me.closemask();
-
     },
     setFormValues:function(data,me,form){
         var businessid=form.objdata.businessid;
