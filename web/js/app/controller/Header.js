@@ -242,6 +242,7 @@ Ext.define('ZSMZJ.controller.Header', {
                           store.proxy.extraParams.logic=null;
                           store.proxy.extraParams.compare=null;
                           store.proxy.extraParams.value=null;
+                          CommonFunc.widgetdolayout("mainContent-panel",1);
                       });
                   }
 
