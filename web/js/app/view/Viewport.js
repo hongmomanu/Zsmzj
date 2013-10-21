@@ -10,6 +10,7 @@ Ext.define('ZSMZJ.view.Viewport', {
         'Ext.layout.container.Accordion',
         'Ext.tab.*',
         'Ext.ux.TabCloseMenu',
+        'Ext.ux.TabScrollerMenu',
         'ZSMZJ.view.MainPanel',
         'Ext.resizer.Splitter'
 
@@ -63,6 +64,7 @@ Ext.define('ZSMZJ.view.Viewport', {
                         //deferredRender: false,
 			            layout:'fit',
                         id: 'mainContent-panel',
+
                         //maskOnDisable:false,
                         plugins: Ext.create('Ext.ux.TabCloseMenu', {
                             extraItemsTail: [

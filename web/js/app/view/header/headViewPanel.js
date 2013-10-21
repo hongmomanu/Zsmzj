@@ -53,9 +53,12 @@ Ext.define('ZSMZJ.view.header.headViewPanel' ,{
 
                 listeners: {
                     selectionchange: function(dv, nodes ){
-                        var menu_arr=eval(nodes[0].raw.value);
-                        Ext.getCmp('west-panel').removeAll();
-                        Ext.getCmp('west-panel').add(menu_arr);
+                        if(nodes[0]){
+                            var menu_arr=eval(nodes[0].raw.value);
+                            Ext.getCmp('west-panel').removeAll();
+                            Ext.getCmp('west-panel').add(menu_arr);
+
+                        }
 
                         //var l = nodes.length,
                         //    s = l !== 1 ? 's' : '';
