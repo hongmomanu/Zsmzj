@@ -236,7 +236,7 @@ Ext.define('ZSMZJ.controller.Header', {
                       store.proxy.extraParams.ispublicinfo=grid.ispublicinfo
                       store.load({callback:function(){
 
-                          CommonFunc.widgetdolayout("mainContent-panel",100);
+                          CommonFunc.widgetdolayout("mainContent-panel",1);
                       }});
                       //清空高级搜索
                       store.on('load', function (store, options) {
@@ -1751,6 +1751,16 @@ Ext.define('ZSMZJ.controller.Header', {
         }
         //me.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',me.setSignature,form);
 
+
+    },
+    setFormAllValuesWithOutSignature:function(data,me,form){
+        var businessid=form.objdata.businessid;
+        form.getForm().setValues(data.form);
+        var divisiontype=form.down('#divisiontype');
+        divisiontype.setValue(data.form.division);
+        divisiontype.setRawValue(data.form.division);
+        me.setAffixValue(data.affixfile,me,form);
+        me.closemask();
 
     },
     setFormAllValues:function(data,me,form){

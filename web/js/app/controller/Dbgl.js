@@ -72,8 +72,8 @@ Ext.define('ZSMZJ.controller.Dbgl', {
     ],
 
     initStrore:function(){
-        var store=this.getDbglNeedToDoBusinessesStore();
-        var header_cl=this.application.getController("Header");
+        //var store=this.getDbglNeedToDoBusinessesStore();
+        /*var header_cl=this.application.getController("Header");
         store.on('load', function (store, options) {
             header_cl.widgetdolayout("mainContent-panel");
         });
@@ -92,7 +92,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         grant_store.on('load', function (store, options) {
             header_cl.widgetdolayout("mainContent-panel");
         });
-
+*/
     },
     init: function() {
         var me = this;
@@ -124,24 +124,30 @@ Ext.define('ZSMZJ.controller.Dbgl', {
                 this.houseareachane(c);
             }
          },
-          'personidsearchcombo':{
-              select: function (combo, records) {
+             'personidsearchcombo':{
+                 select: function (combo, records) {
+                     var me=this;
+                     ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
+                     ViewWaitMask.show();
+                     function fn(){
+                         var head_cl=me.application.getController("Header");
+                         var form=combo.up('form');
+                         console.log(records[0].data);
+                         var businessid=records[0].data.businessid;
+                         form.objdata={};
+                         form.objdata.businessid=businessid
+                         head_cl.clearAlterContent(form);//清空修改内容
+                         head_cl.getValueBybusinessid(businessid,'ajax/getapplyformallbybid.jsp',head_cl.setFormAllValuesWithOutSignature,form);
+                         head_cl.formpanelstoreload(businessid,form);
 
-                  ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
-                  ViewWaitMask.show();
-                  var head_cl=this.application.getController("Header");
-                  var form=combo.up('form');
-                  console.log(records[0].data);
-                  var businessid=records[0].data.businessid;
-                  form.objdata={};
-                  form.objdata.businessid=businessid
-                  head_cl.clearAlterContent(form);//清空修改内容
-                  head_cl.getValueBybusinessid(businessid,'ajax/getapplyformallbybid.jsp',head_cl.setFormAllValues,form);
-                  head_cl.formpanelstoreload(businessid,form);
+                     }
+
+                     var task = new Ext.util.DelayedTask(fn);
+                     task.delay(10);
 
 
-              }
-          },
+                 }
+             },
          'dbglbusinessalterform component':{
              imgclick:function (c){
                  this.showAlterUploadImgWin(c);
