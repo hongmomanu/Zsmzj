@@ -72,6 +72,8 @@ Ext.define('ZSMZJ.controller.Dbgl', {
     ],
 
     initStrore:function(){
+        //initedforms.dbglbusinessapplyform=Ext.widget('dbglbusinessapplyform');
+
         //var store=this.getDbglNeedToDoBusinessesStore();
         /*var header_cl=this.application.getController("Header");
         store.on('load', function (store, options) {

@@ -6,6 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 var extLocation="http://192.168.2.112/extjs4.2/";
+
 var businessTableType=
         {   'dbgl':"低保",
             'dbbyh':"边缘户",

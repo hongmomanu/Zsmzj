@@ -110,19 +110,21 @@ Ext.define('ZSMZJ.controller.Navigation', {
                 ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
                 ViewWaitMask.show();
                 function fn(){
-                    var newtab=tabs.add({
-                        closable: true,
-                        id: 'tab' + value,
-                        xtype: value,
-                        businesstype:businesstype,
-                        ispublicinfo:ispublicinfo,
-                        autoShow:true,
-                        autoScroll: true,
-                        //active:true,
-                        iconCls: 'tabs',
-                        title: label
-                    });
-                    tabs.setActiveTab(newtab);
+
+                        var newtab=tabs.add({
+                            closable: true,
+                            id: 'tab' + value,
+                            xtype: value,
+                            businesstype:businesstype,
+                            ispublicinfo:ispublicinfo,
+                            autoShow:true,
+                            autoScroll: true,
+                            //active:true,
+                            iconCls: 'tabs',
+                            title: label
+                        });
+                        tabs.setActiveTab(newtab);
+
                 }
                 var task = new Ext.util.DelayedTask(fn);
                 task.delay(1);
