@@ -310,9 +310,9 @@ Ext.define('ZSMZJ.controller.Header', {
                 //function fn1(){
                     store.load();
                 //}
-                //var task = new Ext.util.DelayedTask(fn1);
-                //task.delay(50);
-
+                /*var task = new Ext.util.DelayedTask(fn1);
+                task.delay(10);
+*/
 
             }
 
@@ -339,9 +339,9 @@ Ext.define('ZSMZJ.controller.Header', {
 
                     }});
                 //}
-                //var task = new Ext.util.DelayedTask(fn);
-                //task.delay(10);
-
+                /*var task = new Ext.util.DelayedTask(fn);
+                task.delay(150);
+*/
             }
 
     },
@@ -1724,10 +1724,10 @@ Ext.define('ZSMZJ.controller.Header', {
         var businessid=form.objdata.businessid;
         var num=data.length;
         for(var i=0;i<num;i++){
+
             if(data[i].attachmenttype!='accountimgpath'){
                 var item=form.down('#'+data[i].attachmenttype);
                 var count=data[i].results.length;
-
                 CommonFunc.updateitemnum(item,count);
                 var formdata=[];
                 Ext.each(data[i].results,function(a){
@@ -1769,6 +1769,7 @@ Ext.define('ZSMZJ.controller.Header', {
         var divisiontype=form.down('#divisiontype');
         divisiontype.setValue(data.form.division);
         divisiontype.setRawValue(data.form.division);
+
         me.setSignature(data.signature,me,form);
         me.setAffixValue(data.affixfile,me,form);
         me.closemask();

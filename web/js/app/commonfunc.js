@@ -41,15 +41,27 @@ var CommonFunc = {
     },
     updateitemnum: function (item, count) {
         var text = '';
-        if (Ext.isGecko) {
-            text = item.el.dom.textContent;
-        } else {
+        if(Ext.isIE){
             text = item.el.dom.innerText;
+            var before_str = text.slice(0, text.indexOf("(") + 1);
+            var after_str = text.slice(text.indexOf(")"));
+            item.el.dom.innerText= before_str + count + after_str;
+
         }
-        var before_str = text.slice(0, text.indexOf("(") + 1);
-        var after_str = text.slice(text.indexOf(")"));
-        item.update(before_str + count + after_str);
-        item.doLayout();
+        else{
+            if (Ext.isGecko) {
+                text = item.el.dom.textContent;
+            } else {
+                text = item.el.dom.innerText;
+            }
+            var before_str = text.slice(0, text.indexOf("(") + 1);
+            var after_str = text.slice(text.indexOf(")"));
+
+            item.update(before_str + count + after_str);
+            item.doLayout();
+        }
+
+
 
     },
     removeTask: function (mask, el) {

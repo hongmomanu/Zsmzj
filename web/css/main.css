@@ -86,7 +86,7 @@
  /*extjs表格阴影效果*/
 .shadowdiv
 {
-    filter: progid:DXImageTransform.Microsoft.Shadow(color=#909090,direction=120,strength=4); /*ie*/
+    filter: ''; /*ie*/
     -moz-box-shadow: 20px 20px 5px black; /*firefox*/
     -webkit-box-shadow: 20px 20px 5px black; /*safari或chrome*/
     box-shadow: 5px 5px 5px black; /*opera或ie9*/

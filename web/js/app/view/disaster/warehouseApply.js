@@ -44,7 +44,7 @@ Ext.define('ZSMZJ.view.disaster.warehouseApply', {
                         cellspacing: 1,
                         width: '100%',
                         align: 'center',
-                        style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:center;"
+                        style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
                         /*style: {
                          width: '100%'
                          }*/

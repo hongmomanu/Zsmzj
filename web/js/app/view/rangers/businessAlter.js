@@ -52,7 +52,7 @@ Ext.define('ZSMZJ.view.rangers.businessAlter', {
                             cellspacing: 1,
                             width: '100%',
                             align: 'center',
-                            style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:center;"
+                            style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
                             /*style: {
                              width: '100%'
                              }*/

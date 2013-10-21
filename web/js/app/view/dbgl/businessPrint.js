@@ -58,7 +58,7 @@ Ext.define('ZSMZJ.view.dbgl.businessPrint', {
                                     cellspacing: 1,
                                     width: '100%',
                                     align: 'center',
-                                    style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:center;"
+                                    style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
                                     /*style: {
                                      width: '100%'
                                      }*/
@@ -169,7 +169,7 @@ Ext.define('ZSMZJ.view.dbgl.businessPrint', {
                                     cellspacing: 1,
                                     width: '100%',
                                     align: 'center',
-                                    style: "width:100%;height:100%;border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:center;"
+                                    style: "width:100%;height:100%;border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
 
                                 }
                             },

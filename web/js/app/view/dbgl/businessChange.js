@@ -56,7 +56,7 @@ Ext.define('ZSMZJ.view.dbgl.businessChange', {
                             cellspacing: 1,
                             width: '100%',
                             align: 'center',
-                            style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:center;"
+                            style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
                             /*style: {
                              width: '100%'
                              }*/
@@ -81,24 +81,36 @@ Ext.define('ZSMZJ.view.dbgl.businessChange', {
                         allowBlank: false
                     },
                         {
-                            xtype: 'component',
-                            name:'accountimgpath',
-                            value:"",
-                            width:100,
-                            height:110,
-                            itemId:'dbglaccountimg',
-                            rowspan:4,
-                            listeners: {
-                                render: function(c){
-                                    c.getEl().on('click', function(){ this.fireEvent('imgclick', c); }, c);
+
+                        xtype:'panel',
+                        border:0,
+
+                        style: "text-align:center;",
+                        rowspan:4,
+                        items:[
+                            {
+                                xtype: 'component',
+                                name:'accountimgpath',
+
+                                value:"",
+                                width:100,
+                                height:110,
+                                itemId:'dbglaccountimg',
+
+                                listeners: {
+                                    render: function(c){
+                                        c.getEl().on('click', function(){ this.fireEvent('imgclick', c); }, c);
+                                    }
+                                },
+                                autoEl: {
+                                    tag: 'img',
+                                    cls:'mouseover',
+                                    src : "img/noperson.gif"
                                 }
-                            },
-                            autoEl: {
-                                tag: 'img',
-                                cls:'mouseover',
-                                src : "img/noperson.gif"
                             }
-                        }
+                        ]
+
+                    }
                         ,{
                             xtype:'dbglaplytype',
                             name: 'applytype',
@@ -277,7 +289,7 @@ Ext.define('ZSMZJ.view.dbgl.businessChange', {
                             cellspacing: 1,
                             width: '100%',
                             align: 'center',
-                            style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:center;"
+                            style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
                             /*style: {
                              width: '100%'
                              }*/
@@ -372,7 +384,7 @@ Ext.define('ZSMZJ.view.dbgl.businessChange', {
                             cellspacing: 1,
                             width: '100%',
                             align: 'center',
-                            style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:center;"
+                            style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
                             /*style: {
                              width: '100%'
                              }*/
@@ -614,7 +626,7 @@ Ext.define('ZSMZJ.view.dbgl.businessChange', {
                             cellspacing: 1,
                             width: '100%',
                             align: 'center',
-                            style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:center;"
+                            style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
                             /*style: {
                              width: '100%'
                              }*/
@@ -786,7 +798,7 @@ Ext.define('ZSMZJ.view.dbgl.businessChange', {
                             cellspacing: 1,
                             width: '100%',
                             align: 'center',
-                            style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:center;"
+                            style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
                             /*style: {
                              width: '100%'
                              }*/
@@ -1039,7 +1051,7 @@ Ext.define('ZSMZJ.view.dbgl.businessChange', {
                             cellspacing: 1,
                             width: '100%',
                             align: 'center',
-                            style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:center;"
+                            style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
                             /*style: {
                              width: '100%'
                              }*/
@@ -1109,7 +1121,7 @@ Ext.define('ZSMZJ.view.dbgl.businessChange', {
                             cellspacing: 1,
                             width: '100%',
                             align: 'center',
-                            style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:center;"
+                            style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
                             /*style: {
                              width: '100%'
                              }*/
@@ -1303,7 +1315,7 @@ Ext.define('ZSMZJ.view.dbgl.businessChange', {
                             cellspacing: 1,
                             width: '100%',
                             align: 'center',
-                            style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:center;"
+                            style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
                             /*style: {
                              width: '100%'
                              }*/
