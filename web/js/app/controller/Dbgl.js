@@ -137,7 +137,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
                          var businessid=records[0].data.businessid;
                          form.objdata={};
                          form.objdata.businessid=businessid
-                         //head_cl.clearAlterContent(form);//清空修改内容
+                         head_cl.clearAlterContent(form);//清空修改内容
                          head_cl.getValueBybusinessid(businessid,'ajax/getapplyformallbybid.jsp',head_cl.setFormAllValuesWithOutSignature,form);
                          head_cl.formpanelstoreload(businessid,form);
 
