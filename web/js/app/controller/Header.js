@@ -52,7 +52,7 @@ Ext.define('ZSMZJ.controller.Header', {
             'dbglbusinessalterform,dbedgebusinessalterform,temporaryhelpbusinessalterform,medicalhelpbusinessalterform,studyhelpbusinessalterform,charitablehelpbusinessalterform,disasterhelpwarealterform,disasterhelpbusinessalterform,rangershelpbusinessalterform':{
 
                 alterapplyaftershow:function(form){
-                    ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
+                    ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"数据加载中..."});
                     ViewWaitMask.show();
                     var businessid=form.objdata.businessid;
                     this.clearAlterContent(form);//清空修改内容
@@ -77,8 +77,11 @@ Ext.define('ZSMZJ.controller.Header', {
                     //this.closemask();
                     var me =this;
                     //ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
-                    ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
+                    ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"数据加载中..."});
                     ViewWaitMask.show();
+
+
+                    //alert(2);
                     var businessid=form.objdata.businessid;
                     this.clearAlterContent(form);//清空修改内容
                     this.initProcessBtns(form); //初始化操作功能键
