@@ -980,6 +980,31 @@ Ext.define('ZSMZJ.view.temporaryhelp.businessApply', {
                             grow : true,
                             allowBlank: true
                         }
+                        ,{
+                            name: 'helpunit',
+                            fieldLabel: '救助单位',
+                            colspan:3,
+                            minWidth:600,
+                            width:800,
+                            //draggable :true,
+                            anchor : '100%',
+                            //width:800,
+                            xtype : 'textarea',
+                            grow : true,
+                            allowBlank: true
+                        },{
+                            name: 'helpunitopinion',
+                            fieldLabel: '救助单位意见',
+                            colspan:3,
+                            minWidth:600,
+                            width:800,
+                            //draggable :true,
+                            anchor : '100%',
+                            //width:800,
+                            xtype : 'textarea',
+                            grow : true,
+                            allowBlank: true
+                        }
                         ,/*{
                             colspan:3,
                             anchor : '100%',

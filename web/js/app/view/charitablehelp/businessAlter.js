@@ -929,6 +929,30 @@ Ext.define('ZSMZJ.view.charitablehelp.businessAlter', {
                             xtype : 'textarea',
                             grow : true,
                             allowBlank: true
+                        },{
+                            name: 'helpunit',
+                            fieldLabel: '慈善机构',
+                            colspan:3,
+                            minWidth:600,
+                            width:800,
+                            //draggable :true,
+                            anchor : '100%',
+                            //width:800,
+                            xtype : 'textarea',
+                            grow : true,
+                            allowBlank: true
+                        },{
+                            name: 'helpunitopinion',
+                            fieldLabel: '慈善机构意见',
+                            colspan:3,
+                            minWidth:600,
+                            width:800,
+                            //draggable :true,
+                            anchor : '100%',
+                            //width:800,
+                            xtype : 'textarea',
+                            grow : true,
+                            allowBlank: true
                         }
                         /*{
                             colspan:3,

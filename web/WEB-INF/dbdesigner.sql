@@ -206,7 +206,10 @@ windresistance                 VARCHAR(50),                          --抗风能
 earthquakeresistance           VARCHAR(50),                          --抗震能力
 conectperson                   VARCHAR(50),                          --联系人1
 conectperson2                   VARCHAR(50),                          --联系人2
-telnum2                        VARCHAR(50)                           --联系人2电话
+telnum2                        VARCHAR(50),                           --联系人2电话
+
+helpunit                        VARCHAR(50),                           --救助单位
+helpunitopinion                 VARCHAR(50)                           --救助单位意见
 );
 
 
@@ -333,6 +336,9 @@ CREATE VIRTUAL TABLE IF NOT EXISTS businesschange USING fts3
   conectperson                   VARCHAR(50),                          --联系人1
   conectperson2                  VARCHAR(50),                          --联系人2
   telnum2                        VARCHAR(50),                           --联系人2电话
+
+  helpunit                        VARCHAR(50),                           --救助单位
+  helpunitopinion                 VARCHAR(50),                           --救助单位意见
 
   businessid               integer,                                 --业务id
   insertdate               VARCHAR(50)                              --charuriq
