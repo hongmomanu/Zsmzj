@@ -839,10 +839,10 @@ Ext.define('ZSMZJ.view.temporaryhelp.businessAlter', {
                         ,
                         {
                             name: 'losemoney',
-                            fieldLabel: '受损金额(元)',
+                            fieldLabel: '受助金额(元)',
                             afterLabelTextTpl: required,
-                            emptyText: '请输入受损金额',
-                            blankText : '请输入搜损金额',
+                            emptyText: '请输入受助金额',
+                            blankText : '请输入受助金额',
                             allowBlank: false
                         }
                         ,
