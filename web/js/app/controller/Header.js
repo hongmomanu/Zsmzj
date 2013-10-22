@@ -52,18 +52,7 @@ Ext.define('ZSMZJ.controller.Header', {
             'dbglbusinessalterform,dbedgebusinessalterform,temporaryhelpbusinessalterform,medicalhelpbusinessalterform,studyhelpbusinessalterform,charitablehelpbusinessalterform,disasterhelpwarealterform,disasterhelpbusinessalterform,rangershelpbusinessalterform':{
 
                 alterapplyaftershow:function(form){
-                    ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"数据加载中..."});
-                    ViewWaitMask.show();
-                    var businessid=form.objdata.businessid;
-                    this.clearAlterContent(form);//清空修改内容
-                    this.initProcessBtns(form); //初始化操作功能键
-                    this.getValueBybusinessid(businessid,'ajax/getapplyformallbybid.jsp',this.setFormAllValues,form);
-                    this.formpanelstoreload(businessid,form);
-
-
-
-
-
+                    this.forminitdata(form);
                 }
             } ,
             'dbglbusinesschangeform,dbedgebusinesschangeform':{
@@ -74,34 +63,12 @@ Ext.define('ZSMZJ.controller.Header', {
                     }, p);*/
                 },
                 alterapplyaftershow:function(form){
-                    //this.closemask();
-                    var me =this;
-                    //ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
-                    ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"数据加载中..."});
-                    ViewWaitMask.show();
-
-
-                    //alert(2);
-                    var businessid=form.objdata.businessid;
-                    this.clearAlterContent(form);//清空修改内容
-                    this.initProcessBtns(form); //初始化操作功能键
-                    //this.initchangelogoutbtns(form);//更具是否操作来过滤按钮
-                    this.getValueBybusinessid(businessid,'ajax/getapplyformallbybid.jsp',this.setFormAllValues,form);
-                    this.formpanelstoreload(businessid,form);
+                    this.forminitdata(form);
                 }
             } ,
             'dbglbusinesslogoutform,dbedgebusinesslogoutform':{
                 alterapplyaftershow:function(form){
-                    //ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
-                    ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
-                    ViewWaitMask.show();
-                    var businessid=form.objdata.businessid;
-                    this.clearAlterContent(form);//清空修改内容
-                    this.initProcessBtns(form); //初始化操作功能键
-                    //this.initchangelogoutbtns(form);//更具是否操作来过滤按钮
-                    this.getValueBybusinessid(businessid,'ajax/getapplyformallbybid.jsp',this.setFormAllValues,form);
-                    this.formpanelstoreload(businessid,form);
-
+                    this.forminitdata(form);
                 }
             } ,
 
@@ -301,6 +268,16 @@ Ext.define('ZSMZJ.controller.Header', {
         }
     }
     ,
+    forminitdata:function(form){
+        ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
+        ViewWaitMask.show();
+        var businessid=form.objdata.businessid;
+        this.clearAlterContent(form);//清空修改内容
+        this.initProcessBtns(form); //初始化操作功能键
+        //this.initchangelogoutbtns(form);//更具是否操作来过滤按钮
+        this.getValueBybusinessid(businessid,'ajax/getapplyformallbybid.jsp',this.setFormAllValues,form);
+        this.formpanelstoreload(businessid,form);
+    },
     formpanelstoreload:function(businessid,form){
 
             var processpanel=form.down('#processhistorypanel');
