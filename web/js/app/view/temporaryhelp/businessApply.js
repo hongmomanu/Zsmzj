@@ -859,6 +859,27 @@ Ext.define('ZSMZJ.view.temporaryhelp.businessApply', {
                             allowBlank: false
                         }
                          ,
+                        {
+                            xtype:'dbglaplytype',
+                            searchtype:"temporaryfundsresource",
+                            name: 'fundsresource',
+                            fieldLabel: '资金来源',
+                            afterLabelTextTpl: required,
+                            emptyText: '请选择资金来源',
+                            blankText : '请选择资金来源',
+                            allowBlank: false
+                        },
+                        {
+                            xtype:'dbglaplytype',
+                            searchtype:"temporaryhelpobject",
+                            name: 'helpobject',
+                            fieldLabel: '救助对象',
+                            afterLabelTextTpl: required,
+                            emptyText: '请选择救助对象',
+                            blankText : '请选择救助对象',
+                            allowBlank: false
+                        }
+                        ,
                          {
                          name: 'aidnum',
                          fieldLabel: '救助证编号',
@@ -923,7 +944,7 @@ Ext.define('ZSMZJ.view.temporaryhelp.businessApply', {
                             fieldLabel: '公示结束日期',
                             xtype: 'datefield',
                             format: 'Y-m-d',
-                            colspan:3,
+                            colspan:2,
                             allowBlank: true
                         }
                         ,{
