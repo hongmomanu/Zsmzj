@@ -826,6 +826,16 @@ Ext.define('ZSMZJ.view.charitablehelp.businessApply', {
 
                     items: [
 
+                        {
+                            xtype:'dbglaplytype',
+                            searchtype:"helpprojecttype",
+                            name: 'helpprojecttype',
+                            fieldLabel: '救助项目类型',
+                            afterLabelTextTpl: required,
+                            emptyText: '请选择救助项目类型',
+                            blankText : '请选择救助项目类型',
+                            allowBlank: false
+                        },
 
                         {
                             name: 'helpbgtime',
