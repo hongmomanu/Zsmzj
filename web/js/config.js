@@ -13,6 +13,7 @@ var businessTableType=
             'temporaryhelp':'临时救助',
             'studyhelp':'助学救助',
             'charitablehelp':'慈善救助',
+            'charitableinstitutionhelp':'慈善机构救助',
             'medicalhelp':'医疗救助',
             'disasterhelp':'灾害救助',
             'disasterware':'避灾仓库',
@@ -642,6 +643,9 @@ var familyheaders={
 
 };
 
+var applyformviews=['dbglfamilybasicfieldset','dbglfamilymemberfieldset',
+    'dbglfamilymoneyfieldset','dbglfamilyhousefieldset','dbglfamilyinputfieldset',
+    'dbglfamilyaffixfieldset','dbglfamilyapplyfieldset','dbglapplysubmitfieldset'];
 var menu_shjz=[
     {
         layout: 'fit',

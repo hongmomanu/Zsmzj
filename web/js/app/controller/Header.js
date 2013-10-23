@@ -36,7 +36,6 @@ Ext.define('ZSMZJ.controller.Header', {
         var me = this;
         this.initHeadView();
 
-
         this.control({
             /*'headviewpanel#headviewitem':{
                 selectionchange: this.selectionchange
@@ -1403,6 +1402,8 @@ Ext.define('ZSMZJ.controller.Header', {
                 widgetname='disasterhelpbusinessalterform';
             }else if(r.get('businesstype')==businessTableType.rangershelp){
                 widgetname='rangershelpbusinessalterform';
+            }else if(r.get('businesstype')==businessTableType.charitableinstitutionhelp){
+                widgetname='charitablehelpinstitutionalterform';
             }
 
         }else if(r.get('processstatustype')==processstatustype.change){

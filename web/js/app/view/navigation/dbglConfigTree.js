@@ -18,7 +18,7 @@ Ext.define('ZSMZJ.view.navigation.dbglConfigTree' ,{
 
     rootVisible: false,
     border: false,
-    useArrows: true,
+    useArrows: false,
 
     initComponent: function() {
         Ext.apply(this, {

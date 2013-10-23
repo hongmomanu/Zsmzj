@@ -103,16 +103,12 @@ Ext.define('ZSMZJ.view.Viewport', {
                             }
                         }),
                         //hideMode:"visibility",
-                        closeAction:'hide',
+                        closeAction:'close',
                         activeTab: 0,     // first tab initially active
                         items: [
                             {
                                 xtype: 'mainpanel'
-                               /* html:'',
-                                id:'tabindex',
-                                bodyCls : ['indexbackground','welcome-title'],
-                                title: '首页',
-                                autoScroll: true*/
+
                             }
 				    ]
                    })

@@ -23,7 +23,9 @@ Ext.define('ZSMZJ.controller.Charitable', {
     ],
     views: [
         'charitablehelp.businessApply',
-        'charitablehelp.businessAlter'
+        'charitablehelp.businessAlter',
+        'charitablehelp.institutionApply',
+        'charitablehelp.institutionAlter'
     ],
 
     initStrore: function () {
@@ -34,7 +36,7 @@ Ext.define('ZSMZJ.controller.Charitable', {
         var dbgl_cl = this.application.getController("Dbgl");
         var header_cl=this.application.getController("Header");
         this.control({
-            'charitablehelpbusinessapplyform,charitablehelpbusinessalterform': {
+            'charitablehelpbusinessapplyform,charitablehelpbusinessalterform,charitablehelpinstitutionalterform,charitablehelpinstitutionapplyform': {
                 afterrender: dbgl_cl.afterrenderEvents
             },
             'charitablehelpbusinessapplyform component,charitablehelpbusinessalterform component': {
@@ -51,7 +53,11 @@ Ext.define('ZSMZJ.controller.Charitable', {
             'charitablehelpbusinessapplyform button[action=applysubmit]': {
                 click: this.applysubmit
             },
-            'charitablehelpbusinessalterform button[action=applysubmit]': {
+            'charitablehelpinstitutionapplyform button[action=applysubmit]': {
+                click: this.institutionapplysubmit
+            },
+
+            'charitablehelpbusinessalterform button[action=applysubmit],charitablehelpinstitutionalterform button[action=applysubmit]': {
                 click: Ext.bind(dbgl_cl.applysubmitupdate, dbgl_cl)
             },
             'charitablehelpbusinessalterform button[action=sendbusiness]':{
@@ -63,7 +69,7 @@ Ext.define('ZSMZJ.controller.Charitable', {
             'charitablehelpbusinessalterform button[action=change]':{
                 click: Ext.bind(header_cl.showchangeform,header_cl)
             },
-            'charitablehelpbusinessalterform button[action=cancel]':{
+            'charitablehelpbusinessalterform button[action=cancel],charitablehelpinstitutionalterform button[action=cancel]':{
                 click: Ext.bind(header_cl.cancelcheck,header_cl)
             },
             'charitablehelpbusinessalterform button[action=checkbusiness]':{
@@ -95,6 +101,11 @@ Ext.define('ZSMZJ.controller.Charitable', {
     applysubmit: function (btn) {
         var dbgl_cl = this.application.getController("Dbgl");
         dbgl_cl.submitcommon(btn, businessTableType.charitablehelp,true);
+    },
+    institutionapplysubmit:function(btn){
+        var dbgl_cl = this.application.getController("Dbgl");
+        dbgl_cl.submitcommon(btn, businessTableType.charitableinstitutionhelp,false);
+
     },
 
     onLaunch: function () {

@@ -68,7 +68,15 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.moreSearchFamilyWin',
         'common.MonthField',
         'dbgl.StatisticsComplexOneGrid',
-        'dbgl.personidSearchCombo'
+        'dbgl.personidSearchCombo',
+        'dbgl.applysubmitFieldset',
+        'dbgl.familyaffixFieldset',
+        'dbgl.familybasicFieldset',
+        'dbgl.familyhouseFieldset',
+        'dbgl.familyinputFieldset',
+        'dbgl.familymemberFieldset',
+        'dbgl.familymoneyFieldset',
+        'dbgl.familyapplyFieldset'
     ],
 
     initStrore:function(){
@@ -222,7 +230,48 @@ Ext.define('ZSMZJ.controller.Dbgl', {
          },
 
          'dbglbusinessapplyform,dbglbusinesscheckform,dbglbusinessalterform,dbglbusinesschangeform,dbglbusinesslogoutform':{
-             afterrender: this.afterrenderEvents
+             afterrender: this.afterrenderEvents,
+             initformaftershow:function(form){
+                 for(var i=0;i<applyformviews.length;i++){
+                     //alert(applyformviews[i]);
+                     /*var task = {
+                         run: function(){
+                             form.add(Ext.widget(applyformviews[i]));
+                         },
+                         repeat:1,
+                         interval: 1 //1 秒
+                     };
+                     Ext.TaskManager.start(task);*/
+
+                     (function a (index){
+                         /*function fn(){
+                            //alert(applyformviews[index]);
+                            form.add(Ext.widget(applyformviews[index]));
+                         }
+                         var task = new Ext.util.DelayedTask(fn);
+                         task.delay(index*50);*/
+                         var task = {
+                             run: function(){
+                                 //form.add(Ext.widget(applyformviews[index]));
+                                 function fn(){
+                                     form.add(Ext.widget(applyformviews[index]));
+                                 }
+                                 var task = new Ext.util.DelayedTask(fn);
+                                 task.delay(index*30);
+                             },
+                             repeat:1,
+                             interval: 1 //1 秒
+                         };
+                         Ext.TaskManager.start(task);
+
+                     })(i);
+
+
+
+                 }
+
+
+             }
          },
 
 
