@@ -71,12 +71,22 @@ Ext.define('ZSMZJ.controller.Header', {
                     }, p);*/
                 },
                 alterapplyaftershow:function(form){
-                    this.forminitdata(form);
+                    if(form.isnewbusiness||form.items.items.length==0){
+                        this.getValueBybusinessid(form.objdata.businessid,'ajax/getapplyformallbybid.jsp',this.setFormValuesPieces,form);
+                    }else{
+                        this.closemask();
+                    }
+                    //this.forminitdata(form);
                 }
             } ,
             'dbglbusinesslogoutform,dbedgebusinesslogoutform':{
                 alterapplyaftershow:function(form){
-                    this.forminitdata(form);
+                    if(form.isnewbusiness||form.items.items.length==0){
+                        this.getValueBybusinessid(form.objdata.businessid,'ajax/getapplyformallbybid.jsp',this.setFormValuesPieces,form);
+                    }else{
+                        this.closemask();
+                    }
+                    //this.forminitdata(form);
                 }
             } ,
 

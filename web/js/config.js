@@ -24,7 +24,9 @@ var businessTableType=
 
 var formwidgettype={
     'dbglapply':'dbglbusinessapplyform',
-    'dbglalter':'dbglbusinessalterform'
+    'dbglalter':'dbglbusinessalterform',
+    'dbglchange':'dbglbusinesschangeform',
+    'dbgllogout':'dbglbusinesslogoutform'
 };
 
 var familyheaders={
@@ -668,6 +670,29 @@ var applyformviews={
         'dbglfamilyaffixfieldset',
         'dbglfamilyapplyfieldset',
         'dbglaltersubmitfieldset',
+        'dbglapplyhistoryfieldset'
+
+    ],
+    'dbglchange':[
+        'dbglfamilybasicfieldset',
+        'dbglfamilymemberfieldset',
+        'dbglfamilymoneyfieldset',
+        'dbglfamilyhousefieldset',
+        'dbglfamilyinputfieldset',
+        'dbglfamilyaffixfieldset',
+        'dbglfamilyapplyfieldset',
+        'dbglchangesubmitfieldset',
+        'dbglapplyhistoryfieldset'
+
+    ],'dbgllogout':[
+        'dbglfamilybasicfieldset',
+        'dbglfamilymemberfieldset',
+        'dbglfamilymoneyfieldset',
+        'dbglfamilyhousefieldset',
+        'dbglfamilyinputfieldset',
+        'dbglfamilyaffixfieldset',
+        'dbglfamilyapplyfieldset',
+        'dbgllogoutsubmitfieldset',
         'dbglapplyhistoryfieldset'
 
     ]

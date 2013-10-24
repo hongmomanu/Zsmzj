@@ -78,7 +78,9 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.familymoneyFieldset',
         'dbgl.familyapplyFieldset',
         'dbgl.applyhistoryFieldset',
-        'dbgl.altersubmitFieldset'
+        'dbgl.altersubmitFieldset',
+        'dbgl.changesubmitFieldset',
+        'dbgl.logoutsubmitFieldset'
 
     ],
 
