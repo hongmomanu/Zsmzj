@@ -78,6 +78,9 @@ Ext.define('ZSMZJ.controller.Navigation', {
             var businesstype=item.raw.name==item.raw.url?item.raw.name:record.panel.businesstype;
             this.showtab(item.data.text,item.data.value,item.data.type,businesstype);
 
+        }else{
+            if(item.isExpanded())item.collapse();
+            else  item.expand();
         }
     },
     tabdolayout:function(value){

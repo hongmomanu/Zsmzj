@@ -1390,10 +1390,10 @@ Ext.define('ZSMZJ.controller.Header', {
 
         form.getForm().reset();
         //家庭成员清空
-        var grid=form.down('#familymembergrid');
+        /*var grid=form.down('#familymembergrid');
         if(grid){
             grid.getStore().removeAll();
-        }
+        }*/
 
         //照片清空
         var img_item=form.down('#dbglaccountimg');
@@ -1405,14 +1405,20 @@ Ext.define('ZSMZJ.controller.Header', {
 
         //附件清空
         var affixfilespanel=form.down('#affixfilespanel');
+        testobj=form;
         if(affixfilespanel){
-            Ext.each(affixfilespanel.items.items,function(a){
+            var index=form.items.indexOf(affixfilespanel);
+            form.remove(affixfilespanel);
+            var form_widget=Ext.widget('dbglfamilyaffixfieldset');
+            //form.add(form_widget);
+            form.insert(index,form_widget)
+            /*Ext.each(affixfilespanel.items.items,function(a){
                 if(a.items){
                     CommonFunc.updateitemnum(a.items.items[0],0);
                     a.items.items[0].formdata=[];
 
                 }
-            });
+            });*/
         }
 
         //清空窗口

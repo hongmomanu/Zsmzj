@@ -339,6 +339,9 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             var task = {
                 run: function(){
                     var form_items=form.items.items;
+                    head_cl.clearAlterContent(form);
+
+                    Ext.bind(head_cl.clearAlterContent(form),head_cl);
                     for(var n=0;n<form_items.length;n++){
                         (function a (index,len){
                             function fn(){
@@ -692,7 +695,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         var affixpanel=form.down('#affixfilespanel');
         if(affixpanel){
             Ext.each(affixpanel.items.items,function(a){
-                if(a.xtype=='panel'){
+                if(a.xtype=='container'){
                     var formdata=a.down('panel').formdata;
                     var affixfileitem={};
                     affixfileitem[a.down('panel').type]=formdata;
