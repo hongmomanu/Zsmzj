@@ -1742,7 +1742,6 @@ Ext.define('ZSMZJ.controller.Header', {
         var businessid=form.objdata.businessid;
 
         var num=data.length;
-        console.log(data);
         for(var i=0;i<num;i++){
             if(data[i].attachmenttype!='accountimgpath'){
                 var item=form.down('#'+data[i].attachmenttype);
