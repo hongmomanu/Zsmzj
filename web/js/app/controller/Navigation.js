@@ -98,6 +98,7 @@ Ext.define('ZSMZJ.controller.Navigation', {
         var tabs = Ext.getCmp('mainContent-panel');
         var tab=tabs.getComponent('tab' + value);
         if (tab) {
+            tab.isnewgrid=!(tab.xtype==value&&tab.businesstype==businesstype);
             tab.businesstype=businesstype;
             tab.ispublicinfo=ispublicinfo;
             tab.setTitle(label);
@@ -117,6 +118,7 @@ Ext.define('ZSMZJ.controller.Navigation', {
                             xtype: value,
                             businesstype:businesstype,
                             ispublicinfo:ispublicinfo,
+                            isnewgrid:true,
                             autoShow:true,
                             autoScroll: true,
                             //active:true,

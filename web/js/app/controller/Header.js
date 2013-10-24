@@ -206,10 +206,14 @@ Ext.define('ZSMZJ.controller.Header', {
                       store.proxy.extraParams.businesstype = grid.businesstype;
                       store.proxy.extraParams.type=grid.stype
                       store.proxy.extraParams.ispublicinfo=grid.ispublicinfo
-                      store.load({callback:function(){
+                      if(grid.isnewgrid){
+                          store.load({callback:function(){
 
-                          CommonFunc.widgetdolayout("mainContent-panel",1);
-                      }});
+                              CommonFunc.widgetdolayout("mainContent-panel",1);
+                          }});
+                          grid.isnewgrid=false;
+                      }
+
                       //清空高级搜索
                       store.on('load', function (store, options) {
                           store.proxy.extraParams.name=null;
@@ -1697,7 +1701,7 @@ Ext.define('ZSMZJ.controller.Header', {
             signaturepic.setLocalX(item.x);
             signaturepic.setLocalY(item.y);
 
-            this.signaturepicarr.push(signaturepic)
+            this.signaturepicarr.push(signaturepic);
 
 
     },
@@ -1738,8 +1742,8 @@ Ext.define('ZSMZJ.controller.Header', {
         var businessid=form.objdata.businessid;
 
         var num=data.length;
+        console.log(data);
         for(var i=0;i<num;i++){
-
             if(data[i].attachmenttype!='accountimgpath'){
                 var item=form.down('#'+data[i].attachmenttype);
                 var count=data[i].results.length;
@@ -1752,12 +1756,16 @@ Ext.define('ZSMZJ.controller.Header', {
             }
             else{
                 var filepath=data[i].results[0].attachmentpath;
-                var img_item=form.down('#dbglaccountimg');
-                if(img_item){
-                    img_item.getEl().dom.src=filepath;
-                    img_item.value=filepath;
+                if(filepath!=""){
+                    var img_item=form.down('#dbglaccountimg');
+                    if(img_item){
+                        img_item.getEl().dom.src=filepath;
+                        img_item.value=filepath;
 
+                    }
                 }
+
+
 
             }
 
@@ -1782,6 +1790,7 @@ Ext.define('ZSMZJ.controller.Header', {
         form.allformdata=data.form;
         form.signaturedata=data.signature;
         form.affixfiledata=data.affixfile;
+        me.initProcessBtns(form);
         var dbgl_cl=me.application.getController("Dbgl");
         var callback=function(){return me.setSignature(data.signature,me,form)};
         dbgl_cl.initformaftershow(form,true,callback);
@@ -2034,13 +2043,18 @@ Ext.define('ZSMZJ.controller.Header', {
         var tabs = Ext.getCmp('mainContent-panel');
         if (tabs.getComponent('tab' + value)) {
             var tab=tabs.getComponent('tab' + value);
-            if(objdata)tab.objdata=objdata;
+
+            if(objdata){
+                tab.isnewbusiness=!(tab.objdata.businessid==objdata.businessid);
+                tab.objdata=objdata;
+            }
 
             if(tab.isHidden()){
 
                 //function fn(){
                     tab.tab.show();
                     tabs.setActiveTab(tab);
+
                 //}
 
                 //var task = new Ext.util.DelayedTask(fn);

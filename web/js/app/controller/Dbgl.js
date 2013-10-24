@@ -280,51 +280,88 @@ Ext.define('ZSMZJ.controller.Dbgl', {
     },
     initformaftershow:function(form,isajaxdata,callback){
         var views=applyformviews[CommonFunc.lookupitemname(formwidgettype,form.xtype)];
+        //console.log(form.items.items.length);
         var me=this;
-        for(var i=0;i<views.length;i++){
-            (function a (index,len){
+        if(form.items.items.length==0){
 
-                var task = {
-                    run: function(){
-                        function fn(){
-                            var form_widget=Ext.widget(views[index]);
-                            form.add(form_widget);
-                            if(isajaxdata){
-                                if(form_widget.itemId==='affixfilespanel'){
-                                    var head_cl=me.application.getController("Header");
-                                    head_cl.setAffixValue(form.affixfiledata,head_cl,form);
-                                }
-                                else{
-                                    var items=form_widget.items.items;
+            for(var i=0;i<views.length;i++){
+                (function a (index,len){
 
-                                    for(var j=0;j<items.length;j++){
-                                        var name=items[j].name;
-                                        if(name){
-                                            items[j].setValue(form.allformdata[name]);
-                                            if(items[j].itemId=='divisiontype')items[j].setRawValue(form.allformdata[name]);
-                                        }else{
-                                            var head_cl=me.application.getController("Header");
-                                            head_cl.formgridload(form,items[j]);
+                    var task = {
+                        run: function(){
+                            function fn(){
+                                var form_widget=Ext.widget(views[index]);
+                                form.add(form_widget);
+                                if(isajaxdata){
+                                    if(form_widget.itemId==='affixfilespanel'){
+                                        var head_cl=me.application.getController("Header");
+                                        head_cl.setAffixValue(form.affixfiledata,head_cl,form);
+                                    }
+                                    else{
+                                        var items=form_widget.items.items;
+
+                                        for(var j=0;j<items.length;j++){
+                                            var name=items[j].name;
+                                            if(name){
+                                                items[j].setValue(form.allformdata[name]);
+                                                if(items[j].itemId=='divisiontype')items[j].setRawValue(form.allformdata[name]);
+                                            }else{
+                                                var head_cl=me.application.getController("Header");
+                                                head_cl.formgridload(form,items[j]);
+                                            }
                                         }
                                     }
-                                }
 
+
+                                }
+                                if(len-1==index&&callback)callback();
 
                             }
-                            if(len-1==index&&callback)callback();
+                            var task = new Ext.util.DelayedTask(fn);
+                            task.delay(index*30);
+                        },
+                        repeat:1,
+                        interval: 1 //1 毫秒
+                    };
+                    Ext.TaskManager.start(task);
 
-                        }
-                        var task = new Ext.util.DelayedTask(fn);
-                        task.delay(index*30);
-                    },
-                    repeat:1,
-                    interval: 1 //1 毫秒
-                };
-                Ext.TaskManager.start(task);
+                })(i,views.length);
 
-            })(i,views.length);
+            }
 
         }
+        else if(form.isnewbusiness){
+            var form_items=form.items.items;
+            for(var n=0;n<form_items.length;n++){
+                var  form_widget=form_items[n];
+                if(form_widget.itemId==='affixfilespanel'){
+                    var head_cl=me.application.getController("Header");
+                    head_cl.setAffixValue(form.affixfiledata,head_cl,form);
+                }
+                else{
+                    var items=form_widget.items.items;
+
+                    for(var j=0;j<items.length;j++){
+                        var name=items[j].name;
+                        if(name){
+                            items[j].setValue(form.allformdata[name]);
+                            if(items[j].itemId=='divisiontype')items[j].setRawValue(form.allformdata[name]);
+                        }else{
+                            var head_cl=me.application.getController("Header");
+                            head_cl.formgridload(form,items[j]);
+                        }
+                    }
+                }
+
+
+            }
+            callback();
+        }
+        else{
+            var head_cl=me.application.getController("Header");
+            head_cl.closemask();
+        }
+
 
 
     },
