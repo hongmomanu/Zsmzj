@@ -331,31 +331,49 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
         }
         else if(form.isnewbusiness){
-            var form_items=form.items.items;
-            for(var n=0;n<form_items.length;n++){
-                var  form_widget=form_items[n];
-                if(form_widget.itemId==='affixfilespanel'){
-                    var head_cl=me.application.getController("Header");
-                    head_cl.setAffixValue(form.affixfiledata,head_cl,form);
-                }
-                else{
-                    var items=form_widget.items.items;
+            var head_cl=me.application.getController("Header");
+            head_cl.closemask();
 
-                    for(var j=0;j<items.length;j++){
-                        var name=items[j].name;
-                        if(name){
-                            items[j].setValue(form.allformdata[name]);
-                            if(items[j].itemId=='divisiontype')items[j].setRawValue(form.allformdata[name]);
-                        }else{
-                            var head_cl=me.application.getController("Header");
-                            head_cl.formgridload(form,items[j]);
-                        }
+            var task = {
+                run: function(){
+                    var form_items=form.items.items;
+                    for(var n=0;n<form_items.length;n++){
+                        (function a (index,len){
+                            function fn(){
+                                var  form_widget=form_items[index];
+                                if(form_widget.itemId==='affixfilespanel'){
+
+                                    head_cl.setAffixValue(form.affixfiledata,head_cl,form);
+                                }
+                                else{
+                                    var items=form_widget.items.items;
+
+                                    for(var j=0;j<items.length;j++){
+                                        var name=items[j].name;
+                                        if(name){
+                                            items[j].setValue(form.allformdata[name]);
+                                            if(items[j].itemId=='divisiontype')items[j].setRawValue(form.allformdata[name]);
+                                        }else{
+                                            head_cl.formgridload(form,items[j]);
+                                        }
+                                    }
+                                }
+                            }
+                            var task = new Ext.util.DelayedTask(fn);
+                            task.delay(n*30);
+
+
+                        })(n)
+
                     }
-                }
-
-
+                    callback();
+                },
+                repeat:1,
+                interval: 1 //1 毫秒
             }
-            callback();
+            Ext.TaskManager.start(task);
+
+
         }
         else{
             var head_cl=me.application.getController("Header");

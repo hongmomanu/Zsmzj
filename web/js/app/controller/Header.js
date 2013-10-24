@@ -51,8 +51,12 @@ Ext.define('ZSMZJ.controller.Header', {
             'dbglbusinessalterform,dbedgebusinessalterform,temporaryhelpbusinessalterform,medicalhelpbusinessalterform,studyhelpbusinessalterform,charitablehelpbusinessalterform,disasterhelpwarealterform,disasterhelpbusinessalterform,rangershelpbusinessalterform':{
 
                 alterapplyaftershow:function(form){
+                    if(form.isnewbusiness||form.items.items.length==0){
+                        this.getValueBybusinessid(form.objdata.businessid,'ajax/getapplyformallbybid.jsp',this.setFormValuesPieces,form);
+                    }else{
+                        this.closemask();
+                    }
 
-                    this.getValueBybusinessid(form.objdata.businessid,'ajax/getapplyformallbybid.jsp',this.setFormValuesPieces,form);
 
                     /*var callback=Ext.bind(this.forminitdata,this);
                     dbgl_cl.initformaftershow(form,callback);*/
@@ -1750,7 +1754,7 @@ Ext.define('ZSMZJ.controller.Header', {
                 var formdata=[];
                 Ext.each(data[i].results,function(a){
                     formdata.push(a);
-                })
+                });
                 item.formdata=formdata;
             }
             else{
