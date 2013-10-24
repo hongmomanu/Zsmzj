@@ -22,6 +22,11 @@ var businessTableType=
             'allquery':'all'
         };
 
+var formwidgettype={
+    'dbglapply':'dbglbusinessapplyform',
+    'dbglalter':'dbglbusinessalterform'
+};
+
 var familyheaders={
     'dbgl':[
 
@@ -643,9 +648,31 @@ var familyheaders={
 
 };
 
-var applyformviews=['dbglfamilybasicfieldset','dbglfamilymemberfieldset',
-    'dbglfamilymoneyfieldset','dbglfamilyhousefieldset','dbglfamilyinputfieldset',
-    'dbglfamilyaffixfieldset','dbglfamilyapplyfieldset','dbglapplysubmitfieldset'];
+var applyformviews={
+    'dbglapply':[
+        'dbglfamilybasicfieldset',
+        'dbglfamilymemberfieldset',
+        'dbglfamilymoneyfieldset',
+        'dbglfamilyhousefieldset',
+        'dbglfamilyinputfieldset',
+        'dbglfamilyaffixfieldset',
+        'dbglfamilyapplyfieldset',
+        'dbglapplysubmitfieldset'
+    ],
+    'dbglalter':[
+        'dbglfamilybasicfieldset',
+        'dbglfamilymemberfieldset',
+        'dbglfamilymoneyfieldset',
+        'dbglfamilyhousefieldset',
+        'dbglfamilyinputfieldset',
+        'dbglfamilyaffixfieldset',
+        'dbglfamilyapplyfieldset',
+        'dbglaltersubmitfieldset',
+        'dbglapplyhistoryfieldset'
+
+    ]
+
+}
 var menu_shjz=[
     {
         layout: 'fit',

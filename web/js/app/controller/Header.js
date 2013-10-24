@@ -51,7 +51,12 @@ Ext.define('ZSMZJ.controller.Header', {
             'dbglbusinessalterform,dbedgebusinessalterform,temporaryhelpbusinessalterform,medicalhelpbusinessalterform,studyhelpbusinessalterform,charitablehelpbusinessalterform,disasterhelpwarealterform,disasterhelpbusinessalterform,rangershelpbusinessalterform':{
 
                 alterapplyaftershow:function(form){
-                    this.forminitdata(form);
+
+                    this.getValueBybusinessid(form.objdata.businessid,'ajax/getapplyformallbybid.jsp',this.setFormValuesPieces,form);
+
+                    /*var callback=Ext.bind(this.forminitdata,this);
+                    dbgl_cl.initformaftershow(form,callback);*/
+
                 }
             } ,
             'dbglbusinesschangeform,dbedgebusinesschangeform':{
@@ -276,6 +281,37 @@ Ext.define('ZSMZJ.controller.Header', {
         //this.initchangelogoutbtns(form);//更具是否操作来过滤按钮
         this.getValueBybusinessid(businessid,'ajax/getapplyformallbybid.jsp',this.setFormAllValues,form);
         this.formpanelstoreload(businessid,form);
+    },
+    formgridload:function(form,grid){
+      if(grid.itemId=='processhistorypanel'){
+          var store=grid.getStore();
+          store.proxy.extraParams = {
+              businessid:form.objdata.businessid
+          };
+          store.load();
+      }
+        else if(grid.itemId=='familymembergrid'){
+
+          var familystore=grid.getStore();
+          familystore.proxy.extraParams = {
+              businessid:form.objdata.businessid
+          };
+
+          familystore.load({callback:function(){
+              var enjoyednum=0;
+              Ext.each(familystore.data.items,function(a){
+                  if(a.get("isenjoyed")==isenjoyedtype.yes){
+                      enjoyednum++;
+                  }
+              });
+              var countitem=form.down('#FamilyPersons');
+              var enjoyitem=form.down('#enjoyPersons');
+              if(countitem)countitem.setValue(familystore.data.items.length);
+              if(enjoyitem)enjoyitem.setValue(enjoyednum);
+
+          }});
+
+      }
     },
     formpanelstoreload:function(businessid,form){
 
@@ -1666,7 +1702,6 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
     setSignature:function(data,me,form){
-
         Ext.each(data,function(item){
             me.addSignature(item,form);
         });
@@ -1701,6 +1736,7 @@ Ext.define('ZSMZJ.controller.Header', {
     },
     setAffixValue:function(data,me,form){
         var businessid=form.objdata.businessid;
+
         var num=data.length;
         for(var i=0;i<num;i++){
 
@@ -1740,6 +1776,15 @@ Ext.define('ZSMZJ.controller.Header', {
         divisiontype.setRawValue(data.form.division);
         me.setAffixValue(data.affixfile,me,form);
         me.closemask();
+
+    },
+    setFormValuesPieces:function(data,me,form){
+        form.allformdata=data.form;
+        form.signaturedata=data.signature;
+        form.affixfiledata=data.affixfile;
+        var dbgl_cl=me.application.getController("Dbgl");
+        var callback=function(){return me.setSignature(data.signature,me,form)};
+        dbgl_cl.initformaftershow(form,true,callback);
 
     },
     setFormAllValues:function(data,me,form){

@@ -76,7 +76,10 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.familyinputFieldset',
         'dbgl.familymemberFieldset',
         'dbgl.familymoneyFieldset',
-        'dbgl.familyapplyFieldset'
+        'dbgl.familyapplyFieldset',
+        'dbgl.applyhistoryFieldset',
+        'dbgl.altersubmitFieldset'
+
     ],
 
     initStrore:function(){
@@ -231,47 +234,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
          'dbglbusinessapplyform,dbglbusinesscheckform,dbglbusinessalterform,dbglbusinesschangeform,dbglbusinesslogoutform':{
              afterrender: this.afterrenderEvents,
-             initformaftershow:function(form){
-                 for(var i=0;i<applyformviews.length;i++){
-                     //alert(applyformviews[i]);
-                     /*var task = {
-                         run: function(){
-                             form.add(Ext.widget(applyformviews[i]));
-                         },
-                         repeat:1,
-                         interval: 1 //1 秒
-                     };
-                     Ext.TaskManager.start(task);*/
-
-                     (function a (index){
-                         /*function fn(){
-                            //alert(applyformviews[index]);
-                            form.add(Ext.widget(applyformviews[index]));
-                         }
-                         var task = new Ext.util.DelayedTask(fn);
-                         task.delay(index*50);*/
-                         var task = {
-                             run: function(){
-                                 //form.add(Ext.widget(applyformviews[index]));
-                                 function fn(){
-                                     form.add(Ext.widget(applyformviews[index]));
-                                 }
-                                 var task = new Ext.util.DelayedTask(fn);
-                                 task.delay(index*30);
-                             },
-                             repeat:1,
-                             interval: 1 //1 秒
-                         };
-                         Ext.TaskManager.start(task);
-
-                     })(i);
-
-
-
-                 }
-
-
-             }
+             initformaftershow:this.initformaftershow
          },
 
 
@@ -312,6 +275,56 @@ Ext.define('ZSMZJ.controller.Dbgl', {
              beforeload:function(store){alert(1)}
          }
          }, this);
+
+
+    },
+    initformaftershow:function(form,isajaxdata,callback){
+        var views=applyformviews[CommonFunc.lookupitemname(formwidgettype,form.xtype)];
+        var me=this;
+        for(var i=0;i<views.length;i++){
+            (function a (index,len){
+
+                var task = {
+                    run: function(){
+                        function fn(){
+                            var form_widget=Ext.widget(views[index]);
+                            form.add(form_widget);
+                            if(isajaxdata){
+                                if(form_widget.itemId==='affixfilespanel'){
+                                    var head_cl=me.application.getController("Header");
+                                    head_cl.setAffixValue(form.affixfiledata,head_cl,form);
+                                }
+                                else{
+                                    var items=form_widget.items.items;
+
+                                    for(var j=0;j<items.length;j++){
+                                        var name=items[j].name;
+                                        if(name){
+                                            items[j].setValue(form.allformdata[name]);
+                                            if(items[j].itemId=='divisiontype')items[j].setRawValue(form.allformdata[name]);
+                                        }else{
+                                            var head_cl=me.application.getController("Header");
+                                            head_cl.formgridload(form,items[j]);
+                                        }
+                                    }
+                                }
+
+
+                            }
+                            if(len-1==index&&callback)callback();
+
+                        }
+                        var task = new Ext.util.DelayedTask(fn);
+                        task.delay(index*30);
+                    },
+                    repeat:1,
+                    interval: 1 //1 毫秒
+                };
+                Ext.TaskManager.start(task);
+
+            })(i,views.length);
+
+        }
 
 
     },
