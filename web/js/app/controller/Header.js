@@ -51,6 +51,11 @@ Ext.define('ZSMZJ.controller.Header', {
             'dbglbusinessalterform,dbedgebusinessalterform,temporaryhelpbusinessalterform,medicalhelpbusinessalterform,studyhelpbusinessalterform,charitablehelpbusinessalterform,disasterhelpwarealterform,disasterhelpbusinessalterform,rangershelpbusinessalterform':{
 
                 alterapplyaftershow:function(form){
+                    var views=applyformviews[CommonFunc.lookupitemname(formwidgettype,form.xtype)];
+                    if(!views||views===''||views.length==0){
+                        this.forminitdata(form);
+                        return;
+                    }
                     if(form.isnewbusiness||form.items.items.length==0){
                         this.getValueBybusinessid(form.objdata.businessid,'ajax/getapplyformallbybid.jsp',this.setFormValuesPieces,form);
                     }else{
@@ -71,6 +76,11 @@ Ext.define('ZSMZJ.controller.Header', {
                     }, p);*/
                 },
                 alterapplyaftershow:function(form){
+                    var views=applyformviews[CommonFunc.lookupitemname(formwidgettype,form.xtype)];
+                    if(!views||views===''||views.length==0){
+                        this.forminitdata(form);
+                        return;
+                    }
                     if(form.isnewbusiness||form.items.items.length==0){
                         this.getValueBybusinessid(form.objdata.businessid,'ajax/getapplyformallbybid.jsp',this.setFormValuesPieces,form);
                     }else{
@@ -81,6 +91,12 @@ Ext.define('ZSMZJ.controller.Header', {
             } ,
             'dbglbusinesslogoutform,dbedgebusinesslogoutform':{
                 alterapplyaftershow:function(form){
+
+                    var views=applyformviews[CommonFunc.lookupitemname(formwidgettype,form.xtype)];
+                    if(!views||views===''||views.length==0){
+                        this.forminitdata(form);
+                        return;
+                    }
                     if(form.isnewbusiness||form.items.items.length==0){
                         this.getValueBybusinessid(form.objdata.businessid,'ajax/getapplyformallbybid.jsp',this.setFormValuesPieces,form);
                     }else{
@@ -1388,7 +1404,7 @@ Ext.define('ZSMZJ.controller.Header', {
     },
     clearAlterContent:function(form){
 
-        form.getForm().reset();
+        //form.getForm().reset();
         //家庭成员清空
         /*var grid=form.down('#familymembergrid');
         if(grid){
@@ -1405,13 +1421,12 @@ Ext.define('ZSMZJ.controller.Header', {
 
         //附件清空
         var affixfilespanel=form.down('#affixfilespanel');
-        testobj=form;
         if(affixfilespanel){
             var index=form.items.indexOf(affixfilespanel);
             form.remove(affixfilespanel);
             var form_widget=Ext.widget('dbglfamilyaffixfieldset');
             //form.add(form_widget);
-            form.insert(index,form_widget)
+            form.insert(index,form_widget);
             /*Ext.each(affixfilespanel.items.items,function(a){
                 if(a.items){
                     CommonFunc.updateitemnum(a.items.items[0],0);

@@ -263,6 +263,9 @@ Ext.define('ZSMZJ.controller.Dbgl', {
          'addnewgrantwin button[action=grant]':{
              click: this.grantmoney
          },
+         'affixfilesgrid button[action=delfile]':{
+             click: this.delslectfile
+         },
          'affixfilesgrid':{
 
              afterrender:this.affixgridrendered
@@ -280,68 +283,80 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
 
     },
+    makenewform:function(views,form,isajaxdata,callback){
+        var me=this;
+        for(var i=0;i<views.length;i++){
+            (function a (index,len){
+
+                var task = {
+                    run: function(){
+                        function fn(){
+                            var form_widget=Ext.widget(views[index]);
+                            form.add(form_widget);
+                            if(isajaxdata){
+                                if(form_widget.itemId==='affixfilespanel'){
+                                    var head_cl=me.application.getController("Header");
+                                    head_cl.setAffixValue(form.affixfiledata,head_cl,form);
+                                }
+                                else{
+                                    var items=form_widget.items.items;
+
+                                    for(var j=0;j<items.length;j++){
+                                        var name=items[j].name;
+                                        if(name){
+                                            items[j].setValue(form.allformdata[name]);
+                                            if(items[j].itemId=='divisiontype')items[j].setRawValue(form.allformdata[name]);
+                                        }else{
+                                            var head_cl=me.application.getController("Header");
+                                            head_cl.formgridload(form,items[j]);
+                                        }
+                                    }
+                                }
+
+
+                            }
+                            if(len-1==index&&callback)callback();
+
+                        }
+                        var task = new Ext.util.DelayedTask(fn);
+                        task.delay(index*30);
+                    },
+                    repeat:1,
+                    interval: 1 //1 毫秒
+                };
+                Ext.TaskManager.start(task);
+
+            })(i,views.length);
+
+        }
+    },
     initformaftershow:function(form,isajaxdata,callback){
         var views=applyformviews[CommonFunc.lookupitemname(formwidgettype,form.xtype)];
         //console.log(form.items.items.length);
         var me=this;
         if(form.items.items.length==0){
 
-            for(var i=0;i<views.length;i++){
-                (function a (index,len){
-
-                    var task = {
-                        run: function(){
-                            function fn(){
-                                var form_widget=Ext.widget(views[index]);
-                                form.add(form_widget);
-                                if(isajaxdata){
-                                    if(form_widget.itemId==='affixfilespanel'){
-                                        var head_cl=me.application.getController("Header");
-                                        head_cl.setAffixValue(form.affixfiledata,head_cl,form);
-                                    }
-                                    else{
-                                        var items=form_widget.items.items;
-
-                                        for(var j=0;j<items.length;j++){
-                                            var name=items[j].name;
-                                            if(name){
-                                                items[j].setValue(form.allformdata[name]);
-                                                if(items[j].itemId=='divisiontype')items[j].setRawValue(form.allformdata[name]);
-                                            }else{
-                                                var head_cl=me.application.getController("Header");
-                                                head_cl.formgridload(form,items[j]);
-                                            }
-                                        }
-                                    }
-
-
-                                }
-                                if(len-1==index&&callback)callback();
-
-                            }
-                            var task = new Ext.util.DelayedTask(fn);
-                            task.delay(index*30);
-                        },
-                        repeat:1,
-                        interval: 1 //1 毫秒
-                    };
-                    Ext.TaskManager.start(task);
-
-                })(i,views.length);
-
-            }
+            this.makenewform(views,form,isajaxdata,callback);
 
         }
         else if(form.isnewbusiness){
+
+            /*form.removeAll();
+            var head_cl=me.application.getController("Header");
+            head_cl.closemask() ;
+            this.makenewform(views,form,isajaxdata,callback);*/
             var head_cl=me.application.getController("Header");
             head_cl.closemask();
 
             var task = {
                 run: function(){
                     var form_items=form.items.items;
-                    head_cl.clearAlterContent(form);
+                    function fn(){
+                        Ext.bind(head_cl.clearAlterContent(form),head_cl);
+                    }
+                    var task = new Ext.util.DelayedTask(fn);
+                    task.delay(30);
 
-                    Ext.bind(head_cl.clearAlterContent(form),head_cl);
                     for(var n=0;n<form_items.length;n++){
                         (function a (index,len){
                             function fn(){
@@ -377,7 +392,6 @@ Ext.define('ZSMZJ.controller.Dbgl', {
                 interval: 1 //1 毫秒
             }
             Ext.TaskManager.start(task);
-
 
         }
         else{
@@ -586,6 +600,12 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         store.proxy.extraParams.compare = values.compare;
         store.loadPage(1);
 
+    },
+    delslectfile:function(btn){
+      var gridpanel=btn.up('panel');
+      var sm = gridpanel.getSelectionModel();
+      var removeitem=sm.getSelection();
+      gridpanel.getStore().remove(removeitem);
     },
     grantmoney:function(btn){
         var me=this;
