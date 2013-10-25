@@ -34,7 +34,8 @@ Ext.define('ZSMZJ.view.dbedge.businessAlter', {
                 msgTarget: 'side'
             },
             autoScroll: true,
-            items: [{
+            items: [
+                /*{
                 xtype: 'fieldset',
                 title: '<a>【低保边缘户业务办理】家庭基本信息</a>',
                 defaultType: 'textfield',
@@ -52,9 +53,9 @@ Ext.define('ZSMZJ.view.dbedge.businessAlter', {
                         width: '100%',
                         align: 'center',
                         style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
-                        /*style: {
+                        *//*style: {
                             width: '100%'
-                        }*/
+                        }*//*
                     }
                 },
 
@@ -115,12 +116,12 @@ Ext.define('ZSMZJ.view.dbedge.businessAlter', {
                         blankText: '请输入申请类别',
                         afterLabelTextTpl: required
 
-                        /*name: 'applytype',
+                        *//*name: 'applytype',
                          afterLabelTextTpl: required,
                          fieldLabel: '申请类别',
                          emptyText: '请输入申请类别',
                          blankText: '请输入申请类别',
-                         allowBlank: false*/
+                         allowBlank: false*//*
                     },{
                         xtype:'dbglaplytype',
                         name: 'familytype',
@@ -268,9 +269,9 @@ Ext.define('ZSMZJ.view.dbedge.businessAlter', {
                             width: '100%',
                             align: 'center',
                             style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
-                            /*style: {
+                            *//*style: {
                              width: '100%'
-                             }*/
+                             }*//*
                         }
                     },
                     items:[
@@ -363,9 +364,9 @@ Ext.define('ZSMZJ.view.dbedge.businessAlter', {
                             width: '100%',
                             align: 'center',
                             style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
-                            /*style: {
+                            *//*style: {
                              width: '100%'
-                             }*/
+                             }*//*
                         }
                     },
                     items:[
@@ -605,9 +606,9 @@ Ext.define('ZSMZJ.view.dbedge.businessAlter', {
                             width: '100%',
                             align: 'center',
                             style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
-                            /*style: {
+                            *//*style: {
                              width: '100%'
-                             }*/
+                             }*//*
                         }
                     },
                     items:[
@@ -755,9 +756,9 @@ Ext.define('ZSMZJ.view.dbedge.businessAlter', {
                             width: '100%',
                             align: 'center',
                             style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
-                            /*style: {
+                            *//*style: {
                              width: '100%'
-                             }*/
+                             }*//*
                         }
                     },
                     itemId: 'affixfilespanel',
@@ -801,10 +802,10 @@ Ext.define('ZSMZJ.view.dbedge.businessAlter', {
                                     type:'accountbook',
                                     itemId:'accountbook',
                                     listeners: {
-                                        /*click: {
+                                        *//*click: {
                                          element: 'el', //bind to the underlying el property on the panel
                                          fn: function(){ alert('click el'); }
-                                         }*/
+                                         }*//*
                                         render: function(c){
                                             c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
                                         }
@@ -828,10 +829,10 @@ Ext.define('ZSMZJ.view.dbedge.businessAlter', {
                                     type:'disabilitybook',
                                     itemId:'disabilitybook',
                                     listeners: {
-                                        /*click: {
+                                        *//*click: {
                                          element: 'el', //bind to the underlying el property on the panel
                                          fn: function(){ alert('click el'); }
-                                         }*/
+                                         }*//*
                                         render: function(c){
                                             c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
                                         }
@@ -857,10 +858,10 @@ Ext.define('ZSMZJ.view.dbedge.businessAlter', {
                                     type:'illbook',
                                     itemId:'illbook',
                                     listeners: {
-                                        /*click: {
+                                        *//*click: {
                                          element: 'el', //bind to the underlying el property on the panel
                                          fn: function(){ alert('click el'); }
-                                         }*/
+                                         }*//*
                                         render: function(c){
                                             c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
                                         }
@@ -887,10 +888,10 @@ Ext.define('ZSMZJ.view.dbedge.businessAlter', {
                                     type:'marrybook',
                                     itemId:'marrybook',
                                     listeners: {
-                                        /*click: {
+                                        *//*click: {
                                          element: 'el', //bind to the underlying el property on the panel
                                          fn: function(){ alert('click el'); }
-                                         }*/
+                                         }*//*
                                         render: function(c){
                                             c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
                                         }
@@ -917,10 +918,10 @@ Ext.define('ZSMZJ.view.dbedge.businessAlter', {
                                     type:'housebook',
                                     itemId:'housebook',
                                     listeners: {
-                                        /*click: {
+                                        *//*click: {
                                          element: 'el', //bind to the underlying el property on the panel
                                          fn: function(){ alert('click el'); }
-                                         }*/
+                                         }*//*
                                         render: function(c){
                                             c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
                                         }
@@ -945,10 +946,10 @@ Ext.define('ZSMZJ.view.dbedge.businessAlter', {
                                     type:'incomebook',
                                     itemId:'incomebook',
                                     listeners: {
-                                        /*click: {
+                                        *//*click: {
                                          element: 'el', //bind to the underlying el property on the panel
                                          fn: function(){ alert('click el'); }
-                                         }*/
+                                         }*//*
                                         render: function(c){
                                             c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
                                         }
@@ -972,10 +973,10 @@ Ext.define('ZSMZJ.view.dbedge.businessAlter', {
                                     type:'familypropertybook',
                                     itemId:'familypropertybook',
                                     listeners: {
-                                        /*click: {
+                                        *//*click: {
                                          element: 'el', //bind to the underlying el property on the panel
                                          fn: function(){ alert('click el'); }
-                                         }*/
+                                         }*//*
                                         render: function(c){
                                             c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
                                         }
@@ -1008,9 +1009,9 @@ Ext.define('ZSMZJ.view.dbedge.businessAlter', {
                             width: '100%',
                             align: 'center',
                             style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
-                            /*style: {
+                            *//*style: {
                              width: '100%'
-                             }*/
+                             }*//*
                         }
                     },
 
@@ -1078,9 +1079,9 @@ Ext.define('ZSMZJ.view.dbedge.businessAlter', {
                             width: '100%',
                             align: 'center',
                             style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
-                            /*style: {
+                            *//*style: {
                              width: '100%'
-                             }*/
+                             }*//*
                         }
                     },
 
@@ -1202,7 +1203,7 @@ Ext.define('ZSMZJ.view.dbedge.businessAlter', {
                             grow : true,
                             allowBlank: true
                         }
-                        /*{
+                        *//*{
                             colspan:3,
                             anchor : '100%',
                             width:'100%',
@@ -1214,8 +1215,8 @@ Ext.define('ZSMZJ.view.dbedge.businessAlter', {
                             layout:'column',
                             defaultType: 'textfield',
 
-                            items:[*/
-                                /*{
+                            items:[*//*
+                                *//*{
                                     fieldLabel: '制表时间',
                                     name:'mktime',
                                     //columnWidth:.5,
@@ -1238,8 +1239,8 @@ Ext.define('ZSMZJ.view.dbedge.businessAlter', {
 
 
                                 }
-                         *//*   ]
-                        }*/
+                         *//**//*   ]
+                        }*//*
                     ]
                 },
                 {
@@ -1260,9 +1261,9 @@ Ext.define('ZSMZJ.view.dbedge.businessAlter', {
                             width: '100%',
                             align: 'center',
                             style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
-                            /*style: {
+                            *//*style: {
                              width: '100%'
-                             }*/
+                             }*//*
                         }
                     },
 
@@ -1299,7 +1300,7 @@ Ext.define('ZSMZJ.view.dbedge.businessAlter', {
                         }
 
                     ]
-                }
+                }*/
             ],
             buttons:[
                 {text: '打印预览',

@@ -25,7 +25,12 @@ Ext.define('ZSMZJ.controller.Dbedge', {
         'dbedge.businessApply',
         'dbedge.businessChange',
         'dbedge.businessLogout',
-        'dbedge.businessAlter'
+        'dbedge.businessAlter',
+        'dbedge.familybasicFieldset',
+        'dbedge.applysubmitFieldset',
+        'dbedge.altersubmitFieldset',
+        'dbedge.changesubmitFieldset',
+        'dbedge.logoutsubmitFieldset'
 
     ],
 
@@ -37,7 +42,9 @@ Ext.define('ZSMZJ.controller.Dbedge', {
         var dbgl_cl = this.application.getController("Dbgl");
         this.control({
             'dbedgebusinessapplyform,dbedgebusinessalterform,dbedgebusinesschangeform,dbedgebusinesslogoutform': {
-                afterrender: dbgl_cl.afterrenderEvents
+                afterrender: dbgl_cl.afterrenderEvents,
+                initformaftershow:Ext.bind(dbgl_cl.initformaftershow, dbgl_cl)
+
             },
             'dbedgebusinessapplyform component,dbedgebusinessalterform component,dbedgebusinesschangeform component,dbedgebusinesslogoutform component': {
                 imgclick: function (c) {

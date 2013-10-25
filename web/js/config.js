@@ -26,7 +26,11 @@ var formwidgettype={
     'dbglapply':'dbglbusinessapplyform',
     'dbglalter':'dbglbusinessalterform',
     'dbglchange':'dbglbusinesschangeform',
-    'dbgllogout':'dbglbusinesslogoutform'
+    'dbgllogout':'dbglbusinesslogoutform',
+    'dbedgeapply':'dbedgebusinessapplyform' ,
+    'dbedgealter':'dbedgebusinessalterform' ,
+    'dbedgechange':'dbedgebusinesschangeform' ,
+    'dbedgelogout':'dbedgebusinesslogoutform'
 };
 
 var familyheaders={
@@ -693,6 +697,50 @@ var applyformviews={
         'dbglfamilyaffixfieldset',
         'dbglfamilyapplyfieldset',
         'dbgllogoutsubmitfieldset',
+        'dbglapplyhistoryfieldset'
+
+    ],'dbedgeapply':[
+        'dbedgefamilybasicfieldset',
+        'dbglfamilymemberfieldset',
+        'dbglfamilymoneyfieldset',
+        'dbglfamilyhousefieldset',
+        'dbglfamilyinputfieldset',
+        'dbglfamilyaffixfieldset',
+        'dbglfamilyapplyfieldset',
+        'dbedgeapplysubmitfieldset'
+    ],
+    'dbedgealter':[
+        'dbedgefamilybasicfieldset',
+        'dbglfamilymemberfieldset',
+        'dbglfamilymoneyfieldset',
+        'dbglfamilyhousefieldset',
+        'dbglfamilyinputfieldset',
+        'dbglfamilyaffixfieldset',
+        'dbglfamilyapplyfieldset',
+        'dbedgealtersubmitfieldset',
+        'dbglapplyhistoryfieldset'
+
+    ],
+    'dbedgechange':[
+        'dbedgefamilybasicfieldset',
+        'dbglfamilymemberfieldset',
+        'dbglfamilymoneyfieldset',
+        'dbglfamilyhousefieldset',
+        'dbglfamilyinputfieldset',
+        'dbglfamilyaffixfieldset',
+        'dbglfamilyapplyfieldset',
+        'dbedgechangesubmitfieldset',
+        'dbglapplyhistoryfieldset'
+
+    ],'dbedgelogout':[
+        'dbedgefamilybasicfieldset',
+        'dbglfamilymemberfieldset',
+        'dbglfamilymoneyfieldset',
+        'dbglfamilyhousefieldset',
+        'dbglfamilyinputfieldset',
+        'dbglfamilyaffixfieldset',
+        'dbglfamilyapplyfieldset',
+        'dbedgelogoutsubmitfieldset',
         'dbglapplyhistoryfieldset'
 
     ]
