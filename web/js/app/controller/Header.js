@@ -52,13 +52,18 @@ Ext.define('ZSMZJ.controller.Header', {
 
                 alterapplyaftershow:function(form){
                     var views=applyformviews[CommonFunc.lookupitemname(formwidgettype,form.xtype)];
+                    var businessid=form.objdata.businessid;
+
                     if(!views||views===''||views.length==0){
+                        //this.signaturepicarr["print"+businessid]=[];
                         this.forminitdata(form);
                         return;
                     }
                     if(form.isnewbusiness||form.items.items.length==0){
+                        this.signaturepicarr["print"+businessid]=[];
                         this.getValueBybusinessid(form.objdata.businessid,'ajax/getapplyformallbybid.jsp',this.setFormValuesPieces,form);
                     }else{
+
                         this.closemask();
                     }
 
@@ -77,11 +82,13 @@ Ext.define('ZSMZJ.controller.Header', {
                 },
                 alterapplyaftershow:function(form){
                     var views=applyformviews[CommonFunc.lookupitemname(formwidgettype,form.xtype)];
+                    var businessid=form.objdata.businessid;
                     if(!views||views===''||views.length==0){
                         this.forminitdata(form);
                         return;
                     }
                     if(form.isnewbusiness||form.items.items.length==0){
+                        this.signaturepicarr["print"+businessid]=[];
                         this.getValueBybusinessid(form.objdata.businessid,'ajax/getapplyformallbybid.jsp',this.setFormValuesPieces,form);
                     }else{
                         this.closemask();
@@ -93,11 +100,14 @@ Ext.define('ZSMZJ.controller.Header', {
                 alterapplyaftershow:function(form){
 
                     var views=applyformviews[CommonFunc.lookupitemname(formwidgettype,form.xtype)];
+                    var businessid=form.objdata.businessid;
+
                     if(!views||views===''||views.length==0){
                         this.forminitdata(form);
                         return;
                     }
                     if(form.isnewbusiness||form.items.items.length==0){
+                        this.signaturepicarr["print"+businessid]=[];
                         this.getValueBybusinessid(form.objdata.businessid,'ajax/getapplyformallbybid.jsp',this.setFormValuesPieces,form);
                     }else{
                         this.closemask();
@@ -392,7 +402,10 @@ Ext.define('ZSMZJ.controller.Header', {
     },
     initprintform:function(form){
         var me=this;
+        testobj=me;
         var formvalues=form.objdata.getValues();
+        var businessid=form.objdata.objdata.businessid;
+
         for(var key in formvalues){
             if(form.down('#'+key)){
                 form.down('#'+key).setText(formvalues[key]);
@@ -405,7 +418,7 @@ Ext.define('ZSMZJ.controller.Header', {
             Ext.Array.remove(me.signaturepicprintarr,a);
         });
 
-        Ext.each(this.signaturepicarr,function(a){
+        Ext.each(this.signaturepicarr['print'+businessid],function(a){
             var target=form.down('#businesscheckinfo').getEl();
             //target.scrollIntoView(formcontent);
             var signaturepic = Ext.create('Ext.draw.Component', {
@@ -558,14 +571,14 @@ Ext.define('ZSMZJ.controller.Header', {
         //testobj=this.checkprocessWin;
 
     },
-    signaturepicarr:[],
+    signaturepicarr:{},
     signaturepicprintarr:[],
-    issignaturedone:function(path){
+    issignaturedone:function(path,businessid){
       var result={isok:false};
-      for(var i=0;i<this.signaturepicarr.length;i++){
-         if(this.signaturepicarr[i].items[0].src==path){
+      for(var i=0;i<this.signaturepicarr['print'+businessid].length;i++){
+         if(this.signaturepicarr['print'+businessid][i].items[0].src==path){
              result.isok=true;
-             result.item=this.signaturepicarr[i];
+             result.item=this.signaturepicarr['print'+businessid][i];
              break;
          }
       }
@@ -574,23 +587,25 @@ Ext.define('ZSMZJ.controller.Header', {
     },
     clearsignaturepic:function(btn,res){
         var form=btn.up('form');
+        var businessid=form.objdata.businessid;
         var formcontent=form.getDefaultContentTarget();
         var target=form.down('#businesscheckinfo').getEl();
         target.scrollIntoView(formcontent);
-        var result=this.issignaturedone(res.signaturepath)
+        var result=this.issignaturedone(res.signaturepath,businessid)
         if(result.isok){
             result.item.destroy();
-            Ext.Array.remove(this.signaturepicarr,result.item);
+            Ext.Array.remove(this.signaturepicarr['print'+businessid],result.item);
         }
 
     },
     makesignaturepic:function(btn,res){
 
         var form=btn.up('form');
+        var businessid=form.objdata.businessid;
         var formcontent=form.getDefaultContentTarget();
         var target=form.down('#businesscheckinfo').getEl();
         target.scrollIntoView(formcontent);
-        if(!this.issignaturedone(res.signaturepath).isok){
+        if(!this.issignaturedone(res.signaturepath,businessid).isok){
             var signaturepic = Ext.create('Ext.draw.Component', {
                 width: 153,
                 height: 153,
@@ -619,7 +634,7 @@ Ext.define('ZSMZJ.controller.Header', {
                 ]
             });
             signaturepic.userid=userid;
-            this.signaturepicarr.push(signaturepic)
+            this.signaturepicarr['print'+businessid].push(signaturepic)
 
 
         }
@@ -1412,6 +1427,7 @@ Ext.define('ZSMZJ.controller.Header', {
         }*/
 
         //照片清空
+        var businessid=form.objdata.businessid;
         var img_item=form.down('#dbglaccountimg');
         if(img_item){
             img_item.getEl().dom.src="img/noperson.gif";
@@ -1440,10 +1456,10 @@ Ext.define('ZSMZJ.controller.Header', {
         var dbgl_cl=this.application.getController("Dbgl");
         dbgl_cl.cleanuploadWin();
         //清空签章
-        Ext.each(this.signaturepicarr,function(item){
+        Ext.each(this.signaturepicarr['print'+businessid],function(item){
            item.destroy();
         });
-        this.signaturepicarr=[];
+        this.signaturepicarr={};
 
     },
 
@@ -1703,6 +1719,7 @@ Ext.define('ZSMZJ.controller.Header', {
     addSignature:function(item,form){
         var formcontent=form.getDefaultContentTarget();
         var target=form.down('#businesscheckinfo').getEl();
+        var businessid=form.objdata.businessid;
         //target.scrollIntoView(formcontent);
 
             var signaturepic = Ext.create('Ext.draw.Component', {
@@ -1737,7 +1754,7 @@ Ext.define('ZSMZJ.controller.Header', {
             signaturepic.setLocalX(item.x);
             signaturepic.setLocalY(item.y);
 
-            this.signaturepicarr.push(signaturepic);
+            this.signaturepicarr['print'+businessid].push(signaturepic);
 
 
     },
