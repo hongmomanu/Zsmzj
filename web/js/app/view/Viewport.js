@@ -103,12 +103,22 @@ Ext.define('ZSMZJ.view.Viewport', {
                             }
                         }),
                         //hideMode:"visibility",
-                        closeAction:'close',
+                        //closeAction:'close',
                         activeTab: 0,     // first tab initially active
                         items: [
                             {
                                 xtype: 'mainpanel'
 
+                            }, {
+                                title: 'Tab 1',
+                                bodyPadding: 10,
+                                closable:true,
+                                html : 'A simple tab'
+                            },
+                            {
+                                title: 'Tab 2',
+                                closable:true,
+                                html : 'Another one'
                             }
 				    ]
                    })

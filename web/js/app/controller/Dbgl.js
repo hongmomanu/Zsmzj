@@ -392,7 +392,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
                 interval: 1 //1 毫秒
             }
             Ext.TaskManager.start(task);
-
+            form.isnewbusiness=false;
         }
         else{
             var head_cl=me.application.getController("Header");

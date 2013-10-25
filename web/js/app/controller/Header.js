@@ -2079,7 +2079,12 @@ Ext.define('ZSMZJ.controller.Header', {
             var tab=tabs.getComponent('tab' + value);
 
             if(objdata){
+                //tab.isnewbusiness=false;
                 tab.isnewbusiness=!(tab.objdata.businessid==objdata.businessid);
+                if(tab.isnewbusiness){
+                    //tab.removeAll();
+                    testobj=tab;
+                }
                 tab.objdata=objdata;
             }
 
