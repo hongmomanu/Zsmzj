@@ -10,6 +10,7 @@ Ext.define('ZSMZJ.model.dbgl.PeopleQuery', {
     fields: [
         {name:'owername'},
         {name:'processstatus'},
+        {name:'process'},
         {name:'processstatustype'},
         {name:'birthday'},
         {name:'businesstype'},

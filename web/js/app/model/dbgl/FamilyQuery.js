@@ -15,6 +15,7 @@ Ext.define('ZSMZJ.model.dbgl.FamilyQuery', {
         {name:'poorfamilytype'},
         'helpreason',
         'accountaddress',
+        {name:'process'},
         {name: 'division'},
         {name: 'telnum2'},
         {name: 'telnum'},

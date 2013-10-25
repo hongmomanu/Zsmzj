@@ -1654,6 +1654,7 @@ Ext.define('ZSMZJ.controller.Header', {
     },
 
     showBusinessCheckContent:function(c,r,grid,callback){
+        alert(r.get("process"));
         if(r.get("process")==processdiction.stepone){
 
              this.showsendapplywin(c,r,grid,callback);

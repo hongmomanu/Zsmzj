@@ -449,6 +449,10 @@ public class BusinessProcessControl {
 
         ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
         int totalnum=cd.getTotalCountBySql(sql_count);
+        for(Map<String,Object> map:list){
+            map.put("process", ProcessType.UseProcessType.getNext(ProcessType.UseProcessType.
+                    getProcessFromChinese(map.get("processstatus").toString())));
+        }
 
         Map<String,Object>res=new HashMap<String, Object>();
         res.put("totalCount",totalnum);
@@ -534,6 +538,10 @@ public class BusinessProcessControl {
 
         Map<String,Object>res=new HashMap<String, Object>();
         int totalnum=cd.getTotalCountBySql(sql_count);
+        for(Map<String,Object> map:list){
+            map.put("process", ProcessType.UseProcessType.getNext(ProcessType.UseProcessType.
+                    getProcessFromChinese(map.get("processstatus").toString())));
+        }
         res.put("totalCount",totalnum);
         res.put("results",list);
         return JSONObject.fromObject(res).toString();
