@@ -85,39 +85,14 @@ Ext.define('ZSMZJ.controller.Dbgl', {
     ],
 
     initStrore:function(){
-        //initedforms.dbglbusinessapplyform=Ext.widget('dbglbusinessapplyform');
 
-        //var store=this.getDbglNeedToDoBusinessesStore();
-        /*var header_cl=this.application.getController("Header");
-        store.on('load', function (store, options) {
-            header_cl.widgetdolayout("mainContent-panel");
-        });
-
-        var changed_store=this.getDbglChangedBusinessesStore();
-        changed_store.on('load', function (store, options) {
-            header_cl.widgetdolayout("mainContent-panel");
-        });
-
-        var logout_store=this.getDbglLogoutBusinessesStore();
-        logout_store.on('load', function (store, options) {
-            header_cl.widgetdolayout("mainContent-panel");
-        });
-
-        var grant_store=this.getDbglGrantMoneyStoreStore();
-        grant_store.on('load', function (store, options) {
-            header_cl.widgetdolayout("mainContent-panel");
-        });
-*/
     },
     init: function() {
         var me = this;
         this.initStrore();
         Ext.apply(Ext.form.field.VTypes, {
             personid:  function(v) {
-                //规则区号（3-4位数字）-电话号码（7-8位数字）
-                //console.log(v);
                 return CommonFunc.IdentityCodeValid(v).isok;
-                //return /^(\d{3}-|\d{4}-)?(\d{8}|\d{7})$/.test(v);
             },
             personidText: '请输入有效的身份证'
         });

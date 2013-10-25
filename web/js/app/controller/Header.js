@@ -237,10 +237,7 @@ Ext.define('ZSMZJ.controller.Header', {
                       store.proxy.extraParams.type=grid.stype
                       store.proxy.extraParams.ispublicinfo=grid.ispublicinfo
                       if(grid.isnewgrid){
-                          store.load({callback:function(){
-
-                              CommonFunc.widgetdolayout("mainContent-panel",1);
-                          }});
+                          store.load();
                           grid.isnewgrid=false;
                       }
 
@@ -250,7 +247,7 @@ Ext.define('ZSMZJ.controller.Header', {
                           store.proxy.extraParams.logic=null;
                           store.proxy.extraParams.compare=null;
                           store.proxy.extraParams.value=null;
-                          CommonFunc.widgetdolayout("mainContent-panel",1);
+                          //CommonFunc.widgetdolayout("mainContent-panel",1);
                       });
                   }
 
@@ -451,9 +448,12 @@ Ext.define('ZSMZJ.controller.Header', {
         var base_grid=form.objdata.down('#familymembergrid');
 
         var grid=form.down('#familymembergrid');
+        var grid_store=grid.getStore();
+        grid_store.removeAll();
+
         Ext.each(base_grid.getStore().data.items,function(b){
             var r = Ext.create('ZSMZJ.model.dbgl.FamilyMember', b.data);
-            grid.getStore().insert(0, r);
+            grid_store.insert(0, r);
         });
         //me.closemask();
         /*var countitem=form.down('#FamilyPersons');
@@ -2076,7 +2076,7 @@ Ext.define('ZSMZJ.controller.Header', {
         ViewWaitMask.show();
 
         var tabs = Ext.getCmp('mainContent-panel');
-        var tabid=objdata?objdata.record.get('businessid'):value;
+        var tabid=(objdata&&objdata.record)?objdata.record.get('businessid'):value;
         tabid=value+tabid;
         var tab=tabs.getComponent(tabid);
         if (tab) {
