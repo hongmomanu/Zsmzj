@@ -513,7 +513,7 @@ Ext.define('ZSMZJ.controller.Header', {
         }else if(businesstype==businessTableType.dbbyh){
             widgetname='dbedgebusinesschangeform';
         }
-        this.showtab("变更操作",widgetname,'widget',form.objdata);
+        this.showtab(form.objdata.record.get('owername'),widgetname,'widget',form.objdata);
 
     },
     ischangeclick:false,
@@ -545,7 +545,7 @@ Ext.define('ZSMZJ.controller.Header', {
             widgetname='dbedgebusinesslogoutform';
         }
 
-        this.showtab("注销操作",widgetname,'widget',form.objdata);
+        this.showtab(form.objdata.record.get('owername'),widgetname,'widget',form.objdata);
 
 
     },
@@ -1495,7 +1495,7 @@ Ext.define('ZSMZJ.controller.Header', {
                 widgetname='dbedgebusinesslogoutform';
             }
         }
-        this.showtab("业务操作",widgetname,'widget',objdata);
+        this.showtab(r.get('owername'),widgetname,'widget',objdata);
 
     },
     cancelbusinesssubmit:function(c,r,grid,form){
@@ -2075,15 +2075,32 @@ Ext.define('ZSMZJ.controller.Header', {
         ViewWaitMask.show();
 
         var tabs = Ext.getCmp('mainContent-panel');
-        if (tabs.getComponent('tab' + value)) {
-            var tab=tabs.getComponent('tab' + value);
+        var tabid=objdata?objdata.record.get('businessid'):value;
+        tabid=value+tabid;
+        var tab=tabs.getComponent(tabid);
+        if (tab) {
+            //var tab=tabs.getComponent('tab' + value);
 
             if(objdata){
                 //tab.isnewbusiness=false;
                 tab.isnewbusiness=!(tab.objdata.businessid==objdata.businessid);
                 if(tab.isnewbusiness){
                     //tab.removeAll();
-                    testobj=tab;
+                    function fn(){
+                        tabs.add({
+                            closable: true,
+                            id: tabid,
+                            xtype: value,
+                            objdata:objdata,
+                            autoScroll: true,
+                            iconCls: 'tabs',
+                            title: label
+                        }).show();
+                    }
+                    var task = new Ext.util.DelayedTask(fn);
+                    task.delay(50);
+                    return;
+
                 }
                 tab.objdata=objdata;
             }
@@ -2100,7 +2117,7 @@ Ext.define('ZSMZJ.controller.Header', {
                 //task.delay(10);
             }
             else{
-                this.initchangelogoutbtns(tabs.getComponent('tab' + value));
+                this.initchangelogoutbtns(tabs.getComponent(tabid));
                 CommonFunc.removeTask(ViewWaitMask,Ext.getCmp('mainContent-panel').getEl());
             }
 
@@ -2112,7 +2129,7 @@ Ext.define('ZSMZJ.controller.Header', {
                 function fn(){
                     tabs.add({
                         closable: true,
-                        id: 'tab' + value,
+                        id: tabid,
                         xtype: value,
                         objdata:objdata,
                         autoScroll: true,

@@ -109,16 +109,6 @@ Ext.define('ZSMZJ.view.Viewport', {
                             {
                                 xtype: 'mainpanel'
 
-                            }, {
-                                title: 'Tab 1',
-                                bodyPadding: 10,
-                                closable:true,
-                                html : 'A simple tab'
-                            },
-                            {
-                                title: 'Tab 2',
-                                closable:true,
-                                html : 'Another one'
                             }
 				    ]
                    })

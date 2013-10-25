@@ -300,7 +300,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
                                 }
                                 else{
                                     var items=form_widget.items.items;
-
+                                    Ext.suspendLayouts();
                                     for(var j=0;j<items.length;j++){
                                         var name=items[j].name;
                                         if(name){
@@ -311,6 +311,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
                                             head_cl.formgridload(form,items[j]);
                                         }
                                     }
+                                    Ext.resumeLayouts(true);
                                 }
 
 
@@ -341,57 +342,6 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         }
         else if(form.isnewbusiness){
 
-            /*form.removeAll();
-            var head_cl=me.application.getController("Header");
-            head_cl.closemask() ;
-            this.makenewform(views,form,isajaxdata,callback);*/
-            var head_cl=me.application.getController("Header");
-            head_cl.closemask();
-
-            var task = {
-                run: function(){
-                    var form_items=form.items.items;
-                    function fn(){
-                        Ext.bind(head_cl.clearAlterContent(form),head_cl);
-                    }
-                    var task = new Ext.util.DelayedTask(fn);
-                    task.delay(30);
-
-                    for(var n=0;n<form_items.length;n++){
-                        (function a (index,len){
-                            function fn(){
-                                var  form_widget=form_items[index];
-                                if(form_widget.itemId==='affixfilespanel'){
-
-                                    head_cl.setAffixValue(form.affixfiledata,head_cl,form);
-                                }
-                                else{
-                                    var items=form_widget.items.items;
-
-                                    for(var j=0;j<items.length;j++){
-                                        var name=items[j].name;
-                                        if(name){
-                                            items[j].setValue(form.allformdata[name]);
-                                            if(items[j].itemId=='divisiontype')items[j].setRawValue(form.allformdata[name]);
-                                        }else{
-                                            head_cl.formgridload(form,items[j]);
-                                        }
-                                    }
-                                }
-                            }
-                            var task = new Ext.util.DelayedTask(fn);
-                            task.delay(n*30);
-
-
-                        })(n)
-
-                    }
-                    callback();
-                },
-                repeat:1,
-                interval: 1 //1 毫秒
-            }
-            Ext.TaskManager.start(task);
             form.isnewbusiness=false;
         }
         else{
