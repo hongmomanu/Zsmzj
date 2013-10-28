@@ -106,71 +106,77 @@ Ext.define('ZSMZJ.view.dbgl.GrantMoneyGrid' ,{
 
             ],
             flex: 1,
-            /*tbar:[
+            tbar:[
+                {
+                    xtype: 'textfield',
+                    hidden: false,
+                    width:200,
+                    //size:40,
+                    listeners: {
 
-            ],*/
+                        "specialkey": function (field, e) {
+                            if (e.keyCode == 13) {
+                                var keyword = field.getValue().replace(/\s+/g, "");
+                                var store=this.up('panel').getStore();
+                                store.proxy.extraParams.keyword = keyword;
+                                store.loadPage(1);
+                            }
+                        }
+                    },
+                    emptyText: '输入搜索关键字'
+
+                },
+                /*{
+                    xtype: 'monthfield',
+                    fieldLabel: '选择年月',
+                    value: Ext.Date.format(new Date(), 'Y-m'),
+                    listeners: {
+
+                        "specialkey": function (field, e) {
+                            if (e.keyCode == 13) {
+                                var month = field.getRawValue().replace(/\s+/g, "");
+                                var store=this.up('panel').getStore();
+                                store.proxy.extraParams.bgmonth = month;
+
+                                store.loadPage(1);
+                            }
+                        }
+                    },
+                    format: 'Y-m'
+
+                },*/
+                '->',
+                {
+                    text: '高级检索',
+                    action:'moresearch',
+                    searchtype:'moresearchgrantmoney'
+
+                },
+                {
+                    text: '导出Excel',
+                    action:'outexcel'
+
+                },
+                '-',
+                {
+                    text: '新增',
+                    hidden:!CommonFunc.lookup(processRoleBtn,
+                        {name:"name",value:"资金发放"}),
+                    action:'newgrant'
+
+                }
+            ],
             bbar: Ext.create('Ext.PagingToolbar', {
                 store: 'dbgl.GrantMoneyStore',
                 displayInfo: true,
                 displayMsg: '显示 {0} - {1}条记录,共 {2}条记录',
                 beforePageText:'第',
                 afterPageText:'页，共{0}页',
-                emptyMsg: "无待办事务",
+                emptyMsg: "无待办事务"/*,
                 items:[
                     '-',
-                    {
-                        xtype: 'textfield',
-                        hidden: false,
-                        width:200,
-                        //size:40,
-                        listeners: {
 
-                            "specialkey": function (field, e) {
-                                if (e.keyCode == 13) {
-                                    var keyword = field.getValue().replace(/\s+/g, "");
-                                    var store=this.up('panel').getStore();
-                                    store.proxy.extraParams.keyword = keyword;
-                                    store.loadPage(1);
-                                }
-                            }
-                        },
-                        emptyText: '输入搜索关键字'
-
-                    },
-                    {
-                        xtype: 'monthfield',
-                        fieldLabel: '选择年月',
-                        value: Ext.Date.format(new Date(), 'Y-m'),
-                        listeners: {
-
-                            "specialkey": function (field, e) {
-                                if (e.keyCode == 13) {
-                                    var month = field.getRawValue().replace(/\s+/g, "");
-                                    var store=this.up('panel').getStore();
-                                    store.proxy.extraParams.bgmonth = month;
-
-                                    store.loadPage(1);
-                                }
-                            }
-                        },
-                        format: 'Y-m'
-
-                    },
-                    '->',
-                    {
-                        text: '导出Excel',
-                        action:'outexcel'
-
-                    },
-                    '-',
-                    {
-                        text: '新增',
-                        hidden:!CommonFunc.lookup(processRoleBtn,
-                            {name:"name",value:"资金发放"}),
-                        action:'newgrant'
-
-                    }
-                ]
+                ]*/
             }),
             store: 'dbgl.GrantMoneyStore'
 

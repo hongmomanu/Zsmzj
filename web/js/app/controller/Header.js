@@ -180,6 +180,9 @@ Ext.define('ZSMZJ.controller.Header', {
             'familyquerypanel button[action=moresearch]':{
                 click: this.moresearch_family
 
+            },'dbglgrantmoneypanel button[action=moresearch]':{
+                click: this.moresearch_family
+
             },
 
             'peoplequerypanel button[action=outexcel]':{
@@ -1164,8 +1167,11 @@ Ext.define('ZSMZJ.controller.Header', {
 
     moresearch_family:function(btn){
         var grid=btn.up('panel');
-        if(!this.newMoreSearchWin)this.newMoreSearchWin=Ext.widget('moresearchfamilywin',{ // Equivalent to Ext.create('widget.panel')
-            searchtype: 'moresearchfamily'
+        if(this.newMoreSearchWin){
+            this.newMoreSearchWin.close();
+        }
+        this.newMoreSearchWin=Ext.widget('moresearchfamilywin',{ // Equivalent to Ext.create('widget.panel')
+            searchtype: btn.searchtype
         });
         //this.newMoreSearchWin.searchtype="moresearchfamily";
         this.newMoreSearchWin.dataobj=grid;

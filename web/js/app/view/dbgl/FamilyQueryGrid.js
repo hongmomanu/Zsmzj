@@ -165,7 +165,8 @@ Ext.define('ZSMZJ.view.dbgl.FamilyQueryGrid' ,{
                     ,
                     {
                         text: '高级检索',
-                        action:'moresearch'
+                        action:'moresearch',
+                        searchtype:'moresearchfamily'
 
                     }
                 ]

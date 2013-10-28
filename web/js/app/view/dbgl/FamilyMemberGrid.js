@@ -20,7 +20,6 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                 edit: function(editor,obj,objold){
                     var famlygrid=editor.grid;
                     var form=famlygrid.up('form');
-
                     var store=famlygrid.getStore();
                     var enjoyednum=0;
                     var disablednum=0;
@@ -38,7 +37,6 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                         owernameitem.setValue(obj.record.get("name"));
                         oweriditem.setValue(obj.record.get("personid"));
                     }
-
 
                 },
                 canceledit: function(grid, e, eOpts){
