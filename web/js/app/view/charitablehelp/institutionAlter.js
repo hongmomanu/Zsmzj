@@ -30,7 +30,7 @@ Ext.define('ZSMZJ.view.charitablehelp.institutionAlter', {
             buttonAlign : 'center',
             fieldDefaults: {
                 labelAlign: 'right',
-                labelWidth: 180,
+                labelWidth: 80,
                 msgTarget: 'side'
             },
             autoScroll: true,

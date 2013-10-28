@@ -25,7 +25,7 @@ Ext.define('ZSMZJ.view.dbgl.businessPrint', {
             buttonAlign : 'center',
             fieldDefaults: {
                 labelAlign: 'right',
-                labelWidth: 180,
+                labelWidth: 80,
                 msgTarget: 'side'
             },
             autoScroll: true,

@@ -27,7 +27,7 @@ Ext.define('ZSMZJ.view.dbedge.businessApply', {
             buttonAlign : 'center',
             fieldDefaults: {
                 labelAlign: 'right',
-                labelWidth: 180,
+                labelWidth: 80,
                 msgTarget: 'side'
             },
             autoScroll: true,

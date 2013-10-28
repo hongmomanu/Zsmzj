@@ -20,7 +20,7 @@ Ext.define('ZSMZJ.view.dbgl.personidSearchCombo' ,{
             {
                 store: 'dbgl.SearchCombos',
                 displayField: 'owerid',
-                width:600,
+                width:300,
                 valueField:'owerid',
                 typeAhead: false,
                 //hideLabel: true,

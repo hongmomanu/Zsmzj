@@ -22,7 +22,7 @@ Ext.define('ZSMZJ.view.studyhelp.businessApply', {
             buttonAlign : 'center',
             fieldDefaults: {
                 labelAlign: 'right',
-                labelWidth: 180,
+                labelWidth: 80,
                 msgTarget: 'side'
             },
             autoScroll: true,
