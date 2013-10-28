@@ -42,8 +42,11 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
 
                 },
                 canceledit: function(grid, e, eOpts){
-
-
+                     if(!grid.editor.isValid()){
+                         //Ext.Msg.alert("提示信息", "请填上必要信息");
+                         //grid.startEdit(0, 0);
+                         e.grid.store.remove(e.record);
+                     }
                 }
 
             },
