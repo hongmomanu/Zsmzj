@@ -209,9 +209,10 @@ Ext.define('ZSMZJ.view.dbgl.familybasicFieldset', {
                         searchtype:"dbglbank",
                         name: 'bank',
                         fieldLabel: '开户银行',
-                        //afterLabelTextTpl: required,
-                        //emptyText: '低保户类型',
-                        allowBlank: true
+                        afterLabelTextTpl: required,
+                        emptyText: '请选择开户银行',
+                        blankText:'开户银行',
+                        allowBlank: false
                     }
                     ,{
                         name: 'bankower',

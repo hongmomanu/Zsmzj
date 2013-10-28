@@ -227,18 +227,18 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                 },
 
                 {
-                    header: '分类管理*',
+                    header: '人员类别*',
                     dataIndex: 'persontype',
                     //width: 160,
                     editor: {
                         allowBlank: false,
                         xtype:'dbglaplytype',
-                        searchtype:"poortype"
+                        searchtype:"persontype"
                         //vtype: 'email'
                     }
                 },
                 {
-                    header: '是否可推荐就业*',
+                    header: '职业状况*',
                     dataIndex: 'jobstatus',
                     //width: 160,
                     editor: {
@@ -259,7 +259,7 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                         //vtype: 'email'
                     }
                 },
-                /*{
+                {
                     header: '特定救助对象',
                     dataIndex: 'specialobject',
                     //width: 160,
@@ -267,7 +267,7 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                         allowBlank: true
                         //vtype: 'email'
                     }
-                },*/
+                },
                 {
                     header: '工作单位',
                     dataIndex: 'workunits',
@@ -311,7 +311,7 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     }
                 },
                 {
-                    header: '就学阶段',//'文化程度',
+                    header: '文化程度',//'文化程度 就学阶段',
                     dataIndex: 'education',
                     //width: 160,
                     editor: {
@@ -372,7 +372,82 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                         allowBlank: true
                         //vtype: 'email'
                     }
+                },
+                {
+                    header: '劳动能力',
+                    dataIndex: 'workability',
+                    //width: 160,
+                    editor: {
+                        allowBlank: true,
+                        xtype:'dbglaplytype',
+                        searchtype:"workability"
+                        //vtype: 'email'
+                    }
+                },{
+                    header: '养老保险',
+                    dataIndex: 'ispension',
+                    //width: 160,
+                    editor: {
+                        allowBlank: true,
+                        xtype:'dbglaplytype',
+                        searchtype:"ispension"
+                        //vtype: 'email'
+                    }
+                },{
+                    header: '医疗保险',
+                    dataIndex: 'ismedical',
+                    //width: 160,
+                    editor: {
+                        allowBlank: true,
+                        xtype:'dbglaplytype',
+                        searchtype:"ismedical"
+                        //vtype: 'email'
+                    }
+                },{
+                    header: '医疗类型',
+                    dataIndex: 'medicaltype',
+                    //width: 160,
+                    editor: {
+                        allowBlank: true,
+                        xtype:'dbglaplytype',
+                        searchtype:"medicaltype"
+                        //vtype: 'email'
+                    }
+                },{
+                    header: '医保卡号',
+                    dataIndex: 'medicalnum',
+                    //width: 160,
+                    editor: {
+                        allowBlank: true
+                        //vtype: 'email'
+                    }
+                },{
+                    header: '失业保险',
+                    dataIndex: 'isunemployment',
+                    //width: 160,
+                    editor: {
+                        allowBlank: true,
+                        xtype:'dbglaplytype',
+                        searchtype:"isunemployment"
+                        //vtype: 'email'
+                    }
+                },{
+                    header: '失业证号',
+                    dataIndex: 'unemploymentnum',
+                    //width: 160,
+                    editor: {
+                        allowBlank: true
+                        //vtype: 'email'
+                    }
+                },{
+                    header: '备注',
+                    dataIndex: 'other',
+                    editor: {
+                        allowBlank: true
+                        //vtype: 'email'
+                    }
                 }
+
 
             ],
             tbar: [{

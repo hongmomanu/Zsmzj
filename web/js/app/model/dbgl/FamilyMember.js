@@ -36,6 +36,14 @@ Ext.define('ZSMZJ.model.dbgl.FamilyMember', {
         'disabledtype',
         'disabledlevel',
         'disablenum',
+        'unemploymentnum',
+        'other',
+        'isunemployment',
+        'medicalnum',
+        'medicaltype',
+        'ismedical',
+        'ispension',
+        'workability',
         { name: 'birthday', type: 'date',dateFormat: 'Y-m-dTH:i:s' },
         { name: 'monthlyincome', type: 'float' }
 
