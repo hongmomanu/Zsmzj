@@ -112,7 +112,9 @@ Ext.define('ZSMZJ.view.dbgl.GrantMoneyGrid' ,{
             bbar: Ext.create('Ext.PagingToolbar', {
                 store: 'dbgl.GrantMoneyStore',
                 displayInfo: true,
-                displayMsg: '显示待办事务 {0} - {1} of {2}',
+                displayMsg: '显示 {0} - {1}条记录,共 {2}条记录',
+                beforePageText:'第',
+                afterPageText:'页，共{0}页',
                 emptyMsg: "无待办事务",
                 items:[
                     '-',

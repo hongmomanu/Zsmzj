@@ -115,8 +115,9 @@ Ext.define('ZSMZJ.view.dbgl.PeopleQueryGrid' ,{
             bbar: Ext.create('Ext.PagingToolbar', {
                 store: 'dbgl.PeopleQuerys',
                 displayInfo: true,
-                displayMsg: '显示人员信息 {0} - {1} of {2}',
-                emptyMsg: "无人员信息",
+                displayMsg: '显示 {0} - {1}条记录,共 {2}条记录',
+
+                emptyMsg: "无记录",
                 items:[
                     '-',
                     {

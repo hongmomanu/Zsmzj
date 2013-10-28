@@ -263,8 +263,10 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
             bbar: Ext.create('Ext.PagingToolbar', {
                 store: 'dbgl.NeedToDoBusinesses',
                 displayInfo: true,
-                displayMsg: '显示待办事务 {0} - {1} of {2}',
-                emptyMsg: "无待办事务",
+                displayMsg: '显示 {0} - {1}条记录,共 {2}条记录',
+                beforePageText:'第',
+                afterPageText:'页，共{0}页',
+                emptyMsg: "无记录",
                 items:[
                     '-',
                     {

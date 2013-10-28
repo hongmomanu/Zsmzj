@@ -18,7 +18,7 @@ Ext.define('ZSMZJ.view.dbgl.comboxwidget.divisiontreepath', {
     initComponent: function () {
         Ext.apply(this, {
             //margin:10,
-            width:500,
+            width:320,
             //height: 10,
             //treeHeight: 10,
             treeWidth: 240,

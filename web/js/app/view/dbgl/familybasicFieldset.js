@@ -39,8 +39,9 @@ Ext.define('ZSMZJ.view.dbgl.familybasicFieldset', {
                     name: 'division',
                     fieldLabel: '行政区划',
                     itemId:'divisiontype',
-                    //width:300,
+
                     //id:'testobjcomb',
+
                     xtype:'dbgldivsioncombtreepath',
                     allowBlank: false,
                     blankText: "不能为空",
@@ -157,7 +158,7 @@ Ext.define('ZSMZJ.view.dbgl.familybasicFieldset', {
                         afterLabelTextTpl: required,
                         name: 'familyaccount',
                         fieldLabel: '家庭户口',
-                        colspan:2,
+                        //colspan:2,
                         blankText: '请选择家庭户口',
                         emptyText: '请选择家庭户口',
                         allowBlank: false
@@ -165,7 +166,7 @@ Ext.define('ZSMZJ.view.dbgl.familybasicFieldset', {
                     ,{
                         name: 'accountaddress',
                         fieldLabel: '户主户口所在地',
-                        colspan:2,
+                        //colspan:2,
                         //afterLabelTextTpl: required,
                         //emptyText: '低保户类型',
                         allowBlank: true
@@ -229,8 +230,8 @@ Ext.define('ZSMZJ.view.dbgl.familybasicFieldset', {
                         name: 'otherfamilyinfo',
                         fieldLabel: '家庭备注',
                         colspan:3,
-                        minWidth:600,
-                        width:800,
+                        minWidth:300,
+                        width:500,
                         //draggable :true,
                         anchor : '100%',
                         //width:800,
