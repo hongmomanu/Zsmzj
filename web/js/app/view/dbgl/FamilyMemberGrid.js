@@ -41,7 +41,9 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
 
 
                 },
-                canceledit: function(grid,obj){
+                canceledit: function(grid, e, eOpts){
+
+
                 }
 
             },
@@ -244,7 +246,7 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     editor: {
                         allowBlank: false,
                         xtype:'dbglaplytype',
-                        searchtype:"isjobstatus"
+                        searchtype:"jobstatus"
                         //vtype: 'email'
                     }
                 },
@@ -264,7 +266,9 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     dataIndex: 'specialobject',
                     //width: 160,
                     editor: {
-                        allowBlank: true
+                        allowBlank: true,
+                        xtype:'dbglaplytype',
+                        searchtype:"specialobject"
                         //vtype: 'email'
                     }
                 },
@@ -306,7 +310,9 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     dataIndex: 'maritalstatus',
                     //width: 160,
                     editor: {
-                        allowBlank: true
+                        allowBlank: true,
+                        xtype:'dbglaplytype',
+                        searchtype:"maritalstatus"
                         //vtype: 'email'
                     }
                 },
