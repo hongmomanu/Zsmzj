@@ -281,10 +281,10 @@ Ext.define('ZSMZJ.controller.Dbgl', {
                                         if(name){
                                             items[j].setValue(form.allformdata[name]);
                                             if(items[j].itemId=='divisiontype')items[j].setRawValue(form.allformdata[name]);
-                                        }else{
+                                        }/*else{
                                             var head_cl=me.application.getController("Header");
                                             head_cl.formgridload(form,items[j]);
-                                        }
+                                        }*/
                                     }
                                     Ext.resumeLayouts(true);
                                 }

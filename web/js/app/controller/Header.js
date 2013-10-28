@@ -356,20 +356,7 @@ Ext.define('ZSMZJ.controller.Header', {
     },
     formpanelstoreload:function(businessid,form){
 
-            var processpanel=form.down('#processhistorypanel');
-            if(processpanel){
-                var store=form.down('#processhistorypanel').getStore();
-                store.proxy.extraParams = {
-                    businessid:businessid
-                };
-                //function fn1(){
-                    store.load();
-                //}
-                /*var task = new Ext.util.DelayedTask(fn1);
-                task.delay(10);
-*/
 
-            }
 
             var familgrid=form.down('#familymembergrid');
             if(familgrid){
@@ -378,7 +365,7 @@ Ext.define('ZSMZJ.controller.Header', {
                     businessid:businessid
                 };
 
-                //function fn(){
+
                     familystore.load({callback:function(){
                         var enjoyednum=0;
                         Ext.each(familystore.data.items,function(a){
@@ -392,11 +379,19 @@ Ext.define('ZSMZJ.controller.Header', {
                         if(countitem)countitem.setValue(familystore.data.items.length);
                         if(enjoyitem)enjoyitem.setValue(enjoyednum);
 
+                        var processpanel=form.down('#processhistorypanel');
+                        if(processpanel){
+                            var store=form.down('#processhistorypanel').getStore();
+                            store.proxy.extraParams = {
+                                businessid:businessid
+                            };
+                            store.load();
+
+                        }
+
+
                     }});
-                //}
-                /*var task = new Ext.util.DelayedTask(fn);
-                task.delay(150);
-*/
+
             }
 
     },
@@ -1844,7 +1839,11 @@ Ext.define('ZSMZJ.controller.Header', {
         form.affixfiledata=data.affixfile;
         me.initProcessBtns(form);
         var dbgl_cl=me.application.getController("Dbgl");
-        var callback=function(){return me.setSignature(data.signature,me,form)};
+        var callback=function(){
+            me.setSignature(data.signature,me,form);
+            me.formpanelstoreload(form.objdata.businessid,form);
+
+        };
         dbgl_cl.initformaftershow(form,true,callback);
 
     },
