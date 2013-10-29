@@ -43,9 +43,6 @@ Ext.onReady(function() {
  *
  */
 
-
-
-//var myMask = new Ext.LoadMask(Ext.getBody(), {msg:"Please wait..."});
 Ext.application({
     name: 'ZSMZJ',
     appFolder: 'js/app',
