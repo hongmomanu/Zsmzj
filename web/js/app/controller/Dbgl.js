@@ -464,7 +464,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
                     blankText: "不能为空",
                     listeners: {
                         change:function( combo, newValue, oldValue, eOpts ){
-                            testobj=combo;
+                            //testobj=combo;
                             if(combo.getValue()){
                                 var next=combo.nextNode();
                                 next.setDisabled(false);
