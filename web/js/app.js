@@ -56,6 +56,7 @@ Ext.application({
         'Ext.ux.window.Notification',
         'Ext.ux.TreeCombo'
     ],
+    //对应controller目录下的文件
     controllers: [
         'Navigation','Header','Manager','Dbgl',
         'Dbedge','Temporaryhelp','Medical',
