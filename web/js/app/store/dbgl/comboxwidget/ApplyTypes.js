@@ -11,10 +11,11 @@ Ext.define('ZSMZJ.store.dbgl.comboxwidget.ApplyTypes', {
     alias : 'widget.dbglapplytypes',
 
 
+
     autoLoad:false,
     proxy:{
         type: 'ajax',
-
+        getMethod:function(request){ return 'POST'; },
         url: 'ajax/getenumbytype.jsp'
     }
 

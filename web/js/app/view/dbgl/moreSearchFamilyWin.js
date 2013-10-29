@@ -79,11 +79,12 @@ Ext.define('ZSMZJ.view.dbgl.moreSearchFamilyWin' ,{
                                 searchtype:this.searchtype,
                                 listeners: {
                                     change:function( combo, newValue, oldValue, eOpts ){
+                                        testobj=combo;
                                         if(combo.getValue()){
                                            var next=combo.nextNode();
                                            next.setDisabled(false);
                                            //next.store.clearFilter();
-                                            //next.clearValue();
+                                           next.clearValue();
                                            next.store.proxy.extraParams.type=combo.searchtype+combo.getValue();
                                         }
                                     }
