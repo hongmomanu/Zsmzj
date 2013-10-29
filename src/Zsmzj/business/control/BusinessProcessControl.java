@@ -218,7 +218,7 @@ public class BusinessProcessControl {
                 //if(logic[i].equals("and")){
                     if(compare[i].equals(">=")){
                         String sql=" ";
-                        if(compare[i].equals("and")){
+                        if(logic[i].equals("and")){
                             sql=" "+logic[i]+" a.rowid in (select rowid from "+BusinessTable+" where CAST("+col_name+" AS real) >= "+value[i]+") ";
 
                         }else{
@@ -230,7 +230,7 @@ public class BusinessProcessControl {
 
                     }else if(compare[i].equals("<=")){
                         String sql=" ";
-                        if(compare[i].equals("and")){
+                        if(logic[i].equals("and")){
                             sql=" "+logic[i]+" a.rowid in (select rowid from "+BusinessTable+" where CAST("+col_name+" AS real) <= "+value[i]+") ";
 
                         }else{
@@ -240,7 +240,7 @@ public class BusinessProcessControl {
                         sql_count+=sql;
                     }else if(compare[i].equals("=")){
                         String sql=" ";
-                        if(compare[i].equals("and")){
+                        if(logic[i].equals("and")){
                             sql=" "+logic[i]+"  a.rowid in (select rowid from "+BusinessTable+" where "+col_name+" MATCH '"+value[i]+"') ";
 
                         }else{
@@ -251,7 +251,7 @@ public class BusinessProcessControl {
 
                     }else if(compare[i].equals("match")){
                         String sql=" ";
-                        if(compare[i].equals("and")){
+                        if(logic[i].equals("and")){
                             sql=" "+logic[i]+"  a.rowid in (select rowid from "+BusinessTable+" where "+col_name+" MATCH '"+value[i]+"*') ";
 
                         }else{
@@ -274,7 +274,7 @@ public class BusinessProcessControl {
                         String endyear=syearFormat.format(calendar.getTime());
 
                         String sql=" ";
-                        if(compare[i].equals("and")){
+                        if(logic[i].equals("and")){
                             sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+value[i]
                                     +"' and  '"+endyear+"') ";
 
@@ -299,7 +299,7 @@ public class BusinessProcessControl {
                         String endyear=syearFormat.format(calendar.getTime());
 
                         String sql=" ";
-                        if(compare[i].equals("and")){
+                        if(logic[i].equals("and")){
                             sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+value[i]
                                     +"' and  '"+endyear+"') ";
 
@@ -323,7 +323,7 @@ public class BusinessProcessControl {
                         String endyear=syearFormat.format(calendar.getTime());
 
                         String sql=" ";
-                        if(compare[i].equals("and")){
+                        if(logic[i].equals("and")){
                             sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+endyear
                                     +"' and  '"+value[i]+"') ";
 
@@ -349,7 +349,7 @@ public class BusinessProcessControl {
 
 
                         String sql=" ";
-                        if(compare[i].equals("and")){
+                        if(logic[i].equals("and")){
                             sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+value[i]
                                     +"' and  '"+endmonth+"') ";
 
@@ -375,7 +375,7 @@ public class BusinessProcessControl {
                         String endmonth=sDateFormat.format(calendar.getTime());
 
                         String sql=" ";
-                        if(compare[i].equals("and")){
+                        if(logic[i].equals("and")){
                             sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+value[i]
                                     +"' and  '"+endmonth+"') ";
 
@@ -400,7 +400,7 @@ public class BusinessProcessControl {
                         String endmonth=sDateFormat.format(calendar.getTime());
 
                         String sql=" ";
-                        if(compare[i].equals("and")){
+                        if(logic[i].equals("and")){
                             sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+endmonth
                                     +"' and  '"+value[i]+"') ";
 
