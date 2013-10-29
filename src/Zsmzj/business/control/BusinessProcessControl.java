@@ -185,17 +185,17 @@ public class BusinessProcessControl {
                                       String[]compare,String[]value,String[]logic){
         SimpleDateFormat sDateFormat   =   new SimpleDateFormat("yyyy-MM");
         SimpleDateFormat syearFormat   =   new SimpleDateFormat("yyyy");
-        String basic_sql= "where a.rowid=b.businessid "
+        String basic_sql= " a.rowid=b.businessid "
                 +" and b.userid =c.rowid and  a.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+type+"')";
         String sql_list="select a.*,b.businessid,b.bgdate,b.eddate,b.grantdate,b.time as granttime," +
                 "c.displayname as grantuser,(select count(*)  from "+ FamilyTable+" d where " +
                 "  d.businessid MATCH a.rowid)  as familynum," +
                 " (select count(*)  from "+ FamilyTable+" e where " +
                 " e.businessid = a.rowid and e.isenjoyed MATCH '享受')  as enjoynum from "+BusinessTable +" a,"+GrantTable+" b,"+UserTable
-                +" c "+basic_sql;
+                +" c where"+basic_sql;
 
         String sql_count="select count(*) from "+GrantTable+" b,"+BusinessTable+
-                " a,"+UserTable+" c "+basic_sql;
+                " a,"+UserTable+" c where"+basic_sql;
         if(bgmonth!=null&&!bgmonth.equals("")){
             Date date = null;
             try {
@@ -217,18 +217,50 @@ public class BusinessProcessControl {
                 String col_name=name[i].split("附")[0];
                 //if(logic[i].equals("and")){
                     if(compare[i].equals(">=")){
-                        sql_list+=" "+logic[i]+" a.rowid in (select rowid from "+BusinessTable+" where CAST("+col_name+" AS real) >= "+value[i]+") ";
-                        sql_count+=" "+logic[i]+" a.rowid in (select rowid from "+BusinessTable+" where CAST("+col_name+" AS real) >= "+value[i]+") ";
+                        String sql=" ";
+                        if(compare[i].equals("and")){
+                            sql=" "+logic[i]+" a.rowid in (select rowid from "+BusinessTable+" where CAST("+col_name+" AS real) >= "+value[i]+") ";
+
+                        }else{
+                            sql=" "+logic[i]+" (a.rowid in (select rowid from "+BusinessTable+" where CAST("+col_name+" AS real) >= "+value[i]+") and "+basic_sql+") ";
+                        }
+                        sql_list+=sql;
+                        sql_count+=sql;
+
 
                     }else if(compare[i].equals("<=")){
-                        sql_list+=" "+logic[i]+" a.rowid in (select rowid from "+BusinessTable+" where CAST("+col_name+" AS real) <= "+value[i]+") ";
-                        sql_count+=" "+logic[i]+" a.rowid in (select rowid from "+BusinessTable+" where CAST("+col_name+" AS real) <= "+value[i]+") ";
+                        String sql=" ";
+                        if(compare[i].equals("and")){
+                            sql=" "+logic[i]+" a.rowid in (select rowid from "+BusinessTable+" where CAST("+col_name+" AS real) <= "+value[i]+") ";
+
+                        }else{
+                            sql=" "+logic[i]+" (a.rowid in (select rowid from "+BusinessTable+" where CAST("+col_name+" AS real) <= "+value[i]+") and "+basic_sql+") ";
+                        }
+                        sql_list+=sql;
+                        sql_count+=sql;
                     }else if(compare[i].equals("=")){
-                        sql_list+=" "+logic[i]+"  a.rowid in (select rowid from "+BusinessTable+" where "+col_name+" MATCH '"+value[i]+"') ";
-                        sql_count+=" "+logic[i]+" a.rowid in (select rowid from "+BusinessTable+" where "+col_name+" MATCH '"+value[i]+"') ";
+                        String sql=" ";
+                        if(compare[i].equals("and")){
+                            sql=" "+logic[i]+"  a.rowid in (select rowid from "+BusinessTable+" where "+col_name+" MATCH '"+value[i]+"') ";
+
+                        }else{
+                            sql=" "+logic[i]+"  (a.rowid in (select rowid from "+BusinessTable+" where "+col_name+" MATCH '"+value[i]+"') and "+basic_sql+") ";
+                        }
+                        sql_list+=sql;
+                        sql_count+=sql;
+
                     }else if(compare[i].equals("match")){
-                        sql_list+=" "+logic[i]+"  a.rowid in (select rowid from "+BusinessTable+" where "+col_name+" MATCH '"+value[i]+"*') ";
-                        sql_count+=" "+logic[i]+" a.rowid in (select rowid from "+BusinessTable+" where "+col_name+" MATCH '"+value[i]+"*') ";
+                        String sql=" ";
+                        if(compare[i].equals("and")){
+                            sql=" "+logic[i]+"  a.rowid in (select rowid from "+BusinessTable+" where "+col_name+" MATCH '"+value[i]+"*') ";
+
+                        }else{
+                            sql=" "+logic[i]+"  (a.rowid in (select rowid from "+BusinessTable+" where "+col_name+" MATCH '"+value[i]+"*') and "+basic_sql+") ";
+                        }
+                        sql_list+=sql;
+                        sql_count+=sql;
+
+
                     }else if(compare[i].equals("year")){
                         Date date = null;
                         try {
@@ -240,10 +272,20 @@ public class BusinessProcessControl {
                         calendar.setTime(date);
                         calendar.add(Calendar.YEAR, +1);    //得到下一年
                         String endyear=syearFormat.format(calendar.getTime());
-                        sql_list+=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+value[i]
-                                +"' and  '"+endyear+"') ";
-                        sql_count+=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+value[i]
-                                +"' and  '"+endyear+"') ";
+
+                        String sql=" ";
+                        if(compare[i].equals("and")){
+                            sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+value[i]
+                                    +"' and  '"+endyear+"') ";
+
+                        }else{
+                            sql=" "+logic[i]+" (b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+value[i]
+                                    +"' and  '"+endyear+"') and "+basic_sql+") ";
+                        }
+                        sql_list+=sql;
+                        sql_count+=sql;
+
+
                     }else if(compare[i].equals("beginyear")){
                         Date date = null;
                         try {
@@ -255,10 +297,19 @@ public class BusinessProcessControl {
                         calendar.setTime(date);
                         calendar.add(Calendar.YEAR, +100);    //得到下一年
                         String endyear=syearFormat.format(calendar.getTime());
-                        sql_list+=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+value[i]
-                                +"' and  '"+endyear+"') ";
-                        sql_count+=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+value[i]
-                                +"' and  '"+endyear+"') ";
+
+                        String sql=" ";
+                        if(compare[i].equals("and")){
+                            sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+value[i]
+                                    +"' and  '"+endyear+"') ";
+
+                        }else{
+                            sql=" "+logic[i]+" (b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+value[i]
+                                    +"' and  '"+endyear+"') and "+basic_sql+") ";
+                        }
+                        sql_list+=sql;
+                        sql_count+=sql;
+
                     }else if(compare[i].equals("endyear")){
                         Date date = null;
                         try {
@@ -270,10 +321,19 @@ public class BusinessProcessControl {
                         calendar.setTime(date);
                         calendar.add(Calendar.YEAR, -100);    //得到起始年
                         String endyear=syearFormat.format(calendar.getTime());
-                        sql_list+=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+endyear
-                                +"' and  '"+value[i]+"') ";
-                        sql_count+=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+endyear
-                                +"' and  '"+value[i]+"') ";
+
+                        String sql=" ";
+                        if(compare[i].equals("and")){
+                            sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+endyear
+                                    +"' and  '"+value[i]+"') ";
+
+                        }else{
+                            sql=" "+logic[i]+" (b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+endyear
+                                    +"' and  '"+value[i]+"') and "+basic_sql+") ";
+                        }
+                        sql_list+=sql;
+                        sql_count+=sql;
+
                     }
                     else if(compare[i].equals("month")){
                         Date date = null;
@@ -286,10 +346,21 @@ public class BusinessProcessControl {
                         calendar.setTime(date);
                         calendar.add(Calendar.MONTH, +1);    //得到下一个月
                         String endmonth=sDateFormat.format(calendar.getTime());
-                        sql_list+=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+value[i]
-                                +"' and  '"+endmonth+"') ";
-                        sql_count+=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" d where d.time Between '"+value[i]
-                                +"' and  '"+endmonth+"') ";
+
+
+                        String sql=" ";
+                        if(compare[i].equals("and")){
+                            sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+value[i]
+                                    +"' and  '"+endmonth+"') ";
+
+                        }else{
+                            sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+value[i]
+                                    +"' and  '"+endmonth+"')  and "+basic_sql+") ";
+                        }
+                        sql_list+=sql;
+                        sql_count+=sql;
+
+
                     }
                     else if(compare[i].equals("beginmonth")){
                         Date date = null;
@@ -302,10 +373,20 @@ public class BusinessProcessControl {
                         calendar.setTime(date);
                         calendar.add(Calendar.YEAR, +100);    //得到下一个月
                         String endmonth=sDateFormat.format(calendar.getTime());
-                        sql_list+=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+value[i]
-                                +"' and  '"+endmonth+"') ";
-                        sql_count+=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+value[i]
-                                +"' and  '"+endmonth+"') ";
+
+                        String sql=" ";
+                        if(compare[i].equals("and")){
+                            sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+value[i]
+                                    +"' and  '"+endmonth+"') ";
+
+                        }else{
+                            sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+value[i]
+                                    +"' and  '"+endmonth+"')  and "+basic_sql+") ";
+                        }
+                        sql_list+=sql;
+                        sql_count+=sql;
+
+
                     }else if(compare[i].equals("endmonth")){
                         Date date = null;
                         try {
@@ -317,10 +398,19 @@ public class BusinessProcessControl {
                         calendar.setTime(date);
                         calendar.add(Calendar.YEAR, -100);    //得到下一个月
                         String endmonth=sDateFormat.format(calendar.getTime());
-                        sql_list+=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+endmonth
-                                +"' and  '"+value[i]+"') ";
-                        sql_count+=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+endmonth
-                                +"' and  '"+value[i]+"') ";
+
+                        String sql=" ";
+                        if(compare[i].equals("and")){
+                            sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+endmonth
+                                    +"' and  '"+value[i]+"') ";
+
+                        }else{
+                            sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+endmonth
+                                    +"' and  '"+value[i]+"')  and "+basic_sql+") ";
+                        }
+                        sql_list+=sql;
+                        sql_count+=sql;
+
                     }
                 //}
             }
