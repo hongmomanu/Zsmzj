@@ -77,6 +77,18 @@ Ext.define('ZSMZJ.view.dbgl.moreSearchFamilyWin' ,{
                                 columnWidth: 0.25,
                                 xtype:'dbglaplytype',
                                 searchtype:this.searchtype,
+                                listeners: {
+                                    change:function( combo, newValue, oldValue, eOpts ){
+                                        if(combo.getValue()){
+                                           var next=combo.nextNode();
+                                           next.setDisabled(false);
+                                           //next.store.clearFilter();
+                                            //next.clearValue();
+                                           next.store.proxy.extraParams.type=combo.searchtype+combo.getValue();
+                                        }
+                                    }
+                                },
+
                                 allowBlank: false,
                                 blankText: "不能为空",
                                 name:'name',
@@ -86,6 +98,12 @@ Ext.define('ZSMZJ.view.dbgl.moreSearchFamilyWin' ,{
                             {
                                 columnWidth: 0.25,
                                 xtype:'dbglaplytype',
+                                disabled:true,
+                                listeners: {
+                                    beforequery: function(qe){
+                                       delete qe.combo.lastQuery;
+                                    }
+                                },
                                 searchtype:'comparelabel',
                                 allowBlank: false,
                                 blankText: "不能为空",
@@ -111,14 +129,13 @@ Ext.define('ZSMZJ.view.dbgl.moreSearchFamilyWin' ,{
                                 blankText: "不能为空",
                                 name:'logic',
                                 fieldLabel: '逻辑符'
-
                             }
 
                         ]
                     }
 
                 ],
-
+                //tip小组件
                 dockedItems: [{
                     cls: Ext.baseCSSPrefix + 'dd-drop-ok',
                     xtype: 'container',
@@ -180,12 +197,9 @@ Ext.define('ZSMZJ.view.dbgl.moreSearchFamilyWin' ,{
                             }
                             return tip;
                         },
-
                         setErrors: function(errors) {
                             var me = this,
                                 tip = me.getTip();
-
-
                             errors = Ext.Array.from(errors);
 
                             // Update CSS class and tooltip content
