@@ -31,7 +31,7 @@ Ext.define('ZSMZJ.controller.Header', {
     views: [
         'Header','header.headViewPanel','header.NeedToDoGrid','header.AnnounceGrid'
     ],
-
+    //初始化
     init: function() {
         var me = this;
         this.initHeadView();
@@ -48,6 +48,7 @@ Ext.define('ZSMZJ.controller.Header', {
                 //indexmsginit:function a(panel){this.initIndexMsg();},
                 afterrender:function a(){this.initIndexMsg();}
             },
+            //获取表单信息
             'dbglbusinessalterform,dbedgebusinessalterform,temporaryhelpbusinessalterform,medicalhelpbusinessalterform,studyhelpbusinessalterform,charitablehelpbusinessalterform,disasterhelpwarealterform,disasterhelpbusinessalterform,rangershelpbusinessalterform':{
 
                 alterapplyaftershow:function(form){
@@ -73,6 +74,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
                 }
             } ,
+            //获取变更表单信息
             'dbglbusinesschangeform,dbedgebusinesschangeform':{
                 render: function(p){
                     /*p.body.on('scroll', function(e,t){
@@ -96,6 +98,7 @@ Ext.define('ZSMZJ.controller.Header', {
                     //this.forminitdata(form);
                 }
             } ,
+            //获取注销表单信息
             'dbglbusinesslogoutform,dbedgebusinesslogoutform':{
                 alterapplyaftershow:function(form){
 
@@ -298,7 +301,7 @@ Ext.define('ZSMZJ.controller.Header', {
         }, this);
 
     },
-
+    //初始化变更注销按钮
     initchangelogoutbtns:function(form){
         if(this.ischangeclick){
             this.showchangebtn(form);
@@ -316,6 +319,7 @@ Ext.define('ZSMZJ.controller.Header', {
         }
     }
     ,
+    //初始化表单数据内容
     forminitdata:function(form){
         ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
         ViewWaitMask.show();
@@ -326,6 +330,7 @@ Ext.define('ZSMZJ.controller.Header', {
         this.getValueBybusinessid(businessid,'ajax/getapplyformallbybid.jsp',this.setFormAllValues,form);
         this.formpanelstoreload(businessid,form);
     },
+    //放弃的grid初始化方法
     formgridload:function(form,grid){
       if(grid.itemId=='processhistorypanel'){
           var store=grid.getStore();
@@ -357,9 +362,8 @@ Ext.define('ZSMZJ.controller.Header', {
 
       }
     },
+    //信用的gridpanel加载方法
     formpanelstoreload:function(businessid,form){
-
-
 
             var familgrid=form.down('#familymembergrid');
             if(familgrid){
@@ -398,9 +402,9 @@ Ext.define('ZSMZJ.controller.Header', {
             }
 
     },
+    //初始化打印表单
     initprintform:function(form){
         var me=this;
-        testobj=me;
         var formvalues=form.objdata.getValues();
         var businessid=form.objdata.objdata.businessid;
 
@@ -475,6 +479,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
 
     },
+    //流程表单
     formprocess:function(btn){
         var form=btn.up('form');
         var c=form.objdata.item;
@@ -483,6 +488,7 @@ Ext.define('ZSMZJ.controller.Header', {
         this.showProcessWin(c,r,grid);
 
     },
+    //取消提交业务
     cancelsendbusiness:function(btn){
         var form=btn.up('form');
         var c=form.objdata.item;
@@ -490,6 +496,7 @@ Ext.define('ZSMZJ.controller.Header', {
         var grid=form.objdata.grid;
         this.cancelbusinesssubmit(c,r,grid,form);
     },
+    //提交表单
     sendbusiness:function(btn){
         var me=this;
         var form=btn.up('form');
@@ -508,12 +515,12 @@ Ext.define('ZSMZJ.controller.Header', {
         this.showBusinessCheckContent(c,r,grid,callback);
 
     },
-
+    //取消审核
     cancelcheck:function(btn){
         var form=btn.up('form');
         this.closetab(form.id);
     },
-
+    //显示表更表
     showchangeform:function(btn){
         this.ischangeclick=true;
         var form=btn.up('form');
@@ -529,6 +536,7 @@ Ext.define('ZSMZJ.controller.Header', {
     },
     ischangeclick:false,
     islogoutclick:false,
+    //显示变更表单按钮
     showchangebtn:function(form){
 
         var btns=form.getDockedItems('toolbar[dock="bottom"]')[0].items.items;
@@ -537,6 +545,7 @@ Ext.define('ZSMZJ.controller.Header', {
         });
         this.ischangeclick=false;
     },
+    //显示注销表单按钮
     showlogoutbtn:function(form){
         var btns=form.getDockedItems('toolbar[dock="bottom"]')[0].items.items;
         Ext.each(btns,function(a){
@@ -544,7 +553,7 @@ Ext.define('ZSMZJ.controller.Header', {
         });
         this.islogoutclick=false;
     },
-
+    //注销业务
     logoutbusiness:function(btn){
         this.islogoutclick=true;
         var form=btn.up('form');
@@ -560,6 +569,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
 
     },
+    //显示审核审批窗口
     showcheckwin:function(btn){
 
         if(!this.checkprocessWin)this.checkprocessWin=Ext.widget('processcheckwin');
@@ -569,8 +579,11 @@ Ext.define('ZSMZJ.controller.Header', {
         //testobj=this.checkprocessWin;
 
     },
+    //签章对象
     signaturepicarr:{},
+    //打印签章数组
     signaturepicprintarr:[],
+    //是否有签章
     issignaturedone:function(path,businessid){
       var result={isok:false};
       for(var i=0;i<this.signaturepicarr['print'+businessid].length;i++){
@@ -583,6 +596,7 @@ Ext.define('ZSMZJ.controller.Header', {
         return result;
 
     },
+    //清除签章
     clearsignaturepic:function(btn,res){
         var form=btn.up('form');
         var businessid=form.objdata.businessid;
@@ -596,6 +610,7 @@ Ext.define('ZSMZJ.controller.Header', {
         }
 
     },
+    //生成签章
     makesignaturepic:function(btn,res){
 
         var form=btn.up('form');
@@ -639,6 +654,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
 
     },
+    //显示签章
     showsignature:function(btn){
         var me=this;
         var params = {
@@ -660,6 +676,7 @@ Ext.define('ZSMZJ.controller.Header', {
         this.ajaxSend(params, 'ajax/getsignaturebyuid.jsp', successFunc, failFunc,'POST');
 
     },
+    //树转数组
     treeToarr:function(node,arr){
         for(var i=0;i<node.childNodes.length;i++){
             arr.push(node.childNodes[i].raw);
@@ -670,6 +687,7 @@ Ext.define('ZSMZJ.controller.Header', {
         return arr;
 
     },
+    //新增资金方法
     new_grant:function(btn){
         var grid=btn.up('panel');
         if(!this.newGrantWin)this.newGrantWin=Ext.widget('addnewgrantwin');
@@ -677,6 +695,7 @@ Ext.define('ZSMZJ.controller.Header', {
         this.newGrantWin.dataobj=grid;
 
     },
+    //资金发放导出
     grant_outexcel:function(btn){
         var grid=btn.up('panel');
         var store=grid.getStore();
@@ -1164,7 +1183,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
 
-
+    //高级搜索入口
     moresearch_family:function(btn){
         var grid=btn.up('panel');
         if(this.newMoreSearchWin){
@@ -1331,6 +1350,7 @@ Ext.define('ZSMZJ.controller.Header', {
         };
         this.ajaxSend(params, 'ajax/makeexcel.jsp', successFunc, failFunc,'POST');
     },
+    //打印
     printformFn:function(form){
         var el = form;
 
@@ -1359,12 +1379,14 @@ Ext.define('ZSMZJ.controller.Header', {
         win.close();
 
     },
+    //显示打印页面
     formprint:function(btn){
         var form=btn.up('form');
         this.showtab("打印","dbglbusinessprintform","widget",form);
 
 
     },
+    //删除签章
     delsignature:function(btn){
         var me=this;
         var params = {
@@ -1405,6 +1427,7 @@ Ext.define('ZSMZJ.controller.Header', {
         this.showProcessWin(c,r,grid);
 
     },
+    //初始化流程按钮
     initProcessBtns:function(form){
         var btns=form.getDockedItems('toolbar[dock="bottom"]')[0].items.items;
         Ext.each(btns,function(a){
@@ -1418,6 +1441,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
         })
     },
+    //清除表单内容
     clearAlterContent:function(form){
 
         //form.getForm().reset();
@@ -1463,7 +1487,7 @@ Ext.define('ZSMZJ.controller.Header', {
         this.signaturepicarr={};
 
     },
-
+    //显示表单内容
     showAlterContent:function(c,r,grid){
         //var businessid=r.get('businessid');
         var objdata={
@@ -1515,6 +1539,7 @@ Ext.define('ZSMZJ.controller.Header', {
         this.showtab(r.get('owername'),widgetname,'widget',objdata);
 
     },
+    //取消业务提交
     cancelbusinesssubmit:function(c,r,grid,form){
         var businessid=r.get('businessid');
         var me=this;
@@ -1532,6 +1557,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
 
     },
+    //删除申请
     delbusinessapply:function(c,r,grid){
         var businessid=r.get('businessid');
         var me=this;
@@ -1553,6 +1579,7 @@ Ext.define('ZSMZJ.controller.Header', {
         });
 
     },
+    //组件重新layout,尽量不要使用，此方法废弃，耗性能
     widgetdolayout:function(widgetid){
         function fn(){
             Ext.getCmp(widgetid).doLayout();
@@ -1560,6 +1587,7 @@ Ext.define('ZSMZJ.controller.Header', {
         var task = new Ext.util.DelayedTask(fn);
         task.delay(500);
     },
+    //根据业务表单id取消已提交表单
     cancelsubmitbybid:function(businessid,store,form){
         var me=this;
         var params = {
@@ -1580,6 +1608,7 @@ Ext.define('ZSMZJ.controller.Header', {
         this.ajaxSend(params, 'ajax/changestatusbybid.jsp', successFunc, failFunc,'POST');
 
     },
+     //如果是变更业务，删除则回复以前的状态
     recoverapplybybid:function(businessid,store){
         var me=this;
         var params = {
@@ -1600,6 +1629,7 @@ Ext.define('ZSMZJ.controller.Header', {
         this.ajaxSend(params, 'ajax/changeprocessstatustype.jsp', successFunc, failFunc,'POST');
 
     },
+    //根据id删除单子
     delapplybybid:function(businessid,store){
         var me=this;
         var params = {
@@ -1619,6 +1649,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
 
     },
+    //改变业务状态
     changeapplystatus:function(businessid,status,grid,callback){
         var me=this;
         var params = {
@@ -1648,7 +1679,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
 
-
+    //提交申请
     showsendapplywin:function(c,r,grid,callback){
         var me=this;
         var businessid=r.get('businessid');
@@ -1669,9 +1700,9 @@ Ext.define('ZSMZJ.controller.Header', {
         });
 
     },
-
+    //显示审核审批窗口
     showBusinessCheckContent:function(c,r,grid,callback){
-        alert(r.get("process"));
+        //alert(r.get("process"));
         if(r.get("process")==processdiction.stepone){
 
              this.showsendapplywin(c,r,grid,callback);
@@ -1700,7 +1731,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
 
-
+    //通过业务id获取表单值
     getValueBybusinessid:function(businessid,url,callbackfn,form){
         var me=this;
         var params = {
@@ -1716,7 +1747,7 @@ Ext.define('ZSMZJ.controller.Header', {
         this.ajaxSend(params, url, successFunc, failFunc,'POST');
 
     },
-
+    //增加签章
     addSignature:function(item,form){
         var formcontent=form.getDefaultContentTarget();
         var target=form.down('#businesscheckinfo').getEl();
@@ -1759,6 +1790,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
 
     },
+    //设置签章
     setSignature:function(data,me,form){
         Ext.each(data,function(item){
             me.addSignature(item,form);
@@ -1786,12 +1818,14 @@ Ext.define('ZSMZJ.controller.Header', {
         me.getValueBybusinessid(businessid,'ajax/getsignaturebybid.jsp',me.setSignature,form);
 
     },
+    //关闭mask
     closemask:function(){
         try{
             Ext.getCmp('mainContent-panel').getEl().unmask();
         }catch (e){
         }
     },
+    //设置附件
     setAffixValue:function(data,me,form){
         var businessid=form.objdata.businessid;
 
@@ -1829,6 +1863,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
 
     },
+    //设置值不带签章
     setFormAllValuesWithOutSignature:function(data,me,form){
         var businessid=form.objdata.businessid;
         form.getForm().setValues(data.form);
@@ -1839,6 +1874,7 @@ Ext.define('ZSMZJ.controller.Header', {
         me.closemask();
 
     },
+    //同步分组件加载form表单
     setFormValuesPieces:function(data,me,form){
         form.allformdata=data.form;
         form.signaturedata=data.signature;
@@ -1853,6 +1889,7 @@ Ext.define('ZSMZJ.controller.Header', {
         dbgl_cl.initformaftershow(form,true,callback);
 
     },
+    //异步加载form表单
     setFormAllValues:function(data,me,form){
         var businessid=form.objdata.businessid;
         form.getForm().setValues(data.form);
@@ -1863,6 +1900,7 @@ Ext.define('ZSMZJ.controller.Header', {
         me.setAffixValue(data.affixfile,me,form);
         me.closemask();
     },
+    //放弃的方法
     setFormValues:function(data,me,form){
         var businessid=form.objdata.businessid;
         form.getForm().setValues(data);
@@ -1874,7 +1912,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
 
-
+    //显示流程窗口
     showProcessWin:function(c,r,grid){//显示进程窗口
        var me=this;
        //窗口初始化显示
@@ -2024,6 +2062,7 @@ Ext.define('ZSMZJ.controller.Header', {
         }
 
     },
+    //afterrender，关闭mask
     afterrenderEvents:function(){
         CommonFunc.removeTask(ViewWaitMask,Ext.getCmp('mainContent-panel').getEl());
         this.widgetdolayout('mainContent-panel');
@@ -2031,6 +2070,7 @@ Ext.define('ZSMZJ.controller.Header', {
     processpictureRenderEvent:function(){
 
     },
+    //render 获取待办信息
     headerRenderEvents:function(){
         var params = {
             roleid:roleid,
@@ -2053,6 +2093,7 @@ Ext.define('ZSMZJ.controller.Header', {
         this.ajaxSend(params, 'ajax/getneedtodos.jsp', successFunc, failFunc,'POST');
 
     },
+    //ajax统一入口
     ajaxSend:function(params,url,sucFun,failFunc,method){
         Ext.Ajax.request({
             url: url,
@@ -2063,11 +2104,13 @@ Ext.define('ZSMZJ.controller.Header', {
         });
 
     },
+    //显示待办事务
     showneedthings:function(c){
 
         this.showtab('待办业务','needtodopanel','widget');
 
     },
+    //关闭tab
     closetab:function(value){
         var tabs = Ext.getCmp('mainContent-panel');
         var tab=tabs.getComponent(value);
@@ -2077,10 +2120,12 @@ Ext.define('ZSMZJ.controller.Header', {
         }
 
     },
+    //放弃的方法
     showoldtab:function(id){
         var tabs = Ext.getCmp('mainContent-panel');
         tabs.getComponent(id).show();
     },
+    //显示tab
     showtab:function(label,value,type,objdata){
 
         //ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
@@ -2180,6 +2225,7 @@ Ext.define('ZSMZJ.controller.Header', {
         }
 
     },
+   //更具roleid获取初始化功能
     initProcessFromRole:function(){
         var me=this;
         var params = {
@@ -2196,6 +2242,7 @@ Ext.define('ZSMZJ.controller.Header', {
         this.ajaxSend(params, 'ajax/getallfuncsbyrule.jsp', successFunc, failFunc,'POST');
 
     },
+    //初始化首页公告
     initIndexMsg:function(){
         var me=this;
         function fn(){
@@ -2222,6 +2269,7 @@ Ext.define('ZSMZJ.controller.Header', {
         task.delay(100);
 
     },
+    //初始化首页头菜单
     initHeadView:function(){
         this.initProcessFromRole();
         var me=this;

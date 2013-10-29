@@ -181,7 +181,8 @@ public class BusinessProcessControl {
 
 
     }
-    public String getGrantMoneyBytype(String type,String bgmonth,String keyword){
+    public String getGrantMoneyBytype(String type,String bgmonth,String keyword,String[]name,
+                                      String[]compare,String[]value,String[]logic){
         SimpleDateFormat sDateFormat   =   new SimpleDateFormat("yyyy-MM");
 
 
@@ -210,6 +211,24 @@ public class BusinessProcessControl {
                     +"' and  '"+edmonth+"') ";
             sql_count+=" and b.rowid in (select rowid from "+GrantTable+" d where d.time Between '"+bgmonth
                     +"' and  '"+edmonth+"') ";
+        }
+        if(name!=null&&name.length>0){
+            for(int i=0;i<name.length;i++){
+                if(logic[i].equals("and")){
+                    if(compare[i].equals(">=")){
+                        sql_list+=" and a.rowid in (select rowid from "+BusinessTable+" where CAST("+name[i]+" AS real) >= "+value[i]+") ";
+                        sql_count+=" and a.rowid in (select rowid from "+BusinessTable+" where CAST("+name[i]+" AS real) >= "+value[i]+") ";
+
+                    }else if(compare[i].equals("<=")){
+                        sql_list+=" and a.rowid in (select rowid from "+BusinessTable+" where CAST("+name[i]+" AS real) <= "+value[i]+") ";
+                        sql_count+=" and a.rowid in (select rowid from "+BusinessTable+" where CAST("+name[i]+" AS real) <= "+value[i]+") ";
+                    }else{
+                        sql_list+=" and a.rowid in (select rowid from "+BusinessTable+" where "+name[i]+" MATCH '"+value[i]+"') ";
+                        sql_count+=" and a.rowid in (select rowid from "+BusinessTable+" where "+name[i]+" MATCH '"+value[i]+"') ";
+                    }
+                }
+            }
+
         }
 
         /*if(keyword!=null&&!keyword.equals("")){

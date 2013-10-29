@@ -19,6 +19,11 @@
         String type=request.getParameter("businesstype");
         String bgmonth=request.getParameter("bgmonth");
         String keyword=request.getParameter("keyword");
-        out.print(bp.getGrantMoneyBytype(type,bgmonth,keyword));
+        String[] name=request.getParameterValues("name");
+        String[] compare=request.getParameterValues("compare");
+        String[] value=request.getParameterValues("value");
+        String[] logic=request.getParameterValues("logic");
+
+        out.print(bp.getGrantMoneyBytype(type,bgmonth,keyword,name,compare,value,logic));
     }
 %>
