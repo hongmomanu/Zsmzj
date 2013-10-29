@@ -220,6 +220,7 @@ Ext.define('ZSMZJ.view.dbgl.moreSearchFamilyWin' ,{
                         }
                     }, {
                         xtype: 'button',
+                        itemId:'searchbtn',
                         formBind: true,
                         disabled: true,
                         text: '检索',
