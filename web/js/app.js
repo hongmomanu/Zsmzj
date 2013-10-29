@@ -6,7 +6,6 @@
  * To change this template use File | Settings | File Templates.
  */
 
-
 /**
  * Ext.Loader
  */
@@ -14,10 +13,6 @@ Ext.Loader.setConfig({
     enabled: true,
     disableCaching: true,
     paths: {
-        //GeoExt: "static/javascripts/geoext4/src/GeoExt",
-        // for dev use
-        //Ext: extLocation+"src"
-        // for build purpose
         'Ext.ux':'js/Ext/ux'
     }
 
@@ -33,8 +28,6 @@ Ext.onReady(function() {
     splashscreen.show();
 
 });
-
-
 
 
 /**

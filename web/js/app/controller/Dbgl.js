@@ -13,6 +13,7 @@
  */
 Ext.define('ZSMZJ.controller.Dbgl', {
     extend: 'Ext.app.Controller',
+    //加载model
     models: ['dbgl.FamilyMember','dbgl.AffixFilesGrid',
         'dbgl.comboxwidget.ApplyType','dbgl.ProcessHistory',
         'dbgl.NeedToDoBusiness','dbgl.ChangedBusiness',
@@ -22,7 +23,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.SearchCombo'
 
     ],
-
+    //加载store
     stores: ['dbgl.FamilyMembers','dbgl.AffixFilesGrids',
         'dbgl.comboxwidget.ApplyTypes','dbgl.ProcessHistorys',
         'dbgl.NeedToDoBusinesses','dbgl.ChangedBusinesses',
@@ -31,7 +32,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.StatisticsComplexOnes','dbgl.GrantMoneyStore',
         'dbgl.SearchCombos'
     ],
-
+    //自定义引用名
     refs: [
         {ref: 'myviewbusinessapplyform', selector: 'dbglbusinessapplyform'},
         /*{ref: 'mydbglbusinesscheckform', selector: 'dbglbusinesscheckform'},*/
@@ -40,6 +41,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         {ref: 'myviewaffixfilesgrid', selector: 'affixfilesgrid'},
         {ref: 'myviewuploadimgfilewin', selector: 'uploadimgfilewin'}
     ],
+    //加载view
     views: [
         'dbgl.businessApply',
         'dbgl.FamilyMemberGrid',
@@ -258,6 +260,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
 
     },
+    //生成新form
     makenewform:function(views,form,isajaxdata,callback){
         var me=this;
         for(var i=0;i<views.length;i++){
@@ -306,6 +309,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
         }
     },
+    //form初始化后显示触发事件
     initformaftershow:function(form,isajaxdata,callback){
         var views=applyformviews[CommonFunc.lookupitemname(formwidgettype,form.xtype)];
         //console.log(form.items.items.length);
@@ -327,6 +331,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
 
     },
+    //afterrender 共用方法
     afterrenderEvents:function(){
 
         CommonFunc.removeTask(ViewWaitMask,Ext.getCmp('mainContent-panel').getEl());
@@ -337,6 +342,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         task.delay(500);
 
     },
+    //附件panel渲染后初始化
     affixgridrendered:function(grid,e){
         var view = grid.getView();
         var tip = Ext.create('Ext.tip.ToolTip', {
@@ -359,12 +365,14 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         tip.show();
 
     },*/
+    //生日改变
     birthdaychange:function(obj,newValue, oldValue, eOpts ){
         var age=(new Date()).getFullYear()-newValue.getFullYear();
         var ageitem=obj.up('panel').down('#personage');
         ageitem.setValue(age);
     },
 
+    //删除家庭成员
     delperson:function(btn){
 
         var  gridpanel=btn.up('panel');
@@ -396,6 +404,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
        }
 
     },
+    //新增家庭成员
     addnewperson:function(btn){
         var  gridpanel=btn.up('panel');
         var rowEditing=gridpanel.editingPlugin;
@@ -435,6 +444,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         //var applyform=this.getMyviewbusinessapplyform();
 
     },
+    //新增条件
     addnewcondition:function(btn){
         var form=btn.up('form');
         var win=btn.up('window');
@@ -511,6 +521,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         });
 
     },
+    //高级条件搜索
     searchcondition:function(btn){
 
         var me=this;
@@ -526,12 +537,14 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         store.loadPage(1);
 
     },
+    //删除选中的文件
     delslectfile:function(btn){
       var gridpanel=btn.up('panel');
       var sm = gridpanel.getSelectionModel();
       var removeitem=sm.getSelection();
       gridpanel.getStore().remove(removeitem);
     },
+    //资金发放
     grantmoney:function(btn){
         var me=this;
         var win=btn.up('window');
@@ -557,6 +570,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
 
     },
+    //上传附件确认
     uploadAffixFileConfirm:function(btn){
         var win=btn.up('window');
         var grid=btn.up('panel').down('panel');
@@ -572,6 +586,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
 
     },
+    //上传附件
     uploadAffixFile:function(btn){
         var me=this;
         var params = {
@@ -600,13 +615,15 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         var form =btn.up('form');
         this.formSubmit(form, params, 'ajax/uploadfile.jsp', successFunc, failFunc,"正在提交数据");
     },
-
+    //保存业务注销
     savelogoutapplysubmit:function(btn){
         this.updateformbyurl(btn,'ajax/logoutapply.jsp',processstatustype.logout);
     },
+    //业务变更提交
     applysubmitchange:function(btn){
         this.updateformbyurl(btn,'ajax/changeapply.jsp',processstatustype.change);
     },
+    //更新form
     updateformbyurl:function(btn,url,processtype){
         var form=btn.up('form');
         var me=this;
@@ -678,11 +695,12 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         this.formSubmit(form, params, url, successFunc, failFunc,"正在提交数据");
 
     },
+    //更新入口
     applysubmitupdate:function(btn){
         this.updateformbyurl(btn,'ajax/updateapply.jsp');
 
     },
-
+    //发送审核form
     sendCheckForm:function(btn){
 
         var me=this;
@@ -717,6 +735,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
 
     },
+    //form提交共用入口
     submitcommon:function(btn,businesstype,isprocess){
         var me=this;
         //var store=this.getMyviewfamilymembergrid().getStore();
@@ -774,10 +793,12 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
 
     },
+    //业务提交共用入口
     applysubmit:function(btn){
 
        this.submitcommon(btn,businessTableType.dbgl,true);
     },
+    //上传图片文件
     uploadImgFile:function(btn){
         var me=this;
         var params = {
@@ -802,6 +823,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         this.formSubmit(form, params, 'ajax/uploadfile.jsp', successFunc, failFunc,"正在提交数据");
 
     },
+    //form提交共用方法
     formSubmit: function (myform, params, url, sucFunc, failFunc,waitmsg) {
         var form = myform.getForm();
         if (form.isValid()) {
@@ -826,13 +848,14 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
 
     },
-
+    //显示上传窗口
     showUploadImgWin:function(c){
         if(!this.uploadimgWin)this.uploadimgWin=Ext.widget('uploadimgfilewin');
         this.uploadimgWin.itemdata= c;
         this.uploadimgWin.show();
 
     },
+    //清除上传窗口
     cleanuploadWin:function(){
         if(this.alteruploadaffixWin){
             this.alteruploadaffixWin.destroy();
@@ -843,6 +866,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             this.alteruploadimgWin=null;
         }
     },
+    //显示修改的上传窗口
     showAlterUploadImgWin:function(c){
         if(!this.alteruploadimgWin)this.alteruploadimgWin=Ext.widget('uploadimgfilewin');
         this.alteruploadimgWin.itemdata= c;
@@ -850,6 +874,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         this.alteruploadimgWin.show();
 
     },
+    //form 房屋结构 子项变更
     houseareachane:function(c){
         var formpanel= c.up('form');
         var person_nums=parseInt(formpanel.down('#FamilyPersons').getValue());
@@ -857,6 +882,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         c.nextNode().setValue(parseInt(person_nums==0?area:area/person_nums))
 
     },
+    //form 收入 子项变更
     moneychane:function(c){
       //var value=
         //alert(c.getValue());
@@ -899,6 +925,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
         //console.log(testobj);
     },
+    //form 用户 子项变更
     owerchanged:function(c){
       if(c.getRawValue()!=""){
           var familygrid= c.up('form').down('familymembergrid');
@@ -952,6 +979,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
       }
 
     },
+    // 显示附件窗口
     showaffixWindow:function(c){
         var store=null;
         if(!this.uploadaffixWin){
@@ -970,6 +998,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         this.uploadaffixWin.show();
 
     },
+    //显示修改的附件窗口
     showAlteraffixWindow:function(c){
         var store=null;
         if(!this.alteruploadaffixWin){
