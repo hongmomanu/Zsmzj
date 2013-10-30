@@ -1187,14 +1187,29 @@ Ext.define('ZSMZJ.controller.Header', {
     moresearch_family:function(btn){
         var grid=btn.up('panel');
         if(this.newMoreSearchWin){
-            this.newMoreSearchWin.close();
+            if(btn.searchtype==this.newMoreSearchWin.searchtype){
+                this.newMoreSearchWin.show();
+            }
+            else{
+
+                this.newMoreSearchWin.destroy();
+                this.newMoreSearchWin=Ext.widget('moresearchfamilywin',{ // Equivalent to Ext.create('widget.panel')
+                    searchtype: btn.searchtype
+                });
+                //this.newMoreSearchWin.searchtype="moresearchfamily";
+                this.newMoreSearchWin.dataobj=grid;
+                this.newMoreSearchWin.show();
+            }
+        }else{
+            this.newMoreSearchWin=Ext.widget('moresearchfamilywin',{ // Equivalent to Ext.create('widget.panel')
+                searchtype: btn.searchtype
+            });
+            //this.newMoreSearchWin.searchtype="moresearchfamily";
+            this.newMoreSearchWin.dataobj=grid;
+            this.newMoreSearchWin.show();
+
         }
-        this.newMoreSearchWin=Ext.widget('moresearchfamilywin',{ // Equivalent to Ext.create('widget.panel')
-            searchtype: btn.searchtype
-        });
-        //this.newMoreSearchWin.searchtype="moresearchfamily";
-        this.newMoreSearchWin.dataobj=grid;
-        this.newMoreSearchWin.show();
+
 
         //console.log(11);
     },

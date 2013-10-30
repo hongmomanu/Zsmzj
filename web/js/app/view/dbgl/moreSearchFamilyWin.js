@@ -18,7 +18,7 @@ Ext.define('ZSMZJ.view.dbgl.moreSearchFamilyWin' ,{
             title: '高级搜索',
             height: 300,
             width: 430,
-           /* closeAction : 'hide',*/
+            closeAction : 'hide',
             resizable:false,
             layout: 'fit',
             items: {  // Let's put an empty grid in just to illustrate fit layout
