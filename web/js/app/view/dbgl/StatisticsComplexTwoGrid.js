@@ -68,7 +68,7 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsComplexTwoGrid' ,{
 
                         width    : 50,
                         align:   'center',
-                        dataIndex: 'totalhelpmoney'
+                        dataIndex: 'newtotalhelpmoney'
                     }]
                 },
                 {

@@ -12,62 +12,40 @@ Ext.define('ZSMZJ.model.dbgl.StatisticsComplexTwo', {
             name: 'divisionname'
         },
         {
-            name: 'oldperson'
+            name: 'newmonthfamilynum'
         },
         {
-            name: 'loginnojob'
+            name: 'newmonthpeoplenum'
         },
         {
-            name: 'logoutnojob'
+            name: 'newtotalhelpmoney'
         },
         {
-            name: 'student'
+            name: 'logoutmonthfamilynum'
         },
         {
-            name: 'totalfamily',defadefaultValue: 0
+            name: 'logoutmonthpeoplenum',defadefaultValue: 0
         },
         {
-            name: 'totalperson'
+            name: 'logouttotalhelpmoney'
         },
         {
-            name: 'totalmen'
+            name: 'addmoneymonthfamilynum'
         },
         {
-            name: 'totalgirls'
+            name: 'addmoneymonthpeoplenum'
         },
         {
-            name: 'totalmoney',defadefaultValue: 0
+            name: 'addmoneytotalhelpmoney',defadefaultValue: 0
         },
         {
-            name: 'cityfamily'
+            name: 'reducemoneymonthfamilynum'
         },
         {
-            name: 'cityperson'
+            name: 'reducemoneymonthpeoplenum'
         },
         {
-            name: 'citymen'
-        },
-        {
-            name: 'citygirls'
-        },
-        {
-            name: 'citymoney' ,defadefaultValue: 0
-
-        },
-        {
-            name: 'villagefamily'
-        },
-        {
-            name: 'villageperson'
-        },
-        {
-            name: 'villagemen'
-        },
-        {
-            name: 'villagegirls'
-        },
-        {
-            name: 'villagemoney' ,defadefaultValue: 0
+            name: 'reducemoneytotalhelpmoney'
         }
     ]
 });
