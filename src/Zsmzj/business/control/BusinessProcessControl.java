@@ -134,14 +134,14 @@ public class BusinessProcessControl {
 
 
     }
-    public String grantmoneybytype(int userid,String bgdate,String eddate,String grantdate,String businesstype){
+    public String grantmoneybytype(int userid,String bgdate,String eddate,String grantdate,String businesstype,float adjustmoney){
         SimpleDateFormat sDateFormat   =   new SimpleDateFormat("yyyy-MM");
 
         BusinessProcess bp=new BusinessProcess();
         ComonDao cd=new ComonDao();
         int totalnum=cd.getTotalCountBySql("select count(*) from "+GrantTable+" a,"+BusinessTable+
-                " b where b.rowid=a.businessid and a.rowid in (select rowid from "+GrantTable+" d where d.time Between '"
-                +bgdate+"' and  '"+eddate+"')  and b.businesstype MATCH '"+businesstype+"'");
+                " b where b.rowid=a.businessid and a.rowid in (select rowid from "+GrantTable+" d where d.grantdate Between '"
+                +bgdate+"' and  '"+eddate+"' union select rowid from "+GrantTable+" where grantdate MATCH '"+grantdate+"' )  and b.businesstype MATCH '"+businesstype+"'");
         if(totalnum>0){
             return "{success:true,msg:\"资金已发\"}";
         }
@@ -161,6 +161,7 @@ public class BusinessProcessControl {
                 param.put("bgdate",bgdate);
                 param.put("grantdate",grantdate);
                 param.put("userid",userid);
+                param.put("adjustmoney",adjustmoney);
                 bDao.insertTableVales(param, GrantTable);
             }
             return "{success:true,msg:\"资金已发\"}";

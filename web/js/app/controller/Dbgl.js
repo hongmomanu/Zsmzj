@@ -572,7 +572,8 @@ Ext.define('ZSMZJ.controller.Dbgl', {
     grantmoney:function(btn){
         var me=this;
         var win=btn.up('window');
-        var ajaxform=win.down('form');
+
+        var ajaxform=btn.up('form');
 
         var grid=win.dataobj;
         var params = {
@@ -581,7 +582,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         };
         var successFunc = function (myform, action) {
 
-            btn.up('window').close();
+            win.close();
             grid.getStore().load();
 
         };
