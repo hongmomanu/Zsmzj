@@ -222,7 +222,7 @@ public class BusinessProcessControl {
                             sql=" "+logic[i]+" a.rowid in (select rowid from "+BusinessTable+" where CAST("+col_name+" AS real) >= "+value[i]+") ";
 
                         }else{
-                            sql=" "+logic[i]+" (a.rowid in (select rowid from "+BusinessTable+" where CAST("+col_name+" AS real) >= "+value[i]+") and "+basic_sql+") ";
+                            sql=" "+logic[i]+" (a.rowid in (select rowid from "+BusinessTable+" where CAST("+col_name+" AS real) >= "+value[i]+") and ("+basic_sql+") ";
                         }
                         sql_list+=sql;
                         sql_count+=sql;
@@ -234,7 +234,7 @@ public class BusinessProcessControl {
                             sql=" "+logic[i]+" a.rowid in (select rowid from "+BusinessTable+" where CAST("+col_name+" AS real) <= "+value[i]+") ";
 
                         }else{
-                            sql=" "+logic[i]+" (a.rowid in (select rowid from "+BusinessTable+" where CAST("+col_name+" AS real) <= "+value[i]+") and "+basic_sql+") ";
+                            sql=" "+logic[i]+" (a.rowid in (select rowid from "+BusinessTable+" where CAST("+col_name+" AS real) <= "+value[i]+") and ("+basic_sql+") ";
                         }
                         sql_list+=sql;
                         sql_count+=sql;
@@ -244,7 +244,7 @@ public class BusinessProcessControl {
                             sql=" "+logic[i]+"  a.rowid in (select rowid from "+BusinessTable+" where "+col_name+" MATCH '"+value[i]+"') ";
 
                         }else{
-                            sql=" "+logic[i]+"  (a.rowid in (select rowid from "+BusinessTable+" where "+col_name+" MATCH '"+value[i]+"') and "+basic_sql+") ";
+                            sql=" "+logic[i]+"  (a.rowid in (select rowid from "+BusinessTable+" where "+col_name+" MATCH '"+value[i]+"') and ("+basic_sql+") ";
                         }
                         sql_list+=sql;
                         sql_count+=sql;
@@ -255,7 +255,7 @@ public class BusinessProcessControl {
                             sql=" "+logic[i]+"  a.rowid in (select rowid from "+BusinessTable+" where "+col_name+" MATCH '"+value[i]+"*') ";
 
                         }else{
-                            sql=" "+logic[i]+"  (a.rowid in (select rowid from "+BusinessTable+" where "+col_name+" MATCH '"+value[i]+"*') and "+basic_sql+") ";
+                            sql=" "+logic[i]+"  (a.rowid in (select rowid from "+BusinessTable+" where "+col_name+" MATCH '"+value[i]+"*') and ("+basic_sql+") ";
                         }
                         sql_list+=sql;
                         sql_count+=sql;
@@ -280,7 +280,7 @@ public class BusinessProcessControl {
 
                         }else{
                             sql=" "+logic[i]+" (b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+value[i]
-                                    +"' and  '"+endyear+"') and "+basic_sql+") ";
+                                    +"' and  '"+endyear+"') and ("+basic_sql+") ";
                         }
                         sql_list+=sql;
                         sql_count+=sql;
@@ -305,7 +305,7 @@ public class BusinessProcessControl {
 
                         }else{
                             sql=" "+logic[i]+" (b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+value[i]
-                                    +"' and  '"+endyear+"') and "+basic_sql+") ";
+                                    +"' and  '"+endyear+"') and ("+basic_sql+") ";
                         }
                         sql_list+=sql;
                         sql_count+=sql;
@@ -329,7 +329,7 @@ public class BusinessProcessControl {
 
                         }else{
                             sql=" "+logic[i]+" (b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+endyear
-                                    +"' and  '"+value[i]+"') and "+basic_sql+") ";
+                                    +"' and  '"+value[i]+"') and ("+basic_sql+") ";
                         }
                         sql_list+=sql;
                         sql_count+=sql;
@@ -355,7 +355,7 @@ public class BusinessProcessControl {
 
                         }else{
                             sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+value[i]
-                                    +"' and  '"+endmonth+"')  and "+basic_sql+") ";
+                                    +"' and  '"+endmonth+"')  and ("+basic_sql+") ";
                         }
                         sql_list+=sql;
                         sql_count+=sql;
@@ -381,7 +381,7 @@ public class BusinessProcessControl {
 
                         }else{
                             sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+value[i]
-                                    +"' and  '"+endmonth+"')  and "+basic_sql+") ";
+                                    +"' and  '"+endmonth+"')  and ("+basic_sql+") ";
                         }
                         sql_list+=sql;
                         sql_count+=sql;
@@ -406,7 +406,7 @@ public class BusinessProcessControl {
 
                         }else{
                             sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" d where d."+col_name+" Between '"+endmonth
-                                    +"' and  '"+value[i]+"')  and "+basic_sql+") ";
+                                    +"' and  '"+value[i]+"')  and ("+basic_sql+") ";
                         }
                         sql_list+=sql;
                         sql_count+=sql;
