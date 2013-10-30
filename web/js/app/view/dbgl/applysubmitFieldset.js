@@ -87,6 +87,7 @@ Ext.define('ZSMZJ.view.dbgl.applysubmitFieldset', {
                         value: Ext.Date.format(new Date(), 'Y-m-d'),
                         allowBlank: false
                     },
+
                     {
                         name: 'helpedtime',
                         fieldLabel: '救助结束日期',
