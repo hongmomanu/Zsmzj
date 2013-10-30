@@ -238,7 +238,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
             },
 
-            'needtodopanel,announcegridpanel,enumerateconfigmanager,usermanagerpanel,rolemanagerpanel,funcmanagerpanel,needtodobusinesspanel,changedbusinesspanel,logoutbusinesspanel,peoplequerypanel,familyquerypanel,dbglstatisticsfullpanel,dbglgrantmoneypanel,dbglstatisticscomplexonepanel,dbglstatisticscomplextwopanel,dbglstatisticscomplexthreepanel,dbglstatisticscomplexfourpanel,dbglstatisticscomplexcountrypanel,medicalstandardgridpanel':{
+            'needtodopanel,announcegridpanel,enumerateconfigmanager,usermanagerpanel,rolemanagerpanel,funcmanagerpanel,needtodobusinesspanel,changedbusinesspanel,logoutbusinesspanel,peoplequerypanel,familyquerypanel,dbglstatisticsfullpanel,dbglgrantmoneypanel,dbglstatisticscomplexonepanel,dbglstatisticscomplextwopanel,dbglstatisticscomplexthreepanel,dbglstatisticscomplexfourpanel,dbglstatisticscomplexcountrypanel,dbglstatisticscomplexnewlogoutpanel,medicalstandardgridpanel':{
 
                 gridshowfresh:function(grid){
                   if(grid.xtype=='familyquerypanel'){
