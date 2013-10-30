@@ -54,14 +54,14 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsComplexThreeGrid' ,{
                         align:   'center',
                         dataIndex: 'totalpeoplenum'
                     }, {
-                        text     : '资金支出\n(元)',
+                        text     : '资金支出</br>(元)',
                         dataIndex: 'totalhelpmoney',
                         width    : 80,
                         align:   'center'
                     }, {
-                        text     : '月人均补\n助水平(元)',
+                        text     : '月人均补</br>助水平(元)',
 
-                        width    : 50,
+                        width    : 80,
                         align:   'center',
                         dataIndex: 'personhelpmoney'
                     }]
@@ -75,13 +75,13 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsComplexThreeGrid' ,{
                         align:   'center',
                         dataIndex: 'atotalpeoplenum'
                     }, {
-                        text     : '资金支出\n(元)',
+                        text     : '资金支出</br>(元)',
                         dataIndex: 'atotalhelpmoney',
                         width    : 80,
                         align:   'center'
                     }, {
-                        text     : '月人均补\n助水平(元)',
-                        width    : 50,
+                        text     : '月人均补</br>助水平(元)',
+                        width    : 80,
                         align:   'center',
                         dataIndex: 'apersonhelpmoney'
                     }]
@@ -95,14 +95,14 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsComplexThreeGrid' ,{
                         align:   'center',
                         dataIndex: 'btotalpeoplenum'
                     }, {
-                        text     : '资金支出\n(元)',
+                        text     : '资金支出</br>(元)',
                         dataIndex: 'btotalhelpmoney',
                         width    : 80,
                         align:   'center'
                     }, {
-                        text     : '月人均补\n助水平(元)',
+                        text     : '月人均补</br>助水平(元)',
 
-                        width    : 50,
+                        width    : 80,
                         align:   'center',
                         dataIndex: 'bpersonhelpmoney'
                     }]
@@ -117,14 +117,14 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsComplexThreeGrid' ,{
                         align:   'center',
                         dataIndex: 'ctotalpeoplenum'
                     }, {
-                        text     : '资金支出\n(元)',
+                        text     : '资金支出</br>(元)',
                         dataIndex: 'ctotalhelpmoney',
                         width    : 80,
                         align:   'center'
                     }, {
-                        text     : '月人均补\n助水平(元)',
+                        text     : '月人均补</br>助水平(元)',
 
-                        width    : 50,
+                        width    : 80,
                         align:   'center',
                         dataIndex: 'cpersonhelpmoney'
                     }]
