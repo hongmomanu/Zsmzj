@@ -298,7 +298,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
                         }
                         var task = new Ext.util.DelayedTask(fn);
-                        task.delay(index*30);
+                        task.delay(index*20);
                     },
                     repeat:1,
                     interval: 1 //1 毫秒

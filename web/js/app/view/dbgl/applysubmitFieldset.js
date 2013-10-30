@@ -60,7 +60,15 @@ Ext.define('ZSMZJ.view.dbgl.applysubmitFieldset', {
                      blankText : '请输入低保标准',
                      allowBlank: false
                      }*/
-                    ,
+
+                    {
+                        name: 'poorstandard',
+                        fieldLabel: '低保标准(元)',
+                        afterLabelTextTpl: required,
+                        emptyText: '请输入低保标准',
+                        blankText : '请输入低保标准',
+                        allowBlank: false
+                    },
                     {
                         name: 'aidnum',
                         fieldLabel: '救助证编号',
@@ -136,7 +144,7 @@ Ext.define('ZSMZJ.view.dbgl.applysubmitFieldset', {
                         xtype: 'datefield',
                         format: 'Y-m-d',
                         value:Ext.Date.format(Ext.Date.add(new Date(), Ext.Date.DAY,7), 'Y-m-d'),
-                        //colspan:3,
+                        colspan:3,
                         allowBlank: true
                     }
                     ,{
