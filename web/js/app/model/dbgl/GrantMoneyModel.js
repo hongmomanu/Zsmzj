@@ -19,6 +19,7 @@ Ext.define('ZSMZJ.model.dbgl.GrantMoneyModel', {
         {name:'familytype'},
         {name:'familytype'},
         {name:'totalhelpmoney'},
+        {name:'adjustmoney'},
         {name:'familynum'},
         {name:'enjoynum'},
         {name:'grantuser'},

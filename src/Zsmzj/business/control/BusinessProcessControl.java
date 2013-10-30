@@ -161,8 +161,8 @@ public class BusinessProcessControl {
             for(Map<String,Object> item:list){
                 Map<String,Object> param=new HashMap<String, Object>();
                 param.put("businessid",item.get("businessid"));
-                param.put("eddate",eddate);
-                param.put("bgdate",bgdate);
+                param.put("eddate",eddate==null?"":eddate);
+                param.put("bgdate",bgdate==null?"":bgdate);
                 param.put("grantdate",grantdate);
                 param.put("userid",userid);
                 param.put("adjustmoney",adjustmoney);
@@ -192,7 +192,7 @@ public class BusinessProcessControl {
         SimpleDateFormat syearFormat   =   new SimpleDateFormat("yyyy");
         String basic_sql= " a.rowid=b.businessid "
                 +" and b.userid =c.rowid and  a.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+type+"')";
-        String sql_list="select a.*,b.businessid,b.bgdate,b.eddate,b.grantdate,b.time as granttime," +
+        String sql_list="select a.*,b.businessid,b.bgdate,b.eddate,b.grantdate,b.time as granttime,b.adjustmoney," +
                 "c.displayname as grantuser,(select count(*)  from "+ FamilyTable+" d where " +
                 "  d.businessid MATCH a.rowid)  as familynum," +
                 " (select count(*)  from "+ FamilyTable+" e where " +
