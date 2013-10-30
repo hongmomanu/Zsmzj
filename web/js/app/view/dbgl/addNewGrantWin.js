@@ -124,7 +124,7 @@ Ext.define('ZSMZJ.view.dbgl.addNewGrantWin' ,{
                             },{
                                 xtype:'textfield',
                                 fieldLabel:'调整金额（元）',
-                                defaultValue:0,
+                                value:0,
                                 name:'adjustmoney'
 
                             }
@@ -141,7 +141,8 @@ Ext.define('ZSMZJ.view.dbgl.addNewGrantWin' ,{
                             },
                             padding: '10 10 5',
 
-                            items: [{
+                            items: [
+                                {
                                 xtype: 'component',
                                 id: 'formErrorState',
                                 invalidCls: Ext.baseCSSPrefix + 'form-invalid-icon',
@@ -248,7 +249,7 @@ Ext.define('ZSMZJ.view.dbgl.addNewGrantWin' ,{
                             },{
                                 xtype:'textfield',
                                 fieldLabel:'调整金额（元）',
-                                defaultValue:0,
+                                value:0,
                                 name:'adjustmoney'
 
                             }
@@ -264,7 +265,10 @@ Ext.define('ZSMZJ.view.dbgl.addNewGrantWin' ,{
                             padding: '10 10 5',
 
                             items: [
-                            '->',
+                                {
+                                    xtype: 'component',
+                                    flex: 1
+                                },
                             {
                                 xtype: 'button',
                                 //formBind: true,
@@ -281,7 +285,19 @@ Ext.define('ZSMZJ.view.dbgl.addNewGrantWin' ,{
                                 }
                             }]
                         }],
+                        layout: {
+                            type: 'vbox',
 
+                            align: 'stretch'
+                        },
+                        bodyPadding: 10,
+                        //xtype: 'fieldset',
+
+                        fieldDefaults: {
+                            labelAlign: 'top',
+                            labelWidth: 100,
+                            labelStyle: 'font-weight:bold'
+                        },
                         border: false
 
                     }

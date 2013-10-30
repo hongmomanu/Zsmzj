@@ -139,9 +139,13 @@ public class BusinessProcessControl {
 
         BusinessProcess bp=new BusinessProcess();
         ComonDao cd=new ComonDao();
+        if(bgdate==null){
+            grantdate+="-00-00";
+        }
         int totalnum=cd.getTotalCountBySql("select count(*) from "+GrantTable+" a,"+BusinessTable+
                 " b where b.rowid=a.businessid and a.rowid in (select rowid from "+GrantTable+" d where d.grantdate Between '"
-                +bgdate+"' and  '"+eddate+"' union select rowid from "+GrantTable+" where grantdate MATCH '"+grantdate+"' )  and b.businesstype MATCH '"+businesstype+"'");
+                +bgdate+"' and  '"+eddate+"' union select rowid from "+GrantTable+" where grantdate Between '"+grantdate+"' and '"
+                +grantdate+"')  and b.businesstype MATCH '"+businesstype+"'");
         if(totalnum>0){
             return "{success:true,msg:\"资金已发\"}";
         }
