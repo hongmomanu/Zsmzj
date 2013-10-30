@@ -8,6 +8,8 @@
     <file url="file://$PROJECT_DIR$/web/js/app/model/dbgl/NeedToDoBusiness.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/model/dbgl/PeopleQuery.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/model/dbgl/ProcessHistory.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/web/js/app/model/dbgl/StatisticsComplexCountry.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/web/js/app/model/dbgl/StatisticsComplexFour.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/model/dbgl/StatisticsComplexOne.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/model/dbgl/StatisticsComplexThree.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/model/dbgl/StatisticsComplexTwo.js" charset="UTF-8" />
@@ -23,6 +25,8 @@
     <file url="file://$PROJECT_DIR$/web/js/app/store/dbgl/NeedToDoBusinesses.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/store/dbgl/PeopleQuerys.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/store/dbgl/ProcessHistorys.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/web/js/app/store/dbgl/StatisticsComplexCountrys.js" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/web/js/app/store/dbgl/StatisticsComplexFours.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/store/dbgl/StatisticsComplexOnes.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/store/dbgl/StatisticsComplexThrees.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/store/dbgl/StatisticsComplexTwos.js" charset="UTF-8" />

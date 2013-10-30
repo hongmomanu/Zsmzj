@@ -21,7 +21,8 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.FamilyQuery','dbgl.StatisticsFull',
         'dbgl.StatisticsComplexOne','dbgl.GrantMoneyModel',
         'dbgl.SearchCombo','dbgl.StatisticsComplexTwo',
-        'dbgl.StatisticsComplexThree'
+        'dbgl.StatisticsComplexThree','dbgl.StatisticsComplexFour',
+        'dbgl.StatisticsComplexCountry'
 
     ],
     //加载store
@@ -32,7 +33,8 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.FamilyQuerys','dbgl.StatisticsFulls',
         'dbgl.StatisticsComplexOnes','dbgl.GrantMoneyStore',
         'dbgl.SearchCombos','dbgl.StatisticsComplexTwos',
-        'dbgl.StatisticsComplexThrees'
+        'dbgl.StatisticsComplexThrees','dbgl.StatisticsComplexFours',
+        'dbgl.StatisticsComplexCountrys'
 
     ],
     //自定义引用名
@@ -75,6 +77,8 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.StatisticsComplexOneGrid',
         'dbgl.StatisticsComplexTwoGrid',
         'dbgl.StatisticsComplexThreeGrid',
+        'dbgl.StatisticsComplexFourGrid',
+        'dbgl.StatisticsComplexCountryGrid',
         'dbgl.personidSearchCombo',
         'dbgl.applysubmitFieldset',
         'dbgl.familyaffixFieldset',
