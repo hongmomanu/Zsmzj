@@ -580,17 +580,18 @@ public class BusinessProcessControl {
             BusinessProcess bp=new BusinessProcess();
             ComonDao cd=new ComonDao();
             String sql_list="select a.divisionname  ,a.rowid as id," +
-                   /* "(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and  division MATCH (a.divisionpath||'*')) as newmonthfamilynum ,"
+                    "(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and rowid in (seclect rowid from "
+                    +BusinessTable+" where businesstype MATCH '"+businesstype+"') and  division MATCH (a.divisionpath||'*')) as newmonthfamilynum ,"
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
                     "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and c.businessid=b.rowid and b.division MATCH (a.divisionpath||'*')) as newmonthpeoplenum, "
 
-                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and division MATCH (a.divisionpath||'*')) as newtotalhelpmoney, "*/
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and division MATCH (a.divisionpath||'*')) as newtotalhelpmoney, "
 
-            "(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and  division MATCH (a.divisionpath||'*')) as newmonthfamilynum ,"
+            +"(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and  division MATCH (a.divisionpath||'*')) as logoutmonthfamilynum ,"
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and c.businessid=b.rowid and b.division MATCH (a.divisionpath||'*')) as newmonthpeoplenum, "
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and c.businessid=b.rowid and b.division MATCH (a.divisionpath||'*')) as logoutmonthpeoplenum, "
 
-                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and division MATCH (a.divisionpath||'*')) as newtotalhelpmoney "
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and division MATCH (a.divisionpath||'*')) as logouttotalhelpmoney "
 
 
 
