@@ -22,7 +22,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.StatisticsComplexOne','dbgl.GrantMoneyModel',
         'dbgl.SearchCombo','dbgl.StatisticsComplexTwo',
         'dbgl.StatisticsComplexThree','dbgl.StatisticsComplexFour',
-        'dbgl.StatisticsComplexCountry'
+        'dbgl.StatisticsComplexCountry','dbgl.StatisticsComplexNewLogout'
 
     ],
     //加载store
@@ -34,7 +34,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.StatisticsComplexOnes','dbgl.GrantMoneyStore',
         'dbgl.SearchCombos','dbgl.StatisticsComplexTwos',
         'dbgl.StatisticsComplexThrees','dbgl.StatisticsComplexFours',
-        'dbgl.StatisticsComplexCountrys'
+        'dbgl.StatisticsComplexCountrys','dbgl.StatisticsComplexNewLogouts'
 
     ],
     //自定义引用名
@@ -79,6 +79,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.StatisticsComplexThreeGrid',
         'dbgl.StatisticsComplexFourGrid',
         'dbgl.StatisticsComplexCountryGrid',
+        'dbgl.StatisticsComplexNewLogoutGrid',
         'dbgl.personidSearchCombo',
         'dbgl.applysubmitFieldset',
         'dbgl.familyaffixFieldset',
