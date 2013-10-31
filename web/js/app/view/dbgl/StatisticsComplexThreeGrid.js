@@ -56,6 +56,10 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsComplexThreeGrid' ,{
                     }, {
                         text     : '资金支出</br>(元)',
                         dataIndex: 'totalhelpmoney',
+                        renderer:function(val,obj,record){
+                            if(val) return val;
+                            return 0;
+                        },
                         width    : 80,
                         align:   'center'
                     }, {
@@ -83,6 +87,10 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsComplexThreeGrid' ,{
                     }, {
                         text     : '资金支出</br>(元)',
                         dataIndex: 'atotalhelpmoney',
+                        renderer:function(val,obj,record){
+                            if(val) return val;
+                            return 0;
+                        },
                         width    : 80,
                         align:   'center'
                     }, {
@@ -110,6 +118,10 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsComplexThreeGrid' ,{
                     }, {
                         text     : '资金支出</br>(元)',
                         dataIndex: 'btotalhelpmoney',
+                        renderer:function(val,obj,record){
+                            if(val) return val;
+                            return 0;
+                        },
                         width    : 80,
                         align:   'center'
                     }, {
@@ -138,6 +150,10 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsComplexThreeGrid' ,{
                     }, {
                         text     : '资金支出</br>(元)',
                         dataIndex: 'ctotalhelpmoney',
+                        renderer:function(val,obj,record){
+                            if(val) return val;
+                            return 0;
+                        },
                         width    : 80,
                         align:   'center'
                     }, {

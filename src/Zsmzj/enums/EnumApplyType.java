@@ -9,7 +9,8 @@ package Zsmzj.enums;
  */
 public enum EnumApplyType {
 
-    A(1),B(2),C(3);
+    A(1),B(2),C(3),Farmer(4),Forester(5),Criminal(6),Compatriot(7),Immigrant(8),Graduate(9),Veterans(10);
+
     private int code;
     private EnumApplyType(int code){
         this.code = code;
@@ -36,6 +37,28 @@ public enum EnumApplyType {
                 case C:
                     result="C类";
                     break;
+                case Farmer:
+                    result="农垦企业人员(含农场)";
+                    break;
+                case Forester:
+                    result="森工企业(含国有林场)";
+                    break;
+                case Criminal:
+                    result="两劳释放人员";
+                    break;
+                case Compatriot:
+                    result="散居归侨侨眷";
+                    break;
+                case Immigrant:
+                    result="非农水库移民";
+                    break;
+                case Graduate:
+                    result="高校毕业生";
+                    break;
+                case Veterans:
+                    result="退役军人";
+                    break;
+
                 default :
                     result = "其他";
                     break;

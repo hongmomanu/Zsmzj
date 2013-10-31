@@ -9,7 +9,7 @@ Ext.define('ZSMZJ.store.dbgl.StatisticsComplexNewLogouts', {
     extend: 'Ext.data.TreeStore',
     //alias : 'widget.headerviewers',
     model: 'ZSMZJ.model.dbgl.StatisticsComplexNewLogout',
-    autoLoad:false,
+    autoLoad :false,
     pageSize: 15,
     proxy: {
         type: 'ajax',

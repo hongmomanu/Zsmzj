@@ -724,6 +724,88 @@ public class BusinessProcessControl {
 
 
 
+        }else if(type.equals(StatisticsType.UseStatisticsType.getChineseSeason(StatisticsType.ComplexFour))){
+
+            BusinessProcess bp=new BusinessProcess();
+            ComonDao cd=new ComonDao();
+            String sql_list="select a.divisionname  ,a.rowid as id,"
+
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Farmer)+"') " +
+
+                    "and c.businessid=b.rowid " +
+
+                    "and b.division MATCH (a.divisionpath||'*')) as farmer, "
+
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Forester)+"') " +
+
+                    "and c.businessid=b.rowid " +
+
+                    "and b.division MATCH (a.divisionpath||'*')) as forester, "
+
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Criminal)+"') " +
+
+                    "and c.businessid=b.rowid " +
+
+                    "and b.division MATCH (a.divisionpath||'*')) as criminal, "
+
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Compatriot)+"') " +
+
+                    "and c.businessid=b.rowid " +
+
+                    "and b.division MATCH (a.divisionpath||'*')) as compatriot, "
+
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Immigrant)+"') " +
+
+                    "and c.businessid=b.rowid " +
+
+                    "and b.division MATCH (a.divisionpath||'*')) as immigrant, "
+
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Graduate)+"') " +
+
+                    "and c.businessid=b.rowid " +
+
+                    "and b.division MATCH (a.divisionpath||'*')) as graduate, "
+
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Veterans)+"') " +
+
+                    "and c.businessid=b.rowid " +
+
+                    "and b.division MATCH (a.divisionpath||'*')) as veterans "
+
+
+                    +"  from "+DivisionsTable+" a where a.parentid MATCH "+divisionpid;
+
+            ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
+
+            res.put("divisionname","");
+            res.put("children",list);
+
+
+
+
+
+
         }
 
         return JSONObject.fromObject(res).toString();

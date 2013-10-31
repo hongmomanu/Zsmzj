@@ -45,6 +45,7 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsComplexFourGrid' ,{
 
                 {
                     text: '农垦企业人员(含农场)',
+                    align:   'center',
                     width:80,
                     flex:1,
                     dataIndex:'farmer'
@@ -52,22 +53,26 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsComplexFourGrid' ,{
                 {
                     text: '国有森工员(含国有林场)',
                     width:80,
+                    align:   'center',
                     flex:1,
                     dataIndex:'forester'
                 },
                 {
                     text: '两劳释放人员',
                     width:80,
+                    align:   'center',
                     flex:1,
                     dataIndex:'criminal'
                 },
                 {
                     text: '散居归侨侨眷',
+                    align:   'center',
                     width:80,
                     dataIndex:'compatriot'
                 },
                 {
                     text: '非农水库移民',
+                    align:   'center',
                     width:80,
                     flex:1,
                     dataIndex:'immigrant'
@@ -75,11 +80,13 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsComplexFourGrid' ,{
                 {
                     text: '高校毕业生',
                     width:80,
+                    align:'center',
                     flex:1,
                     dataIndex:'graduate'
                 },
                 {
                     text: '退役军人',
+                    align:   'center',
                     width:80,
                     flex:1,
                     dataIndex:'veterans'
