@@ -3,6 +3,7 @@ package Zsmzj.business.control;
 import Zsmzj.business.dao.BusinessProcessDao;
 import Zsmzj.business.impl.BusinessProcess;
 import Zsmzj.conmmon.ComonDao;
+import Zsmzj.enums.EnumApplyType;
 import Zsmzj.enums.ProcessType;
 import Zsmzj.enums.RelationsType;
 import Zsmzj.enums.StatisticsType;
@@ -672,7 +673,44 @@ public class BusinessProcessControl {
                     +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+
                     " where time Between '"+bgmonth+"' and  '"+edmonth+"'" +
                     " and rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') and " +
-                    "division MATCH (a.divisionpath||'*')) as totalhelpmoney "
+                    "division MATCH (a.divisionpath||'*')) as totalhelpmoney ,"
+
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where poortype MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.A)+"') " +
+                    "and c.businessid=b.rowid " +
+                    "and b.division MATCH (a.divisionpath||'*')) as atotalpeoplenum, "
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+
+                    " where time Between '"+bgmonth+"' and  '"+edmonth+"'" +
+                    " and rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"')  " +
+                    "and rowid in (select rowid from "+BusinessTable+" where poortype MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.A)+"') " +
+                    "and division MATCH (a.divisionpath||'*')) as atotalhelpmoney ,"
+
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where poortype MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.B)+"') " +
+                    "and c.businessid=b.rowid " +
+                    "and b.division MATCH (a.divisionpath||'*')) as btotalpeoplenum, "
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+
+                    " where time Between '"+bgmonth+"' and  '"+edmonth+"'" +
+                    " and rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"')  " +
+                    "and rowid in (select rowid from "+BusinessTable+" where poortype MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.B)+"') " +
+                    "and division MATCH (a.divisionpath||'*')) as btotalhelpmoney ,"
+
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where poortype MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.C)+"') " +
+                    "and c.businessid=b.rowid " +
+                    "and b.division MATCH (a.divisionpath||'*')) as ctotalpeoplenum, "
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+
+                    " where time Between '"+bgmonth+"' and  '"+edmonth+"'" +
+                    " and rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"')  " +
+                    "and rowid in (select rowid from "+BusinessTable+" where poortype MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.C)+"') " +
+                    "and division MATCH (a.divisionpath||'*')) as ctotalhelpmoney "
+
 
                     +"  from "+DivisionsTable+" a where a.parentid MATCH "+divisionpid;
 

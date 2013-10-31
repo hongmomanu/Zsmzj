@@ -61,6 +61,13 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsComplexThreeGrid' ,{
                     }, {
                         text     : '月人均补</br>助水平(元)',
                         width    : 80,
+                        renderer: function (val, obj, record) {
+                            var person=parseInt(record.get("totalpeoplenum"));
+                            if(person==0)return person;
+                            else{
+                                return (parseInt(record.get("totalhelpmoney"))/person).toFixed(1);
+                            }
+                        },
                         align:   'center',
                         dataIndex: 'personhelpmoney'
                     }]
@@ -81,6 +88,13 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsComplexThreeGrid' ,{
                     }, {
                         text     : '月人均补</br>助水平(元)',
                         width    : 80,
+                        renderer: function (val, obj, record) {
+                            var person=parseInt(record.get("atotalpeoplenum"));
+                            if(person==0)return person;
+                            else{
+                                return (parseInt(record.get("atotalhelpmoney"))/person).toFixed(1);
+                            }
+                        },
                         align:   'center',
                         dataIndex: 'apersonhelpmoney'
                     }]
@@ -100,7 +114,13 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsComplexThreeGrid' ,{
                         align:   'center'
                     }, {
                         text     : '月人均补</br>助水平(元)',
-
+                        renderer: function (val, obj, record) {
+                            var person=parseInt(record.get("btotalpeoplenum"));
+                            if(person==0)return person;
+                            else{
+                                return (parseInt(record.get("btotalhelpmoney"))/person).toFixed(1);
+                            }
+                        },
                         width    : 80,
                         align:   'center',
                         dataIndex: 'bpersonhelpmoney'
@@ -122,7 +142,13 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsComplexThreeGrid' ,{
                         align:   'center'
                     }, {
                         text     : '月人均补</br>助水平(元)',
-
+                        renderer: function (val, obj, record) {
+                            var person=parseInt(record.get("ctotalpeoplenum"));
+                            if(person==0)return person;
+                            else{
+                                return (parseInt(record.get("ctotalhelpmoney"))/person).toFixed(1);
+                            }
+                        },
                         width    : 80,
                         align:   'center',
                         dataIndex: 'cpersonhelpmoney'
