@@ -9,7 +9,7 @@ package Zsmzj.enums;
  */
 public enum StatisticsType {
 
-    Full(1),ComplexOne(2),ComplexTwo(3);
+    Full(1),ComplexOne(2),ComplexTwo(3),ComplexThree(4);
     private int code;
     private StatisticsType(int code){
         this.code = code;
@@ -35,6 +35,9 @@ public enum StatisticsType {
                     break;
                 case ComplexTwo:
                     result="complextwo";
+                    break;
+                case ComplexThree:
+                    result="complexthree";
                     break;
                 default :
                     result = "其他";
