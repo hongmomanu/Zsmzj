@@ -187,7 +187,7 @@ public class BusinessProcessControl {
 
     }
     public String getGrantMoneyBytype(String type,String bgmonth,String keyword,String[]name,
-                                      String[]compare,String[]value,String[]logic){
+                                      String[]compare,String[]value,String[]logic,int start,int limit){
         SimpleDateFormat sDateFormat   =   new SimpleDateFormat("yyyy-MM");
         SimpleDateFormat syearFormat   =   new SimpleDateFormat("yyyy");
         String basic_sql= " a.rowid=b.businessid "
@@ -465,6 +465,7 @@ public class BusinessProcessControl {
 
         ComonDao cd=new ComonDao();
         int totalnum=cd.getTotalCountBySql(sql_count);
+        sql_list+=" Limit "+limit+" Offset "+start;
         ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
 
         Map<String,Object>res=new HashMap<String, Object>();
@@ -587,18 +588,71 @@ public class BusinessProcessControl {
                     "' and b.rowid in ( select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') and c.businessid=b.rowid and b.division MATCH (a.divisionpath||'*')) as newmonthpeoplenum, "
 
                     +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+
-                    "' and rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') and division MATCH (a.divisionpath||'*')) as newtotalhelpmoney, "
+                    "' and rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and division MATCH (a.divisionpath||'*')) as newtotalhelpmoney, "
 
-            +"(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+
-                    "' and rowid in(select rowid from "+BusinessTable+" where  businesstype MATCH '"+businesstype+"') and  division MATCH (a.divisionpath||'*')) as logoutmonthfamilynum ,"
+            +"(select count(*) from "+BusinessTable+" where  time Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and rowid in(select rowid from "+BusinessTable+" where  businesstype MATCH '"+businesstype+"') " +
+                    " and rowid in(select rowid from "+BusinessTable+" where  processstatustype  MATCH '"+ProcessType.UseProcessType.getChineseSeason(ProcessType.Cancellation)+"') " +
+
+                    " and  division MATCH (a.divisionpath||'*')) as logoutmonthfamilynum ,"
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
                     "c where b.time Between '"+bgmonth+"' and  '"+edmonth+
-                    "' and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') and c.businessid=b.rowid and b.division MATCH (a.divisionpath||'*')) as logoutmonthpeoplenum, "
+                    "' and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and b.rowid in(select rowid from "+BusinessTable+" where  processstatustype  MATCH '"+ProcessType.UseProcessType.getChineseSeason(ProcessType.Cancellation)+"') " +
+                    " and c.businessid=b.rowid and b.division MATCH (a.divisionpath||'*')) as logoutmonthpeoplenum, "
 
                     +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+
-                    "' and rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') and division MATCH (a.divisionpath||'*')) as logouttotalhelpmoney "
 
-                    +"  from "+DivisionsTable+" a where a.parentid MATCH "+divisionpid;
+                    "' and rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and rowid in(select rowid from "+BusinessTable+" where  processstatustype  MATCH '"+ProcessType.UseProcessType.getChineseSeason(ProcessType.Cancellation)+"') "+
+                    " and division MATCH (a.divisionpath||'*')) as logouttotalhelpmoney ,"+
+
+
+                    "(select count(*) from "+GrantTable+" e,"+BusinessTable+" f where e.businessid=f.rowid and e.grantdate Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and f.rowid in (select rowid from "
+                    +BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+
+                    " and e.rowid in(select rowid from "+ GrantTable+" where CAST(adjustmoney AS real)>0) "+
+
+                    "and  f.division MATCH (a.divisionpath||'*')) as addmoneymonthfamilynum ,"
+
+                    +"(select count(*) from "+GrantTable+" e,"+BusinessTable+" f,"+FamilyTable+" " +
+                    "c where e.businessid=f.rowid and e.grantdate Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and f.rowid in ( select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and e.rowid in(select rowid from "+ GrantTable+" where CAST(adjustmoney AS real)>0) "+
+                    "and c.businessid=f.rowid and f.division MATCH (a.divisionpath||'*')) as addmoneymonthpeoplenum, "
+
+                    +  "(select sum(CAST(e.adjustmoney AS real)) from "+GrantTable+" e," +
+                    BusinessTable+" f where e.grantdate Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and f.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and e.rowid in(select rowid from "+ GrantTable+" where CAST(adjustmoney AS real)>0) "+
+                    "and division MATCH (a.divisionpath||'*')) as addmoneytotalhelpmoney, " +
+
+
+
+                    "(select count(*) from "+GrantTable+" e,"+BusinessTable+" f where e.businessid=f.rowid and e.grantdate Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and f.rowid in (select rowid from "
+                    +BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+
+                    " and e.rowid in(select rowid from "+ GrantTable+" where CAST(adjustmoney AS real)<0) "+
+
+                    "and  f.division MATCH (a.divisionpath||'*')) as reducemoneymonthfamilynum ,"
+
+                    +"(select count(*) from "+GrantTable+" e,"+BusinessTable+" f,"+FamilyTable+" " +
+                    "c where e.businessid=f.rowid and e.grantdate Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and f.rowid in ( select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and e.rowid in(select rowid from "+ GrantTable+" where CAST(adjustmoney AS real)<0) "+
+                    "and c.businessid=f.rowid and f.division MATCH (a.divisionpath||'*')) as reducemoneymonthpeoplenum, "
+
+                    +  "(select sum(CAST(e.adjustmoney AS real)) from "+GrantTable+" e," +
+                    BusinessTable+" f where e.grantdate Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and f.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and e.rowid in(select rowid from "+ GrantTable+" where CAST(adjustmoney AS real)<0) "+
+                    "and division MATCH (a.divisionpath||'*')) as reducemoneytotalhelpmoney " +
+
+
+                    "  from "+DivisionsTable+" a where a.parentid MATCH "+divisionpid;
 
             ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
 
