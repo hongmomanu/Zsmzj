@@ -187,6 +187,10 @@ Ext.define('ZSMZJ.controller.Header', {
                 click: this.moresearch_family
 
             },
+            'peoplequerypanel button[action=moresearch]':{
+                click: this.moresearch_family
+
+            },
 
             'peoplequerypanel button[action=outexcel]':{
                 click: this.outexcel_person

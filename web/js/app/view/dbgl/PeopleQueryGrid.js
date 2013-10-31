@@ -109,9 +109,42 @@ Ext.define('ZSMZJ.view.dbgl.PeopleQueryGrid' ,{
 
             ],
             flex: 1,
-            /*tbar:[
+            tbar:[
+                {
+                    fieldLabel:'快速全文检索',
+                    xtype: 'textfield',
+                    hidden: false,
+                    width:250,
+                    //size:40,
+                    listeners: {
 
-            ],*/
+                        "specialkey": function (field, e) {
+                            if (e.keyCode == 13) {
+                                var keyword = field.getValue().replace(/\s+/g, "");
+                                var store=this.up('panel').getStore();
+                                store.proxy.extraParams.keyword = keyword;
+                                store.loadPage(1);
+                            }
+                        }
+                    },
+                    emptyText: '输入搜索关键字'
+
+                },'->',
+                {
+                    text: '导出Excel',
+                    action:'outexcel'
+
+                },
+                '-'
+                ,
+                {
+                    text: '高级检索',
+                    action:'moresearch',
+                    searchtype:'moresearchpeople'
+
+                }
+
+            ],
             bbar: Ext.create('Ext.PagingToolbar', {
                 store: 'dbgl.PeopleQuerys',
                 displayInfo: true,

@@ -59,6 +59,12 @@ public enum EnumApplyType {
                 case Veterans:
                     result="退役军人";
                     break;
+                case CityAccount:
+                    result="城镇";
+                    break;
+                case CountryAccount:
+                    result="农村";
+                    break;
 
                 default :
                     result = "其他";
