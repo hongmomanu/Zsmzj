@@ -45,7 +45,7 @@ Ext.define('ZSMZJ.model.dbgl.StatisticsComplexTwo', {
             name: 'reducemoneymonthpeoplenum'
         },
         {
-            name: 'reducemoneytotalhelpmoney'
+            name: 'reducemoneytotalhelpmoney',defadefaultValue: 0
         }
     ]
 });

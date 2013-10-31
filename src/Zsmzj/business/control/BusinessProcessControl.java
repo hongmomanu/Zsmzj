@@ -624,7 +624,7 @@ public class BusinessProcessControl {
                     "and c.businessid=f.rowid and f.division MATCH (a.divisionpath||'*')) as addmoneymonthpeoplenum, "
 
                     +  "(select sum(CAST(e.adjustmoney AS real)) from "+GrantTable+" e," +
-                    BusinessTable+" f where e.grantdate Between '"+bgmonth+"' and  '"+edmonth+
+                    BusinessTable+" f where e.businessid=f.rowid and e.grantdate Between '"+bgmonth+"' and  '"+edmonth+
                     "' and f.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
                     " and e.rowid in(select rowid from "+ GrantTable+" where CAST(adjustmoney AS real)>0) "+
                     "and division MATCH (a.divisionpath||'*')) as addmoneytotalhelpmoney, " +
@@ -646,7 +646,7 @@ public class BusinessProcessControl {
                     "and c.businessid=f.rowid and f.division MATCH (a.divisionpath||'*')) as reducemoneymonthpeoplenum, "
 
                     +  "(select sum(CAST(e.adjustmoney AS real)) from "+GrantTable+" e," +
-                    BusinessTable+" f where e.grantdate Between '"+bgmonth+"' and  '"+edmonth+
+                    BusinessTable+" f where e.businessid=f.rowid and e.grantdate Between '"+bgmonth+"' and  '"+edmonth+
                     "' and f.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
                     " and e.rowid in(select rowid from "+ GrantTable+" where CAST(adjustmoney AS real)<0) "+
                     "and division MATCH (a.divisionpath||'*')) as reducemoneytotalhelpmoney " +
