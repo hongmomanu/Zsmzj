@@ -9,7 +9,8 @@ package Zsmzj.enums;
  */
 public enum EnumApplyType {
 
-    A(1),B(2),C(3),Farmer(4),Forester(5),Criminal(6),Compatriot(7),Immigrant(8),Graduate(9),Veterans(10);
+    A(1),B(2),C(3),Farmer(4),Forester(5),Criminal(6),Compatriot(7),Immigrant(8),Graduate(9),
+    Veterans(10),CountryAccount(11),CityAccount(12);
 
     private int code;
     private EnumApplyType(int code){
