@@ -60,7 +60,6 @@ Ext.define('ZSMZJ.view.dbgl.StatisticsComplexThreeGrid' ,{
                         align:   'center'
                     }, {
                         text     : '月人均补</br>助水平(元)',
-
                         width    : 80,
                         align:   'center',
                         dataIndex: 'personhelpmoney'
