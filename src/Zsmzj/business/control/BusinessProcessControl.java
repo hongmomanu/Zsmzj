@@ -940,6 +940,8 @@ public class BusinessProcessControl {
 
         SimpleDateFormat sDateFormat   =   new SimpleDateFormat("yyyy-MM");
         SimpleDateFormat syearFormat   =   new SimpleDateFormat("yyyy");
+        SimpleDateFormat sDayFormat   =   new SimpleDateFormat("yyyy-MM-dd");
+
 
         String basic_sql=" a.rowid = b.businessid  ";
 
@@ -1181,6 +1183,85 @@ public class BusinessProcessControl {
                     sql_count+=sql;
 
                 }
+
+                else if(compare[i].equals("date")){
+                    Date date = null;
+                    try {
+                        date = sDayFormat.parse( value[i]);
+                    } catch (ParseException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
+                    java.util.Calendar   calendar=java.util.Calendar.getInstance();
+                    calendar.setTime(date);
+                    //calendar.add(Calendar.MONTH, +1);    //得到下一个月
+                    String enddate=sDateFormat.format(calendar.getTime());
+
+
+                    String sql=" ";
+                    if(logic[i].equals("and")){
+                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                                +"' and  '"+value[i]+"') ";
+
+                    }else{
+                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                                +"' and  '"+value[i]+"')  and ("+basic_sql+")) ";
+                    }
+                    sql_list+=sql;
+                    sql_count+=sql;
+
+
+                }
+                else if(compare[i].equals("begindate")){
+                    Date date = null;
+                    try {
+                        date = sDayFormat.parse( value[i]);
+                    } catch (ParseException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
+                    java.util.Calendar   calendar=java.util.Calendar.getInstance();
+                    calendar.setTime(date);
+                    calendar.add(Calendar.YEAR, +100);    //得到下一个月
+                    String enddate=sDateFormat.format(calendar.getTime());
+
+                    String sql=" ";
+                    if(logic[i].equals("and")){
+                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+"  where "+col_name+" Between '"+value[i]
+                                +"' and  '"+enddate+"') ";
+
+                    }else{
+                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+"  where "+col_name+" Between '"+value[i]
+                                +"' and  '"+enddate+"')  and ("+basic_sql+")) ";
+                    }
+                    sql_list+=sql;
+                    sql_count+=sql;
+
+
+                }else if(compare[i].equals("enddate")){
+                    Date date = null;
+                    try {
+                        date = sDayFormat.parse( value[i]);
+                    } catch (ParseException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
+                    java.util.Calendar   calendar=java.util.Calendar.getInstance();
+                    calendar.setTime(date);
+                    calendar.add(Calendar.YEAR, -100);    //得到下一个月
+                    String enddate=sDateFormat.format(calendar.getTime());
+
+                    String sql=" ";
+                    if(logic[i].equals("and")){
+                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+"  where "+col_name+" Between '"+enddate
+                                +"' and  '"+value[i]+"') ";
+
+                    }else{
+                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+"  where "+col_name+" Between '"+enddate
+                                +"' and  '"+value[i]+"')  and ("+basic_sql+")) ";
+                    }
+                    sql_list+=sql;
+                    sql_count+=sql;
+
+                }
+
                 //}
             }
 
