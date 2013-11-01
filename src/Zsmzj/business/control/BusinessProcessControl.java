@@ -941,27 +941,29 @@ public class BusinessProcessControl {
         SimpleDateFormat sDateFormat   =   new SimpleDateFormat("yyyy-MM");
         SimpleDateFormat syearFormat   =   new SimpleDateFormat("yyyy");
 
-        String basic_sql=" a.rowid>0 ";
+        String basic_sql=" a.rowid = b.businessid  ";
 
-
+        basic_sql+=" and c.rowid in (select rowid from "+DivisionsTable+" where divisionpath MATCH a.division )";
 
         if(!businesstype.equals("all")){
-            basic_sql+=" and a.businesstype MATCH '"+businesstype+"'";
+            basic_sql+=" and a.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"')";
         }
 
+
+
         String sql_count="select count(*)"+
-                " from "+BusinessTable +" a where "+basic_sql;
+                " from "+BusinessTable +" a,"+FamilyTable+" b, " + DivisionsTable+" c where "+basic_sql;
 
 
                 //int totalnum =cd.getTotalCount(BusinessTable);
 
-        String sql_list="select a.rowid as businessid,a.*,(select count(*)  from "+ FamilyTable+" b where " +
+        String sql_list="select a.rowid as businessid,a.rowid,c.divisionname,a.*,(select count(*)  from "+ FamilyTable+" b where " +
                 "b.businessid MATCH a.rowid)  as familynum," +
                 "(select count(*)  from "+ FamilyTable+" b where " +
                 "b.businessid = a.rowid and isenjoyed MATCH '享受')  as enjoynum"+
-                " from "+BusinessTable +" a where "+basic_sql;
+                " from "+BusinessTable +" a,"+FamilyTable+" b, " + DivisionsTable+" c  where "+basic_sql;
 
-
+        String fulltable="("+sql_list+") as ff";
 
         if(name!=null&&name.length>0){
             /*for(int i=0;i<name.length;i++){
@@ -986,10 +988,10 @@ public class BusinessProcessControl {
                 if(compare[i].equals(">=")){
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" a.rowid in (select rowid from "+BusinessTable+" where CAST("+col_name+" AS real) >= "+value[i]+") ";
+                        sql=" "+logic[i]+" a.rowid in (select rowid from "+fulltable+" where CAST("+col_name+" AS real) >= "+value[i]+") ";
 
                     }else{
-                        sql=" "+logic[i]+" (a.rowid in (select rowid from "+BusinessTable+" where CAST("+col_name+" AS real) >= "+value[i]+") and ("+basic_sql+")) ";
+                        sql=" "+logic[i]+" (a.rowid in (select rowid from "+fulltable+" where CAST("+col_name+" AS real) >= "+value[i]+") and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
                     sql_count+=sql;
@@ -998,20 +1000,20 @@ public class BusinessProcessControl {
                 }else if(compare[i].equals("<=")){
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" a.rowid in (select rowid from "+BusinessTable+" where CAST("+col_name+" AS real) <= "+value[i]+") ";
+                        sql=" "+logic[i]+" a.rowid in (select rowid from "+fulltable+" where CAST("+col_name+" AS real) <= "+value[i]+") ";
 
                     }else{
-                        sql=" "+logic[i]+" (a.rowid in (select rowid from "+BusinessTable+" where CAST("+col_name+" AS real) <= "+value[i]+") and ("+basic_sql+")) ";
+                        sql=" "+logic[i]+" (a.rowid in (select rowid from "+fulltable+" where CAST("+col_name+" AS real) <= "+value[i]+") and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
                     sql_count+=sql;
                 }else if(compare[i].equals("=")){
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+"  a.rowid in (select rowid from "+BusinessTable+" where "+col_name+" MATCH '"+value[i]+"') ";
+                        sql=" "+logic[i]+"  a.rowid in (select rowid from "+fulltable+" where "+col_name+" MATCH '"+value[i]+"') ";
 
                     }else{
-                        sql=" "+logic[i]+"  (a.rowid in (select rowid from "+BusinessTable+" where "+col_name+" MATCH '"+value[i]+"') and ("+basic_sql+")) ";
+                        sql=" "+logic[i]+"  (a.rowid in (select rowid from "+fulltable+" where "+col_name+" MATCH '"+value[i]+"') and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
                     sql_count+=sql;
@@ -1019,10 +1021,10 @@ public class BusinessProcessControl {
                 }else if(compare[i].equals("match")){
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+"  a.rowid in (select rowid from "+BusinessTable+" where "+col_name+" MATCH '"+value[i]+"*') ";
+                        sql=" "+logic[i]+"  a.rowid in (select rowid from "+fulltable+" where "+col_name+" MATCH '"+value[i]+"*') ";
 
                     }else{
-                        sql=" "+logic[i]+"  (a.rowid in (select rowid from "+BusinessTable+" where "+col_name+" MATCH '"+value[i]+"*') and ("+basic_sql+")) ";
+                        sql=" "+logic[i]+"  (a.rowid in (select rowid from "+fulltable+" where "+col_name+" MATCH '"+value[i]+"*') and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
                     sql_count+=sql;
@@ -1042,11 +1044,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endyear+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endyear+"') and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1067,11 +1069,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endyear+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endyear+"') and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1091,11 +1093,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+endyear
+                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+endyear
                                 +"' and  '"+value[i]+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+endyear
+                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+endyear
                                 +"' and  '"+value[i]+"') and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1117,11 +1119,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endmonth+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endmonth+"')  and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1143,11 +1145,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endmonth+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endmonth+"')  and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1168,11 +1170,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+endmonth
+                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+endmonth
                                 +"' and  '"+value[i]+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+endmonth
+                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+endmonth
                                 +"' and  '"+value[i]+"')  and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
