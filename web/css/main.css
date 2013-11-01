@@ -139,13 +139,28 @@
 {
     background-image: url('../img/1.jpg');
 }
-.task{
-    width: 16px;
+.taskleaf{
     background-image: url('../img/icon16_info.png');
 }
-.task{background-image:url(../img/icon16_info.png)}
+.taskfather{
+     background-image: url('../img/icon16_info.png');
+ }
+
+
 /*
 .welcome-title
 {
     background: url(/img/title.png) no-repeat;position:absolute; top:38%; left:50%; margin-left:-232px;
 }*/
+
+/*默认树节点图标*/
+
+
+/*.x-grid-tree-node-expanded .x-tree-icon-parent {
+    background: url('../img/icon16_info.png') no-repeat center center !important;
+}
+.x-grid-row  .x-tree-icon-leaf {
+    background-image:url('../img/icon16_info.png');
+}*/
+
+
