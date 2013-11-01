@@ -147,6 +147,18 @@ Ext.define('ZSMZJ.view.dbgl.FamilyQueryGrid' ,{
                     },
                     emptyText: '输入搜索关键字'
 
+                },{
+                    text:'检索',
+                    listeners:{
+                        "click":function(btn){
+                            var field=btn.previousNode();
+                            var keyword = field.getValue().replace(/\s+/g, "");
+                            var store=this.up('panel').getStore();
+                            store.proxy.extraParams.keyword = keyword;
+                            store.loadPage(1);
+                        }
+                    }
+
                 },'->',
                 {
                     text: '导出Excel',

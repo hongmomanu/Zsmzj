@@ -20,6 +20,7 @@ Ext.define('ZSMZJ.view.Viewport', {
         var me = this;
 
         Ext.apply(me, {
+
             items: [{
                 xtype: 'panel',
                 //id:'wholepanel',
@@ -28,6 +29,7 @@ Ext.define('ZSMZJ.view.Viewport', {
                 dockedItems: [
                     Ext.create('ZSMZJ.view.Header')
                 ],
+
                 items: [
                     {
             		region: "center",
@@ -35,16 +37,24 @@ Ext.define('ZSMZJ.view.Viewport', {
             		tabBar: {
                			 hidden: true
             		},
+
                         items: [
                 	{
                 	
                 		layout: "border",
+
+
                			items: [
                     {
                         region: 'west',
                         id: 'west-panel', // see Ext.getCmp() below
                         title: '导航栏',
                         split: false,
+                        listeners: {
+                            afterrender: function (panel) {
+                                panel.getEl().addCls('custom-header');
+                            }
+                        },
                         width: 204,
                         style: {
                              border: 'none'

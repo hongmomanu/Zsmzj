@@ -750,6 +750,7 @@ var menu_shjz=[
     {
         layout: 'fit',
         title: '低保管理',
+
         items:[
             {xtype:'dbglconfigtree',searchtype:"低保管理",businesstype:businessTableType.dbgl}
         ],

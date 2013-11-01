@@ -135,6 +135,10 @@
     line-height: 23px;
     padding-bottom: 4px;
 }
+.custom-header .x-accordion-hd
+{
+    background-image: url('../img/1.jpg');
+}
 /*
 .welcome-title
 {
