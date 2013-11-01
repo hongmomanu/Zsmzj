@@ -185,7 +185,6 @@ Ext.define('ZSMZJ.view.dbgl.FamilyQueryGrid' ,{
             }),
             store: 'dbgl.FamilyQuerys'
 
-
         });
         this.callParent(arguments);
         ZSMZJ.view.dbgl.PeopleQueryGrid.selectionModel = this.getSelectionModel();

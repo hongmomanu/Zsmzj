@@ -76,7 +76,7 @@
         margin:0;
         padding:10px;
  }
-.x-tree-icon { display: none !important; }
+/*.x-tree-icon { display: none !important; }*/
 .mouseover{cursor: hand;font-size: 10;text-decoration:underline;}
 /*.my-header .x-fieldset-header-text {
     color: red;
@@ -139,6 +139,11 @@
 {
     background-image: url('../img/1.jpg');
 }
+.task{
+    width: 16px;
+    background-image: url('../img/icon16_info.png');
+}
+.task{background-image:url(../img/icon16_info.png)}
 /*
 .welcome-title
 {
