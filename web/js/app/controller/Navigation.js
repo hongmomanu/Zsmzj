@@ -15,11 +15,11 @@ Ext.define('ZSMZJ.controller.Navigation', {
     extend: 'Ext.app.Controller',
 
     models: ['navigation.UserConfig','navigation.SystemConfig',
-             'navigation.FuncConfig', 'navigation.DbglTreeConfig','navigation.IndexMsg'
-            ],
+        'navigation.FuncConfig', 'navigation.DbglTreeConfig','navigation.IndexMsg'
+    ],
     stores: ['navigation.UserConfigs','navigation.SystemConfigs',
-             'navigation.FuncConfigs', 'navigation.DbglTreeConfigs','navigation.IndexMsgs'
-            ],
+        'navigation.FuncConfigs', 'navigation.DbglTreeConfigs','navigation.IndexMsgs'
+    ],
 
     refs: [
         {ref: 'mydbglConfigTree', selector: 'dbglconfigtree'}
@@ -55,9 +55,9 @@ Ext.define('ZSMZJ.controller.Navigation', {
         var me=this;
 
         var params={
-                roleid:roleid,
-                leaf:true,
-                type:type+me.searchtype
+            roleid:roleid,
+            leaf:true,
+            type:type+me.searchtype
 
         };
         Ext.apply(store.proxy.extraParams, params);
@@ -90,11 +90,11 @@ Ext.define('ZSMZJ.controller.Navigation', {
     showtab:function(label,value,type,businesstype,ispublicinfo){
 
         if(ViewWaitMask){
-             try{
-                 Ext.getCmp('mainContent-panel').getEl().unmask();
-             }catch (e){
+            try{
+                Ext.getCmp('mainContent-panel').getEl().unmask();
+            }catch (e){
 
-             }
+            }
 
 
         }
@@ -115,20 +115,20 @@ Ext.define('ZSMZJ.controller.Navigation', {
                 ViewWaitMask.show();
                 function fn(){
 
-                        var newtab=tabs.add({
-                            closable: true,
-                            id: 'tab' + value,
-                            xtype: value,
-                            businesstype:businesstype,
-                            ispublicinfo:ispublicinfo,
-                            isnewgrid:true,
-                            autoShow:true,
-                            autoScroll: true,
-                            //active:true,
-                            iconCls: 'tabs',
-                            title: label
-                        });
-                        tabs.setActiveTab(newtab);
+                    var newtab=tabs.add({
+                        closable: true,
+                        id: 'tab' + value,
+                        xtype: value,
+                        businesstype:businesstype,
+                        ispublicinfo:ispublicinfo,
+                        isnewgrid:true,
+                        autoShow:true,
+                        autoScroll: true,
+                        //active:true,
+                        iconCls: 'tabs',
+                        title: label
+                    });
+                    tabs.setActiveTab(newtab);
 
                 }
                 var task = new Ext.util.DelayedTask(fn);

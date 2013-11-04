@@ -769,7 +769,8 @@ public class BusinessProcessControl {
 
         }
         sql_list+="Limit "+limit+" Offset "+start;
-
+		System.out.println("***************************************************************************************************");
+		System.out.println(sql_list);
         ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
         for(Map<String,Object> map:list){
             map.put("process", ProcessType.UseProcessType.getNext(ProcessType.UseProcessType.

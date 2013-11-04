@@ -50,23 +50,22 @@ Ext.define('ZSMZJ.view.Header', {
                                 border:0
                             },
                             items:[
-                                {
+                            /*{
                                     html: '  <a>舟山市社会救助管理综合平台<a>',
                                     baseCls: 'main-header',
                                     //cls:'mouseover',
                                     //type:'needthings',
                                     listeners: {
-                                        /*click: {
+                                        click: {
                                          element: 'el', //bind to the underlying el property on the panel
                                          fn: function(){ alert('click el'); }
-                                         }*/
-                                        /*render: function(c){
+                                         }render: function(c){
                                             alert(2);
                                             c.getEl().on('click', function(){ this.fireEvent('needthingsclick', c); }, c);
-                                        }*/
+                                        }
 
                                     }
-                                }
+                                }*/
                             ]
 
                         },
@@ -82,7 +81,7 @@ Ext.define('ZSMZJ.view.Header', {
                             },
                             items:[
                                 {
-                                    html: '  <a>在线人数:'+onlinenums+'<a>',
+                                    //html: '  <a>在线人数:'+onlinenums+'<a>',
                                     baseCls: 'main-header',
                                     columnWidth:.3,
                                     cls:'mouseover',
@@ -97,10 +96,10 @@ Ext.define('ZSMZJ.view.Header', {
                                     }
                                 },
                                 {
-                                    html: '待办事务:(0)',
+                                    //html: '待办事务:(0)',
                                     baseCls: 'main-header',
                                     columnWidth:.3,
-                                    itemId: 'needtodopanel',
+                                    //itemId: 'needtodopanel',
                                     cls:'mouseover',
                                     //type:'needthings',
                                     listeners: {
@@ -113,7 +112,7 @@ Ext.define('ZSMZJ.view.Header', {
                                 },
                                 {
                                     columnWidth:.3,
-                                    html: '  <a href="logout">退出<a>',
+                                    //html: '  <a href="logout">退出<a>',
                                     baseCls: 'main-header',
                                     //cls:'mouseover',
                                     //type:'needthings',
@@ -135,16 +134,113 @@ Ext.define('ZSMZJ.view.Header', {
                     ],
                     border: 0,
                     baseCls: 'main-header',
-                    columnWidth: 0.4
+                    columnWidth: 0.6
 
                 },
                 {
 
+                    /*
                     columnWidth: 0.6,
                     baseCls: 'main-header',
                     border: false,
-                    xtype:'headviewpanel'
+                    xtype:'headviewpanel'*/
                     //html: "test"
+                    xtype:'panel',
+                    baseCls: 'main-header',
+                    layout:'column',
+                    width:300,
+                    border:0,
+                    columnWidth: 0.4,
+                    defaults:{
+                        border:0
+                    },
+                    items:[
+
+                        {
+                            columnWidth: 0.6,
+                            baseCls: 'main-header',
+                            border: false,
+                            xtype:'headviewpanel'
+
+                        },
+                        {
+                            columnWidth: 0.4,
+                            xtype:'panel',
+                            border: false,
+                            baseCls: 'main-header',
+                            items:[
+                                {
+                                    xtype:'panel',
+                                    bodyPadding: 15,//三个菜单上的方块区域
+                                    baseCls: 'main-header'
+                                },
+                                {               //三个显示菜单
+                                    //columnWidth: 0.4,
+                                    xtype:'panel',
+                                    baseCls: 'main-header',
+                                    layout:'column',
+                                    defaults:{
+                                        border:0
+                                        //paddingTop:'100px'
+                                    },
+                                    items:[
+                                        {
+                                            html: '  在线人数:'+onlinenums+'<a>',
+                                            baseCls: 'main-header',
+                                            columnWidth:.3,
+                                            cls:'mouseover',
+                                            //type:'needthings',
+                                            listeners: {
+
+                                                /*render: function(c){
+                                                 alert(2);
+                                                 c.getEl().on('click', function(){ this.fireEvent('needthingsclick', c); }, c);
+                                                 }*/
+
+                                            }
+                                        },
+                                        {
+                                            html: '待办事务:(0)',
+                                            baseCls: 'main-header',
+                                            columnWidth:.4,
+                                            itemId: 'needtodopanel',
+                                            cls:'mouseover',
+                                            //type:'needthings',
+                                            listeners: {
+
+                                                render: function(c){
+                                                    c.getEl().on('click', function(){ this.fireEvent('needthingsclick', c); }, c);
+                                                }
+
+                                            }
+                                        },
+                                        {
+                                            columnWidth:.3,
+                                            html: '     <a href="logout">退出<a>',
+                                            baseCls: 'main-header',
+                                            //cls:'mouseover',
+                                            //type:'needthings',
+                                            listeners: {
+                                                /*click: {
+                                                 element: 'el', //bind to the underlying el property on the panel
+                                                 fn: function(){ alert('click el'); }
+                                                 }*/
+                                                /*render: function(c){
+                                                 alert(2);
+                                                 c.getEl().on('click', function(){ this.fireEvent('needthingsclick', c); }, c);
+                                                 }*/
+
+                                            }
+                                        }
+                                    ]
+
+                                }
+
+                            ]
+                        }
+
+
+                    ]
 
                 }
             ]

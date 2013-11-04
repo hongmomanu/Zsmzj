@@ -17,6 +17,11 @@ Ext.define('ZSMZJ.model.navigation.DbglTreeConfig', {
             mapping:'name',
             type:'string'
         },
+        {
+            name: 'iconCls',
+            mapping:'url',
+            type:'string'
+        },
         { name: 'expanded', defaultValue: false },
         { name: 'leaf', type: 'boolean', mapping: 'leaf' },
         {

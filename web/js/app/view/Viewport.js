@@ -35,16 +35,24 @@ Ext.define('ZSMZJ.view.Viewport', {
             		tabBar: {
                			 hidden: true
             		},
+
                         items: [
                 	{
                 	
                 		layout: "border",
+
+
                			items: [
                     {
                         region: 'west',
                         id: 'west-panel', // see Ext.getCmp() below
                         title: '导航栏',
                         split: false,
+                        listeners: {
+                            afterrender: function (panel) {
+                                panel.getEl().addCls('custom-header');
+                            }
+                        },
                         width: 204,
                         style: {
                              border: 'none'

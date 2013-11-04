@@ -127,4 +127,9 @@ public class ComonDao {
 
     }
 
+    public static void main(String[] args){
+        ComonDao cd=new ComonDao();
+        int i=cd.getTotalCountBySql("select count(*) from users");
+        System.out.println(i);
+    }
 }
