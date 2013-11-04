@@ -2290,10 +2290,17 @@ Ext.define('ZSMZJ.controller.Header', {
         this.initProcessFromRole();
         var me=this;
         var store=this.getHeaderHeaderViewersStore();
-
         store.on('load', function (store, options) {
-            var viewpanel=me.getMyviewheadViewPanel().items.items[0];
-            viewpanel.select(0);
+            if(store.data.items.length==0){
+                me.getMyviewheadViewPanel().items.items[0].setVisible(false);
+                Ext.getCmp('west-panel').removeAll();
+                Ext.getCmp('west-panel').add(menu_shjz);
+
+            }else{
+                var viewpanel=me.getMyviewheadViewPanel().items.items[0];
+                viewpanel.select(0);
+            }
+
         });
 
     },

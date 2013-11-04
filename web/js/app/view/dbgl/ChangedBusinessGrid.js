@@ -111,7 +111,7 @@ Ext.define('ZSMZJ.view.dbgl.ChangedBusinessGrid' ,{
                                 hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
                                     {name:"name",value:r.get("processstatus")}).children,
                                     {name:"name",value:"查看"}),
-                                icon:'img/sp.gif',
+                                icon:'img/form_show.png',
                                 width: 55,
                                 listeners: {
                                     render: function(c){

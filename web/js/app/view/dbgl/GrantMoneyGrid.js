@@ -52,7 +52,7 @@ Ext.define('ZSMZJ.view.dbgl.GrantMoneyGrid' ,{
                                 renderTo: id0,
                                 margin: '0 5 0 5',
                                 text: '查看',
-                                icon:'img/sp.gif',
+                                icon:'img/form_show.png',
 
                                 width: 55,
                                 listeners: {
