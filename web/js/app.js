@@ -11,7 +11,7 @@
  */
 Ext.Loader.setConfig({
     enabled: true,
-    disableCaching: true,
+    disableCaching: false,
     paths: {
         'Ext.ux':'js/Ext/ux'
     }
@@ -25,6 +25,7 @@ var splashscreen;
 Ext.onReady(function() {
 
     splashscreen = new Ext.LoadMask(Ext.getBody().el, {msg:"页面加载中..."});//{useMsg: false}
+
     splashscreen.show();
 
 });
