@@ -76,7 +76,7 @@ Ext.define('ZSMZJ.controller.Navigation', {
 
         if (item.data.leaf) {
             //testobj=item;
-            var businesstype=item.raw.name==item.raw.url?item.raw.name:record.panel.businesstype;
+            var businesstype=spatialchildTableType[item.raw.name]?item.raw.name:record.panel.businesstype;
 
             this.showtab(item.data.text,item.data.value,item.data.type,businesstype);
 

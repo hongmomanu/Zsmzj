@@ -185,7 +185,7 @@ Ext.define('ZSMZJ.view.Header', {
                                     },
                                     items:[
                                         {
-                                            html: '  在线人数:'+onlinenums+'<a>',
+                                            html: '在线人数:'+onlinenums+'<a>',
                                             baseCls: 'main-header',
                                             columnWidth:.3,
                                             cls:'mouseover',
