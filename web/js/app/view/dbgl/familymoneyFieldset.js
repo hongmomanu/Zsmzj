@@ -18,7 +18,7 @@ Ext.define('ZSMZJ.view.dbgl.familymoneyFieldset', {
         Ext.apply(this,
             {
                 xtype: 'fieldset',
-                title: '<a>家庭闲置财产信息</a>',
+                title: '<a>家庭财产信息</a>',
                 defaultType: 'textfield',
                 bodyStyle: 'padding:5px 5px 5px 5px',
                 //layout: 'anchor',
@@ -101,7 +101,7 @@ Ext.define('ZSMZJ.view.dbgl.familymoneyFieldset', {
                         allowBlank: true
                     },{
                         name: 'nonresidentialhouse',
-                        fieldLabel: '闲置房产折价',
+                        fieldLabel: '非居住房产折价',
                         value:0,
                         regex :/^-?\d+$/,
                         listeners: {
