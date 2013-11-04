@@ -146,7 +146,7 @@ Ext.define('ZSMZJ.view.dbgl.altersubmitFieldset', {
                         //width:600,
                         //draggable :true,
                         anchor : '100%',
-                        //width:800,
+                        width:800,
                         xtype : 'textarea',
                         grow : true,
 
@@ -162,7 +162,7 @@ Ext.define('ZSMZJ.view.dbgl.altersubmitFieldset', {
                         //width:600,
                         //draggable :true,
                         anchor : '100%',
-                        //width:800,
+                        width:800,
                         xtype : 'textarea',
                         grow : true,
 
@@ -175,7 +175,7 @@ Ext.define('ZSMZJ.view.dbgl.altersubmitFieldset', {
                         //width:600,
                         //draggable :true,
                         anchor : '100%',
-                        //width:800,
+                        width:800,
                         xtype : 'textarea',
                         grow : true,
                         allowBlank: true
@@ -184,10 +184,10 @@ Ext.define('ZSMZJ.view.dbgl.altersubmitFieldset', {
                         fieldLabel: '民政局意见',
                         colspan:3,
                         minWidth:300,
-                        //width:600,
+                        width:600,
                         //draggable :true,
                         anchor : '100%',
-                        //width:800,
+                        width:800,
                         xtype : 'textarea',
                         grow : true,
                         allowBlank: true
