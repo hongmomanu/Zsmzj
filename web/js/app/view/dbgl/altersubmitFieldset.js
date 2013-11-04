@@ -146,7 +146,7 @@ Ext.define('ZSMZJ.view.dbgl.altersubmitFieldset', {
                         //width:600,
                         //draggable :true,
                         anchor : '100%',
-                        //width:800,
+                        width:800,
                         xtype : 'textarea',
                         grow : true,
 
@@ -162,7 +162,7 @@ Ext.define('ZSMZJ.view.dbgl.altersubmitFieldset', {
                         //width:600,
                         //draggable :true,
                         anchor : '100%',
-                        //width:800,
+                        width:800,
                         xtype : 'textarea',
                         grow : true,
 
@@ -175,7 +175,7 @@ Ext.define('ZSMZJ.view.dbgl.altersubmitFieldset', {
                         //width:600,
                         //draggable :true,
                         anchor : '100%',
-                        //width:800,
+                        width:800,
                         xtype : 'textarea',
                         grow : true,
                         allowBlank: true
@@ -187,7 +187,7 @@ Ext.define('ZSMZJ.view.dbgl.altersubmitFieldset', {
                         //width:600,
                         //draggable :true,
                         anchor : '100%',
-                        //width:800,
+                        width:800,
                         xtype : 'textarea',
                         grow : true,
                         allowBlank: true
