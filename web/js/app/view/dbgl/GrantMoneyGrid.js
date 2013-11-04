@@ -76,9 +76,16 @@ Ext.define('ZSMZJ.view.dbgl.GrantMoneyGrid' ,{
                 //发放年月	行政区划	户主姓名	户主身份证	申请类别	家庭类别	救助金额	家庭人数	享受人数	发放人	发放日期	数据生成日期
 
                 {header: '发放年月', dataIndex: 'grantdate',width: 150,renderer: function (val, obj, record) {
-                    var time =Ext.Date.parse(val, "Y-m-d");
-                    val = Ext.util.Format.date(time, 'Y-m');
-                    return val;
+                    var yearindex=val.indexOf("00-00");
+                    if(yearindex>0){
+                       return val.substring(0,yearindex-1)+"第十三月";
+                    }
+                    else{
+                        var time =Ext.Date.parse(val, "Y-m-d");
+                        val = Ext.util.Format.date(time, 'Y-m');
+                        return val;
+                    }
+
                 }},
                 {header: '行政区划', dataIndex: 'division',align:'center',width: 250},
                 {header: '户主姓名',align:'center',dataIndex:'owername'},
@@ -89,13 +96,21 @@ Ext.define('ZSMZJ.view.dbgl.GrantMoneyGrid' ,{
 
                 {header: '家庭类别',align:'center',dataIndex:'familytype'},
                 {header: '救助金额',align:'center',dataIndex:'totalhelpmoney'},
+                {header: '调整金额',align:'center',dataIndex:'adjustmoney'},
                 {header: '家庭人数',align:'center',dataIndex:'familynum'},
                 {header: '享受人数',align:'center',dataIndex:'enjoynum'},
                 {header: '发放人',align:'center',dataIndex:'grantuser'},
                 {header: '发放日期',align:'center',dataIndex:'grantdate',width:200,renderer: function (val, obj, record) {
-                    var time =Ext.Date.parse(val, "Y-m-d");
-                    val = Ext.util.Format.date(time, 'Y-m-d');
-                    return val;
+                    var yearindex=val.indexOf("00-00");
+                    if(yearindex>0){
+                        return val.substring(0,yearindex-1)+"第十三月";
+                    }
+                    else{
+                        var time =Ext.Date.parse(val, "Y-m-d");
+                        val = Ext.util.Format.date(time, 'Y-m-d');
+                        return val;
+                    }
+
                 }},
                 {header: '数据生成日期',align:'center',dataIndex:'granttime',width:200,renderer: function (val, obj, record) {
                     var time =Ext.Date.parse(val, "Y-m-d H:i:s");
@@ -125,7 +140,20 @@ Ext.define('ZSMZJ.view.dbgl.GrantMoneyGrid' ,{
                     },
                     emptyText: '输入搜索关键字'
 
+                },{
+                    text:'检索',
+                    listeners:{
+                        "click":function(btn){
+                            var field=btn.previousNode();
+                            var keyword = field.getValue().replace(/\s+/g, "");
+                            var store=this.up('panel').getStore();
+                            store.proxy.extraParams.keyword = keyword;
+                            store.loadPage(1);
+                        }
+                    }
+
                 },
+
                 /*{
                     xtype: 'monthfield',
                     fieldLabel: '选择年月',

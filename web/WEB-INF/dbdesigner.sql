@@ -484,7 +484,8 @@ CREATE VIRTUAL TABLE IF NOT EXISTS grantmoney USING fts3
   userid                    integer,                --用户id
   bgdate                    VARCHAR(100),           --开始日期
   eddate                    VARCHAR(100),           --结束日期
-  grantdate                 VARCHAR(100)            --结束日期
+  grantdate                 VARCHAR(100),            --发放日期
+  adjustmoney               VARCHAR(100)            --结束日期
   );
 
 --医疗标准表

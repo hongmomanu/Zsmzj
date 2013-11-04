@@ -22,8 +22,6 @@ public enum RelationsType {
 
     public static class UseRelationsType {
 
-
-
         public static String getChineseSeason(RelationsType pType){
             String result = "";
             switch(pType){

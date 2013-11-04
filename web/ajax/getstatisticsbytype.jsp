@@ -17,7 +17,6 @@
     }
     else{
         BusinessProcessControl bp=new BusinessProcessControl();
-
         String type=request.getParameter("type");
         String businesstype=request.getParameter("businesstype");
         String bgmonth=request.getParameter("bgmonth");

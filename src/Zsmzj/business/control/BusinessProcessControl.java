@@ -3,6 +3,7 @@ package Zsmzj.business.control;
 import Zsmzj.business.dao.BusinessProcessDao;
 import Zsmzj.business.impl.BusinessProcess;
 import Zsmzj.conmmon.ComonDao;
+import Zsmzj.enums.EnumApplyType;
 import Zsmzj.enums.ProcessType;
 import Zsmzj.enums.RelationsType;
 import Zsmzj.enums.StatisticsType;
@@ -134,14 +135,18 @@ public class BusinessProcessControl {
 
 
     }
-    public String grantmoneybytype(int userid,String bgdate,String eddate,String grantdate,String businesstype){
+    public String grantmoneybytype(int userid,String bgdate,String eddate,String grantdate,String businesstype,float adjustmoney){
         SimpleDateFormat sDateFormat   =   new SimpleDateFormat("yyyy-MM");
 
         BusinessProcess bp=new BusinessProcess();
         ComonDao cd=new ComonDao();
+        if(bgdate==null){
+            grantdate+="-00-00";
+        }
         int totalnum=cd.getTotalCountBySql("select count(*) from "+GrantTable+" a,"+BusinessTable+
-                " b where b.rowid=a.businessid and a.rowid in (select rowid from "+GrantTable+" d where d.time Between '"
-                +bgdate+"' and  '"+eddate+"')  and b.businesstype MATCH '"+businesstype+"'");
+                " b where b.rowid=a.businessid and a.rowid in (select rowid from "+GrantTable+" d where d.grantdate Between '"
+                +bgdate+"' and  '"+eddate+"' union select rowid from "+GrantTable+" where grantdate Between '"+grantdate+"' and '"
+                +grantdate+"')  and b.businesstype MATCH '"+businesstype+"'");
         if(totalnum>0){
             return "{success:true,msg:\"资金已发\"}";
         }
@@ -157,10 +162,11 @@ public class BusinessProcessControl {
             for(Map<String,Object> item:list){
                 Map<String,Object> param=new HashMap<String, Object>();
                 param.put("businessid",item.get("businessid"));
-                param.put("eddate",eddate);
-                param.put("bgdate",bgdate);
+                param.put("eddate",eddate==null?"":eddate);
+                param.put("bgdate",bgdate==null?"":bgdate);
                 param.put("grantdate",grantdate);
                 param.put("userid",userid);
+                param.put("adjustmoney",adjustmoney);
                 bDao.insertTableVales(param, GrantTable);
             }
             return "{success:true,msg:\"资金已发\"}";
@@ -182,19 +188,20 @@ public class BusinessProcessControl {
 
     }
     public String getGrantMoneyBytype(String type,String bgmonth,String keyword,String[]name,
-                                      String[]compare,String[]value,String[]logic){
+                                      String[]compare,String[]value,String[]logic,int start,int limit){
         SimpleDateFormat sDateFormat   =   new SimpleDateFormat("yyyy-MM");
-
-
-        String sql_list="select a.*,b.businessid,b.bgdate,b.eddate,b.grantdate,b.time as granttime," +
+        SimpleDateFormat syearFormat   =   new SimpleDateFormat("yyyy");
+        String basic_sql= " a.rowid=b.businessid "
+                +" and b.userid =c.rowid and  a.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+type+"')";
+        String sql_list="select a.*,b.businessid,b.bgdate,b.eddate,b.grantdate,b.time as granttime,b.adjustmoney," +
                 "c.displayname as grantuser,(select count(*)  from "+ FamilyTable+" d where " +
                 "  d.businessid MATCH a.rowid)  as familynum," +
                 " (select count(*)  from "+ FamilyTable+" e where " +
-                " e.businessid = a.rowid and e.isenjoyed MATCH '享受')  as enjoynum from "+BusinessTable +" a,"+GrantTable+" b,"+UserTable+" c where a.rowid=b.businessid "
-                +" and b.userid =c.rowid and a.businesstype MATCH '"+type+"'";
+                " e.businessid = a.rowid and e.isenjoyed MATCH '享受')  as enjoynum from "+BusinessTable +" a,"+GrantTable+" b,"+UserTable
+                +" c where"+basic_sql;
 
         String sql_count="select count(*) from "+GrantTable+" b,"+BusinessTable+
-                " a where a.rowid=b.businessid and a.businesstype MATCH '"+type+"'";
+                " a,"+UserTable+" c where"+basic_sql;
         if(bgmonth!=null&&!bgmonth.equals("")){
             Date date = null;
             try {
@@ -206,27 +213,212 @@ public class BusinessProcessControl {
             calendar.setTime(date);
             calendar.add(Calendar.MONTH, +1);    //得到下一个月
             String edmonth=sDateFormat.format(calendar.getTime());
-
-            sql_list+=" and b.rowid in (select rowid from "+GrantTable+" d where d.time Between '"+bgmonth
+            String sql=" and b.rowid in (select rowid from "+GrantTable+" d where d.time Between '"+bgmonth
                     +"' and  '"+edmonth+"') ";
-            sql_count+=" and b.rowid in (select rowid from "+GrantTable+" d where d.time Between '"+bgmonth
-                    +"' and  '"+edmonth+"') ";
+            sql_list+=sql;
+            sql_count+=sql;
         }
         if(name!=null&&name.length>0){
             for(int i=0;i<name.length;i++){
-                if(logic[i].equals("and")){
+                String col_name=name[i].split("附")[0];
+                //if(logic[i].equals("and")){
                     if(compare[i].equals(">=")){
-                        sql_list+=" and a.rowid in (select rowid from "+BusinessTable+" where CAST("+name[i]+" AS real) >= "+value[i]+") ";
-                        sql_count+=" and a.rowid in (select rowid from "+BusinessTable+" where CAST("+name[i]+" AS real) >= "+value[i]+") ";
+                        String sql=" ";
+                        if(logic[i].equals("and")){
+                            sql=" "+logic[i]+" a.rowid in (select rowid from "+BusinessTable+" where CAST("+col_name+" AS real) >= "+value[i]+") ";
+
+                        }else{
+                            sql=" "+logic[i]+" (a.rowid in (select rowid from "+BusinessTable+" where CAST("+col_name+" AS real) >= "+value[i]+") and ("+basic_sql+")) ";
+                        }
+                        sql_list+=sql;
+                        sql_count+=sql;
+
 
                     }else if(compare[i].equals("<=")){
-                        sql_list+=" and a.rowid in (select rowid from "+BusinessTable+" where CAST("+name[i]+" AS real) <= "+value[i]+") ";
-                        sql_count+=" and a.rowid in (select rowid from "+BusinessTable+" where CAST("+name[i]+" AS real) <= "+value[i]+") ";
-                    }else{
-                        sql_list+=" and a.rowid in (select rowid from "+BusinessTable+" where "+name[i]+" MATCH '"+value[i]+"') ";
-                        sql_count+=" and a.rowid in (select rowid from "+BusinessTable+" where "+name[i]+" MATCH '"+value[i]+"') ";
+                        String sql=" ";
+                        if(logic[i].equals("and")){
+                            sql=" "+logic[i]+" a.rowid in (select rowid from "+BusinessTable+" where CAST("+col_name+" AS real) <= "+value[i]+") ";
+
+                        }else{
+                            sql=" "+logic[i]+" (a.rowid in (select rowid from "+BusinessTable+" where CAST("+col_name+" AS real) <= "+value[i]+") and ("+basic_sql+")) ";
+                        }
+                        sql_list+=sql;
+                        sql_count+=sql;
+                    }else if(compare[i].equals("=")){
+                        String sql=" ";
+                        if(logic[i].equals("and")){
+                            sql=" "+logic[i]+"  a.rowid in (select rowid from "+BusinessTable+" where "+col_name+" MATCH '"+value[i]+"') ";
+
+                        }else{
+                            sql=" "+logic[i]+"  (a.rowid in (select rowid from "+BusinessTable+" where "+col_name+" MATCH '"+value[i]+"') and ("+basic_sql+")) ";
+                        }
+                        sql_list+=sql;
+                        sql_count+=sql;
+
+                    }else if(compare[i].equals("match")){
+                        String sql=" ";
+                        if(logic[i].equals("and")){
+                            sql=" "+logic[i]+"  a.rowid in (select rowid from "+BusinessTable+" where "+col_name+" MATCH '"+value[i]+"*') ";
+
+                        }else{
+                            sql=" "+logic[i]+"  (a.rowid in (select rowid from "+BusinessTable+" where "+col_name+" MATCH '"+value[i]+"*') and ("+basic_sql+")) ";
+                        }
+                        sql_list+=sql;
+                        sql_count+=sql;
+
+
+                    }else if(compare[i].equals("year")){
+                        Date date = null;
+                        try {
+                            date = syearFormat.parse( value[i]);
+                        } catch (ParseException e) {
+                            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                        }
+                        java.util.Calendar   calendar=java.util.Calendar.getInstance();
+                        calendar.setTime(date);
+                        calendar.add(Calendar.YEAR, +1);    //得到下一年
+                        String endyear=syearFormat.format(calendar.getTime());
+
+                        String sql=" ";
+                        if(logic[i].equals("and")){
+                            sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+value[i]
+                                    +"' and  '"+endyear+"') ";
+
+                        }else{
+                            sql=" "+logic[i]+" (b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+value[i]
+                                    +"' and  '"+endyear+"') and ("+basic_sql+")) ";
+                        }
+                        sql_list+=sql;
+                        sql_count+=sql;
+
+
+                    }else if(compare[i].equals("beginyear")){
+                        Date date = null;
+                        try {
+                            date = syearFormat.parse( value[i]);
+                        } catch (ParseException e) {
+                            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                        }
+                        java.util.Calendar   calendar=java.util.Calendar.getInstance();
+                        calendar.setTime(date);
+                        calendar.add(Calendar.YEAR, +100);    //得到下一年
+                        String endyear=syearFormat.format(calendar.getTime());
+
+                        String sql=" ";
+                        if(logic[i].equals("and")){
+                            sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+value[i]
+                                    +"' and  '"+endyear+"') ";
+
+                        }else{
+                            sql=" "+logic[i]+" (b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+value[i]
+                                    +"' and  '"+endyear+"') and ("+basic_sql+")) ";
+                        }
+                        sql_list+=sql;
+                        sql_count+=sql;
+
+                    }else if(compare[i].equals("endyear")){
+                        Date date = null;
+                        try {
+                            date = syearFormat.parse( value[i]);
+                        } catch (ParseException e) {
+                            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                        }
+                        java.util.Calendar   calendar=java.util.Calendar.getInstance();
+                        calendar.setTime(date);
+                        calendar.add(Calendar.YEAR, -100);    //得到起始年
+                        String endyear=syearFormat.format(calendar.getTime());
+
+                        String sql=" ";
+                        if(logic[i].equals("and")){
+                            sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+endyear
+                                    +"' and  '"+value[i]+"') ";
+
+                        }else{
+                            sql=" "+logic[i]+" (b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+endyear
+                                    +"' and  '"+value[i]+"') and ("+basic_sql+")) ";
+                        }
+                        sql_list+=sql;
+                        sql_count+=sql;
+
                     }
-                }
+                    else if(compare[i].equals("month")){
+                        Date date = null;
+                        try {
+                            date = sDateFormat.parse( value[i]);
+                        } catch (ParseException e) {
+                            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                        }
+                        java.util.Calendar   calendar=java.util.Calendar.getInstance();
+                        calendar.setTime(date);
+                        calendar.add(Calendar.MONTH, +1);    //得到下一个月
+                        String endmonth=sDateFormat.format(calendar.getTime());
+
+
+                        String sql=" ";
+                        if(logic[i].equals("and")){
+                            sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+value[i]
+                                    +"' and  '"+endmonth+"') ";
+
+                        }else{
+                            sql=" "+logic[i]+" (b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+value[i]
+                                    +"' and  '"+endmonth+"')  and ("+basic_sql+")) ";
+                        }
+                        sql_list+=sql;
+                        sql_count+=sql;
+
+
+                    }
+                    else if(compare[i].equals("beginmonth")){
+                        Date date = null;
+                        try {
+                            date = sDateFormat.parse( value[i]);
+                        } catch (ParseException e) {
+                            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                        }
+                        java.util.Calendar   calendar=java.util.Calendar.getInstance();
+                        calendar.setTime(date);
+                        calendar.add(Calendar.YEAR, +100);    //得到下一个月
+                        String endmonth=sDateFormat.format(calendar.getTime());
+
+                        String sql=" ";
+                        if(logic[i].equals("and")){
+                            sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+value[i]
+                                    +"' and  '"+endmonth+"') ";
+
+                        }else{
+                            sql=" "+logic[i]+" (b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+value[i]
+                                    +"' and  '"+endmonth+"')  and ("+basic_sql+")) ";
+                        }
+                        sql_list+=sql;
+                        sql_count+=sql;
+
+
+                    }else if(compare[i].equals("endmonth")){
+                        Date date = null;
+                        try {
+                            date = sDateFormat.parse( value[i]);
+                        } catch (ParseException e) {
+                            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                        }
+                        java.util.Calendar   calendar=java.util.Calendar.getInstance();
+                        calendar.setTime(date);
+                        calendar.add(Calendar.YEAR, -100);    //得到下一个月
+                        String endmonth=sDateFormat.format(calendar.getTime());
+
+                        String sql=" ";
+                        if(logic[i].equals("and")){
+                            sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+endmonth
+                                    +"' and  '"+value[i]+"') ";
+
+                        }else{
+                            sql=" "+logic[i]+" (b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+endmonth
+                                    +"' and  '"+value[i]+"')  and ("+basic_sql+")) ";
+                        }
+                        sql_list+=sql;
+                        sql_count+=sql;
+
+                    }
+                //}
             }
 
         }
@@ -274,6 +466,7 @@ public class BusinessProcessControl {
 
         ComonDao cd=new ComonDao();
         int totalnum=cd.getTotalCountBySql(sql_count);
+        sql_list+=" Limit "+limit+" Offset "+start;
         ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
 
         Map<String,Object>res=new HashMap<String, Object>();
@@ -384,7 +577,358 @@ public class BusinessProcessControl {
 
 
 
+        }else if(type.equals(StatisticsType.UseStatisticsType.getChineseSeason(StatisticsType.ComplexTwo))){
+            BusinessProcess bp=new BusinessProcess();
+            ComonDao cd=new ComonDao();
+            String sql_list="select a.divisionname  ,a.rowid as id," +
+                    "(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and rowid in (select rowid from "
+                    +BusinessTable+" where businesstype MATCH '"+businesstype+"') and  division MATCH (a.divisionpath||'*')) as newmonthfamilynum ,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and b.rowid in ( select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') and c.businessid=b.rowid and b.division MATCH (a.divisionpath||'*')) as newmonthpeoplenum, "
+
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and division MATCH (a.divisionpath||'*')) as newtotalhelpmoney, "
+
+            +"(select count(*) from "+BusinessTable+" where  time Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and rowid in(select rowid from "+BusinessTable+" where  businesstype MATCH '"+businesstype+"') " +
+                    " and rowid in(select rowid from "+BusinessTable+" where  processstatustype  MATCH '"+ProcessType.UseProcessType.getChineseSeason(ProcessType.Cancellation)+"') " +
+
+                    " and  division MATCH (a.divisionpath||'*')) as logoutmonthfamilynum ,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and b.rowid in(select rowid from "+BusinessTable+" where  processstatustype  MATCH '"+ProcessType.UseProcessType.getChineseSeason(ProcessType.Cancellation)+"') " +
+                    " and c.businessid=b.rowid and b.division MATCH (a.divisionpath||'*')) as logoutmonthpeoplenum, "
+
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+
+
+                    "' and rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and rowid in(select rowid from "+BusinessTable+" where  processstatustype  MATCH '"+ProcessType.UseProcessType.getChineseSeason(ProcessType.Cancellation)+"') "+
+                    " and division MATCH (a.divisionpath||'*')) as logouttotalhelpmoney ,"+
+
+
+                    "(select count(*) from "+GrantTable+" e,"+BusinessTable+" f where e.businessid=f.rowid and e.grantdate Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and f.rowid in (select rowid from "
+                    +BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+
+                    " and e.rowid in(select rowid from "+ GrantTable+" where CAST(adjustmoney AS real)>0) "+
+
+                    "and  f.division MATCH (a.divisionpath||'*')) as addmoneymonthfamilynum ,"
+
+                    +"(select count(*) from "+GrantTable+" e,"+BusinessTable+" f,"+FamilyTable+" " +
+                    "c where e.businessid=f.rowid and e.grantdate Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and f.rowid in ( select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and e.rowid in(select rowid from "+ GrantTable+" where CAST(adjustmoney AS real)>0) "+
+                    "and c.businessid=f.rowid and f.division MATCH (a.divisionpath||'*')) as addmoneymonthpeoplenum, "
+
+                    +  "(select sum(CAST(e.adjustmoney AS real)) from "+GrantTable+" e," +
+                    BusinessTable+" f where e.businessid=f.rowid and e.grantdate Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and f.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and e.rowid in(select rowid from "+ GrantTable+" where CAST(adjustmoney AS real)>0) "+
+                    "and division MATCH (a.divisionpath||'*')) as addmoneytotalhelpmoney, " +
+
+
+
+                    "(select count(*) from "+GrantTable+" e,"+BusinessTable+" f where e.businessid=f.rowid and e.grantdate Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and f.rowid in (select rowid from "
+                    +BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+
+                    " and e.rowid in(select rowid from "+ GrantTable+" where CAST(adjustmoney AS real)<0) "+
+
+                    "and  f.division MATCH (a.divisionpath||'*')) as reducemoneymonthfamilynum ,"
+
+                    +"(select count(*) from "+GrantTable+" e,"+BusinessTable+" f,"+FamilyTable+" " +
+                    "c where e.businessid=f.rowid and e.grantdate Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and f.rowid in ( select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and e.rowid in(select rowid from "+ GrantTable+" where CAST(adjustmoney AS real)<0) "+
+                    "and c.businessid=f.rowid and f.division MATCH (a.divisionpath||'*')) as reducemoneymonthpeoplenum, "
+
+                    +  "(select sum(CAST(e.adjustmoney AS real)) from "+GrantTable+" e," +
+                    BusinessTable+" f where e.businessid=f.rowid and e.grantdate Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and f.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and e.rowid in(select rowid from "+ GrantTable+" where CAST(adjustmoney AS real)<0) "+
+                    "and division MATCH (a.divisionpath||'*')) as reducemoneytotalhelpmoney " +
+
+
+                    "  from "+DivisionsTable+" a where a.parentid MATCH "+divisionpid;
+
+            ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
+
+            res.put("divisionname","");
+            res.put("children",list);
+
+        }else if(type.equals(StatisticsType.UseStatisticsType.getChineseSeason(StatisticsType.ComplexThree))){
+
+            BusinessProcess bp=new BusinessProcess();
+            ComonDao cd=new ComonDao();
+            String sql_list="select a.divisionname  ,a.rowid as id,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and c.businessid=b.rowid " +
+                    "and b.division MATCH (a.divisionpath||'*')) as totalpeoplenum, "
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+
+                    " where time Between '"+bgmonth+"' and  '"+edmonth+"'" +
+                    " and rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') and " +
+                    "division MATCH (a.divisionpath||'*')) as totalhelpmoney ,"
+
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where poortype MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.A)+"') " +
+                    "and c.businessid=b.rowid " +
+                    "and b.division MATCH (a.divisionpath||'*')) as atotalpeoplenum, "
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+
+                    " where time Between '"+bgmonth+"' and  '"+edmonth+"'" +
+                    " and rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"')  " +
+                    "and rowid in (select rowid from "+BusinessTable+" where poortype MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.A)+"') " +
+                    "and division MATCH (a.divisionpath||'*')) as atotalhelpmoney ,"
+
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where poortype MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.B)+"') " +
+                    "and c.businessid=b.rowid " +
+                    "and b.division MATCH (a.divisionpath||'*')) as btotalpeoplenum, "
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+
+                    " where time Between '"+bgmonth+"' and  '"+edmonth+"'" +
+                    " and rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"')  " +
+                    "and rowid in (select rowid from "+BusinessTable+" where poortype MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.B)+"') " +
+                    "and division MATCH (a.divisionpath||'*')) as btotalhelpmoney ,"
+
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where poortype MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.C)+"') " +
+                    "and c.businessid=b.rowid " +
+                    "and b.division MATCH (a.divisionpath||'*')) as ctotalpeoplenum, "
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+
+                    " where time Between '"+bgmonth+"' and  '"+edmonth+"'" +
+                    " and rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"')  " +
+                    "and rowid in (select rowid from "+BusinessTable+" where poortype MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.C)+"') " +
+                    "and division MATCH (a.divisionpath||'*')) as ctotalhelpmoney "
+
+
+                    +"  from "+DivisionsTable+" a where a.parentid MATCH "+divisionpid;
+
+            ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
+
+            res.put("divisionname","");
+            res.put("children",list);
+
+
+
+
+
+
+        }else if(type.equals(StatisticsType.UseStatisticsType.getChineseSeason(StatisticsType.ComplexFour))){
+
+            BusinessProcess bp=new BusinessProcess();
+            ComonDao cd=new ComonDao();
+            String sql_list="select a.divisionname  ,a.rowid as id,"
+
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Farmer)+"') " +
+
+                    "and c.businessid=b.rowid " +
+
+                    "and b.division MATCH (a.divisionpath||'*')) as farmer, "
+
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Forester)+"') " +
+
+                    "and c.businessid=b.rowid " +
+
+                    "and b.division MATCH (a.divisionpath||'*')) as forester, "
+
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Criminal)+"') " +
+
+                    "and c.businessid=b.rowid " +
+
+                    "and b.division MATCH (a.divisionpath||'*')) as criminal, "
+
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Compatriot)+"') " +
+
+                    "and c.businessid=b.rowid " +
+
+                    "and b.division MATCH (a.divisionpath||'*')) as compatriot, "
+
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Immigrant)+"') " +
+
+                    "and c.businessid=b.rowid " +
+
+                    "and b.division MATCH (a.divisionpath||'*')) as immigrant, "
+
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Graduate)+"') " +
+
+                    "and c.businessid=b.rowid " +
+
+                    "and b.division MATCH (a.divisionpath||'*')) as graduate, "
+
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Veterans)+"') " +
+
+                    "and c.businessid=b.rowid " +
+
+                    "and b.division MATCH (a.divisionpath||'*')) as veterans "
+
+
+                    +"  from "+DivisionsTable+" a where a.parentid MATCH "+divisionpid;
+
+            ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
+
+            res.put("divisionname","");
+            res.put("children",list);
+
+
+
+
+
+
+        }else if(type.equals(StatisticsType.UseStatisticsType.getChineseSeason(StatisticsType.ComplexNewLogout))){
+            BusinessProcess bp=new BusinessProcess();
+            ComonDao cd=new ComonDao();
+            String sql_list="select a.divisionname  ,a.rowid as id," +
+                    "(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and rowid in (select rowid from "
+                    +BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and rowid in (select rowid from "
+                    +BusinessTable+" where familyaccount MATCH '"
+                    +EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.CountryAccount)+"') " +
+                    "and  division MATCH (a.divisionpath||'*')) as newmonthfamilynum ,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and b.rowid in ( select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and b.rowid in (select rowid from "
+                    +BusinessTable+" where familyaccount MATCH '"
+                    +EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.CountryAccount)+"') " +
+
+                    "and c.businessid=b.rowid and b.division MATCH (a.divisionpath||'*')) as newmonthpeoplenum, "
+
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and rowid in (select rowid from "
+                    +BusinessTable+" where familyaccount MATCH '"
+                    +EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.CountryAccount)+"') " +
+
+                    "and division MATCH (a.divisionpath||'*')) as newmonthmoney, "
+
+                    +"(select count(*) from "+BusinessTable+" where  time Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and rowid in(select rowid from "+BusinessTable+" where  businesstype MATCH '"+businesstype+"') " +
+                    " and rowid in(select rowid from "+BusinessTable+" where  processstatustype  MATCH '"+ProcessType.UseProcessType.getChineseSeason(ProcessType.Cancellation)+"') " +
+                    " and rowid in (select rowid from "
+                    +BusinessTable+" where familyaccount MATCH '"
+                    +EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.CountryAccount)+"') " +
+
+                    " and  division MATCH (a.divisionpath||'*')) as logoutmonthfamilynum ,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and b.rowid in (select rowid from "
+                    +BusinessTable+" where familyaccount MATCH '"
+                    +EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.CountryAccount)+"') " +
+
+                    " and b.rowid in(select rowid from "+BusinessTable+" where  processstatustype  MATCH '"+ProcessType.UseProcessType.getChineseSeason(ProcessType.Cancellation)+"') " +
+                    " and c.businessid=b.rowid and b.division MATCH (a.divisionpath||'*')) as logoutmonthpeoplenum, "
+
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+
+
+                    "' and rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and rowid in(select rowid from "+BusinessTable+" where  processstatustype  MATCH '"+ProcessType.UseProcessType.getChineseSeason(ProcessType.Cancellation)+"') "+
+                    " and rowid in (select rowid from "
+                    +BusinessTable+" where familyaccount MATCH '"
+                    +EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.CountryAccount)+"') " +
+
+                    " and division MATCH (a.divisionpath||'*')) as logoutmonthmoney, "+
+
+
+                    //城镇
+
+
+                    "(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and rowid in (select rowid from "
+                    +BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and rowid in (select rowid from "
+                    +BusinessTable+" where familyaccount MATCH '"
+                    +EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.CityAccount)+"') " +
+                    "and  division MATCH (a.divisionpath||'*')) as newcitymonthfamilynum ,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and b.rowid in ( select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and b.rowid in (select rowid from "
+                    +BusinessTable+" where familyaccount MATCH '"
+                    +EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.CityAccount)+"') " +
+
+                    "and c.businessid=b.rowid and b.division MATCH (a.divisionpath||'*')) as newcitymonthpeoplenum, "
+
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and rowid in (select rowid from "
+                    +BusinessTable+" where familyaccount MATCH '"
+                    +EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.CityAccount)+"') " +
+
+                    "and division MATCH (a.divisionpath||'*')) as newcitymonthmoney, "
+
+                    +"(select count(*) from "+BusinessTable+" where  time Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and rowid in(select rowid from "+BusinessTable+" where  businesstype MATCH '"+businesstype+"') " +
+                    " and rowid in(select rowid from "+BusinessTable+" where  processstatustype  MATCH '"+ProcessType.UseProcessType.getChineseSeason(ProcessType.Cancellation)+"') " +
+                    " and rowid in (select rowid from "
+                    +BusinessTable+" where familyaccount MATCH '"
+                    +EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.CityAccount)+"') " +
+
+                    " and  division MATCH (a.divisionpath||'*')) as logoutcitymonthfamilynum ,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and b.rowid in (select rowid from "
+                    +BusinessTable+" where familyaccount MATCH '"
+                    +EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.CityAccount)+"') " +
+
+                    " and b.rowid in(select rowid from "+BusinessTable+" where  processstatustype  MATCH '"+ProcessType.UseProcessType.getChineseSeason(ProcessType.Cancellation)+"') " +
+                    " and c.businessid=b.rowid and b.division MATCH (a.divisionpath||'*')) as logoutcitymonthpeoplenum, "
+
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+
+
+                    "' and rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and rowid in(select rowid from "+BusinessTable+" where  processstatustype  MATCH '"+ProcessType.UseProcessType.getChineseSeason(ProcessType.Cancellation)+"') "+
+                    " and rowid in (select rowid from "
+                    +BusinessTable+" where familyaccount MATCH '"
+                    +EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.CityAccount)+"') " +
+
+                    " and division MATCH (a.divisionpath||'*')) as logoutcitymonthmoney "+
+
+
+
+                    "  from "+DivisionsTable+" a where a.parentid MATCH "+divisionpid;
+
+            ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
+
+            res.put("divisionname","");
+            res.put("children",list);
+
         }
+
         return JSONObject.fromObject(res).toString();
 
     }
@@ -393,25 +937,38 @@ public class BusinessProcessControl {
                                     String[]compare,String[]value,String[]logic){
         BusinessProcess bp=new BusinessProcess();
         ComonDao cd=new ComonDao();
+
+        SimpleDateFormat sDateFormat   =   new SimpleDateFormat("yyyy-MM");
+        SimpleDateFormat syearFormat   =   new SimpleDateFormat("yyyy");
+        SimpleDateFormat sDayFormat   =   new SimpleDateFormat("yyyy-MM-dd");
+
+
+        String basic_sql=" a.rowid = b.businessid  ";
+
+        basic_sql+=" and c.rowid in (select rowid from "+DivisionsTable+" where divisionpath MATCH a.division )";
+
+        if(!businesstype.equals("all")){
+            basic_sql+=" and a.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"')";
+        }
+
+
+
         String sql_count="select count(*)"+
-                " from "+BusinessTable +" a where a.rowid>0 ";
+                " from "+BusinessTable +" a,"+FamilyTable+" b, " + DivisionsTable+" c where "+basic_sql;
 
 
-        //int totalnum =cd.getTotalCount(BusinessTable);
+                //int totalnum =cd.getTotalCount(BusinessTable);
 
-        String sql_list="select a.rowid as businessid,a.*,(select count(*)  from "+ FamilyTable+" b where " +
+        String sql_list="select a.rowid as businessid,a.rowid,c.divisionname,a.*,(select count(*)  from "+ FamilyTable+" b where " +
                 "b.businessid MATCH a.rowid)  as familynum," +
                 "(select count(*)  from "+ FamilyTable+" b where " +
                 "b.businessid = a.rowid and isenjoyed MATCH '享受')  as enjoynum"+
-                " from "+BusinessTable +" a where a.rowid>0 ";
+                " from "+BusinessTable +" a,"+FamilyTable+" b, " + DivisionsTable+" c  where "+basic_sql;
 
-        if(!businesstype.equals("all")){
-            sql_list+=" and a.businesstype MATCH '"+businesstype+"'";
-            sql_count+=" and a.businesstype MATCH '"+businesstype+"'";
-        }
+        String fulltable="("+sql_list+") as ff";
 
         if(name!=null&&name.length>0){
-            for(int i=0;i<name.length;i++){
+            /*for(int i=0;i<name.length;i++){
                 if(logic[i].equals("and")){
                     if(compare[i].equals(">=")){
                         sql_list+=" and a.rowid in (select rowid from "+BusinessTable+" where CAST("+name[i]+" AS real) >= "+value[i]+") ";
@@ -425,7 +982,289 @@ public class BusinessProcessControl {
                         sql_count+=" and a.rowid in (select rowid from "+BusinessTable+" where "+name[i]+" MATCH '"+value[i]+"*') ";
                     }
                 }
+            }*/
+
+            for(int i=0;i<name.length;i++){
+                String col_name=name[i].split("附")[0];
+                //if(logic[i].equals("and")){
+                if(compare[i].equals(">=")){
+                    String sql=" ";
+                    if(logic[i].equals("and")){
+                        sql=" "+logic[i]+" a.rowid in (select rowid from "+fulltable+" where CAST("+col_name+" AS real) >= "+value[i]+") ";
+
+                    }else{
+                        sql=" "+logic[i]+" (a.rowid in (select rowid from "+fulltable+" where CAST("+col_name+" AS real) >= "+value[i]+") and ("+basic_sql+")) ";
+                    }
+                    sql_list+=sql;
+                    sql_count+=sql;
+
+
+                }else if(compare[i].equals("<=")){
+                    String sql=" ";
+                    if(logic[i].equals("and")){
+                        sql=" "+logic[i]+" a.rowid in (select rowid from "+fulltable+" where CAST("+col_name+" AS real) <= "+value[i]+") ";
+
+                    }else{
+                        sql=" "+logic[i]+" (a.rowid in (select rowid from "+fulltable+" where CAST("+col_name+" AS real) <= "+value[i]+") and ("+basic_sql+")) ";
+                    }
+                    sql_list+=sql;
+                    sql_count+=sql;
+                }else if(compare[i].equals("=")){
+                    String sql=" ";
+                    if(logic[i].equals("and")){
+                        sql=" "+logic[i]+"  a.rowid in (select rowid from "+fulltable+" where "+col_name+" MATCH '"+value[i]+"') ";
+
+                    }else{
+                        sql=" "+logic[i]+"  (a.rowid in (select rowid from "+fulltable+" where "+col_name+" MATCH '"+value[i]+"') and ("+basic_sql+")) ";
+                    }
+                    sql_list+=sql;
+                    sql_count+=sql;
+
+                }else if(compare[i].equals("match")){
+                    String sql=" ";
+                    if(logic[i].equals("and")){
+                        sql=" "+logic[i]+"  a.rowid in (select rowid from "+fulltable+" where "+col_name+" MATCH '"+value[i]+"*') ";
+
+                    }else{
+                        sql=" "+logic[i]+"  (a.rowid in (select rowid from "+fulltable+" where "+col_name+" MATCH '"+value[i]+"*') and ("+basic_sql+")) ";
+                    }
+                    sql_list+=sql;
+                    sql_count+=sql;
+
+
+                }else if(compare[i].equals("year")){
+                    Date date = null;
+                    try {
+                        date = syearFormat.parse( value[i]);
+                    } catch (ParseException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
+                    java.util.Calendar   calendar=java.util.Calendar.getInstance();
+                    calendar.setTime(date);
+                    calendar.add(Calendar.YEAR, +1);    //得到下一年
+                    String endyear=syearFormat.format(calendar.getTime());
+
+                    String sql=" ";
+                    if(logic[i].equals("and")){
+                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                                +"' and  '"+endyear+"') ";
+
+                    }else{
+                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                                +"' and  '"+endyear+"') and ("+basic_sql+")) ";
+                    }
+                    sql_list+=sql;
+                    sql_count+=sql;
+
+
+                }else if(compare[i].equals("beginyear")){
+                    Date date = null;
+                    try {
+                        date = syearFormat.parse( value[i]);
+                    } catch (ParseException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
+                    java.util.Calendar   calendar=java.util.Calendar.getInstance();
+                    calendar.setTime(date);
+                    calendar.add(Calendar.YEAR, +100);    //得到下一年
+                    String endyear=syearFormat.format(calendar.getTime());
+
+                    String sql=" ";
+                    if(logic[i].equals("and")){
+                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                                +"' and  '"+endyear+"') ";
+
+                    }else{
+                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                                +"' and  '"+endyear+"') and ("+basic_sql+")) ";
+                    }
+                    sql_list+=sql;
+                    sql_count+=sql;
+
+                }else if(compare[i].equals("endyear")){
+                    Date date = null;
+                    try {
+                        date = syearFormat.parse( value[i]);
+                    } catch (ParseException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
+                    java.util.Calendar   calendar=java.util.Calendar.getInstance();
+                    calendar.setTime(date);
+                    calendar.add(Calendar.YEAR, -100);    //得到起始年
+                    String endyear=syearFormat.format(calendar.getTime());
+
+                    String sql=" ";
+                    if(logic[i].equals("and")){
+                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+endyear
+                                +"' and  '"+value[i]+"') ";
+
+                    }else{
+                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+endyear
+                                +"' and  '"+value[i]+"') and ("+basic_sql+")) ";
+                    }
+                    sql_list+=sql;
+                    sql_count+=sql;
+
+                }
+                else if(compare[i].equals("month")){
+                    Date date = null;
+                    try {
+                        date = sDateFormat.parse( value[i]);
+                    } catch (ParseException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
+                    java.util.Calendar   calendar=java.util.Calendar.getInstance();
+                    calendar.setTime(date);
+                    calendar.add(Calendar.MONTH, +1);    //得到下一个月
+                    String endmonth=sDateFormat.format(calendar.getTime());
+
+
+                    String sql=" ";
+                    if(logic[i].equals("and")){
+                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                                +"' and  '"+endmonth+"') ";
+
+                    }else{
+                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                                +"' and  '"+endmonth+"')  and ("+basic_sql+")) ";
+                    }
+                    sql_list+=sql;
+                    sql_count+=sql;
+
+
+                }
+                else if(compare[i].equals("beginmonth")){
+                    Date date = null;
+                    try {
+                        date = sDateFormat.parse( value[i]);
+                    } catch (ParseException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
+                    java.util.Calendar   calendar=java.util.Calendar.getInstance();
+                    calendar.setTime(date);
+                    calendar.add(Calendar.YEAR, +100);    //得到下一个月
+                    String endmonth=sDateFormat.format(calendar.getTime());
+
+                    String sql=" ";
+                    if(logic[i].equals("and")){
+                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                                +"' and  '"+endmonth+"') ";
+
+                    }else{
+                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                                +"' and  '"+endmonth+"')  and ("+basic_sql+")) ";
+                    }
+                    sql_list+=sql;
+                    sql_count+=sql;
+
+
+                }else if(compare[i].equals("endmonth")){
+                    Date date = null;
+                    try {
+                        date = sDateFormat.parse( value[i]);
+                    } catch (ParseException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
+                    java.util.Calendar   calendar=java.util.Calendar.getInstance();
+                    calendar.setTime(date);
+                    calendar.add(Calendar.YEAR, -100);    //得到下一个月
+                    String endmonth=sDateFormat.format(calendar.getTime());
+
+                    String sql=" ";
+                    if(logic[i].equals("and")){
+                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+endmonth
+                                +"' and  '"+value[i]+"') ";
+
+                    }else{
+                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+endmonth
+                                +"' and  '"+value[i]+"')  and ("+basic_sql+")) ";
+                    }
+                    sql_list+=sql;
+                    sql_count+=sql;
+
+                }
+
+                else if(compare[i].equals("date")){
+                    Date date = null;
+                    try {
+                        date = sDayFormat.parse( value[i]);
+                    } catch (ParseException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
+                    java.util.Calendar   calendar=java.util.Calendar.getInstance();
+                    calendar.setTime(date);
+                    //calendar.add(Calendar.MONTH, +1);    //得到下一个月
+                    String enddate=sDateFormat.format(calendar.getTime());
+
+
+                    String sql=" ";
+                    if(logic[i].equals("and")){
+                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                                +"' and  '"+value[i]+"') ";
+
+                    }else{
+                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                                +"' and  '"+value[i]+"')  and ("+basic_sql+")) ";
+                    }
+                    sql_list+=sql;
+                    sql_count+=sql;
+
+
+                }
+                else if(compare[i].equals("begindate")){
+                    Date date = null;
+                    try {
+                        date = sDayFormat.parse( value[i]);
+                    } catch (ParseException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
+                    java.util.Calendar   calendar=java.util.Calendar.getInstance();
+                    calendar.setTime(date);
+                    calendar.add(Calendar.YEAR, +100);    //得到下一个月
+                    String enddate=sDateFormat.format(calendar.getTime());
+
+                    String sql=" ";
+                    if(logic[i].equals("and")){
+                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+"  where "+col_name+" Between '"+value[i]
+                                +"' and  '"+enddate+"') ";
+
+                    }else{
+                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+"  where "+col_name+" Between '"+value[i]
+                                +"' and  '"+enddate+"')  and ("+basic_sql+")) ";
+                    }
+                    sql_list+=sql;
+                    sql_count+=sql;
+
+
+                }else if(compare[i].equals("enddate")){
+                    Date date = null;
+                    try {
+                        date = sDayFormat.parse( value[i]);
+                    } catch (ParseException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
+                    java.util.Calendar   calendar=java.util.Calendar.getInstance();
+                    calendar.setTime(date);
+                    calendar.add(Calendar.YEAR, -100);    //得到下一个月
+                    String enddate=sDateFormat.format(calendar.getTime());
+
+                    String sql=" ";
+                    if(logic[i].equals("and")){
+                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+"  where "+col_name+" Between '"+enddate
+                                +"' and  '"+value[i]+"') ";
+
+                    }else{
+                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+"  where "+col_name+" Between '"+enddate
+                                +"' and  '"+value[i]+"')  and ("+basic_sql+")) ";
+                    }
+                    sql_list+=sql;
+                    sql_count+=sql;
+
+                }
+
+                //}
             }
+
 
         }
 
@@ -480,21 +1319,336 @@ public class BusinessProcessControl {
 
 
     }
-    public String getPeopleInfoList(int start ,int limit,String keyword,String businesstype){
+    public String getPeopleInfoList(int start ,int limit,String keyword,String businesstype,String[]name,
+                                    String[]compare,String[]value,String[]logic){
         BusinessProcess bp=new BusinessProcess();
         ComonDao cd=new ComonDao();
+
+        SimpleDateFormat sDateFormat   =   new SimpleDateFormat("yyyy-MM");
+        SimpleDateFormat syearFormat   =   new SimpleDateFormat("yyyy");
+        SimpleDateFormat sDayFormat   =   new SimpleDateFormat("yyyy-MM-dd");
+
+        String basic_sql=" a.rowid = b.businessid  ";
+        basic_sql+=" and c.rowid in (select rowid from "+DivisionsTable+" where divisionpath MATCH a.division )";
+
+        if(!businesstype.equals("all")){
+            basic_sql+=" and a.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"')";
+        }
+
         String sql_count="select count(*)"+
-                " from "+BusinessTable +" a,"+FamilyTable+" b " +
-                "where a.rowid = b.businessid ";
+                " from "+BusinessTable +" a,"+FamilyTable+" b, " + DivisionsTable+" c "+
+                "where  "+basic_sql;
         //int totalnum =cd.getTotalCount(FamilyTable);
 
-        String sql_list="select a.division,a.owername,a.processstatus,a.processstatustype,a.businesstype,b.rowid,a.owerid,b.* "+
-                " from "+BusinessTable +" a,"+FamilyTable+" b " +
-                "where a.rowid = b.businessid ";
-        if(!businesstype.equals("all")){
+        String sql_list="select a.division,a.owername,c.divisionname,a.processstatus,a.processstatustype,a.businesstype,b.rowid,a.owerid,b.* "+
+                " from "+BusinessTable +" a,"+FamilyTable+" b, " +  DivisionsTable+" c "+
+                "where  "+basic_sql;
+        String fulltable="("+sql_list+") as ff";
+
+        if(name!=null&&name.length>0){
+            /*for(int i=0;i<name.length;i++){
+                if(logic[i].equals("and")){
+                    if(compare[i].equals(">=")){
+                        sql_list+=" and a.rowid in (select rowid from "+BusinessTable+" where CAST("+name[i]+" AS real) >= "+value[i]+") ";
+                        sql_count+=" and a.rowid in (select rowid from "+BusinessTable+" where CAST("+name[i]+" AS real) >= "+value[i]+") ";
+
+                    }else if(compare[i].equals("<=")){
+                        sql_list+=" and a.rowid in (select rowid from "+BusinessTable+" where CAST("+name[i]+" AS real) <= "+value[i]+") ";
+                        sql_count+=" and a.rowid in (select rowid from "+BusinessTable+" where CAST("+name[i]+" AS real) <= "+value[i]+") ";
+                    }else{
+                        sql_list+=" and a.rowid in (select rowid from "+BusinessTable+" where "+name[i]+" MATCH '"+value[i]+"*') ";
+                        sql_count+=" and a.rowid in (select rowid from "+BusinessTable+" where "+name[i]+" MATCH '"+value[i]+"*') ";
+                    }
+                }
+            }*/
+
+            for(int i=0;i<name.length;i++){
+                String col_name=name[i].split("附")[0];
+                //if(logic[i].equals("and")){
+                if(compare[i].equals(">=")){
+                    String sql=" ";
+                    if(logic[i].equals("and")){
+                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where CAST("+col_name+" AS real) >= "+value[i]+") ";
+
+                    }else{
+                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where CAST("+col_name+" AS real) >= "+value[i]+") and ("+basic_sql+")) ";
+                    }
+                    sql_list+=sql;
+                    sql_count+=sql;
+
+
+                }else if(compare[i].equals("<=")){
+                    String sql=" ";
+                    if(logic[i].equals("and")){
+                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where CAST("+col_name+" AS real) <= "+value[i]+") ";
+
+                    }else{
+                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where CAST("+col_name+" AS real) <= "+value[i]+") and ("+basic_sql+")) ";
+                    }
+                    sql_list+=sql;
+                    sql_count+=sql;
+                }else if(compare[i].equals("=")){
+                    String sql=" ";
+                    if(logic[i].equals("and")){
+                        sql=" "+logic[i]+"  b.rowid in (select rowid from "+fulltable+" where "+col_name+" MATCH '"+value[i]+"') ";
+
+                    }else{
+                        sql=" "+logic[i]+"  (b.rowid in (select rowid from "+fulltable+" where "+col_name+" MATCH '"+value[i]+"') and ("+basic_sql+")) ";
+                    }
+                    sql_list+=sql;
+                    sql_count+=sql;
+
+                }else if(compare[i].equals("match")){
+                    String sql=" ";
+                    if(logic[i].equals("and")){
+                        sql=" "+logic[i]+"  b.rowid in (select rowid from "+fulltable+" where "+col_name+" MATCH '"+value[i]+"*') ";
+
+                    }else{
+                        sql=" "+logic[i]+"  (b.rowid in (select rowid from "+fulltable+" where "+col_name+" MATCH '"+value[i]+"*') and ("+basic_sql+")) ";
+                    }
+                    sql_list+=sql;
+                    sql_count+=sql;
+
+
+                }else if(compare[i].equals("year")){
+                    Date date = null;
+                    try {
+                        date = syearFormat.parse( value[i]);
+                    } catch (ParseException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
+                    java.util.Calendar   calendar=java.util.Calendar.getInstance();
+                    calendar.setTime(date);
+                    calendar.add(Calendar.YEAR, +1);    //得到下一年
+                    String endyear=syearFormat.format(calendar.getTime());
+
+                    String sql=" ";
+                    if(logic[i].equals("and")){
+                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                                +"' and  '"+endyear+"') ";
+
+                    }else{
+                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                                +"' and  '"+endyear+"') and ("+basic_sql+")) ";
+                    }
+                    sql_list+=sql;
+                    sql_count+=sql;
+
+
+                }else if(compare[i].equals("beginyear")){
+                    Date date = null;
+                    try {
+                        date = syearFormat.parse( value[i]);
+                    } catch (ParseException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
+                    java.util.Calendar   calendar=java.util.Calendar.getInstance();
+                    calendar.setTime(date);
+                    calendar.add(Calendar.YEAR, +100);    //得到下一年
+                    String endyear=syearFormat.format(calendar.getTime());
+
+                    String sql=" ";
+                    if(logic[i].equals("and")){
+                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                                +"' and  '"+endyear+"') ";
+
+                    }else{
+                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                                +"' and  '"+endyear+"') and ("+basic_sql+")) ";
+                    }
+                    sql_list+=sql;
+                    sql_count+=sql;
+
+                }else if(compare[i].equals("endyear")){
+                    Date date = null;
+                    try {
+                        date = syearFormat.parse( value[i]);
+                    } catch (ParseException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
+                    java.util.Calendar   calendar=java.util.Calendar.getInstance();
+                    calendar.setTime(date);
+                    calendar.add(Calendar.YEAR, -100);    //得到起始年
+                    String endyear=syearFormat.format(calendar.getTime());
+
+                    String sql=" ";
+                    if(logic[i].equals("and")){
+                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+endyear
+                                +"' and  '"+value[i]+"') ";
+
+                    }else{
+                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+endyear
+                                +"' and  '"+value[i]+"') and ("+basic_sql+")) ";
+                    }
+                    sql_list+=sql;
+                    sql_count+=sql;
+
+                }
+                else if(compare[i].equals("month")){
+                    Date date = null;
+                    try {
+                        date = sDateFormat.parse( value[i]);
+                    } catch (ParseException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
+                    java.util.Calendar   calendar=java.util.Calendar.getInstance();
+                    calendar.setTime(date);
+                    calendar.add(Calendar.MONTH, +1);    //得到下一个月
+                    String endmonth=sDateFormat.format(calendar.getTime());
+
+
+                    String sql=" ";
+                    if(logic[i].equals("and")){
+                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                                +"' and  '"+endmonth+"') ";
+
+                    }else{
+                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                                +"' and  '"+endmonth+"')  and ("+basic_sql+")) ";
+                    }
+                    sql_list+=sql;
+                    sql_count+=sql;
+
+
+                }
+                else if(compare[i].equals("beginmonth")){
+                    Date date = null;
+                    try {
+                        date = sDateFormat.parse( value[i]);
+                    } catch (ParseException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
+                    java.util.Calendar   calendar=java.util.Calendar.getInstance();
+                    calendar.setTime(date);
+                    calendar.add(Calendar.YEAR, +100);    //得到下一个月
+                    String endmonth=sDateFormat.format(calendar.getTime());
+
+                    String sql=" ";
+                    if(logic[i].equals("and")){
+                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                                +"' and  '"+endmonth+"') ";
+
+                    }else{
+                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                                +"' and  '"+endmonth+"')  and ("+basic_sql+")) ";
+                    }
+                    sql_list+=sql;
+                    sql_count+=sql;
+
+
+                }else if(compare[i].equals("endmonth")){
+                    Date date = null;
+                    try {
+                        date = sDateFormat.parse( value[i]);
+                    } catch (ParseException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
+                    java.util.Calendar   calendar=java.util.Calendar.getInstance();
+                    calendar.setTime(date);
+                    calendar.add(Calendar.YEAR, -100);    //得到下一个月
+                    String endmonth=sDateFormat.format(calendar.getTime());
+
+                    String sql=" ";
+                    if(logic[i].equals("and")){
+                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+endmonth
+                                +"' and  '"+value[i]+"') ";
+
+                    }else{
+                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+endmonth
+                                +"' and  '"+value[i]+"')  and ("+basic_sql+")) ";
+                    }
+                    sql_list+=sql;
+                    sql_count+=sql;
+
+                }
+                else if(compare[i].equals("date")){
+                    Date date = null;
+                    try {
+                        date = sDayFormat.parse( value[i]);
+                    } catch (ParseException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
+                    java.util.Calendar   calendar=java.util.Calendar.getInstance();
+                    calendar.setTime(date);
+                    //calendar.add(Calendar.MONTH, +1);    //得到下一个月
+                    String enddate=sDateFormat.format(calendar.getTime());
+
+
+                    String sql=" ";
+                    if(logic[i].equals("and")){
+                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                                +"' and  '"+value[i]+"') ";
+
+                    }else{
+                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                                +"' and  '"+value[i]+"')  and ("+basic_sql+")) ";
+                    }
+                    sql_list+=sql;
+                    sql_count+=sql;
+
+
+                }
+                else if(compare[i].equals("begindate")){
+                    Date date = null;
+                    try {
+                        date = sDayFormat.parse( value[i]);
+                    } catch (ParseException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
+                    java.util.Calendar   calendar=java.util.Calendar.getInstance();
+                    calendar.setTime(date);
+                    calendar.add(Calendar.YEAR, +100);    //得到下一个月
+                    String enddate=sDateFormat.format(calendar.getTime());
+
+                    String sql=" ";
+                    if(logic[i].equals("and")){
+                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+"  where "+col_name+" Between '"+value[i]
+                                +"' and  '"+enddate+"') ";
+
+                    }else{
+                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+"  where "+col_name+" Between '"+value[i]
+                                +"' and  '"+enddate+"')  and ("+basic_sql+")) ";
+                    }
+                    sql_list+=sql;
+                    sql_count+=sql;
+
+
+                }else if(compare[i].equals("enddate")){
+                    Date date = null;
+                    try {
+                        date = sDayFormat.parse( value[i]);
+                    } catch (ParseException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
+                    java.util.Calendar   calendar=java.util.Calendar.getInstance();
+                    calendar.setTime(date);
+                    calendar.add(Calendar.YEAR, -100);    //得到下一个月
+                    String enddate=sDateFormat.format(calendar.getTime());
+
+                    String sql=" ";
+                    if(logic[i].equals("and")){
+                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+"  where "+col_name+" Between '"+enddate
+                                +"' and  '"+value[i]+"') ";
+
+                    }else{
+                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+"  where "+col_name+" Between '"+enddate
+                                +"' and  '"+value[i]+"')  and ("+basic_sql+")) ";
+                    }
+                    sql_list+=sql;
+                    sql_count+=sql;
+
+                }
+                //}
+            }
+
+
+        }
+
+
+        /*if(!businesstype.equals("all")){
             sql_list+=" and a.businesstype MATCH '"+businesstype+"'";
             sql_count+=" and a.businesstype MATCH '"+businesstype+"'";
-        }
+        }*/
 
         if (keyword!=null&&!keyword.equals("")){
             if(keyword.indexOf("and")>0){

@@ -20,6 +20,7 @@ Ext.define('ZSMZJ.view.Viewport', {
         var me = this;
 
         Ext.apply(me, {
+
             items: [{
                 xtype: 'panel',
                 //id:'wholepanel',
@@ -28,6 +29,7 @@ Ext.define('ZSMZJ.view.Viewport', {
                 dockedItems: [
                     Ext.create('ZSMZJ.view.Header')
                 ],
+
                 items: [
                     {
             		region: "center",

@@ -95,6 +95,7 @@ public class FuncDao {
                 func.put("name",rs.getString("funcname"));
                 func.put("value",rs.getString("label"));
                 func.put("url",rs.getString("imgurl"));
+                func.put("iconCls",rs.getString("imgurl"));
                 func.put("type","widget");
                 list.add(func);
 

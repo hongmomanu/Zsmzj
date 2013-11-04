@@ -21,6 +21,11 @@
         int limit=Integer.parseInt(request.getParameter("limit"));
         String keyword=request.getParameter("keyword");
         String type=request.getParameter("businesstype");
-        out.print(bp.getPeopleInfoList(start,limit,keyword,type));
+
+        String[] name=request.getParameterValues("name");
+        String[] compare=request.getParameterValues("compare");
+        String[] value=request.getParameterValues("value");
+        String[] logic=request.getParameterValues("logic");
+        out.print(bp.getPeopleInfoList(start,limit,keyword,type,name,compare,value,logic));
     }
 %>

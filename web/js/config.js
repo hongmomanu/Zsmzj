@@ -6,9 +6,6 @@
  * To change this template use File | Settings | File Templates.
  */
 var extLocation="http://192.168.2.112/extjs4.2/";
-extLocation="http://192.168.193.129:8080/extjs4.2/";
-
-var icons="img/icon/";
 
 var businessTableType=
         {   'dbgl':"低保",
@@ -753,8 +750,6 @@ var menu_shjz=[
     {
         layout: 'fit',
         title: '低保管理',
-        icon:icons+'1.png',
-        style:'',
         items:[
             {xtype:'dbglconfigtree',searchtype:"低保管理",businesstype:businessTableType.dbgl}
         ],
@@ -764,7 +759,6 @@ var menu_shjz=[
     {
         layout: 'fit',
         title: '低保边缘户',
-        icon:icons+'2.png',
         items:[
             {xtype:'dbglconfigtree',searchtype:"低保边缘户",businesstype:businessTableType.dbbyh}
         ],
@@ -774,7 +768,6 @@ var menu_shjz=[
     {
         layout: 'fit',
         title: '临时救助',
-        icon:icons+'7.png',
         items:[
             {xtype:'dbglconfigtree',searchtype:"临时救助",businesstype:businessTableType.temporaryhelp}
         ],
@@ -784,7 +777,6 @@ var menu_shjz=[
     {
         layout: 'fit',
         title: '医疗救助',
-        icon:icons+'4.png',
         items:[
             {xtype:'dbglconfigtree',searchtype:"医疗救助",businesstype:businessTableType.medicalhelp}
         ],
@@ -793,7 +785,6 @@ var menu_shjz=[
     {
         layout: 'fit',
         title: '助学救助',
-        icon:icons+'5.png',
         items:[
             {xtype:'dbglconfigtree',searchtype:"助学救助",businesstype:businessTableType.studyhelp}
         ],
@@ -802,7 +793,6 @@ var menu_shjz=[
     {
         layout: 'fit',
         title: '慈善救助',
-        icon:icons+'9.png',
         items:[
             {xtype:'dbglconfigtree',searchtype:"慈善救助",businesstype:businessTableType.charitablehelp}
         ],
@@ -811,7 +801,6 @@ var menu_shjz=[
     {
         layout: 'fit',
         title: '灾害救助',
-        icon:icons+'10.png',
         items:[
             {xtype:'dbglconfigtree',searchtype:"灾害救助",businesstype:businessTableType.disasterhelp}
         ],
@@ -819,7 +808,6 @@ var menu_shjz=[
     },{
         layout: 'fit',
         title: '流浪救助',
-        icon:icons+'6.png',
         items:[
             {xtype:'dbglconfigtree',searchtype:"流浪救助",businesstype:businessTableType.rangershelp}
         ],
@@ -829,7 +817,6 @@ var menu_shjz=[
     {
         layout: 'fit',
         title: '综合查询',
-        icon:icons+'11.png',
         items:[
             {xtype:'dbglconfigtree',searchtype:"综合查询",businesstype:businessTableType.allquery}
         ],

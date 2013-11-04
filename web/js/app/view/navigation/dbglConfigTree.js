@@ -14,11 +14,11 @@ Ext.define('ZSMZJ.view.navigation.dbglConfigTree' ,{
         'Ext.tree.*',
         'Ext.data.*'
     ],
-    xtype: 'tree-reorder',
+    //xtype: 'tree-reorder',
 
     rootVisible: false,
-    border: false,
-    useArrows: false,
+    /*border: false,
+    useArrows: false,*/
 
     initComponent: function() {
         Ext.apply(this, {

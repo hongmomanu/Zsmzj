@@ -9,7 +9,7 @@ package Zsmzj.enums;
  */
 public enum ProcessType {
 
-    Apply(1),Submit(2), Check(3), Approval(4), Grant(5),Cancellation(6),Callback(7),NoProcess(8);
+    Apply(1),Submit(2), Check(3), Approval(4), Grant(5),Cancellation(6),Callback(7),NoProcess(8),Change(9),Ok(10);
 
     private int code;
     private ProcessType(int code){
@@ -140,6 +140,12 @@ public enum ProcessType {
                     break;
                 case NoProcess:
                     result = "无流程";
+                    break;
+                case Change:
+                    result="变更";
+                    break;
+                case  Ok:
+                    result="正常";
                     break;
                 default :
                     result = "其他";

@@ -250,40 +250,50 @@ Ext.define('ZSMZJ.view.dbgl.ChangedBusinessGrid' ,{
 
             ],
             flex: 1,
-            /*tbar:[
+            tbar:[
+                {
+                    xtype: 'textfield',
+                    hidden: false,
+                    width:200,
+                    //size:40,
+                    listeners: {
 
-            ],*/
+                        "specialkey": function (field, e) {
+                            if (e.keyCode == 13) {
+                                var keyword = field.getValue().replace(/\s+/g, "");
+                                var store=this.up('panel').getStore();
+                                store.proxy.extraParams.keyword = keyword;
+                                store.loadPage(1);
+                            }
+                        }
+                    },
+                    emptyText: '输入搜索关键字'
+
+                },{
+                    text:'检索',
+                    listeners:{
+                        "click":function(btn){
+                            var field=btn.previousNode();
+                            var keyword = field.getValue().replace(/\s+/g, "");
+                            var store=this.up('panel').getStore();
+                            store.proxy.extraParams.keyword = keyword;
+                            store.loadPage(1);
+                        }
+                    }
+
+                },'->',
+                {
+                    text: '导出Excel',
+                    action:'outexcel'
+
+                }
+            ],
             bbar: Ext.create('Ext.PagingToolbar', {
                 store: 'dbgl.ChangedBusinesses',
                 displayInfo: true,
                 displayMsg: '显示待办事务 {0} - {1} of {2}',
                 emptyMsg: "无待办事务",
                 items:[
-                    '-',
-                    {
-                        xtype: 'textfield',
-                        hidden: false,
-                        width:200,
-                        //size:40,
-                        listeners: {
-
-                            "specialkey": function (field, e) {
-                                if (e.keyCode == 13) {
-                                    var keyword = field.getValue().replace(/\s+/g, "");
-                                    var store=this.up('panel').getStore();
-                                    store.proxy.extraParams.keyword = keyword;
-                                    store.loadPage(1);
-                                }
-                            }
-                        },
-                        emptyText: '输入搜索关键字'
-
-                    },'->',
-                    {
-                        text: '导出Excel',
-                        action:'outexcel'
-
-                    }
                 ]
             }),
             store: 'dbgl.ChangedBusinesses'

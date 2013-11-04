@@ -23,7 +23,9 @@
         String[] compare=request.getParameterValues("compare");
         String[] value=request.getParameterValues("value");
         String[] logic=request.getParameterValues("logic");
+        int start=Integer.parseInt(request.getParameter("start"));
+        int limit =Integer.parseInt(request.getParameter("limit"));
 
-        out.print(bp.getGrantMoneyBytype(type,bgmonth,keyword,name,compare,value,logic));
+        out.print(bp.getGrantMoneyBytype(type,bgmonth,keyword,name,compare,value,logic,start,limit));
     }
 %>

@@ -60,7 +60,15 @@ Ext.define('ZSMZJ.view.dbgl.applysubmitFieldset', {
                      blankText : '请输入低保标准',
                      allowBlank: false
                      }*/
-                    ,
+
+                    {
+                        name: 'poorstandard',
+                        fieldLabel: '低保标准(元)',
+                        afterLabelTextTpl: required,
+                        emptyText: '请输入低保标准',
+                        blankText : '请输入低保标准',
+                        allowBlank: false
+                    },
                     {
                         name: 'aidnum',
                         fieldLabel: '救助证编号',
@@ -79,6 +87,7 @@ Ext.define('ZSMZJ.view.dbgl.applysubmitFieldset', {
                         value: Ext.Date.format(new Date(), 'Y-m-d'),
                         allowBlank: false
                     },
+
                     {
                         name: 'helpedtime',
                         fieldLabel: '救助结束日期',
@@ -136,7 +145,7 @@ Ext.define('ZSMZJ.view.dbgl.applysubmitFieldset', {
                         xtype: 'datefield',
                         format: 'Y-m-d',
                         value:Ext.Date.format(Ext.Date.add(new Date(), Ext.Date.DAY,7), 'Y-m-d'),
-                        //colspan:3,
+                        colspan:3,
                         allowBlank: true
                     }
                     ,{
@@ -144,7 +153,7 @@ Ext.define('ZSMZJ.view.dbgl.applysubmitFieldset', {
                         fieldLabel: '救助原因',
                         colspan:3,
                         minWidth:300,
-                        width:500,
+                        width:800,
                         //draggable :true,
                         anchor : '100%',
                         //width:800,
@@ -160,7 +169,7 @@ Ext.define('ZSMZJ.view.dbgl.applysubmitFieldset', {
                         fieldLabel: '社区/村意见',
                         colspan:3,
                         minWidth:300,
-                        width:500,
+                        width:800,
                         //draggable :true,
                         anchor : '100%',
                         //width:800,
@@ -173,7 +182,7 @@ Ext.define('ZSMZJ.view.dbgl.applysubmitFieldset', {
                         fieldLabel: '街道/乡镇意见',
                         colspan:3,
                         minWidth:300,
-                        width:500,
+                        width:800,
                         //draggable :true,
                         anchor : '100%',
                         //width:800,
@@ -185,7 +194,7 @@ Ext.define('ZSMZJ.view.dbgl.applysubmitFieldset', {
                         fieldLabel: '民政局意见',
                         colspan:3,
                         minWidth:300,
-                        width:500,
+                        width:800,
                         //draggable :true,
                         anchor : '100%',
                         //width:800,

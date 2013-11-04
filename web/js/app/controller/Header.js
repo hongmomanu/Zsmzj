@@ -187,6 +187,10 @@ Ext.define('ZSMZJ.controller.Header', {
                 click: this.moresearch_family
 
             },
+            'peoplequerypanel button[action=moresearch]':{
+                click: this.moresearch_family
+
+            },
 
             'peoplequerypanel button[action=outexcel]':{
                 click: this.outexcel_person
@@ -238,7 +242,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
             },
 
-            'needtodopanel,announcegridpanel,enumerateconfigmanager,usermanagerpanel,rolemanagerpanel,funcmanagerpanel,needtodobusinesspanel,changedbusinesspanel,logoutbusinesspanel,peoplequerypanel,familyquerypanel,dbglstatisticsfullpanel,dbglgrantmoneypanel,dbglstatisticscomplexonepanel,medicalstandardgridpanel':{
+            'needtodopanel,announcegridpanel,enumerateconfigmanager,usermanagerpanel,rolemanagerpanel,funcmanagerpanel,needtodobusinesspanel,changedbusinesspanel,logoutbusinesspanel,peoplequerypanel,familyquerypanel,dbglstatisticsfullpanel,dbglgrantmoneypanel,dbglstatisticscomplexonepanel,dbglstatisticscomplextwopanel,dbglstatisticscomplexthreepanel,dbglstatisticscomplexfourpanel,dbglstatisticscomplexcountrypanel,dbglstatisticscomplexnewlogoutpanel,medicalstandardgridpanel':{
 
                 gridshowfresh:function(grid){
                   if(grid.xtype=='familyquerypanel'){
@@ -1187,16 +1191,28 @@ Ext.define('ZSMZJ.controller.Header', {
     moresearch_family:function(btn){
         var grid=btn.up('panel');
         if(this.newMoreSearchWin){
-            this.newMoreSearchWin.close();
-        }
-        this.newMoreSearchWin=Ext.widget('moresearchfamilywin',{ // Equivalent to Ext.create('widget.panel')
-            searchtype: btn.searchtype
-        });
-        //this.newMoreSearchWin.searchtype="moresearchfamily";
-        this.newMoreSearchWin.dataobj=grid;
-        this.newMoreSearchWin.show();
+            if(btn.searchtype==this.newMoreSearchWin.searchtype){
+                this.newMoreSearchWin.show();
+            }
+            else{
 
-        //console.log(11);
+                this.newMoreSearchWin.destroy();
+                this.newMoreSearchWin=Ext.widget('moresearchfamilywin',{ // Equivalent to Ext.create('widget.panel')
+                    searchtype: btn.searchtype
+                });
+                this.newMoreSearchWin.dataobj=grid;
+                this.newMoreSearchWin.show();
+            }
+        }else{
+            this.newMoreSearchWin=Ext.widget('moresearchfamilywin',{ // Equivalent to Ext.create('widget.panel')
+                searchtype: btn.searchtype
+            });
+            //this.newMoreSearchWin.searchtype="moresearchfamily";
+            this.newMoreSearchWin.dataobj=grid;
+            this.newMoreSearchWin.show();
+
+        }
+
     },
     outexcel_family:function(btn){
         var grid=btn.up('panel');

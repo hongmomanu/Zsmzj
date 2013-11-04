@@ -126,53 +126,64 @@ Ext.define('ZSMZJ.view.dbgl.FamilyQueryGrid' ,{
 
             ],
             flex: 1,
-            /*tbar:[
+            tbar:[
 
-            ],*/
+                {
+                    fieldLabel:'快速全文检索',
+                    xtype: 'textfield',
+                    hidden: false,
+                    width:250,
+                    //size:40,
+                    listeners: {
+
+                        "specialkey": function (field, e) {
+                            if (e.keyCode == 13) {
+                                var keyword = field.getValue().replace(/\s+/g, "");
+                                var store=this.up('panel').getStore();
+                                store.proxy.extraParams.keyword = keyword;
+                                store.loadPage(1);
+                            }
+                        }
+                    },
+                    emptyText: '输入搜索关键字'
+
+                },{
+                    text:'检索',
+                    listeners:{
+                        "click":function(btn){
+                            var field=btn.previousNode();
+                            var keyword = field.getValue().replace(/\s+/g, "");
+                            var store=this.up('panel').getStore();
+                            store.proxy.extraParams.keyword = keyword;
+                            store.loadPage(1);
+                        }
+                    }
+
+                },'->',
+                {
+                    text: '导出Excel',
+                    action:'outexcel'
+
+                },
+                '-'
+                ,
+                {
+                    text: '高级检索',
+                    action:'moresearch',
+                    searchtype:'moresearchfamily'
+
+                }
+            ],
             bbar: Ext.create('Ext.PagingToolbar', {
                 store: 'dbgl.FamilyQuerys',
                 displayInfo: true,
                 displayMsg: '显示待家庭 {0} - {1} of {2}',
                 emptyMsg: "无家庭数据",
                 items:[
-                    '-',
-                    {
-                        fieldLabel:'快速全文检索',
-                        xtype: 'textfield',
-                        hidden: false,
-                        width:250,
-                        //size:40,
-                        listeners: {
 
-                            "specialkey": function (field, e) {
-                                if (e.keyCode == 13) {
-                                    var keyword = field.getValue().replace(/\s+/g, "");
-                                    var store=this.up('panel').getStore();
-                                    store.proxy.extraParams.keyword = keyword;
-                                    store.loadPage(1);
-                                }
-                            }
-                        },
-                        emptyText: '输入搜索关键字'
-
-                    },'->',
-                    {
-                        text: '导出Excel',
-                        action:'outexcel'
-
-                    },
-                    '-'
-                    ,
-                    {
-                        text: '高级检索',
-                        action:'moresearch',
-                        searchtype:'moresearchfamily'
-
-                    }
                 ]
             }),
             store: 'dbgl.FamilyQuerys'
-
 
         });
         this.callParent(arguments);

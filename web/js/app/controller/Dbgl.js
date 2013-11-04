@@ -20,7 +20,9 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.LogoutBusiness','dbgl.PeopleQuery',
         'dbgl.FamilyQuery','dbgl.StatisticsFull',
         'dbgl.StatisticsComplexOne','dbgl.GrantMoneyModel',
-        'dbgl.SearchCombo'
+        'dbgl.SearchCombo','dbgl.StatisticsComplexTwo',
+        'dbgl.StatisticsComplexThree','dbgl.StatisticsComplexFour',
+        'dbgl.StatisticsComplexCountry','dbgl.StatisticsComplexNewLogout'
 
     ],
     //加载store
@@ -30,7 +32,10 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.LogoutBusinesses','dbgl.PeopleQuerys',
         'dbgl.FamilyQuerys','dbgl.StatisticsFulls',
         'dbgl.StatisticsComplexOnes','dbgl.GrantMoneyStore',
-        'dbgl.SearchCombos'
+        'dbgl.SearchCombos','dbgl.StatisticsComplexTwos',
+        'dbgl.StatisticsComplexThrees','dbgl.StatisticsComplexFours',
+        'dbgl.StatisticsComplexCountrys','dbgl.StatisticsComplexNewLogouts'
+
     ],
     //自定义引用名
     refs: [
@@ -70,6 +75,11 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.moreSearchFamilyWin',
         'common.MonthField',
         'dbgl.StatisticsComplexOneGrid',
+        'dbgl.StatisticsComplexTwoGrid',
+        'dbgl.StatisticsComplexThreeGrid',
+        'dbgl.StatisticsComplexFourGrid',
+        'dbgl.StatisticsComplexCountryGrid',
+        'dbgl.StatisticsComplexNewLogoutGrid',
         'dbgl.personidSearchCombo',
         'dbgl.applysubmitFieldset',
         'dbgl.familyaffixFieldset',
@@ -298,7 +308,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
                         }
                         var task = new Ext.util.DelayedTask(fn);
-                        task.delay(index*30);
+                        task.delay(index*20);
                     },
                     repeat:1,
                     interval: 1 //1 毫秒
@@ -448,6 +458,8 @@ Ext.define('ZSMZJ.controller.Dbgl', {
     addnewcondition:function(btn){
         var form=btn.up('form');
         var win=btn.up('window');
+        var searchbtn=form.down('#searchbtn');
+        searchbtn.setDisabled(true);
         form.add({
             xtype:'panel',
             layout: 'column',
@@ -460,6 +472,18 @@ Ext.define('ZSMZJ.controller.Dbgl', {
                     searchtype:win.searchtype,
                     allowBlank: false,
                     blankText: "不能为空",
+                    listeners: {
+                        change:function( combo, newValue, oldValue, eOpts ){
+                            //testobj=combo;
+                            if(combo.getValue()){
+                                var next=combo.nextNode();
+                                next.setDisabled(false);
+                                //next.store.clearFilter();
+                                next.clearValue();
+                                next.store.proxy.extraParams.type=combo.searchtype+combo.getValue();
+                            }
+                        }
+                    },
                     name:'name',
                     fieldLabel: '查询字段'
 
@@ -467,6 +491,12 @@ Ext.define('ZSMZJ.controller.Dbgl', {
                 {
                     columnWidth: 0.23,
                     xtype:'dbglaplytype',
+                    disabled:true,
+                    listeners: {
+                        beforequery: function(qe){
+                            delete qe.combo.lastQuery;
+                        }
+                    },
                     searchtype:'comparelabel',
                     allowBlank: false,
                     blankText: "不能为空",
@@ -510,6 +540,10 @@ Ext.define('ZSMZJ.controller.Dbgl', {
                                 click: function() {
                                     var item=this.up('panel');
                                     form.remove(item);
+
+                                    if(form.isValid()){
+                                        searchbtn.setDisabled(false);
+                                    }
                                 }
                             }
 
@@ -548,7 +582,8 @@ Ext.define('ZSMZJ.controller.Dbgl', {
     grantmoney:function(btn){
         var me=this;
         var win=btn.up('window');
-        var ajaxform=win.down('form');
+
+        var ajaxform=btn.up('form');
 
         var grid=win.dataobj;
         var params = {
@@ -557,7 +592,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         };
         var successFunc = function (myform, action) {
 
-            btn.up('window').close();
+            win.close();
             grid.getStore().load();
 
         };
