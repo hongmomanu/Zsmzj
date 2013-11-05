@@ -80,54 +80,7 @@ Ext.define('ZSMZJ.view.Header', {
                                 border:0
                             },
                             items:[
-                                {
-                                    //html: '  <a>在线人数:'+onlinenums+'<a>',
-                                    baseCls: 'main-header',
-                                    columnWidth:.3,
-                                    cls:'mouseover',
-                                    //type:'needthings',
-                                    listeners: {
 
-                                        /*render: function(c){
-                                         alert(2);
-                                         c.getEl().on('click', function(){ this.fireEvent('needthingsclick', c); }, c);
-                                         }*/
-
-                                    }
-                                },
-                                {
-                                    //html: '待办事务:(0)',
-                                    baseCls: 'main-header',
-                                    columnWidth:.3,
-                                    //itemId: 'needtodopanel',
-                                    cls:'mouseover',
-                                    //type:'needthings',
-                                    listeners: {
-
-                                        render: function(c){
-                                         c.getEl().on('click', function(){ this.fireEvent('needthingsclick', c); }, c);
-                                         }
-
-                                    }
-                                },
-                                {
-                                    columnWidth:.3,
-                                    //html: '  <a href="logout">退出<a>',
-                                    baseCls: 'main-header',
-                                    //cls:'mouseover',
-                                    //type:'needthings',
-                                    listeners: {
-                                        /*click: {
-                                         element: 'el', //bind to the underlying el property on the panel
-                                         fn: function(){ alert('click el'); }
-                                         }*/
-                                        /*render: function(c){
-                                         alert(2);
-                                         c.getEl().on('click', function(){ this.fireEvent('needthingsclick', c); }, c);
-                                         }*/
-
-                                    }
-                                }
                             ]
 
                         }
@@ -171,68 +124,77 @@ Ext.define('ZSMZJ.view.Header', {
                             items:[
                                 {
                                     xtype:'panel',
-                                    bodyPadding: 15,//三个菜单上的方块区域
+                                    bodyPadding: 25,//三个菜单上的方块区域
                                     baseCls: 'main-header'
                                 },
                                 {               //三个显示菜单
                                     //columnWidth: 0.4,
                                     xtype:'panel',
                                     baseCls: 'main-header',
-                                    layout:'column',
-                                    defaults:{
-                                        border:0
-                                        //paddingTop:'100px'
+                                    layout: {
+                                        type: 'vbox',
+                                        // The total column count must be specified here
+                                        align:'right'
+                                    },
+                                    defaults: {
+                                        // applied to each contained panel
+                                        bodyStyle: ''
                                     },
                                     items:[
                                         {
-                                            html: '  在线人数:'+onlinenums+'<a>',
+                                            xtype:'panel',
+                                            layout:'table',
                                             baseCls: 'main-header',
-                                            columnWidth:.3,
-                                            cls:'mouseover',
-                                            //type:'needthings',
-                                            listeners: {
+                                            items:[
+                                                {
+                                                    html: '  <a>在线人数:'+onlinenums+'</a>',
+                                                    baseCls: 'main-header',
+                                                    cls:'mouseover',
+                                                    //type:'needthings',
+                                                    listeners: {
 
-                                                /*render: function(c){
-                                                 alert(2);
-                                                 c.getEl().on('click', function(){ this.fireEvent('needthingsclick', c); }, c);
-                                                 }*/
+                                                        /*render: function(c){
+                                                         alert(2);
+                                                         c.getEl().on('click', function(){ this.fireEvent('needthingsclick', c); }, c);
+                                                         }*/
 
-                                            }
-                                        },
-                                        {
-                                            html: '待办事务:(0)',
-                                            baseCls: 'main-header',
-                                            columnWidth:.4,
-                                            itemId: 'needtodopanel',
-                                            cls:'mouseover',
-                                            //type:'needthings',
-                                            listeners: {
+                                                    }
+                                                },
+                                                {
+                                                    html: '待办事务:(0)',
+                                                    baseCls: 'main-header',
+                                                    itemId: 'needtodopanel',
+                                                    cls:'mouseover',
+                                                    //type:'needthings',
+                                                    listeners: {
 
-                                                render: function(c){
-                                                    c.getEl().on('click', function(){ this.fireEvent('needthingsclick', c); }, c);
+                                                        render: function(c){
+                                                            c.getEl().on('click', function(){ this.fireEvent('needthingsclick', c); }, c);
+                                                        }
+
+                                                    }
+                                                },
+                                                {
+                                                    html: '<a href="logout">退出<a>',
+                                                    baseCls: 'main-header',
+                                                    //cls:'mouseover',
+                                                    //type:'needthings',
+                                                    listeners: {
+                                                        /*click: {
+                                                         element: 'el', //bind to the underlying el property on the panel
+                                                         fn: function(){ alert('click el'); }
+                                                         }*/
+                                                        /*render: function(c){
+                                                         alert(2);
+                                                         c.getEl().on('click', function(){ this.fireEvent('needthingsclick', c); }, c);
+                                                         }*/
+
+                                                    }
                                                 }
-
-                                            }
-                                        },
-                                        {
-                                            columnWidth:.3,
-                                            html: '     <a href="logout">退出<a>',
-                                            baseCls: 'main-header',
-                                            //cls:'mouseover',
-                                            //type:'needthings',
-                                            listeners: {
-                                                /*click: {
-                                                 element: 'el', //bind to the underlying el property on the panel
-                                                 fn: function(){ alert('click el'); }
-                                                 }*/
-                                                /*render: function(c){
-                                                 alert(2);
-                                                 c.getEl().on('click', function(){ this.fireEvent('needthingsclick', c); }, c);
-                                                 }*/
-
-                                            }
+                                            ]
                                         }
                                     ]
+
 
                                 }
 
