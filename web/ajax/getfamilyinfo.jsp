@@ -19,6 +19,8 @@
         BusinessProcessControl bp=new BusinessProcessControl();
         int start=Integer.parseInt(request.getParameter("start"));
         int limit=Integer.parseInt(request.getParameter("limit"));
+        String bgdate=request.getParameter("bgdate");
+        String eddate=request.getParameter("eddate");
         String keyword=request.getParameter("keyword");
         String type=request.getParameter("businesstype");
         String[] name=request.getParameterValues("name");

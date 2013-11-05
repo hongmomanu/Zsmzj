@@ -193,7 +193,7 @@ public class BusinessProcessControl {
 
     }
     public String getGrantMoneyBytype(String type,String bgmonth,String keyword,String[]name,
-                                      String[]compare,String[]value,String[]logic,int start,int limit){
+                                      String[]compare,String[]value,String[]logic,int start,int limit,String bgdate,String eddate){
         SimpleDateFormat sDateFormat   =   new SimpleDateFormat("yyyy-MM");
         SimpleDateFormat syearFormat   =   new SimpleDateFormat("yyyy");
         String basic_sql= " a.rowid=b.businessid "
@@ -433,13 +433,52 @@ public class BusinessProcessControl {
             sql_count+=" and a.rowid in (select rowid from "+BusinessTable+"  where "+BusinessTable+" MATCH '"+keyword+"*') ";
 
         }*/
+        SimpleDateFormat sDayFormat   =   new SimpleDateFormat("yyyy-MM-dd");
+        if(bgdate!=null&&!bgdate.equals("")){
+            Date date = null;
+            try {
+                date = sDayFormat.parse(bgdate);
+            } catch (ParseException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            java.util.Calendar   calendar=java.util.Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.YEAR, +100);    //得到下一个月
+            String enddate=sDateFormat.format(calendar.getTime());
+
+
+            sql_list+=" and b.rowid in (select rowid from "+GrantTable+" where grantdate Between '"+bgdate
+                    +"' and  '"+enddate+"') ";
+            sql_count+=" and b.rowid in (select rowid from "+GrantTable+" where grantdate Between '"+bgdate
+                    +"' and  '"+enddate+"') ";
+
+        }
+        if(eddate!=null&&!eddate.equals("")){
+
+            Date date = null;
+            try {
+                date = sDayFormat.parse(eddate);
+            } catch (ParseException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            java.util.Calendar   calendar=java.util.Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.YEAR, -100);    //得到下一个月
+            String enddate=sDateFormat.format(calendar.getTime());
+
+            sql_list+=" and b.rowid in (select rowid from "+GrantTable+" where grantdate Between '"+enddate
+                    +"' and  '"+eddate+"') ";
+            sql_count+=" and b.rowid in (select rowid from "+GrantTable+" where grantdate Between '"+enddate
+                    +"' and  '"+eddate+"') ";
+
+
+        }
         if (keyword!=null&&!keyword.equals("")){
             if(keyword.indexOf("and")>0){
                 String[] arr=keyword.split("and");
                 for(int i=0;i<arr.length;i++){
                     sql_list+=" and a.rowid in (select rowid from "+BusinessTable+" where "+BusinessTable+" MATCH '"+arr[i]+"*') ";
                     sql_count+=" and a.rowid in (select rowid from "+BusinessTable+" where "+BusinessTable+" MATCH '"+arr[i]+"*') ";
-
                 }
             }
             else if(keyword.indexOf("or")>0){
