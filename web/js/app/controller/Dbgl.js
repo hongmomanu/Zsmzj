@@ -119,6 +119,10 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             owerchange:function(c){
                 this.owerchanged(c);
             },
+             totalhelpmoneychane:function(c){
+                 this.totalhelpmoneychane(c);
+
+             },
             moneychane:function(c){
                 this.moneychane(c);
             },
@@ -963,6 +967,16 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         }
 
         //console.log(testobj);
+    },
+
+    totalhelpmoneychane:function(c){
+      var fieldset= c.up('fieldset');
+      var poorstandard=fieldset.down('#poorstandard');
+      if(parseFloat(c.getValue())<0.4*parseFloat(poorstandard.getValue())){
+          c.setValue(0.4*parseFloat(poorstandard.getValue()));
+          Ext.Msg.alert("提示信息", "低于低保标准的40%，则救助金采用低保金的40%");
+      };
+
     },
     //form 用户 子项变更
     owerchanged:function(c){

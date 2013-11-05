@@ -162,6 +162,8 @@ Ext.define('ZSMZJ.view.dbgl.logoutsubmitFieldset', {
                     {
                         fieldLabel: '注销时间',
                         name:'logoutdate',
+                        xtype: 'datefield',
+                        format: 'Y-m-d',
                         afterLabelTextTpl: required,
                         allowBlank:false,
                         colspan:3,

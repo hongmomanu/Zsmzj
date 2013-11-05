@@ -2170,6 +2170,9 @@ Ext.define('ZSMZJ.controller.Header', {
                 tab.isnewbusiness=!(tab.objdata.businessid==objdata.businessid);
                 if(tab.isnewbusiness){
                     //tab.removeAll();
+                    if(tabs.items.items[1]){
+                        tabs.remove(tabs.items.items[1]);
+                    }
                     function fn(){
                         tabs.add({
                             closable: true,
@@ -2210,6 +2213,9 @@ Ext.define('ZSMZJ.controller.Header', {
         } else {
             //alert(1);
             if (type == 'widget') {
+                if(tabs.items.items[1]){
+                    tabs.remove(tabs.items.items[1]);
+                }
                 function fn(){
                     tabs.add({
                         closable: true,
