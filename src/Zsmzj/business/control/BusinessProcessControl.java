@@ -978,7 +978,7 @@ public class BusinessProcessControl {
     }
 
     public String getFamilyInfoList(int start,int limit,String keyword,String businesstype,String[]name,
-                                    String[]compare,String[]value,String[]logic){
+                                    String[]compare,String[]value,String[]logic,String bgdate,String eddate){
         BusinessProcess bp=new BusinessProcess();
         ComonDao cd=new ComonDao();
 
@@ -1312,6 +1312,46 @@ public class BusinessProcessControl {
 
         }
 
+        if(bgdate!=null&&!bgdate.equals("")){
+            Date date = null;
+            try {
+                date = sDayFormat.parse(bgdate);
+            } catch (ParseException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            java.util.Calendar   calendar=java.util.Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.YEAR, +100);    //得到下一个月
+            String enddate=sDateFormat.format(calendar.getTime());
+
+            sql_list+=" and (b.rowid in (select rowid from "+fulltable+"  where birthday Between '"+bgdate
+                    +"' and  '"+enddate+"')  and ("+basic_sql+")) ";
+
+            sql_count+=" and (b.rowid in (select rowid from "+fulltable+"  where birthday Between '"+bgdate
+                    +"' and  '"+enddate+"')  and ("+basic_sql+")) ";
+
+        }
+        if(eddate!=null&&!eddate.equals("")){
+
+            Date date = null;
+            try {
+                date = sDayFormat.parse(eddate);
+            } catch (ParseException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            java.util.Calendar   calendar=java.util.Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.YEAR, -100);    //得到下一个月
+            String enddate=sDateFormat.format(calendar.getTime());
+
+            sql_list+=" and (b.rowid in (select rowid from "+fulltable+"  where birthday Between '"+enddate
+                    +"' and  '"+eddate+"')  and ("+basic_sql+")) ";
+
+            sql_count+=" and (b.rowid in (select rowid from "+fulltable+"  where birthday Between '"+enddate
+                    +"' and  '"+eddate+"')  and ("+basic_sql+")) ";
+
+        }
+
         if (keyword!=null&&!keyword.equals("")){
             if(keyword.indexOf("and")>0){
                 String[] arr=keyword.split("and");
@@ -1364,7 +1404,7 @@ public class BusinessProcessControl {
 
     }
     public String getPeopleInfoList(int start ,int limit,String keyword,String businesstype,String[]name,
-                                    String[]compare,String[]value,String[]logic){
+                                    String[]compare,String[]value,String[]logic,String bgdate,String eddate){
         BusinessProcess bp=new BusinessProcess();
         ComonDao cd=new ComonDao();
 
@@ -1693,6 +1733,47 @@ public class BusinessProcessControl {
             sql_list+=" and a.businesstype MATCH '"+businesstype+"'";
             sql_count+=" and a.businesstype MATCH '"+businesstype+"'";
         }*/
+
+        if(bgdate!=null&&!bgdate.equals("")){
+            Date date = null;
+            try {
+                date = sDayFormat.parse(bgdate);
+            } catch (ParseException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            java.util.Calendar   calendar=java.util.Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.YEAR, +100);    //得到下一个月
+            String enddate=sDateFormat.format(calendar.getTime());
+
+            sql_list+=" and (b.rowid in (select rowid from "+fulltable+"  where birthday Between '"+bgdate
+                    +"' and  '"+enddate+"')  and ("+basic_sql+")) ";
+
+            sql_count+=" and (b.rowid in (select rowid from "+fulltable+"  where birthday Between '"+bgdate
+                    +"' and  '"+enddate+"')  and ("+basic_sql+")) ";
+
+        }
+        if(eddate!=null&&!eddate.equals("")){
+
+            Date date = null;
+            try {
+                date = sDayFormat.parse(eddate);
+            } catch (ParseException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            java.util.Calendar   calendar=java.util.Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.YEAR, -100);    //得到下一个月
+            String enddate=sDateFormat.format(calendar.getTime());
+
+            sql_list+=" and (b.rowid in (select rowid from "+fulltable+"  where birthday Between '"+enddate
+                    +"' and  '"+eddate+"')  and ("+basic_sql+")) ";
+
+            sql_count+=" and (b.rowid in (select rowid from "+fulltable+"  where birthday Between '"+enddate
+                    +"' and  '"+eddate+"')  and ("+basic_sql+")) ";
+
+        }
+
 
         if (keyword!=null&&!keyword.equals("")){
             if(keyword.indexOf("and")>0){

@@ -28,6 +28,6 @@
         String[] compare=request.getParameterValues("compare");
         String[] value=request.getParameterValues("value");
         String[] logic=request.getParameterValues("logic");
-        out.print(bp.getPeopleInfoList(start,limit,keyword,type,name,compare,value,logic));
+        out.print(bp.getPeopleInfoList(start,limit,keyword,type,name,compare,value,logic,bgdate,eddate));
     }
 %>

@@ -120,9 +120,15 @@ Ext.define('ZSMZJ.view.dbgl.PeopleQueryGrid' ,{
                         "specialkey": function (field, e) {
                             if (e.keyCode == 13) {
                                 var keyword = field.getValue().replace(/\s+/g, "");
-                                var store=this.up('panel').getStore();
+                                var panel=this.up('panel');
+                                var store=panel.getStore();
+                                var bgdate=panel.down('#bgdate').getValue();
+                                var eddate=panel.down('#eddate').getValue();
+                                store.proxy.extraParams.bgdate=bgdate;
+                                store.proxy.extraParams.eddate=eddate;
                                 store.proxy.extraParams.keyword = keyword;
                                 store.loadPage(1);
+
                             }
                         }
                     },
@@ -134,12 +140,39 @@ Ext.define('ZSMZJ.view.dbgl.PeopleQueryGrid' ,{
                         "click":function(btn){
                             var field=btn.previousNode();
                             var keyword = field.getValue().replace(/\s+/g, "");
-                            var store=this.up('panel').getStore();
+
+                            var panel=this.up('panel');
+                            var store=panel.getStore();
+                            var bgdate=panel.down('#bgdate').getValue();
+                            var eddate=panel.down('#eddate').getValue();
+                            store.proxy.extraParams.bgdate=bgdate;
+                            store.proxy.extraParams.eddate=eddate;
                             store.proxy.extraParams.keyword = keyword;
                             store.loadPage(1);
+
                         }
                     }
 
+                },{
+                    //fieldLabel: '发放开始日期',
+                    emptyText: '请选择开始日期',
+                    itemId:'bgdate',
+                    blankText : '请输选择开始日期',
+                    xtype: 'datefield',
+                    //itemId: 'personbirthday',
+                    format: 'Y-m-d',
+                    //value: Ext.Date.format(new Date(), 'Y-m-d'),
+                    allowBlank: false
+                },{
+                    //fieldLabel: '发放结束日期',
+                    emptyText: '请选择结束日期',
+                    blankText : '请输选择结束日期',
+                    xtype: 'datefield',
+                    itemId:'eddate',
+                    //itemId: 'personbirthday',
+                    format: 'Y-m-d',
+                    //value: Ext.Date.format(new Date(), 'Y-m-d'),
+                    allowBlank: false
                 },'->',
                 {
                     text: '导出Excel',
