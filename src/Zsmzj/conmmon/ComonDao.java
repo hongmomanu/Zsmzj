@@ -86,6 +86,20 @@ public class ComonDao {
 
 
     }
+    public int delbysql(String sql){
+        Connection testConn= JdbcFactory.getConn("sqlite");
+        PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
+        int result=0;
+        try {
+            return pstmt.executeUpdate();
+        }catch (Exception e){
+            log.debug(e.getMessage());
+        }finally {
+            return result;
+        }
+
+
+    }
     public String getSingleCol(String sql){
         Connection testConn= JdbcFactory.getConn("sqlite");
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);

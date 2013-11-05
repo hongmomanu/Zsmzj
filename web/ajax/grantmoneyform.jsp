@@ -20,9 +20,10 @@
         String bgdate=request.getParameter("bgdate");
         String eddate=request.getParameter("eddate");
         String grantdate=request.getParameter("grantdate");
+        boolean isnew=Boolean.parseBoolean(request.getParameter("isnew"));
         String businesstype=request.getParameter("businesstype");
         float adjustmoney=Float.parseFloat(request.getParameter("adjustmoney"));
         BusinessProcessControl pc=new BusinessProcessControl();
-        out.print(pc.grantmoneybytype(userid,bgdate,eddate,grantdate,businesstype,adjustmoney));
+        out.print(pc.grantmoneybytype(userid,bgdate,eddate,grantdate,businesstype,adjustmoney,isnew));
     }
 %>

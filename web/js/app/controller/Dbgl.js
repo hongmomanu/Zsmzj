@@ -596,6 +596,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         var grid=win.dataobj;
         var params = {
             userid:userid,
+            isnew:btn.isnew,
             businesstype:grid.businesstype
         };
         var successFunc = function (myform, action) {

@@ -1381,7 +1381,7 @@ Ext.define('ZSMZJ.controller.Header', {
         win.document.write('<html><head>');
         win.document.write('<title>' + document.title + '</title>');
         win.document.write('<link rel="stylesheet" type="text/css" href="'+extLocation+
-            'resources/ext-theme-neptune/ext-theme-neptune-all.css"><\/>');
+            'resources/resources/css/ext-all.css"><\/>');
 
 
         win.document.write('<link rel="stylesheet" type="text/css" href="css/main.css" />');

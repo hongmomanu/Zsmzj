@@ -135,7 +135,7 @@ public class BusinessProcessControl {
 
 
     }
-    public String grantmoneybytype(int userid,String bgdate,String eddate,String grantdate,String businesstype,float adjustmoney){
+    public String grantmoneybytype(int userid,String bgdate,String eddate,String grantdate,String businesstype,float adjustmoney,boolean isnew){
         SimpleDateFormat sDateFormat   =   new SimpleDateFormat("yyyy-MM");
 
         BusinessProcess bp=new BusinessProcess();
@@ -147,10 +147,15 @@ public class BusinessProcessControl {
                 " b where b.rowid=a.businessid and a.rowid in (select rowid from "+GrantTable+" d where d.grantdate Between '"
                 +bgdate+"' and  '"+eddate+"' union select rowid from "+GrantTable+" where grantdate Between '"+grantdate+"' and '"
                 +grantdate+"')  and b.businesstype MATCH '"+businesstype+"'");
-        if(totalnum>0){
-            return "{success:true,msg:\"资金已发\"}";
+        if(totalnum>0&&isnew){
+            return "{success:true,msg:\"资金已发放，若想重新发放请点击资金重新发放\"}";
         }
         else{
+            String delsql="delete from "+GrantTable+" where rowid in(select a.rowid from "+GrantTable+" a,"+BusinessTable+
+                    " b where b.rowid=a.businessid and a.rowid in (select rowid from "+GrantTable+" d where d.grantdate Between '"
+                    +bgdate+"' and  '"+eddate+"' union select rowid from "+GrantTable+" where grantdate Between '"+grantdate+"' and '"
+                    +grantdate+"')  and b.businesstype MATCH '"+businesstype+"')";
+            cd.delbysql(delsql);
             String sql_list="select rowid as businessid from "+BusinessTable+" a where a.businesstype MATCH '"+businesstype+"' " +
                     "and a.rowid in (select rowid from "+BusinessTable+" b where b.processstatus MATCH'"
                     +ProcessType.UseProcessType.getChineseSeason(ProcessType.Approval)+"')";
