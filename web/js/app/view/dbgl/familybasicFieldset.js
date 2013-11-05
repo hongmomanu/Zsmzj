@@ -196,6 +196,8 @@ Ext.define('ZSMZJ.view.dbgl.familybasicFieldset', {
                         value:0,
                         disabled:true,
                         //emptyText: '低保户类型',
+                        disabledCls:'yw-disabled-field-cls',
+
                         allowBlank: false
                     }
                     ,{
