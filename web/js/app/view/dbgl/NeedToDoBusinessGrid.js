@@ -134,7 +134,7 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                                 hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
                                     {name:"name",value:r.get("processstatus")}).children,
                                     {name:"name",value:"提交"}),
-                                icon:'img/sp.gif',
+                                icon:'img/busiicon/busiapproval.png',
                                 width: 55,
                                 listeners: {
                                     render: function(c){
