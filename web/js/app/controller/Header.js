@@ -1680,17 +1680,27 @@ Ext.define('ZSMZJ.controller.Header', {
             status:status
         };
         var successFunc = function (form, action) {
+            testobj=grid;
             var panel=grid.up('panel');
-            if(panel.isHidden()){
-                if(callback)callback();
-            }
-            else{
-                grid.getStore().load({callback:function(){
-                 //me.closetab("dbglbusinessalterform");
-                 if(callback)callback();
+            if(panel){
+                if(panel.isHidden()){
+                    if(callback)callback();
+                }
+                else{
+                    grid.getStore().load({callback:function(){
+                        //me.closetab("dbglbusinessalterform");
+                        if(callback)callback();
 
-                 }});
+                    }});
+                }
+            }else{
+                grid.getStore().load({callback:function(){
+                    //me.closetab("dbglbusinessalterform");
+                    if(callback)callback();
+
+                }});
             }
+
 
         };
         var failFunc = function (form, action) {
