@@ -39,7 +39,7 @@ Ext.define('ZSMZJ.view.Header', {
                         '<li ><a>在线人数:'+onlinenums+'</a></li><li><a>未读信息:0</a></li>' +
                         '<li><a>待办事务:0</a></li><li><a href="logout">退出</a></li></ul></div>',*/
                     xtype:'panel',
-                    bodyPadding: 10,
+                    bodyPadding: 3,
                     items:[
                         {
                             xtype:'panel',
@@ -171,7 +171,7 @@ Ext.define('ZSMZJ.view.Header', {
                             items:[
                                 {
                                     xtype:'panel',
-                                    bodyPadding: 15,//三个菜单上的方块区域
+                                    bodyPadding: 0,//三个菜单上的方块区域
                                     baseCls: 'main-header'
                                 },
                                 {               //三个显示菜单

@@ -310,16 +310,23 @@ Ext.define('ZSMZJ.controller.Header', {
         if(this.ischangeclick){
             this.showchangebtn(form);
             var invaliditem=form.down('#businesscheckinfo');
-            var formcontent=form.getDefaultContentTarget();
-            var target=invaliditem.getEl();
-            target.scrollIntoView(formcontent,true,true,true);
+
+            if(invaliditem){
+                var formcontent=form.getDefaultContentTarget();
+                var target=invaliditem.getEl();
+                target.scrollIntoView(formcontent,true,true,true);
+            }
+
         }
         if(this.islogoutclick){
             this.showlogoutbtn(form);
             var invaliditem=form.down('#businesscheckinfo');
-            var formcontent=form.getDefaultContentTarget();
-            var target=invaliditem.getEl();
-            target.scrollIntoView(formcontent,true,true,true);
+            if(invaliditem){
+                var formcontent=form.getDefaultContentTarget();
+                var target=invaliditem.getEl();
+                target.scrollIntoView(formcontent,true,true,true);
+            }
+
         }
     }
     ,
@@ -1381,12 +1388,12 @@ Ext.define('ZSMZJ.controller.Header', {
         win.document.write('<html><head>');
         win.document.write('<title>' + document.title + '</title>');
         win.document.write('<link rel="stylesheet" type="text/css" href="'+extLocation+
-            'resources/resources/css/ext-all.css"><\/>');
+            'resources/css/ext-all.css"><\/>');
 
 
         win.document.write('<link rel="stylesheet" type="text/css" href="css/main.css" />');
         win.document.write('<link rel="stylesheet" type="text/css" href="css/data-view.css" />');
-        win.document.write('</head><body>');
+        win.document.write('</head><body style="width: 100%;height: 100%;">');
         win.document.write(el.body.dom.innerHTML);
         win.document.write('</body></html>');
         win.document.close();
@@ -2170,9 +2177,7 @@ Ext.define('ZSMZJ.controller.Header', {
                 tab.isnewbusiness=!(tab.objdata.businessid==objdata.businessid);
                 if(tab.isnewbusiness){
                     //tab.removeAll();
-                    if(tabs.items.items[1]){
-                        tabs.remove(tabs.items.items[1]);
-                    }
+
                     function fn(){
                         tabs.add({
                             closable: true,
@@ -2183,6 +2188,11 @@ Ext.define('ZSMZJ.controller.Header', {
                             iconCls: 'tabs',
                             title: label
                         }).show();
+                        if(tabs.items.items.length==3){
+
+                            tabs.items.items[1].close();
+                            //tabs.remove(tabs.items.items[1]);
+                        }
                     }
                     var task = new Ext.util.DelayedTask(fn);
                     task.delay(50);
@@ -2213,9 +2223,7 @@ Ext.define('ZSMZJ.controller.Header', {
         } else {
             //alert(1);
             if (type == 'widget') {
-                if(tabs.items.items[1]){
-                    tabs.remove(tabs.items.items[1]);
-                }
+
                 function fn(){
                     tabs.add({
                         closable: true,
@@ -2226,6 +2234,10 @@ Ext.define('ZSMZJ.controller.Header', {
                         iconCls: 'tabs',
                         title: label
                     }).show();
+                    if(tabs.items.items.length==3){
+                        tabs.items.items[1].close();
+                        //tabs.remove(tabs.items.items[1]);
+                    }
                 }
                 var task = new Ext.util.DelayedTask(fn);
                 task.delay(50);

@@ -989,6 +989,7 @@ public class BusinessProcessControl {
 
         String basic_sql=" a.rowid = b.businessid  ";
 
+        basic_sql+=" and b.rowid in (select rowid from "+FamilyTable+" where relationship MATCH '"+RelationsType.UseRelationsType.getChineseSeason(RelationsType.ower)+"' )";
         basic_sql+=" and c.rowid in (select rowid from "+DivisionsTable+" where divisionpath MATCH a.division )";
 
         if(!businesstype.equals("all")){
@@ -1322,12 +1323,12 @@ public class BusinessProcessControl {
             java.util.Calendar   calendar=java.util.Calendar.getInstance();
             calendar.setTime(date);
             calendar.add(Calendar.YEAR, +100);    //得到下一个月
-            String enddate=sDateFormat.format(calendar.getTime());
+            String enddate=sDayFormat.format(calendar.getTime());
 
-            sql_list+=" and (b.rowid in (select rowid from "+fulltable+"  where birthday Between '"+bgdate
+            sql_list+=" and (a.rowid in (select rowid from "+fulltable+"  where helpbgtime Between '"+bgdate
                     +"' and  '"+enddate+"')  and ("+basic_sql+")) ";
 
-            sql_count+=" and (b.rowid in (select rowid from "+fulltable+"  where birthday Between '"+bgdate
+            sql_count+=" and (a.rowid in (select rowid from "+fulltable+"  where helpbgtime Between '"+bgdate
                     +"' and  '"+enddate+"')  and ("+basic_sql+")) ";
 
         }
@@ -1342,12 +1343,12 @@ public class BusinessProcessControl {
             java.util.Calendar   calendar=java.util.Calendar.getInstance();
             calendar.setTime(date);
             calendar.add(Calendar.YEAR, -100);    //得到下一个月
-            String enddate=sDateFormat.format(calendar.getTime());
+            String enddate=sDayFormat.format(calendar.getTime());
 
-            sql_list+=" and (b.rowid in (select rowid from "+fulltable+"  where birthday Between '"+enddate
+            sql_list+=" and (a.rowid in (select rowid from "+fulltable+"  where helpbgtime Between '"+enddate
                     +"' and  '"+eddate+"')  and ("+basic_sql+")) ";
 
-            sql_count+=" and (b.rowid in (select rowid from "+fulltable+"  where birthday Between '"+enddate
+            sql_count+=" and (a.rowid in (select rowid from "+fulltable+"  where helpbgtime Between '"+enddate
                     +"' and  '"+eddate+"')  and ("+basic_sql+")) ";
 
         }

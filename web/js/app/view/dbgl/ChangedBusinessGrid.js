@@ -48,105 +48,117 @@ Ext.define('ZSMZJ.view.dbgl.ChangedBusinessGrid' ,{
                         var me=this;
                         var id0=Ext.id();
                         Ext.defer(function () {
-                            Ext.widget('button', {
-                                renderTo: id0,
-                                margin: '0 5 0 5',
-                                text: '修改',
-                                icon:'img/sp.gif',
-                                /*hidden:!(r.get('processstatus').toString()==processdiction.stepzero
-                                    ||r.get('processstatus').toString()==processdiction.stepback),*/
-                                hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
-                                    {name:"name",value:r.get("processstatus")}).children,
-                                    {name:"name",value:"修改"}),
-                                width: 55,
-                                listeners: {
+                            if(Ext.get(id0)){
+                                Ext.widget('button', {
+                                    renderTo: id0,
+                                    margin: '0 5 0 5',
+                                    text: '修改',
+                                    icon:'img/sp.gif',
+                                    /*hidden:!(r.get('processstatus').toString()==processdiction.stepzero
+                                     ||r.get('processstatus').toString()==processdiction.stepback),*/
+                                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                                        {name:"name",value:r.get("processstatus")}).children,
+                                        {name:"name",value:"修改"}),
+                                    width: 55,
+                                    listeners: {
 
-                                    render: function(c){
-                                        c.getEl().on('click', function(){
-                                            me.up('panel').fireEvent('alterclick', c,r,me);
+                                        render: function(c){
+                                            c.getEl().on('click', function(){
+                                                me.up('panel').fireEvent('alterclick', c,r,me);
 
-                                        }, c);
+                                            }, c);
+                                        }
+
                                     }
+                                });
+                            }
 
-                                }
-                            });
                         }, 50);
 
 
                         var id1 = Ext.id();
                         Ext.defer(function () {
-                            Ext.widget('button', {
-                                renderTo: id1,
-                                margin: '0 5 0 5',
-                                icon:'img/process.gif',
-                                text: '流程' ,
-                                width: 55,
-                               /* hidden: r.get('processstatus').toString()==processdiction.stepzero||
-                                    r.get('processstatus').toString()==processdiction.stepback,*/
-                                hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
-                                    {name:"name",value:r.get("processstatus")}).children,
-                                    {name:"name",value:"流程"}),
-                                listeners: {
+                            if(Ext.get(id1)){
+                                Ext.widget('button', {
+                                    renderTo: id1,
+                                    margin: '0 5 0 5',
+                                    icon:'img/process.gif',
+                                    text: '流程' ,
+                                    width: 55,
+                                    /* hidden: r.get('processstatus').toString()==processdiction.stepzero||
+                                     r.get('processstatus').toString()==processdiction.stepback,*/
+                                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                                        {name:"name",value:r.get("processstatus")}).children,
+                                        {name:"name",value:"流程"}),
+                                    listeners: {
 
-                                    render: function(c){
-                                        c.getEl().on('click', function(){
-                                            //Ext.Msg.alert('Info', r.get('processstatus'))
-                                            //me.fireEvent('processclick', c,r,me);
-                                            me.up('panel').fireEvent('processclick', c,r,me);
+                                        render: function(c){
+                                            c.getEl().on('click', function(){
+                                                //Ext.Msg.alert('Info', r.get('processstatus'))
+                                                //me.fireEvent('processclick', c,r,me);
+                                                me.up('panel').fireEvent('processclick', c,r,me);
 
-                                        }, c);
+                                            }, c);
+                                        }
+
                                     }
+                                });
+                            }
 
-                                }
-                            });
                         }, 50);
 
                         var id2=Ext.id();
                         Ext.defer(function () {
-                            Ext.widget('button', {
-                                renderTo: id2,
-                                text: '查看',
-                                margin: '0 5 0 5',
-                               /* hidden:(r.get('processstatus').toString()==processdiction.stepzero),*/
-                                hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
-                                    {name:"name",value:r.get("processstatus")}).children,
-                                    {name:"name",value:"查看"}),
-                                icon:'img/form_show.png',
-                                width: 55,
-                                listeners: {
-                                    render: function(c){
-                                        c.getEl().on('click', function(){
-                                            me.up('panel').fireEvent('alterclick', c,r,me);
+                            if(Ext.get(id2)){
+                                Ext.widget('button', {
+                                    renderTo: id2,
+                                    text: '查看',
+                                    margin: '0 5 0 5',
+                                    /* hidden:(r.get('processstatus').toString()==processdiction.stepzero),*/
+                                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                                        {name:"name",value:r.get("processstatus")}).children,
+                                        {name:"name",value:"查看"}),
+                                    icon:'img/form_show.png',
+                                    width: 55,
+                                    listeners: {
+                                        render: function(c){
+                                            c.getEl().on('click', function(){
+                                                me.up('panel').fireEvent('alterclick', c,r,me);
 
-                                        }, c);
+                                            }, c);
+                                        }
+
                                     }
+                                });
+                            }
 
-                                }
-                            });
                         }, 50);
 
                         var id5=Ext.id();
                         Ext.defer(function () {
-                            Ext.widget('button', {
-                                renderTo: id5,
-                                margin: '0 5 0 5',
-                                text: '提交',
-                                //hidden:!(r.get('processstatus').toString()==processdiction.stepzero),
-                                hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
-                                    {name:"name",value:r.get("processstatus")}).children,
-                                    {name:"name",value:"提交"}),
-                                icon:'img/sp.gif',
-                                width: 55,
-                                listeners: {
-                                    render: function(c){
-                                        c.getEl().on('click', function(){
-                                            me.up('panel').fireEvent('businessclick', c,r,me);
+                            if(Ext.get(id5)){
+                                Ext.widget('button', {
+                                    renderTo: id5,
+                                    margin: '0 5 0 5',
+                                    text: '提交',
+                                    //hidden:!(r.get('processstatus').toString()==processdiction.stepzero),
+                                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                                        {name:"name",value:r.get("processstatus")}).children,
+                                        {name:"name",value:"提交"}),
+                                    icon:'img/sp.gif',
+                                    width: 55,
+                                    listeners: {
+                                        render: function(c){
+                                            c.getEl().on('click', function(){
+                                                me.up('panel').fireEvent('businessclick', c,r,me);
 
-                                        }, c);
+                                            }, c);
+                                        }
+
                                     }
+                                });
+                            }
 
-                                }
-                            });
                         }, 50);
 
 
@@ -154,53 +166,59 @@ Ext.define('ZSMZJ.view.dbgl.ChangedBusinessGrid' ,{
 
                         var id3=Ext.id();
                         Ext.defer(function () {
-                            Ext.widget('button', {
-                                renderTo: id3,
-                                text: '删除',
-                                margin: '0 5 0 5',
-                                icon:'img/sp.gif',
-                                /*hidden:!(r.get('processstatus').toString()==processdiction.stepzero
-                                    ||r.get('processstatus').toString()==processdiction.stepback),*/
-                                hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                            if(Ext.get(id3)){
+                                Ext.widget('button', {
+                                    renderTo: id3,
+                                    text: '删除',
+                                    margin: '0 5 0 5',
+                                    icon:'img/sp.gif',
+                                    /*hidden:!(r.get('processstatus').toString()==processdiction.stepzero
+                                     ||r.get('processstatus').toString()==processdiction.stepback),*/
+                                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
                                         {name:"name",value:r.get("processstatus")}).children,
                                         {name:"name",value:"删除"}),
-                                width: 55,
-                                listeners: {
+                                    width: 55,
+                                    listeners: {
 
-                                    render: function(c){
-                                        c.getEl().on('click', function(){
-                                            me.up('panel').fireEvent('delclick', c,r,me);
+                                        render: function(c){
+                                            c.getEl().on('click', function(){
+                                                me.up('panel').fireEvent('delclick', c,r,me);
 
-                                        }, c);
+                                            }, c);
+                                        }
+
                                     }
+                                });
+                            }
 
-                                }
-                            });
                         }, 50);
 
                         var id4=Ext.id();
                         Ext.defer(function () {
-                            Ext.widget('button', {
-                                renderTo: id4,
-                                text: '取消',
-                                icon:'img/sp.gif',
-                                //hidden:!(r.get('processstatus').toString()==processdiction.stepone),
-                                hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
-                                    {name:"name",value:r.get("processstatus")}).children,
-                                    {name:"name",value:"取消"}),
-                                width: 55,
-                                margin: '0 5 0 5',
-                                listeners: {
+                            if(Ext.get(id4)){
+                                Ext.widget('button', {
+                                    renderTo: id4,
+                                    text: '取消',
+                                    icon:'img/sp.gif',
+                                    //hidden:!(r.get('processstatus').toString()==processdiction.stepone),
+                                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                                        {name:"name",value:r.get("processstatus")}).children,
+                                        {name:"name",value:"取消"}),
+                                    width: 55,
+                                    margin: '0 5 0 5',
+                                    listeners: {
 
-                                    render: function(c){
-                                        c.getEl().on('click', function(){
+                                        render: function(c){
+                                            c.getEl().on('click', function(){
 
-                                            me.up('panel').fireEvent('cancelclick', c,r,me);
-                                        }, c);
+                                                me.up('panel').fireEvent('cancelclick', c,r,me);
+                                            }, c);
+                                        }
+
                                     }
+                                });
+                            }
 
-                                }
-                            });
                         }, 50);
 
                         return Ext.String.format('<span id="{0}"></span>' +
