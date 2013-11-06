@@ -27,7 +27,16 @@ Ext.define('ZSMZJ.controller.Medical', {
         'medicalhelp.businessApply',
         'medicalhelp.businessAlter',
         'medicalhelp.addNewMedicalStandardWin',
-        'medicalhelp.MedicalStandardGrid'
+        'medicalhelp.MedicalStandardGrid',
+        'medicalhelp.familybasicFieldset',
+        'medicalhelp.familyhouseFieldset',
+        'medicalhelp.familyinputFieldset',
+        'medicalhelp.familypropertyFieldset',
+        'medicalhelp.familyapplyFieldset',
+        'medicalhelp.applysubmitFieldset',
+        'medicalhelp.alterfamilybasicFieldset',
+        'medicalhelp.altersubmitFieldset',
+        'medicalhelp.altersubmitlogFieldset'
     ],
 
     initStrore: function () {
@@ -39,7 +48,8 @@ Ext.define('ZSMZJ.controller.Medical', {
         var header_cl=this.application.getController("Header");
         this.control({
             'medicalhelpbusinessapplyform,medicalhelpbusinessalterform': {
-                afterrender: dbgl_cl.afterrenderEvents
+                afterrender: dbgl_cl.afterrenderEvents,
+                initformaftershow:Ext.bind(dbgl_cl.initformaftershow, dbgl_cl)/*加载小表单*/
             },
             'medicalhelpbusinessapplyform component,medicalhelpbusinessalterform component': {
                 imgclick: function (c) {
