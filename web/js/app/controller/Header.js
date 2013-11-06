@@ -1384,19 +1384,39 @@ Ext.define('ZSMZJ.controller.Header', {
         }
 
 
-
+        win.document.write('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">');
         win.document.write('<html><head>');
         win.document.write('<title>' + document.title + '</title>');
-        win.document.write('<link rel="stylesheet" type="text/css" href="'+extLocation+
-            'resources/css/ext-all.css"><\/>');
+        var linkstr='<link rel="stylesheet" type="text/css" href="'+extLocation+
+            'resources/css/ext-all.css'+'"></link>';
+        win.document.write(linkstr);
 
 
-        win.document.write('<link rel="stylesheet" type="text/css" href="css/main.css" />');
-        win.document.write('<link rel="stylesheet" type="text/css" href="css/data-view.css" />');
+        win.document.write('<link rel="stylesheet" type="text/css" href="css/main.css" >'+'</link>');
+        win.document.write('<link rel="stylesheet" type="text/css" href="css/data-view.css"></link>');
         win.document.write('</head><body style="width: 100%;height: 100%;">');
         win.document.write(el.body.dom.innerHTML);
         win.document.write('</body></html>');
         win.document.close();
+
+        /*var params = {
+            doc:win.document.documentElement.innerHTML//.replace(/linkss/g,'link')
+
+        };
+        var successFunc = function (response, action) {
+            var res = Ext.JSON.decode(response.responseText);
+            if(res.success){
+                window.location.href = res.filepath;
+            }
+            else{
+                Ext.Msg.alert("提示信息", "打印pdf文件失败");
+            }
+        };
+        var failFunc = function (res, action) {
+            Ext.Msg.alert("提示信息", "打印pdf文件失败");
+        };
+        this.ajaxSend(params, 'ajax/htmltopdf.jsp', successFunc, failFunc,'POST');
+*/
         win.focus();
         win.print();
         win.close();
@@ -1680,7 +1700,6 @@ Ext.define('ZSMZJ.controller.Header', {
             status:status
         };
         var successFunc = function (form, action) {
-            testobj=grid;
             var panel=grid.up('panel');
             if(panel){
                 if(panel.isHidden()){
