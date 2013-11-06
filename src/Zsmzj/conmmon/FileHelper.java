@@ -1,12 +1,14 @@
 package Zsmzj.conmmon;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.tool.xml.XMLWorkerHelper;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletContext;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
+import java.io.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,6 +77,27 @@ public class FileHelper {
             return result;
         }
 
+    }
+    public Map<String,Object> htmldocToPdf(String doc,String filepath){
+        Map<String,Object> result=new HashMap<String, Object>();
+        Document document = new Document();
+        String savename=StringHelper.getTimeStr();
+        PdfWriter writer = null;
+        String filename=filepath + savename + ".pdf";
+        try {
+            writer = PdfWriter.getInstance(document, new FileOutputStream(filename));
+            document.open();
+            XMLWorkerHelper.getInstance().parseXHtml(writer, document,
+                    new ByteArrayInputStream(doc.getBytes("UTF-8")));
+        } catch (Exception e) {
+            log.debug(e.getMessage());  //To change body of catch statement use File | Settings | File Templates.
+            result.put("success",false);
+            return result;
+        }
+        result.put("success",true);
+        result.put("filepath",savename + ".pdf");
+        document.close();
+        return result;
     }
 
 
