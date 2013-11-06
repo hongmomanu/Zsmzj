@@ -154,25 +154,46 @@ Ext.define('ZSMZJ.view.dbgl.PeopleQueryGrid' ,{
                     }
 
                 },{
+                    xtype: 'button',
+                    text: '<span style="font-weight:bold">>></span>',
+                    tooltip: '显示/隐藏日期',
+                    //id: 'westpanelhandler',
+                    handler: function () {
+                        if (this.nextSibling().isHidden()) {
+                            this.nextSibling().show();
+                            this.nextSibling().nextSibling().show();
+                            this.setText('<span style="font-weight:bold"><<</span>');
+                        } else {
+                            this.nextSibling().hide();
+                            this.nextSibling().setValue("");
+                            this.nextSibling().nextSibling().setValue("");
+                            this.nextSibling().nextSibling().hide();
+                            this.setText('<span style="font-weight:bold">>></span>');
+                        }
+
+                    }
+                },{
                     //fieldLabel: '发放开始日期',
                     emptyText: '请选择开始日期',
+                    hidden:true,
                     itemId:'bgdate',
                     blankText : '请输选择开始日期',
                     xtype: 'datefield',
                     //itemId: 'personbirthday',
                     format: 'Y-m-d',
                     //value: Ext.Date.format(new Date(), 'Y-m-d'),
-                    allowBlank: false
+                    allowBlank: true
                 },{
                     //fieldLabel: '发放结束日期',
                     emptyText: '请选择结束日期',
+                    hidden:true,
                     blankText : '请输选择结束日期',
                     xtype: 'datefield',
                     itemId:'eddate',
                     //itemId: 'personbirthday',
                     format: 'Y-m-d',
                     //value: Ext.Date.format(new Date(), 'Y-m-d'),
-                    allowBlank: false
+                    allowBlank: true
                 },'->',
                 {
                     text: '导出Excel',
