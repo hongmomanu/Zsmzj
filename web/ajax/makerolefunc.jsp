@@ -18,7 +18,6 @@
         int roleid=Integer.parseInt(request.getParameter("roleid"));
         String[] func_arr=request.getParameterValues("funcid");
         String[] delete_arr=request.getParameterValues("deleteid");
-        System.out.println(func_arr.length);
         RoleControl role=new RoleControl();
         out.print(role.makeRoleFuncs(roleid,func_arr,delete_arr));
         //out.print("ok");
