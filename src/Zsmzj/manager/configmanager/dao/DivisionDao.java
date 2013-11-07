@@ -38,7 +38,7 @@ public class DivisionDao {
                 obj.put("divisionpath",rs.getString("divisionpath"));
                 obj.put("id",rs.getInt("rowid"));
                 obj.put("signaturepath",rs.getString("signaturepath"));
-                if(rs.getString("signaturepath")==null){
+                if(rs.getString("signaturepath")==null||rs.getString("signaturepath").equals("")){
                     obj.put("qtip","无签章图片");
                 }else{
                     obj.put("qtip","<img width=\"200\" height=\"200\" src=\""+ rs.getString("signaturepath")+"\">");
