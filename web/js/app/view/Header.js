@@ -196,6 +196,9 @@ Ext.define('ZSMZJ.view.Header', {
                                                          }*/
 
                                                     }
+                                                },{
+                                                    baseCls: 'main-header',
+                                                    html:'&nbsp;&nbsp;'
                                                 }
                                             ]
                                         }
