@@ -34,7 +34,8 @@ Ext.define('ZSMZJ.view.temporaryhelp.businessAlter', {
                 msgTarget: 'side'
             },
             autoScroll: true,
-            items: [{
+            items:[],
+            items2: [{
                 xtype: 'fieldset',
                 title: '<a>【临时救助业务办理】家庭基本信息</a>',
                 defaultType: 'textfield',

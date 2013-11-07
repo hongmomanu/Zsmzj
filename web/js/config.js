@@ -829,6 +829,17 @@ var applyformviews={
         'temporaryhelpfamilyapplyfieldset',
         'temporaryhelpapplysubmitfieldset'
 
+    ],'temporaryhelpalter':[/* 临时救助修改*/
+        'temporaryhelpalterfamilybasicfieldset',
+        'temporaryhelpfamilyhousefieldset',
+        'temporaryhelpfamilyinputfieldset',
+        'temporaryhelpfamilypropertyfieldset',
+        'dbglfamilymemberfieldset',
+        'dbglfamilyaffixfieldset',
+        'temporaryhelpfamilyapplyfieldset',
+        'temporaryhelpaltersubmitfieldset',
+        'temporaryhelpaltersubmitlogfieldset'
+
     ]
 
 }
