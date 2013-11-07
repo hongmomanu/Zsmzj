@@ -88,7 +88,7 @@
 
             <tr>
                 <td class='rowhead'>密&nbsp;&nbsp;&nbsp;码：</td>
-                <td><input class='text-2' type='password' required="true" placeholder="在这里输入密码"
+                <td><input  class='text-2' type='password' required="true" placeholder="在这里输入密码"
                            name='password' onkeydown="javascript:onEnterKeyDown(this,event);"/></td>
 
             </tr>
@@ -130,4 +130,9 @@
             btnClick();
         }
     }
+
+    (function(){
+        document.getElementById("account").focus();
+    })();
+
 </script>
