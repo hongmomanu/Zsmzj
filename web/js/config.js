@@ -819,7 +819,7 @@ var applyformviews={
         'studyhelpaltersubmitfieldset',
         'studyhelpapplysubmitfieldset'
 
-    ],'temporaryhelpapply':[/*临时救助申请 */
+    ],'temporaryhelpapply':[/* 临时救助申请*/
         'temporaryhelpfamilybasicfieldset',
         'temporaryhelpfamilyhousefieldset',
         'temporaryhelpfamilyinputfieldset',
