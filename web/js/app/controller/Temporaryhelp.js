@@ -29,7 +29,10 @@ Ext.define('ZSMZJ.controller.Temporaryhelp', {
         'temporaryhelp.familyinputFieldset',
         'temporaryhelp.familypropertyFieldset',
         'temporaryhelp.familyapplyFieldset',
-        'temporaryhelp.applysubmitFieldset'
+        'temporaryhelp.applysubmitFieldset',
+        'temporaryhelp.alterfamilybasicFieldset',
+        'temporaryhelp.altersubmitFieldset',
+        'temporaryhelp.altersubmitlogFieldset'
 
     ],
 
