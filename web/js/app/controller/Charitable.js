@@ -25,7 +25,15 @@ Ext.define('ZSMZJ.controller.Charitable', {
         'charitablehelp.businessApply',
         'charitablehelp.businessAlter',
         'charitablehelp.institutionApply',
-        'charitablehelp.institutionAlter'
+        'charitablehelp.institutionAlter',
+        'charitablehelp.familybasicFieldset',
+        'charitablehelp.familyhouseFieldset',
+        'charitablehelp.familyinputFieldset',
+        'charitablehelp.applysubmitFieldset',
+        'charitablehelp.familyapplyFieldset',
+        'charitablehelp.alterfamilybasicFieldset',
+        'charitablehelp.altersubmitFieldset',
+        'charitablehelp.altersubmitlogFieldset'
     ],
 
     initStrore: function () {
@@ -37,7 +45,8 @@ Ext.define('ZSMZJ.controller.Charitable', {
         var header_cl=this.application.getController("Header");
         this.control({
             'charitablehelpbusinessapplyform,charitablehelpbusinessalterform,charitablehelpinstitutionalterform,charitablehelpinstitutionapplyform': {
-                afterrender: dbgl_cl.afterrenderEvents
+                afterrender: dbgl_cl.afterrenderEvents,
+                initformaftershow:Ext.bind(dbgl_cl.initformaftershow, dbgl_cl)/*加载小表单*/
             },
             'charitablehelpbusinessapplyform component,charitablehelpbusinessalterform component': {
                 imgclick: function (c) {

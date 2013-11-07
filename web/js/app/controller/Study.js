@@ -23,7 +23,16 @@ Ext.define('ZSMZJ.controller.Study', {
     ],
     views: [
         'studyhelp.businessApply',
-        'studyhelp.businessAlter'
+        'studyhelp.businessAlter',
+        'studyhelp.familybasicFieldset',
+        'studyhelp.familyhouseFieldset',
+        'studyhelp.familyinputFieldset',
+        'studyhelp.familypropertyFieldset',
+        'studyhelp.familyapplyFieldset',
+        'studyhelp.applysubmitFieldset',
+        'studyhelp.alterfamilybasicFieldset',
+        'studyhelp.altersubmitFieldset',
+        'studyhelp.altersubmitlogFieldset'
     ],
 
     initStrore: function () {
@@ -35,7 +44,8 @@ Ext.define('ZSMZJ.controller.Study', {
         var header_cl=this.application.getController("Header");
         this.control({
             'studyhelpbusinessapplyform,studyhelpbusinessalterform': {
-                afterrender: dbgl_cl.afterrenderEvents
+                afterrender: dbgl_cl.afterrenderEvents,
+                initformaftershow:Ext.bind(dbgl_cl.initformaftershow, dbgl_cl)/*加载小表单*/
             },
             'studyhelpbusinessapplyform component,studyhelpbusinessalterform component': {
                 imgclick: function (c) {
