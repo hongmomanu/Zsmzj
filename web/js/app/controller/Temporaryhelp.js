@@ -23,7 +23,13 @@ Ext.define('ZSMZJ.controller.Temporaryhelp', {
     ],
     views: [
         'temporaryhelp.businessApply',
-        'temporaryhelp.businessAlter'
+        'temporaryhelp.businessAlter',
+        'temporaryhelp.familybasicFieldset',
+        'temporaryhelp.familyhouseFieldset',
+        'temporaryhelp.familyinputFieldset',
+        'temporaryhelp.familypropertyFieldset',
+        'temporaryhelp.familyapplyFieldset',
+        'temporaryhelp.applysubmitFieldset'
     ],
 
     initStrore: function () {
@@ -35,7 +41,8 @@ Ext.define('ZSMZJ.controller.Temporaryhelp', {
         var header_cl=this.application.getController("Header");
         this.control({
             'temporaryhelpbusinessapplyform,temporaryhelpbusinessalterform': {
-                afterrender: dbgl_cl.afterrenderEvents
+                afterrender: dbgl_cl.afterrenderEvents,
+                initformaftershow:Ext.bind(dbgl_cl.initformaftershow, dbgl_cl)/*加载小表单*/
             },
             'temporaryhelpbusinessapplyform component,temporaryhelpbusinessalterform component': {
                 imgclick: function (c) {
