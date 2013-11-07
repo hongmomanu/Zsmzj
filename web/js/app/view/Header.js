@@ -124,7 +124,7 @@ Ext.define('ZSMZJ.view.Header', {
                             items:[
                                 {
                                     xtype:'panel',
-                                    bodyPadding: 15,//三个菜单上的方块区域
+                                    bodyPadding: 30,//三个菜单上的方块区域
                                     baseCls: 'main-header'
                                 },
                                 {               //三个显示菜单
@@ -159,9 +159,12 @@ Ext.define('ZSMZJ.view.Header', {
                                                          }*/
 
                                                     }
+                                                },{
+                                                    baseCls: 'main-header',
+                                                    html:'&nbsp;&nbsp;'
                                                 },
                                                 {
-                                                    html: '待办事务:(100)',
+                                                    html: '待办事务:(1)',
                                                     baseCls: 'main-header',
                                                     itemId: 'needtodopanel',
                                                     cls:'mouseover',
@@ -173,6 +176,9 @@ Ext.define('ZSMZJ.view.Header', {
                                                         }
 
                                                     }
+                                                },{
+                                                    baseCls: 'main-header',
+                                                    html:'&nbsp;&nbsp;'
                                                 },
                                                 {
                                                     html: '<a href="logout">退出<a>',
