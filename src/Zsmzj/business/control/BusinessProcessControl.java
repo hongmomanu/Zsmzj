@@ -56,21 +56,24 @@ public class BusinessProcessControl {
                 RelationsType.UseRelationsType.getChineseSeason(RelationsType.ower)
                 +"') ";
 
-        sql_list+=" and a.rowid IN (";
-        sql_count+=" and a.rowid IN (";
-        for(int i=0;i<types.length;i++){
-            //sql_list+=arr[i]+"* OR ";
-            sql_list+=
-                    "select rowid from "+BusinessTable+"  where  businesstype MATCH  '"+types[i] +"' "+
-            "UNION ";
 
-            sql_count+=
-                    "    SELECT ROWID FROM "+BusinessTable+" WHERE businesstype MATCH '"+types[i]+"' " +
-                            "UNION ";
+        if(types!=null){
+            sql_list+=" and a.rowid IN (";
+            sql_count+=" and a.rowid IN (";
+            for(int i=0;i<types.length;i++){
+                //sql_list+=arr[i]+"* OR ";
+                sql_list+=
+                        "select rowid from "+BusinessTable+"  where  businesstype MATCH  '"+types[i] +"' "+
+                                "UNION ";
 
+                sql_count+=
+                        "    SELECT ROWID FROM "+BusinessTable+" WHERE businesstype MATCH '"+types[i]+"' " +
+                                "UNION ";
+
+            }
+            sql_list=sql_list.substring(0,sql_list.lastIndexOf("UNION"))+") ";
+            sql_count=sql_count.substring(0,sql_count.lastIndexOf("UNION"))+") ";
         }
-        sql_list=sql_list.substring(0,sql_list.lastIndexOf("UNION"))+") ";
-        sql_count=sql_count.substring(0,sql_count.lastIndexOf("UNION"))+") ";
 
 
         sql_list+="Limit "+limit+" Offset "+start;
