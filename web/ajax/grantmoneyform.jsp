@@ -24,6 +24,7 @@
         String businesstype=request.getParameter("businesstype");
         float adjustmoney=Float.parseFloat(request.getParameter("adjustmoney"));
         BusinessProcessControl pc=new BusinessProcessControl();
-        out.print(pc.grantmoneybytype(userid,bgdate,eddate,grantdate,businesstype,adjustmoney,isnew));
+        String[] grant_arr=request.getParameterValues("grantid");
+        out.print(pc.grantmoneybytype(userid,bgdate,eddate,grantdate,businesstype,adjustmoney,isnew,grant_arr));
     }
 %>
