@@ -30,6 +30,7 @@ Ext.define('ZSMZJ.controller.Temporaryhelp', {
         'temporaryhelp.familypropertyFieldset',
         'temporaryhelp.familyapplyFieldset',
         'temporaryhelp.applysubmitFieldset'
+
     ],
 
     initStrore: function () {
