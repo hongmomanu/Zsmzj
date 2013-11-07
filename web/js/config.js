@@ -40,7 +40,9 @@ var formwidgettype={
     'charitablehelpapply':'charitablehelpbusinessapplyform',/*慈善救助申请*/
     'charitablehelpalter':'charitablehelpbusinessalterform',/*慈善救助申请表单修改*/
     'studyhelpapply':'studyhelpbusinessapplyform',/*助学救助申请*/
-    'studyhelpalter':'studyhelpbusinessalterform'/*助学救助修改*/
+    'studyhelpalter':'studyhelpbusinessalterform',/*助学救助修改*/
+    'temporaryhelpapply':'temporaryhelpbusinessapplyform',/*临时救助申请*/
+    'temporaryhelpalter':'temporaryhelpbusinessalterform'/*临时救助申请*/
 
 };
 
@@ -769,8 +771,8 @@ var applyformviews={
         'medicalhelpfamilyhousefieldset',
         'medicalhelpfamilyinputfieldset',
         'medicalhelpfamilypropertyfieldset',
-        'dbglfamilymemberfieldset',//家庭成员信息
-        'dbglfamilyaffixfieldset',//电子附件信息
+        'dbglfamilymemberfieldset',
+        'dbglfamilyaffixfieldset',
         'medicalhelpfamilyapplyfieldset',
         'medicalhelpaltersubmitfieldset',
         'medicalhelpaltersubmitlogfieldset'
@@ -780,8 +782,8 @@ var applyformviews={
         'charitablehelpfamilyhousefieldset',
         'charitablehelpfamilyinputfieldset',
         'medicalhelpfamilypropertyfieldset',
-        'dbglfamilymemberfieldset',//家庭成员信息
-        'dbglfamilyaffixfieldset',//电子附件信息
+        'dbglfamilymemberfieldset',
+        'dbglfamilyaffixfieldset',
         'charitablehelpfamilyapplyfieldset',
         'charitablehelpapplysubmitfieldset'
 
@@ -790,8 +792,8 @@ var applyformviews={
         'charitablehelpfamilyhousefieldset',
         'charitablehelpfamilyinputfieldset',
         'medicalhelpfamilypropertyfieldset',
-        'dbglfamilymemberfieldset',//家庭成员信息
-        'dbglfamilyaffixfieldset',//电子附件信息
+        'dbglfamilymemberfieldset',
+        'dbglfamilyaffixfieldset',
         'charitablehelpfamilyapplyfieldset',
         'charitablehelpaltersubmitfieldset',
         'charitablehelpaltersubmitlogfieldset'
@@ -801,8 +803,8 @@ var applyformviews={
         'studyhelpfamilyhousefieldset',
         'studyhelpfamilyinputfieldset',
         'studyhelpfamilypropertyfieldset',
-        'dbglfamilymemberfieldset',//家庭成员信息
-        'dbglfamilyaffixfieldset',//电子附件信息
+        'dbglfamilymemberfieldset',
+        'dbglfamilyaffixfieldset',
         'studyhelpfamilyapplyfieldset',
         'studyhelpapplysubmitfieldset'
 
@@ -811,11 +813,21 @@ var applyformviews={
         'studyhelpfamilyhousefieldset',
         'studyhelpfamilyinputfieldset',
         'studyhelpfamilypropertyfieldset',
-        'dbglfamilymemberfieldset',//家庭成员信息
-        'dbglfamilyaffixfieldset',//电子附件信息
+        'dbglfamilymemberfieldset',
+        'dbglfamilyaffixfieldset',
         'studyhelpfamilyapplyfieldset',
         'studyhelpaltersubmitfieldset',
         'studyhelpapplysubmitfieldset'
+
+    ],'temporaryhelpapply':[/*临时救助申请 */
+        'temporaryhelpfamilybasicfieldset',
+        'temporaryhelpfamilyhousefieldset',
+        'temporaryhelpfamilyinputfieldset',
+        'temporaryhelpfamilypropertyfieldset',
+        'dbglfamilymemberfieldset',
+        'dbglfamilyaffixfieldset',
+        'temporaryhelpfamilyapplyfieldset',
+        'temporaryhelpapplysubmitfieldset'
 
     ]
 
