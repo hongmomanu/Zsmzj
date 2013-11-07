@@ -157,7 +157,7 @@ public class BusinessProcessControl {
                 +bgdate+"' and  '"+eddate+"' union select rowid from "+GrantTable+" where grantdate Between '"+grantdate+"' and '"
                 +grantdate+"')  and b.businesstype MATCH '"+businesstype+"'";
         String ids="";
-        if(grant_arr!=null){
+        if(grant_arr!=null&&grant_arr.length>0){
             ids=" and b.rowid in (";
             for(int i=0;i<grant_arr.length;i++){
                  if(i!=0)ids+=",";
