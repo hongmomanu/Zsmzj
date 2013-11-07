@@ -34,7 +34,14 @@ var formwidgettype={
     'dbedgeapply':'dbedgebusinessapplyform' ,
     'dbedgealter':'dbedgebusinessalterform' ,
     'dbedgechange':'dbedgebusinesschangeform' ,
-    'dbedgelogout':'dbedgebusinesslogoutform'
+    'dbedgelogout':'dbedgebusinesslogoutform',
+    'medicalhelpapply':'medicalhelpbusinessapplyform',/*医疗救助申请表单*/
+    'medicalhelpalter':'medicalhelpbusinessalterform',/*医疗救助申请表单修改*/
+    'charitablehelpapply':'charitablehelpbusinessapplyform',/*慈善救助申请*/
+    'charitablehelpalter':'charitablehelpbusinessalterform',/*慈善救助申请表单修改*/
+    'studyhelpapply':'studyhelpbusinessapplyform',/*助学救助申请*/
+    'studyhelpalter':'studyhelpbusinessalterform'/*助学救助修改*/
+
 };
 
 var familyheaders={
@@ -746,6 +753,69 @@ var applyformviews={
         'dbglfamilyapplyfieldset',
         'dbedgelogoutsubmitfieldset',
         'dbglapplyhistoryfieldset'
+
+    ],'medicalhelpapply':[/*医疗救助申请表单分隔的各个小表单*/
+        'medicalhelpfamilybasicfieldset',
+        'medicalhelpfamilyhousefieldset',
+        'medicalhelpfamilyinputfieldset',
+        'medicalhelpfamilypropertyfieldset',
+        'dbglfamilymemberfieldset',//家庭成员信息
+        'dbglfamilyaffixfieldset',//电子附件信息
+        'medicalhelpfamilyapplyfieldset',
+        'medicalhelpapplysubmitfieldset'
+
+    ],'medicalhelpalter':[/*医疗救助申请表单修改界面 分隔的各个小表单*/
+        'medicalhelpalterfamilybasicfieldset',
+        'medicalhelpfamilyhousefieldset',
+        'medicalhelpfamilyinputfieldset',
+        'medicalhelpfamilypropertyfieldset',
+        'dbglfamilymemberfieldset',//家庭成员信息
+        'dbglfamilyaffixfieldset',//电子附件信息
+        'medicalhelpfamilyapplyfieldset',
+        'medicalhelpaltersubmitfieldset',
+        'medicalhelpaltersubmitlogfieldset'
+
+    ],'charitablehelpapply':[/*慈善救助申请*/
+        'charitablehelpfamilybasicfieldset',
+        'charitablehelpfamilyhousefieldset',
+        'charitablehelpfamilyinputfieldset',
+        'medicalhelpfamilypropertyfieldset',
+        'dbglfamilymemberfieldset',//家庭成员信息
+        'dbglfamilyaffixfieldset',//电子附件信息
+        'charitablehelpfamilyapplyfieldset',
+        'charitablehelpapplysubmitfieldset'
+
+    ],'charitablehelpalter':[/*慈善救助申请 修改*/
+        'charitablehelpalterfamilybasicfieldset',
+        'charitablehelpfamilyhousefieldset',
+        'charitablehelpfamilyinputfieldset',
+        'medicalhelpfamilypropertyfieldset',
+        'dbglfamilymemberfieldset',//家庭成员信息
+        'dbglfamilyaffixfieldset',//电子附件信息
+        'charitablehelpfamilyapplyfieldset',
+        'charitablehelpaltersubmitfieldset',
+        'charitablehelpaltersubmitlogfieldset'
+
+    ],'studyhelpapply':[/*助学救助申请 */
+        'studyhelpfamilybasicfieldset',
+        'studyhelpfamilyhousefieldset',
+        'studyhelpfamilyinputfieldset',
+        'studyhelpfamilypropertyfieldset',
+        'dbglfamilymemberfieldset',//家庭成员信息
+        'dbglfamilyaffixfieldset',//电子附件信息
+        'studyhelpfamilyapplyfieldset',
+        'studyhelpapplysubmitfieldset'
+
+    ],'studyhelpalter':[/*助学救助申请 修改*/
+        'studyhelpalterfamilybasicfieldset',
+        'studyhelpfamilyhousefieldset',
+        'studyhelpfamilyinputfieldset',
+        'studyhelpfamilypropertyfieldset',
+        'dbglfamilymemberfieldset',//家庭成员信息
+        'dbglfamilyaffixfieldset',//电子附件信息
+        'studyhelpfamilyapplyfieldset',
+        'studyhelpaltersubmitfieldset',
+        'studyhelpapplysubmitfieldset'
 
     ]
 
