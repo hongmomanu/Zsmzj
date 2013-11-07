@@ -49,24 +49,27 @@ Ext.define('ZSMZJ.view.dbgl.FamilyQueryGrid' ,{
                     var me=this;
                     var id0=Ext.id();
                     Ext.defer(function () {
-                        Ext.widget('label', {
-                            renderTo: id0,
-                            //margin: '0 5 0 5',
-                            border:0,
-                            text: v,
-                            overCls:'mouseover',
-                            width: 55,
-                            listeners: {
+                        if(Ext.get(id0)){
+                            Ext.widget('label', {
+                                renderTo: id0,
+                                //margin: '0 5 0 5',
+                                border:0,
+                                text: v,
+                                overCls:'mouseover',
+                                width: 55,
+                                listeners: {
 
-                                render: function(c){
-                                    c.getEl().on('click', function(){
-                                        testobj=me.up('panel');
-                                        me.up('panel').fireEvent('alterclick', c,r,me);
-                                    }, c);
+                                    render: function(c){
+                                        c.getEl().on('click', function(){
+                                            testobj=me.up('panel');
+                                            me.up('panel').fireEvent('alterclick', c,r,me);
+                                        }, c);
+                                    }
+
                                 }
+                            });
+                        }
 
-                            }
-                        });
                     }, 50);
 
 
@@ -139,7 +142,12 @@ Ext.define('ZSMZJ.view.dbgl.FamilyQueryGrid' ,{
                         "specialkey": function (field, e) {
                             if (e.keyCode == 13) {
                                 var keyword = field.getValue().replace(/\s+/g, "");
-                                var store=this.up('panel').getStore();
+                                var panel=this.up('panel');
+                                var store=panel.getStore();
+                                var bgdate=panel.down('#bgdate').getValue();
+                                var eddate=panel.down('#eddate').getValue();
+                                store.proxy.extraParams.bgdate=bgdate;
+                                store.proxy.extraParams.eddate=eddate;
                                 store.proxy.extraParams.keyword = keyword;
                                 store.loadPage(1);
                             }
@@ -153,12 +161,60 @@ Ext.define('ZSMZJ.view.dbgl.FamilyQueryGrid' ,{
                         "click":function(btn){
                             var field=btn.previousNode();
                             var keyword = field.getValue().replace(/\s+/g, "");
-                            var store=this.up('panel').getStore();
+                            var panel=this.up('panel');
+                            var store=panel.getStore();
+                            var bgdate=panel.down('#bgdate').getValue();
+                            var eddate=panel.down('#eddate').getValue();
+                            store.proxy.extraParams.bgdate=bgdate;
+                            store.proxy.extraParams.eddate=eddate;
                             store.proxy.extraParams.keyword = keyword;
                             store.loadPage(1);
                         }
                     }
 
+                },
+                {
+                    xtype: 'button',
+                    text: '<span style="font-weight:bold">>></span>',
+                    tooltip: '显示/隐藏日期',
+                    //id: 'westpanelhandler',
+                    handler: function () {
+                        if (this.nextSibling().isHidden()) {
+                            this.nextSibling().show();
+                            this.nextSibling().nextSibling().show();
+                            this.setText('<span style="font-weight:bold"><<</span>');
+                        } else {
+                            this.nextSibling().hide();
+                            this.nextSibling().setValue("");
+                            this.nextSibling().nextSibling().setValue("");
+                            this.nextSibling().nextSibling().hide();
+                            this.setText('<span style="font-weight:bold">>></span>');
+                        }
+
+                    }
+                },
+                {
+                    //fieldLabel: '发放开始日期',
+                    emptyText: '请选择开始日期',
+                    itemId:'bgdate',
+                    hidden:true,
+                    blankText : '请输选择开始日期',
+                    xtype: 'datefield',
+                    //itemId: 'personbirthday',
+                    format: 'Y-m-d',
+                    //value: Ext.Date.format(new Date(), 'Y-m-d'),
+                    allowBlank: true
+                },{
+                    //fieldLabel: '发放结束日期',
+                    emptyText: '请选择结束日期',
+                    blankText : '请输选择结束日期',
+                    hidden:true,
+                    xtype: 'datefield',
+                    itemId:'eddate',
+                    //itemId: 'personbirthday',
+                    format: 'Y-m-d',
+                    //value: Ext.Date.format(new Date(), 'Y-m-d'),
+                    allowBlank: true
                 },'->',
                 {
                     text: '导出Excel',

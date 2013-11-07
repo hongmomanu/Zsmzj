@@ -44,6 +44,14 @@ Ext.define('ZSMZJ.view.dbedge.applysubmitFieldset', {
 
                     {
                         name: 'poorstandard',
+                        itemId:'poorstandard',
+                        listeners: {
+
+                            "blur":function(field,e){
+                                this.fireEvent('moneychane', field);
+                            }
+                        },
+                        value:0,
                         fieldLabel: '低保边缘户标准(元)',
                         afterLabelTextTpl: required,
                         emptyText: '请输入低保边缘户标准',
@@ -87,6 +95,7 @@ Ext.define('ZSMZJ.view.dbedge.applysubmitFieldset', {
                     },
                     {
                         name: 'totalhelpmoney',
+                        itemId:'totalhelpmoney',
                         fieldLabel: '总救助金额(元/月/户)',
                         afterLabelTextTpl: required,
                         emptyText: '请输入救助金额',

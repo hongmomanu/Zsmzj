@@ -38,7 +38,7 @@
       <link rel="stylesheet" type="text/css" href="css/data-view.css" />
      <%-- 加载web应用层--%>
 
-      <script type="text/javascript" src="app-all.js"></script>
+      <%--<script type="text/javascript" src="app-all.js"></script>--%>
       <script type="text/javascript" src="js/app.js"></script>
       <script type="text/javascript" src="js/app/commonfunc.js"></script>
     <title>欢迎使用舟山市民政救助系统</title>

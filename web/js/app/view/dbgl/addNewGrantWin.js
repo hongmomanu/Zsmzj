@@ -220,9 +220,17 @@ Ext.define('ZSMZJ.view.dbgl.addNewGrantWin' ,{
                                 xtype: 'button',
                                 formBind: true,
                                 disabled: true,
+                                isnew:true,
                                 text: '资金发放',
                                 action:'grant'
                             },{
+                                    xtype: 'button',
+                                    formBind: true,
+                                    disabled: true,
+                                    isnew:false,
+                                    text: '资金重新发放',
+                                    action:'grant'
+                                },{
                                 xtype: 'button',
                                 formBind: true,
                                 disabled: true,

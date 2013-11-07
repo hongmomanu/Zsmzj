@@ -21,6 +21,10 @@ var businessTableType=
             'rangershelp':'流浪救助',
             'allquery':'all'
         };
+var spatialchildTableType={
+    '避灾仓库':'disasterware',
+    '避灾场所': 'disasterplace'
+};
 
 var formwidgettype={
     'dbglapply':'dbglbusinessapplyform',

@@ -56,21 +56,24 @@ public class BusinessProcessControl {
                 RelationsType.UseRelationsType.getChineseSeason(RelationsType.ower)
                 +"') ";
 
-        sql_list+=" and a.rowid IN (";
-        sql_count+=" and a.rowid IN (";
-        for(int i=0;i<types.length;i++){
-            //sql_list+=arr[i]+"* OR ";
-            sql_list+=
-                    "select rowid from "+BusinessTable+"  where  businesstype MATCH  '"+types[i] +"' "+
-            "UNION ";
 
-            sql_count+=
-                    "    SELECT ROWID FROM "+BusinessTable+" WHERE businesstype MATCH '"+types[i]+"' " +
-                            "UNION ";
+        if(types!=null){
+            sql_list+=" and a.rowid IN (";
+            sql_count+=" and a.rowid IN (";
+            for(int i=0;i<types.length;i++){
+                //sql_list+=arr[i]+"* OR ";
+                sql_list+=
+                        "select rowid from "+BusinessTable+"  where  businesstype MATCH  '"+types[i] +"' "+
+                                "UNION ";
 
+                sql_count+=
+                        "    SELECT ROWID FROM "+BusinessTable+" WHERE businesstype MATCH '"+types[i]+"' " +
+                                "UNION ";
+
+            }
+            sql_list=sql_list.substring(0,sql_list.lastIndexOf("UNION"))+") ";
+            sql_count=sql_count.substring(0,sql_count.lastIndexOf("UNION"))+") ";
         }
-        sql_list=sql_list.substring(0,sql_list.lastIndexOf("UNION"))+") ";
-        sql_count=sql_count.substring(0,sql_count.lastIndexOf("UNION"))+") ";
 
 
         sql_list+="Limit "+limit+" Offset "+start;
@@ -135,7 +138,7 @@ public class BusinessProcessControl {
 
 
     }
-    public String grantmoneybytype(int userid,String bgdate,String eddate,String grantdate,String businesstype,float adjustmoney){
+    public String grantmoneybytype(int userid,String bgdate,String eddate,String grantdate,String businesstype,float adjustmoney,boolean isnew){
         SimpleDateFormat sDateFormat   =   new SimpleDateFormat("yyyy-MM");
 
         BusinessProcess bp=new BusinessProcess();
@@ -147,10 +150,15 @@ public class BusinessProcessControl {
                 " b where b.rowid=a.businessid and a.rowid in (select rowid from "+GrantTable+" d where d.grantdate Between '"
                 +bgdate+"' and  '"+eddate+"' union select rowid from "+GrantTable+" where grantdate Between '"+grantdate+"' and '"
                 +grantdate+"')  and b.businesstype MATCH '"+businesstype+"'");
-        if(totalnum>0){
-            return "{success:true,msg:\"资金已发\"}";
+        if(totalnum>0&&isnew){
+            return "{success:true,msg:\"资金已发放，若想重新发放请点击资金重新发放\"}";
         }
         else{
+            String delsql="delete from "+GrantTable+" where rowid in(select a.rowid from "+GrantTable+" a,"+BusinessTable+
+                    " b where b.rowid=a.businessid and a.rowid in (select rowid from "+GrantTable+" d where d.grantdate Between '"
+                    +bgdate+"' and  '"+eddate+"' union select rowid from "+GrantTable+" where grantdate Between '"+grantdate+"' and '"
+                    +grantdate+"')  and b.businesstype MATCH '"+businesstype+"')";
+            cd.delbysql(delsql);
             String sql_list="select rowid as businessid from "+BusinessTable+" a where a.businesstype MATCH '"+businesstype+"' " +
                     "and a.rowid in (select rowid from "+BusinessTable+" b where b.processstatus MATCH'"
                     +ProcessType.UseProcessType.getChineseSeason(ProcessType.Approval)+"')";
@@ -188,7 +196,7 @@ public class BusinessProcessControl {
 
     }
     public String getGrantMoneyBytype(String type,String bgmonth,String keyword,String[]name,
-                                      String[]compare,String[]value,String[]logic,int start,int limit){
+                                      String[]compare,String[]value,String[]logic,int start,int limit,String bgdate,String eddate){
         SimpleDateFormat sDateFormat   =   new SimpleDateFormat("yyyy-MM");
         SimpleDateFormat syearFormat   =   new SimpleDateFormat("yyyy");
         String basic_sql= " a.rowid=b.businessid "
@@ -428,13 +436,52 @@ public class BusinessProcessControl {
             sql_count+=" and a.rowid in (select rowid from "+BusinessTable+"  where "+BusinessTable+" MATCH '"+keyword+"*') ";
 
         }*/
+        SimpleDateFormat sDayFormat   =   new SimpleDateFormat("yyyy-MM-dd");
+        if(bgdate!=null&&!bgdate.equals("")){
+            Date date = null;
+            try {
+                date = sDayFormat.parse(bgdate);
+            } catch (ParseException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            java.util.Calendar   calendar=java.util.Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.YEAR, +100);    //得到下一个月
+            String enddate=sDateFormat.format(calendar.getTime());
+
+
+            sql_list+=" and b.rowid in (select rowid from "+GrantTable+" where grantdate Between '"+bgdate
+                    +"' and  '"+enddate+"') ";
+            sql_count+=" and b.rowid in (select rowid from "+GrantTable+" where grantdate Between '"+bgdate
+                    +"' and  '"+enddate+"') ";
+
+        }
+        if(eddate!=null&&!eddate.equals("")){
+
+            Date date = null;
+            try {
+                date = sDayFormat.parse(eddate);
+            } catch (ParseException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            java.util.Calendar   calendar=java.util.Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.YEAR, -100);    //得到下一个月
+            String enddate=sDateFormat.format(calendar.getTime());
+
+            sql_list+=" and b.rowid in (select rowid from "+GrantTable+" where grantdate Between '"+enddate
+                    +"' and  '"+eddate+"') ";
+            sql_count+=" and b.rowid in (select rowid from "+GrantTable+" where grantdate Between '"+enddate
+                    +"' and  '"+eddate+"') ";
+
+
+        }
         if (keyword!=null&&!keyword.equals("")){
             if(keyword.indexOf("and")>0){
                 String[] arr=keyword.split("and");
                 for(int i=0;i<arr.length;i++){
                     sql_list+=" and a.rowid in (select rowid from "+BusinessTable+" where "+BusinessTable+" MATCH '"+arr[i]+"*') ";
                     sql_count+=" and a.rowid in (select rowid from "+BusinessTable+" where "+BusinessTable+" MATCH '"+arr[i]+"*') ";
-
                 }
             }
             else if(keyword.indexOf("or")>0){
@@ -934,7 +981,7 @@ public class BusinessProcessControl {
     }
 
     public String getFamilyInfoList(int start,int limit,String keyword,String businesstype,String[]name,
-                                    String[]compare,String[]value,String[]logic){
+                                    String[]compare,String[]value,String[]logic,String bgdate,String eddate){
         BusinessProcess bp=new BusinessProcess();
         ComonDao cd=new ComonDao();
 
@@ -945,6 +992,7 @@ public class BusinessProcessControl {
 
         String basic_sql=" a.rowid = b.businessid  ";
 
+        basic_sql+=" and b.rowid in (select rowid from "+FamilyTable+" where relationship MATCH '"+RelationsType.UseRelationsType.getChineseSeason(RelationsType.ower)+"' )";
         basic_sql+=" and c.rowid in (select rowid from "+DivisionsTable+" where divisionpath MATCH a.division )";
 
         if(!businesstype.equals("all")){
@@ -1268,6 +1316,46 @@ public class BusinessProcessControl {
 
         }
 
+        if(bgdate!=null&&!bgdate.equals("")){
+            Date date = null;
+            try {
+                date = sDayFormat.parse(bgdate);
+            } catch (ParseException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            java.util.Calendar   calendar=java.util.Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.YEAR, +100);    //得到下一个月
+            String enddate=sDayFormat.format(calendar.getTime());
+
+            sql_list+=" and (a.rowid in (select rowid from "+fulltable+"  where helpbgtime Between '"+bgdate
+                    +"' and  '"+enddate+"')  and ("+basic_sql+")) ";
+
+            sql_count+=" and (a.rowid in (select rowid from "+fulltable+"  where helpbgtime Between '"+bgdate
+                    +"' and  '"+enddate+"')  and ("+basic_sql+")) ";
+
+        }
+        if(eddate!=null&&!eddate.equals("")){
+
+            Date date = null;
+            try {
+                date = sDayFormat.parse(eddate);
+            } catch (ParseException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            java.util.Calendar   calendar=java.util.Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.YEAR, -100);    //得到下一个月
+            String enddate=sDayFormat.format(calendar.getTime());
+
+            sql_list+=" and (a.rowid in (select rowid from "+fulltable+"  where helpbgtime Between '"+enddate
+                    +"' and  '"+eddate+"')  and ("+basic_sql+")) ";
+
+            sql_count+=" and (a.rowid in (select rowid from "+fulltable+"  where helpbgtime Between '"+enddate
+                    +"' and  '"+eddate+"')  and ("+basic_sql+")) ";
+
+        }
+
         if (keyword!=null&&!keyword.equals("")){
             if(keyword.indexOf("and")>0){
                 String[] arr=keyword.split("and");
@@ -1320,7 +1408,7 @@ public class BusinessProcessControl {
 
     }
     public String getPeopleInfoList(int start ,int limit,String keyword,String businesstype,String[]name,
-                                    String[]compare,String[]value,String[]logic){
+                                    String[]compare,String[]value,String[]logic,String bgdate,String eddate){
         BusinessProcess bp=new BusinessProcess();
         ComonDao cd=new ComonDao();
 
@@ -1649,6 +1737,47 @@ public class BusinessProcessControl {
             sql_list+=" and a.businesstype MATCH '"+businesstype+"'";
             sql_count+=" and a.businesstype MATCH '"+businesstype+"'";
         }*/
+
+        if(bgdate!=null&&!bgdate.equals("")){
+            Date date = null;
+            try {
+                date = sDayFormat.parse(bgdate);
+            } catch (ParseException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            java.util.Calendar   calendar=java.util.Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.YEAR, +100);    //得到下一个月
+            String enddate=sDateFormat.format(calendar.getTime());
+
+            sql_list+=" and (b.rowid in (select rowid from "+fulltable+"  where birthday Between '"+bgdate
+                    +"' and  '"+enddate+"')  and ("+basic_sql+")) ";
+
+            sql_count+=" and (b.rowid in (select rowid from "+fulltable+"  where birthday Between '"+bgdate
+                    +"' and  '"+enddate+"')  and ("+basic_sql+")) ";
+
+        }
+        if(eddate!=null&&!eddate.equals("")){
+
+            Date date = null;
+            try {
+                date = sDayFormat.parse(eddate);
+            } catch (ParseException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            java.util.Calendar   calendar=java.util.Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.YEAR, -100);    //得到下一个月
+            String enddate=sDateFormat.format(calendar.getTime());
+
+            sql_list+=" and (b.rowid in (select rowid from "+fulltable+"  where birthday Between '"+enddate
+                    +"' and  '"+eddate+"')  and ("+basic_sql+")) ";
+
+            sql_count+=" and (b.rowid in (select rowid from "+fulltable+"  where birthday Between '"+enddate
+                    +"' and  '"+eddate+"')  and ("+basic_sql+")) ";
+
+        }
+
 
         if (keyword!=null&&!keyword.equals("")){
             if(keyword.indexOf("and")>0){

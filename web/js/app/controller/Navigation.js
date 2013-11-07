@@ -75,7 +75,9 @@ Ext.define('ZSMZJ.controller.Navigation', {
 
 
         if (item.data.leaf) {
-            var businesstype=item.raw.name==item.raw.url?item.raw.name:record.panel.businesstype;
+            //testobj=item;
+            var businesstype=spatialchildTableType[item.raw.name]?item.raw.name:record.panel.businesstype;
+
             this.showtab(item.data.text,item.data.value,item.data.type,businesstype);
 
         }else{
@@ -110,11 +112,15 @@ Ext.define('ZSMZJ.controller.Navigation', {
 
         } else {
             if (type == 'widget') {
+
+
                 //ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
                 ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
                 ViewWaitMask.show();
                 function fn(){
-
+                    if(tabs.items.items.length==2){
+                        tabs.items.items[1].close();
+                    }
                     var newtab=tabs.add({
                         closable: true,
                         id: 'tab' + value,
@@ -127,8 +133,9 @@ Ext.define('ZSMZJ.controller.Navigation', {
                         //active:true,
                         iconCls: 'tabs',
                         title: label
-                    });
-                    tabs.setActiveTab(newtab);
+                    }).show();
+                    //tabs.setActiveTab(newtab);
+
 
                 }
                 var task = new Ext.util.DelayedTask(fn);

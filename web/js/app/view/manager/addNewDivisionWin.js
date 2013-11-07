@@ -82,8 +82,8 @@ Ext.define('ZSMZJ.view.manager.addNewDivisionWin' ,{
                                 xtype: 'textfield',
                                 itemId:'signaturepath',
                                 columnWidth: 0.8,
-                                blankText   : '不能为空',
-                                allowBlank:false,
+                                //blankText   : '不能为空',
+                                allowBlank:true,
                                 name: 'signaturepath'
                             },
                             {

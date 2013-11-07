@@ -143,6 +143,8 @@ Ext.define('ZSMZJ.view.dbgl.changesubmitFieldset', {
                     {
                         fieldLabel: '变更时间',
                         name:'changedate',
+                        xtype: 'datefield',
+                        format: 'Y-m-d',
                         afterLabelTextTpl: required,
                         allowBlank:false,
                         colspan:3,

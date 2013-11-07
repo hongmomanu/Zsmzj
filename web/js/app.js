@@ -11,7 +11,7 @@
  */
 Ext.Loader.setConfig({
     enabled: true,
-    disableCaching: false,
+    disableCaching: true,
     paths: {
         'Ext.ux':'js/Ext/ux'
     }

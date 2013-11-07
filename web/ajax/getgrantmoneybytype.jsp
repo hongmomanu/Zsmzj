@@ -18,6 +18,8 @@
 
         String type=request.getParameter("businesstype");
         String bgmonth=request.getParameter("bgmonth");
+        String bgdate=request.getParameter("bgdate");
+        String eddate=request.getParameter("eddate");
         String keyword=request.getParameter("keyword");
         String[] name=request.getParameterValues("name");
         String[] compare=request.getParameterValues("compare");
@@ -26,6 +28,6 @@
         int start=Integer.parseInt(request.getParameter("start"));
         int limit =Integer.parseInt(request.getParameter("limit"));
 
-        out.print(bp.getGrantMoneyBytype(type,bgmonth,keyword,name,compare,value,logic,start,limit));
+        out.print(bp.getGrantMoneyBytype(type,bgmonth,keyword,name,compare,value,logic,start,limit,bgdate,eddate));
     }
 %>

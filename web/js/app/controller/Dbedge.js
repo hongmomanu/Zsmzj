@@ -57,7 +57,7 @@ Ext.define('ZSMZJ.controller.Dbedge', {
                     dbgl_cl.owerchanged(c);
                 },
                 moneychane:function(c){
-                    dbgl_cl.moneychane(c);
+                    dbgl_cl.moneychane(c,businessTableType.dbedge);
                 },
                 houseareachane:function(c){
                     dbgl_cl.houseareachane(c);

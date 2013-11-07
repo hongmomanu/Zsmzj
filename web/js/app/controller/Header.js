@@ -310,16 +310,23 @@ Ext.define('ZSMZJ.controller.Header', {
         if(this.ischangeclick){
             this.showchangebtn(form);
             var invaliditem=form.down('#businesscheckinfo');
-            var formcontent=form.getDefaultContentTarget();
-            var target=invaliditem.getEl();
-            target.scrollIntoView(formcontent,true,true,true);
+
+            if(invaliditem){
+                var formcontent=form.getDefaultContentTarget();
+                var target=invaliditem.getEl();
+                target.scrollIntoView(formcontent,true,true,true);
+            }
+
         }
         if(this.islogoutclick){
             this.showlogoutbtn(form);
             var invaliditem=form.down('#businesscheckinfo');
-            var formcontent=form.getDefaultContentTarget();
-            var target=invaliditem.getEl();
-            target.scrollIntoView(formcontent,true,true,true);
+            if(invaliditem){
+                var formcontent=form.getDefaultContentTarget();
+                var target=invaliditem.getEl();
+                target.scrollIntoView(formcontent,true,true,true);
+            }
+
         }
     }
     ,
@@ -1377,19 +1384,39 @@ Ext.define('ZSMZJ.controller.Header', {
         }
 
 
-
+        win.document.write('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">');
         win.document.write('<html><head>');
         win.document.write('<title>' + document.title + '</title>');
-        win.document.write('<link rel="stylesheet" type="text/css" href="'+extLocation+
-            'resources/ext-theme-neptune/ext-theme-neptune-all.css"><\/>');
+        var linkstr='<link rel="stylesheet" type="text/css" href="'+extLocation+
+            'resources/css/ext-all.css'+'"></link>';
+        win.document.write(linkstr);
 
 
-        win.document.write('<link rel="stylesheet" type="text/css" href="css/main.css" />');
-        win.document.write('<link rel="stylesheet" type="text/css" href="css/data-view.css" />');
-        win.document.write('</head><body>');
+        win.document.write('<link rel="stylesheet" type="text/css" href="css/main.css" >'+'</link>');
+        win.document.write('<link rel="stylesheet" type="text/css" href="css/data-view.css"></link>');
+        win.document.write('</head><body style="width: 100%;height: 100%;">');
         win.document.write(el.body.dom.innerHTML);
         win.document.write('</body></html>');
         win.document.close();
+
+        /*var params = {
+            doc:win.document.documentElement.innerHTML//.replace(/linkss/g,'link')
+
+        };
+        var successFunc = function (response, action) {
+            var res = Ext.JSON.decode(response.responseText);
+            if(res.success){
+                window.location.href = res.filepath;
+            }
+            else{
+                Ext.Msg.alert("提示信息", "打印pdf文件失败");
+            }
+        };
+        var failFunc = function (res, action) {
+            Ext.Msg.alert("提示信息", "打印pdf文件失败");
+        };
+        this.ajaxSend(params, 'ajax/htmltopdf.jsp', successFunc, failFunc,'POST');
+*/
         win.focus();
         win.print();
         win.close();
@@ -1674,16 +1701,25 @@ Ext.define('ZSMZJ.controller.Header', {
         };
         var successFunc = function (form, action) {
             var panel=grid.up('panel');
-            if(panel.isHidden()){
-                if(callback)callback();
-            }
-            else{
-                grid.getStore().load({callback:function(){
-                 //me.closetab("dbglbusinessalterform");
-                 if(callback)callback();
+            if(panel){
+                if(panel.isHidden()){
+                    if(callback)callback();
+                }
+                else{
+                    grid.getStore().load({callback:function(){
+                        //me.closetab("dbglbusinessalterform");
+                        if(callback)callback();
 
-                 }});
+                    }});
+                }
+            }else{
+                grid.getStore().load({callback:function(){
+                    //me.closetab("dbglbusinessalterform");
+                    if(callback)callback();
+
+                }});
             }
+
 
         };
         var failFunc = function (form, action) {
@@ -2170,6 +2206,7 @@ Ext.define('ZSMZJ.controller.Header', {
                 tab.isnewbusiness=!(tab.objdata.businessid==objdata.businessid);
                 if(tab.isnewbusiness){
                     //tab.removeAll();
+
                     function fn(){
                         tabs.add({
                             closable: true,
@@ -2180,6 +2217,11 @@ Ext.define('ZSMZJ.controller.Header', {
                             iconCls: 'tabs',
                             title: label
                         }).show();
+                        if(tabs.items.items.length==3){
+
+                            tabs.items.items[1].close();
+                            //tabs.remove(tabs.items.items[1]);
+                        }
                     }
                     var task = new Ext.util.DelayedTask(fn);
                     task.delay(50);
@@ -2210,6 +2252,7 @@ Ext.define('ZSMZJ.controller.Header', {
         } else {
             //alert(1);
             if (type == 'widget') {
+
                 function fn(){
                     tabs.add({
                         closable: true,
@@ -2220,6 +2263,10 @@ Ext.define('ZSMZJ.controller.Header', {
                         iconCls: 'tabs',
                         title: label
                     }).show();
+                    if(tabs.items.items.length==3){
+                        tabs.items.items[1].close();
+                        //tabs.remove(tabs.items.items[1]);
+                    }
                 }
                 var task = new Ext.util.DelayedTask(fn);
                 task.delay(50);
@@ -2290,10 +2337,17 @@ Ext.define('ZSMZJ.controller.Header', {
         this.initProcessFromRole();
         var me=this;
         var store=this.getHeaderHeaderViewersStore();
-
         store.on('load', function (store, options) {
-            var viewpanel=me.getMyviewheadViewPanel().items.items[0];
-            viewpanel.select(0);
+            if(store.data.items.length==1){
+                me.getMyviewheadViewPanel().items.items[0].setVisible(false);
+                Ext.getCmp('west-panel').removeAll();
+                Ext.getCmp('west-panel').add(menu_shjz);
+
+            }else{
+                var viewpanel=me.getMyviewheadViewPanel().items.items[0];
+                viewpanel.select(0);
+            }
+
         });
 
     },

@@ -239,6 +239,7 @@ Ext.define('ZSMZJ.view.dbgl.familyinputFieldset', {
                         regexText  : "只能输入数值",
                         fieldLabel: '家庭上年度月平均现金收入',
                         itemId:'incomesumarea',
+
                         value:0,
                         allowBlank: true
                     },

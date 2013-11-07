@@ -41,7 +41,7 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberPrintGrid' ,{
                 {
                     header: '与户主关系',
                     dataIndex: 'relationship',
-                    width:150,
+                    width:100,
                     //flex: 1,
                     summaryType: 'count',//求数量
                     summaryRenderer: function(value){
@@ -62,7 +62,7 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberPrintGrid' ,{
                 },  {
                     header: '身份证',
                     dataIndex: 'personid',
-                    width: 180,
+                    width: 150,
                     editor: {
                         allowBlank: false
                         //vtype: 'email'
@@ -84,6 +84,7 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberPrintGrid' ,{
                 },
                 {
                     header: '年龄',
+                    width:50,
                     dataIndex: 'age'
 
                 },
