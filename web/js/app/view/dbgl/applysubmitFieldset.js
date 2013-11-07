@@ -67,6 +67,12 @@ Ext.define('ZSMZJ.view.dbgl.applysubmitFieldset', {
                         fieldLabel: '低保标准(元)',
                         value:0,
                         afterLabelTextTpl: required,
+                        listeners: {
+
+                            "blur":function(field,e){
+                                this.fireEvent('moneychane', field);
+                            }
+                        },
                         emptyText: '请输入低保标准',
                         blankText : '请输入低保标准',
                         allowBlank: false
@@ -130,7 +136,9 @@ Ext.define('ZSMZJ.view.dbgl.applysubmitFieldset', {
                     }
                     ,
                     {
+
                         name: 'totalhelpmoney',
+                        itemId:'totalhelpmoney',
                         fieldLabel: '总救助金额(元/月/户)',
                         listeners: {
 

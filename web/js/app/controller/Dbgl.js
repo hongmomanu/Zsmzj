@@ -124,7 +124,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
              },
             moneychane:function(c){
-                this.moneychane(c);
+                this.moneychane(c,businessTableType.dbgl);
             },
             houseareachane:function(c){
                 this.houseareachane(c);
@@ -164,7 +164,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
                  this.owerchanged(c);
              },
              moneychane:function(c){
-                 this.moneychane(c);
+                 this.moneychane(c,businessTableType.dbgl);
              },
              houseareachane:function(c){
                  this.houseareachane(c);
@@ -181,7 +181,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
                  this.owerchanged(c);
              },
              moneychane:function(c){
-                 this.moneychane(c);
+                 this.moneychane(c,businessTableType.dbgl);
              },
              houseareachane:function(c){
                  this.houseareachane(c);
@@ -198,7 +198,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
                  this.owerchanged(c);
              },
              moneychane:function(c){
-                 this.moneychane(c);
+                 this.moneychane(c,businessTableType.dbgl);
              },
              houseareachane:function(c){
                  this.houseareachane(c);
@@ -415,7 +415,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
            countitem.setValue(count);
            enjoyitem.setValue(enjoyednum);
            disableditem.setValue(disablednum);
-           this.moneychane(gridpanel);
+           this.moneychane(gridpanel,businessTableType.dbgl);
 
        }catch (e){
 
@@ -452,7 +452,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             var enjoyitem=applyform.down('#enjoyPersons');
             enjoyitem.setValue(parseInt(enjoyitem.getValue())+1);
 
-            this.moneychane(gridpanel);
+            this.moneychane(gridpanel,businessTableType.dbgl);
         }catch(e){
 
         }
@@ -927,7 +927,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
     },
     //form 收入 子项变更
-    moneychane:function(c){
+    moneychane:function(c,type){
       //var value=
         //alert(c.getValue());
         var formpanel=c.up('panel');
@@ -964,6 +964,21 @@ Ext.define('ZSMZJ.controller.Dbgl', {
 
 
             averageincome.setValue(parseInt(person_nums==0?parseInt(familyincome.getValue())/12:parseInt(familyincome.getValue())/12/person_nums));
+            var totalhelpmoney=formpanel.down('#totalhelpmoney');
+            var poorstandard=formpanel.down('#poorstandard');
+            if(type===businessTableType.dbgl){
+                var helpmomey=poorstandard.getValue()-familyincome.getValue()/12;
+
+                if(helpmomey<0.4*parseFloat(poorstandard.getValue())){
+                    totalhelpmoney.setValue(0.4*parseFloat(poorstandard.getValue()));
+                    //Ext.Msg.alert("提示信息", "低于低保标准的40%，则救助金采用低保金的40%");
+                }else{
+                    totalhelpmoney.setValue(helpmomey.toFixed(1));
+                }
+            }else if(type===businessTableType.dbedge){
+                totalhelpmoney.setValue(poorstandard.getValue());
+            }
+
 
         }
 
@@ -1016,7 +1031,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
               var formcontent=applyform.getDefaultContentTarget();
               var target=familygrid.getEl();
               target.scrollIntoView(formcontent,true,true,true);
-              this.moneychane(familygrid);
+              this.moneychane(familygrid,businessTableType.dbgl);
               rowEditing.startEdit(0, 0);
 
 
