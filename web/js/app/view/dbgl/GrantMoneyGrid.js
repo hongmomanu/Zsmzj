@@ -16,6 +16,7 @@ Ext.define('ZSMZJ.view.dbgl.GrantMoneyGrid' ,{
     ],
     listeners: {
         show: function(panel) {
+
             this.fireEvent('gridshowfresh',this);
         }
     },

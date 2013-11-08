@@ -32,10 +32,7 @@ Ext.define('ZSMZJ.controller.Temporaryhelp', {
         'temporaryhelp.applysubmitFieldset',
         'temporaryhelp.alterfamilybasicFieldset',
         'temporaryhelp.altersubmitFieldset',
-        'temporaryhelp.altersubmitlogFieldset',
-
-        'temporaryhelp.GrantMoneyGrid'
-
+        'temporaryhelp.altersubmitlogFieldset'
     ],
 
     initStrore: function () {
