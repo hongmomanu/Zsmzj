@@ -88,7 +88,8 @@
 
             <tr>
                 <td class='rowhead'>密&nbsp;&nbsp;&nbsp;码：</td>
-                <td><input class='text-2' type='password' required="true" placeholder="在这里输入密码" name='password' /></td>
+                <td><input  class='text-2' type='password' required="true" placeholder="在这里输入密码"
+                           name='password' onkeydown="javascript:onEnterKeyDown(this,event);"/></td>
 
             </tr>
             <tr>
@@ -115,7 +116,23 @@
 <script type="text/javascript">
     //window.onload=btnClick;
     function btnClick(){
-        //document.getElementById("loginbtn").addEventListener('click',function(){document.getElementById("myform").submit(); })
         document.getElementById("myform").submit();
     }
+    function onEnterKeyDown(src,e){
+        var keyPressed;
+        if (window.event){
+            keyPressed = window.event.keyCode; // IE
+        }
+        else{
+            keyPressed = e.which; // Firefox
+        }
+        if (keyPressed == 13) {
+            btnClick();
+        }
+    }
+
+    (function(){
+        document.getElementById("account").focus();
+    })();
+
 </script>
