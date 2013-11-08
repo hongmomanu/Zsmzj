@@ -25,7 +25,7 @@ public class ExcelHelper {
     private static final Logger log = Logger.getLogger(ExcelHelper.class);
 
     public static Map<String, Object> writeExcel(String fileName, String header_arr, String rowdata, String sum,
-                                                 String title, int headerheight,int headercols) {
+                                                 String title, int headerheight,int headercols,boolean isall,String url,String extraParams) {
         WritableWorkbook wwb = null;
         Map<String, Object> map = new HashMap<String, Object>();
         int sumrow_index = 0;
@@ -44,7 +44,22 @@ public class ExcelHelper {
             //Workbook的createSheet方法有两个参数，第一个是工作表的名称，第二个是工作表在工作薄中的位置
             WritableSheet ws = wwb.createSheet("sheet1", 0);
             JSONArray headers = JSONArray.fromObject(header_arr);
-            JSONArray rowdatas = JSONArray.fromObject(rowdata);
+            JSONArray rowdatas=new JSONArray();
+            if(isall){
+               JSONObject urlparam=JSONObject.fromObject(extraParams);
+                String urlparamsstr="";
+                for (Object param_name : urlparam.names()) {
+                    urlparamsstr+=param_name.toString()+"="+urlparam.get(param_name).toString()+"&";
+
+                }
+                urlparamsstr+="limit=100000&start=0";
+
+                rowdatas=JSONObject.fromObject(UrlConnectHelper.sendPost(url,urlparamsstr)).getJSONArray("results");
+
+
+            }else{
+                rowdatas = JSONArray.fromObject(rowdata);
+            }
             JSONObject sum_item = JSONObject.fromObject(sum);
             try {
                 WritableFont font = new WritableFont(WritableFont.createFont("宋体"),
