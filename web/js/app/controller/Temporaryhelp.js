@@ -14,9 +14,9 @@
  */
 Ext.define('ZSMZJ.controller.Temporaryhelp', {
     extend: 'Ext.app.Controller',
-    models: ['temporaryhelp.GrantMoneyModel'],
+    models: [],
 
-    stores: ['temporaryhelp.GrantMoneyStore'],
+    stores: [],
 
     refs: [
 
@@ -32,9 +32,9 @@ Ext.define('ZSMZJ.controller.Temporaryhelp', {
         'temporaryhelp.applysubmitFieldset',
         'temporaryhelp.alterfamilybasicFieldset',
         'temporaryhelp.altersubmitFieldset',
-        'temporaryhelp.altersubmitlogFieldset',
+        'temporaryhelp.altersubmitlogFieldset'/*,
 
-        'temporaryhelp.GrantMoneyGrid'
+        'temporaryhelp.GrantMoneyGrid'*/
 
     ],
 

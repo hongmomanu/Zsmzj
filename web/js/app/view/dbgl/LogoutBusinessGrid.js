@@ -291,9 +291,23 @@ Ext.define('ZSMZJ.view.dbgl.LogoutBusinessGrid' ,{
 
                 },'->',
                 {
-                    text: '导出Excel',
-                    action:'outexcel'
-
+                    xtype:'splitbutton',
+                    text: 'excel输出',
+                    isall:false,
+                    action:'outexcel',
+                    arrowAlign:'right',
+                    menu: [
+                        {
+                            text: '当前页导出',
+                            isall:false,
+                            action:'outexcel'
+                        },
+                        {
+                            text: '全部导出',
+                            isall:true,
+                            action:'outexcel'
+                        }
+                    ]
                 }
             ],
             bbar: Ext.create('Ext.PagingToolbar', {

@@ -239,26 +239,19 @@ Ext.define('ZSMZJ.view.dbgl.GrantMoneyGrid' ,{
                 {
                     xtype:'splitbutton',
                     text: 'excel输出',
-                    /*scale: 'large',
-                    rowspan: 3,
-                    iconCls: 'add',
-                    iconAlign: 'top',*/
                     isall:false,
                     action:'outexcel',
                     arrowAlign:'right',
                     menu: [
                         {
-                            text: '当前页导出Excel',
+                            text: '当前页导出',
                             isall:false,
-
                             action:'outexcel'
-
                         },
                         {
-                            text: '全部导出Excel',
+                            text: '全部导出',
                             isall:true,
                             action:'outexcel'
-
                         }
                     ]
                 },

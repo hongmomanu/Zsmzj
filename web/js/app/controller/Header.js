@@ -164,19 +164,19 @@ Ext.define('ZSMZJ.controller.Header', {
                 click: this.showcheckprocess
 
             },*/
-            'needtodobusinesspanel button[action=outexcel]':{
+            'needtodobusinesspanel button[action=outexcel],needtodobusinesspanel menuitem[action=outexcel]':{
                 click: this.outexcel
 
             },
-            'changedbusinesspanel button[action=outexcel]':{
+            'changedbusinesspanel button[action=outexcel],changedbusinesspanel menuitem[action=outexcel]':{
                 click: this.outexcel_changed
 
             },
-            'logoutbusinesspanel button[action=outexcel]':{
+            'logoutbusinesspanel button[action=outexcel],logoutbusinesspanel menuitem[action=outexcel]':{
                 click: this.outexcel_logout
 
             },
-            'familyquerypanel button[action=outexcel]':{
+            'familyquerypanel button[action=outexcel],familyquerypanel menuitem[action=outexcel]':{
                 click: this.outexcel_family
 
             },
@@ -192,7 +192,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
             },
 
-            'peoplequerypanel button[action=outexcel]':{
+            'peoplequerypanel button[action=outexcel],peoplequerypanel menuitem[action=outexcel]':{
                 click: this.outexcel_person
 
             },
@@ -200,7 +200,7 @@ Ext.define('ZSMZJ.controller.Header', {
                 click: this.outexcel_statistics
 
             },
-            'dbglstatisticscomplexonepanel button[action=outexcel]':{
+            'dbglstatisticscomplexonepanel button[action=outexcel],dbglstatisticscomplexonepanel menuitem[action=outexcel]':{
                 click: this.outexcel_complex
 
             },
