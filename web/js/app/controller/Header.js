@@ -924,10 +924,12 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
     outexcel_statistics:function(btn){
+        //var b=a.normalGrid;var c=b.columnManager.headerCt.items.items[0]
+
         var grid=btn.up('panel');
         var root=grid.getRootNode();
         var rows=this.treeToarr(root,[]);
-
+        testobj=grid;
         var sum={};
         if(rows.length==0){
             Ext.Msg.alert("提示信息", "无相关数据可导出");

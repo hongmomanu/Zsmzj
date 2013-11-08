@@ -23,7 +23,14 @@ public class FuncControl {
 
         FuncImplement func=new FuncImplement();
         ComonDao cd=new ComonDao();
-        int totalnum= cd.getTotalCount(FuncTable);
+        String sqlCount="select count(*) from "+FuncTable;
+        if(keyword!=null&&!keyword.equals("")){
+            sqlCount+=" where funcname like '%"+keyword+"%' ";
+            sqlCount+=" or functype like '%"+keyword+"%' ";
+            sqlCount+=" or label like '%"+keyword+"%' ";
+            sqlCount+=" or imgurl like '%"+keyword+"%' ";
+        }
+        int totalnum= cd.getTotalCountBySql(sqlCount);
         ArrayList<Map<String,Object>> list=func.getFuncs(start, limit, keyword);
         Map<String,Object>res=new HashMap<String, Object>();
         res.put("totalCount",totalnum);

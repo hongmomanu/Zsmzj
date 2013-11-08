@@ -24,7 +24,15 @@ public class FuncDao {
     private static String FuncToRoleTable="functorole";
     public ArrayList<Map<String, Object>> getFuncs(int start, int limit, String keyword) {
         Connection testConn= JdbcFactory.getConn("sqlite");
-        String sql=  "select funcname,functype,id,label,imgurl,sortnum from "+FuncTable+" Limit "+limit+" Offset "+ start;
+        String sql=  "select funcname,functype,id,label,imgurl,sortnum from "+FuncTable ;
+        if(keyword!=null && !keyword.equals("")){
+            sql+=" where funcname like '%"+keyword+"%' ";
+            sql+=" or functype like '%"+keyword+"%' ";
+            sql+=" or label like '%"+keyword+"%' ";
+            sql+=" or imgurl like '%"+keyword+"%' ";
+
+        }
+        sql +=" Limit "+limit+" Offset "+ start;
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
         ArrayList<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         try {

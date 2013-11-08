@@ -4,11 +4,11 @@ Ext.define('ZSMZJ.store.manager.FuncManagers', {
     alias : 'widget.funcmanagers',
 
     pageSize: 20,
-    getMethod:function(request){ return 'POST'; },
     autoLoad:false,
     proxy:{
         type: 'ajax',
         url: 'ajax/getfuncs.jsp',
+        getMethod:function(request){ return 'POST'; },
         reader: {
             type: 'json',
             root: 'results',
