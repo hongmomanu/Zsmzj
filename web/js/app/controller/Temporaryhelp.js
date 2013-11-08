@@ -14,9 +14,9 @@
  */
 Ext.define('ZSMZJ.controller.Temporaryhelp', {
     extend: 'Ext.app.Controller',
-    models: ['temporaryhelp.GrantMoneyModel'],
+    models: [],
 
-    stores: ['temporaryhelp.GrantMoneyStore'],
+    stores: [],
 
     refs: [
 
