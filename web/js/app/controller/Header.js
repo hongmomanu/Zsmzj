@@ -725,10 +725,10 @@ Ext.define('ZSMZJ.controller.Header', {
             return ;
         }
         var sum={"monthlyincome":store.sum("monthlyincome")};
-        this.outexcel_common(btn,sum,1,rows)
+        this.outexcel_common(btn,sum,1,rows,null,null,grid);
     },
     outexcel_complex:function(btn){
-        var grid=btn.up('grid');
+        var grid=btn.up('panel');
         var root=grid.getRootNode();
         var rows=this.treeToarr(root,[]);
 
@@ -920,11 +920,11 @@ Ext.define('ZSMZJ.controller.Header', {
         //alert(1);
         //testobj=grid;//.columnManager.getColumns()
         //var a=testobj.getView().normalView
-        this.outexcel_common(btn,sum,3,rows,headers,15);
+        this.outexcel_common(btn,sum,3,rows,headers,15,grid);
 
     },
     outexcel_statistics:function(btn){
-        var grid=btn.up('grid');
+        var grid=btn.up('panel');
         var root=grid.getRootNode();
         var rows=this.treeToarr(root,[]);
 
@@ -1121,7 +1121,7 @@ Ext.define('ZSMZJ.controller.Header', {
         }
         var sum={"monthlyincome":store.sum("monthlyincome")};
         var headers=this.makecommon_headers(grid);
-        this.outexcel_common(btn,sum,1,rows,headers);
+        this.outexcel_common(btn,sum,1,rows,headers,null,grid);
     },
 
     //高级搜索入口
@@ -1164,7 +1164,7 @@ Ext.define('ZSMZJ.controller.Header', {
         }
         var headers=this.makecommon_headers(grid);
         var sum={"totalhelpmoney":store.sum("totalhelpmoney"),"familynum":store.sum("familynum")};
-        this.outexcel_common(btn,sum,1,rows,headers);
+        this.outexcel_common(btn,sum,1,rows,headers,null,grid);
     },
     outexcel_logout:function(btn){
         var grid=btn.up('grid');
@@ -1179,7 +1179,7 @@ Ext.define('ZSMZJ.controller.Header', {
         }
         var sum={"totalhelpmoney":store.sum("totalhelpmoney"),"familynum":store.sum("familynum")};
         var headers=this.makecommon_headers(grid);
-        this.outexcel_common(btn,sum,1,rows,headers);
+        this.outexcel_common(btn,sum,1,rows,headers,null,grid);
     },
     outexcel_changed:function(btn){
         var grid=btn.up('grid');
@@ -1194,10 +1194,10 @@ Ext.define('ZSMZJ.controller.Header', {
         }
         var headers=this.makecommon_headers(grid);
         var sum={"totalhelpmoney":store.sum("totalhelpmoney"),"familynum":store.sum("familynum")};
-        this.outexcel_common(btn,sum,1,rows,headers);
+        this.outexcel_common(btn,sum,1,rows,headers,null,grid);
     },
-    outexcel_common:function(btn,sum,headerheight,rows,headers,headercols){
-        var grid=btn.up('grid');
+    outexcel_common:function(btn,sum,headerheight,rows,headers,headercols,grid){
+
         var me=this;
         //testobj=grid;
         var store=grid.getStore();
@@ -1227,6 +1227,7 @@ Ext.define('ZSMZJ.controller.Header', {
             }
         };
         var failFunc = function (res, action) {
+            me.closemask();
             Ext.Msg.alert("提示信息", "导出excel文件失败");
         };
         ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"数据生成中..."});
@@ -1235,7 +1236,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
     },
     outexcel:function(btn){
-        var grid=btn.up('panel');
+        var grid=btn.up('grid');
         var store=grid.getStore();
         var rows=[];
         Ext.each(store.data.items,function(item){
@@ -1247,7 +1248,7 @@ Ext.define('ZSMZJ.controller.Header', {
         }
         var headers=this.makecommon_headers(grid);
         var sum={"totalhelpmoney":store.sum("totalhelpmoney"),"familynum":store.sum("familynum")};
-        this.outexcel_common(btn,sum,1,rows,headers);
+        this.outexcel_common(btn,sum,1,rows,headers,null,grid);
 
     },
     //打印
@@ -2026,6 +2027,7 @@ Ext.define('ZSMZJ.controller.Header', {
     ajaxSend:function(params,url,sucFun,failFunc,method){
         Ext.Ajax.request({
             url: url,
+            timeout: 60000,
             method:method,
             params: params,
             success:sucFun,

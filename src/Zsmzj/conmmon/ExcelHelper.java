@@ -49,7 +49,9 @@ public class ExcelHelper {
                JSONObject urlparam=JSONObject.fromObject(extraParams);
                 String urlparamsstr="";
                 for (Object param_name : urlparam.names()) {
-                    urlparamsstr+=param_name.toString()+"="+urlparam.get(param_name).toString()+"&";
+                    String value=urlparam.get(param_name).toString();
+                    if(value.equals("null"))continue;
+                    urlparamsstr+=param_name.toString()+"="+value+"&";
 
                 }
                 urlparamsstr+="limit=100000&start=0";
