@@ -135,10 +135,9 @@ Ext.define('ZSMZJ.view.dbgl.addNewGrantWin' ,{
                                 value:0,
                                 name:'adjustmoney'
 
-                            },{
-                                //xtype:'dbglsearchbusinessgrid'
+                            }/*,{
                                 xtype:'dbglsearchbusinessgridpanel'
-                            }
+                            }*/
 
                         ],
 
