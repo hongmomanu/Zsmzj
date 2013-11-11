@@ -101,7 +101,7 @@ Ext.define('ZSMZJ.view.charitablehelp.applysubmitFieldset', {
                         fieldLabel: '公示结束日期',
                         xtype: 'datefield',
                         format: 'Y-m-d',
-                        colspan:2,
+                        //colspan:2,
                         allowBlank: true
                     }
                     ,{

@@ -226,7 +226,7 @@ Ext.define('ZSMZJ.view.dbedge.familybasicFieldset', {
                     },{
                         name: 'bankid',
                         fieldLabel: '银行账号',
-                        colspan:3,
+                        colspan:2,
                         //afterLabelTextTpl: required,
                         //emptyText: '低保户类型',
                         allowBlank: true

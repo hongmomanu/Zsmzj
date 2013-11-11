@@ -19,7 +19,7 @@ Ext.define('ZSMZJ.view.studyhelp.alterfamilybasicFieldset', {
         Ext.apply(this,
             {
                 xtype: 'fieldset',
-                title: '<a>【助学救助业务办理】家庭基本信息555</a>',
+                title: '<a>【助学救助业务办理】家庭基本信息</a>',
                 cls:'fieldset-border',
                 defaultType: 'textfield',
 
@@ -201,7 +201,7 @@ Ext.define('ZSMZJ.view.studyhelp.alterfamilybasicFieldset', {
                     },{
                         name: 'bankid',
                         fieldLabel: '银行账号',
-                        colspan:2,
+                        //colspan:2,
                         //afterLabelTextTpl: required,
                         //emptyText: '低保户类型',
                         allowBlank: true

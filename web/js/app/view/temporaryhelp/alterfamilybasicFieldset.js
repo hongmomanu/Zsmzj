@@ -217,7 +217,7 @@ Ext.define('ZSMZJ.view.temporaryhelp.alterfamilybasicFieldset', {
                     {
                         name: 'bankid',
                         fieldLabel: '银行账号',
-                        colspan: 2,
+                        //colspan: 2,
                         //afterLabelTextTpl: required,
                         //emptyText: '低保户类型',
                         allowBlank: true
