@@ -30,6 +30,7 @@ Ext.define('ZSMZJ.view.disaster.businessApply', {
                 {
                 xtype: 'fieldset',
                 title: '<a>【灾害场所信息登记办理】灾害基本信息</a>',
+                cls:'fieldset-border',
                 defaultType: 'textfield',
 
                 //layout: 'anchor',
@@ -44,7 +45,7 @@ Ext.define('ZSMZJ.view.disaster.businessApply', {
                         cellspacing: 1,
                         width: '100%',
                         align: 'center',
-                        style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
+                        style: "border:1px solid #2E2E2E;border-collapse:collapse;margin:0 auto;text-align:left;"
                         /*style: {
                          width: '100%'
                          }*/
