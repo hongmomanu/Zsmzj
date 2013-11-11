@@ -37,6 +37,7 @@ Ext.define('ZSMZJ.view.charitablehelp.institutionAlter', {
             items: [
                 {
                     xtype: 'fieldset',
+                    cls:'fieldset-border',
                     title: '<a>【机构救助登记办理】救助机构基本信息</a>',
                     defaultType: 'textfield',
 
@@ -52,7 +53,7 @@ Ext.define('ZSMZJ.view.charitablehelp.institutionAlter', {
                             cellspacing: 1,
                             width: '100%',
                             align: 'center',
-                            style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
+                            style: "border:1px solid #2E2E2E;border-collapse:collapse;margin:0 auto;text-align:left;"
                             /*style: {
                              width: '100%'
                              }*/

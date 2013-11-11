@@ -17,6 +17,7 @@ Ext.define('ZSMZJ.view.charitablehelp.familyinputFieldset', {
         var required = '<span style="color:red;font-weight:bold" data-qtip="必填字段">*</span>';
         Ext.apply(this, {
             xtype: 'fieldset',
+            cls:'fieldset-border',
             title: '<a>家庭收入信息</a>',
             collapsible: true,
             collapsed:true,
@@ -33,7 +34,7 @@ Ext.define('ZSMZJ.view.charitablehelp.familyinputFieldset', {
                     cellspacing: 1,
                     width: '100%',
                     align: 'center',
-                    style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
+                    style: "border:1px solid #2E2E2E;border-collapse:collapse;margin:0 auto;text-align:left;"
                     /*style: {
                      width: '100%'
                      }*/

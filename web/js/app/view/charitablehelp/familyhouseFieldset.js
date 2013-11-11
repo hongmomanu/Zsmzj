@@ -15,6 +15,7 @@ Ext.define('ZSMZJ.view.charitablehelp.familyhouseFieldset',{
         var required='<span style="color:red;font-weight:bold" data-qtip="必填字段">*</span>';
         Ext.apply(this,{
             xtype: 'fieldset',
+            cls:'fieldset-border',
             title: '<a>家庭房产信息</a>',
             defaultType: 'textfield',
             bodyStyle: 'padding:5px 5px 5px 5px',
@@ -30,7 +31,7 @@ Ext.define('ZSMZJ.view.charitablehelp.familyhouseFieldset',{
                     cellspacing: 1,
                     width: '100%',
                     align: 'center',
-                    style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
+                    style: "border:1px solid #2E2E2E;border-collapse:collapse;margin:0 auto;text-align:left;"
                     /*style: {
                      width: '100%'
                      }*/
