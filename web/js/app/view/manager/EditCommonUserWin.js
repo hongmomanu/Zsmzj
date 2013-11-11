@@ -5,9 +5,9 @@
  * Time: 下午1:35
  * To change this template use File | Settings | File Templates.
  */
-Ext.define('ZSMZJ.view.manager.EditUserWin' ,{
+Ext.define('ZSMZJ.view.manager.EditCommonUserWin' ,{
     extend: 'Ext.window.Window',
-    alias : 'widget.edituserwin',
+    alias : 'widget.editcommonuserwin',
     requires: [
         //'Ext.form.*'
     ],
@@ -15,7 +15,7 @@ Ext.define('ZSMZJ.view.manager.EditUserWin' ,{
         Ext.apply(this, {
             title: '编辑用户',
             height: 260,
-            width: 600,
+            width: 400,
             closeAction : 'hide',
             resizable:false,
             layout: 'fit',
@@ -52,17 +52,17 @@ Ext.define('ZSMZJ.view.manager.EditUserWin' ,{
                         blankText   : '不能为空',
                         name: 'displayname'
                     },
-                    /*{
+                    {
                         xtype: 'textfield',
-                        fieldLabel: '用户密码',
+                        fieldLabel: '原用户密码',
                         blankText   : '不能为空',
                         allowBlank:false,
                         inputType: 'password',
                         name: 'oldpassword'
-                    },*/
+                    },
                     {
                         xtype: 'textfield',
-                        fieldLabel: '用户密码',
+                        fieldLabel: '新用户密码',
                         blankText   : '不能为空',
                         allowBlank:false,
                         inputType: 'password',

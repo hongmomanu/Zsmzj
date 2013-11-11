@@ -1,5 +1,6 @@
 package Zsmzj.manager.usermanager.dao;
 
+import Zsmzj.conmmon.ComonDao;
 import Zsmzj.jdbc.JdbcFactory;
 import org.apache.log4j.Logger;
 
@@ -25,7 +26,7 @@ public class UserDao {
     private static String  RoleTable="roles";
     public ArrayList<Map<String, Object>> getUsers(int start, int limit, String keyword) {
         Connection testConn= JdbcFactory.getConn("sqlite");
-        String sql=  "select a.username,a.time,a.id,a.displayname,b.rolename from "+UserTable+" as a,"+RoleTable+" as b " +
+        String sql=  "select a.username,a.time,a.id,a.password,a.displayname,b.rolename from "+UserTable+" as a,"+RoleTable+" as b " +
                 " where a.roleid=b.id Limit "+limit+" Offset "+ start;
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
         ArrayList<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
@@ -37,6 +38,7 @@ public class UserDao {
                 user.put("rolename",rs.getString("rolename"));
                 user.put("time",rs.getString("time"));
                 user.put("userid",rs.getInt("id"));
+                user.put("passwordold",rs.getString("password"));
                 user.put("displayname",rs.getString("displayname"));
                 list.add(user);
 
@@ -114,8 +116,14 @@ public class UserDao {
 
 
     }
-    public int editUser(int userid,String username,String displayname,String password){
+    public int editUser(int userid,String username,String displayname,String password,boolean iscomon,String oldpassword){
         Connection conn= JdbcFactory.getConn("sqlite");
+        if(iscomon){
+            String sql = "select count(*)  from " + UserTable + " where id="+userid+" and password='"+oldpassword+"'";
+            ComonDao cd=new ComonDao();
+            int num=cd.getTotalCountBySql(sql);
+            if(num==0)return -1;
+        }
         String sql = "update " + UserTable + " set username=?,displayname=?,password=? where id=? ";
         PreparedStatement pstmt = JdbcFactory.getPstmt(conn, sql);
 
