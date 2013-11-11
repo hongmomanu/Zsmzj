@@ -108,6 +108,7 @@ Ext.define('ZSMZJ.view.dbgl.applysubmitFieldset', {
                         fieldLabel: '享受人数',
                         value:0,
                         itemId: 'enjoyPersons',
+
                         afterLabelTextTpl: required,
                         disabled:true,
                         allowBlank: false
@@ -117,6 +118,13 @@ Ext.define('ZSMZJ.view.dbgl.applysubmitFieldset', {
                         itemId:'disabledpersons',
                         fieldLabel: '重残人数',
                         value:0,
+                        listeners: {
+
+                            "change":function(field,e){
+                                //alert(1);
+                                this.fireEvent('moneychane', field);
+                            }
+                        },
                         afterLabelTextTpl: required,
                         emptyText: '请输入重残人数',
                         blankText : '请输入重残人数',
