@@ -39,6 +39,27 @@ Ext.define('ZSMZJ.view.manager.FuncManager' ,{
 
             ],
             flex: 1,
+            tbar:[
+                {
+                    xtype: 'textfield',
+                    hidden: false,
+                    width:200,
+                    //size:40,
+                    listeners: {
+
+                        "specialkey": function (field, e) {
+                            if (e.keyCode == 13) {
+                                var keyword = field.getValue().replace(/\s+/g, "");
+                                var store=this.up('panel').getStore();
+                                store.proxy.extraParams.keyword = keyword;
+                                store.loadPage(1);
+                            }
+                        }
+                    },
+                    emptyText: '输入搜索关键字'
+
+                }
+            ],
             bbar: Ext.create('Ext.PagingToolbar', {
                 store: 'manager.FuncManagers',
                 displayInfo: true,

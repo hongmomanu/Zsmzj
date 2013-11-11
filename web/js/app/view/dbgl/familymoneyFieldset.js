@@ -19,6 +19,7 @@ Ext.define('ZSMZJ.view.dbgl.familymoneyFieldset', {
             {
                 xtype: 'fieldset',
                 title: '<a>家庭财产信息</a>',
+                cls:'fieldset-border',
                 defaultType: 'textfield',
                 bodyStyle: 'padding:5px 5px 5px 5px',
                 //layout: 'anchor',
@@ -33,7 +34,7 @@ Ext.define('ZSMZJ.view.dbgl.familymoneyFieldset', {
                         cellspacing: 1,
                         width: '100%',
                         align: 'center',
-                        style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
+                        style: "border:1px solid #2E2E2E;border-collapse:collapse;margin:0 auto;text-align:left;"
                         /*style: {
                          width: '100%'
                          }*/

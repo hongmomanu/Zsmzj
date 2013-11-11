@@ -18,6 +18,7 @@ Ext.define('ZSMZJ.view.dbgl.familyaffixFieldset', {
         Ext.apply(this,
             {
                 title: '<a>电子附件信息</a>',
+                cls:'fieldset-border',
                 collapsible: true,
                 collapsed:true,
                 defaultType: 'label',
@@ -32,7 +33,7 @@ Ext.define('ZSMZJ.view.dbgl.familyaffixFieldset', {
                         cellspacing: 1,
                         width: '100%',
                         align: 'center',
-                        style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
+                        style: "border:1px solid #2E2E2E;border-collapse:collapse;margin:0 auto;text-align:left;"
                         /*style: {
                          width: '100%'
                          }*/

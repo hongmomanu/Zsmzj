@@ -52,7 +52,7 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                                     renderTo: id0,
                                     margin: '0 5 0 5',
                                     text: '修改',
-                                    icon:'img/edit.png',
+                                    icon:'img/busiicon/change.png',
                                     /*hidden:!(r.get('processstatus').toString()==processdiction.stepzero
                                      ||r.get('processstatus').toString()==processdiction.stepback),*/
                                     hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
@@ -145,7 +145,7 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                                     hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
                                         {name:"name",value:r.get("processstatus")}).children,
                                         {name:"name",value:"提交"}),
-                                    icon:'img/sp.gif',
+                                    icon:'img/busiicon/busiapproval.png',
                                     width: 55,
                                     listeners: {
                                         render: function(c){
@@ -171,7 +171,7 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                                     renderTo: id3,
                                     text: '删除',
                                     margin: '0 5 0 5',
-                                    icon:'img/del.gif',
+                                    icon:'img/busiicon/del.gif',
                                     /*hidden:!(r.get('processstatus').toString()==processdiction.stepzero
                                      ||r.get('processstatus').toString()==processdiction.stepback),*/
                                     hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,

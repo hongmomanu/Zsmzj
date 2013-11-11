@@ -32,6 +32,7 @@ Ext.define('ZSMZJ.view.dbgl.SearchBusinessGrid' ,{
             border: false,
             isnewgrid:true,
             stype:businessTableType.dbgl,
+            //stype:this.up('grid'),
             viewConfig: {
                 trackOver: false,
                 loadMask: true,

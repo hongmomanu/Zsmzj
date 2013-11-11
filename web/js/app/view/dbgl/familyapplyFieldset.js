@@ -19,6 +19,7 @@ Ext.define('ZSMZJ.view.dbgl.familyapplyFieldset', {
             {
                 xtype: 'fieldset',
                 title: '<a>业务申请信息</a>',
+                cls:'fieldset-border',
                 defaultType: 'textfield',
 
                 //layout: 'anchor',
@@ -27,13 +28,19 @@ Ext.define('ZSMZJ.view.dbgl.familyapplyFieldset', {
 
                     // The total column count must be specified here
                     columns: 3,
+                    tdAttrs:{
+                        style: "BGCOLOR:red;border:1px solid #2E2E2E;border-collapse:collapse;margin:0 auto;text-align:left;"
+                    },
                     tableAttrs: {
                         border: 1,
                         cellpadding: 5,
-                        cellspacing: 1,
+                        cellspacing: 0,
+                        cellstyle:{
+
+                        },
                         width: '100%',
                         align: 'center',
-                        style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
+                        style: "BGCOLOR:red;border:1px solid #2E2E2E;border-collapse:collapse;margin:0 auto;text-align:left;"
                         /*style: {
                          width: '100%'
                          }*/
@@ -78,6 +85,7 @@ Ext.define('ZSMZJ.view.dbgl.familyapplyFieldset', {
                         fieldLabel: '申请救济金(元/月/人)',
                         afterLabelTextTpl: required,
                         value:0,
+                        colspan:3,
                         emptyText: '请输入家庭总收入',
                         blankText : '请输入家庭总收入',
                         allowBlank: false

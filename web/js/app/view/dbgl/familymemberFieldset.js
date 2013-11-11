@@ -19,6 +19,7 @@ Ext.define('ZSMZJ.view.dbgl.familymemberFieldset', {
             {
                 xtype: 'fieldset',
                 title: '<a>家庭成员信息</a>',
+                cls:'fieldset-border',
                 defaultType: 'textfield',
                 bodyStyle: 'padding:5px 5px 5px 5px',
                 layout: 'fit',

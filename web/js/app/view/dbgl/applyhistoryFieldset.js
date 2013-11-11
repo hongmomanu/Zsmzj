@@ -16,7 +16,7 @@ Ext.define('ZSMZJ.view.dbgl.applyhistoryFieldset', {
             {
                 title: '<a>审批记录</a>',
                 defaultType: 'textfield',
-
+                cls:'fieldset-border',
                 //layout: 'anchor',
                 layout: {
                     type: 'table',
@@ -29,7 +29,7 @@ Ext.define('ZSMZJ.view.dbgl.applyhistoryFieldset', {
                         cellspacing: 1,
                         width: '100%',
                         align: 'center',
-                        style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
+                        style: "border:1px solid #2E2E2E;border-collapse:collapse;margin:0 auto;text-align:left;"
                         /*style: {
                          width: '100%'
                          }*/

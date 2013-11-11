@@ -19,6 +19,8 @@ Ext.define('ZSMZJ.view.dbgl.familybasicFieldset', {
             {
                 title: '<a>【低保业务办理】家庭基本信息</a>',
                 defaultType: 'textfield',
+                cls:'fieldset-border',
+                //style:"border:0px solid gray;",
                 layout: {
                     type: 'table',
                     columns: 3,
@@ -28,7 +30,7 @@ Ext.define('ZSMZJ.view.dbgl.familybasicFieldset', {
                         cellspacing: 1,
                         width: '100%',
                         //align: 'center',
-                        style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
+                        style: "border:1px solid #2E2E2E;border-collapse:collapse;margin:0 auto;text-align:left;"
                         /*style: {
                          width: '100%'
                          }*/
