@@ -17,6 +17,7 @@ Ext.define('ZSMZJ.view.studyhelp.familypropertyFieldset', {
         Ext.apply(this, {
             xtype: 'fieldset',
             title: '<a>家庭财产信息</a>',
+            cls:'fieldset-border',
             collapsible: true,
             collapsed:true,
             defaultType: 'textfield',
@@ -33,7 +34,7 @@ Ext.define('ZSMZJ.view.studyhelp.familypropertyFieldset', {
                     cellspacing: 1,
                     width: '100%',
                     align: 'center',
-                    style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
+                    style: "border:1px solid #2E2E2E;border-collapse:collapse;margin:0 auto;text-align:left;"
                     /*style: {
                      width: '100%'
                      }*/
