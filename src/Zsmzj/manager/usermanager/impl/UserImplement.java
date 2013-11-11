@@ -33,9 +33,9 @@ public class UserImplement implements UserMethods {
     }
 
     @Override
-    public int editUser(int userid, String username, String displayname, String password) {
+    public int editUser(int userid, String username, String displayname, String password,boolean iscomon,String oldpassword) {
         UserDao dao=new UserDao();
-        return dao.editUser(userid,username,displayname,password);
+        return dao.editUser(userid,username,displayname,password,iscomon,oldpassword);
     }
 
     @Override

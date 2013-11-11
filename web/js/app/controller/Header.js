@@ -217,7 +217,7 @@ Ext.define('ZSMZJ.controller.Header', {
                 },
                 showalterpwd:function(c){
                     var manager_cl=this.application.getController("Manager");
-                    manager_cl.edituserwin(userid,{"displayname":displayname,"username":username,"userid":userid});
+                    manager_cl.editcommonuserwin(userid,{"displayname":displayname,"username":username,"userid":userid});
                     //this.showalterpwd(c);
                 }
             },

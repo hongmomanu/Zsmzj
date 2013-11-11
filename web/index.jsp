@@ -20,6 +20,7 @@
           var roleid=<%=request.getSession().getAttribute("roleid")%>;
           var displayname="<%=request.getSession().getAttribute("displayname")%>";
           var divisionpath="<%=request.getSession().getAttribute("divisionpath")%>";
+          var password="<%=request.getSession().getAttribute("password")%>";
 
       </script>
       <script>

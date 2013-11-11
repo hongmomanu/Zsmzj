@@ -47,6 +47,7 @@ Ext.define('ZSMZJ.controller.Manager', {
         'manager.RoleFuncWin',
         'manager.EditFuncWin',
         'manager.EditUserWin',
+        'manager.EditCommonUserWin',
         'manager.EditEnumWin',
         'manager.funcMenu',
         'manager.enumMenu',
@@ -114,6 +115,8 @@ Ext.define('ZSMZJ.controller.Manager', {
             },
             'edituserwin button[action=save]': {
                 click: this.saveedituser
+            },'editcommonuserwin button[action=save]': {
+                click: this.saveeditusercommon
             },
 
             'rolefuncgrid button[action=save]': {
@@ -432,6 +435,13 @@ Ext.define('ZSMZJ.controller.Manager', {
         this.rolefuncstoreLoad(rolefuncstore);
 
     },
+    editcommonuserwin:function(userid,data){
+        if (!this.edit_commonuser_win)this.edit_commonuser_win =Ext.widget('editcommonuserwin');
+        this.edit_commonuser_win.down('form').getForm().reset();
+        this.edit_commonuser_win.down('form').getForm().setValues(data);
+        this.edit_commonuser_win.show();
+        this.edit_commonuser_win.editdata=data;
+    },
     edituserwin:function(userid,data){
         if (!this.edit_user_win)this.edit_user_win =Ext.widget('edituserwin');
         this.edit_user_win.down('form').getForm().reset();
@@ -551,10 +561,34 @@ Ext.define('ZSMZJ.controller.Manager', {
         this.formSubmit(btn, params, 'ajax/uploadfile.jsp', successFunc, failFunc,"正在提交数据");
 
     },
+    saveeditusercommon:function(btn){
+        var me=this;
+        var params = {
+            userid:btn.up('window').editdata.userid,
+            iscommon:true
+        };
+        var successFunc = function (form, action) {
+            var msg=Ext.JSON.decode(action.response.responseText);
+            if(msg.success){
+                Ext.Msg.alert("提示信息", "修改成功");
+                btn.up('window').close();
+            }else{
+                Ext.Msg.alert("提示信息", "修改失败");
+            }
+        };
+        var failFunc = function (form, action) {
+            Ext.Msg.alert("提示信息", "修改失败，检查web服务或数据库服务");
+
+        };
+
+        this.formSubmit(btn, params, 'ajax/edituser.jsp', successFunc, failFunc,"正在提交数据");
+
+    },
     saveedituser:function(btn){
         var me=this;
         var params = {
-            userid:btn.up('window').editdata.userid
+            userid:btn.up('window').editdata.userid,
+            iscommon:false
         };
         var userstore=this.getManagerUserManagersStore();
         var successFunc = function (form, action) {

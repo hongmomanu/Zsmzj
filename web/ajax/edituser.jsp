@@ -18,9 +18,11 @@
         String username=request.getParameter("username");
         String displayname=request.getParameter("displayname");
         String password=request.getParameter("password");
+        String oldpassword=request.getParameter("oldpassword");
+        boolean iscommon=Boolean.parseBoolean(request.getParameter("iscommon"));
         int userid=Integer.parseInt(request.getParameter("userid"));
         UserControl user=new UserControl();
-        out.print(user.EditUser(userid,username,displayname,password));
+        out.print(user.EditUser(userid,username,displayname,password,iscommon,oldpassword));
     }
     //out.print("ok");
 %>
