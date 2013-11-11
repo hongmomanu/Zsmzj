@@ -17,6 +17,7 @@ Ext.define('ZSMZJ.view.dbedge.changesubmitFieldset', {
             {
                 xtype: 'fieldset',
                 title: '<a>业务审批信息</a>',
+                cls:'fieldset-border',
                 defaultType: 'textfield',
                 itemId:'businesscheckinfo',
 
@@ -32,7 +33,7 @@ Ext.define('ZSMZJ.view.dbedge.changesubmitFieldset', {
                         cellspacing: 1,
                         width: '100%',
                         align: 'center',
-                        style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
+                        style: "border:1px solid #2E2E2E;border-collapse:collapse;margin:0 auto;text-align:left;"
                         /*style: {
                          width: '100%'
                          }*/
