@@ -110,14 +110,14 @@ Ext.define('ZSMZJ.view.Header', {
                     items:[
 
                         {
-                            columnWidth: 0.6,
+                            columnWidth: 0.5,
                             baseCls: 'main-header',
                             border: false,
                             xtype:'headviewpanel'
 
                         },
                         {
-                            columnWidth: 0.4,
+                            columnWidth: 0.5,
                             xtype:'panel',
                             border: false,
                             baseCls: 'main-header',
@@ -194,6 +194,20 @@ Ext.define('ZSMZJ.view.Header', {
                                                          alert(2);
                                                          c.getEl().on('click', function(){ this.fireEvent('needthingsclick', c); }, c);
                                                          }*/
+
+                                                    }
+                                                },{
+                                                    baseCls: 'main-header',
+                                                    html:'&nbsp;&nbsp;'
+                                                },{
+                                                    html: '重设密码',
+                                                    baseCls: 'main-header',
+                                                    cls:'mouseover',
+                                                    //type:'needthings',
+                                                    listeners: {
+                                                        render: function(c){
+                                                            c.getEl().on('click', function(){ this.fireEvent('showalterpwd', c); }, c);
+                                                        }
 
                                                     }
                                                 },{

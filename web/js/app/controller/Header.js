@@ -214,6 +214,11 @@ Ext.define('ZSMZJ.controller.Header', {
             'myheader component':{
                 needthingsclick:function (c){
                     this.showneedthings(c);
+                },
+                showalterpwd:function(c){
+                    var manager_cl=this.application.getController("Manager");
+                    manager_cl.edituserwin(userid,{"displayname":displayname,"username":username,"userid":userid});
+                    //this.showalterpwd(c);
                 }
             },
             'processpicturepanel':{
