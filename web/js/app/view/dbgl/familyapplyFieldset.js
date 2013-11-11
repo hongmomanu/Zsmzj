@@ -28,9 +28,7 @@ Ext.define('ZSMZJ.view.dbgl.familyapplyFieldset', {
 
                     // The total column count must be specified here
                     columns: 3,
-                    tdAttrs:{
-                        style: "BGCOLOR:red;border:1px solid #2E2E2E;border-collapse:collapse;margin:0 auto;text-align:left;"
-                    },
+                    tdAttrs:{style: "border:1px solid #2E2E2E;"},
                     tableAttrs: {
                         border: 1,
                         cellpadding: 5,
@@ -40,7 +38,7 @@ Ext.define('ZSMZJ.view.dbgl.familyapplyFieldset', {
                         },
                         width: '100%',
                         align: 'center',
-                        style: "BGCOLOR:red;border:1px solid #2E2E2E;border-collapse:collapse;margin:0 auto;text-align:left;"
+                        style: "border:1px solid #2E2E2E;border-collapse:collapse;margin:0 auto;text-align:left;"
                         /*style: {
                          width: '100%'
                          }*/
