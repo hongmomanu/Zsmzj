@@ -2,9 +2,9 @@
     /*background-color: #252F49;*/
 
     border-bottom: 0px solid #16191D;
-    color: white;
+    color: #16191D;
     font-size: 16px;
-    font-weight: bold;
+    /*font-weight: bold;*/
     padding: 0px;
     /*text-align: center;*/
     /*height: 300px;*/
@@ -12,7 +12,7 @@
 
 }
 .main-header-all{
-    background-image: url('../img/log.jpg');
+    background-image: url('../img/head.jpg');
     border-bottom: 0px solid #16191D;
     color: white;
     font-size: 16px;
@@ -22,6 +22,8 @@
     /*height: 300px;*/
     text-shadow: 0 1px 0 #16191D;
 }
+
+
 /*设置开头li横向排列*/
 .main-header li{
     list-style: none;
