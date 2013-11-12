@@ -3,7 +3,7 @@ Ext.define('ZSMZJ.store.manager.UserManagers', {
     model: 'ZSMZJ.model.manager.UserManager',
     alias : 'widget.usermanagers',
 
-
+    pageSize: 10000,
     autoLoad:false,
     proxy:{
         type: 'ajax',
