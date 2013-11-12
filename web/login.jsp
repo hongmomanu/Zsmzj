@@ -117,7 +117,14 @@
 
     window.onload=function(){
         document.getElementById("account").focus();
-        document.getElementById('img_div').addEventListener('keydown',function(){alert('yes')});
+
+        var imgdiv=document.getElementById('img_div');
+
+        if(document.addEventListener){
+            imgdiv.addEventListener('keydown',onKeyDown);
+        }else if(document.attachEvent){
+            imgdiv.attachEvent('onkeydown',onKeyDown);
+        }
     };
 
 
@@ -135,6 +142,10 @@
         if (keyPressed == 13) {
             btnClick();
         }
+    }
+
+    function onKeyDown(e){
+        onEnterKeyDown('',e);
     }
 
 
