@@ -17,7 +17,7 @@ Ext.define('ZSMZJ.view.dbgl.familybasicFieldset', {
         var required = '<span style="color:red;font-weight:bold" data-qtip="必填字段">*</span>';
         Ext.apply(this,
             {
-                title: '<a>【低保业务办理】家庭基本信息2</a>',
+                title: '<a>【低保业务办理】家庭基本信息</a>',
                 defaultType: 'textfield',
                 cls:'fieldset-border',
                 //style:"border:0px solid gray;",
