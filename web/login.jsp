@@ -74,12 +74,12 @@
             <!--<caption id='welcome'>欢迎使用舟山市民政救助系统</caption>-->
             <tr>
                 <td class='rowhead'>用户名：</td>
-                <td><input class='text-2' type='text' required="true" placeholder="在这里输入用户名" name='username' id='account' /></td>
+                <td><input tabindex="1" class='text-2' type='text' required="true" placeholder="在这里输入用户名" name='username' id='account' /></td>
                 <!--<td rowspan='2'>
                     <input type='submit' id='submit' value='登录' class='button-s' style="text-align:center" />
                 </td>-->
                 <td rowspan="2" align="center" >
-                    <div>
+                    <div tabindex="3" id="img_div">
                         <img id="loginbtn" src="img/loginbtn.png" onclick="javascript:btnClick();">
                         <!--<input type='submit' id='submit' value='登录' class='button-s' style="text-align:center" />-->
                     </div>
@@ -88,7 +88,7 @@
 
             <tr>
                 <td class='rowhead'>密&nbsp;&nbsp;&nbsp;码：</td>
-                <td><input  class='text-2' type='password' required="true" placeholder="在这里输入密码"
+                <td><input tabindex="2" class='text-2' type='password' required="true" placeholder="在这里输入密码"
                            name='password' onkeydown="javascript:onEnterKeyDown(this,event);"/></td>
 
             </tr>
@@ -114,7 +114,20 @@
 </body>
 </html>
 <script type="text/javascript">
-    //window.onload=btnClick;
+
+    window.onload=function(){
+        document.getElementById("account").focus();
+
+        var imgdiv=document.getElementById('img_div');
+
+        if(document.addEventListener){
+            imgdiv.addEventListener('keydown',onKeyDown);
+        }else if(document.attachEvent){
+            imgdiv.attachEvent('onkeydown',onKeyDown);
+        }
+    };
+
+
     function btnClick(){
         document.getElementById("myform").submit();
     }
@@ -131,8 +144,10 @@
         }
     }
 
-    (function(){
-        document.getElementById("account").focus();
-    })();
+    function onKeyDown(e){
+        onEnterKeyDown('',e);
+    }
+
+
 
 </script>

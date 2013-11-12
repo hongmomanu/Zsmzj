@@ -19,7 +19,6 @@
     <file url="file://$PROJECT_DIR$/web/js/app/model/header/HeaderViewer.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/model/header/NeedToDo.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/model/medicalhelp/MedicalStandard.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/web/js/app/model/temporaryhelp/GrantMoneyModel.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/store/dbgl/ChangedBusinesses.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/store/dbgl/FamilyQuerys.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/store/dbgl/GrantMoneyStore.js" charset="UTF-8" />
@@ -38,7 +37,6 @@
     <file url="file://$PROJECT_DIR$/web/js/app/store/header/HeaderViewers.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/store/header/NeedToDos.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/store/medicalhelp/MedicalStandards.js" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/web/js/app/store/temporaryhelp/GrantMoneyStore.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/view/Header.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/view/MainPanel.js" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/web/js/app/view/Viewport.js" charset="UTF-8" />
