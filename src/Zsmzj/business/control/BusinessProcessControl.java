@@ -1984,9 +1984,11 @@ public class BusinessProcessControl {
 
     }
 
-    public String getNeedTodoBusinessList(int start,int limit,String keyword,String type,String businesstype,boolean ispublicinfo){
+    public String getNeedTodoBusinessList(int start,int limit,String keyword,String type,
+                                          String businesstype,boolean ispublicinfo,String bgdate,String edddate){
         BusinessProcess bp=new BusinessProcess();
         ComonDao cd=new ComonDao();
+        SimpleDateFormat sDayFormat   =   new SimpleDateFormat("yyyy-MM-dd");
         int totalnum =0;
         String sql_count="select count(*) from "+BusinessTable+" a  where 1=1 ";
 
@@ -2033,6 +2035,45 @@ public class BusinessProcessControl {
             sql_count+=" and a.rowid in  (select rowid from "+BusinessTable+" where processstatustype MATCH '"+type+"')";
 
         }
+        if(bgdate!=null&&!bgdate.equals("")){
+            Date date = null;
+            try {
+                date = sDayFormat.parse(bgdate);
+            } catch (ParseException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            java.util.Calendar   calendar=java.util.Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.YEAR, +100);    //得到下一个月
+            String enddate=sDayFormat.format(calendar.getTime());
+
+            sql_list+=" and a.rowid in  (select rowid from "+BusinessTable+" where helpbgtime Between '"+bgdate
+                    +"' and  '"+enddate+"' or changedate Between '"+bgdate+"' and '"+enddate+"' or logoutdate Between '"+bgdate+"' and '"+enddate+"')";
+            sql_list+=" and a.rowid in  (select rowid from "+BusinessTable+" where helpbgtime Between '"+bgdate
+                    +"' and  '"+enddate+"' or changedate Between '"+bgdate+"' and '"+enddate+"' or logoutdate Between '"+bgdate+"' and '"+enddate+"')";
+
+
+        }
+        if(edddate!=null&&!edddate.equals("")){
+
+            Date date = null;
+            try {
+                date = sDayFormat.parse(edddate);
+            } catch (ParseException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            java.util.Calendar   calendar=java.util.Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.YEAR, -100);    //得到下一个月
+            String enddate=sDayFormat.format(calendar.getTime());
+
+            sql_list+=" and a.rowid in  (select rowid from "+BusinessTable+" where helpbgtime Between '"+enddate
+                    +"' and  '"+edddate+"' or changedate Between '"+enddate+"' and '"+edddate+"' or logoutdate Between '"+enddate+"' and '"+edddate+"')";
+            sql_count+=" and a.rowid in  (select rowid from "+BusinessTable+" where helpbgtime Between '"+enddate
+                    +"' and  '"+edddate+"' or changedate Between '"+enddate+"' and '"+edddate+"' or logoutdate Between '"+enddate+"' and '"+edddate+"')";
+        }
+
+
         if (keyword!=null&&!keyword.equals("")){
             if(keyword.indexOf("and")>0){
                 String[] arr=keyword.split("and");

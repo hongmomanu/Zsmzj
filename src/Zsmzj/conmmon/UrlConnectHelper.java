@@ -98,6 +98,8 @@ public class UrlConnectHelper {
             conn.setRequestProperty("accept", "*/*");
             conn.setRequestProperty("connection", "Keep-Alive");
             conn.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)");
+            conn.setRequestProperty("Accept-Charset", "utf-8");
+            conn.setRequestProperty("contentType", "utf-8");
 
             //log.debug(params);
             // 发送POST请求必须设置如下两行
@@ -111,7 +113,7 @@ public class UrlConnectHelper {
             out.flush();
 
             // 定义BufferedReader输入流来读取URL的响应
-            in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            in = new BufferedReader(new InputStreamReader(conn.getInputStream(),"UTF-8"));
             String line;
             while ((line = in.readLine()) != null) {
                 result += "\n" + line;
