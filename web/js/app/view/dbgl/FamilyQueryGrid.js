@@ -144,8 +144,8 @@ Ext.define('ZSMZJ.view.dbgl.FamilyQueryGrid' ,{
                                 var keyword = field.getValue().replace(/\s+/g, "");
                                 var panel=this.up('panel');
                                 var store=panel.getStore();
-                                var bgdate=panel.down('#bgdate').getValue();
-                                var eddate=panel.down('#eddate').getValue();
+                                var bgdate=panel.down('#bgdate').getRawValue();
+                                var eddate=panel.down('#eddate').getRawValue();
                                 store.proxy.extraParams.bgdate=bgdate;
                                 store.proxy.extraParams.eddate=eddate;
                                 store.proxy.extraParams.keyword = keyword;
@@ -163,8 +163,8 @@ Ext.define('ZSMZJ.view.dbgl.FamilyQueryGrid' ,{
                             var keyword = field.getValue().replace(/\s+/g, "");
                             var panel=this.up('panel');
                             var store=panel.getStore();
-                            var bgdate=panel.down('#bgdate').getValue();
-                            var eddate=panel.down('#eddate').getValue();
+                            var bgdate=panel.down('#bgdate').getRawValue();
+                            var eddate=panel.down('#eddate').getRawValue();
                             store.proxy.extraParams.bgdate=bgdate;
                             store.proxy.extraParams.eddate=eddate;
                             store.proxy.extraParams.keyword = keyword;

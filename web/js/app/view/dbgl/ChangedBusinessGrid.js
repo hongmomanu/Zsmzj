@@ -281,8 +281,8 @@ Ext.define('ZSMZJ.view.dbgl.ChangedBusinessGrid' ,{
                                 var keyword = field.getValue().replace(/\s+/g, "");
                                 var panel=this.up('panel');
                                 var store=panel.getStore();
-                                var bgdate=panel.down('#bgdate').getValue();
-                                var eddate=panel.down('#eddate').getValue();
+                                var bgdate=panel.down('#bgdate').getRawValue();
+                                var eddate=panel.down('#eddate').getRawValue();
                                 store.proxy.extraParams.bgdate=bgdate;
                                 store.proxy.extraParams.eddate=eddate;
                                 store.proxy.extraParams.keyword = keyword;
@@ -300,8 +300,8 @@ Ext.define('ZSMZJ.view.dbgl.ChangedBusinessGrid' ,{
                             var field=btn.previousNode();
                             var panel=this.up('panel');
                             var store=panel.getStore();
-                            var bgdate=panel.down('#bgdate').getValue();
-                            var eddate=panel.down('#eddate').getValue();
+                            var bgdate=panel.down('#bgdate').getRawValue();
+                            var eddate=panel.down('#eddate').getRawValue();
                             store.proxy.extraParams.bgdate=bgdate;
                             store.proxy.extraParams.eddate=eddate;
                             var keyword = field.getValue().replace(/\s+/g, "");
@@ -337,6 +337,7 @@ Ext.define('ZSMZJ.view.dbgl.ChangedBusinessGrid' ,{
                     blankText : '请输选择开始日期',
                     xtype: 'datefield',
                     //itemId: 'personbirthday',
+                    submitFormat :'Y-m-d',
                     format: 'Y-m-d',
                     //value: Ext.Date.format(new Date(), 'Y-m-d'),
                     allowBlank: true
@@ -349,6 +350,7 @@ Ext.define('ZSMZJ.view.dbgl.ChangedBusinessGrid' ,{
                     itemId:'eddate',
                     //itemId: 'personbirthday',
                     format: 'Y-m-d',
+                    submitFormat :'Y-m-d',
                     //value: Ext.Date.format(new Date(), 'Y-m-d'),
                     allowBlank: true
                 },'->',
