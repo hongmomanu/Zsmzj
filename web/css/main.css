@@ -179,6 +179,17 @@
 .yw-busiapproval{
     background-image: url('../img/busiicon/busiapproval.png');
 }
+
+.fieldset-border{
+    border:0px solid gray;
+}
+
+.employee-add{
+    background-image: url('../img/icon/1.png');
+}
+.employee-remove{
+    background-image: url('../img/busiicon/del.gif');
+}
 /*主要显示界面header设置为图片
 .x-header-horizontal{
     background-image: url('../img/2.jpg');
