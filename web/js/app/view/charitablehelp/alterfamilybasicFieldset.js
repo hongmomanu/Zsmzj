@@ -19,22 +19,23 @@ Ext.define('ZSMZJ.view.charitablehelp.alterfamilybasicFieldset', {
         Ext.apply(this,
             {
                 xtype: 'fieldset',
+                cls:'fieldset-border',
                 title: '<a>【慈善救助业务办理】家庭基本信息</a>',
                 defaultType: 'textfield',
 
                 //layout: 'anchor',
                 layout: {
                     type: 'table',
-
+                    tdAttrs:{style: "border:1px solid #2E2E2E;"},
                     // The total column count must be specified here
                     columns: 3,
                     tableAttrs: {
                         border: 1,
                         cellpadding: 5,
-                        cellspacing: 1,
+                        cellspacing: 0,
                         width: '100%',
                         align: 'center',
-                        style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
+                        style: "border:1px solid #2E2E2E;border-collapse:collapse;margin:0 auto;text-align:left;"
                         /*style: {
                          width: '100%'
                          }*/
@@ -200,7 +201,7 @@ Ext.define('ZSMZJ.view.charitablehelp.alterfamilybasicFieldset', {
                     },{
                         name: 'bankid',
                         fieldLabel: '银行账号',
-                        colspan:2,
+                        //colspan:2,
                         //afterLabelTextTpl: required,
                         //emptyText: '低保户类型',
                         allowBlank: true

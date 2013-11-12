@@ -196,23 +196,9 @@ Ext.define('ZSMZJ.view.dbgl.PeopleQueryGrid' ,{
                     allowBlank: true
                 },'->',
                 {
-                    xtype:'splitbutton',
-                    text: 'excel输出',
-                    isall:false,
-                    action:'outexcel',
-                    arrowAlign:'right',
-                    menu: [
-                        {
-                            text: '当前页导出',
-                            isall:false,
-                            action:'outexcel'
-                        },
-                        {
-                            text: '全部导出',
-                            isall:true,
-                            action:'outexcel'
-                        }
-                    ]
+                    text: '导出Excel',
+                    action:'outexcel'
+
                 },
                 '-'
                 ,

@@ -16,20 +16,20 @@ Ext.define('ZSMZJ.view.dbgl.applyhistoryFieldset', {
             {
                 title: '<a>审批记录</a>',
                 defaultType: 'textfield',
-
+                cls:'fieldset-border',
                 //layout: 'anchor',
                 layout: {
                     type: 'table',
-
+                    tdAttrs:{style: "border:1px solid #2E2E2E;"},
                     // The total column count must be specified here
                     columns: 3,
                     tableAttrs: {
                         border: 1,
                         cellpadding: 5,
-                        cellspacing: 1,
+                        cellspacing: 0,
                         width: '100%',
                         align: 'center',
-                        style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
+                        style: "border:1px solid #2E2E2E;border-collapse:collapse;margin:0 auto;text-align:left;"
                         /*style: {
                          width: '100%'
                          }*/

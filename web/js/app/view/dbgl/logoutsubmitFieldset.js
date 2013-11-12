@@ -22,7 +22,7 @@ Ext.define('ZSMZJ.view.dbgl.logoutsubmitFieldset', {
                 //layout: 'anchor',
                 layout: {
                     type: 'table',
-
+                    tdAttrs:{style: "border:1px solid #2E2E2E;"},
                     // The total column count must be specified here
                     columns: 3,
                     tableAttrs: {

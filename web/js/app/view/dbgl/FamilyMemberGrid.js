@@ -12,6 +12,7 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
     requires: [
     ],
     initComponent: function() {
+        var me=this;
         var rowEditing = Ext.create('Ext.grid.plugin.RowEditing', {
             clicksToMoveEditor: 1,
             saveBtnText  : '确定',
@@ -56,7 +57,7 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
         Ext.apply(this, {
             border: false,
             //autoScroll: true,
-
+            style:'border:1px solid #2E2E2E;',
             viewConfig: {
                 trackOver: false,
                 loadMask: true,
@@ -130,6 +131,16 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                         blankText: '输入身份证号',
                         allowBlank: false
                         //vtype: 'email'
+                        ,
+                        listeners:{
+                            change:function(){
+                                var obj=CommonFunc.showBirthday(this.getValue());
+                                var birthitem=this.up('panel').down('#personbirthday');
+                                var sex=this.up('panel').down('#sex');
+                                birthitem.setValue(obj.birthday);
+                                sex.setValue(obj.sex);
+                            }
+                        }
                     }
                 },
                 {
@@ -137,6 +148,7 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     dataIndex: 'sex',
                     //width: 160,
                     editor: {
+                        itemId: 'sex',
                         xtype:'dbglaplytype',
                         searchtype:"dbglsex",
                         allowBlank: false
@@ -458,11 +470,25 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
 
             ],
             tbar: [{
+                xtype:'button',
+                border: 1,
+                style: {
+                    backgroundColor:'#BBD2F0',
+                    borderColor: '#424242',
+                    borderStyle: 'solid'
+                },
                 text: '新增家庭成员',
                 iconCls: 'employee-add',
                 action:'addnewperson'
 
             }, {
+                xtype:'button',
+                border: 1,
+                style: {
+                    backgroundColor:'#BBD2F0',
+                    borderColor: '#424242',
+                    borderStyle: 'solid'
+                },
                 itemId: 'removePerson',
                 text: '删除家庭成员',
                 iconCls: 'employee-remove',

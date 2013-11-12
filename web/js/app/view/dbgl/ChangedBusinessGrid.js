@@ -53,7 +53,7 @@ Ext.define('ZSMZJ.view.dbgl.ChangedBusinessGrid' ,{
                                     renderTo: id0,
                                     margin: '0 5 0 5',
                                     text: '修改',
-                                    icon:'img/sp.gif',
+                                    icon:'img/busiicon/change.png',
                                     /*hidden:!(r.get('processstatus').toString()==processdiction.stepzero
                                      ||r.get('processstatus').toString()==processdiction.stepback),*/
                                     hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
@@ -145,7 +145,7 @@ Ext.define('ZSMZJ.view.dbgl.ChangedBusinessGrid' ,{
                                     hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
                                         {name:"name",value:r.get("processstatus")}).children,
                                         {name:"name",value:"提交"}),
-                                    icon:'img/sp.gif',
+                                    icon:'img/busiicon/busiapproval.png',
                                     width: 55,
                                     listeners: {
                                         render: function(c){
@@ -171,7 +171,7 @@ Ext.define('ZSMZJ.view.dbgl.ChangedBusinessGrid' ,{
                                     renderTo: id3,
                                     text: '删除',
                                     margin: '0 5 0 5',
-                                    icon:'img/sp.gif',
+                                    icon:'img/busiicon/del.gif',
                                     /*hidden:!(r.get('processstatus').toString()==processdiction.stepzero
                                      ||r.get('processstatus').toString()==processdiction.stepback),*/
                                     hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
@@ -301,23 +301,9 @@ Ext.define('ZSMZJ.view.dbgl.ChangedBusinessGrid' ,{
 
                 },'->',
                 {
-                    xtype:'splitbutton',
-                    text: 'excel输出',
-                    isall:false,
-                    action:'outexcel',
-                    arrowAlign:'right',
-                    menu: [
-                        {
-                            text: '当前页导出',
-                            isall:false,
-                            action:'outexcel'
-                        },
-                        {
-                            text: '全部导出',
-                            isall:true,
-                            action:'outexcel'
-                        }
-                    ]
+                    text: '导出Excel',
+                    action:'outexcel'
+
                 }
             ],
             bbar: Ext.create('Ext.PagingToolbar', {

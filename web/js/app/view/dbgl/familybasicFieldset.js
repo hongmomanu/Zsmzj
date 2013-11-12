@@ -17,18 +17,21 @@ Ext.define('ZSMZJ.view.dbgl.familybasicFieldset', {
         var required = '<span style="color:red;font-weight:bold" data-qtip="必填字段">*</span>';
         Ext.apply(this,
             {
-                title: '<a>【低保业务办理】家庭基本信息</a>',
+                title: '<a>【低保业务办理】家庭基本信息2</a>',
                 defaultType: 'textfield',
+                cls:'fieldset-border',
+                //style:"border:0px solid gray;",
                 layout: {
                     type: 'table',
                     columns: 3,
+                    tdAttrs:{style: "border:1px solid #2E2E2E;"},
                     tableAttrs: {
                         border: 1,
                         cellpadding: 5,
-                        cellspacing: 1,
+                        cellspacing: 0,
                         width: '100%',
                         //align: 'center',
-                        style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
+                        style: "border:1px solid #2E2E2E;border-collapse:collapse;margin:0 auto;text-align:left;"
                         /*style: {
                          width: '100%'
                          }*/
@@ -178,7 +181,7 @@ Ext.define('ZSMZJ.view.dbgl.familybasicFieldset', {
                         allowBlank: true
                     },{
                         name: 'realaddress',
-                        colspan:2,
+                        //colspan:2,
                         fieldLabel: '实际居住地',
                         allowBlank: true
                     },{
