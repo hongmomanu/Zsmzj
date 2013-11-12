@@ -279,7 +279,12 @@ Ext.define('ZSMZJ.view.dbgl.ChangedBusinessGrid' ,{
                         "specialkey": function (field, e) {
                             if (e.keyCode == 13) {
                                 var keyword = field.getValue().replace(/\s+/g, "");
-                                var store=this.up('panel').getStore();
+                                var panel=this.up('panel');
+                                var store=panel.getStore();
+                                var bgdate=panel.down('#bgdate').getRawValue();
+                                var eddate=panel.down('#eddate').getRawValue();
+                                store.proxy.extraParams.bgdate=bgdate;
+                                store.proxy.extraParams.eddate=eddate;
                                 store.proxy.extraParams.keyword = keyword;
                                 store.loadPage(1);
                             }
@@ -291,14 +296,63 @@ Ext.define('ZSMZJ.view.dbgl.ChangedBusinessGrid' ,{
                     text:'检索',
                     listeners:{
                         "click":function(btn){
+
                             var field=btn.previousNode();
+                            var panel=this.up('panel');
+                            var store=panel.getStore();
+                            var bgdate=panel.down('#bgdate').getRawValue();
+                            var eddate=panel.down('#eddate').getRawValue();
+                            store.proxy.extraParams.bgdate=bgdate;
+                            store.proxy.extraParams.eddate=eddate;
                             var keyword = field.getValue().replace(/\s+/g, "");
-                            var store=this.up('panel').getStore();
                             store.proxy.extraParams.keyword = keyword;
                             store.loadPage(1);
                         }
                     }
 
+                },{
+                    xtype: 'button',
+                    text: '<span style="font-weight:bold">>></span>',
+                    tooltip: '显示/隐藏日期',
+                    //id: 'westpanelhandler',
+                    handler: function () {
+                        if (this.nextSibling().isHidden()) {
+                            this.nextSibling().show();
+                            this.nextSibling().nextSibling().show();
+                            this.setText('<span style="font-weight:bold"><<</span>');
+                        } else {
+                            this.nextSibling().hide();
+                            this.nextSibling().setValue("");
+                            this.nextSibling().nextSibling().setValue("");
+                            this.nextSibling().nextSibling().hide();
+                            this.setText('<span style="font-weight:bold">>></span>');
+                        }
+
+                    }
+                },{
+                    //fieldLabel: '发放开始日期',
+                    emptyText: '请选择开始日期',
+                    hidden:true,
+                    itemId:'bgdate',
+                    blankText : '请输选择开始日期',
+                    xtype: 'datefield',
+                    //itemId: 'personbirthday',
+                    submitFormat :'Y-m-d',
+                    format: 'Y-m-d',
+                    //value: Ext.Date.format(new Date(), 'Y-m-d'),
+                    allowBlank: true
+                },{
+                    //fieldLabel: '发放结束日期',
+                    emptyText: '请选择结束日期',
+                    hidden:true,
+                    blankText : '请输选择结束日期',
+                    xtype: 'datefield',
+                    itemId:'eddate',
+                    //itemId: 'personbirthday',
+                    format: 'Y-m-d',
+                    submitFormat :'Y-m-d',
+                    //value: Ext.Date.format(new Date(), 'Y-m-d'),
+                    allowBlank: true
                 },'->',
                 {
                     xtype:'splitbutton',
