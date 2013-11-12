@@ -24,7 +24,7 @@ Ext.define('ZSMZJ.view.dbgl.addNewGrantWin' ,{
     initComponent: function() {
         Ext.apply(this, {
             title: '资金发放',
-            height: 460,//260
+            height: 260,//260
             width: 430,
             closeAction : 'hide',
             resizable:false,
