@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source source="LOCAL" name="Data Source" product="SQLite" version="3.7.15" jdbc-version="2.1" driver-name="SQLiteJDBC" driver-version="native" uuid="03e70445-8679-40da-ae2f-06d175f779c2">
+    <synchronize>true</synchronize>
+    <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+    <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/data/zsmzj.db3</jdbc-url>
+    <libraries>
+      <library>
+        <url>file://$PROJECT_DIR$/web/WEB-INF/lib/sqlite-jdbc-3.7.15-M1.jar</url>
+      </library>
+    </libraries>
+    <schema name="" catalog=""/>
+    <table name="approvalprocess" schema="" catalog="" type="TABLE"/>
+    <table name="approvalprocess_content" schema="" catalog="" type="TABLE">
+      <column name="docid" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="c0id" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c1businessid" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c2time" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c3approvalname" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c4approvalresult" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c5userid" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c6approvalopinion" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <primary-key columns="docid"/>
+    </table>
+    <table name="approvalprocess_segdir" schema="" catalog="" type="TABLE">
+      <column name="level" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="idx" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="start_block" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="leaves_end_block" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="end_block" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="root" sqlType="BLOB" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <primary-key columns="level,idx"/>
+    </table>
+    <table name="approvalprocess_segments" schema="" catalog="" type="TABLE">
+      <column name="blockid" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="block" sqlType="BLOB" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <primary-key columns="blockid"/>
+    </table>
+    <table name="approvalprocessbackup" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="businessid" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="time" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="approvalname" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="approvalresult" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="userid" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="approvalopinion" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+    </table>
+    <table name="approvalprocessbackup_content" schema="" catalog="" type="TABLE"/>
+    <table name="approvalprocessbackup_segdir" schema="" catalog="" type="TABLE"/>
+    <table name="approvalprocessbackup_segments" schema="" catalog="" type="TABLE"/>
+    <table name="attachment" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="time" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="businessid" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="attachmentname" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="attachmenttype" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="attachmentpath" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+    </table>
+    <table name="attachment_content" schema="" catalog="" type="TABLE">
+      <column name="docid" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="c0id" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c1businessid" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c2attachmentname" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c3attachmenttype" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c4attachmentpath" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <primary-key columns="docid"/>
+    </table>
+    <table name="attachment_segdir" schema="" catalog="" type="TABLE">
+      <column name="level" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="idx" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="start_block" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="leaves_end_block" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="end_block" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="root" sqlType="BLOB" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <primary-key columns="level,idx"/>
+    </table>
+    <table name="attachment_segments" schema="" catalog="" type="TABLE">
+      <column name="blockid" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="block" sqlType="BLOB" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <primary-key columns="blockid"/>
+    </table>
+    <table name="business" schema="" catalog="" type="TABLE"/>
+    <table name="business_content" schema="" catalog="" type="TABLE"/>
+    <table name="business_segdir" schema="" catalog="" type="TABLE"/>
+    <table name="business_segments" schema="" catalog="" type="TABLE"/>
+    <table name="businessbackup_content" schema="" catalog="" type="TABLE"/>
+    <table name="businessbackup_segdir" schema="" catalog="" type="TABLE"/>
+    <table name="businessbackup_segments" schema="" catalog="" type="TABLE"/>
+    <table name="businesschange" schema="" catalog="" type="TABLE"/>
+    <table name="businesschange_content" schema="" catalog="" type="TABLE"/>
+    <table name="businesschange_segdir" schema="" catalog="" type="TABLE"/>
+    <table name="businesschange_segments" schema="" catalog="" type="TABLE"/>
+    <table name="businesschangebackup_content" schema="" catalog="" type="TABLE"/>
+    <table name="businesschangebackup_segdir" schema="" catalog="" type="TABLE"/>
+    <table name="businesschangebackup_segments" schema="" catalog="" type="TABLE"/>
+    <table name="businesssignature" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="time" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="businessid" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="path" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="userid" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="x" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="y" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+    </table>
+    <table name="businesssignature_content" schema="" catalog="" type="TABLE"/>
+    <table name="businesssignature_segdir" schema="" catalog="" type="TABLE"/>
+    <table name="businesssignature_segments" schema="" catalog="" type="TABLE"/>
+    <table name="businesstemp" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="time" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="businesstype" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="processstatus" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="division" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="applytype" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="familytype" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="owername" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="owerid" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="poorfamilytype" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="familyaccount" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="accountaddress" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="accountzipcode" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="realaddress" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="realzipcode" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="households" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="telnum" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="bank" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="bankower" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="bankid" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="otherfamilyinfo" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="houseproperties" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="housestructure" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="housearea" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="houseaveragearea" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="interest" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="wages" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="planting" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="pension" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="management" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="alimony" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="incidentalincome" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="remuneration" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="allowance" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="paidservices" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="propertylease" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="otherincome" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="cash" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="banksecurities" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="debt" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="vehicle" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="nonresidentialhouse" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="insurance" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="registeredcapital" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="userid" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="icomemonth" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="poortype" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="familyincome" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="averageincome" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="applymoney" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="poorstandard" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="aidnum" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="helpbgtime" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="helpedtime" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="disabledpersons" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="disabledmoney" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="othershelpmoney" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="totalhelpmoney" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="publicityedtm" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="helpreason" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="villageopinion" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="townopinion" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="civilopinion" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="processstatustype" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="changedate" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="changereason" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+    </table>
+    <table name="businesstemp_content" schema="" catalog="" type="TABLE"/>
+    <table name="businesstemp_segdir" schema="" catalog="" type="TABLE"/>
+    <table name="businesstemp_segments" schema="" catalog="" type="TABLE"/>
+    <table name="divisions" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="parentid" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="divisionname" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="signaturepath" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="divisionpath" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+    </table>
+    <table name="divisions_content" schema="" catalog="" type="TABLE">
+      <column name="docid" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="c0id" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c1parentid" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c2divisionname" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c3divisionpath" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <primary-key columns="docid"/>
+    </table>
+    <table name="divisions_segdir" schema="" catalog="" type="TABLE">
+      <column name="level" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="idx" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="start_block" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="leaves_end_block" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="end_block" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="root" sqlType="BLOB" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <primary-key columns="level,idx"/>
+    </table>
+    <table name="divisions_segments" schema="" catalog="" type="TABLE">
+      <column name="blockid" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="block" sqlType="BLOB" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <primary-key columns="blockid"/>
+    </table>
+    <table name="enumerate" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="enumeratetype" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="enumeratevalue" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="enumeratelabel" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+    </table>
+    <table name="enumerate_content" schema="" catalog="" type="TABLE">
+      <column name="docid" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="c0id" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c1enumeratetype" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c2enumeratevalue" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c3enumeratelabel" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <primary-key columns="docid"/>
+    </table>
+    <table name="enumerate_segdir" schema="" catalog="" type="TABLE">
+      <column name="level" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="idx" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="start_block" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="leaves_end_block" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="end_block" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="root" sqlType="BLOB" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <primary-key columns="level,idx"/>
+    </table>
+    <table name="enumerate_segments" schema="" catalog="" type="TABLE">
+      <column name="blockid" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="block" sqlType="BLOB" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <primary-key columns="blockid"/>
+    </table>
+    <table name="familymembers" schema="" catalog="" type="TABLE"/>
+    <table name="familymembers_backup" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="businessid" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="time" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="birthday" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="isenjoyed" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="persontype" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="jobstatus" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="bodystatus" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="specialobject" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="workunits" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="monthlyincome" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="accounttype" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="maritalstatus" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="education" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="political" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="disabledtype" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="disabledlevel" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="disablenum" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="workability" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="ispension" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="ismedical" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="medicaltype" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="medicalnum" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="isunemployment" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="unemploymentnum" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="relationship" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="name" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="personid" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="sex" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="other" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+    </table>
+    <table name="familymembers_backup_content" schema="" catalog="" type="TABLE"/>
+    <table name="familymembers_backup_segdir" schema="" catalog="" type="TABLE"/>
+    <table name="familymembers_backup_segments" schema="" catalog="" type="TABLE"/>
+    <table name="familymembers_content" schema="" catalog="" type="TABLE">
+      <column name="docid" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="c0id" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c1businessid" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c2time" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c3birthday" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c4isenjoyed" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c5persontype" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c6jobstatus" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c7bodystatus" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c8specialobject" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c9workunits" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c10monthlyincome" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c11accounttype" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c12maritalstatus" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c13education" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c14political" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c15disabledtype" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c16disabledlevel" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c17disablenum" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c18workability" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c19ispension" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c20ismedical" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c21medicaltype" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c22medicalnum" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c23isunemployment" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c24unemploymentnum" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c25relationship" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c26name" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c27personid" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c28sex" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="c29other" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <primary-key columns="docid"/>
+    </table>
+    <table name="familymembers_segdir" schema="" catalog="" type="TABLE">
+      <column name="level" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="idx" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="start_block" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="leaves_end_block" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="end_block" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="root" sqlType="BLOB" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <primary-key columns="level,idx"/>
+    </table>
+    <table name="familymembers_segments" schema="" catalog="" type="TABLE">
+      <column name="blockid" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="block" sqlType="BLOB" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <primary-key columns="blockid"/>
+    </table>
+    <table name="familymembersbackup" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="businessid" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="time" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="birthday" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="isenjoyed" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="persontype" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="jobstatus" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="bodystatus" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="specialobject" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="workunits" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="monthlyincome" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="accounttype" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="maritalstatus" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="education" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="political" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="disabledtype" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="disabledlevel" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="disablenum" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="workability" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="ispension" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="ismedical" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="medicaltype" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="medicalnum" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="isunemployment" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="unemploymentnum" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="relationship" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="name" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="personid" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="sex" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="other" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="noenjoyedreason" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+    </table>
+    <table name="familymembersbackup_content" schema="" catalog="" type="TABLE"/>
+    <table name="familymembersbackup_segdir" schema="" catalog="" type="TABLE"/>
+    <table name="familymembersbackup_segments" schema="" catalog="" type="TABLE"/>
+    <table name="familymembershistory" schema="" catalog="" type="TABLE"/>
+    <table name="familymembershistory_backup" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="businessid" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="time" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="birthday" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="isenjoyed" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="persontype" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="jobstatus" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="bodystatus" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="specialobject" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="workunits" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="monthlyincome" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="accounttype" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="maritalstatus" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="education" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="political" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="disabledtype" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="disabledlevel" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="disablenum" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="workability" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="ispension" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="ismedical" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="medicaltype" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="medicalnum" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="isunemployment" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="unemploymentnum" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="relationship" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="name" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="personid" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="sex" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="other" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="isnewest" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+    </table>
+    <table name="familymembershistory_backup_content" schema="" catalog="" type="TABLE"/>
+    <table name="familymembershistory_backup_segdir" schema="" catalog="" type="TABLE"/>
+    <table name="familymembershistory_backup_segments" schema="" catalog="" type="TABLE"/>
+    <table name="familymembershistory_content" schema="" catalog="" type="TABLE"/>
+    <table name="familymembershistory_segdir" schema="" catalog="" type="TABLE"/>
+    <table name="familymembershistory_segments" schema="" catalog="" type="TABLE"/>
+    <table name="familymembershistorybackup" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="businessid" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="time" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="birthday" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="isenjoyed" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="persontype" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="jobstatus" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="bodystatus" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="specialobject" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="workunits" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="monthlyincome" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="accounttype" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="maritalstatus" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="education" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="political" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="disabledtype" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="disabledlevel" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="disablenum" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="workability" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="ispension" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="ismedical" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="medicaltype" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="medicalnum" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="isunemployment" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="unemploymentnum" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="relationship" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="name" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="personid" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="sex" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="other" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="noenjoyedreason" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="isnewest" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+    </table>
+    <table name="familymembershistorybackup_content" schema="" catalog="" type="TABLE"/>
+    <table name="familymembershistorybackup_segdir" schema="" catalog="" type="TABLE"/>
+    <table name="familymembershistorybackup_segments" schema="" catalog="" type="TABLE"/>
+    <table name="functions" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="funcname" sqlType="VARCHAR(50)" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="functype" sqlType="VARCHAR(50)" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="label" sqlType="VARCHAR(50)" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="imgurl" sqlType="VARCHAR(250)" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="sortnum" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <primary-key columns="id"/>
+    </table>
+    <table name="functorole" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="funcid" sqlType="VARCHAR(50)" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="roleid" sqlType="VARCHAR(50)" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <primary-key columns="id"/>
+    </table>
+    <table name="grantmoney_content" schema="" catalog="" type="TABLE"/>
+    <table name="grantmoney_segdir" schema="" catalog="" type="TABLE"/>
+    <table name="grantmoney_segments" schema="" catalog="" type="TABLE"/>
+    <table name="grantmoneybackup" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="time" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="businessid" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="userid" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="bgdate" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="eddate" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="grantdate" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+    </table>
+    <table name="medicalstandard" schema="" catalog="" type="TABLE"/>
+    <table name="medicalstandard_content" schema="" catalog="" type="TABLE"/>
+    <table name="medicalstandard_segdir" schema="" catalog="" type="TABLE"/>
+    <table name="medicalstandard_segments" schema="" catalog="" type="TABLE"/>
+    <table name="roles" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="rolename" sqlType="VARCHAR(50)" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <primary-key columns="id"/>
+    </table>
+    <table name="sqlite_sequence" schema="" catalog="" type="TABLE">
+      <column name="name" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="seq" sqlType="" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+    </table>
+    <table name="users" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="username" sqlType="VARCHAR(50)" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="password" sqlType="VARCHAR(50)" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="time" sqlType="DATETIME" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="roleid" sqlType="INTEGER" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <column name="displayname" sqlType="VARCHAR(50)" length="2000000000" precision="10" nullable="true" jdbcType="12"/>
+      <column name="divisionid" sqlType="INT" length="2000000000" precision="10" nullable="true" jdbcType="4"/>
+      <primary-key columns="id"/>
+    </table>
+  </data-source>
+</component>
