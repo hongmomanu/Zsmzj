@@ -131,7 +131,6 @@ var CommonFunc = {
                 sex = '男';
             else
                 sex = '女';
-            sr = birthdayValue;
         }
         if (18 == val.length) { //18位身份证号码
             birthdayValue = val.charAt(6) + val.charAt(7) + val.charAt(8) + val.charAt(9) + '-' + val.charAt(10) + val.charAt(11)
@@ -142,13 +141,12 @@ var CommonFunc = {
             else
                 sex = '女';
 
-            sr = birthdayValue;
-            return {
-                birthday:birthdayValue,
-                sex:sex
-            }
-        }
 
+        }
+        return {
+            birthday:birthdayValue,
+            sex:sex
+        }
     }
 
 }
