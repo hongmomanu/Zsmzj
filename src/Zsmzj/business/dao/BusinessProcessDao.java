@@ -206,7 +206,7 @@ public class BusinessProcessDao {
             match_str+=item.get("name").toString()+" OR ";
         }
         match_str=match_str.substring(0,match_str.lastIndexOf("OR"));
-        String sql=  "select a.processstatus,b.displayname,a.time,a.rowid,a.processstatustype,a.businesstype   from "+
+        String sql=  "select a.processstatus,b.displayname,a.owername,a.time,a.rowid,a.processstatustype,a.businesstype   from "+
                 tablename+" a,"+UserTable+" b where processstatus  MATCH ?  and a.rowid in( select rowid from "+tablename+" where division MATCH ( ? ||'*'))";
         if(keyword!=null)sql+="AND ? ";
         sql+="and a.userid=b.id Limit ? Offset ?";
@@ -234,6 +234,7 @@ public class BusinessProcessDao {
                 map.put("businessid",rs.getInt("rowid"));
                 map.put("displayname",rs.getString("displayname"));
                 map.put("time",rs.getString("time"));
+                map.put("owername",rs.getString("owername"));
                 map.put("businesstype",rs.getString("businesstype"));
                 list.add(map);
             }
