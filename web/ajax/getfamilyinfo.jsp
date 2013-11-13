@@ -27,7 +27,8 @@
         String[] compare=request.getParameterValues("compare");
         String[] value=request.getParameterValues("value");
         String[] logic=request.getParameterValues("logic");
+        String divisionpath=request.getParameter("divisionpath");
 
-        out.print(bp.getFamilyInfoList(start,limit,keyword,type,name,compare,value,logic,bgdate,eddate));
+        out.print(bp.getFamilyInfoList(start,limit,keyword,type,name,compare,value,logic,bgdate,eddate,divisionpath));
     }
 %>

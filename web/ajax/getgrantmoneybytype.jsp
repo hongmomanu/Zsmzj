@@ -27,7 +27,7 @@
         String[] logic=request.getParameterValues("logic");
         int start=Integer.parseInt(request.getParameter("start"));
         int limit =Integer.parseInt(request.getParameter("limit"));
-
-        out.print(bp.getGrantMoneyBytype(type,bgmonth,keyword,name,compare,value,logic,start,limit,bgdate,eddate));
+        String divisionpath=request.getParameter("divisionpath");
+        out.print(bp.getGrantMoneyBytype(type,bgmonth,keyword,name,compare,value,logic,start,limit,bgdate,eddate,divisionpath));
     }
 %>
