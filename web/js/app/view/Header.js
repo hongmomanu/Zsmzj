@@ -27,7 +27,7 @@ Ext.define('ZSMZJ.view.Header', {
             border:0,
             collapsible: true,
             collapsed: false,
-            height:91,
+            height:90,
             defaults:{
                 //columnWidth:0.5
                 //,layout:'anchor'
@@ -54,7 +54,7 @@ Ext.define('ZSMZJ.view.Header', {
                             xtype:'panel',
                             baseCls: 'main-header',
                             layout:'column',
-                            width:300,
+                            //width:300,
                             border:0,
                             defaults:{
                                 border:0
@@ -79,7 +79,7 @@ Ext.define('ZSMZJ.view.Header', {
                     xtype:'panel',
                     baseCls: 'main-header',
                     layout:'column',
-                    width:300,
+                   // width:300,
                     border:0,
                     columnWidth: 0.9,
                     defaults:{
@@ -88,12 +88,12 @@ Ext.define('ZSMZJ.view.Header', {
                     items:[
 
                         /*{
-                            columnWidth: 0.3,
-                            baseCls: 'main-header',
-                            border: false,
-                            xtype:'headviewpanel'
+                         columnWidth: 0.3,
+                         baseCls: 'main-header',
+                         border: false,
+                         xtype:'headviewpanel'
 
-                        },*/
+                         },*/
                         {
                             columnWidth: 0.8,
                             xtype:'panel',
@@ -111,33 +111,42 @@ Ext.define('ZSMZJ.view.Header', {
                                     baseCls: 'main-header',
 
                                     layout: {
-                                        type: 'vbox',
+                                        type: 'table'
                                         // The total column count must be specified here
-                                        align:'right'
+
                                     },
                                     defaults: {
                                         // applied to each contained panel
-                                        bodyStyle: ''
+                                       // bodyStyle: ''
                                     },
                                     items:[
                                         {
                                             xtype:'panel',
                                             layout:'table',
                                             baseCls: 'main-header',
-                                            wdith:'500',
+
+                                            //wdith:'500',
                                             items:[
                                                 {
-                                                    html: '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+
-                                                        '<img src="img/head/1.png">&nbsp;<a>欢迎您：&nbsp;'+
-                                                        displayname+'&nbsp;('+divisionpath+')</a><span style="width:5px;"></span>',
+                                                    width:380,
+                                                    baseCls: 'main-header',
+                                                    html:''
+                                                },
+                                                {
+                                                    html: ''+
+                                                        '<img src="img/head/1.png"><a>欢迎您：'+
+                                                        displayname+'&nbsp;('+divisionpath+')</a>',
+                                                    cls:'mouseover',
+                                                    width:280,
                                                     baseCls: 'main-header'
                                                 },{
                                                     baseCls: 'main-header',
-                                                    html:'&nbsp;&nbsp;<img src="img/head/2.png">&nbsp;'
+                                                    html:'<img src="img/head/2.png">'
 
                                                 },
                                                 {
                                                     html: '待办事务:(1)',
+                                                    width:80,
                                                     baseCls: 'main-header',
                                                     itemId: 'needtodopanel',
                                                     cls:'mouseover',
@@ -150,28 +159,28 @@ Ext.define('ZSMZJ.view.Header', {
 
                                                     }
                                                 },{
-                                                    html: '<span style="width:10px;"></span><img src="img/head/4.png">&nbsp;',
+                                                    html: '<img src="img/head/4.png">',
                                                     baseCls: 'main-header'
                                                 },
                                                 {
                                                     html: '  <a>在线人数:'+onlinenums+'</a>',
                                                     baseCls: 'main-header',
+                                                    width:60,
                                                     cls:'mouseover',
                                                     //type:'needthings',
                                                     listeners: {
 
-                                                        /*render: function(c){
-                                                         alert(2);
-                                                         c.getEl().on('click', function(){ this.fireEvent('needthingsclick', c); }, c);
-                                                         }*/
+
 
                                                     }
                                                 },{
                                                     baseCls: 'main-header',
-                                                    html:'&nbsp;&nbsp;<img src="img/head/5.png">&nbsp;'
+                                                    html:'<img src="img/head/5.png">'
                                                 },{
                                                     html: '重设密码',
+                                                    width:60,
                                                     baseCls: 'main-header',
+
                                                     cls:'mouseover',
                                                     //type:'needthings',
                                                     listeners: {
@@ -183,27 +192,15 @@ Ext.define('ZSMZJ.view.Header', {
                                                 },
                                                 {
                                                     baseCls: 'main-header',
-                                                    html:'<span style="width:20px;">&nbsp;</span><img src="img/head/7.png">&nbsp;'
+
+                                                    html:'</span><img src="img/head/7.png">'
                                                 },
                                                 {
-                                                    html: '<a href="logout">退出<a>',
                                                     baseCls: 'main-header',
-                                                    //cls:'mouseover',
-                                                    //type:'needthings',
-                                                    listeners: {
-                                                        /*click: {
-                                                         element: 'el', //bind to the underlying el property on the panel
-                                                         fn: function(){ alert('click el'); }
-                                                         }*/
-                                                        /*render: function(c){
-                                                         alert(2);
-                                                         c.getEl().on('click', function(){ this.fireEvent('needthingsclick', c); }, c);
-                                                         }*/
+                                                    cls:'mouseover',
+                                                    width:60,
+                                                    html: '<a href="logout">退出<a>'
 
-                                                    }
-                                                },{
-                                                    baseCls: 'main-header',
-                                                    html:'&nbsp;&nbsp;'
                                                 }
                                             ]
                                         }
@@ -215,7 +212,7 @@ Ext.define('ZSMZJ.view.Header', {
                             ]
                         },
                         {
-                            columnWidth: 0.2,
+                            columnWidth: 0.1,
                             baseCls: 'main-header',
                             border: false,
                             xtype:'headviewpanel'
