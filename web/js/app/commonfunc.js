@@ -45,7 +45,8 @@ var CommonFunc = {
             text = item.el.dom.innerText;
             var before_str = text.slice(0, text.indexOf("(") + 1);
             var after_str = text.slice(text.indexOf(")"));
-            item.el.dom.innerText= before_str + count + after_str;
+            testobj=item.el;
+            item.el.dom.innerHTML= "<span style='font-size: 12px'>"+before_str + count + after_str+"</span>";
 
         }
         else{

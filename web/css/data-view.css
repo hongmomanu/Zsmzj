@@ -17,23 +17,23 @@
 
 #images-view .thumb img{
 
-    height: 48px;
-    width: 48px;
+    height: 20px;
+    width: 20px;
 }
 #images-view .thumb-wrap{
     float: left;
     margin: 4px;
     margin-right: 0;
     padding: 5px;
-    height:81 ;
+    height:58 ;
 }
 #images-view .thumb-wrap span {
 
     display: block;
     overflow: hidden;
     text-align: center;
-    width: 81px; /* for ie to ensure that the text is centered */
-    font-size:11px;
+    width: 45px; /* for ie to ensure that the text is centered */
+    font-size:10px;
 
 }
 

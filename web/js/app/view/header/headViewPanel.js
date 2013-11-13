@@ -17,7 +17,7 @@ Ext.define('ZSMZJ.view.header.headViewPanel' ,{
             frame: false,
             //collapsible: true,
             //width: 535,
-            height: 78,
+            height: 58,
 
             //renderTo: 'dataview-example',
             //title: 'Simple DataView (0 items selected)',

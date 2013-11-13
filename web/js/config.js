@@ -5,8 +5,8 @@
  * Time: 上午10:54
  * To change this template use File | Settings | File Templates.
  */
-var extLocation="http://192.168.2.112/extjs4.2/";
- extLocation="http://127.168.193.1/extjs4.2/";
+var extLocation="http://192.168.2.141:8080/extjs4.2/";
+ //extLocation="http://192.168.2.9/extjs4.2/";
 
 var businessTableType=
         {   'dbgl':"低保",
