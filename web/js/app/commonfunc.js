@@ -45,7 +45,6 @@ var CommonFunc = {
             text = item.el.dom.innerText;
             var before_str = text.slice(0, text.indexOf("(") + 1);
             var after_str = text.slice(text.indexOf(")"));
-            testobj=item.el;
             item.el.dom.innerHTML= "<span style='font-size: 12px'>"+before_str + count + after_str+"</span>";
 
         }
@@ -116,6 +115,7 @@ var CommonFunc = {
 
     ,
     showBirthday:function (val) {
+        var sex;
         var birthdayValue;
         if (15 == val.length) { //15位身份证号码
             birthdayValue = val.charAt(6) + val.charAt(7);
@@ -130,7 +130,6 @@ var CommonFunc = {
                 sex = '男';
             else
                 sex = '女';
-            sr = birthdayValue;
         }
         if (18 == val.length) { //18位身份证号码
             birthdayValue = val.charAt(6) + val.charAt(7) + val.charAt(8) + val.charAt(9) + '-' + val.charAt(10) + val.charAt(11)
@@ -141,13 +140,12 @@ var CommonFunc = {
             else
                 sex = '女';
 
-            sr = birthdayValue;
-            return {
-                birthday:birthdayValue,
-                sex:sex
-            }
-        }
 
+        }
+        return {
+            birthday:birthdayValue,
+            sex:sex
+        }
     }
 
 }
