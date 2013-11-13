@@ -226,11 +226,15 @@ public class BusinessProcessControl {
 
     }
     public String getGrantMoneyBytype(String type,String bgmonth,String keyword,String[]name,
-                                      String[]compare,String[]value,String[]logic,int start,int limit,String bgdate,String eddate){
+                                      String[]compare,String[]value,String[]logic,int start,int limit,
+                                      String bgdate,String eddate,String divisionpath){
         SimpleDateFormat sDateFormat   =   new SimpleDateFormat("yyyy-MM");
         SimpleDateFormat syearFormat   =   new SimpleDateFormat("yyyy");
         String basic_sql= " a.rowid=b.businessid "
                 +" and b.userid =c.rowid and  a.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+type+"')";
+
+        basic_sql+=" and a.rowid in  (select rowid from "+BusinessTable+" where division MATCH ( '"+divisionpath+"' ||'*') )";
+
         String sql_list="select a.*,b.businessid,b.bgdate,b.eddate,b.grantdate,b.time as granttime,b.adjustmoney," +
                 "c.displayname as grantuser,(select count(*)  from "+ FamilyTable+" d where " +
                 "  d.businessid MATCH a.rowid)  as familynum," +
