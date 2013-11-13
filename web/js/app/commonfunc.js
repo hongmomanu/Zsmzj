@@ -116,6 +116,7 @@ var CommonFunc = {
 
     ,
     showBirthday:function (val) {
+        var sex;
         var birthdayValue;
         if (15 == val.length) { //15位身份证号码
             birthdayValue = val.charAt(6) + val.charAt(7);
