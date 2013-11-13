@@ -135,10 +135,13 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                         listeners:{
                             change:function(){
                                 var obj=CommonFunc.showBirthday(this.getValue());
-                                var birthitem=this.up('panel').down('#personbirthday');
-                                var sex=this.up('panel').down('#sex');
-                                birthitem.setValue(obj.birthday);
-                                sex.setValue(obj.sex);
+                                if(obj){
+                                    var birthitem=this.up('panel').down('#personbirthday');
+                                    var sex=this.up('panel').down('#sex');
+                                    birthitem.setValue(obj.birthday);
+                                    sex.setValue(obj.sex);
+                                }
+
                             }
                         }
                     }

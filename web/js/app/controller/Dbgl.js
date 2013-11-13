@@ -973,10 +973,10 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             averageincome.setValue((person_nums==0?parseInt(familyincome.getValue())/12:parseInt(familyincome.getValue())/12/person_nums).toFixed(1));
             var totalhelpmoney=formpanel.down('#totalhelpmoney');
             var poorstandard=formpanel.down('#poorstandard');
-
+            var disableditem=formpanel.down('#disabledpersons');
+            var disablednum=disableditem.getValue();
             if(type===businessTableType.dbgl){
-                var disableditem=formpanel.down('#disabledpersons');
-                var disablednum=disableditem.getValue();
+
                 var helpmomey=poorstandard.getValue()-averageincome.getValue();
                 //var helpmomey=poorstandard.getValue()*disablednum+()
 
@@ -991,7 +991,9 @@ Ext.define('ZSMZJ.controller.Dbgl', {
                 }
                 totalhelpmoney.setValue(totalmoney.toFixed(1));
             }else if(type===businessTableType.dbbyh){
-                totalhelpmoney.setValue(poorstandard.getValue()*0.2*person_nums);
+                var totalmoney=poorstandard.getValue()*disablednum;
+                totalmoney+=poorstandard.getValue()*0.2*(person_nums-disablednum)
+                totalhelpmoney.setValue(totalmoney);
             }
 
 
