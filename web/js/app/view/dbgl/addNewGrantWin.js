@@ -13,18 +13,10 @@ Ext.define('ZSMZJ.view.dbgl.addNewGrantWin' ,{
         'Ext.Img',
         'Ext.tip.QuickTipManager'
     ],
-
-    /*添加listeners触发本页面中的grid组件的gridshowfresh*/
-    listeners: {
-        show: function(panel) {
-            var grid=panel.down('grid');
-            grid.fireEvent('gridshowfresh',grid);
-        }
-    },
     initComponent: function() {
         Ext.apply(this, {
             title: '资金发放',
-            height: 260,//260
+            height: 260,
             width: 430,
             closeAction : 'hide',
             resizable:false,
@@ -135,9 +127,7 @@ Ext.define('ZSMZJ.view.dbgl.addNewGrantWin' ,{
                                 value:0,
                                 name:'adjustmoney'
 
-                            }/*,{
-                                xtype:'dbglsearchbusinessgridpanel'
-                            }*/
+                            }
 
                         ],
 

@@ -95,6 +95,23 @@ Ext.define('ZSMZJ.view.dbedge.applysubmitFieldset', {
                         allowBlank: false
                     },
                     {
+                        name: 'disabledpersons',
+                        itemId:'disabledpersons',
+                        fieldLabel: '重残人数',
+                        value:0,
+                        listeners: {
+
+                            "change":function(field,e){
+                                //alert(1);
+                                this.fireEvent('moneychane', field);
+                            }
+                        },
+                        afterLabelTextTpl: required,
+                        emptyText: '请输入重残人数',
+                        blankText : '请输入重残人数',
+                        allowBlank: false
+                    },
+                    {
                         name: 'totalhelpmoney',
                         itemId:'totalhelpmoney',
                         fieldLabel: '总救助金额(元/月/户)',

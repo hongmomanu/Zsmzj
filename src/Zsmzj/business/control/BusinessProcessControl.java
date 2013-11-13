@@ -144,7 +144,8 @@ public class BusinessProcessControl {
 
 
     }
-    public String grantmoneybytype(int userid,String bgdate,String eddate,String grantdate,String businesstype,float adjustmoney,boolean isnew,String[] grant_arr){
+    public String grantmoneybytype(int userid,String bgdate,String eddate,String grantdate,String businesstype,
+                                   float adjustmoney,boolean isnew,String[] grant_arr,String divisionpath){
         SimpleDateFormat sDateFormat   =   new SimpleDateFormat("yyyy-MM");
 
         BusinessProcess bp=new BusinessProcess();
@@ -155,7 +156,8 @@ public class BusinessProcessControl {
         String num_sql="select count(*) from "+GrantTable+" a,"+BusinessTable+
                 " b where b.rowid=a.businessid and a.rowid in (select rowid from "+GrantTable+" d where d.grantdate Between '"
                 +bgdate+"' and  '"+eddate+"' union select rowid from "+GrantTable+" where grantdate Between '"+grantdate+"' and '"
-                +grantdate+"')  and b.businesstype MATCH '"+businesstype+"'";
+                +grantdate+"')  and b.businesstype MATCH '"+businesstype+"' and b.rowid in (select rowid from "+BusinessTable
+                +" where  division MATCH ( '"+divisionpath+"' ||'*') )" ;
         String ids="";
         if(grant_arr!=null&&grant_arr.length>0){
             ids=" and b.rowid in (";
@@ -174,11 +176,13 @@ public class BusinessProcessControl {
             String delsql="delete from "+GrantTable+" where rowid in(select a.rowid from "+GrantTable+" a,"+BusinessTable+
                     " b where b.rowid=a.businessid and a.rowid in (select rowid from "+GrantTable+" d where d.grantdate Between '"
                     +bgdate+"' and  '"+eddate+"' union select rowid from "+GrantTable+" where grantdate Between '"+grantdate+"' and '"
-                    +grantdate+"')  and b.businesstype MATCH '"+businesstype+"' "+ids+")";
+                    +grantdate+"')  and b.businesstype MATCH '"+businesstype+"' "+ids+" and b.rowid in (select rowid from "+BusinessTable
+                    +" where  division MATCH ('"+divisionpath+"' ||'*') ))";
             cd.delbysql(delsql);
             String sql_list="select rowid as businessid from "+BusinessTable+" a where a.businesstype MATCH '"+businesstype+"' " +
-                    "and a.rowid in (select rowid from "+BusinessTable+" b where b.processstatus MATCH'"
-                    +ProcessType.UseProcessType.getChineseSeason(ProcessType.Approval)+"'"+ids+")";
+                    "and a.rowid in (select rowid from "+BusinessTable+" b where b.processstatus MATCH '"
+                    +ProcessType.UseProcessType.getChineseSeason(ProcessType.Approval)+"'"+ids+" and b.rowid in (select rowid from "+BusinessTable
+                    +" where  division MATCH ('"+divisionpath+"' ||'*') ))";
             //log.debug("资金发放开始::"+sql_list);
 
             ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
