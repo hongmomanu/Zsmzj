@@ -601,7 +601,8 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         var params = {
             userid:userid,
             isnew:btn.isnew,
-            grantid:[34],
+            divisionpath:divisionpath,
+            /*grantid:[34],*/
             businesstype:grid.businesstype
         };
         var successFunc = function (myform, action) {
