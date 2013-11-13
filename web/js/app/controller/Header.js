@@ -259,8 +259,9 @@ Ext.define('ZSMZJ.controller.Header', {
                   var store=grid.getStore();
                   if(store.proxy.extraParams){
                       store.proxy.extraParams.businesstype = grid.businesstype;
-                      store.proxy.extraParams.type=grid.stype
-                      store.proxy.extraParams.ispublicinfo=grid.ispublicinfo
+                      store.proxy.extraParams.type=grid.stype;
+                      store.proxy.extraParams.divisionpath=divisionpath;
+                      store.proxy.extraParams.ispublicinfo=grid.ispublicinfo;
                       if(grid.isnewgrid){
                           store.load();
                           grid.isnewgrid=false;

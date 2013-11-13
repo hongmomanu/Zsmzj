@@ -25,8 +25,9 @@
         String bgdate=request.getParameter("bgdate");
         String eddate=request.getParameter("eddate");
         String businesstype=request.getParameter("businesstype");
+        String divisionpath=request.getParameter("divisionpath");
         boolean ispublicinfo=request.getParameter("ispublicinfo")!=null?Boolean.parseBoolean(request.getParameter("ispublicinfo")):false;
-        out.print(bp.getNeedTodoBusinessList(start,limit,keyword,type,businesstype,ispublicinfo,bgdate,eddate));
+        out.print(bp.getNeedTodoBusinessList(start,limit,keyword,type,businesstype,ispublicinfo,bgdate,eddate,divisionpath));
     }
     //out.print("ok");
 %>

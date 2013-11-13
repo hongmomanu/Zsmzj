@@ -150,6 +150,7 @@ public class BusinessProcessControl {
 
         BusinessProcess bp=new BusinessProcess();
         ComonDao cd=new ComonDao();
+        String processstatustype=ProcessType.UseProcessType.getChineseSeason(ProcessType.Cancellation);
         if(bgdate==null){
             grantdate+="-00-00";
         }
@@ -157,7 +158,8 @@ public class BusinessProcessControl {
                 " b where b.rowid=a.businessid and a.rowid in (select rowid from "+GrantTable+" d where d.grantdate Between '"
                 +bgdate+"' and  '"+eddate+"' union select rowid from "+GrantTable+" where grantdate Between '"+grantdate+"' and '"
                 +grantdate+"')  and b.businesstype MATCH '"+businesstype+"' and b.rowid in (select rowid from "+BusinessTable
-                +" where  division MATCH ( '"+divisionpath+"' ||'*') )" ;
+                +" where  division MATCH ( '"+divisionpath+"' ||'*') ) and b.rowid not in (select rowid from "+BusinessTable
+                +" where  processstatustype MATCH '"+processstatustype+"')" ;
         String ids="";
         if(grant_arr!=null&&grant_arr.length>0){
             ids=" and b.rowid in (";
@@ -177,12 +179,19 @@ public class BusinessProcessControl {
                     " b where b.rowid=a.businessid and a.rowid in (select rowid from "+GrantTable+" d where d.grantdate Between '"
                     +bgdate+"' and  '"+eddate+"' union select rowid from "+GrantTable+" where grantdate Between '"+grantdate+"' and '"
                     +grantdate+"')  and b.businesstype MATCH '"+businesstype+"' "+ids+" and b.rowid in (select rowid from "+BusinessTable
-                    +" where  division MATCH ('"+divisionpath+"' ||'*') ))";
+                    +" where  division MATCH ('"+divisionpath+"' ||'*') )"
+                    +" and b.rowid not in (select rowid from "+BusinessTable
+                    +" where  processstatustype MATCH '"+processstatustype+"')"
+                    +")";
             cd.delbysql(delsql);
             String sql_list="select rowid as businessid from "+BusinessTable+" a where a.businesstype MATCH '"+businesstype+"' " +
                     "and a.rowid in (select rowid from "+BusinessTable+" b where b.processstatus MATCH '"
                     +ProcessType.UseProcessType.getChineseSeason(ProcessType.Approval)+"'"+ids+" and b.rowid in (select rowid from "+BusinessTable
-                    +" where  division MATCH ('"+divisionpath+"' ||'*') ))";
+                    +" where  division MATCH ('"+divisionpath+"' ||'*') )"
+                    +" and b.rowid not in (select rowid from "+BusinessTable
+                    +" where  processstatustype MATCH '"+processstatustype+"')"
+
+            +")";
             //log.debug("资金发放开始::"+sql_list);
 
             ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
@@ -1002,7 +1011,7 @@ public class BusinessProcessControl {
     }
 
     public String getFamilyInfoList(int start,int limit,String keyword,String businesstype,String[]name,
-                                    String[]compare,String[]value,String[]logic,String bgdate,String eddate){
+                                    String[]compare,String[]value,String[]logic,String bgdate,String eddate,String divisionpath){
         BusinessProcess bp=new BusinessProcess();
         ComonDao cd=new ComonDao();
 
@@ -1015,6 +1024,8 @@ public class BusinessProcessControl {
 
         basic_sql+=" and b.rowid in (select rowid from "+FamilyTable+" where relationship MATCH '"+RelationsType.UseRelationsType.getChineseSeason(RelationsType.ower)+"' )";
         basic_sql+=" and c.rowid in (select rowid from "+DivisionsTable+" where divisionpath MATCH a.division )";
+
+        basic_sql+=" and a.rowid in  (select rowid from "+BusinessTable+" where division MATCH ( '"+divisionpath+"' ||'*') )";
 
         if(!businesstype.equals("all")){
             basic_sql+=" and a.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"')";
@@ -1429,7 +1440,7 @@ public class BusinessProcessControl {
 
     }
     public String getPeopleInfoList(int start ,int limit,String keyword,String businesstype,String[]name,
-                                    String[]compare,String[]value,String[]logic,String bgdate,String eddate){
+                                    String[]compare,String[]value,String[]logic,String bgdate,String eddate,String divisionpath){
         BusinessProcess bp=new BusinessProcess();
         ComonDao cd=new ComonDao();
 
@@ -1440,6 +1451,7 @@ public class BusinessProcessControl {
         String basic_sql=" a.rowid = b.businessid  ";
         basic_sql+=" and c.rowid in (select rowid from "+DivisionsTable+" where divisionpath MATCH a.division )";
 
+        basic_sql+=" and a.rowid in  (select rowid from "+BusinessTable+" where division MATCH ( '"+divisionpath+"' ||'*') )";
         if(!businesstype.equals("all")){
             basic_sql+=" and a.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"')";
         }
@@ -1989,7 +2001,7 @@ public class BusinessProcessControl {
     }
 
     public String getNeedTodoBusinessList(int start,int limit,String keyword,String type,
-                                          String businesstype,boolean ispublicinfo,String bgdate,String edddate){
+                                          String businesstype,boolean ispublicinfo,String bgdate,String edddate,String divisionpath){
         BusinessProcess bp=new BusinessProcess();
         ComonDao cd=new ComonDao();
         SimpleDateFormat sDayFormat   =   new SimpleDateFormat("yyyy-MM-dd");
@@ -2011,6 +2023,9 @@ public class BusinessProcessControl {
                 " ) as approvaluserid" +
                 " from "+BusinessTable +" a,"+UserTable+" b " +
                 "where a.userid = b.id  ";
+
+        sql_list+=" and a.rowid in  (select rowid from "+BusinessTable+" where division MATCH ( '"+divisionpath+"' ||'*') )";
+        sql_count+=" and a.rowid in  (select rowid from "+BusinessTable+" where division MATCH ( '"+divisionpath+"' ||'*') )";
 
         if(!businesstype.equals("all")){
             sql_list+=" and a.businesstype MATCH '"+businesstype+"'";
