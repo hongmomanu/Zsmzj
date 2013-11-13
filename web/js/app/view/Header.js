@@ -18,6 +18,12 @@ Ext.define('ZSMZJ.view.Header', {
 
 
     initComponent: function() {
+        var zsj='舟山市';
+        var localdivisionpath;
+        if(divisionpath.indexOf(zsj)==0){
+            localdivisionpath=divisionpath.substring(zsj.length);
+        }
+
         Ext.applyIf(this, {
             //html: '舟山市社会救助管理平台'
             xtype:'panel',
@@ -135,7 +141,7 @@ Ext.define('ZSMZJ.view.Header', {
                                                 {
                                                     html: ''+
                                                         '<img src="img/head/1.png"><a>欢迎您：'+
-                                                        displayname+'&nbsp;('+divisionpath+')</a>',
+                                                        displayname+'&nbsp;('+localdivisionpath+')</a>',
                                                     cls:'mouseover',
                                                     width:280,
                                                     baseCls: 'main-header'
@@ -145,7 +151,7 @@ Ext.define('ZSMZJ.view.Header', {
 
                                                 },
                                                 {
-                                                    html: '待办事务:(1)',
+                                                    html: '待办业务:(0)',
                                                     width:80,
                                                     baseCls: 'main-header',
                                                     itemId: 'needtodopanel',
