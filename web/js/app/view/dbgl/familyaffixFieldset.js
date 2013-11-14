@@ -246,6 +246,114 @@ Ext.define('ZSMZJ.view.dbgl.familyaffixFieldset', {
                         },
                         items:[
                             {
+                                html: '  <a>【申请人】最低生活保障申请对象民主评议表(0)<a>',
+                                cls:'mouseover',
+                                type:'limitlifetable',
+                                itemId:'limitlifetable',
+                                listeners: {
+                                    /*click: {
+                                     element: 'el', //bind to the underlying el property on the panel
+                                     fn: function(){ alert('click el'); }
+                                     }*/
+                                    render: function(c){
+                                        c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
+                                    }
+
+                                }
+
+                            }
+                        ]
+
+                    },
+                    {
+                        xtype:'container',
+                        border:0,
+                        defaults:{
+                            border:0
+                        },
+                        items:[
+                            {
+                                html: '  <a>【申请人】申请报告(0)<a>',
+                                cls:'mouseover',
+                                type:'applybook',
+                                itemId:'applybook',
+                                listeners: {
+                                    /*click: {
+                                     element: 'el', //bind to the underlying el property on the panel
+                                     fn: function(){ alert('click el'); }
+                                     }*/
+                                    render: function(c){
+                                        c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
+                                    }
+
+                                }
+
+                            }
+                        ]
+
+                    },
+                    {
+                        xtype:'container',
+                        border:0,
+                        defaults:{
+                            border:0
+                        },
+                        items:[
+                            {
+                                html: '  <a>【申请人】 签署“协议书”并盖章(0)<a>',
+                                cls:'mouseover',
+                                type:'agreementbook',
+                                itemId:'agreementbook',
+                                listeners: {
+                                    /*click: {
+                                     element: 'el', //bind to the underlying el property on the panel
+                                     fn: function(){ alert('click el'); }
+                                     }*/
+                                    render: function(c){
+                                        c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
+                                    }
+
+                                }
+
+                            }
+                        ]
+
+                    },
+                    {
+                        xtype:'container',
+                        border:0,
+                        defaults:{
+                            border:0
+                        },
+                        items:[
+                            {
+                                html: '  <a>【申请人】最低生活保障申请审批表(0)<a>',
+                                cls:'mouseover',
+                                type:'limitlifeapprovaltable',
+                                itemId:'limitlifeapprovaltable',
+                                listeners: {
+                                    /*click: {
+                                     element: 'el', //bind to the underlying el property on the panel
+                                     fn: function(){ alert('click el'); }
+                                     }*/
+                                    render: function(c){
+                                        c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
+                                    }
+
+                                }
+
+                            }
+                        ]
+
+                    },
+                    {
+                        xtype:'container',
+                        border:0,
+                        defaults:{
+                            border:0
+                        },
+                        items:[
+                            {
                                 html: '  <a>【申请人】家庭财产证明(0) <a>',
                                 cls:'mouseover',
                                 type:'familypropertybook',

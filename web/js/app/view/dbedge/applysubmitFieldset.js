@@ -126,6 +126,7 @@ Ext.define('ZSMZJ.view.dbedge.applysubmitFieldset', {
                     {
                         name: 'publicityedtm',
                         fieldLabel: '公示结束日期',
+                        value:Ext.Date.format(Ext.Date.add(new Date(), Ext.Date.DAY,7), 'Y-m-d'),
                         xtype: 'datefield',
                         format: 'Y-m-d',
                         colspan:3,
