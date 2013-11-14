@@ -788,7 +788,7 @@ Ext.define('ZSMZJ.controller.Manager', {
 
         };
         var failFunc = function (form, action) {
-            Ext.Msg.alert("提示信息", "新增用户失败，检查web服务或数据库服务");
+            Ext.Msg.alert("提示信息", "新增用户失败，用户已存在或服务异常");
 
         };
 

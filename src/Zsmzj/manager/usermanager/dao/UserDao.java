@@ -96,6 +96,14 @@ public class UserDao {
     public int addnewUser (String username,String password,int roleid,int divisionid,String displayname){
 
         Connection conn= JdbcFactory.getConn("sqlite");
+
+        String sql_count="select count(*) from "+ UserTable+" where username='"+username+"'";
+        ComonDao cd =new ComonDao();
+        int count=cd.getTotalCountBySql(sql_count);
+        if(count>0){
+            return -1;
+        }
+
         String sql = "insert  into " + UserTable + " (username,password,roleid,divisionid,displayname) " +
                 "values (?,?,?,?,?)  ";
         PreparedStatement pstmt = JdbcFactory.getPstmt(conn, sql);
