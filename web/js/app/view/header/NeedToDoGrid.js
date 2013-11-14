@@ -48,7 +48,7 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
                                 renderTo: id0,
                                 text: '修改',
                                 margin: '0 5 0 5',
-                                icon:'img/sp.gif',
+                                icon:'img/busiicon/change.png',
                                 hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
                                     {name:"name",value:r.get("processstatus")}).children,
                                     {name:"name",value:"修改"}),
@@ -102,7 +102,7 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
                                 renderTo: id2,
                                 margin: '0 5 0 5',
                                 text: r.get('process'),
-                                icon:'img/sp.gif',
+                                icon:'img/busiicon/busiapproval.png',
                                 width: 55,
                                 listeners: {
 
@@ -124,7 +124,7 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
                                 renderTo: id3,
                                 text: '删除',
                                 margin: '0 5 0 5',
-                                icon:'img/sp.gif',
+                                icon:'img/busiicon/del.gif',
                                 /*hidden:!(r.get('processstatus').toString()==processdiction.stepzero
                                     ||r.get('processstatus').toString()==processdiction.stepback),*/
                                 hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
