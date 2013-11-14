@@ -19,8 +19,8 @@ Ext.define('ZSMZJ.view.Header', {
 
     initComponent: function() {
         var zsj='舟山市';
-        var localdivisionpath;
-        if(divisionpath.indexOf(zsj)==0){
+        var localdivisionpath=divisionpath;
+        if(divisionpath.indexOf(zsj)==0&&divisionpath!=zsj){
             localdivisionpath=divisionpath.substring(zsj.length);
         }
 
