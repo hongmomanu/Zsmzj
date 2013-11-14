@@ -18,7 +18,7 @@ Ext.define('ZSMZJ.view.dbgl.logoutsubmitFieldset', {
                 title: '<a>业务审批信息</a>',
                 defaultType: 'textfield',
                 itemId:'businesscheckinfo',
-
+                cls:'fieldset-border',
                 //layout: 'anchor',
                 layout: {
                     type: 'table',
@@ -28,7 +28,7 @@ Ext.define('ZSMZJ.view.dbgl.logoutsubmitFieldset', {
                     tableAttrs: {
                         border: 1,
                         cellpadding: 5,
-                        cellspacing: 1,
+                        cellspacing: 0,
                         width: '100%',
                         align: 'center',
                         style: "border:1px solid gray;border-collapse:collapse;margin:0 auto;text-align:left;"
