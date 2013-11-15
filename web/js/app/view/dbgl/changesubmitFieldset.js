@@ -99,10 +99,12 @@ Ext.define('ZSMZJ.view.dbgl.changesubmitFieldset', {
                         name: 'disabledmoney',
                         fieldLabel: '重残低保金(元)',
                         value:0,
+                        hidden:true,
                         allowBlank: true
                     },
                     {
                         name: 'othershelpmoney',
+                        hidden:true,
                         fieldLabel: '其他人员低保金(元)',
                         value:0,
                         allowBlank: true
@@ -124,7 +126,7 @@ Ext.define('ZSMZJ.view.dbgl.changesubmitFieldset', {
                         fieldLabel: '公示结束日期',
                         xtype: 'datefield',
                         format: 'Y-m-d',
-                        colspan:3,
+                        colspan:2,
                         allowBlank: true
                     }
                     ,{
