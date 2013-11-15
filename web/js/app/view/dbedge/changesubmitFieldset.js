@@ -53,8 +53,11 @@ Ext.define('ZSMZJ.view.dbedge.changesubmitFieldset', {
                     ,
                     {
                         name: 'aidnum',
+                        afterLabelTextTpl: required,
+                        emptyText: '请输入救助证编号',
+                        blankText : '请输入救助证编号',
                         fieldLabel: '救助证编号',
-                        allowBlank: true
+                        allowBlank: false
                     }
                     ,
                     {

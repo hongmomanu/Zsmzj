@@ -42,7 +42,6 @@ Ext.define('ZSMZJ.view.dbedge.applysubmitFieldset', {
                 },
 
                 items: [
-
                     {
                         name: 'poorstandard',
                         itemId:'poorstandard',
@@ -62,8 +61,11 @@ Ext.define('ZSMZJ.view.dbedge.applysubmitFieldset', {
                     ,
                     {
                         name: 'aidnum',
+                        afterLabelTextTpl: required,
+                        emptyText: '请输入救助证编号',
+                        blankText : '请输入救助证编号',
                         fieldLabel: '救助证编号',
-                        allowBlank: true
+                        allowBlank: false
                     }
                     ,
                     {

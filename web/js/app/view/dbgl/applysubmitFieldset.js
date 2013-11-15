@@ -80,8 +80,11 @@ Ext.define('ZSMZJ.view.dbgl.applysubmitFieldset', {
                     },
                     {
                         name: 'aidnum',
+                        afterLabelTextTpl: required,
+                        emptyText: '请输入救助证编号',
+                        blankText : '请输入救助证编号',
                         fieldLabel: '救助证编号',
-                        allowBlank: true
+                        allowBlank: false
                     }
                     ,
                     {
@@ -135,11 +138,13 @@ Ext.define('ZSMZJ.view.dbgl.applysubmitFieldset', {
                         name: 'disabledmoney',
                         fieldLabel: '重残低保金(元)',
                         value:0,
+                        hidden:true,
                         allowBlank: true
                     },
                     {
                         name: 'othershelpmoney',
                         fieldLabel: '其他人员低保金(元)',
+                        hidden:true,
                         value:0,
                         allowBlank: true
                     }
@@ -170,7 +175,7 @@ Ext.define('ZSMZJ.view.dbgl.applysubmitFieldset', {
                         xtype: 'datefield',
                         format: 'Y-m-d',
                         value:Ext.Date.format(Ext.Date.add(new Date(), Ext.Date.DAY,7), 'Y-m-d'),
-                        colspan:3,
+                        colspan:2,
                         allowBlank: true
                     }
                     ,{
