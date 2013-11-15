@@ -44,6 +44,14 @@ Ext.define('ZSMZJ.controller.Header', {
                 afterrender: this.headerRenderEvents
 
             },
+            'dbglfamilybasicfieldset':{
+                afterrender:function(form){
+                    var pathTree=form.down('#divisiontype');
+                    pathTree.setValue(divisionpath);
+                    pathTree.setRawValue(divisionpath);
+                    pathTree.validate();
+                }
+            },
             'mainpanel':{
                 //indexmsginit:function a(panel){this.initIndexMsg();},
                 afterrender:function a(){this.initIndexMsg();}
