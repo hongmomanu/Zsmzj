@@ -47,10 +47,11 @@ Ext.define('ZSMZJ.view.dbgl.SearchBusinessGrid' ,{
 
                 {header: '户主姓名',align:'center',dataIndex:'owername'},
                 {header: '户主身份证',align:'center',dataIndex:'owerid',width:160},
-                {header: '家庭类别',align:'center',dataIndex:'familytype'}
+                {header: '家庭类别',align:'center',dataIndex:'familytype',width:80}
 
 
             ],
+            height: 200,
             selModel: selModel,
             store: 'dbgl.SearchBusinesses'
 
