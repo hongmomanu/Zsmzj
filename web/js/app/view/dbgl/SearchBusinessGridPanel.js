@@ -25,13 +25,41 @@ Ext.define('ZSMZJ.view.dbgl.SearchBusinessGridPanel' ,{
         var me=this;
         Ext.apply(this, {
 
-            items: [{
-                xtype: 'textfield',
-                width: 400,
-                fieldLabel: '查询条件'
+            items: [
+                {
+                    xtype:'panel',
+                    layout: 'column',
+                    border:0,
+                    paddingBottom:'10px',
+                    items:[
+                        {
+                            columnWidth: 0.7,
+                            xtype: 'textfield',
+                            width: 400,
+                            itemId:'query_text',
+                            emptyText:'身份证号码'/*,
+                         fieldLabel: '查询条件'*/
 
-            }, {
-                xtype: 'dbglsearchbusinessgrid'
+                        },{
+                            columnWidth: 0.3,
+                            xtype:'button',
+                            text:'查询',
+                            listeners:{
+                                click:function(){
+                                    var query_text=this.up('panel').down('#query_text').value;
+                                    var grid=this.up('window').down('#query_result');
+                                    var store=grid.getStore();
+                                    store.proxy.extraParams.type=this.up('window').dataobj.businesstype;
+                                    store.proxy.extraParams.query=query_text;
+                                    store.load();
+                                }
+                            }
+                        }
+                    ]
+
+            },{
+                xtype: 'dbglsearchbusinessgrid',
+                itemId:'query_result'
             }]
         });
         this.callParent(arguments);
