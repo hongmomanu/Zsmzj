@@ -596,13 +596,18 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         var win=btn.up('window');
 
         var ajaxform=btn.up('form');
-
+        var recordList=win.down('#query_result').getSelectionModel().getSelection();
+        var businessidList=[];
+        for(var i=0;i<recordList.length;i++){
+            businessidList.push(recordList[i].data.businessid);
+        }
+        console.log(businessidList);
         var grid=win.dataobj;
         var params = {
             userid:userid,
             isnew:btn.isnew,
             divisionpath:divisionpath,
-            /*grantid:[34],*/
+            grantid:businessidList,
             businesstype:grid.businesstype
         };
         var successFunc = function (myform, action) {
