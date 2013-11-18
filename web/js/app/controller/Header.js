@@ -44,8 +44,9 @@ Ext.define('ZSMZJ.controller.Header', {
                 afterrender: this.headerRenderEvents
 
             },
-            'dbglfamilybasicfieldset':{
+            'dbglfamilybasicfieldset,dbedgefamilybasicfieldset,medicalhelpfamilybasicfieldset,charitablehelpfamilybasicfieldset,studyhelpfamilybasicfieldset,temporaryhelpfamilybasicfieldset':{
                 afterrender:function(form){
+                    //下拉树设置默认的行政区划
                     var pathTree=form.down('#divisiontype');
                     pathTree.setValue(divisionpath);
                     pathTree.setRawValue(divisionpath);
@@ -254,8 +255,8 @@ Ext.define('ZSMZJ.controller.Header', {
                 }
 
             },
-
-            'needtodopanel,dbglsearchbusinessgridpanel,dbglsearchbusinessgrid,announcegridpanel,enumerateconfigmanager,usermanagerpanel,rolemanagerpanel,funcmanagerpanel,needtodobusinesspanel,changedbusinesspanel,logoutbusinesspanel,peoplequerypanel,familyquerypanel,dbglstatisticsfullpanel,dbglgrantmoneypanel,dbglstatisticscomplexonepanel,dbglstatisticscomplextwopanel,dbglstatisticscomplexthreepanel,dbglstatisticscomplexfourpanel,dbglstatisticscomplexcountrypanel,dbglstatisticscomplexnewlogoutpanel,medicalstandardgridpanel':{
+            //dbglsearchbusinessgrid
+            'needtodopanel,dbglsearchbusinessgridpanel,announcegridpanel,enumerateconfigmanager,usermanagerpanel,rolemanagerpanel,funcmanagerpanel,needtodobusinesspanel,changedbusinesspanel,logoutbusinesspanel,peoplequerypanel,familyquerypanel,dbglstatisticsfullpanel,dbglgrantmoneypanel,dbglstatisticscomplexonepanel,dbglstatisticscomplextwopanel,dbglstatisticscomplexthreepanel,dbglstatisticscomplexfourpanel,dbglstatisticscomplexcountrypanel,dbglstatisticscomplexnewlogoutpanel,medicalstandardgridpanel':{
 
                 gridshowfresh:function(grid){
                   if(grid.xtype=='familyquerypanel'){
