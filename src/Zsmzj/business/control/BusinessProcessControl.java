@@ -164,8 +164,13 @@ public class BusinessProcessControl {
         if(grant_arr!=null&&grant_arr.length>0){
             ids=" and b.rowid in (";
             for(int i=0;i<grant_arr.length;i++){
-                 if(i!=0)ids+=",";
-                 else ids+=grant_arr[i];
+				if(i!=0){
+					ids+=",";
+					ids+=grant_arr[i];
+				}
+                 else {
+					ids+=grant_arr[i];
+				}
             }
             ids+=") ";
             num_sql+=ids;
