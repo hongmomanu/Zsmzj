@@ -71,11 +71,25 @@ public class ExcelHelper {
                     ArrayList<String>result=new ArrayList<String>();
                     result.add(divisionname);
                     result=getDivisionTreeBypath(parentid,"divisions",result);
+                    JSONObject row=JSONObject.fromObject(rowdatas.get(row_index));
                     for(int i=result.size()-1;i>=0;i--){
-                       if(i==result.size()-1)JSONObject.fromObject(rowdatas.get(row_index)).put("city",result.get(i));
-                       if(i==result.size()-2)JSONObject.fromObject(rowdatas.get(row_index)).put("county",result.get(i));
-                       if(i==result.size()-3)JSONObject.fromObject(rowdatas.get(row_index)).put("town",result.get(i));
-                       if(i==result.size()-4)JSONObject.fromObject(rowdatas.get(row_index)).put("village",result.get(i));
+                       if(i==result.size()-1){
+                           row.put("city",result.get(i));
+                           rowdatas.set(row_index,row);
+                       }
+                       if(i==result.size()-2){
+                           row.put("county",result.get(i));
+                           rowdatas.set(row_index,row);
+                       if(i==result.size()-3){
+                           row.put("town",result.get(i));
+                           rowdatas.set(row_index,row);
+                       }
+                       if(i==result.size()-4){
+                           row.put("village",result.get(i));
+                           rowdatas.set(row_index,row);
+                       }
+
+                       }
                     }
 
                 }
