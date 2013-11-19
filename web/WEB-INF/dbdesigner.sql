@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS users
   displayname VACHAR(50),                                 --显示名称
   divisionid  integer,                                    --行政区划id
   time DATETIME DEFAULT (datetime(CURRENT_TIMESTAMP,'localtime')),  --注册时间
-  roleid  integer                                         --角色id
+  roleid  integer                                           --角色id
 
 );
 
@@ -214,7 +214,9 @@ helpunitopinion                 VARCHAR(50),                           --救助�
 
 fundsresource                   VARCHAR(50),                           --资金来源
 helpobject                      VARCHAR(50),                           --救助对象
-helpprojecttype                 VARCHAR(50)                           --救助项目类型
+helpprojecttype                 VARCHAR(50),                           --救助项目类型
+illexpenses                     VARCHAR(50),                           --因病支出
+educationexpenses               VARCHAR(50)                            --因教育支出
 );
 
 
@@ -348,6 +350,8 @@ CREATE VIRTUAL TABLE IF NOT EXISTS businesschange USING fts3
   fundsresource                   VARCHAR(50),                           --资金来源
   helpobject                      VARCHAR(50),                           --救助对象
   helpprojecttype                 VARCHAR(50),                           --救助项目类型
+  illexpenses                     VARCHAR(50),                           --因病支出
+  educationexpenses               VARCHAR(50),                            --因教育支出
 
   businessid               integer,                                 --业务id
   insertdate               VARCHAR(50)                              --charuriq

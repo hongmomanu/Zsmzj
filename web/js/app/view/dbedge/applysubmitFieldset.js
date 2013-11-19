@@ -124,6 +124,28 @@ Ext.define('ZSMZJ.view.dbedge.applysubmitFieldset', {
                         value:0,
                         allowBlank: false
                     }
+                    ,{
+                        name: 'illexpenses',
+                        itemId:'illexpenses',
+                        fieldLabel: '因病支出',
+                        afterLabelTextTpl: required,
+                        emptyText: '请输入因病支出金额',
+                        blankText : '请输入因病支出金额',
+                        afterLabelTextTpl: required,
+                        value:0,
+                        allowBlank: false
+                    }
+                    ,{
+                        name: 'educationexpenses',
+                        itemId:'educationexpenses',
+                        fieldLabel: '因教育支出',
+                        afterLabelTextTpl: required,
+                        emptyText: '请输入因教育支出金额',
+                        blankText : '请输入因教育支出金额',
+                        afterLabelTextTpl: required,
+                        value:0,
+                        allowBlank: false
+                    }
                     ,
                     {
                         name: 'publicityedtm',

@@ -46,6 +46,13 @@ Ext.define('ZSMZJ.view.dbedge.logoutsubmitFieldset', {
                     {
                         name: 'poorstandard',
                         fieldLabel: '低保标准(元)',
+                        itemId:'poorstandard',
+                        listeners: {
+
+                            "blur":function(field,e){
+                                this.fireEvent('moneychane', field);
+                            }
+                        },
                         afterLabelTextTpl: required,
                         emptyText: '请输入低保标准',
                         blankText : '请输入低保标准',
@@ -89,16 +96,27 @@ Ext.define('ZSMZJ.view.dbedge.logoutsubmitFieldset', {
                         disabled:true,
                         allowBlank: false
                     },
+                    {
+                        name: 'disabledpersons',
+                        itemId:'disabledpersons',
+                        fieldLabel: '重残人数',
+                        value:0,
+                        listeners: {
+
+                            "change":function(field,e){
+                                //alert(1);
+                                this.fireEvent('moneychane', field);
+                            }
+                        },
+                        afterLabelTextTpl: required,
+                        emptyText: '请输入重残人数',
+                        blankText : '请输入重残人数',
+                        allowBlank: false
+                    },
 
                     {
-                        name: 'othershelpmoney',
-                        fieldLabel: '其他人员低保金(元)',
-                        value:0,
-                        allowBlank: true
-                    }
-                    ,
-                    {
                         name: 'totalhelpmoney',
+                        itemId:'totalhelpmoney',
                         fieldLabel: '总救助金额(元/月/户)',
                         afterLabelTextTpl: required,
                         emptyText: '请输入救助金额',
@@ -108,6 +126,28 @@ Ext.define('ZSMZJ.view.dbedge.logoutsubmitFieldset', {
                         allowBlank: false
                     }
                     ,
+                    {
+                        name: 'illexpenses',
+                        itemId:'illexpenses',
+                        fieldLabel: '因病支出',
+                        afterLabelTextTpl: required,
+                        emptyText: '请输入因病支出金额',
+                        blankText : '请输入因病支出金额',
+                        afterLabelTextTpl: required,
+                        value:0,
+                        allowBlank: false
+                    }
+                    ,{
+                        name: 'educationexpenses',
+                        itemId:'educationexpenses',
+                        fieldLabel: '因教育支出',
+                        afterLabelTextTpl: required,
+                        emptyText: '请输入因教育支出金额',
+                        blankText : '请输入因教育支出金额',
+                        afterLabelTextTpl: required,
+                        value:0,
+                        allowBlank: false
+                    },
                     {
                         name: 'publicityedtm',
                         fieldLabel: '公示结束日期',
@@ -135,6 +175,8 @@ Ext.define('ZSMZJ.view.dbedge.logoutsubmitFieldset', {
                     {
                         fieldLabel: '注销时间',
                         name:'logoutdate',
+                        xtype: 'datefield',
+                        format: 'Y-m-d',
                         afterLabelTextTpl: required,
                         allowBlank:false,
                         colspan:3,
@@ -151,8 +193,8 @@ Ext.define('ZSMZJ.view.dbedge.logoutsubmitFieldset', {
                         xtype : 'textarea',
                         grow : true,
                         afterLabelTextTpl: required,
-                        emptyText: '输入变更原因',
-                        emptyText: '输入变更原因',
+                        emptyText: '输入注销原因',
+                        emptyText: '输入注销原因',
                         allowBlank: false
                     },
                     {

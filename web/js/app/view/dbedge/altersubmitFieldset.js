@@ -43,6 +43,13 @@ Ext.define('ZSMZJ.view.dbedge.altersubmitFieldset', {
                 items: [
                     {
                         name: 'poorstandard',
+                        itemId:'poorstandard',
+                        listeners: {
+
+                            "blur":function(field,e){
+                                this.fireEvent('moneychane', field);
+                            }
+                        },
                         fieldLabel: '低保边缘户标准(元)',
                         afterLabelTextTpl: required,
                         emptyText: '请输入低保边缘户标准',
@@ -87,9 +94,26 @@ Ext.define('ZSMZJ.view.dbedge.altersubmitFieldset', {
                         disabled:true,
                         allowBlank: false
                     },
+                    {
+                        name: 'disabledpersons',
+                        itemId:'disabledpersons',
+                        fieldLabel: '重残人数',
+                        value:0,
+                        listeners: {
 
+                            "change":function(field,e){
+                                //alert(1);
+                                this.fireEvent('moneychane', field);
+                            }
+                        },
+                        afterLabelTextTpl: required,
+                        emptyText: '请输入重残人数',
+                        blankText : '请输入重残人数',
+                        allowBlank: false
+                    },
                     {
                         name: 'totalhelpmoney',
+                        itemId:'totalhelpmoney',
                         fieldLabel: '总救助金额(元/月/户)',
                         afterLabelTextTpl: required,
                         emptyText: '请输入救助金额',
@@ -99,6 +123,28 @@ Ext.define('ZSMZJ.view.dbedge.altersubmitFieldset', {
                         allowBlank: false
                     }
                     ,
+                    {
+                        name: 'illexpenses',
+                        itemId:'illexpenses',
+                        fieldLabel: '因病支出',
+                        afterLabelTextTpl: required,
+                        emptyText: '请输入因病支出金额',
+                        blankText : '请输入因病支出金额',
+                        afterLabelTextTpl: required,
+                        value:0,
+                        allowBlank: false
+                    }
+                    ,{
+                        name: 'educationexpenses',
+                        itemId:'educationexpenses',
+                        fieldLabel: '因教育支出',
+                        afterLabelTextTpl: required,
+                        emptyText: '请输入因教育支出金额',
+                        blankText : '请输入因教育支出金额',
+                        afterLabelTextTpl: required,
+                        value:0,
+                        allowBlank: false
+                    },
                     {
                         name: 'publicityedtm',
                         fieldLabel: '公示结束日期',

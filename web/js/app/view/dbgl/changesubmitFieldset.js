@@ -42,6 +42,7 @@ Ext.define('ZSMZJ.view.dbgl.changesubmitFieldset', {
                 items: [
                     {
                         name: 'poorstandard',
+                        itemId:'poorstandard',
                         fieldLabel: '低保标准(元)',
                         afterLabelTextTpl: required,
                         emptyText: '请输入低保标准',
@@ -112,6 +113,7 @@ Ext.define('ZSMZJ.view.dbgl.changesubmitFieldset', {
                     ,
                     {
                         name: 'totalhelpmoney',
+                        itemId:'totalhelpmoney',
                         fieldLabel: '总救助金额(元/月/户)',
                         afterLabelTextTpl: required,
                         emptyText: '请输入救助金额',

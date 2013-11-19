@@ -60,6 +60,13 @@ Ext.define('ZSMZJ.view.dbgl.logoutsubmitFieldset', {
                     {
                         name: 'poorstandard',
                         fieldLabel: '低保标准(元)',
+                        itemId:'poorstandard',
+                        listeners: {
+
+                            "blur":function(field,e){
+                                this.fireEvent('moneychane', field);
+                            }
+                        },
                         afterLabelTextTpl: required,
                         emptyText: '请输入低保标准',
                         blankText : '请输入低保标准',
@@ -108,6 +115,13 @@ Ext.define('ZSMZJ.view.dbgl.logoutsubmitFieldset', {
                         itemId:'disabledpersons',
                         fieldLabel: '重残人数',
                         value:0,
+                        listeners: {
+
+                            "change":function(field,e){
+                                //alert(1);
+                                this.fireEvent('moneychane', field);
+                            }
+                        },
                         afterLabelTextTpl: required,
                         emptyText: '请输入重残人数',
                         blankText : '请输入重残人数',
@@ -130,6 +144,7 @@ Ext.define('ZSMZJ.view.dbgl.logoutsubmitFieldset', {
                     ,
                     {
                         name: 'totalhelpmoney',
+                        itemId:'totalhelpmoney',
                         fieldLabel: '总救助金额(元/月/户)',
                         afterLabelTextTpl: required,
                         emptyText: '请输入救助金额',
@@ -185,8 +200,8 @@ Ext.define('ZSMZJ.view.dbgl.logoutsubmitFieldset', {
                         xtype : 'textarea',
                         grow : true,
                         afterLabelTextTpl: required,
-                        emptyText: '输入变更原因',
-                        emptyText: '输入变更原因',
+                        emptyText: '输入注销原因',
+                        emptyText: '输入注销原因',
                         allowBlank: false
                     },
                     {

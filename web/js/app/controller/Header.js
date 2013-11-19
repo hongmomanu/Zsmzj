@@ -298,7 +298,9 @@ Ext.define('ZSMZJ.controller.Header', {
                     var me=this;
                     var callback=function fn(){
                         me.closemask();
+                        Ext.Msg.alert("提示信息", "操作成功");
                         me.widgetdolayout("mainContent-panel");
+
                     };
 
                    this.showBusinessCheckContent(c,r,grid,callback);
@@ -1124,6 +1126,7 @@ Ext.define('ZSMZJ.controller.Header', {
         var grid=btn.up('grid');
         var store=grid.getStore();
         var rows=[];
+
         Ext.each(store.data.items,function(item){
             var time =Ext.Date.parse(item.raw['birthday'], "Y-m-dTH:i:s");
             var now =new Date();
@@ -2109,6 +2112,7 @@ Ext.define('ZSMZJ.controller.Header', {
                             id: tabid,
                             xtype: value,
                             objdata:objdata,
+                            businesstype:objdata?objdata.record.get('businesstype'):null,
                             autoScroll: true,
                             iconCls: 'tabs',
                             title: label
@@ -2155,6 +2159,7 @@ Ext.define('ZSMZJ.controller.Header', {
                         id: tabid,
                         xtype: value,
                         objdata:objdata,
+                        businesstype:objdata?objdata.record.get('businesstype'):null,
                         autoScroll: true,
                         iconCls: 'tabs',
                         title: label
