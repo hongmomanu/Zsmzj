@@ -601,7 +601,6 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         for(var i=0;i<recordList.length;i++){
             businessidList.push(recordList[i].data.businessid);
         }
-        console.log(businessidList);
         var grid=win.dataobj;
         var params = {
             userid:userid,

@@ -51,6 +51,8 @@ Ext.define('ZSMZJ.view.dbgl.SearchBusinessGridPanel' ,{
                                     var store=grid.getStore();
                                     store.proxy.extraParams.type=this.up('window').dataobj.businesstype;
                                     store.proxy.extraParams.query=query_text;
+                                    store.pageSize=20;
+                                    store.start=0;
                                     store.load();
                                 }
                             }
