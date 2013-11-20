@@ -53,7 +53,7 @@ public class UserDao {
 
     public Map<String,Object> login(String username,String password){
         Connection testConn= JdbcFactory.getConn("sqlite");
-        String sql=  "select a.id,a.roleid,a.displayname,b.divisionpath from "+UserTable+" a, " +DivisionTable+" b"+
+        String sql=  "select a.id,a.roleid,a.displayname,b.divisionpath,b.rowid from "+UserTable+" a, " +DivisionTable+" b"+
                 " where password=? and username=?  and a.divisionid=b.rowid";
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
         Map<String,Object> res=new HashMap<String, Object>();
@@ -71,6 +71,7 @@ public class UserDao {
                 res.put("roleid", rs.getInt(2));
                 res.put("displayname", rs.getString(3));
                 res.put("divisionpath", rs.getString(4));
+                res.put("divisionid", rs.getInt(5));
 
 
             }

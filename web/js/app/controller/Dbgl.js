@@ -940,10 +940,9 @@ Ext.define('ZSMZJ.controller.Dbgl', {
     moneychane:function(c){
       //var value=
         //alert(c.getValue());
-        var formpanel=c.up('panel');
+        var formpanel=c.up('form');
         var type=formpanel.businesstype;
         var incomesum=formpanel.down('#incomesum');
-        testobj=formpanel;
         if(incomesum){
             var incomesum_value=0;
             var incomeitems=incomesum.up('fieldset').items.items;
@@ -981,13 +980,17 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             var disableditem=formpanel.down('#disabledpersons');
             var disablednum=disableditem.getValue();
             if(type===businessTableType.dbgl){
-
+                var minpercent=0.4;
+                var isshanghai=formpanel.down('#isshanghai');
+                if(isshanghai&&isshanghai.checked){
+                    minpercent=0.5;
+                }
                 var helpmomey=poorstandard.getValue()-averageincome.getValue();
                 //var helpmomey=poorstandard.getValue()*disablednum+()
 
                 var totalmoney=poorstandard.getValue()*disablednum;
-                if(helpmomey<0.4*parseFloat(poorstandard.getValue())){
-                    totalmoney+=(0.4*parseFloat(poorstandard.getValue()))*(person_nums-disablednum);
+                if(helpmomey<minpercent*parseFloat(poorstandard.getValue())){
+                    totalmoney+=(minpercent*parseFloat(poorstandard.getValue()))*(person_nums-disablednum);
                     //totalhelpmoney.setValue(0.4*parseFloat(poorstandard.getValue()));
                     //Ext.Msg.alert("提示信息", "低于低保标准的40%，则救助金采用低保金的40%");
                 }else{

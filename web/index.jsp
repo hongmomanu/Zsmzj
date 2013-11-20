@@ -21,6 +21,7 @@
           var displayname="<%=request.getSession().getAttribute("displayname")%>";
           var divisionpath="<%=request.getSession().getAttribute("divisionpath")%>";
           var password="<%=request.getSession().getAttribute("password")%>";
+          var divisionid=<%=request.getSession().getAttribute("divisionid")%>;
 
       </script>
       <script>

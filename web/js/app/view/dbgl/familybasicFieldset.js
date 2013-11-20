@@ -42,9 +42,6 @@ Ext.define('ZSMZJ.view.dbgl.familybasicFieldset', {
                     name: 'division',
                     fieldLabel: '行政区划',
                     itemId:'divisiontype',
-
-                    //id:'testobjcomb',
-
                     xtype:'dbgldivsioncombtreepath',
                     allowBlank: false,
                     blankText: "不能为空",
@@ -155,17 +152,46 @@ Ext.define('ZSMZJ.view.dbgl.familybasicFieldset', {
                      blankText: '低保户类型',
                      emptyText: '低保户类型',
                      allowBlank: false
-                     },*/{
-                        xtype:'dbglaplytype',
-                        searchtype:"dbglfamilyaccount",
-                        afterLabelTextTpl: required,
-                        name: 'familyaccount',
-                        fieldLabel: '家庭户口',
-                        //colspan:2,
-                        blankText: '请选择家庭户口',
-                        emptyText: '请选择家庭户口',
-                        allowBlank: false
+                     },*/
+                    {
+                        xtype:'panel',
+                        layout: 'column',
+                        border:0,
+                        items:[
+                            {
+                                columnWidth: 0.8,
+                                xtype:'dbglaplytype',
+                                searchtype:"dbglfamilyaccount",
+                                afterLabelTextTpl: required,
+                                name: 'familyaccount',
+                                fieldLabel: '家庭户口',
+                                //colspan:2,
+                                blankText: '请选择家庭户口',
+                                emptyText: '请选择家庭户口',
+                                allowBlank: false
+                            },
+
+                            {
+                                columnWidth: 0.2,
+                                submitValue:false,
+                                hidden:!(divisionpath.indexOf(spatialchildTableType.shenshispatial)>=0),
+                                listeners: {
+
+                                    "change":function(field,e){
+                                        this.fireEvent('moneychane', field);
+                                    }
+                                },
+                                itemId:'isshanghai',
+                                xtype:'checkboxfield',
+                                value:false,
+                                boxLabel  : '是否居住上海'
+                            }
+
+                        ]
+
                     }
+
+
                     ,{
                         name: 'accountaddress',
                         fieldLabel: '户主户口所在地',

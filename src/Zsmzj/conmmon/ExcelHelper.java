@@ -11,8 +11,11 @@ import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created with IntelliJ IDEA.
@@ -57,6 +60,39 @@ public class ExcelHelper {
                 urlparamsstr+="limit=100000&start=0";
 
                 rowdatas=JSONObject.fromObject(UrlConnectHelper.sendPost(url,urlparamsstr)).getJSONArray("results");
+
+                for (int row_index = 0; row_index < rowdatas.size(); row_index++) {
+                    String division=JSONObject.fromObject(rowdatas.get(row_index)).getString("division");
+                    String sql="select parentid,divisionname from divisions where divisionpath MATCH '"+division+"'";
+                    ComonDao cd=new ComonDao();
+                    Map<String,Object> item=cd.getSigleObj(sql);
+                    int parentid=Integer.parseInt(item.get("parentid").toString());
+                    String divisionname=item.get("divisionname").toString();
+                    ArrayList<String>result=new ArrayList<String>();
+                    result.add(divisionname);
+                    result=getDivisionTreeBypath(parentid,"divisions",result);
+                    JSONObject row=JSONObject.fromObject(rowdatas.get(row_index));
+                    for(int i=result.size()-1;i>=0;i--){
+                       if(i==result.size()-1){
+                           row.put("city",result.get(i));
+                           rowdatas.set(row_index,row);
+                       }
+                       if(i==result.size()-2){
+                           row.put("county",result.get(i));
+                           rowdatas.set(row_index,row);
+                       if(i==result.size()-3){
+                           row.put("town",result.get(i));
+                           rowdatas.set(row_index,row);
+                       }
+                       if(i==result.size()-4){
+                           row.put("village",result.get(i));
+                           rowdatas.set(row_index,row);
+                       }
+
+                       }
+                    }
+
+                }
 
 
             }else{
@@ -103,7 +139,18 @@ public class ExcelHelper {
         return map;
     }
 
-
+    public  static ArrayList<String> getDivisionTreeBypath(int parentid,String tablename,ArrayList<String> result){
+        String sql="select divisionname,parentid from "+tablename+" where rowid = "+parentid;
+        ComonDao cd=new ComonDao();
+        Map<String,Object> item=cd.getSigleObj(sql);
+        result.add(item.get("divisionname").toString());
+        parentid=Integer.parseInt(item.get("parentid").toString());
+        if(parentid<0){
+             return result;
+        }else{
+            return  getDivisionTreeBypath(parentid,tablename,result);
+        }
+    }
     public static void makemultiheader(WritableSheet ws, JSONArray headers,
                                        int colindex, JSONArray rowdatas, JSONObject sum_item, int sumrow_index,int headerheight) {
         WritableFont font = new WritableFont(WritableFont.createFont("宋体"),

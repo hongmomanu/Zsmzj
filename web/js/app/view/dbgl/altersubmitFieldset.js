@@ -58,6 +58,12 @@ Ext.define('ZSMZJ.view.dbgl.altersubmitFieldset', {
                     , */
                     {
                         name: 'poorstandard',
+                        listeners: {
+
+                            "blur":function(field,e){
+                                this.fireEvent('moneychane', field);
+                            }
+                        },
                         fieldLabel: '低保标准(元)',
                         afterLabelTextTpl: required,
                         emptyText: '请输入低保标准',
@@ -106,6 +112,13 @@ Ext.define('ZSMZJ.view.dbgl.altersubmitFieldset', {
                         itemId:'disabledpersons',
                         fieldLabel: '重残人数',
                         value:0,
+                        listeners: {
+
+                            "change":function(field,e){
+                                //alert(1);
+                                this.fireEvent('moneychane', field);
+                            }
+                        },
                         afterLabelTextTpl: required,
                         emptyText: '请输入重残人数',
                         blankText : '请输入重残人数',
@@ -128,6 +141,7 @@ Ext.define('ZSMZJ.view.dbgl.altersubmitFieldset', {
                     ,
                     {
                         name: 'totalhelpmoney',
+                        itemId:'totalhelpmoney',
                         fieldLabel: '总救助金额(元/月/户)',
                         afterLabelTextTpl: required,
                         emptyText: '请输入救助金额',
