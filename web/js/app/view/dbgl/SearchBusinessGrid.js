@@ -51,7 +51,15 @@ Ext.define('ZSMZJ.view.dbgl.SearchBusinessGrid' ,{
 
 
             ],
-            height: 200,
+            bbar: Ext.create('Ext.PagingToolbar', {
+                store: 'dbgl.SearchBusinesses',
+                displayInfo: true,
+                displayMsg: '显示发放人员 {0} - {1} of {2}',
+                emptyMsg: "无待发放人员",
+                items:[
+                ]
+            }),
+            height: 195,
             selModel: selModel,
             store: 'dbgl.SearchBusinesses'
 

@@ -44,7 +44,8 @@ var formwidgettype={
     'studyhelpapply':'studyhelpbusinessapplyform',/*助学救助申请*/
     'studyhelpalter':'studyhelpbusinessalterform',/*助学救助修改*/
     'temporaryhelpapply':'temporaryhelpbusinessapplyform',/*临时救助申请*/
-    'temporaryhelpalter':'temporaryhelpbusinessalterform'/*临时救助申请*/
+    'temporaryhelpalter':'temporaryhelpbusinessalterform',/*临时救助申请*/
+    'propertycheckregister':'propertycheckfamilyinforegister'/*家庭基本信息登记*/
 
 };
 
@@ -841,6 +842,12 @@ var applyformviews={
         'temporaryhelpfamilyapplyfieldset',
         'temporaryhelpaltersubmitfieldset',
         'temporaryhelpaltersubmitlogfieldset'
+
+    ],'propertycheckregister':[/* 家庭基本信息登记*/
+        'propertycheckfamilybasicfieldset',
+        'propertycheckfamilymoneyfieldset',
+        'propertycheckfamilyhousefieldset',
+        'propertycheckfamilyinputfieldset'
 
     ]
 
