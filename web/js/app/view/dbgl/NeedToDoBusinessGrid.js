@@ -236,9 +236,9 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                     var revillage=/[^乡镇街道]+(社区|村)/g;
                     var retown=/[^区县级]+(乡|镇|街道)/g;
                     var division=record.get('division');
-                    division=division.replace(division.match(revillage)[0],"");
-                    division=division.replace(division.match(retown)[0],"");
-                    var result=division.match(re)[0];
+                    division=division.replace(division.match(revillage)?division.match(revillage)[0]:"","");
+                    division=division.replace(division.match(retown)?division.match(retown)[0]:"","");
+                    var result=division.match(re)?division.match(re)[0]:division;
                     (function (result,record){
                         function fn(){
                             record.raw.city=result
@@ -254,9 +254,9 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                     var revillage=/[^乡镇街道]+(社区|村)/g;
                     var retown=/[^区县级]+(乡|镇|街道)/g;
                     var division=record.get('division');
-                    division=division.replace(division.match(revillage)[0],"");
-                    division=division.replace(division.match(retown)[0],"");
-                    division=division.replace(division.match(re)[0],"");
+                    division=division.replace(division.match(revillage)?division.match(revillage)[0]:"","");
+                    division=division.replace(division.match(retown)?division.match(retown)[0]:"","");
+                    division=division.replace(division.match(re)?division.match(re)[0]:"","");
                     //record.set('county',division);
                     (function (result,record){
                         function fn(){
@@ -269,7 +269,7 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                 }},
                 {header: '乡/镇', hidden:true,dataIndex: 'town',align:'center',width: 250,renderer:function(val, obj, record){
                     var re=/[^区县级]+(乡|镇|街道)/g;
-                    var result=record.get('division').match(re)[0];
+                    var result=record.get('division').match(re)?record.get('division').match(re)[0]:"";
                     (function (result,record){
                         function fn(){
                             record.raw.town=result
@@ -282,7 +282,7 @@ Ext.define('ZSMZJ.view.dbgl.NeedToDoBusinessGrid' ,{
                 }},
                 {header: '村/社区',hidden:true, dataIndex: 'village',align:'center',width: 250,renderer:function(val, obj, record){
                     var re=/[^乡镇街道]+(社区|村)/g;
-                    var result=record.get('division').match(re)[0];
+                    var result=record.get('division').match(re)?record.get('division').match(re)[0]:"";
                     //Ext.suspendLayouts();
                     (function (result,record){
                         function fn(){

@@ -71,26 +71,27 @@ public class ExcelHelper {
                     ArrayList<String>result=new ArrayList<String>();
                     result.add(divisionname);
                     result=getDivisionTreeBypath(parentid,"divisions",result);
+                    log.debug(result);
                     JSONObject row=JSONObject.fromObject(rowdatas.get(row_index));
                     for(int i=result.size()-1;i>=0;i--){
-                       if(i==result.size()-1){
+                       log.debug(result.size()-3);
+                       log.debug(result.size()-4);
+                       log.debug(i);
+                       if(i==(result.size()-1)){
                            row.put("city",result.get(i));
-                           rowdatas.set(row_index,row);
                        }
-                       if(i==result.size()-2){
+                       if(i==(result.size()-2)){
                            row.put("county",result.get(i));
-                           rowdatas.set(row_index,row);
-                       if(i==result.size()-3){
-                           row.put("town",result.get(i));
-                           rowdatas.set(row_index,row);
                        }
-                       if(i==result.size()-4){
+                       if(i==(result.size()-3)){
+                           row.put("town",result.get(i));
+                       }
+                       if(i==(result.size()-4)){
                            row.put("village",result.get(i));
-                           rowdatas.set(row_index,row);
                        }
 
-                       }
                     }
+                    rowdatas.set(row_index,row);
 
                 }
 
@@ -140,14 +141,15 @@ public class ExcelHelper {
     }
 
     public  static ArrayList<String> getDivisionTreeBypath(int parentid,String tablename,ArrayList<String> result){
-        String sql="select divisionname,parentid from "+tablename+" where rowid = "+parentid;
-        ComonDao cd=new ComonDao();
-        Map<String,Object> item=cd.getSigleObj(sql);
-        result.add(item.get("divisionname").toString());
-        parentid=Integer.parseInt(item.get("parentid").toString());
+
         if(parentid<0){
              return result;
         }else{
+            String sql="select divisionname,parentid from "+tablename+" where rowid = "+parentid;
+            ComonDao cd=new ComonDao();
+            Map<String,Object> item=cd.getSigleObj(sql);
+            result.add(item.get("divisionname").toString());
+            parentid=Integer.parseInt(item.get("parentid").toString());
             return  getDivisionTreeBypath(parentid,tablename,result);
         }
     }

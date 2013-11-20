@@ -82,6 +82,68 @@ Ext.define('ZSMZJ.view.dbgl.FamilyQueryGrid' ,{
 
 
                 {header: '行政区划', dataIndex: 'division',align:'center',width: 250},
+                {header: '市',hidden:true, dataIndex: 'city',align:'center',width: 250,renderer:function(val, obj, record){
+                    var re=/[^市]+(市)/g;
+                    var revillage=/[^乡镇街道]+(社区|村)/g;
+                    var retown=/[^区县级]+(乡|镇|街道)/g;
+                    var division=record.get('division');
+                    division=division.replace(division.match(revillage)?division.match(revillage)[0]:"","");
+                    division=division.replace(division.match(retown)?division.match(retown)[0]:"","");
+                    var result=division.match(re)?division.match(re)[0]:division;
+                    (function (result,record){
+                        function fn(){
+                            record.raw.city=result
+                        }
+                        var task = new Ext.util.DelayedTask(fn);
+                        task.delay(5);
+                    })(result,record);
+                    //record.set('city',division);
+                    return result;
+                }},
+                {header: '区/县',hidden:true, dataIndex: 'county',align:'center',width: 250,renderer:function(val, obj, record){
+                    var re=/[^市]+(市)/g;
+                    var revillage=/[^乡镇街道]+(社区|村)/g;
+                    var retown=/[^区县级]+(乡|镇|街道)/g;
+                    var division=record.get('division');
+                    division=division.replace(division.match(revillage)?division.match(revillage)[0]:"","");
+                    division=division.replace(division.match(retown)?division.match(retown)[0]:"","");
+                    division=division.replace(division.match(re)?division.match(re)[0]:"","");
+                    //record.set('county',division);
+                    (function (result,record){
+                        function fn(){
+                            record.raw.county=result
+                        }
+                        var task = new Ext.util.DelayedTask(fn);
+                        task.delay(5);
+                    })(division,record);
+                    return division;
+                }},
+                {header: '乡/镇', hidden:true,dataIndex: 'town',align:'center',width: 250,renderer:function(val, obj, record){
+                    var re=/[^区县级]+(乡|镇|街道)/g;
+                    var result=record.get('division').match(re)?record.get('division').match(re)[0]:"";
+                    (function (result,record){
+                        function fn(){
+                            record.raw.town=result
+                        }
+                        var task = new Ext.util.DelayedTask(fn);
+                        task.delay(5);
+                    })(result,record);
+                    //record.set('town',result);
+                    return result;
+                }},
+                {header: '村/社区',hidden:true, dataIndex: 'village',align:'center',width: 250,renderer:function(val, obj, record){
+                    var re=/[^乡镇街道]+(社区|村)/g;
+                    var result=record.get('division').match(re)?record.get('division').match(re)[0]:"";
+                    //Ext.suspendLayouts();
+                    (function (result,record){
+                        function fn(){
+                            record.raw.village=result
+                        }
+                        var task = new Ext.util.DelayedTask(fn);
+                        task.delay(5);
+                    })(result,record);
+                    return result;
+                }},
                 {header: '户主身份证',align:'center',dataIndex:'owerid',width: 250},
 
 
