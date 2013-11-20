@@ -74,7 +74,7 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
 
         var params = {
             //businesstype:businesstype,
-            userid:userid,
+            userid:userid
             //familymembers:Ext.JSON.encode(familymembers),
             //processstatustype:processstatustype.ok,
             //isprocess:isprocess,
