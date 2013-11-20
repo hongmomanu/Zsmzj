@@ -71,12 +71,8 @@ public class ExcelHelper {
                     ArrayList<String>result=new ArrayList<String>();
                     result.add(divisionname);
                     result=getDivisionTreeBypath(parentid,"divisions",result);
-                    log.debug(result);
                     JSONObject row=JSONObject.fromObject(rowdatas.get(row_index));
                     for(int i=result.size()-1;i>=0;i--){
-                       log.debug(result.size()-3);
-                       log.debug(result.size()-4);
-                       log.debug(i);
                        if(i==(result.size()-1)){
                            row.put("city",result.get(i));
                        }
@@ -91,7 +87,7 @@ public class ExcelHelper {
                        }
 
                     }
-                    rowdatas.set(row_index,row);
+                    rowdatas.set(row_index, row);
 
                 }
 
@@ -222,7 +218,9 @@ public class ExcelHelper {
 
                         if (col_name.equals(sum_name.toString())) {
                             labelSumC = new Label(j, sumrow_index, sum_item.get(sum_name).toString());
+                            Formula f1 = new Formula(j, sumrow_index, "SUM(C29:D29)");
                             labelSumC.setCellFormat(cellRowFormat);
+                            log.debug(labelSumC.getContents());
                             ws.addCell(labelSumC);
                             break;
                         }
