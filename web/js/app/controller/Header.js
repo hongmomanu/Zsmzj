@@ -937,7 +937,9 @@ Ext.define('ZSMZJ.controller.Header', {
         //alert(1);
         //testobj=grid;//.columnManager.getColumns()
         //var a=testobj.getView().normalView
-        this.outexcel_common(btn,sum,3,rows,headers,15,grid);
+        //var headers=this.maketree_headers(grid,null,null,null,null,3,true);
+        //console.log(this.maketree_headers(grid,null,null,null,null,3,true));
+            this.outexcel_common(btn,sum,3,rows,headers,15,grid);
 
     },
     outexcel_statistics:function(btn){
@@ -1102,6 +1104,94 @@ Ext.define('ZSMZJ.controller.Header', {
 
 
 
+    },
+    maketree_headers:function(grid,headers,index,columns,level,totallevel,isfirst){
+        var me =this;
+
+        if(!columns){
+            var gridview=grid.getView().normalView;
+            columns=gridview.headerCt.items.items;
+        }
+        if(!index)index=2;
+        if(!level)level=0;
+        if(!headers){
+            headers=[
+                {name:"序号",value:"index",columns:[],
+                    col:[0,0],
+                    row:[1,totallevel]},
+                {
+                    name: '地区',
+                    columns:[],
+                    col:[1,1],
+                    row:[1,totallevel],
+                    value: 'divisionname'
+                }
+            ];
+        }
+
+        Ext.each(columns,function(column){
+            if(!(column.xtype=='rownumberer'||column.isHidden()||column.text=='操作栏'||column.text=='业务操作')){
+                var item={name:column.text,value:column.dataIndex,columns:[],col:[index,0],row:[level,0]};
+                headers.push(item);
+                index++;
+                var colsize=0;
+                var rowsize=0;
+
+
+
+                if(column.items.items.length>0){
+
+                    colsize+=column.items.items.length;
+                    me.maketree_headers(grid,item.columns,index,column.items.items,level+1,3);
+                }
+                var child_totallevel=0;
+                if(column.items.items.length==0)child_totallevel=1;
+                else{
+                    child_totallevel=me.getTotalLevel(grid,0,columns,true);
+                }
+                var self_level=me.getTotalLevel(grid,0,column.items.items,true)+column.items.items.length>0?1:0;
+                if(level==0)self_level=0;
+
+
+                //console.log(column.text+"---------"+child_totallevel+"----------"+self_level);
+                item.row=[level+1,level+(totallevel-level-child_totallevel)+1-self_level];
+                item.col=[item.col[0],item.col[0]+colsize];
+
+
+                //console.log(item.row);
+            }
+            if(isfirst){
+                level=0;
+
+            }
+
+        });
+
+        return headers;
+
+
+    },
+    getTotalLevel:function(grid,level,columns,isfirst){
+        var me=this;
+        if(!columns){
+            var gridview=grid.getView().normalView;
+            columns=gridview.headerCt.items.items;
+        }
+        var max=level;
+        Ext.each(columns,function(column){
+                if(column.items.items.length>0){
+                    level++;
+                    level=me.getTotalLevel(grid,level,column.items.items);
+                    if(level>max){
+                        max=level;
+                    }
+                }
+                if(isfirst){
+                    level=0;
+                }
+            console.log(max);
+        });
+       return max;
     },
     makecommon_headers:function(grid){
         //testobj=grid;
