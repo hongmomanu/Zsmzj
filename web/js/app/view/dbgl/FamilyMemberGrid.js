@@ -170,7 +170,7 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                         xtype: 'datefield',
                         allowBlank: false,
                         itemId: 'personbirthday',
-                        //format: 'Y-m-d',
+                        format: 'Y-m-d',
                         renderer: function (val, obj, record) {
                             var time =Ext.Date.parse(val, "Y-m-dTH:i:s");
                             val = Ext.util.Format.date(time, 'Y-m-d');

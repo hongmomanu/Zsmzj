@@ -212,6 +212,20 @@ Ext.define('ZSMZJ.controller.Header', {
             'dbglstatisticscomplexonepanel button[action=outexcel],dbglstatisticscomplexonepanel menuitem[action=outexcel]':{
                 click: this.outexcel_complex
 
+            },'dbglstatisticscomplexfourpanel button[action=outexcel],dbglstatisticscomplexfourpanel menuitem[action=outexcel]':{
+                click: this.outexcel_complex
+
+            },'dbglstatisticscomplexthreepanel button[action=outexcel],dbglstatisticscomplexthreepanel menuitem[action=outexcel]':{
+                click: this.outexcel_complex
+
+            },'dbglstatisticscomplextwopanel button[action=outexcel],dbglstatisticscomplextwopanel menuitem[action=outexcel]':{
+                click: this.outexcel_complex
+
+            },'dbglstatisticscomplexcountrypanel button[action=outexcel],dbglstatisticscomplexcountrypanel menuitem[action=outexcel]':{
+                click: this.outexcel_complex
+
+            },'dbglstatisticscomplexnewlogoutpanel button[action=outexcel],dbglstatisticscomplexnewlogoutpanel menuitem[action=outexcel]':{
+                click: this.outexcel_complex
             },
             'dbglgrantmoneypanel button[action=newgrant]':{
                 click:this.new_grant
@@ -754,7 +768,7 @@ Ext.define('ZSMZJ.controller.Header', {
             Ext.Msg.alert("提示信息", "无相关数据可导出");
             return ;
         }
-        var headers=[
+        /*var headers=[
             {
                 name:"序号",
                 value:"index",
@@ -933,22 +947,19 @@ Ext.define('ZSMZJ.controller.Header', {
                 }]
             }
 
-        ];
-        //alert(1);
-        //testobj=grid;//.columnManager.getColumns()
-        //var a=testobj.getView().normalView
-        //var headers=this.maketree_headers(grid,null,null,null,null,3,true);
-        //console.log(this.maketree_headers(grid,null,null,null,null,3,true));
-            this.outexcel_common(btn,sum,3,rows,headers,15,grid);
+        ];*/
+
+        var totallevel=this.getTotalLevel(grid,0,null,true);
+        headers=this.maketree_headers(grid,null,null,null,null,totallevel,true);
+        this.outexcel_common(btn,sum,totallevel,rows,headers,grid.columns.length+1,grid);
 
     },
     outexcel_statistics:function(btn){
         //var b=a.normalGrid;var c=b.columnManager.headerCt.items.items[0]
 
-        var grid=btn.up('panel');
+        /*var grid=btn.up('panel');
         var root=grid.getRootNode();
         var rows=this.treeToarr(root,[]);
-        testobj=grid;
         var sum={};
         if(rows.length==0){
             Ext.Msg.alert("提示信息", "无相关数据可导出");
@@ -1102,7 +1113,21 @@ Ext.define('ZSMZJ.controller.Header', {
         };
         this.ajaxSend(params, 'ajax/makeexcel.jsp', successFunc, failFunc,'POST');
 
+*/
+        var grid=btn.up('panel');
+        var root=grid.getRootNode();
+        var rows=this.treeToarr(root,[]);
 
+        var sum={};
+        if(rows.length==0){
+            Ext.Msg.alert("提示信息", "无相关数据可导出");
+            return ;
+        }
+
+        var totallevel=this.getTotalLevel(grid,0,null,true);
+
+        headers=this.maketree_headers(grid,null,null,null,null,totallevel,true);
+        this.outexcel_common(btn,sum,totallevel,rows,headers,grid.columns.length+1,grid);
 
     },
     maketree_headers:function(grid,headers,index,columns,level,totallevel,isfirst){
@@ -1133,32 +1158,27 @@ Ext.define('ZSMZJ.controller.Header', {
             if(!(column.xtype=='rownumberer'||column.isHidden()||column.text=='操作栏'||column.text=='业务操作')){
                 var item={name:column.text,value:column.dataIndex,columns:[],col:[index,0],row:[level,0]};
                 headers.push(item);
-                index++;
+                //index++;
                 var colsize=0;
                 var rowsize=0;
 
-
-
                 if(column.items.items.length>0){
-
-                    colsize+=column.items.items.length;
-                    me.maketree_headers(grid,item.columns,index,column.items.items,level+1,3);
+                    me.maketree_headers(grid,item.columns,index,column.items.items,level+1,totallevel);
                 }
                 var child_totallevel=0;
                 if(column.items.items.length==0)child_totallevel=1;
                 else{
                     child_totallevel=me.getTotalLevel(grid,0,columns,true);
                 }
-                var self_level=me.getTotalLevel(grid,0,column.items.items,true)+column.items.items.length>0?1:0;
-                if(level==0)self_level=0;
+                var self_level=me.getTotalLevel(grid,0,column.items.items,true)+(column.items.items.length>0?1:0);
+                  //var self_level=0;
+                if(level==0)self_level=1;
+                var rowindex=level+1;
+                index=index+me.getTotalSize(1,column);
 
+                item.row=[rowindex,rowindex+(totallevel-level-child_totallevel)-self_level+1];
+                item.col=[item.col[0],item.col[0]+me.getTotalSize(1,column)-1];
 
-                //console.log(column.text+"---------"+child_totallevel+"----------"+self_level);
-                item.row=[level+1,level+(totallevel-level-child_totallevel)+1-self_level];
-                item.col=[item.col[0],item.col[0]+colsize];
-
-
-                //console.log(item.row);
             }
             if(isfirst){
                 level=0;
@@ -1171,27 +1191,46 @@ Ext.define('ZSMZJ.controller.Header', {
 
 
     },
+    getTotalSize:function(size,column){
+        var me=this;
+        if(column.items.items.length>0)size--;
+            size+=column.items.items.length;
+            for(var i=0;i<column.items.items.length;i++){
+                size=me.getTotalSize(size,column.items.items[i]);
+            }
+
+        return size;
+
+    },
     getTotalLevel:function(grid,level,columns,isfirst){
         var me=this;
+
         if(!columns){
             var gridview=grid.getView().normalView;
             columns=gridview.headerCt.items.items;
         }
+
+        if(isfirst){
+            level=1;
+        }
         var max=level;
+
+
         Ext.each(columns,function(column){
-                if(column.items.items.length>0){
-                    level++;
-                    level=me.getTotalLevel(grid,level,column.items.items);
-                    if(level>max){
-                        max=level;
-                    }
-                }
-                if(isfirst){
-                    level=0;
-                }
-            console.log(max);
+            if(column.items.items.length>0){
+                level=level+1;
+                level=me.getTotalLevel(grid,level,column.items.items);
+
+            }
+            if(level>max){
+                max=level;
+            }
+            if(isfirst){
+                level=0;
+
+            }
         });
-       return max;
+        return max;
     },
     makecommon_headers:function(grid){
         //testobj=grid;
