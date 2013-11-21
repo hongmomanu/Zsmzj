@@ -138,6 +138,7 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                                 if(obj){
                                     var birthitem=this.up('panel').down('#personbirthday');
                                     var sex=this.up('panel').down('#sex');
+
                                     birthitem.setValue(obj.birthday);
                                     sex.setValue(obj.sex);
                                 }

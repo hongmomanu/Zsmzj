@@ -44,7 +44,7 @@ Ext.define('ZSMZJ.controller.Header', {
                 afterrender: this.headerRenderEvents
 
             },
-            'dbglfamilybasicfieldset,dbedgefamilybasicfieldset,medicalhelpfamilybasicfieldset,charitablehelpfamilybasicfieldset,studyhelpfamilybasicfieldset,temporaryhelpfamilybasicfieldset':{
+            'dbglfamilybasicfieldset,dbedgefamilybasicfieldset,medicalhelpfamilybasicfieldset,charitablehelpfamilybasicfieldset,studyhelpfamilybasicfieldset,temporaryhelpfamilybasicfieldset,charitablehelpinstitutionapplyform,disasterhelpbusinessapplyform,disasterhelpwarehouseapplyform,rangershelpbusinessapplyform':{
                 afterrender:function(form){
                     //下拉树设置默认的行政区划
                     var pathTree=form.down('#divisiontype');

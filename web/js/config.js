@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 var extLocation="http://192.168.2.112/ext-4.2.1/";
- //extLocation="http://192.168.2.9/extjs4.2/";
+ extLocation="http://127.168.2.9/extjs4.2/";
 
 var businessTableType=
         {   'dbgl':"低保",
@@ -935,6 +935,15 @@ var menu_shjz=[
         icon:icons+'12.png',
         items:[
             {xtype:'dbglconfigtree',searchtype:"综合查询",businesstype:businessTableType.allquery}
+        ],
+        iconCls: 'nav'
+    },
+    {
+        layout: 'fit',
+        title: '财产核定',
+        //icon:icons+'12.png',
+        items:[
+            {xtype:'dbglconfigtree',searchtype:"财产核定",businesstype:businessTableType.propertycheck}
         ],
         iconCls: 'nav'
     }

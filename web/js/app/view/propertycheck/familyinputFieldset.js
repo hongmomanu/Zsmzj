@@ -48,6 +48,7 @@ Ext.define('ZSMZJ.view.propertycheck.familyinputFieldset', {
                         listeners: {
 
                             "blur":function(field,e){
+
                                 this.fireEvent('moneychane', field);
                             }
                         },
