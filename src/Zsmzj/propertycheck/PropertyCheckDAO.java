@@ -1,6 +1,7 @@
 package Zsmzj.propertycheck;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -12,9 +13,10 @@ import java.util.Map;
  */
 public interface PropertyCheckDAO {
 
-	public int doCreate(Map<String,Object> param);
+	public int doCreate(Map<String,Map<String,Object>> param);
 	public int doUpdate(Map<String,Object> param);
 	public int doDelete(int pid,int type);
-	public ArrayList<Map<String,Object>> findAll(String keyword,int type);
+	public ArrayList<Map<String,Object>> findAll(String owerid,int checksum,int item,int check);
+	public int getCount(String keyword,int type);
 	public Map<String,Object> findById(int pid,int type);
 }
