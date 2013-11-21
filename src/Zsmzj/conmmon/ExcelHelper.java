@@ -42,6 +42,7 @@ public class ExcelHelper {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        JSONObject sum_item = JSONObject.fromObject(sum);
         if (wwb != null) {
             //创建一个可写入的工作表
             //Workbook的createSheet方法有两个参数，第一个是工作表的名称，第二个是工作表在工作薄中的位置
@@ -60,8 +61,19 @@ public class ExcelHelper {
                 urlparamsstr+="limit=100000&start=0";
 
                 rowdatas=JSONObject.fromObject(UrlConnectHelper.sendPost(url,urlparamsstr)).getJSONArray("results");
+                Map<String,Double> sum_new=new HashMap<String, Double>();
+                for (Object sum_name : sum_item.names()) {
+                    sum_new.put(sum_name.toString(),0.0);
+
+                }
 
                 for (int row_index = 0; row_index < rowdatas.size(); row_index++) {
+
+                    for (Object sum_name : sum_item.names()) {
+                        sum_new.put(sum_name.toString(),sum_new.get(sum_name.toString())+
+                                Double.parseDouble(JSONObject.fromObject(rowdatas.get(row_index)).getString(sum_name.toString())));
+
+                    }
                     String division=JSONObject.fromObject(rowdatas.get(row_index)).getString("division");
                     String sql="select parentid,divisionname from divisions where divisionpath MATCH '"+division+"'";
                     ComonDao cd=new ComonDao();
@@ -73,32 +85,30 @@ public class ExcelHelper {
                     result=getDivisionTreeBypath(parentid,"divisions",result);
                     JSONObject row=JSONObject.fromObject(rowdatas.get(row_index));
                     for(int i=result.size()-1;i>=0;i--){
-                       if(i==result.size()-1){
+                       if(i==(result.size()-1)){
                            row.put("city",result.get(i));
-                           rowdatas.set(row_index,row);
                        }
-                       if(i==result.size()-2){
+                       if(i==(result.size()-2)){
                            row.put("county",result.get(i));
-                           rowdatas.set(row_index,row);
-                       if(i==result.size()-3){
-                           row.put("town",result.get(i));
-                           rowdatas.set(row_index,row);
                        }
-                       if(i==result.size()-4){
+                       if(i==(result.size()-3)){
+                           row.put("town",result.get(i));
+                       }
+                       if(i==(result.size()-4)){
                            row.put("village",result.get(i));
-                           rowdatas.set(row_index,row);
                        }
 
-                       }
                     }
+                    rowdatas.set(row_index, row);
 
                 }
+                sum_item=JSONObject.fromObject(sum_new);
 
 
             }else{
                 rowdatas = JSONArray.fromObject(rowdata);
             }
-            JSONObject sum_item = JSONObject.fromObject(sum);
+
             try {
                 WritableFont font = new WritableFont(WritableFont.createFont("宋体"),
                         15,
@@ -140,14 +150,15 @@ public class ExcelHelper {
     }
 
     public  static ArrayList<String> getDivisionTreeBypath(int parentid,String tablename,ArrayList<String> result){
-        String sql="select divisionname,parentid from "+tablename+" where rowid = "+parentid;
-        ComonDao cd=new ComonDao();
-        Map<String,Object> item=cd.getSigleObj(sql);
-        result.add(item.get("divisionname").toString());
-        parentid=Integer.parseInt(item.get("parentid").toString());
+
         if(parentid<0){
              return result;
         }else{
+            String sql="select divisionname,parentid from "+tablename+" where rowid = "+parentid;
+            ComonDao cd=new ComonDao();
+            Map<String,Object> item=cd.getSigleObj(sql);
+            result.add(item.get("divisionname").toString());
+            parentid=Integer.parseInt(item.get("parentid").toString());
             return  getDivisionTreeBypath(parentid,tablename,result);
         }
     }

@@ -782,9 +782,9 @@ var applyformviews={
 
     ],'charitablehelpapply':[/*慈善救助申请*/
         'charitablehelpfamilybasicfieldset',
-        'charitablehelpfamilyhousefieldset',
-        'charitablehelpfamilyinputfieldset',
-        'medicalhelpfamilypropertyfieldset',
+        //'charitablehelpfamilyhousefieldset',
+        //'charitablehelpfamilyinputfieldset',
+        //'medicalhelpfamilypropertyfieldset',
         'dbglfamilymemberfieldset',
         'dbglfamilyaffixfieldset',
         'charitablehelpfamilyapplyfieldset',
@@ -792,9 +792,9 @@ var applyformviews={
 
     ],'charitablehelpalter':[/*慈善救助申请 修改*/
         'charitablehelpalterfamilybasicfieldset',
-        'charitablehelpfamilyhousefieldset',
-        'charitablehelpfamilyinputfieldset',
-        'medicalhelpfamilypropertyfieldset',
+        //'charitablehelpfamilyhousefieldset',
+        //'charitablehelpfamilyinputfieldset',
+        //'medicalhelpfamilypropertyfieldset',
         'dbglfamilymemberfieldset',
         'dbglfamilyaffixfieldset',
         'charitablehelpfamilyapplyfieldset',
@@ -803,9 +803,9 @@ var applyformviews={
 
     ],'studyhelpapply':[/*助学救助申请 */
         'studyhelpfamilybasicfieldset',
-        'studyhelpfamilyhousefieldset',
-        'studyhelpfamilyinputfieldset',
-        'studyhelpfamilypropertyfieldset',
+        //'studyhelpfamilyhousefieldset',
+        //'studyhelpfamilyinputfieldset',
+        //'studyhelpfamilypropertyfieldset',
         'dbglfamilymemberfieldset',
         'dbglfamilyaffixfieldset',
         'studyhelpfamilyapplyfieldset',
@@ -813,9 +813,9 @@ var applyformviews={
 
     ],'studyhelpalter':[/*助学救助申请 修改*/
         'studyhelpalterfamilybasicfieldset',
-        'studyhelpfamilyhousefieldset',
-        'studyhelpfamilyinputfieldset',
-        'studyhelpfamilypropertyfieldset',
+        //'studyhelpfamilyhousefieldset',
+        //'studyhelpfamilyinputfieldset',
+        //'studyhelpfamilypropertyfieldset',
         'dbglfamilymemberfieldset',
         'dbglfamilyaffixfieldset',
         'studyhelpfamilyapplyfieldset',
