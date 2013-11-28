@@ -180,7 +180,7 @@ Ext.define('ZSMZJ.view.disaster.businessApply', {
             ],
             buttons:[
                 {
-                    text: '提交登记',
+                    text: '保存',
                     action:'applysubmit'
                 }
             ]

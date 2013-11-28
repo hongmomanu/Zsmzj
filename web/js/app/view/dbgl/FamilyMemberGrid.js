@@ -117,7 +117,7 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     //width: 160,
                     editor: {
 
-                        allowBlank: false
+                        //allowBlank: false
                         //vtype: 'email'
                     }
                 },  {
@@ -128,8 +128,8 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     editor: {
                         vtype:'personid',
                         //emptyText: '输入身份证号',
-                        blankText: '输入身份证号',
-                        allowBlank: false
+                        blankText: '输入身份证号'
+                        //allowBlank: false
                         //vtype: 'email'
                         ,
                         listeners:{
@@ -261,7 +261,7 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     dataIndex: 'jobstatus',
                     //width: 160,
                     editor: {
-                        allowBlank: false,
+                        //allowBlank: false,
                         xtype:'dbglaplytype',
                         searchtype:"jobstatus"
                         //vtype: 'email'

@@ -34,7 +34,7 @@ Ext.define('ZSMZJ.view.medicalhelp.businessApply', {
             items:[],
             buttons:[
                 {
-                    text: '提交申请',
+                    text: '保存',
                     action:'applysubmit'
                 }
             ]

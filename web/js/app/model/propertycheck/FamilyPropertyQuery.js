@@ -13,6 +13,8 @@ Ext.define('ZSMZJ.model.propertycheck.FamilyPropertyQuery', {
         {name:'owerid'},
         {name:'time'},
         {name:'division'},
+        {name:'processstatus'},
+        {name:'process'},
         {name:'applytype'},
         {name:'familytype'},
         {name:'owername'},
@@ -28,6 +30,9 @@ Ext.define('ZSMZJ.model.propertycheck.FamilyPropertyQuery', {
         {name:'bankower'},
         {name:'bankid'},
         {name:'otherfamilyinfo'},
+
+        {name:'checkstatus'},
+
         {name:'interest'},
         {name:'wages'},
         {name:'planting'},
@@ -58,6 +63,13 @@ Ext.define('ZSMZJ.model.propertycheck.FamilyPropertyQuery', {
         {name:'housearea'},
         {name:'houseaveragearea'},
         {name:'houseusearea'},
-        {name:'houseaverageusearea'}
+        {name:'houseaverageusearea'}  ,
+        {name:'processstatustype'} ,
+
+
+        {name:'addontype'},
+        {name:'checkitem'},
+        {name:'checkresult'},
+        {name:'checkcomment'}
     ]
 });

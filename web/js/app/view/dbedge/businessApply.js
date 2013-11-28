@@ -1248,7 +1248,7 @@ Ext.define('ZSMZJ.view.dbedge.businessApply', {
             ],
             buttons:[
                 {
-                    text: '提交申请',
+                    text: '保存',
                     action:'applysubmit'
                 }
             ]

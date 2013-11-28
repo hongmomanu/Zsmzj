@@ -1,15 +1,13 @@
 /**
  * Created with IntelliJ IDEA.
- * User: jack
- * Date: 13-8-16
- * Time: 下午1:25
+ * User: Administrator
+ * Date: 13-11-28
+ * Time: 上午9:44
  * To change this template use File | Settings | File Templates.
  */
-
-
-Ext.define('ZSMZJ.view.charitablehelp.businessApply', {
+Ext.define('ZSMZJ.view.disaster.calamityBusinessLogout', {
     extend : 'Ext.form.Panel',
-    alias : 'widget.charitablehelpbusinessapplyform',
+    alias : 'widget.disasterhelpcalamitybusinesslogoutform',
     requires: [
 
 
@@ -21,25 +19,28 @@ Ext.define('ZSMZJ.view.charitablehelp.businessApply', {
     },
     initComponent: function() {
         var required = '<span style="color:red;font-weight:bold" data-qtip="必填字段">*</span>';
+
         Ext.apply(this, {
             bodyPadding: 10,
             cls: 'shadowdiv',
             buttonAlign : 'center',
             fieldDefaults: {
                 labelAlign: 'right',
-                labelWidth: 80,
+                labelWidth: 100,
                 msgTarget: 'side'
             },
             autoScroll: true,
-            items:[],
+            items:[
+
+            ],
             buttons:[
                 {
-                    text: '保存',
+                    text: '提交申请',
                     action:'applysubmit'
                 }
             ]
 
-            });
+        });
         this.callParent(arguments);
     }
 

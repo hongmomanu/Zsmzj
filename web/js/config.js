@@ -6,7 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 var extLocation="http://192.168.2.112/ext-4.2.1/";
- extLocation="http://127.168.2.9/extjs4.2/";
+
+ extLocation="http://127.168.2.22/ext-4.2.1/";
 
 var businessTableType=
         {   'dbgl':"低保",
@@ -44,8 +45,13 @@ var formwidgettype={
     'studyhelpapply':'studyhelpbusinessapplyform',/*助学救助申请*/
     'studyhelpalter':'studyhelpbusinessalterform',/*助学救助修改*/
     'temporaryhelpapply':'temporaryhelpbusinessapplyform',/*临时救助申请*/
-    'temporaryhelpalter':'temporaryhelpbusinessalterform',/*临时救助申请*/
-    'propertycheckregister':'propertycheckfamilyinforegister'/*家庭基本信息登记*/
+    'temporaryhelpalter':'temporaryhelpbusinessalterform',
+    'disasterhelpcalamityapply':'disasterhelpcalamitybusinessapplyform',
+    'disasterhelpcalamityalter':'disasterhelpcalamitybusinessalterform',
+    'disasterhelpcalamitychange':'disasterhelpcalamitybusinesschangeform',
+    'propertycheckregister':'propertycheckfamilyinforegister',
+    'propertycheckalter':'propertycheckfamilyinfoalter',/*家庭基本信息修改*/
+    'propertycheckitemalter':'propertycheckfamilyinfocheck'/*家庭基本信息核定*/
 
 };
 
@@ -843,7 +849,37 @@ var applyformviews={
         'temporaryhelpaltersubmitfieldset',
         'temporaryhelpaltersubmitlogfieldset'
 
+    ],'disasterhelpcalamityapply':[
+        'disasterhelpfamilybasicfieldset',
+        'dbglfamilymemberfieldset',
+        'dbglfamilyaffixfieldset',
+        'disasterhelpapplysubmitfieldset'
+
+    ],'disasterhelpcalamityalter':[
+        'disasterhelpfamilybasicfieldset',
+        'dbglfamilymemberfieldset',
+        'dbglfamilyaffixfieldset',
+        'disasterhelpapplysubmitfieldset'
+
+    ],'disasterhelpcalamitychange':[
+        'disasterhelpfamilybasicfieldset',
+        'dbglfamilymemberfieldset',
+        'dbglfamilyaffixfieldset',
+        'disasterhelpapplysubmitfieldset'
+
     ],'propertycheckregister':[/* 家庭基本信息登记*/
+        'propertycheckfamilybasicfieldset',
+        'propertycheckfamilymoneyfieldset',
+        'propertycheckfamilyhousefieldset',
+        'propertycheckfamilyinputfieldset'
+
+    ],'propertycheckalter':[/* 家庭基本信息修改*/
+        'propertycheckfamilybasicfieldset',
+        'propertycheckfamilymoneyfieldset',
+        'propertycheckfamilyhousefieldset',
+        'propertycheckfamilyinputfieldset'
+
+    ],'propertycheckitemalter':[/* 家庭基本信息核定*/
         'propertycheckfamilybasicfieldset',
         'propertycheckfamilymoneyfieldset',
         'propertycheckfamilyhousefieldset',

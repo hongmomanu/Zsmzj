@@ -373,6 +373,60 @@ Ext.define('ZSMZJ.view.dbgl.familyaffixFieldset', {
                         ]
 
 
+                    },{
+                        xtype:'container',
+                        border:0,
+                        defaults:{
+                            border:0
+                        },
+                        items:[
+                            {
+                                html: '  <a>【申请人】公告和评议表(0) <a>',
+                                cls:'mouseover',
+                                type:'familynoticeandcommentbook',
+                                itemId:'familynoticeandcommentbook',
+                                listeners: {
+                                    /*click: {
+                                     element: 'el', //bind to the underlying el property on the panel
+                                     fn: function(){ alert('click el'); }
+                                     }*/
+                                    render: function(c){
+                                        c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
+                                    }
+
+                                }
+
+                            }
+                        ]
+
+
+                    },{
+                        xtype:'container',
+                        border:0,
+                        defaults:{
+                            border:0
+                        },
+                        items:[
+                            {
+                                html: '  <a>【申请人】其他(0) <a>',
+                                cls:'mouseover',
+                                type:'familyotherbook',
+                                itemId:'familyotherbook',
+                                listeners: {
+                                    /*click: {
+                                     element: 'el', //bind to the underlying el property on the panel
+                                     fn: function(){ alert('click el'); }
+                                     }*/
+                                    render: function(c){
+                                        c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
+                                    }
+
+                                }
+
+                            }
+                        ]
+
+
                     }
                 ]
             }

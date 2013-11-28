@@ -126,7 +126,7 @@ Ext.define('ZSMZJ.view.rangers.businessApply', {
             ],
             buttons:[
                 {
-                    text: '提交登记',
+                    text: '保存',
                     action:'applysubmit'
                 }
             ]

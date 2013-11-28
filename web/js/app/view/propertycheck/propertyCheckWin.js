@@ -14,9 +14,9 @@ Ext.define('ZSMZJ.view.propertycheck.propertyCheckWin' ,{
     ],
     initComponent: function() {
         Ext.apply(this, {
-            title: '审核操作',
-            height: 460,
-            width: 800,
+            title: '核定操作',
+            height: 360,
+            width: 600,
             closeAction : 'hide',
             maximizable: true,
             resizable:false,
@@ -33,9 +33,9 @@ Ext.define('ZSMZJ.view.propertycheck.propertyCheckWin' ,{
                 //xtype: 'fieldset',
 
                 items: [
-                    {xtype:'processcheckform'},
+                    {xtype:'processcheckform'}/*,
                     {xtype:'processhistorygrid'}
-
+*/
                 ],
                 buttons:[
                     {

@@ -44,7 +44,7 @@ Ext.define('ZSMZJ.controller.Header', {
                 afterrender: this.headerRenderEvents
 
             },
-            'dbglfamilybasicfieldset,dbedgefamilybasicfieldset,medicalhelpfamilybasicfieldset,charitablehelpfamilybasicfieldset,studyhelpfamilybasicfieldset,temporaryhelpfamilybasicfieldset,charitablehelpinstitutionapplyform,disasterhelpbusinessapplyform,disasterhelpwarehouseapplyform,rangershelpbusinessapplyform':{
+            'propertycheckfamilybasicfieldset,dbglfamilybasicfieldset,dbedgefamilybasicfieldset,medicalhelpfamilybasicfieldset,charitablehelpfamilybasicfieldset,studyhelpfamilybasicfieldset,temporaryhelpfamilybasicfieldset,charitablehelpinstitutionapplyform,disasterhelpbusinessapplyform,disasterhelpwarehouseapplyform,rangershelpbusinessapplyform':{
                 afterrender:function(form){
                     //下拉树设置默认的行政区划
                     var pathTree=form.down('#divisiontype');
@@ -58,7 +58,7 @@ Ext.define('ZSMZJ.controller.Header', {
                 afterrender:function a(){this.initIndexMsg();}
             },
             //获取表单信息
-            'dbglbusinessalterform,dbedgebusinessalterform,temporaryhelpbusinessalterform,medicalhelpbusinessalterform,studyhelpbusinessalterform,charitablehelpbusinessalterform,disasterhelpwarealterform,disasterhelpbusinessalterform,rangershelpbusinessalterform':{
+            'dbglbusinessalterform,dbedgebusinessalterform,temporaryhelpbusinessalterform,medicalhelpbusinessalterform,studyhelpbusinessalterform,charitablehelpbusinessalterform,disasterhelpwarealterform,disasterhelpbusinessalterform,rangershelpbusinessalterform,disasterhelpcalamitybusinessalterform':{
 
                 alterapplyaftershow:function(form){
                     var views=applyformviews[CommonFunc.lookupitemname(formwidgettype,form.xtype)];
@@ -84,7 +84,7 @@ Ext.define('ZSMZJ.controller.Header', {
                 }
             } ,
             //获取变更表单信息
-            'dbglbusinesschangeform,dbedgebusinesschangeform':{
+            'dbglbusinesschangeform,dbedgebusinesschangeform,disasterhelpcalamitybusinesschangeform':{
                 render: function(p){
                     /*p.body.on('scroll', function(e,t){
                         //console.log(e);
@@ -572,6 +572,8 @@ Ext.define('ZSMZJ.controller.Header', {
             widgetname='dbglbusinesschangeform';
         }else if(businesstype==businessTableType.dbbyh){
             widgetname='dbedgebusinesschangeform';
+        }else if(businesstype==businessTableType.disasterhelp){
+            widgetname='disasterhelpcalamitybusinesschangeform';
         }
         this.showtab(form.objdata.record.get('owername'),widgetname,'widget',form.objdata);
 
@@ -1590,6 +1592,8 @@ Ext.define('ZSMZJ.controller.Header', {
                 widgetname='rangershelpbusinessalterform';
             }else if(r.get('businesstype')==businessTableType.charitableinstitutionhelp){
                 widgetname='charitablehelpinstitutionalterform';
+            }else if(r.get('businesstype')==businessTableType.disasterhelp){
+                widgetname='disasterhelpcalamitybusinessalterform';
             }
 
         }else if(r.get('processstatustype')==processstatustype.change){
@@ -1597,6 +1601,8 @@ Ext.define('ZSMZJ.controller.Header', {
                 widgetname='dbglbusinesschangeform';
             }else if(r.get('businesstype')==businessTableType.dbbyh){
                 widgetname='dbedgebusinesschangeform';
+            }else if(r.get('businesstype')==businessTableType.disasterhelp){
+                widgetname='disasterhelpcalamitybusinesschangeform';
             }
 
         }else if(r.get('processstatustype')==processstatustype.logout){
