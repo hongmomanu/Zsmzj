@@ -322,7 +322,7 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
             wos:Ext.encode(wo)
         };
         Ext.Ajax.request({
-            url:'ajax/test.jsp',
+            url:'ajax/sendfamilypropertyinfo.jsp',
             params:params,
             method:'POST',
             success:function(){alert('good')}
