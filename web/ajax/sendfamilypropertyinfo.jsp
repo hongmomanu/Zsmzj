@@ -13,25 +13,73 @@
 <%@ page language="java"  contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%
-    if(false&&request.getParameter("businesstype")==null){
-       out.print("缺少参数businesstype");
-    }
-    else{
-
+        String tipName="事件名称-";
+        String eventName=request.getParameter("eventName");
+        if(null==eventName){
+            out.print("要指明事件名称");
+            return;
+        }
         Map<String,Object> params=new HashMap<String,Object>();
+        ProperCheckControl propchk=new ProperCheckControl();
 
-        /*
-        *获取请求参数
-        */
-        Enumeration e  =(Enumeration) request.getParameterNames();
-        while(e.hasMoreElements()){
-
-            String  parName=(String)e.nextElement();
-
-            params.put(parName,request.getParameter(parName));
+        if("registerfamilyinfo".equals(eventName)){
+            params.put("fm01",request.getParameter("fm01"));
+            params.put("isprocess",request.getParameter("isprocess"));
+            out.print(propchk.saveFamliyPropertyInfo(params));
+        }else if("getfamilypropertyinfo".equals(eventName)){
+            Enumeration e  =(Enumeration) request.getParameterNames();
+            Map paraMap=new HashMap<String,Object>();
+            while(e.hasMoreElements()){
+                  String name=(String)e.nextElement();
+                  paraMap.put(name,request.getParameter(name));
+            }
+            out.print(propchk.getFamilyPropertyInfo(paraMap));
+        }else if("getfamilypropertyinfobycheckrole".equals(eventName)){
+            Enumeration e  =(Enumeration) request.getParameterNames();
+            Map paraMap=new HashMap<String,Object>();
+            while(e.hasMoreElements()){
+                String name=(String)e.nextElement();
+                paraMap.put(name,request.getParameter(name));
+            }
+            out.print(propchk.getFamilyPropertyInfoByCheckRole(paraMap));
+        }else if("checkpropertyitem".equals(eventName)){
+            Enumeration e  =(Enumeration) request.getParameterNames();
+            Map paraMap=new HashMap<String,Object>();
+            while(e.hasMoreElements()){
+                String name=(String)e.nextElement();
+                paraMap.put(name,request.getParameter(name));
+            }
+            out.print(propchk.doCheckItem(paraMap));
+        }else if("getperopertycheckitemdetailbyowerid".equals(eventName)){
+            Enumeration e  =(Enumeration) request.getParameterNames();
+            Map paraMap=new HashMap<String,Object>();
+            while(e.hasMoreElements()){
+                String name=(String)e.nextElement();
+                paraMap.put(name,request.getParameter(name));
+            }
+            out.print(propchk.getPropertyCheckItemDatilByOwerId(paraMap));
+        }else if("changebusinessprocessstatus".equals(eventName)){   //提交申请
+            Enumeration e  =(Enumeration) request.getParameterNames();
+            Map paraMap=new HashMap<String,Object>();
+            while(e.hasMoreElements()){
+                String name=(String)e.nextElement();
+                paraMap.put(name,request.getParameter(name));
+            }
+            out.print(propchk.changeBusinessStatus(paraMap));
+        }
+        else if("processcheck".equals(eventName)){      //processcheck   审核审批
+            Enumeration e  =(Enumeration) request.getParameterNames();
+            Map paraMap=new HashMap<String,Object>();
+            while(e.hasMoreElements()){
+                String name=(String)e.nextElement();
+                paraMap.put(name,request.getParameter(name));
+            }
+            out.print(propchk.processCheck(paraMap));
         }
 
-        ProperCheckControl propchk=new ProperCheckControl();
-        out.print(propchk.saveFamliyPropertyInfo(params));
-    }
+
+         //无相应处理时的默认操作提示
+        else{
+            out.print("{success:'false',message:'无对应的操作'}");
+        }
 %>
