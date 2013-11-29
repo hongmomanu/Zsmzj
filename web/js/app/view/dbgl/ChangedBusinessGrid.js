@@ -82,7 +82,7 @@ Ext.define('ZSMZJ.view.dbgl.ChangedBusinessGrid' ,{
                                 Ext.widget('button', {
                                     renderTo: id1,
                                     margin: '0 5 0 5',
-                                    icon:'img/process.gif',
+                                    icon:'img/process.png',
                                     text: '流程' ,
                                     width: 55,
                                     /* hidden: r.get('processstatus').toString()==processdiction.stepzero||

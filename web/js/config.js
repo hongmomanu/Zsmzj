@@ -7,7 +7,8 @@
  */
 var extLocation="http://192.168.2.112/ext-4.2.1/";
 
- extLocation="http://127.168.2.22/ext-4.2.1/";
+ extLocation="http://127.168.2.141/ext-4.2.1/";
+ extLocation="http://192.168.2.141:8080/extjs4.2/";
 
 var businessTableType=
         {   'dbgl':"低保",
@@ -49,6 +50,7 @@ var formwidgettype={
     'disasterhelpcalamityapply':'disasterhelpcalamitybusinessapplyform',
     'disasterhelpcalamityalter':'disasterhelpcalamitybusinessalterform',
     'disasterhelpcalamitychange':'disasterhelpcalamitybusinesschangeform',
+    'disasterhelpcalamitylogout':'disasterhelpcalamitybusinesslogoutform',
     'propertycheckregister':'propertycheckfamilyinforegister',
     'propertycheckalter':'propertycheckfamilyinfoalter',/*家庭基本信息修改*/
     'propertycheckitemalter':'propertycheckfamilyinfocheck'/*家庭基本信息核定*/
@@ -777,9 +779,9 @@ var applyformviews={
 
     ],'medicalhelpalter':[/*医疗救助申请表单修改界面 分隔的各个小表单*/
         'medicalhelpalterfamilybasicfieldset',
-        'medicalhelpfamilyhousefieldset',
+        /*'medicalhelpfamilyhousefieldset',
         'medicalhelpfamilyinputfieldset',
-        'medicalhelpfamilypropertyfieldset',
+        'medicalhelpfamilypropertyfieldset',*/
         'dbglfamilymemberfieldset',
         'dbglfamilyaffixfieldset',
         'medicalhelpfamilyapplyfieldset',
@@ -830,9 +832,9 @@ var applyformviews={
 
     ],'temporaryhelpapply':[/* 临时救助申请*/
         'temporaryhelpfamilybasicfieldset',
-        'temporaryhelpfamilyhousefieldset',
+        /*'temporaryhelpfamilyhousefieldset',
         'temporaryhelpfamilyinputfieldset',
-        'temporaryhelpfamilypropertyfieldset',
+        'temporaryhelpfamilypropertyfieldset',*/
         'dbglfamilymemberfieldset',
         'dbglfamilyaffixfieldset',
         'temporaryhelpfamilyapplyfieldset',
@@ -840,9 +842,9 @@ var applyformviews={
 
     ],'temporaryhelpalter':[/* 临时救助修改*/
         'temporaryhelpalterfamilybasicfieldset',
-        'temporaryhelpfamilyhousefieldset',
+        /*'temporaryhelpfamilyhousefieldset',
         'temporaryhelpfamilyinputfieldset',
-        'temporaryhelpfamilypropertyfieldset',
+        'temporaryhelpfamilypropertyfieldset',*/
         'dbglfamilymemberfieldset',
         'dbglfamilyaffixfieldset',
         'temporaryhelpfamilyapplyfieldset',
@@ -859,13 +861,22 @@ var applyformviews={
         'disasterhelpfamilybasicfieldset',
         'dbglfamilymemberfieldset',
         'dbglfamilyaffixfieldset',
-        'disasterhelpapplysubmitfieldset'
+        'disasterhelpaltersubmitfieldset',
+        'temporaryhelpaltersubmitlogfieldset'
 
     ],'disasterhelpcalamitychange':[
         'disasterhelpfamilybasicfieldset',
         'dbglfamilymemberfieldset',
         'dbglfamilyaffixfieldset',
-        'disasterhelpapplysubmitfieldset'
+        'disasterhelpchangesubmitfieldset',
+        'temporaryhelpaltersubmitlogfieldset'
+
+    ],'disasterhelpcalamitylogout':[
+        'disasterhelpfamilybasicfieldset',
+        'dbglfamilymemberfieldset',
+        'dbglfamilyaffixfieldset',
+        'disasterhelplogoutsubmitfieldset',
+        'temporaryhelpaltersubmitlogfieldset'
 
     ],'propertycheckregister':[/* 家庭基本信息登记*/
         'propertycheckfamilybasicfieldset',
@@ -973,7 +984,7 @@ var menu_shjz=[
             {xtype:'dbglconfigtree',searchtype:"综合查询",businesstype:businessTableType.allquery}
         ],
         iconCls: 'nav'
-    },
+    }/*,
     {
         layout: 'fit',
         title: '财产核定',
@@ -982,7 +993,7 @@ var menu_shjz=[
             {xtype:'dbglconfigtree',searchtype:"财产核定",businesstype:businessTableType.propertycheck}
         ],
         iconCls: 'nav'
-    }
+    }*/
 ];
 
 var menu_qxgl=[{layout: 'fit',title: '权限设置',items:[{xtype:'userconfiggrid'}],iconCls: 'nav' },

@@ -58,6 +58,7 @@ Ext.define('ZSMZJ.view.dbgl.altersubmitFieldset', {
                     , */
                     {
                         name: 'poorstandard',
+                        itemId:'poorstandard',
                         listeners: {
 
                             "blur":function(field,e){

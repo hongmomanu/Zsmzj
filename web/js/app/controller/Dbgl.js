@@ -290,6 +290,12 @@ Ext.define('ZSMZJ.controller.Dbgl', {
                             var form_widget=Ext.widget(views[index]);
                             form.add(form_widget);
                             if(isajaxdata){
+                                if("dbglfamilybasicfieldset"==form_widget.xtype){
+                                    var familyaccount=form.down('#familyaccount');
+                                    if(familyaccount&&familyaccount.name=='familyaccount'){
+                                        familyaccount.setValue(form.allformdata['familyaccount'])
+                                    }
+                                }
                                 if(form_widget.itemId==='affixfilespanel'){
                                     var head_cl=me.application.getController("Header");
                                     head_cl.setAffixValue(form.affixfiledata,head_cl,form);
@@ -835,11 +841,11 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             var hc=me.application.getController("Header");
             hc.closetab(form.id);
 
-            Ext.Msg.alert("提示信息", "提交申请成功");
+            Ext.Msg.alert("提示信息", "保存成功");
 
         };
         var failFunc = function (form, action) {
-            Ext.Msg.alert("提示信息", "提交申请失败,检查web服务");
+            Ext.Msg.alert("提示信息", "保存失败,检查web服务");
 
         };
         var form =btn.up('form');
@@ -941,6 +947,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
       //var value=
         //alert(c.getValue());
         var formpanel=c.up('form');
+        myformpanel=  formpanel
         var type=formpanel.businesstype;
         var incomesum=formpanel.down('#incomesum');
         if(incomesum){

@@ -44,14 +44,10 @@ Ext.define('ZSMZJ.controller.Header', {
                 afterrender: this.headerRenderEvents
 
             },
-            'propertycheckfamilybasicfieldset,dbglfamilybasicfieldset,dbedgefamilybasicfieldset,medicalhelpfamilybasicfieldset,charitablehelpfamilybasicfieldset,studyhelpfamilybasicfieldset,temporaryhelpfamilybasicfieldset,charitablehelpinstitutionapplyform,disasterhelpbusinessapplyform,disasterhelpwarehouseapplyform,rangershelpbusinessapplyform':{
-                afterrender:function(form){
+            'disasterhelpfamilybasicfieldset,propertycheckfamilybasicfieldset,dbglfamilybasicfieldset,dbedgefamilybasicfieldset,medicalhelpfamilybasicfieldset,charitablehelpfamilybasicfieldset,studyhelpfamilybasicfieldset,temporaryhelpfamilybasicfieldset,charitablehelpinstitutionapplyform,disasterhelpbusinessapplyform,disasterhelpwarehouseapplyform,rangershelpbusinessapplyform':{
+                afterrender:this.afterrender_setDefaultDivision
                     //下拉树设置默认的行政区划
-                    var pathTree=form.down('#divisiontype');
-                    pathTree.setValue(divisionpath);
-                    pathTree.setRawValue(divisionpath);
-                    pathTree.validate();
-                }
+
             },
             'mainpanel':{
                 //indexmsginit:function a(panel){this.initIndexMsg();},
@@ -108,7 +104,7 @@ Ext.define('ZSMZJ.controller.Header', {
                 }
             } ,
             //获取注销表单信息
-            'dbglbusinesslogoutform,dbedgebusinesslogoutform':{
+            'dbglbusinesslogoutform,dbedgebusinesslogoutform,disasterhelpcalamitybusinesslogoutform':{
                 alterapplyaftershow:function(form){
 
                     var views=applyformviews[CommonFunc.lookupitemname(formwidgettype,form.xtype)];
@@ -607,6 +603,8 @@ Ext.define('ZSMZJ.controller.Header', {
             widgetname='dbglbusinesslogoutform';
         }else if(businesstype==businessTableType.dbbyh){
             widgetname='dbedgebusinesslogoutform';
+        }else if(businesstype==businessTableType.disasterhelp){
+            widgetname='disasterhelpcalamitybusinesslogoutform';
         }
 
         this.showtab(form.objdata.record.get('owername'),widgetname,'widget',form.objdata);
@@ -1610,6 +1608,8 @@ Ext.define('ZSMZJ.controller.Header', {
                 widgetname='dbglbusinesslogoutform';
             }else if(r.get('businesstype')==businessTableType.dbbyh){
                 widgetname='dbedgebusinesslogoutform';
+            }else if(r.get('businesstype')==businessTableType.disasterhelp){
+                widgetname='disasterhelpcalamitybusinesslogoutform';
             }
         }
         this.showtab(r.get('owername'),widgetname,'widget',objdata);
@@ -2386,6 +2386,13 @@ Ext.define('ZSMZJ.controller.Header', {
 
         });
 
+    },
+    afterrender_setDefaultDivision:function(form){
+        //下拉树设置默认的行政区划
+        var pathTree=form.down('#divisiontype');
+        pathTree.setValue(divisionpath);
+        pathTree.setRawValue(divisionpath);
+        pathTree.validate();
     },
     onLaunch: function() {
         var me = this;

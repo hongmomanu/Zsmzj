@@ -51,7 +51,7 @@ Ext.application({
     controllers: [
         'Navigation','Header','Manager','Dbgl',
         'Dbedge','Temporaryhelp','Medical',
-        'Study','Charitable','Disaster','Rangers','Propertycheck'
+        'Study','Charitable','Disaster','Rangers'/*,'Propertycheck'*/
     ],
 
     launch: function() {

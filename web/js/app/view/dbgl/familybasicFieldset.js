@@ -164,6 +164,7 @@ Ext.define('ZSMZJ.view.dbgl.familybasicFieldset', {
                                 searchtype:"dbglfamilyaccount",
                                 afterLabelTextTpl: required,
                                 name: 'familyaccount',
+                                itemId:'familyaccount',
                                 fieldLabel: '家庭户口',
                                 //colspan:2,
                                 blankText: '请选择家庭户口',

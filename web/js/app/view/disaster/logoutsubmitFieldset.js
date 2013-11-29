@@ -5,9 +5,9 @@
  * Time: 下午14:26
  * To change this template use File | Settings | File Templates.
  */
-Ext.define('ZSMZJ.view.disaster.applysubmitFieldset', {
+Ext.define('ZSMZJ.view.disaster.logoutsubmitFieldset', {
     extend: 'Ext.form.FieldSet',
-    alias: 'widget.disasterhelpapplysubmitfieldset',
+    alias: 'widget.disasterhelplogoutsubmitfieldset',
     requires: [
 
 
@@ -203,6 +203,31 @@ Ext.define('ZSMZJ.view.disaster.applysubmitFieldset', {
                         allowBlank: false
                     },
                     {
+                        fieldLabel: '注销时间',
+                        name:'logoutdate',
+                        xtype: 'datefield',
+                        format: 'Y-m-d',
+                        afterLabelTextTpl: required,
+                        allowBlank:false,
+                        colspan:3,
+                        value:Ext.Date.format(new Date(), 'Y-m-d')
+
+                    },
+                    {
+                        name: 'logoutreason',
+                        fieldLabel: '注销原因',
+                        colspan:3,
+                        minWidth:600,
+                        width:800,
+                        anchor : '100%',
+                        xtype : 'textarea',
+                        grow : true,
+                        afterLabelTextTpl: required,
+                        emptyText: '输入注销原因',
+                        emptyText: '输入注销原因',
+                        allowBlank: false
+                    },
+                    {
                         name: 'villageopinion',
                         fieldLabel: '社区/村意见',
                         colspan: 3,
@@ -269,33 +294,7 @@ Ext.define('ZSMZJ.view.disaster.applysubmitFieldset', {
                         grow: true,
                         allowBlank: true
                     }
-                    ,
-                    {
-                        fieldLabel: '制表时间',
-                        name: 'mktime',
-                        //columnWidth:.5,
-                        readOnly: true,
-                        value: Ext.Date.format(new Date(), 'Y-m-d')
 
-                    }
-                    ,
-                    {
-                        xtype: 'label',
-                        text: ''
-
-                    }
-                    ,
-
-                    {
-                        fieldLabel: "制表人",
-                        name: 'mkperson',
-                        value: displayname,
-                        readOnly: true
-
-
-                    }
-                    /*   ]
-                     }*/
                 ]
             }
         );

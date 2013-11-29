@@ -14,7 +14,7 @@ Ext.define('ZSMZJ.view.disaster.calamityBusinessLogout', {
     ],
     listeners: {
         show: function(panel) {
-            this.fireEvent('initformaftershow',this);
+            this.fireEvent('alterapplyaftershow',this);
         }
     },
     initComponent: function() {
@@ -35,9 +35,101 @@ Ext.define('ZSMZJ.view.disaster.calamityBusinessLogout', {
             ],
             buttons:[
                 {
-                    text: '提交申请',
+                    text: '保存注销',
+                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                        {name:"name",value:this.objdata.record.get("processstatus")})?CommonFunc.lookup(processRoleBtn,                         {name:"name",value:this.objdata.record.get("processstatus")}).children:null,
+                        {name:"name",value:"保存注销"}),
+                    action:'savelogoutapplysubmit'
+                },
+
+                {text: '打印预览',
+                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                        {name:"name",value:this.objdata.record.get("processstatus")})?CommonFunc.lookup(processRoleBtn,                         {name:"name",value:this.objdata.record.get("processstatus")}).children:null,
+                        {name:"name",value:"打印预览"}),
+                    action:'print'
+                },
+                {
+                    text: '流程跟踪',
+                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                        {name:"name",value:this.objdata.record.get("processstatus")})?CommonFunc.lookup(processRoleBtn,                         {name:"name",value:this.objdata.record.get("processstatus")}).children:null,
+                        {name:"name",value:"流程跟踪"}),
+                    action:'process'
+                },
+                /*{
+                 text: '注销',
+                 hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                 {name:"name",value:this.objdata.record.get("processstatus")})?CommonFunc.lookup(processRoleBtn,                         {name:"name",value:this.objdata.record.get("processstatus")}).children:null,
+                 {name:"name",value:"注销"}),
+                 action:'logout'
+                 },*/
+                /*{
+                 text: '变更',
+                 hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                 {name:"name",value:this.objdata.record.get("processstatus")})?CommonFunc.lookup(processRoleBtn,                         {name:"name",value:this.objdata.record.get("processstatus")}).children:null,
+                 {name:"name",value:"变更"}),
+                 action:'change'
+                 },*/
+                {
+                    text: '提交审批',
+                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                        {name:"name",value:this.objdata.record.get("processstatus")})?CommonFunc.lookup(processRoleBtn,                         {name:"name",value:this.objdata.record.get("processstatus")}).children:null,
+                        {name:"name",value:"提交审批"}),
+                    action:'sendbusiness'
+                },
+                {
+                    text: '取消提交',
+                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                        {name:"name",value:this.objdata.record.get("processstatus")})?CommonFunc.lookup(processRoleBtn,                         {name:"name",value:this.objdata.record.get("processstatus")}).children:null,
+                        {name:"name",value:"取消提交"}),
+                    action:'cancelsendbusiness'
+                },
+                {
+                    text: '审核',
+                    namevalue:'街道/乡镇审核',
+                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                        {name:"name",value:this.objdata.record.get("processstatus")})?CommonFunc.lookup(processRoleBtn,
+                        {name:"name",value:this.objdata.record.get("processstatus")}).children:null,
+                        {name:"name",value:"审核"}),
+                    action:'checkbusiness'
+                },
+                {
+                    text: '审批',
+                    namevalue:'区/县/市审批',
+                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                        {name:"name",value:this.objdata.record.get("processstatus")})?CommonFunc.lookup(processRoleBtn,
+                        {name:"name",value:this.objdata.record.get("processstatus")}).children:null,
+                        {name:"name",value:"审批"}),
+                    action:'checkbusiness'
+                },
+                {
+                    text: '电子签章',
+                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                        {name:"name",value:this.objdata.record.get("processstatus")})?CommonFunc.lookup(processRoleBtn,                         {name:"name",value:this.objdata.record.get("processstatus")}).children:null,
+                        {name:"name",value:"电子签章"}),
+                    action:'signature'
+                },
+                {
+                    text: '删除签章',
+                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                        {name:"name",value:this.objdata.record.get("processstatus")})?CommonFunc.lookup(processRoleBtn,                         {name:"name",value:this.objdata.record.get("processstatus")}).children:null,
+                        {name:"name",value:"删除签章"}),
+                    action:'unsignature'
+                },
+                {
+                    text: '保存',
+                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                        {name:"name",value:this.objdata.record.get("processstatus")})?CommonFunc.lookup(processRoleBtn,                         {name:"name",value:this.objdata.record.get("processstatus")}).children:null,
+                        {name:"name",value:"保存"}),
                     action:'applysubmit'
+                },
+                {
+                    text: '返回',
+                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                        {name:"name",value:this.objdata.record.get("processstatus")})?CommonFunc.lookup(processRoleBtn,                         {name:"name",value:this.objdata.record.get("processstatus")}).children:null,
+                        {name:"name",value:"返回"}),
+                    action:'cancel'
                 }
+
             ]
 
         });

@@ -34,7 +34,10 @@ Ext.define('ZSMZJ.controller.Disaster', {
         'disaster.calamityBusinessChange',
         'disaster.calamityBusinessLogout',
         'disaster.applysubmitFieldset',
-        'disaster.familybasicFieldset'
+        'disaster.familybasicFieldset',
+        'disaster.logoutsubmitFieldset',
+        'disaster.changesubmitFieldset',
+        'disaster.altersubmitFieldset'
     ],
 
     initStrore: function () {
@@ -80,7 +83,7 @@ Ext.define('ZSMZJ.controller.Disaster', {
             'disasterhelpbusinessalterform button[action=cancel],disasterhelpwarealterform button[action=cancel]':{
                 click: Ext.bind(header_cl.cancelcheck,header_cl)
             },
-            'disasterhelpcalamitybusinessapplyform,disasterhelpcalamitybusinessalterform,disasterhelpcalamitybusinesschangeform':{
+            'disasterhelpcalamitybusinessapplyform,disasterhelpcalamitybusinessalterform,disasterhelpcalamitybusinesschangeform,disasterhelpcalamitybusinesslogoutform':{
                 afterrender:dbgl_cl.afterrenderEvents,
                 initformaftershow:Ext.bind(dbgl_cl.initformaftershow, dbgl_cl)
 
@@ -92,7 +95,7 @@ Ext.define('ZSMZJ.controller.Disaster', {
             },
 
 
-            'disasterhelpcalamitybusinessalterform button[action=applysubmit],disasterhelpcalamitybusinesschangeform button[action=applysubmit]':{
+            'disasterhelpcalamitybusinessalterform button[action=applysubmit],disasterhelpcalamitybusinesschangeform button[action=applysubmit],disasterhelpcalamitybusinesslogoutform button[action=applysubmit]':{
                 click: Ext.bind(dbgl_cl.applysubmitupdate, dbgl_cl)
             },
             'disasterhelpcalamitybusinesschangeform button[action=saveapplysubmit]':{
@@ -101,32 +104,35 @@ Ext.define('ZSMZJ.controller.Disaster', {
             'disasterhelpcalamitybusinessalterform button[action=sendbusiness],disasterhelpcalamitybusinesschangeform button[action=sendbusiness]':{
                 click: Ext.bind(header_cl.sendbusiness,header_cl)
             },
-            'disasterhelpcalamitybusinessalterform button[action=process],disasterhelpcalamitybusinesschangeform button[action=process]':{
+            'disasterhelpcalamitybusinessalterform button[action=process],disasterhelpcalamitybusinesschangeform button[action=process],disasterhelpcalamitybusinesslogoutform button[action=process]':{
                 click: Ext.bind(header_cl.formprocess,header_cl)
             },
-            'disasterhelpcalamitybusinessalterform button[action=change]':{
+            'disasterhelpcalamitybusinessalterform button[action=change],disasterhelpcalamitybusinesschangeform button[action=change]':{
                 click: Ext.bind(header_cl.showchangeform,header_cl)
             },
-            'disasterhelpcalamitybusinessalterform button[action=cancel],disasterhelpcalamitybusinesschangeform button[action=cancel]':{
+            'disasterhelpcalamitybusinessalterform button[action=cancel],disasterhelpcalamitybusinesschangeform button[action=cancel],disasterhelpcalamitybusinesslogoutform button[action=cancel]':{
                 click: Ext.bind(header_cl.cancelcheck,header_cl)
             },
-            'disasterhelpcalamitybusinessalterform button[action=checkbusiness],disasterhelpcalamitybusinesschangeform button[action=checkbusiness]':{
+            'disasterhelpcalamitybusinessalterform button[action=checkbusiness],disasterhelpcalamitybusinesschangeform button[action=checkbusiness],disasterhelpcalamitybusinesslogoutform button[action=checkbusiness]':{
                 click: Ext.bind(header_cl.showcheckwin,header_cl)
             },
-            'disasterhelpcalamitybusinessalterform button[action=signature],disasterhelpcalamitybusinesschangeform button[action=signature]':{
+            'disasterhelpcalamitybusinessalterform button[action=signature],disasterhelpcalamitybusinesschangeform button[action=signature],disasterhelpcalamitybusinesslogoutform button[action=signature]':{
                 click: Ext.bind(header_cl.showsignature,header_cl)
             },
-            'disasterhelpcalamitybusinessalterform button[action=unsignature],disasterhelpcalamitybusinesschangeform button[action=unsignature]':{
+            'disasterhelpcalamitybusinessalterform button[action=unsignature],disasterhelpcalamitybusinesschangeform button[action=unsignature],disasterhelpcalamitybusinesslogoutform button[action=unsignature]':{
                 click: Ext.bind(header_cl.delsignature,header_cl)
             },
-            'disasterhelpcalamitybusinessalterform button[action=print],disasterhelpcalamitybusinessalterform button[action=print]':{
+            'disasterhelpcalamitybusinessalterform button[action=print],disasterhelpcalamitybusinessalterform button[action=print],disasterhelpcalamitybusinesschangeform button[action=print],disasterhelpcalamitybusinesslogoutform button[action=print]':{
                 click: Ext.bind(header_cl.formprint,header_cl)
             },
-            'disasterhelpcalamitybusinessalterform button[action=cancelsendbusiness],disasterhelpcalamitybusinessalterform button[action=cancelsendbusiness]':{
+            'disasterhelpcalamitybusinessalterform button[action=cancelsendbusiness],disasterhelpcalamitybusinessalterform button[action=cancelsendbusiness],disasterhelpcalamitybusinesschangeform button[action=cancelsendbusiness],disasterhelpcalamitybusinesslogoutform button[action=cancelsendbusiness]':{
                 click: Ext.bind(header_cl.cancelsendbusiness,header_cl)
             },
-            'disasterhelpcalamitybusinessalterform button[action=logout]':{
+            'disasterhelpcalamitybusinessalterform button[action=logout],disasterhelpcalamitybusinesschangeform button[action=logout]':{
                 click: Ext.bind(header_cl.logoutbusiness,header_cl)
+            },
+            'disasterhelpcalamitybusinesslogoutform button[action=savelogoutapplysubmit]':{
+                click: Ext.bind(dbgl_cl.savelogoutapplysubmit, dbgl_cl)
             }
 
 

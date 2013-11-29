@@ -1,13 +1,14 @@
 /**
  * Created with IntelliJ IDEA.
  * User: Administrator
- * Date: 13-11-7
- * Time: 下午14:26
+ * Date: 13-11-27
+ * Time: 下午16:11
  * To change this template use File | Settings | File Templates.
  */
-Ext.define('ZSMZJ.view.disaster.applysubmitFieldset', {
+
+Ext.define('ZSMZJ.view.disaster.altersubmitFieldset', {
     extend: 'Ext.form.FieldSet',
-    alias: 'widget.disasterhelpapplysubmitfieldset',
+    alias: 'widget.disasterhelpaltersubmitfieldset',
     requires: [
 
 
@@ -43,7 +44,6 @@ Ext.define('ZSMZJ.view.disaster.applysubmitFieldset', {
                 },
 
                 items: [
-
                     {
                         //xtype: 'dbglaplytype',
                         //searchtype: "temporaryhelpway",
@@ -74,8 +74,7 @@ Ext.define('ZSMZJ.view.disaster.applysubmitFieldset', {
                         emptyText: '请选择申请救助种类',
                         blankText: '请选择申请救助种类',
                         allowBlank: false
-                    },
-                    {
+                    },{
                         xtype: 'dbglaplytype',
                         searchtype: "temporaryhelpway",
                         name: 'helpway',
@@ -167,7 +166,7 @@ Ext.define('ZSMZJ.view.disaster.applysubmitFieldset', {
                     },
                     {
                         name: 'totalhelpmoney',
-                        fieldLabel: '救助金额(元/月/户)',
+                        fieldLabel: '总救助金额(元/月/户)',
                         afterLabelTextTpl: required,
                         emptyText: '请输入救助金额',
                         blankText: '请输入救助金额',
@@ -241,8 +240,7 @@ Ext.define('ZSMZJ.view.disaster.applysubmitFieldset', {
                         xtype: 'textarea',
                         grow: true,
                         allowBlank: true
-                    }
-                    ,
+                    },
                     {
                         name: 'helpunit',
                         fieldLabel: '救助单位',
@@ -269,33 +267,7 @@ Ext.define('ZSMZJ.view.disaster.applysubmitFieldset', {
                         grow: true,
                         allowBlank: true
                     }
-                    ,
-                    {
-                        fieldLabel: '制表时间',
-                        name: 'mktime',
-                        //columnWidth:.5,
-                        readOnly: true,
-                        value: Ext.Date.format(new Date(), 'Y-m-d')
 
-                    }
-                    ,
-                    {
-                        xtype: 'label',
-                        text: ''
-
-                    }
-                    ,
-
-                    {
-                        fieldLabel: "制表人",
-                        name: 'mkperson',
-                        value: displayname,
-                        readOnly: true
-
-
-                    }
-                    /*   ]
-                     }*/
                 ]
             }
         );
