@@ -74,6 +74,8 @@ Ext.define('ZSMZJ.view.propertycheck.familyhouseFieldset', {
                     },{
                         name: 'housearea',
                         fieldLabel: '住房总建筑面积(㎡)',
+                        itemId:'housearea',
+                        value:0,
                         listeners: {
 
                             "blur":function(field,e){
@@ -93,6 +95,8 @@ Ext.define('ZSMZJ.view.propertycheck.familyhouseFieldset', {
                     },{
                         name: 'houseusearea',
                         fieldLabel: '住房总使用面积(㎡)',
+                        itemId:'houseusearea',
+                        value:0,
                         listeners: {
 
                             "blur":function(field,e){

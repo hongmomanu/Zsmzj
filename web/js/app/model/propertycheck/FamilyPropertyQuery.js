@@ -10,6 +10,7 @@
 Ext.define('ZSMZJ.model.propertycheck.FamilyPropertyQuery', {
     extend: 'Ext.data.Model',
     fields: [
+        {name:'fmy001'},
         {name:'owerid'},
         {name:'time'},
         {name:'division'},

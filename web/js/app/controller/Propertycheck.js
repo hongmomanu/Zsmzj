@@ -11,14 +11,16 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
     extend: 'Ext.app.Controller',
     models: [
         'propertycheck.FamilyPropertyQuery',
+        'propertycheck.ProcessHistory',
         'propertycheck.FamilyPropertyItem'
     ],
     stores: [
         'propertycheck.FamilyPropertyQuerys',
+        'propertycheck.ProcessHistorys',
         'propertycheck.FamilyPropertyItems'
     ],
     refs: [
-
+        {ref: 'myprocessvector', selector: 'dbglprocessvector'}
     ],
     views: [
         'propertycheck.familyinfoRegister',
@@ -32,7 +34,9 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
         'propertycheck.familyinfoAlter',
         'propertycheck.familyinfoCheck',
         'propertycheck.propertyCheckWin',
-        'propertycheck.processCheckWin'
+        'propertycheck.processCheckWin',
+        'propertycheck.PorpertyProcessHistoryGrid',
+        'propertycheck.applyhistoryFieldset'
 
     ],
     init: function () {
@@ -42,7 +46,7 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
         var dbgl_cl = this.application.getController("Dbgl");
         var header_cl = this.application.getController("Header");
         this.control({
-                'propertycheckneedtocheckbusinesspanel,propertycheckneedtodobusinesspanel,propertycheckfamilyinforegister,propertycheckfamilyinputfieldset,propertycheckfamilyhousefieldset,propertycheckfamilymoneyfieldset':{
+                'propertycheckneedtocheckbusinesspanel,propertycheckneedtodobusinesspanel,propertycheckfamilyinforegister,propertycheckfamilyinputfieldset,propertycheckfamilyhousefieldset,propertycheckfamilymoneyfieldset,propertycheckapplyhistoryfieldset':{
                     afterrender: dbgl_cl.afterrenderEvents,
                     initformaftershow:Ext.bind(dbgl_cl.initformaftershow, dbgl_cl)
 
@@ -52,10 +56,7 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                     initformaftershow:Ext.bind(dbgl_cl.initformaftershow, dbgl_cl),
                     alterapplyaftershow:function(form){
                         var r=form.objdata.record;
-                        var checkbtn=form.down('#propertycheckbtn');
-                        if(r.data.checkresult=='1'&&checkbtn){
-                            checkbtn.hide();
-                        }
+
                         var fn=function(form){
 
                             form.loadRecord(r);
@@ -85,9 +86,21 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                                 division.focus();
                                 division.validateValue();
                             }
+                            var g=form.down('#propertyprocesshistorygrid');
+                            if(g){
+                                var store=g.getStore();
+                                var params={
+                                    eventName:'getprocesscheckbyfmy001',
+                                    fmy001: r.data.fmy001
+                                }
+                                if(store.proxy.extraParams){
+                                    store.proxy.extraParams=params;
+                                }
+                                store.load();
+                            }
                             var params={
                                 eventName:'getperopertycheckitemdetailbyowerid',
-                                owerid: r.data.owerid
+                                fmy001: r.data.fmy001
                             }
                             var store=me.getStore("propertycheck.FamilyPropertyItems");
                             if(store.proxy.extraParams){
@@ -137,12 +150,10 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                         task.delay(500);
                     }
                 },
-                'propertycheckfamilyinforegister button[action=applysubmit]':{
+                'propertycheckfamilyinforegister button[action=applysubmit],propertycheckfamilyinfoalter button[action=applysubmit]':{
                     click: this.applysubmit
                 },
-                'propertycheckfamilyinforegister button[action=applytest]':{
-                    click: this.test
-                },
+
                 'propertycheckfamilyinfocheck button[action=checkbusiness]':{
                     click: this.showpropertycheckwin
                 },
@@ -163,6 +174,7 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                 },
                 'propertycheckneedtocheckbusinesspanel,propertycheckneedtodobusinesspanel':{
                     gridshowfresh:function(grid){
+                        mytesttestgrid=grid;
                         var store=grid.getStore();
                         if(store.proxy.extraParams){
 
@@ -174,7 +186,9 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                             if(grid.xtype=='propertycheckneedtocheckbusinesspanel'){
                                 store.proxy.extraParams.addontype='1';
                                 store.proxy.extraParams.eventName='getfamilypropertyinfobycheckrole';
-                                store.proxy.extraParams.checkitem=propertyCheckRoleBtn[0].name;
+                                //store.proxy.extraParams.checkitem=propertyCheckRoleBtn[0].name;
+                                //store.proxy.extraParams.checkitem=this.checkEnum.toString();
+                                store.proxy.extraParams.checkitem=grid.title;
 
                             }else{
                                 store.proxy.extraParams.addontype='0';
@@ -209,9 +223,9 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                         //me.widgetdolayout("mainContent-panel");
                         var me=this;
                         var callback=function fn(){
-                            me.closemask();
+                            //me.closemask();
                             Ext.Msg.alert("提示信息", "操作成功");
-                            me.widgetdolayout("mainContent-panel");
+                            //me.widgetdolayout("mainContent-panel");
 
                         };
 
@@ -248,6 +262,15 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                         }
                         myrecordList=recordList;
                     }
+                },
+                'propertycheckfamilyinfoalter button[action=process]':{
+                    click:function (c,r,grid){
+                        //alert('查看流程')
+                        this.showProcessWin(c,r,grid);
+                    }
+                },
+                'propertycheckfamilyinfoalter button[action=print]':{
+                    click: function(c,r,grid){alert('打印')}//Ext.bind(header_cl.formprint,header_cl)
                 }
             }
         )
@@ -261,6 +284,9 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
     houseareachane:function(c){
         var formpanel= c.up('form');
         var person_nums=parseInt(formpanel.down('#FamilyPersons').getValue());
+        if(!person_nums) {
+            person_nums=1;
+        }
         var area= parseInt(c.getValue());
         c.nextNode().setValue(parseInt(person_nums==0?area:area/person_nums))
 
@@ -274,7 +300,9 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
             var incomesum_value=0;
             var incomeitems=incomesum.up('fieldset').items.items;
             var person_nums=parseInt(formpanel.down('#FamilyPersons').getValue());
-            alert(person_nums)
+            if(!person_nums) {
+                person_nums=1;
+            }
             for(var i=0;i<incomeitems.length;i++){
                 if(incomeitems[i]==incomesum)break;
                 incomesum_value+=parseFloat(incomeitems[i].getValue());
@@ -295,72 +323,63 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
             }
             propertysum.setValue(propertysum_value);
 
-            var familyincome=formpanel.down('#familyincome');
-            familyincome.setValue(propertysum_value+incomesum_value);
-
-            var averageincome=formpanel.down('#averageincome');
-            averageincome.setValue((person_nums==0?parseInt(familyincome.getValue())/12:parseInt(familyincome.getValue())/12/person_nums).toFixed(1));
-
-
-            var totalhelpmoney=formpanel.down('#totalhelpmoney');
-            var poorstandard=formpanel.down('#poorstandard');
-            var disableditem=formpanel.down('#disabledpersons');
-            var disablednum=disableditem.getValue();
-
-
-
         }
 
-        //console.log(testobj);
     },
-    test:function(btn,businesstype,isprocess){
-        var me=this;
-        var wo={name:'魏攀',age:27};
-        var params= {
-            id: 1,
-            wo:wo,
-            wos:Ext.encode(wo)
-        };
-        Ext.Ajax.request({
-            url:'ajax/sendfamilypropertyinfo.jsp',
-            params:params,
-            method:'POST',
-            success:function(){alert('good')}
-        })
-    },
+
     submitcommon:function(btn,businesstype,isprocess){
-        var successFunc = function (myform, action) {
-            var hc=me.application.getController("Header");
-            Ext.Msg.alert("提示信息", "提交申请成功");
-        };
-        var failFunc = function (form, action) {
-            Ext.Msg.alert("提示信息", "提交申请失败,检查web服务");
-        };
-        form =btn.up('form');
-        var array=form.query('textfield');
-        var tmp={};
-        for(var i=0;i<array.length;i++){
-               var o=  array[i]  ;
-            var json='{'+o.getName()+':"'+o.getValue()+'"}';
-            var  val= o.getValue();
-            val=!!val?val:'';
-            var json= 'tmp.'+o.getName()+'="'+ val+'"';
-            eval(json);
-
+        var me=this;
+        var myform =btn.up('form');
+        var eventName='updatefamilyinfo';
+        if('propertycheckfamilyinforegister'==myform.xtype){
+            eventName='registerfamilyinfo';
         }
-        tmp.processstatustype=processstatustype.ok;
-        var params = {
-            eventName:'registerfamilyinfo',
-            userid:userid,
-            fm01:Ext.encode(tmp),
-            isprocess:isprocess
-        };
-        Ext.Ajax.request({
-            url:'ajax/sendfamilypropertyinfo.jsp',
-            params:params,
-            method:'POST',
-            success:function(){alert('good')}
-        })
+
+        var form=myform.getForm();
+        if (form.isValid()) {
+            var array=myform.query('textfield');
+            var tmp={};
+            for(var i=0;i<array.length;i++){
+                var o=  array[i]  ;
+                var json='{'+o.getName()+':"'+o.getValue()+'"}';
+                var  val= o.getValue();
+                val=!!val?val:'';
+                var json= 'tmp.'+o.getName()+'="'+ val+'"';
+                eval(json);
+
+            }
+            tmp.processstatustype=processstatustype.ok;
+            var params = {
+                eventName:eventName,
+                userid:userid,
+                fm01:Ext.encode(tmp),
+                isprocess:isprocess
+            };
+            Ext.Ajax.request({
+                url:'ajax/sendfamilypropertyinfo.jsp',
+                params:params,
+                method:'POST',
+                success: function(response, opts) {
+                    var obj = Ext.decode(response.responseText);
+                    if(obj.success){
+                        var hc=me.application.getController("Header");
+                        hc.closetab(myform.id);
+                        Ext.Msg.alert("提示信息", "操作成功");
+                    }else{
+                        Ext.Msg.alert("异常提示", "操作失败");
+                    }
+                },
+                failure: function(response, opts) {
+                    Ext.Msg.alert("提示信息", "提交申请失败,检查web服务");
+                }
+            })
+        }else{
+            var invaliditem=form.getFields().findBy(function(c){if(!c.isValid()){return c}});
+            var formcontent=myform.getDefaultContentTarget();
+            var target=invaliditem.getEl();
+            target.scrollIntoView(formcontent,true,true,true);
+        }
+
     },
     //根据roleid获取初始化功能
     initPropertyCheckFromRole:function(){
@@ -371,6 +390,13 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
         };
         var successFunc = function (response, action) {
             propertyCheckRoleBtn=Ext.JSON.decode(response.responseText);
+            me.checkEnum=(function(arr){
+                var array=[];
+                for(var i=0;i<arr.length;i++){
+                    array.push("'"+arr[i].name+"'")
+                }
+                return array;
+            })(propertyCheckRoleBtn),
             me.initCheckItemCmp.call(me,propertyCheckRoleBtn)  ;
         };
         var failFunc = function (form, action) {
@@ -560,7 +586,13 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
     },
     //显示核定窗口
     showpropertycheckwin:function(btn){
-        mybtn=btn;
+        //mybtn=btn;
+        var processstatus=btn.up('form').objdata.record.data.processstatus;
+        if('申请'!=processstatus){
+            Ext.Msg.alert("提示信息", "人员信息已经提交，无法进行核定");
+            return;
+        }
+
         if(!this.propertycheckwin){
             this.propertycheckwin=Ext.widget('propertycheckwin');
         }
@@ -594,7 +626,7 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
         if('propertyprocesscheckwin'==win.xtype){
             eventName='processcheck',
             fm04={
-                owerid:form.objdata.owerid,
+                fmy001:form.objdata.record.data.fmy001,
                 userid:userid,
                 processstatus:form.objdata.record.get('processstatus'),
                 //submituid:form.objdata.record.get("approvaluserid")?form.objdata.record.get("approvaluserid"):form.objdata.record.get("userid"),
@@ -607,10 +639,10 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
         }else{
             eventName='checkpropertyitem',
             fm03 = {
-                owerid:form.objdata.owerid,
+                fmy001:form.objdata.record.data.fmy001,
                 userid:userid,
                 roleid:roleid,
-                checkitem:propertyCheckRoleBtn[0].name,
+                checkitem:win.approvalname,
                 checkresult:ajaxform.query('radiogroup')[0].getChecked()[0].boxLabel=='同意'?1:0,
                 checkcomment:ajaxform.query('textarea')[0].value
             };
@@ -626,7 +658,7 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
             btn.up('window').close();
             Ext.Msg.alert("提示信息", "操作成功");
             var hc=me.application.getController("Header");
-            hc.closetab(form.id);
+            //hc.closetab(form.id);
 
         };
         var failFunc = function (form, action) {
@@ -698,18 +730,21 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
     //提交申请
     showsendapplywin:function(c,r,grid,callback){
         var me=this;
-        var owerid=r.get('owerid');
+        var fmy001=r.get('fmy001');
         var status= r.get('process');
+        var checkstatus=r.get('checkstatus');
+        var msg='你正在试图提交申请.你想继续么?';
+        if(3!=checkstatus){
+            msg= '你正在试图提交申请.<br/><br/><span style="color: red;font-family: font-family: Courier New;font-size: 15pt;">并且核定内容未全部通过</span><br/><br/>你想继续么?';
+        }
+
         Ext.Msg.show({
             title: '确定提交申请?',
-            msg: '你正在试图提交申请.你想继续么?',
+            msg: msg,
             buttons: Ext.Msg.YESNO,
             fn: function (btn) {
                 if(btn=='yes'){
-                    //ViewWaitMask = Ext.getCmp('mainContent-panel').getEl().mask('页面加载中', '');
-                    //ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"页面加载中..."});
-                    //ViewWaitMask.show();
-                    me.changeapplystatus(owerid, status,grid,callback);
+                    me.changeapplystatus(fmy001, status,grid,callback);
                 }
             },
             icon: Ext.Msg.QUESTION
@@ -717,11 +752,11 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
 
     },
     //改变业务状态
-    changeapplystatus:function(owerid,status,grid,callback){
+    changeapplystatus:function(fmy001,status,grid,callback){
         var me=this;
         var params = {
             eventName:'changebusinessprocessstatus', //提交申请
-            rc:Ext.encode({owerid:owerid,processstatus:status})
+            rc:Ext.encode({fmy001:fmy001,processstatus:status})
         };
         var successFunc = function (form, action) {
             var panel=grid.up('panel');
@@ -760,6 +795,139 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
             success:sucFun,
             failure:failFunc
         });
+
+    },
+    showProcessWin:function(c,r,grid){//显示进程窗口
+        var me=this;
+        //var header_cl = this.application.getController("Header");
+        //窗口初始化显示
+        myMM=this;
+        console.log(me.getMyprocessvector())
+        if(!me.processWin){
+            me.processWin=Ext.widget('propertyprocesswin');
+            me.processWin.show();
+            me.vectornums=me.getMyprocessvector().surface.items.items.length;
+        }else{
+            me.processWin.show();
+        }
+
+        //清空流程图
+        var mysurface=me.getMyprocessvector().surface;
+        var length=mysurface.items.items.length;
+        var numsize=me.vectornums;
+        for(var i=length;i>numsize;i--){
+            mysurface.remove(mysurface.items.items[i-1]);
+        }
+        //显示历史审批表
+        var store=me.processWin.down('grid').getStore();
+        store.proxy.extraParams = {
+            businessid: r.get('businessid')
+        };
+        store.load();
+        //绘制流程图
+        if(r.get("processstatus")==processdiction.stepzero){
+
+            mysurface.add({
+                type: "path",
+                text:"muhahaaaa",
+                path: "M40 35  L50 45 L65 28",    //路径      L150 50
+                "stroke-width": "4",
+                opacity :0.6,
+                stroke: "red"/*,
+                 fill: "blue"*/
+            }).show(true);
+            //流程分割符号
+            mysurface.add({
+                type: "path",
+                path: "M110 80  L110 100 L105 100 L115 110 L125 100 L120 100 L120 80 Z",    //路径      L150 50
+                "stroke-width": "2",
+                //opacity :0.6,
+                stroke: "red",
+                fill: "red"
+            }).show(true);
+            //提交申请人名单
+            mysurface.add({
+                type: "text",
+                text:r.get("displayname"),
+                x:20,
+                y:90
+
+            }).show(true);
+
+            me.processWin.doLayout();
+
+        }else if(r.get("processstatus")==processdiction.stepone){
+
+            mysurface.add({
+                type: "path",
+                path: "M195 35  L205 45 L220 28",    //路径      L150 50
+                "stroke-width": "4",
+                opacity :0.6,
+                stroke: "red"/*,
+                 fill: "blue"*/
+            }).show(true);
+            //流程分割符号
+            mysurface.add({
+                type: "path",
+                path: "M265 80  L265 100 L260 100 L270 110 L280 100 L275 100 L275 80 Z",    //路径      L150 50
+                "stroke-width": "2",
+                //opacity :0.6,
+                stroke: "red",
+                fill: "red"
+            }).show(true);
+            //提交申请人名单
+            mysurface.add({
+                type: "text",
+                text:r.get("displayname"),
+                x:175,
+                y:90
+
+            }).show(true);
+
+            me.processWin.doLayout();
+
+        }else if(r.get("processstatus")==processdiction.steptwo){
+
+            mysurface.add({
+                type: "path",
+                path: "M350 35  L360 45 L375 28",    //路径      L150 50
+                "stroke-width": "4",
+                opacity :0.6,
+                stroke: "red"/*,
+                 fill: "blue"*/
+            }).show(true);
+
+            //流程分割符号
+            mysurface.add({
+                type: "path",
+                path: "M420 80  L420 100 L415 100 L425 110 L435 100 L430 100 L430 80 Z",    //路径      L150 50
+                "stroke-width": "2",
+                //opacity :0.6,
+                stroke: "red",
+                fill: "red"
+            }).show(true);
+
+            //提交申请人名单
+            mysurface.add({
+                type: "text",
+                text:r.get("displayname"),
+                x:330,
+                y:90
+            }).show(true);
+            me.processWin.doLayout();
+
+        }else if(r.get("processstatus")==processdiction.stepthree){
+
+            mysurface.add({
+                type: "path",
+                path: "M505 35  L515 45 L530 28",    //路径      L150 50
+                "stroke-width": "4",
+                opacity :0.6,
+                stroke: "red"/*,
+                 fill: "blue"*/
+            }).show(true);
+            me.processWin.doLayout();
+        }
 
     }
 

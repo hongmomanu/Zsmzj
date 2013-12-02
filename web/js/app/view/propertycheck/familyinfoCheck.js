@@ -39,11 +39,26 @@ Ext.define('ZSMZJ.view.propertycheck.familyinfoCheck', {
             buttons:[
 
 
-                {
-                    text: propertyCheckRoleBtn[0].name,
-                    namevalue:propertyCheckRoleBtn[0].name,
-                    hidden:!true,
-                    itemId:'propertycheckbtn',
+                /*{
+                    text: this.objdata.record.get("checkitem"),
+                    namevalue:this.objdata.record.get("checkitem"),
+                    hidden:1==this.objdata.record.get("checkresult"),
+                    //itemId:'propertycheckbtn',
+                    action:'checkbusiness'
+                },*/{
+                    text: '核定收入',
+                    namevalue:'核定收入',
+                    hidden:!(1!=this.objdata.record.get("checkresult")&&this.objdata.record.get("checkitem")=='核定收入'),
+                    action:'checkbusiness'
+                },{
+                    text: '核定住房',
+                    namevalue:'核定住房',
+                    hidden:!(1!=this.objdata.record.get("checkresult")&&this.objdata.record.get("checkitem")=='核定住房'),
+                    action:'checkbusiness'
+                },{
+                    text: '核定现有资产',
+                    namevalue:'核定现有资产',
+                    hidden:!(1!=this.objdata.record.get("checkresult")&&this.objdata.record.get("checkitem")=='核定现有资产'),
                     action:'checkbusiness'
                 },
                 {
@@ -58,6 +73,15 @@ Ext.define('ZSMZJ.view.propertycheck.familyinfoCheck', {
 
         });
         this.callParent(arguments);
+    },
+    findCheckRoleName:function(a,name){
+        for(var i=0;i< a.length;i++){
+            if(a[i].name==name){
+                console.log(a[i].name)
+                return true;
+            }
+        }
+        return false;
     }
 
 });

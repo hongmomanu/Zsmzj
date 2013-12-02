@@ -16,18 +16,19 @@ public interface PropertyCheckDAO {
 	public int doCreate(Map<String,Object> param);
 	public int doUpdate(Map<String,Object> param);
 	public int doDelete(int pid,int type);
-	public ArrayList<Map<String,Object>> findAll(Map paraMap);
-	public ArrayList<Map<String,Object>> findAllByCheckRole(Map paraMap);
+	public ResultInfo findAll(Map paraMap);
+	public ResultInfo findAllByCheckRole(Map paraMap);
 	public int getCount(String keyword,int type);
 	public Map<String,Object> findById(int pid,int type);
     public int changeBusinessProcessStatus(Map<String,Object> param);
 
 
     public int doCheckItem(Map<String,Object> param);
-    public ArrayList<Map<String,Object>> getPropertyCheckItemDatilByOwerId(Map<String,Object> param) ;
+    public ResultInfo getPropertyCheckItemDatilByFmy001(Map<String,Object> param) ;
 
 
     //审核流程
     public String makeApproval(Map<String,Object> param);
+    public ResultInfo getPorcessCheck(Map<String,Object> param);
 
 }
