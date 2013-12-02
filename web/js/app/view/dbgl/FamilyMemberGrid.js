@@ -114,7 +114,6 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     header: '姓名*',
                     //itemId:'name',
                     dataIndex: 'name',
-
                     //width: 160,
                     editor: {
                         msgTarget:'none',
@@ -128,7 +127,6 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     //width: 160,
                     editor: {
                         vtype:'personid',
-                        msgTarget:'none',
                         //emptyText: '输入身份证号',
                         blankText: '输入身份证号',
                         allowBlank: false
@@ -151,14 +149,12 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                 },
                 {
                     header: '性别*',
-
                     dataIndex: 'sex',
                     //width: 160,
                     editor: {
                         itemId: 'sex',
                         xtype:'dbglaplytype',
                         searchtype:"dbglsex",
-                        msgTarget:'none',
                         allowBlank: false
                         //vtype: 'email'
                     }
@@ -204,7 +200,6 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     editor: {
                         itemId: 'personage',
                         xtype:'textfield',
-                        msgTarget:'none',
                         //disabled:true,
                         allowBlank: false
                         //vtype: 'email'
@@ -216,7 +211,6 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     //width: 160,
                     editor: {
                         allowBlank: false,
-                        msgTarget:'none',
                         xtype:'dbglaplytype',
                         listeners:{
                             //scope: this,
@@ -257,7 +251,6 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     //width: 160,
                     editor: {
                         allowBlank: false,
-                        msgTarget:'none',
                         xtype:'dbglaplytype',
                         searchtype:"persontype"
                         //vtype: 'email'
@@ -280,7 +273,6 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     //width: 160,
                     editor: {
                         allowBlank: false,
-                        msgTarget:'none',
                         xtype:'dbglaplytype',
                         searchtype:"bodystatus"
                         //vtype: 'email'
@@ -316,7 +308,6 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     editor: {
                         xtype: 'numberfield',
                         allowBlank: false,
-                        msgTarget:'none',
                         minValue: 0,
                         maxValue: 150000
                     }
