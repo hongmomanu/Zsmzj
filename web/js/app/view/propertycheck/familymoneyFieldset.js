@@ -46,6 +46,7 @@ Ext.define('ZSMZJ.view.propertycheck.familymoneyFieldset', {
                     {
                         name: 'cash',
                         fieldLabel: '现金',
+                        itemId:'cash',
                         value:0,
                         regex :/^-?\d+$/,
                         listeners: {

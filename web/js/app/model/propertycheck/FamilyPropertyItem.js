@@ -9,7 +9,7 @@
 Ext.define('ZSMZJ.model.propertycheck.FamilyPropertyItem', {
     extend: 'Ext.data.Model',
     fields: [
-        {name:'owerid'},
+        {name:'fmy001'},
 
         {name:'checkitem'},
         {name:'checkresult'},

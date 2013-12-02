@@ -112,12 +112,12 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     }
                 }, {
                     header: '姓名*',
-                    //itemId:'name',
+                    itemId:'name',
                     dataIndex: 'name',
                     //width: 160,
                     editor: {
 
-                        //allowBlank: false
+                        allowBlank: false
                         //vtype: 'email'
                     }
                 },  {

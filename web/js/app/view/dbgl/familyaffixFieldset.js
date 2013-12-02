@@ -14,6 +14,7 @@ Ext.define('ZSMZJ.view.dbgl.familyaffixFieldset', {
     ],
 
     initComponent: function() {
+        var me=this;
         var required = '<span style="color:red;font-weight:bold" data-qtip="必填字段">*</span>';
         Ext.apply(this,
             {
@@ -257,6 +258,13 @@ Ext.define('ZSMZJ.view.dbgl.familyaffixFieldset', {
                                      }*/
                                     render: function(c){
                                         c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
+
+                                    },
+                                    beforerender:function(c){
+                                        var o=me.containUncommonTable(me.up('form').xtype);
+                                        if(o){
+                                            c.html= o[c.type]
+                                        }
                                     }
 
                                 }
@@ -433,6 +441,20 @@ Ext.define('ZSMZJ.view.dbgl.familyaffixFieldset', {
         );
         this.callParent(arguments);
 
+    },
+    uncommonTable:[
+
+        {xtype:'testpbusinessapplyform',value:{limitlifetable:'A',limitlifeapprovaltable:'B'}},
+        //{xtype:'dbglbusinessapplyform,dbglbusinessalterform',value:{limitlifetable:'【申请人】临时救助申请对象民主评议表(0)',limitlifeapprovaltable:'B'}},
+        {xtype:'temporaryhelpbusinessapplyform,temporaryhelpbusinessalterform',value:{limitlifetable:'【申请人】临时救助申请对象民主评议表(0)',limitlifeapprovaltable:'B'}}
+    ],
+    containUncommonTable:function(xtype){
+        var len=this.uncommonTable.length;
+        for(var i=0;i<len;i++){
+            if(this.uncommonTable[i].xtype.contains(xtype)){
+                return this.uncommonTable[i].value;
+            }
+        }
     }
 
 });

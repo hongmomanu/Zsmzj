@@ -178,7 +178,20 @@ Ext.define('ZSMZJ.view.propertycheck.familybasicFieldset', {
                         //value:0,
                         //disabled:true,
                         //emptyText: '低保户类型',
-                        allowBlank: false
+                        allowBlank: false,
+                        listeners: {
+                            "change":function(field,e){
+                                this.fireEvent('moneychane', field);
+                                var formpanel=field.up('form');
+                                if(formpanel.down('#housearea')){
+                                    this.fireEvent('houseareachane', formpanel.down('#housearea'));
+                                }
+                                if(formpanel.down('#houseusearea')){
+                                    this.fireEvent('houseareachane', formpanel.down('#houseusearea'));
+                                }
+
+                            }
+                        }
                     }
                     ,{
                         name: 'telnum',

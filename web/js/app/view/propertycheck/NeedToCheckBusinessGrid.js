@@ -99,6 +99,8 @@ Ext.define('ZSMZJ.view.propertycheck.NeedToCheckBusinessGrid' ,{
                     }
                 },
                 {header: '户主姓名',align:'center',dataIndex:'owername'},
+                {header: '家庭序号',align:'center',dataIndex:'fmy001'},
+                {header: '核定项目',align:'center',dataIndex:'checkitem',hidden:true},
                 {header: '户主身份证',align:'center',dataIndex:'owerid',width: 250},
                 {header: '核定',align:'center',dataIndex:'checkresult',itemId:'checkresult',
                     renderer:function(v, m, r){
@@ -110,7 +112,15 @@ Ext.define('ZSMZJ.view.propertycheck.NeedToCheckBusinessGrid' ,{
                     }
                 } ,
                 {header: '备注',align:'left',dataIndex:'checkcomment',itemId:'checkcomment',width:200},
-                {header: '收入合计',align:'center',dataIndex:'incomesum',itemId:'incomesum'},
+                {header: '收入合计',align:'center',dataIndex:'incomesum',itemId:'incomesum',hidden:false,
+                    renderer:function(v,m,r){
+                        if(r.data.checkitem!='核定收入'){
+                               return 'X'
+                        }else{
+                            return v;
+                        }
+                    }
+                },
                 {header: '财产合计',align:'center',dataIndex:'propertysum',itemId:'propertysum'},
                 {header: '住房总使用面积',align:'center',dataIndex:'houseusearea',itemId:'houseusearea'},
                 {header: '行政区划',align:'center',dataIndex:'division',itemId:'division'},
