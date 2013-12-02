@@ -11,6 +11,8 @@ import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -55,7 +57,11 @@ public class ExcelHelper {
                 for (Object param_name : urlparam.names()) {
                     String value=urlparam.get(param_name).toString();
                     if(value.equals("null"))continue;
-                    urlparamsstr+=param_name.toString()+"="+value+"&";
+                    try {
+                        urlparamsstr+=param_name.toString()+"="+ URLEncoder.encode(value, "UTF-8")+"&";
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    }
 
                 }
                 urlparamsstr+="limit=100000&start=0";

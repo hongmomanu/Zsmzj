@@ -395,9 +395,12 @@ Ext.define('ZSMZJ.controller.Dbgl', {
     },*/
     //生日改变
     birthdaychange:function(obj,newValue, oldValue, eOpts ){
-        var age=(new Date()).getFullYear()-newValue.getFullYear();
-        var ageitem=obj.up('panel').down('#personage');
-        ageitem.setValue(age);
+        if(newValue){
+            var age=(new Date()).getFullYear()-newValue.getFullYear();
+            var ageitem=obj.up('panel').down('#personage');
+            ageitem.setValue(age);
+        }
+
     },
 
     //删除家庭成员
@@ -468,7 +471,12 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         }
 
         //testobj=gridpanel;
-        rowEditing.startEdit(0, 0);
+        try{
+            rowEditing.startEdit(0, 0);
+        }catch(e){
+
+        }
+
         //var applyform=this.getMyviewbusinessapplyform();
 
     },
@@ -1064,8 +1072,11 @@ Ext.define('ZSMZJ.controller.Dbgl', {
               var target=familygrid.getEl();
               target.scrollIntoView(formcontent,true,true,true);
               this.moneychane(familygrid);
-              rowEditing.startEdit(0, 0);
+              try{
+                  rowEditing.startEdit(0, 0);
+              }catch(e){
 
+              }
 
           }else{
               Ext.each(store.data.items,function(item){
