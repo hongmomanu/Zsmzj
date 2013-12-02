@@ -151,6 +151,7 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                 },
                 {
                     header: '性别*',
+
                     dataIndex: 'sex',
                     //width: 160,
                     editor: {
