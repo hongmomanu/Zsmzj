@@ -821,7 +821,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         var affixpanel=form.down('#affixfilespanel');
         if(affixpanel){
             Ext.each(affixpanel.items.items,function(a){
-                if(a.xtype=='panel'){
+                if(a.xtype=='container'){
                     var formdata=a.down('panel').formdata;
                     var affixfileitem={};
                     affixfileitem[a.down('panel').type]=formdata;
