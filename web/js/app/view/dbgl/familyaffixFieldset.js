@@ -346,6 +346,12 @@ Ext.define('ZSMZJ.view.dbgl.familyaffixFieldset', {
                                      }*/
                                     render: function(c){
                                         c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
+                                    },
+                                    beforerender:function(c){
+                                        var o=me.containUncommonTable(me.up('form').xtype);
+                                        if(o){
+                                            c.html= o[c.type]
+                                        }
                                     }
 
                                 }
@@ -444,14 +450,27 @@ Ext.define('ZSMZJ.view.dbgl.familyaffixFieldset', {
     },
     uncommonTable:[
 
-        {xtype:'testpbusinessapplyform',value:{limitlifetable:'A',limitlifeapprovaltable:'B'}},
-        //{xtype:'dbglbusinessapplyform,dbglbusinessalterform',value:{limitlifetable:'【申请人】临时救助申请对象民主评议表(0)',limitlifeapprovaltable:'B'}},
-        {xtype:'temporaryhelpbusinessapplyform,temporaryhelpbusinessalterform',value:{limitlifetable:'【申请人】临时救助申请对象民主评议表(0)',limitlifeapprovaltable:'B'}}
+        //{xtype:'testpbusinessapplyform',value:{limitlifetable:'A',limitlifeapprovaltable:'B'}},
+        {xtype:'temporaryhelp',
+            value:{limitlifetable:'【申请人】临时救助申请对象民主评议表(0)',limitlifeapprovaltable:'【申请人】临时救助申请审批表(0)'}},
+        {xtype:'medicalhelp',
+            value:{limitlifetable:'【申请人】医疗救助申请对象民主评议表(0)',limitlifeapprovaltable:'【申请人】医疗救助申请审批表(0)'}},
+        {xtype:'studyhelp',
+            value:{limitlifetable:'【申请人】助学救助申请对象民主评议表(0)',limitlifeapprovaltable:'【申请人】助学救助申请审批表(0)'}},
+        {xtype:'charitablehelp',
+            value:{limitlifetable:'【申请人】慈善救助申请对象民主评议表(0)',limitlifeapprovaltable:'【申请人】慈善救助申请审批表(0)'}},
+        {xtype:'disasterhelpcalamity',
+            value:{limitlifetable:'【申请人】灾害救助申请对象民主评议表(0)',limitlifeapprovaltable:'【申请人】灾害救助申请审批表(0)'}},
+        {xtype:'rangershelp',
+            value:{limitlifetable:'【申请人】流浪救助申请对象民主评议表(0)',limitlifeapprovaltable:'【申请人】流浪救助申请审批表(0)'}}
     ],
     containUncommonTable:function(xtype){
+        if(!xtype){
+            return;
+        }
         var len=this.uncommonTable.length;
         for(var i=0;i<len;i++){
-            if(this.uncommonTable[i].xtype.contains(xtype)){
+            if(xtype.indexOf(this.uncommonTable[i].xtype)==0){
                 return this.uncommonTable[i].value;
             }
         }
