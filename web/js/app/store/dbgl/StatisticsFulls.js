@@ -25,7 +25,7 @@ Ext.define('ZSMZJ.store.dbgl.StatisticsFulls', {
         text: '舟山市',
         divisionpath:'舟山市',
         id:0,
-        expanded: true
+        expanded: false
     }
 
 
