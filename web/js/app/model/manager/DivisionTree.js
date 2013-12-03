@@ -31,6 +31,9 @@ Ext.define('ZSMZJ.model.manager.DivisionTree', {
         ,{
             name: 'qtip',
             type:'string'
+        },{
+            name: 'iconCls',
+            type:'string'
         }
     ]
 });

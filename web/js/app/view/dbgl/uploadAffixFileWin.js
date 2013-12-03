@@ -59,6 +59,10 @@ Ext.define('ZSMZJ.view.dbgl.uploadAffixFileWin' ,{
                             'change': function(fb, v){
                                 //testobjs=fb;
                                 var filename= v.slice(v.lastIndexOf("\\")+1);
+                                //alert(filename)
+                                if(filename==''||filename==null){
+                                    return;
+                                }
                                 fb.previousNode().setValue(filename);
 
                             }

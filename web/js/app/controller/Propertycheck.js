@@ -34,6 +34,7 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
         'propertycheck.familyinfoAlter',
         'propertycheck.familyinfoCheck',
         'propertycheck.propertyCheckWin',
+        'propertycheck.processWin',
         'propertycheck.processCheckWin',
         'propertycheck.PorpertyProcessHistoryGrid',
         'propertycheck.applyhistoryFieldset'
@@ -174,7 +175,6 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                 },
                 'propertycheckneedtocheckbusinesspanel,propertycheckneedtodobusinesspanel':{
                     gridshowfresh:function(grid){
-                        mytesttestgrid=grid;
                         var store=grid.getStore();
                         if(store.proxy.extraParams){
 
@@ -184,14 +184,14 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                             store.proxy.extraParams.ispublicinfo=grid.ispublicinfo;
                             store.proxy.extraParams.eventName='getfamilypropertyinfo';
                             if(grid.xtype=='propertycheckneedtocheckbusinesspanel'){
-                                store.proxy.extraParams.addontype='1';
+                                store.proxy.extraParams.addontype='1'; //核定查询
                                 store.proxy.extraParams.eventName='getfamilypropertyinfobycheckrole';
                                 //store.proxy.extraParams.checkitem=propertyCheckRoleBtn[0].name;
                                 //store.proxy.extraParams.checkitem=this.checkEnum.toString();
                                 store.proxy.extraParams.checkitem=grid.title;
 
                             }else{
-                                store.proxy.extraParams.addontype='0';
+                                store.proxy.extraParams.addontype='0'; //正常查询
                             }
                             if(grid.isnewgrid){
                                 store.load();
@@ -799,10 +799,7 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
     },
     showProcessWin:function(c,r,grid){//显示进程窗口
         var me=this;
-        //var header_cl = this.application.getController("Header");
         //窗口初始化显示
-        myMM=this;
-        console.log(me.getMyprocessvector())
         if(!me.processWin){
             me.processWin=Ext.widget('propertyprocesswin');
             me.processWin.show();
@@ -821,7 +818,8 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
         //显示历史审批表
         var store=me.processWin.down('grid').getStore();
         store.proxy.extraParams = {
-            businessid: r.get('businessid')
+            eventName:'getprocesscheckbyfmy001',
+            fmy001: r.get('fmy001')
         };
         store.load();
         //绘制流程图
@@ -926,11 +924,12 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                 stroke: "red"/*,
                  fill: "blue"*/
             }).show(true);
+
+
             me.processWin.doLayout();
         }
 
     }
-
 
 });
 

@@ -19,6 +19,7 @@
             out.print("要指明事件名称");
             return;
         }
+
         Map<String,Object> params=new HashMap<String,Object>();
         ProperCheckControl propchk=new ProperCheckControl();
 
@@ -26,6 +27,10 @@
             params.put("fm01",request.getParameter("fm01"));
             params.put("isprocess",request.getParameter("isprocess"));
             out.print(propchk.saveFamliyPropertyInfo(params));
+        }else if("updatefamilyinfo".equals(eventName)){
+            params.put("fm01",request.getParameter("fm01"));
+            params.put("isprocess",request.getParameter("isprocess"));
+            out.print(propchk.updateFamliyPropertyInfo(params));
         }else if("getfamilypropertyinfo".equals(eventName)){
             Enumeration e  =(Enumeration) request.getParameterNames();
             Map paraMap=new HashMap<String,Object>();
@@ -57,7 +62,7 @@
                 String name=(String)e.nextElement();
                 paraMap.put(name,request.getParameter(name));
             }
-            out.print(propchk.getPropertyCheckItemDatilByOwerId(paraMap));
+            out.print(propchk.getPropertyCheckItemDatilByFmy001(paraMap));
         }else if("changebusinessprocessstatus".equals(eventName)){   //提交申请
             Enumeration e  =(Enumeration) request.getParameterNames();
             Map paraMap=new HashMap<String,Object>();
@@ -75,6 +80,15 @@
                 paraMap.put(name,request.getParameter(name));
             }
             out.print(propchk.processCheck(paraMap));
+        }
+        else if("getprocesscheckbyfmy001".equals(eventName)){      //获得审批记录
+            Enumeration e  =(Enumeration) request.getParameterNames();
+            Map paraMap=new HashMap<String,Object>();
+            while(e.hasMoreElements()){
+                String name=(String)e.nextElement();
+                paraMap.put(name,request.getParameter(name));
+            }
+            out.print(propchk.getProcessCheck(paraMap));
         }
 
 

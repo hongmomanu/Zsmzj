@@ -9,8 +9,10 @@ import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA.
@@ -136,18 +138,72 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
 
 	@Override
 	public ResultInfo findAll(Map paraMap) {
+        SimpleDateFormat sDayFormat   =   new SimpleDateFormat("yyyy-MM-dd");
         String addontype=(String)paraMap.get("addontype");
-        String sql="select a.*,0 addontype from fm01 a order by a.fmy001 limit ? offset ?";
-        String sql_count="select count(*) from fm01 a order by a.fmy001";
+        String keyword=(String)paraMap.get("keyword");
+        String bgdate=(String)paraMap.get("bgdate");
+        String edddate=(String)paraMap.get("edddate");
+        int start=Integer.parseInt((String)paraMap.get("start"));
+        int limit=Integer.parseInt((String)paraMap.get("limit"));
+        String sql="select a.rowid fmy001,a.*,0 addontype,b.displayname from fm01 a,users b where a.userid=b.id   ";
+        String sql_count="select count(*) from fm01 a,users b where a.userid=b.id  ";
 
+        if(bgdate!=null&&!bgdate.equals("")){
+            Date date = null;
+            try {
+                date = sDayFormat.parse(bgdate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            java.util.Calendar   calendar=java.util.Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.YEAR, +100);    //得到下一个月
+            String enddate=sDayFormat.format(calendar.getTime());
+
+            sql+=" and a.rowid in  (select rowid from fm01 where time Between '"+bgdate
+                    +"' and  '"+enddate+"')";
+            sql_count+=" and a.rowid in  (select rowid from fm01 where time Between '"+bgdate
+                    +"' and  '"+enddate+"')";
+
+
+        }
+        if(edddate!=null&&!edddate.equals("")){
+
+            Date date = null;
+            try {
+                date = sDayFormat.parse(edddate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            java.util.Calendar   calendar=java.util.Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.YEAR, -100);    //得到下一个月
+            String enddate=sDayFormat.format(calendar.getTime());
+
+            sql+=" and a.rowid in  (select rowid from fm01 where time Between '"+bgdate
+                    +"' and  '"+enddate+"')";
+            sql_count+=" and a.rowid in  (select rowid from fm01 where time Between '"+bgdate
+                    +"' and  '"+enddate+"')";
+        }
+
+        if(null!=keyword){
+            sql+=  " and fm01 match '"+keyword+"*'";
+            sql_count+=  " and fm01 match '"+keyword+"*'";
+        }
+
+        sql+= " order by a.rowid limit "+limit+" offset "+start ;
+        sql_count+= " order by a.rowid limit "+limit+" offset "+start ;
+
+        log.debug(sql);
+        log.debug(sql_count);
 		ArrayList<Map<String,Object>> list=new ArrayList<Map<String, Object>>();
 		PreparedStatement pstmt=null;
 		PreparedStatement pstmt_count=null;
         int count=0;
 		try {
 			pstmt=conn.prepareStatement(sql);
-            pstmt.setInt(1,Integer.parseInt((String)paraMap.get("limit")));
-            pstmt.setInt(2,Integer.parseInt((String)paraMap.get("start")));
+            /*pstmt.setInt(1,Integer.parseInt((String)paraMap.get("limit")));
+            pstmt.setInt(2,Integer.parseInt((String)paraMap.get("start")));*/
 			ResultSet rs = pstmt.executeQuery();
 			ResultSetMetaData data=rs.getMetaData();
 			int colnums=data.getColumnCount();
@@ -189,7 +245,7 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
     @Override
     public int changeBusinessProcessStatus(Map<String, Object> param) {
         JSONObject jsonObject=JSONObject.fromObject(param.get("rc"));
-        String sql="update fm01 set processstatus=? where fmy001=?";
+        String sql="update fm01 set processstatus=? where rowid=?";
         PreparedStatement pstmt=null;
         int result=0;
         try {
@@ -207,13 +263,15 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
 	public ResultInfo findAllByCheckRole(Map paraMap) {
         String addontype=(String)paraMap.get("addontype");
         String checkitem=(String) paraMap.get("checkitem");
+        String divisionpath=(String) paraMap.get("divisionpath");
         log.debug(checkitem);
         String t="1".equals(addontype)?"1":"0";
         t+=" addontype";
-        String sql_comm="select a.*,"+ t+ ",b.checkitem checkitem,b.checkresult checkresult,b.checkcomment checkcomment  from fm01 a,fm03 b where a.fmy001=b.fmy001 and b.checkitem =?"
-                +" union  select a.*,"+ t+
-                ",? checkitem,0 checkresult,'' checkcomment  from fm01 a where not exists (select * from fm03 c where c.fmy001=a.fmy001 and c.checkitem =?) order by checkresult  ,fmy001 desc";
+        String sql_comm="select a.rowid fmy001,a.*,"+ t+ ",b.checkitem checkitem,b.checkresult checkresult,b.checkcomment checkcomment  from fm01 a,fm03 b where a.rowid=b.fmy001 and b.checkitem =?"
+                +" union  select a.rowid fmy001,a.*,"+ t+
+                ",? checkitem,0 checkresult,'' checkcomment  from fm01 a where not exists (select * from fm03 c where c.fmy001=a.rowid and c.checkitem =?) order by checkresult,fmy001 desc";
                 ;
+        sql_comm="select * from ("+sql_comm+") y where y.division like '%"+divisionpath+"%'";
         String sql_count="select count(*) from ("+sql_comm+") ";
         String sql= sql_comm+" limit ? offset ?";
 	    log.debug(sql);
@@ -309,7 +367,7 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
         String sql_updateFm03="update fm03 set checkresult=?,checkcomment=?,userid=?,userid=?,roleid=? where  fmy001=? and checkitem=?";
         String sql_insertFm03="insert into fm03(fmy001,checkitem,checkresult,checkitemstatus)values(?,?,0,0)";
         String sql2="select sum(checkresult) from fm03 where fmy001=?";
-        String sql3="update fm01 set checkstatus=? where fmy001=?";
+        String sql3="update fm01 set checkstatus=? where rowid=?";
         int result=0;
         PreparedStatement pstmt=null;
         PreparedStatement pstmt_updateFm03=null;
@@ -436,7 +494,7 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
         String result=null;
         Integer fmy001=Integer.parseInt((String)jsonfm04.get("fmy001"));
         try {
-            pstmt1=conn.prepareStatement("select processstatus from fm01 where fmy001=?");
+            pstmt1=conn.prepareStatement("select processstatus from fm01 where rowid=?");
             pstmt1.setInt(1,fmy001);
             ResultSet rs=pstmt1.executeQuery();
             String rsstatus="";
@@ -457,7 +515,7 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
                 pstmt2.setString(7,fmt.format(new java.util.Date()));
                 pstmt2.execute();
 
-                pstmt3=conn.prepareStatement("update fm01 set processstatus=? where fmy001=?");
+                pstmt3=conn.prepareStatement("update fm01 set processstatus=? where rowid=?");
                 pstmt3.setString(1,staus);
                 log.debug(staus);
                 pstmt3.setInt(2,fmy001);

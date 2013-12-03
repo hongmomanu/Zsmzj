@@ -25,7 +25,9 @@ public class DivisionDao {
 
     public ArrayList<Map<String, Object>>   getDivisions(int parentid){
         Connection testConn= JdbcFactory.getConn("sqlite");
-        String sql=  "select divisionname,divisionpath,rowid,signaturepath from "+DivisionTable+" where parentid=?";
+        //String sql=  "select divisionname,divisionpath,rowid,signaturepath from "+DivisionTable+" where parentid=?";
+        String sql=  "select a.divisionname,a.divisionpath,a.rowid,a.signaturepath,(select count(1) from divisions b where b.parentid=a.rowid) as leaf from "
+                +DivisionTable+" a where a.parentid=?";
 
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
         ArrayList<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
@@ -38,6 +40,8 @@ public class DivisionDao {
                 obj.put("divisionpath",rs.getString("divisionpath"));
                 obj.put("id",rs.getInt("rowid"));
                 obj.put("signaturepath",rs.getString("signaturepath"));
+                obj.put("iconCls",Integer.parseInt(rs.getString("leaf"))>0?"":"division-tree-leaf");
+                obj.put("leaf",Integer.parseInt(rs.getString("leaf"))>0?false:true);
                 if(rs.getString("signaturepath")==null||rs.getString("signaturepath").equals("")){
                     obj.put("qtip","无签章图片");
                 }else{

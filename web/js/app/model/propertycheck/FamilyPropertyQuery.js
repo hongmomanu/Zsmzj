@@ -67,6 +67,8 @@ Ext.define('ZSMZJ.model.propertycheck.FamilyPropertyQuery', {
         {name:'houseaverageusearea'}  ,
         {name:'processstatustype'} ,
 
+        {name:'displayname'} ,
+
 
         {name:'addontype'},
         {name:'checkitem'},

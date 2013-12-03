@@ -183,6 +183,9 @@
 .yw-busiapproval{
     background-image: url('../img/busiicon/busiapproval.png');
 }
+.division-tree-leaf{
+    background-image: url('../img/leafdivision.png');
+}
 
 .fieldset-border{
     border:0px solid gray;
