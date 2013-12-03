@@ -2077,7 +2077,7 @@ public class BusinessProcessControl {
 
             sql_list+=" and a.rowid in  (select rowid from "+BusinessTable+" where helpbgtime Between '"+bgdate
                     +"' and  '"+enddate+"' or changedate Between '"+bgdate+"' and '"+enddate+"' or logoutdate Between '"+bgdate+"' and '"+enddate+"')";
-            sql_list+=" and a.rowid in  (select rowid from "+BusinessTable+" where helpbgtime Between '"+bgdate
+            sql_count+=" and a.rowid in  (select rowid from "+BusinessTable+" where helpbgtime Between '"+bgdate
                     +"' and  '"+enddate+"' or changedate Between '"+bgdate+"' and '"+enddate+"' or logoutdate Between '"+bgdate+"' and '"+enddate+"')";
 
 
