@@ -8,7 +8,6 @@
 var extLocation="http://192.168.2.112/ext-4.2.1/";
 
  extLocation="http://127.168.2.141/ext-4.2.1/";
- extLocation="http://192.168.2.141:8080/extjs4.2/";
 
 var businessTableType=
         {   'dbgl':"低保",
@@ -27,6 +26,8 @@ var businessTableType=
 var spatialchildTableType={
     '避灾仓库':'disasterware',
     '避灾场所': 'disasterplace',
+    '核定收入':'checkinput',
+    '核定住房':'checkhouse',
     'shenshispatial':'嵊泗县'
 };
 
@@ -769,16 +770,17 @@ var applyformviews={
 
     ],'medicalhelpapply':[/*医疗救助申请表单分隔的各个小表单*/
         'medicalhelpfamilybasicfieldset',
-        'medicalhelpfamilyhousefieldset',
+        /*'medicalhelpfamilyhousefieldset',
         'medicalhelpfamilyinputfieldset',
-        'medicalhelpfamilypropertyfieldset',
+        'medicalhelpfamilypropertyfieldset',*/
         'dbglfamilymemberfieldset',//家庭成员信息
         'dbglfamilyaffixfieldset',//电子附件信息
+        'medicalhelpalreadyhelpaidfieldset',
         'medicalhelpfamilyapplyfieldset',
         'medicalhelpapplysubmitfieldset'
 
     ],'medicalhelpalter':[/*医疗救助申请表单修改界面 分隔的各个小表单*/
-        'medicalhelpalterfamilybasicfieldset',
+        'medicalhelpfamilybasicfieldset',
         /*'medicalhelpfamilyhousefieldset',
         'medicalhelpfamilyinputfieldset',
         'medicalhelpfamilypropertyfieldset',*/
@@ -841,7 +843,7 @@ var applyformviews={
         'temporaryhelpapplysubmitfieldset'
 
     ],'temporaryhelpalter':[/* 临时救助修改*/
-        'temporaryhelpalterfamilybasicfieldset',
+        'temporaryhelpfamilybasicfieldset',
         /*'temporaryhelpfamilyhousefieldset',
         'temporaryhelpfamilyinputfieldset',
         'temporaryhelpfamilypropertyfieldset',*/
@@ -888,7 +890,9 @@ var applyformviews={
         'propertycheckfamilybasicfieldset',
         'propertycheckfamilymoneyfieldset',
         'propertycheckfamilyhousefieldset',
-        'propertycheckfamilyinputfieldset'
+        'propertycheckfamilyinputfieldset',
+        'propertycheckapplyhistoryfieldset'
+
 
     ],'propertycheckitemalter':[/* 家庭基本信息核定*/
         'propertycheckfamilybasicfieldset',
@@ -984,7 +988,7 @@ var menu_shjz=[
             {xtype:'dbglconfigtree',searchtype:"综合查询",businesstype:businessTableType.allquery}
         ],
         iconCls: 'nav'
-    }/*,
+    },
     {
         layout: 'fit',
         title: '财产核定',
@@ -993,7 +997,7 @@ var menu_shjz=[
             {xtype:'dbglconfigtree',searchtype:"财产核定",businesstype:businessTableType.propertycheck}
         ],
         iconCls: 'nav'
-    }*/
+    }
 ];
 
 var menu_qxgl=[{layout: 'fit',title: '权限设置',items:[{xtype:'userconfiggrid'}],iconCls: 'nav' },
