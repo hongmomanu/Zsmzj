@@ -18,9 +18,10 @@
     else{
         BusinessProcessControl bp=new BusinessProcessControl();
         String type=request.getParameter("type");
+        String divisionpath=request.getParameter("divisionpath");
         String businesstype=request.getParameter("businesstype");
         String bgmonth=request.getParameter("bgmonth");
         int divisionpid=Integer.parseInt(request.getParameter("node"));
-        out.print(bp.getStatisticsBytype(type,bgmonth,divisionpid,businesstype));
+        out.print(bp.getStatisticsBytype(type,bgmonth,divisionpid,businesstype,divisionpath));
     }
 %>
