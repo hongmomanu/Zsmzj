@@ -108,9 +108,8 @@ Ext.define('ZSMZJ.view.charitablehelp.familybasicFieldset', {
                         emptyText: '请输入户主姓名',
                         allowBlank: false
                     },{
-                        name: 'accountaddress',
-                        fieldLabel: '户口所在地',
-
+                        name: 'telnum',
+                        fieldLabel: '联系电话',
                         //afterLabelTextTpl: required,
                         //emptyText: '低保户类型',
                         allowBlank: true
@@ -152,14 +151,7 @@ Ext.define('ZSMZJ.view.charitablehelp.familybasicFieldset', {
                         emptyText: '请输入身份证号',
                         allowBlank: false
                     },{
-                        name: 'accountzipcode',
-                        fieldLabel: '邮政编码',
-                        //afterLabelTextTpl: required,
-                        //emptyText: '低保户类型',
-                        allowBlank: true
-                    },{
                         name: 'realaddress',
-                        colspan:2,
                         fieldLabel: '实际居住地',
                         allowBlank: true
                     },{
@@ -180,10 +172,18 @@ Ext.define('ZSMZJ.view.charitablehelp.familybasicFieldset', {
                         allowBlank: false
                     }
                     ,{
-                        name: 'telnum',
-                        fieldLabel: '联系电话',
+                        name: 'accountaddress',
+                        fieldLabel: '户口所在地',
+
                         //afterLabelTextTpl: required,
                         //emptyText: '低保户类型',
+                        allowBlank: true
+                    },{
+                        name: 'accountzipcode',
+                        fieldLabel: '邮政编码',
+                        //afterLabelTextTpl: required,
+                        //emptyText: '低保户类型',
+                        colspan:2,
                         allowBlank: true
                     },{
                         xtype:'dbglaplytype',

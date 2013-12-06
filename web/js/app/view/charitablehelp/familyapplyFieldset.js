@@ -72,6 +72,22 @@ Ext.define('ZSMZJ.view.charitablehelp.familyapplyFieldset', {
                         emptyText: '请输入家庭总收入',
                         blankText : '请输入家庭总收入',
                         allowBlank: false
+                    },
+                    {
+                        name: 'helpunit',
+                        fieldLabel: '救助单位',
+                        afterLabelTextTpl: required,
+                        emptyText: '请输入救助单位',
+                        blankText : '请输入救助单位',
+                        allowBlank: false
+                    },
+                    {
+                        name: 'conectperson',
+                        fieldLabel: '单位电话',
+                        afterLabelTextTpl: required,
+                        emptyText: '请输入单位电话',
+                        blankText : '请输入单位电话',
+                        allowBlank: false
                     }
                 ]
             }

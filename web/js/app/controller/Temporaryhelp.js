@@ -56,6 +56,9 @@ Ext.define('ZSMZJ.controller.Temporaryhelp', {
                 },
                 owerchange:function(c){
                     dbgl_cl.owerchanged(c);
+                },
+                familyincomechange:function(c){
+                    this.familyincomechange(c);
                 }
             },
             'temporaryhelpbusinessapplyform button[action=applysubmit]': {
@@ -103,7 +106,13 @@ Ext.define('ZSMZJ.controller.Temporaryhelp', {
         dbgl_cl.submitcommon(btn, businessTableType.temporaryhelp,true);
     },
 
-
+    familyincomechange:function(c){
+        var formpanel= c.up('form');
+        var person_nums=parseInt(formpanel.down('#FamilyPersons').getValue());
+        var thisvalue= parseInt(c.getValue())/12;
+        var avgmoney=parseInt(person_nums==0?thisvalue:thisvalue/person_nums);
+        c.nextNode().setValue(avgmoney);
+    },
     onLaunch: function () {
         var me = this;
         // for dev purpose

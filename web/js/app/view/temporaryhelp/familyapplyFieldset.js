@@ -58,10 +58,16 @@ Ext.define('ZSMZJ.view.temporaryhelp.familyapplyFieldset', {
                         name: 'familyincome',
                         fieldLabel: '家庭总收入',
                         afterLabelTextTpl: required,
+                        itemId:'familyincome',
                         value: 0,
                         emptyText: '请输入家庭总收入',
                         blankText: '请输入家庭总收入',
-                        allowBlank: false
+                        allowBlank: false,
+                        listeners: {
+                            "blur":function(field,e){
+                                this.fireEvent('familyincomechange', field);
+                            }
+                        }
                     }
                     ,
                     {

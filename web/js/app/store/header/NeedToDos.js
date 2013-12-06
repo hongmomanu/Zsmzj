@@ -9,7 +9,7 @@ Ext.define('ZSMZJ.store.header.NeedToDos', {
     extend: 'Ext.data.Store',
     //alias : 'widget.headerviewers',
     model: 'ZSMZJ.model.header.NeedToDo',
-    autoLoad:true,
+    autoLoad:false,
     pageSize: 20,
     proxy: {
         type: 'ajax',

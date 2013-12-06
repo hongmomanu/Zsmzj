@@ -12,9 +12,24 @@ Ext.define('ZSMZJ.view.dbgl.familyaffixFieldset', {
 
 
     ],
+    listeners:{
+        afterrender:function(c){
 
+            var currentxtype=c.up('form').xtype;
+            if(currentxtype.indexOf('studyhelp')==0||currentxtype.indexOf('medicalhelp')==0){
+                c.removeAll();
+                if(currentxtype.indexOf('studyhelp')==0){
+                    c.add(c.studyhelp)
+                }else if(currentxtype.indexOf('medicalhelp')==0){
+                    c.add(c.medicalhelp)
+                }
+            }
+        }
+
+    },
     initComponent: function() {
         var me=this;
+        mynewFS=me;
         var required = '<span style="color:red;font-weight:bold" data-qtip="必填字段">*</span>';
         Ext.apply(this,
             {
@@ -41,6 +56,368 @@ Ext.define('ZSMZJ.view.dbgl.familyaffixFieldset', {
                     }
                 },
                 itemId: 'affixfilespanel',
+                studyhelp:[
+                    {
+                        xtype:'container',
+                        border:0,
+
+                        defaults:{
+                            border:0
+                        },
+                        items:[
+                            {
+                                html: ' 【申请人】身份证(0)',
+
+                                cls:'mouseover',
+                                type:'personid',
+                                itemId:'personid',
+                                listeners: {
+
+                                    render: function(c){
+                                        c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
+                                    }
+
+                                }
+                            }
+                        ]
+
+                    },
+                    {
+                        xtype:'container',
+                        border:0,
+                        defaults:{
+                            border:0
+                        },
+                        items:[
+                            {
+                                html: '  <a>【申请人】户口本(0)<a>',
+                                cls:'mouseover',
+                                type:'accountbook',
+                                itemId:'accountbook',
+                                listeners: {
+                                    /*click: {
+                                     element: 'el', //bind to the underlying el property on the panel
+                                     fn: function(){ alert('click el'); }
+                                     }*/
+                                    render: function(c){
+                                        c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
+                                    }
+
+                                }
+
+                            }
+                        ]
+
+                    },
+                    {
+                        xtype:'container',
+                        border:0,
+                        defaults:{
+                            border:0
+                        },
+                        items:[
+                            {
+                                html: '  <a>【申请人】学生证或在读证明(0)<a>',
+                                cls:'mouseover',
+                                type:'studentbook',
+                                itemId:'studentbook',
+                                listeners: {
+                                    render: function(c){
+                                        c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
+                                    }
+
+                                }
+
+                            }
+                        ]
+
+                    },
+                    {
+                        xtype:'container',
+                        border:0,
+                        defaults:{
+                            border:0
+                        },
+                        items:[
+                            {
+                                html: '  <a>【申请人】困难证明件(0)<a>',
+                                cls:'mouseover',
+                                type:'studyhelpdifficultbook',
+                                itemId:'studyhelpdifficultbook',
+                                listeners: {
+                                    render: function(c){
+                                        c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
+                                    }
+
+                                }
+
+                            }
+                        ]
+
+                    },{
+                        xtype:'container',
+                        border:0,
+                        defaults:{
+                            border:0
+                        },
+                        items:[
+                            {
+                                html: '  <a>【申请人】录取通知书(0) <a>',
+                                cls:'mouseover',
+                                type:'letterofadmission',
+                                itemId:'letterofadmission',
+                                listeners: {
+                                    /*click: {
+                                     element: 'el', //bind to the underlying el property on the panel
+                                     fn: function(){ alert('click el'); }
+                                     }*/
+                                    render: function(c){
+                                        c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
+                                    }
+
+                                }
+
+                            }
+                        ]
+
+
+                    },{
+                        xtype:'container',
+                        border:0,
+                        defaults:{
+                            border:0
+                        },
+                        items:[
+                            {
+                                html: '  <a>【申请人】其他(0) <a>',
+                                cls:'mouseover',
+                                type:'familyotherbook',
+                                itemId:'familyotherbook',
+                                listeners: {
+                                    /*click: {
+                                     element: 'el', //bind to the underlying el property on the panel
+                                     fn: function(){ alert('click el'); }
+                                     }*/
+                                    render: function(c){
+                                        c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
+                                    }
+
+                                }
+
+                            }
+                        ]
+
+
+                    }
+                ],
+                medicalhelp:[
+                    {
+                        xtype:'container',
+                        border:0,
+
+                        defaults:{
+                            border:0
+                        },
+                        items:[
+                            {
+                                html: ' 【申请人】身份证(0)',
+
+                                cls:'mouseover',
+                                type:'personid',
+                                itemId:'personid',
+                                listeners: {
+
+                                    render: function(c){
+                                        c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
+                                    }
+
+                                }
+                            }
+                        ]
+
+                    },
+                    {
+                        xtype:'container',
+                        border:0,
+                        defaults:{
+                            border:0
+                        },
+                        items:[
+                            {
+                                html: '  <a>【申请人】户口本(0)<a>',
+                                cls:'mouseover',
+                                type:'accountbook',
+                                itemId:'accountbook',
+                                listeners: {
+                                    /*click: {
+                                     element: 'el', //bind to the underlying el property on the panel
+                                     fn: function(){ alert('click el'); }
+                                     }*/
+                                    render: function(c){
+                                        c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
+                                    }
+
+                                }
+
+                            }
+                        ]
+
+                    },
+                    {
+                        xtype:'container',
+                        border:0,
+                        defaults:{
+                            border:0
+                        },
+                        items:[
+                            {
+                                html: '  <a>【申请人】发票或结算单(0)<a>',
+                                cls:'mouseover',
+                                type:'Invoiceorstatement',
+                                itemId:'Invoiceorstatement',
+                                listeners: {
+                                    render: function(c){
+                                        c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
+                                    }
+
+                                }
+
+                            }
+                        ]
+
+                    },{
+                        xtype:'container',
+                        border:0,
+                        defaults:{
+                            border:0
+                        },
+                        items:[
+                            {
+                                html: '  <a>【申请人】医疗救助申请对象民主评议表(0) <a>',
+                                cls:'mouseover',
+                                type:'limitlifetable',
+                                itemId:'limitlifetable',
+                                listeners: {
+                                    /*click: {
+                                     element: 'el', //bind to the underlying el property on the panel
+                                     fn: function(){ alert('click el'); }
+                                     }*/
+                                    render: function(c){
+                                        c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
+                                    }
+
+                                }
+
+                            }
+                        ]
+
+
+                    },
+                    {
+                        xtype:'container',
+                        border:0,
+                        defaults:{
+                            border:0
+                        },
+                        items:[
+                            {
+                                html: '  <a>【申请人】困难证明件(0)<a>',
+                                cls:'mouseover',
+                                type:'studyhelpdifficultbook',
+                                itemId:'studyhelpdifficultbook',
+                                listeners: {
+                                    render: function(c){
+                                        c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
+                                    }
+
+                                }
+
+                            }
+                        ]
+
+                    },{
+                        xtype:'container',
+                        border:0,
+                        defaults:{
+                            border:0
+                        },
+                        items:[
+                            {
+                                html: '  <a>【申请人】疾病症断书(0) <a>',
+                                cls:'mouseover',
+                                type:'diseaseoffbook',
+                                itemId:'diseaseoffbook',
+                                listeners: {
+                                    /*click: {
+                                     element: 'el', //bind to the underlying el property on the panel
+                                     fn: function(){ alert('click el'); }
+                                     }*/
+                                    render: function(c){
+                                        c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
+                                    }
+
+                                }
+
+                            }
+                        ]
+
+
+                    },{
+                        xtype:'container',
+                        border:0,
+                        defaults:{
+                            border:0
+                        },
+                        items:[
+                            {
+                                html: '  <a>【申请人】申请报告(0) <a>',
+                                cls:'mouseover',
+                                type:'applicationreport',
+                                itemId:'applicationreport',
+                                listeners: {
+                                    /*click: {
+                                     element: 'el', //bind to the underlying el property on the panel
+                                     fn: function(){ alert('click el'); }
+                                     }*/
+                                    render: function(c){
+                                        c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
+                                    }
+
+                                }
+
+                            }
+                        ]
+
+
+                    },{
+                        xtype:'container',
+                        border:0,
+                        defaults:{
+                            border:0
+                        },
+                        items:[
+                            {
+                                html: '  <a>【申请人】其他(0) <a>',
+                                cls:'mouseover',
+                                type:'familyotherbook',
+                                itemId:'familyotherbook',
+                                listeners: {
+                                    /*click: {
+                                     element: 'el', //bind to the underlying el property on the panel
+                                     fn: function(){ alert('click el'); }
+                                     }*/
+                                    render: function(c){
+                                        c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
+                                    }
+
+                                }
+
+                            }
+                        ]
+
+
+                    }
+                ],
                 items:[
 
                     {
@@ -445,18 +822,14 @@ Ext.define('ZSMZJ.view.dbgl.familyaffixFieldset', {
                 ]
             }
         );
+
         this.callParent(arguments);
 
     },
     uncommonTable:[
 
-        //{xtype:'testpbusinessapplyform',value:{limitlifetable:'A',limitlifeapprovaltable:'B'}},
         {xtype:'temporaryhelp',
             value:{limitlifetable:'【申请人】临时救助申请对象民主评议表(0)',limitlifeapprovaltable:'【申请人】临时救助申请审批表(0)'}},
-        {xtype:'medicalhelp',
-            value:{limitlifetable:'【申请人】医疗救助申请对象民主评议表(0)',limitlifeapprovaltable:'【申请人】医疗救助申请审批表(0)'}},
-        {xtype:'studyhelp',
-            value:{limitlifetable:'【申请人】助学救助申请对象民主评议表(0)',limitlifeapprovaltable:'【申请人】助学救助申请审批表(0)'}},
         {xtype:'charitablehelp',
             value:{limitlifetable:'【申请人】慈善救助申请对象民主评议表(0)',limitlifeapprovaltable:'【申请人】慈善救助申请审批表(0)'}},
         {xtype:'disasterhelpcalamity',

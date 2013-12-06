@@ -77,6 +77,25 @@ public class ProperCheckControl {
 	}
 
 	/*
+    删除家庭财产信息，正常状态下的未提交，可以进行删除操作
+     */
+	public String delFamliyPropertyInfoByFmy001(Map<String,Object> params){
+        int fmy001=-1;
+        try{
+            fmy001=Integer.parseInt((String)params.get("fmy001"));
+        }catch (NumberFormatException e){
+            e.printStackTrace();
+            return  "{success:false}";
+        }
+		int result= 0;
+        result=dao.doDelete(fmy001);
+        closeConnection();
+
+        return  result>0? "{success:true}": "{success:false}";
+
+	}
+
+	/*
 	*
 	* 查询家庭财产信息
 	*/

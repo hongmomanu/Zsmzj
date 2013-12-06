@@ -43,16 +43,15 @@ Ext.define('ZSMZJ.view.medicalhelp.familyapplyFieldset', {
                 },
 
                 items: [{
-                    xtype:'dbglaplytype',
-                    searchtype:"helptype",
-                    name: 'familytype',
-                    itemId:'helptype',
-                    fieldLabel: '救助类别',
+                    xtype: 'dbglaplytype',
+                    searchtype: "medicalapplyhelpway",
+                    name: 'helpway',
+                    fieldLabel: '申请类别',
                     afterLabelTextTpl: required,
-                    emptyText: '请选救助类别',
-                    blankText : '请选择救助类别',
+                    emptyText: '请选申请类别',
+                    blankText : '请选择申请类别',
                     allowBlank: false
-                },
+                } ,
                     {
                         xtype:'dbglaplytype',
                         searchtype:"helpnature",
@@ -97,8 +96,12 @@ Ext.define('ZSMZJ.view.medicalhelp.familyapplyFieldset', {
                         allowBlank: false
                     },
                     {
-                        name: 'medicarenum',
-                        fieldLabel: '医保卡号',
+                        name: 'medicalhelptype',
+                        xtype:'dbglaplytype',
+                        searchtype:"medicalhelptype",
+                        fieldLabel: '医疗救助类别',
+                        emptyText: '请选择医疗救助类别',
+                        blankText : '请选择医疗救助类别',
                         allowBlank: true
                     }
 

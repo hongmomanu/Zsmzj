@@ -168,14 +168,7 @@ Ext.define('ZSMZJ.view.medicalhelp.altersubmitFieldset', {
                         value: Ext.Date.format(new Date(), 'Y-m-d'),
                         allowBlank: false
                     },
-                    {
-                        name: 'helpedtime',
-                        fieldLabel: '救助结束日期',
-                        xtype: 'datefield',
-                        //itemId: 'personbirthday',
-                        format: 'Y-m-d',
-                        allowBlank: true
-                    },
+
 
                     {
                         fieldLabel: '享受人数',
@@ -202,7 +195,7 @@ Ext.define('ZSMZJ.view.medicalhelp.altersubmitFieldset', {
                         fieldLabel: '公示结束日期',
                         xtype: 'datefield',
                         format: 'Y-m-d',
-                        colspan: 2,
+                        colspan: 3,
                         allowBlank: true
                     }
                     ,

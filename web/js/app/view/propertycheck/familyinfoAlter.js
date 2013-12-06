@@ -54,7 +54,7 @@ Ext.define('ZSMZJ.view.propertycheck.familyinfoAlter', {
                 },
                 {
                     text: '注销',
-                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                    hidden:true||!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
                         {name:"name",value:this.objdata.record.get("processstatus")})?CommonFunc.lookup(processRoleBtn,
                         {name:"name",value:this.objdata.record.get("processstatus")}).children:null,
                         {name:"name",value:"注销"}),
@@ -62,7 +62,7 @@ Ext.define('ZSMZJ.view.propertycheck.familyinfoAlter', {
                 },
                 {
                     text: '变更',
-                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                    hidden:true||!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
                         {name:"name",value:this.objdata.record.get("processstatus")})?CommonFunc.lookup(processRoleBtn,
                         {name:"name",value:this.objdata.record.get("processstatus")}).children:null,
                         {name:"name",value:"变更"}),

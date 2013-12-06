@@ -61,6 +61,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.processWin',
         'dbgl.ProcessPicture',
         'dbgl.ProcessVector',
+        'dbgl.ProcessVector2',
         'dbgl.businessPrint',
         'dbgl.businessAlter',
         'dbgl.businessChange',
@@ -253,7 +254,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
              click:this.delperson
          },
          'processcheckwin button[action=send]':{
-             click:this.sendCheckForm
+             click: this.sendCheckForm
          },
          'addnewgrantwin button[action=grant]':{
              click: this.grantmoney
@@ -423,15 +424,17 @@ Ext.define('ZSMZJ.controller.Dbgl', {
            var enjoyitem=applyform.down('#enjoyPersons');
            var disableditem=applyform.down('#disabledpersons');
            var count=parseInt(countitem.getValue())-1;
+           countitem.setValue(count);
+
            var enjoyednum= removeitem[0].get("isenjoyed")==isenjoyedtype.yes?parseInt(enjoyitem.getValue())-1:parseInt(enjoyitem.getValue());
            var disablednum=disabledtype.heavy.indexOf(removeitem[0].get("disabledlevel"))>0?parseInt(disableditem.getValue())-1:parseInt(disableditem.getValue());
-           countitem.setValue(count);
+
            enjoyitem.setValue(enjoyednum);
            disableditem.setValue(disablednum);
            this.moneychane(gridpanel);
 
        }catch (e){
-
+           //console.log(e)
        }
 
     },
@@ -791,14 +794,19 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             Ext.Msg.alert("提示信息", "操作成功");
             var hc=me.application.getController("Header");
             hc.closetab(form.id);
-
+            hc.headerRenderEvents();
         };
         var failFunc = function (form, action) {
             Ext.Msg.alert("提示信息", action.result.msg);
 
         };
 
-        this.formSubmit(ajaxform, params, 'ajax/sendcheckform.jsp', successFunc, failFunc,"正在提交数据");
+        me.applysubmitupdate(win.dataformbtn);
+        var fn=function(){
+            me.formSubmit(ajaxform, params, 'ajax/sendcheckform.jsp', successFunc, failFunc,"正在提交数据");
+        }
+        new Ext.util.DelayedTask(fn).delay(800);
+
 
 
 

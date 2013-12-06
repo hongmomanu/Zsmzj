@@ -34,8 +34,9 @@ Ext.define('ZSMZJ.controller.Medical', {
         'medicalhelp.familypropertyFieldset',
         'medicalhelp.familyapplyFieldset',
         'medicalhelp.applysubmitFieldset',
-        'medicalhelp.alterfamilybasicFieldset',
+        //'medicalhelp.alterfamilybasicFieldset',
         'medicalhelp.altersubmitFieldset',
+        'medicalhelp.alreadyhelpaidFieldset',
         'medicalhelp.altersubmitlogFieldset'
     ],
 

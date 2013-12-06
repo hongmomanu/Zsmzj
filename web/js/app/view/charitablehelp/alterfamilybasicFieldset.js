@@ -108,21 +108,11 @@ Ext.define('ZSMZJ.view.charitablehelp.alterfamilybasicFieldset', {
                         emptyText: '请输入户主姓名',
                         allowBlank: false
                     },{
-                        name: 'owerid',
-                        itemId:'owerid',
-                        fieldLabel: '户主身份证',
-                        listeners: {
-
-                            "blur":function(field,e){
-                                var name = field.getRawValue().replace(/\s+/g, "");
-                                this.fireEvent('owerchange', field);
-
-                            }
-                        },
-                        afterLabelTextTpl: required,
-                        blankText: '请输入身份证号',
-                        emptyText: '请输入身份证号',
-                        allowBlank: false
+                        name: 'telnum',
+                        fieldLabel: '联系电话',
+                        //afterLabelTextTpl: required,
+                        //emptyText: '低保户类型',
+                        allowBlank: true
                     },{
                         xtype:'dbglaplytype',
                         searchtype:"dbedgepoorfamilytype",
@@ -143,21 +133,25 @@ Ext.define('ZSMZJ.view.charitablehelp.alterfamilybasicFieldset', {
                         allowBlank: false
                     }
                     ,{
-                        name: 'accountaddress',
-                        fieldLabel: '户口所在地',
+                        name: 'owerid',
+                        itemId:'owerid',
+                        fieldLabel: '户主身份证',
                         colspan:2,
-                        //afterLabelTextTpl: required,
-                        //emptyText: '低保户类型',
-                        allowBlank: true
-                    },{
-                        name: 'accountzipcode',
-                        fieldLabel: '邮政编码',
-                        //afterLabelTextTpl: required,
-                        //emptyText: '低保户类型',
-                        allowBlank: true
+                        listeners: {
+
+                            "blur":function(field,e){
+                                var name = field.getRawValue().replace(/\s+/g, "");
+                                this.fireEvent('owerchange', field);
+
+                            }
+                        },
+                        afterLabelTextTpl: required,
+                        blankText: '请输入身份证号',
+                        emptyText: '请输入身份证号',
+                        allowBlank: false
                     },{
                         name: 'realaddress',
-                        colspan:2,
+
                         fieldLabel: '实际居住地',
                         allowBlank: true
                     },{
@@ -178,10 +172,14 @@ Ext.define('ZSMZJ.view.charitablehelp.alterfamilybasicFieldset', {
                         allowBlank: false
                     }
                     ,{
-                        name: 'telnum',
-                        fieldLabel: '联系电话',
-                        //afterLabelTextTpl: required,
-                        //emptyText: '低保户类型',
+                        name: 'accountaddress',
+                        fieldLabel: '户口所在地',
+
+                        allowBlank: true
+                    },{
+                        name: 'accountzipcode',
+                        fieldLabel: '邮政编码',
+                        colspan:2,
                         allowBlank: true
                     },{
                         xtype:'dbglaplytype',

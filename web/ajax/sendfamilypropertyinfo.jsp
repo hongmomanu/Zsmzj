@@ -16,7 +16,7 @@
         String tipName="事件名称-";
         String eventName=request.getParameter("eventName");
         if(null==eventName){
-            out.print("要指明事件名称");
+            out.print("{success:false,message:'无对应的操作,要指明事件名称'}");
             return;
         }
 
@@ -31,6 +31,22 @@
             params.put("fm01",request.getParameter("fm01"));
             params.put("isprocess",request.getParameter("isprocess"));
             out.print(propchk.updateFamliyPropertyInfo(params));
+        }else if("delfamilypropertybyfmy001".equals(eventName)){ //未提交前删除
+            Enumeration e  =(Enumeration) request.getParameterNames();
+            Map paraMap=new HashMap<String,Object>();
+            while(e.hasMoreElements()){
+                String name=(String)e.nextElement();
+                paraMap.put(name,request.getParameter(name));
+            }
+            out.print(propchk.delFamliyPropertyInfoByFmy001(paraMap));
+        }else if("cancelsubmitbyfmy001".equals(eventName)){ //未审核前取消提交
+            Enumeration e  =(Enumeration) request.getParameterNames();
+            Map paraMap=new HashMap<String,Object>();
+            while(e.hasMoreElements()){
+                String name=(String)e.nextElement();
+                paraMap.put(name,request.getParameter(name));
+            }
+            //out.print(propchk.cancelsubmitbyfmy001(paraMap));
         }else if("getfamilypropertyinfo".equals(eventName)){
             Enumeration e  =(Enumeration) request.getParameterNames();
             Map paraMap=new HashMap<String,Object>();

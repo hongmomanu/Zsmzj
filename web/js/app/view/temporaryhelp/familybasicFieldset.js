@@ -95,6 +95,7 @@ Ext.define('ZSMZJ.view.temporaryhelp.familybasicFieldset', {
                         name: 'owername',
                         itemId:'owername',
                         fieldLabel: '户主姓名',
+                        //colspan:2,
                         afterLabelTextTpl: required,
                         listeners: {
 
@@ -108,12 +109,13 @@ Ext.define('ZSMZJ.view.temporaryhelp.familybasicFieldset', {
                         emptyText: '请输入户主姓名',
                         allowBlank: false
                     },{
-                        name: 'accountaddress',
-                        fieldLabel: '户口所在地',
+                        name: 'telnum',
+                        fieldLabel: '联系电话',
                         //afterLabelTextTpl: required,
                         //emptyText: '低保户类型',
                         allowBlank: true
-                    },{
+                    },
+                    {
                         xtype:'dbglaplytype',
                         searchtype:"dbedgepoorfamilytype",
                         name: 'poorfamilytype',
@@ -131,8 +133,7 @@ Ext.define('ZSMZJ.view.temporaryhelp.familybasicFieldset', {
                         blankText: '请选择家庭户口',
                         emptyText: '请选择家庭户口',
                         allowBlank: false
-                    }
-                    ,{
+                    },{
                         name: 'owerid',
                         itemId:'owerid',
                         vtype:'personid',
@@ -151,16 +152,9 @@ Ext.define('ZSMZJ.view.temporaryhelp.familybasicFieldset', {
                         blankText: '请输入身份证号',
                         emptyText: '请输入身份证号',
                         allowBlank: false
-                    }
-                    ,{
-                        name: 'accountzipcode',
-                        fieldLabel: '邮政编码',
-                        //afterLabelTextTpl: required,
-                        //emptyText: '低保户类型',
-                        allowBlank: true
                     },{
                         name: 'realaddress',
-                        colspan:2,
+                        //colspan:2,
                         fieldLabel: '实际居住地',
                         allowBlank: true
                     },{
@@ -168,6 +162,7 @@ Ext.define('ZSMZJ.view.temporaryhelp.familybasicFieldset', {
                         fieldLabel: '邮政编码',
                         //afterLabelTextTpl: required,
                         //emptyText: '低保户类型',
+
                         allowBlank: true
                     },{
                         itemId: 'FamilyPersons',
@@ -178,13 +173,23 @@ Ext.define('ZSMZJ.view.temporaryhelp.familybasicFieldset', {
                         value:0,
                         disabled:true,
                         //emptyText: '低保户类型',
-                        allowBlank: false
+                        allowBlank: false ,
+                        listeners: {
+                            "change":function(field,e){
+                                this.fireEvent('familyincomechange', field.up('form').down('#familyincome'));
+                            }
+                        }
                     }
                     ,{
-                        name: 'telnum',
-                        fieldLabel: '联系电话',
+                        name: 'accountaddress',
+                        fieldLabel: '户口所在地',
                         //afterLabelTextTpl: required,
                         //emptyText: '低保户类型',
+                        allowBlank: true
+                    },{
+                        name: 'accountzipcode',
+                        fieldLabel: '邮政编码',
+                        colspan:2,
                         allowBlank: true
                     },{
                         xtype:'dbglaplytype',
@@ -208,21 +213,18 @@ Ext.define('ZSMZJ.view.temporaryhelp.familybasicFieldset', {
                         //afterLabelTextTpl: required,
                         //emptyText: '低保户类型',
                         allowBlank: true
-                    },
-                    {
+                    },{
                         name: 'otherfamilyinfo',
-                        fieldLabel: '家庭备注',
+                        fieldLabel: '家庭情况',
                         colspan:3,
-                        minWidth:600,
+                        minWidth:300,
                         width:800,
                         //draggable :true,
-                        anchor : '100%',
+                        //anchor : '100%',
                         //width:800,
                         xtype : 'textarea',
-                        grow : true,
+                        grow : false,
 
-                        //afterLabelTextTpl: required,
-                        //emptyText: '低保户类型',
                         allowBlank: true
                     }
                 ]

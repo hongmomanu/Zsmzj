@@ -24,6 +24,7 @@ Ext.define('ZSMZJ.view.propertycheck.NeedToCheckBusinessGrid' ,{
     initComponent: function() {
         Ext.apply(this, {
             border: false,
+
             viewConfig: {
                 trackOver: false,
                 loadMask: true,
