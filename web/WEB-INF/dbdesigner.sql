@@ -216,7 +216,21 @@ fundsresource                   VARCHAR(50),                           --资金�
 helpobject                      VARCHAR(50),                           --救助对象
 helpprojecttype                 VARCHAR(50),                           --救助项目类型
 illexpenses                     VARCHAR(50),                           --因病支出
-educationexpenses               VARCHAR(50)                            --因教育支出
+educationexpenses               VARCHAR(50),                            --因教育支出
+
+
+hitdisasterkind					      VARCHAR(50),							--灾害救助种类
+hitdisastersituation			    VARCHAR(50),							--灾害受灾情况
+applydisasterhelpkind			    VARCHAR(50),							--灾害申请救助种类
+thistimedisbursement			    real,									--本次发放资金
+medicalhelptype					      VARCHAR(50),							--医疗救助类别
+educationalbackground			    VARCHAR(50),						--学历
+mzamountofrelief				      VARCHAR(50),								--民政救助金额
+difficulttype					        VARCHAR(50),								--困难类型
+studenthelptype					      VARCHAR(50),								--助学类型
+lengthofschooling					    VARCHAR(50),								--学制（年）
+grade					                VARCHAR(50),								--就读年级
+overtheyearstotalamount					VARCHAR(50)								--历年累计救助金额
 );
 
 
@@ -506,5 +520,94 @@ CREATE VIRTUAL TABLE IF NOT EXISTS medicalstandard USING fts3
   );
 
 
+CREATE  VIRTUAL TABLE fm01  USING fts3
+(	--家庭基本信息核定表（收入、现有财产和住房）
+  id 			 integer primary key autoincrement,             --自增主键
+  owerid                  VARCHAR(50) unique,                  --户主身份证* 主键
+  time DATETIME DEFAULT (datetime(CURRENT_TIMESTAMP,'localtime')),  --家庭登记时间
+  division                VARCHAR(50),                              --行政区划
+  applytype               VARCHAR(50),                              --申请类别
+  familytype              VARCHAR(50),                              --家庭类别*
+  owername                VARCHAR(50),                              --户主姓名*
+  poorfamilytype          VARCHAR(50),                              --低保户类型*
+  familyaccount           VARCHAR(50),                              --家庭户口
+  accountaddress          VARCHAR(50),                              --户口所在地
+  accountzipcode          VARCHAR(50),                              --户口所在地邮政编码
+  realaddress             VARCHAR(50),                              --实际居住地
+  realzipcode             VARCHAR(50),                              --实际所在地邮政编码
+  households              VARCHAR(50),                              --家庭总人口
+  telnum                  VARCHAR(50),                              --联系电话
+  bank                    VARCHAR(50),                              --开户银行
+  bankower                VARCHAR(50),                              --开户人
+  bankid                  VARCHAR(50),                              --银行账号
+  otherfamilyinfo         VARCHAR(50),                              --家庭备注
+
+  processstatus           VARCHAR(50),                              --流程状态
+  checkstatus				VARCHAR(50),                              --核定状态
+  processstatustype       VARCHAR(50),                              --业务流程类型（正常，变更，注销）
+  changedate               VARCHAR(50),                              --变更日期
+  changereason             VARCHAR(50),                              --变更原因
+  logoutdate                VARCHAR(50),                              --注销日期
+  logoutreason                VARCHAR(50),                             --注销原因
+
+
+  interest                VARCHAR(50),                              --利息、股息、红利
+  wages                   VARCHAR(50),                              --工资、薪金
+  planting                VARCHAR(50),                              --种植、养殖、捕捞
+  pension                 VARCHAR(50),                              --离退休金、养老保险等
+  management              VARCHAR(50),                              --承包经营
+  alimony                 VARCHAR(50),                              --赡（抚、扶）养费
+  incidentalincome        VARCHAR(50),                              --赔偿、继承、赠与、偶然所得
+  remuneration            VARCHAR(50),                              --劳务报酬
+  allowance               VARCHAR(50),                              --各类生活补助
+  paidservices            VARCHAR(50),                              --生产经营、有偿服务
+  propertylease           VARCHAR(50),                              --财产租赁、转让
+  otherincome             VARCHAR(50),                              --其他收入
+  userid                  integer,                                  --制单人id
+  incomesumarea                   VARCHAR(50),                         --家庭上年度月平均现金收入信息
+  incomesumareaperson             VARCHAR(50),                         --家庭上年度人平均现金收入信息
+  incomesum                       VARCHAR(50),                         --收入合计
+
+
+  cash                    VARCHAR(50),                              --现金
+  banksecurities          VARCHAR(50),                              --银行存款及有价证券
+  debt                    VARCHAR(50),                              --债权
+  vehicle                 VARCHAR(50),                              --机动车辆
+  nonresidentialhouse     VARCHAR(50),                              --非居住类房屋
+  nolifeneededmachine     VARCHAR(50),                         		--非生活必须船只等机械类折价
+  insurance               VARCHAR(50),                              --商业保险
+  registeredcapital       VARCHAR(50),                              --工商注册资金（资本）
+  propertysum                     VARCHAR(50),                          --财产合计
+
+
+  houseproperties         VARCHAR(50),                              --住房性质
+  housestructure          VARCHAR(50),                              --住房结构
+  housearea               VARCHAR(50),                              --住房总面积
+  houseaveragearea        VARCHAR(50),                              --住房人均面积
+  houseusearea            VARCHAR(50),                      		--住房总使用面积
+  houseaverageusearea             VARCHAR(50)                         --住房人均使用面积
+
+);
+CREATE  VIRTUAL TABLE FM04 USING fts3(
+--审批过程表
+  fmy001 			 integer,
+  time DATETIME DEFAULT (datetime(CURRENT_TIMESTAMP,'localtime')),  --时间
+  approvalname            VARCHAR(50),                              --审批名称*
+  approvalresult          VARCHAR(50),                              --审批结果
+  userid                   integer,                                 --审批人id*
+  approvalopinion         VARCHAR(500),                             --审批意见
+  submituid               integer                                   --提交人id
+);
+
+CREATE  VIRTUAL TABLE fm03 USING fts3(
+--核定过程表
+  fmy001 			        integer,
+  checkitem			      VARCHAR(50),					--核定内容（收入、现有财产、住房)
+  checkitemstatus		  INTEGER,					--核定状态(0为保存,1为提交)
+  checkresult				  INTEGER,					--核定结果
+  checkcomment			  VARCHAR(50),					--核定备注
+  userid              integer,                               --核定人id
+  roleid              integer                              --角色id;
+)
 
 ----技巧说明 日期比较 time Between '2008-06-10' and  '2013-09-11'   数值比较CAST(totalhelpmoney AS real)
