@@ -10,6 +10,7 @@ import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Created with IntelliJ IDEA.

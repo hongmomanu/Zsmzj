@@ -2,6 +2,7 @@ package Zsmzj.business.impl;
 
 import Zsmzj.business.dao.BusinessProcessDao;
 import Zsmzj.business.intf.BusinessProcessIntf;
+import Zsmzj.conmmon.ComonDao;
 import Zsmzj.enums.ProcessType;
 import Zsmzj.jdbc.JdbcFactory;
 import Zsmzj.manager.usermanager.impl.FuncImplement;
@@ -28,6 +29,7 @@ public class BusinessProcess implements BusinessProcessIntf {
     private static final Logger log = Logger.getLogger(BusinessProcess.class);
     private static final String  BusinessTable="business";
     private static final String  BusinessChangeTable="businesschange";
+    private static final String  VirtualindexTable="virtualindexrelation";
     private static final String FamilyTable="familymembers" ;
     private final String FamilyHistoryTable="familymembershistory";
     private static final String SignatureTable="businesssignature";
@@ -67,7 +69,7 @@ public class BusinessProcess implements BusinessProcessIntf {
     @Override
     public int updateApplyBusiness(int businessid, Map<String, Object> param) {
         BusinessProcessDao bDao=new BusinessProcessDao();
-        return bDao.updateTableVales(param, BusinessTable, businessid, "rowid");
+        return bDao.updateTableVales(param, BusinessTable, businessid, "id");
     }
 
     @Override
@@ -101,6 +103,10 @@ public class BusinessProcess implements BusinessProcessIntf {
         BusinessProcessDao bDao=new BusinessProcessDao();
         bDao.deldatabyid(businessid,FamilyTable,"businessid",false);
 
+        /*ComonDao cd=new ComonDao();
+        cd.delbysql("delete from "+VirtualindexTable +" where oid="+businessid);*/
+
+
         int result_num=0;
         JSONArray arr=JSONArray.fromObject(membersjson);
         for(Object item:arr){
@@ -118,6 +124,13 @@ public class BusinessProcess implements BusinessProcessIntf {
             }
 
             result_num=bDao.insertTableVales(mp, FamilyTable);
+
+
+           /* String insert_sql="insert into "+VirtualindexTable+"(oid,aid,otable,atable) values("+businessid+","+
+                    result_num+",'"+BusinessTable+"','"+FamilyTable+"')";
+            cd.delbysql(insert_sql);*/
+
+
 
         }
         return result_num;

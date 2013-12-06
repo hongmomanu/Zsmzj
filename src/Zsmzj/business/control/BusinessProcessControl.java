@@ -18,6 +18,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Created with IntelliJ IDEA.
@@ -37,6 +38,7 @@ public class BusinessProcessControl {
     private final String UserTable="users";
     private final String DivisionsTable="divisions";
     private final String SignatureTable="businesssignature";
+    private final String VirtualindexTable="virtualindexrelation";
     private  final String GrantTable="grantmoney";
     private final String MeidicalStandard="medicalstandard";
     public int getNeedTodoCounts(int roleid,int userid,String divisionpath){
@@ -49,36 +51,36 @@ public class BusinessProcessControl {
         String sql_count= "select count(*)   from "+
                 BusinessTable+" a  where 1=1";
         String sql_list=  "select a.*,b.sex,b.businessid   from "+
-                BusinessTable+" a,"+FamilyTable+" b where a.rowid=b.businessid " +
+                BusinessTable+" a,"+FamilyTable+" b where a.id=b.businessid " +
                 "and b.personid=a.owerid ";
         if(query!=null&&!query.equals("")){
 
-            sql_count+=" and a.owerid MATCH '"+query+"*' ";
-            sql_list+=" and a.owerid MATCH'"+query+"*' ";
+            sql_count+=" and a.owerid like '"+query+"%' ";
+            sql_list+=" and a.owerid like '"+query+"%' ";
         }
 
 
-        sql_list+=" and b.rowid in (select rowid from "+FamilyTable+" c where  c.relationship MATCH  '"+
+        sql_list+=" and b.relationship =  '"+
                 RelationsType.UseRelationsType.getChineseSeason(RelationsType.ower)
-                +"') ";
+                +"' ";
 
 
         if(types!=null){
-            sql_list+=" and a.rowid IN (";
-            sql_count+=" and a.rowid IN (";
+            sql_list+=" and a.businesstype IN (";
+            sql_count+=" and a.businesstype IN (";
             for(int i=0;i<types.length;i++){
                 //sql_list+=arr[i]+"* OR ";
                 sql_list+=
-                        "select rowid from "+BusinessTable+"  where  businesstype MATCH  '"+types[i] +"' "+
-                                "UNION ";
+                        "'"+types[i] +"' "+
+                                ",";
 
                 sql_count+=
-                        "    SELECT ROWID FROM "+BusinessTable+" WHERE businesstype MATCH '"+types[i]+"' " +
-                                "UNION ";
+                        "'"+types[i] +"' "+
+                                ",";
 
             }
-            sql_list=sql_list.substring(0,sql_list.lastIndexOf("UNION"))+") ";
-            sql_count=sql_count.substring(0,sql_count.lastIndexOf("UNION"))+") ";
+            sql_list=sql_list.substring(0,sql_list.lastIndexOf(","))+") ";
+            sql_count=sql_count.substring(0,sql_count.lastIndexOf(","))+") ";
         }
 
 
@@ -155,14 +157,13 @@ public class BusinessProcessControl {
             grantdate+="-00-00";
         }
         String num_sql="select count(*) from "+GrantTable+" a,"+BusinessTable+
-                " b where b.rowid=a.businessid and a.rowid in (select rowid from "+GrantTable+" d where d.grantdate Between '"
-                +bgdate+"' and  '"+eddate+"' union select rowid from "+GrantTable+" where grantdate Between '"+grantdate+"' and '"
-                +grantdate+"')  and b.businesstype MATCH '"+businesstype+"' and b.rowid in (select rowid from "+BusinessTable
-                +" where  division MATCH ( '"+divisionpath+"' ||'*') ) and b.rowid not in (select rowid from "+BusinessTable
-                +" where  processstatustype MATCH '"+processstatustype+"')" ;
+                " b where a.businessid = b.id and (a.grantdate Between '"
+                +bgdate+"' and  '"+eddate+"' or a.grantdate Between '"+grantdate+"' and '"
+                +grantdate+"')  and b.businesstype = '"+businesstype+"' and b.division like  '"+divisionpath+"'%' " +
+                "and b.processstatustype = '"+processstatustype+"' " ;
         String ids="";
         if(grant_arr!=null&&grant_arr.length>0){
-            ids=" and b.rowid in (";
+            ids=" and b.id in (";
             for(int i=0;i<grant_arr.length;i++){
 				if(i!=0){
 					ids+=",";
@@ -181,22 +182,18 @@ public class BusinessProcessControl {
         }
         else{
             String delsql="delete from "+GrantTable+" where rowid in(select a.rowid from "+GrantTable+" a,"+BusinessTable+
-                    " b where b.rowid=a.businessid and a.rowid in (select rowid from "+GrantTable+" d where d.grantdate Between '"
-                    +bgdate+"' and  '"+eddate+"' union select rowid from "+GrantTable+" where grantdate Between '"+grantdate+"' and '"
-                    +grantdate+"')  and b.businesstype MATCH '"+businesstype+"' "+ids+" and b.rowid in (select rowid from "+BusinessTable
-                    +" where  division MATCH ('"+divisionpath+"' ||'*') )"
-                    +" and b.rowid not in (select rowid from "+BusinessTable
-                    +" where  processstatustype MATCH '"+processstatustype+"')"
+                    " b where b.id=a.businessid and (a.grantdate Between '"
+                    +bgdate+"' and  '"+eddate+"' or a.grantdate Between '"+grantdate+"' and '"
+                    +grantdate+"')  and b.businesstype = '"+businesstype+"' "+ids+" and b.division like '"+divisionpath+"%' "
+                    +" and b.processstatustype = '"+processstatustype+"' "
                     +")";
             cd.delbysql(delsql);
-            String sql_list="select rowid as businessid from "+BusinessTable+" a where a.businesstype MATCH '"+businesstype+"' " +
-                    "and a.rowid in (select rowid from "+BusinessTable+" b where b.processstatus MATCH '"
-                    +ProcessType.UseProcessType.getChineseSeason(ProcessType.Approval)+"'"+ids+" and b.rowid in (select rowid from "+BusinessTable
-                    +" where  division MATCH ('"+divisionpath+"' ||'*') )"
-                    +" and b.rowid not in (select rowid from "+BusinessTable
-                    +" where  processstatustype MATCH '"+processstatustype+"')"
+            String sql_list="select rowid as businessid from "+BusinessTable+" b where b.businesstype = '"+businesstype+"' " +
+                    "and b.processstatus = '"
+                    +ProcessType.UseProcessType.getChineseSeason(ProcessType.Approval)+"'"+ids
+                    +" and b.division like '"+divisionpath+"%' "
+                    +" and b.processstatustype != '"+processstatustype+"' ";
 
-            +")";
             //log.debug("资金发放开始::"+sql_list);
 
             ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
@@ -236,15 +233,15 @@ public class BusinessProcessControl {
         SimpleDateFormat sDateFormat   =   new SimpleDateFormat("yyyy-MM");
         SimpleDateFormat syearFormat   =   new SimpleDateFormat("yyyy");
         String basic_sql= " a.rowid=b.businessid "
-                +" and b.userid =c.rowid and  a.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+type+"')";
+                +" and b.userid =c.rowid and  a.businesstype = '"+type+"'";
 
-        basic_sql+=" and a.rowid in  (select rowid from "+BusinessTable+" where division MATCH ( '"+divisionpath+"' ||'*') )";
+        basic_sql+=" and a.division like '"+divisionpath+"%' ";
 
         String sql_list="select a.*,b.businessid,b.bgdate,b.eddate,b.grantdate,b.time as granttime,b.adjustmoney," +
                 "c.displayname as grantuser,(select count(*)  from "+ FamilyTable+" d where " +
-                "  d.businessid MATCH a.rowid)  as familynum," +
+                "  d.businessid = a.id)  as familynum," +
                 " (select count(*)  from "+ FamilyTable+" e where " +
-                " e.businessid = a.rowid and e.isenjoyed MATCH '享受')  as enjoynum from "+BusinessTable +" a,"+GrantTable+" b,"+UserTable
+                " e.businessid = a.id and e.isenjoyed = '享受')  as enjoynum from "+BusinessTable +" a,"+GrantTable+" b,"+UserTable
                 +" c where"+basic_sql;
 
         String sql_count="select count(*) from "+GrantTable+" b,"+BusinessTable+
@@ -260,8 +257,8 @@ public class BusinessProcessControl {
             calendar.setTime(date);
             calendar.add(Calendar.MONTH, +1);    //得到下一个月
             String edmonth=sDateFormat.format(calendar.getTime());
-            String sql=" and b.rowid in (select rowid from "+GrantTable+" d where d.time Between '"+bgmonth
-                    +"' and  '"+edmonth+"') ";
+            String sql=" and b.time Between '"+bgmonth
+                    +"' and  '"+edmonth+"' ";
             sql_list+=sql;
             sql_count+=sql;
         }
@@ -294,10 +291,10 @@ public class BusinessProcessControl {
                     }else if(compare[i].equals("=")){
                         String sql=" ";
                         if(logic[i].equals("and")){
-                            sql=" "+logic[i]+"  a.rowid in (select rowid from "+BusinessTable+" where "+col_name+" MATCH '"+value[i]+"') ";
+                            sql=" "+logic[i]+"  a."+col_name+" = '"+value[i]+"' ";
 
                         }else{
-                            sql=" "+logic[i]+"  (a.rowid in (select rowid from "+BusinessTable+" where "+col_name+" MATCH '"+value[i]+"') and ("+basic_sql+")) ";
+                            sql=" "+logic[i]+"  (a."+col_name+" = '"+value[i]+"' and ("+basic_sql+")) ";
                         }
                         sql_list+=sql;
                         sql_count+=sql;
@@ -305,10 +302,10 @@ public class BusinessProcessControl {
                     }else if(compare[i].equals("match")){
                         String sql=" ";
                         if(logic[i].equals("and")){
-                            sql=" "+logic[i]+"  a.rowid in (select rowid from "+BusinessTable+" where "+col_name+" MATCH '"+value[i]+"*') ";
+                            sql=" "+logic[i]+"  a."+col_name+" like '"+value[i]+"%' ";
 
                         }else{
-                            sql=" "+logic[i]+"  (a.rowid in (select rowid from "+BusinessTable+" where "+col_name+" MATCH '"+value[i]+"*') and ("+basic_sql+")) ";
+                            sql=" "+logic[i]+"  (a."+col_name+" like '"+value[i]+"%' and ("+basic_sql+")) ";
                         }
                         sql_list+=sql;
                         sql_count+=sql;
@@ -328,11 +325,11 @@ public class BusinessProcessControl {
 
                         String sql=" ";
                         if(logic[i].equals("and")){
-                            sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+value[i]
-                                    +"' and  '"+endyear+"') ";
+                            sql=" "+logic[i]+" b."+col_name+" Between '"+value[i]
+                                    +"' and  '"+endyear+"' ";
 
                         }else{
-                            sql=" "+logic[i]+" (b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+value[i]
+                            sql=" "+logic[i]+" (b."+col_name+" Between '"+value[i]
                                     +"' and  '"+endyear+"') and ("+basic_sql+")) ";
                         }
                         sql_list+=sql;
@@ -353,12 +350,12 @@ public class BusinessProcessControl {
 
                         String sql=" ";
                         if(logic[i].equals("and")){
-                            sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+value[i]
-                                    +"' and  '"+endyear+"') ";
+                            sql=" "+logic[i]+" b."+col_name+" Between '"+value[i]
+                                    +"' and  '"+endyear+"' ";
 
                         }else{
-                            sql=" "+logic[i]+" (b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+value[i]
-                                    +"' and  '"+endyear+"') and ("+basic_sql+")) ";
+                            sql=" "+logic[i]+" (b."+col_name+" Between '"+value[i]
+                                    +"' and  '"+endyear+"' and ("+basic_sql+")) ";
                         }
                         sql_list+=sql;
                         sql_count+=sql;
@@ -377,11 +374,11 @@ public class BusinessProcessControl {
 
                         String sql=" ";
                         if(logic[i].equals("and")){
-                            sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+endyear
-                                    +"' and  '"+value[i]+"') ";
+                            sql=" "+logic[i]+" b."+col_name+" Between '"+endyear
+                                    +"' and  '"+value[i]+"' ";
 
                         }else{
-                            sql=" "+logic[i]+" (b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+endyear
+                            sql=" "+logic[i]+" (b."+col_name+" Between '"+endyear
                                     +"' and  '"+value[i]+"') and ("+basic_sql+")) ";
                         }
                         sql_list+=sql;
@@ -403,12 +400,12 @@ public class BusinessProcessControl {
 
                         String sql=" ";
                         if(logic[i].equals("and")){
-                            sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+value[i]
-                                    +"' and  '"+endmonth+"') ";
+                            sql=" "+logic[i]+" b."+col_name+" Between '"+value[i]
+                                    +"' and  '"+endmonth+"' ";
 
                         }else{
-                            sql=" "+logic[i]+" (b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+value[i]
-                                    +"' and  '"+endmonth+"')  and ("+basic_sql+")) ";
+                            sql=" "+logic[i]+" (b."+col_name+" Between '"+value[i]
+                                    +"' and  '"+endmonth+"'  and ("+basic_sql+")) ";
                         }
                         sql_list+=sql;
                         sql_count+=sql;
@@ -429,12 +426,12 @@ public class BusinessProcessControl {
 
                         String sql=" ";
                         if(logic[i].equals("and")){
-                            sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+value[i]
-                                    +"' and  '"+endmonth+"') ";
+                            sql=" "+logic[i]+" b."+col_name+" Between '"+value[i]
+                                    +"' and  '"+endmonth+"' ";
 
                         }else{
-                            sql=" "+logic[i]+" (b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+value[i]
-                                    +"' and  '"+endmonth+"')  and ("+basic_sql+")) ";
+                            sql=" "+logic[i]+" (b."+col_name+" Between '"+value[i]
+                                    +"' and  '"+endmonth+"'  and ("+basic_sql+")) ";
                         }
                         sql_list+=sql;
                         sql_count+=sql;
@@ -454,12 +451,12 @@ public class BusinessProcessControl {
 
                         String sql=" ";
                         if(logic[i].equals("and")){
-                            sql=" "+logic[i]+" b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+endmonth
-                                    +"' and  '"+value[i]+"') ";
+                            sql=" "+logic[i]+" b."+col_name+" Between '"+endmonth
+                                    +"' and  '"+value[i]+"' ";
 
                         }else{
-                            sql=" "+logic[i]+" (b.rowid in (select rowid from "+GrantTable+" where "+col_name+" Between '"+endmonth
-                                    +"' and  '"+value[i]+"')  and ("+basic_sql+")) ";
+                            sql=" "+logic[i]+" (b."+col_name+" Between '"+endmonth
+                                    +"' and  '"+value[i]+"'  and ("+basic_sql+")) ";
                         }
                         sql_list+=sql;
                         sql_count+=sql;
@@ -489,10 +486,10 @@ public class BusinessProcessControl {
             String enddate=sDateFormat.format(calendar.getTime());
 
 
-            sql_list+=" and b.rowid in (select rowid from "+GrantTable+" where grantdate Between '"+bgdate
-                    +"' and  '"+enddate+"') ";
-            sql_count+=" and b.rowid in (select rowid from "+GrantTable+" where grantdate Between '"+bgdate
-                    +"' and  '"+enddate+"') ";
+            sql_list+=" and b.grantdate Between '"+bgdate
+                    +"' and  '"+enddate+"' ";
+            sql_count+=" and b.grantdate Between '"+bgdate
+                    +"' and  '"+enddate+"' ";
 
         }
         if(eddate!=null&&!eddate.equals("")){
@@ -508,45 +505,18 @@ public class BusinessProcessControl {
             calendar.add(Calendar.YEAR, -100);    //得到下一个月
             String enddate=sDateFormat.format(calendar.getTime());
 
-            sql_list+=" and b.rowid in (select rowid from "+GrantTable+" where grantdate Between '"+enddate
-                    +"' and  '"+eddate+"') ";
-            sql_count+=" and b.rowid in (select rowid from "+GrantTable+" where grantdate Between '"+enddate
-                    +"' and  '"+eddate+"') ";
+            sql_list+=" and b.grantdate Between '"+enddate
+                    +"' and  '"+eddate+"' ";
+            sql_count+=" and b.grantdate Between '"+enddate
+                    +"' and  '"+eddate+"' ";
 
 
         }
         if (keyword!=null&&!keyword.equals("")){
-            if(keyword.indexOf("and")>0){
-                String[] arr=keyword.split("and");
-                for(int i=0;i<arr.length;i++){
-                    sql_list+=" and a.rowid in (select rowid from "+BusinessTable+" where "+BusinessTable+" MATCH '"+arr[i]+"*') ";
-                    sql_count+=" and a.rowid in (select rowid from "+BusinessTable+" where "+BusinessTable+" MATCH '"+arr[i]+"*') ";
-                }
-            }
-            else if(keyword.indexOf("or")>0){
 
-                String[] arr=keyword.split("or");
-                sql_list+=" and a.rowid IN (";
-                sql_count+=" and a.rowid IN (";
-                for(int i=0;i<arr.length;i++){
-                    //sql_list+=arr[i]+"* OR ";
-                    sql_list+=
-                            "    SELECT ROWID FROM "+BusinessTable+" WHERE "+BusinessTable+" MATCH '"+arr[i]+"*' " +
-                                    "UNION ";
 
-                    sql_count+=
-                            "    SELECT ROWID FROM "+BusinessTable+" WHERE "+BusinessTable+" MATCH '"+arr[i]+"*' " +
-                                    "UNION ";
-
-                }
-                sql_list=sql_list.substring(0,sql_list.lastIndexOf("UNION"))+") ";
-                sql_count=sql_count.substring(0,sql_count.lastIndexOf("UNION"))+") ";
-            }
-            else{
-                sql_list+=" and a.rowid in (select rowid from "+BusinessTable+" where "+BusinessTable+" MATCH '"+keyword+"*') ";
-                sql_count+=" and a.rowid in (select rowid from "+BusinessTable+" where "+BusinessTable+" MATCH '"+keyword+"*') ";
-
-            }
+                sql_list+=" and a.owerid like '"+keyword+"%' ";
+                sql_count+=" and a.owerid like '"+keyword+"%' ";
 
         }
 
@@ -560,7 +530,10 @@ public class BusinessProcessControl {
         res.put("results",list);
         return JSONObject.fromObject(res).toString();
     }
-    public String getStatisticsBytype(String type,String bgmonth,int divisionpid,String businesstype){
+
+
+
+    public String getStatisticsBytype(String type,String bgmonth,int divisionpid,String businesstype,String divisionpath){
         SimpleDateFormat sDateFormat   =   new SimpleDateFormat("yyyy-MM");
         String edmonth="";
         if(bgmonth==null||bgmonth.equals("")) bgmonth=sDateFormat.format(new   java.util.Date());
@@ -578,50 +551,104 @@ public class BusinessProcessControl {
         if(type.equals(StatisticsType.UseStatisticsType.getChineseSeason(StatisticsType.Full))){
             BusinessProcess bp=new BusinessProcess();
             ComonDao cd=new ComonDao();
-            String sql_list="select a.divisionname  ,a.rowid as id," +
-                    "(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and  division MATCH (a.divisionpath||'*')) as totalfamily ,"
-                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and c.businessid=b.rowid and b.division MATCH (a.divisionpath||'*')) as totalperson, "
-                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and c.businessid=b.rowid and c.sex ='男' and b.division MATCH (a.divisionpath||'*')) as totalmen, "
-                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and c.businessid=b.rowid and c.sex ='女' and b.division MATCH (a.divisionpath||'*')) as totalgirls,"
-                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and division MATCH (a.divisionpath||'*')) as totalmoney, "
 
-                    +"(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='城镇' and division MATCH (a.divisionpath||'*')) as cityfamily ,"
-                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and businesstype='"+businesstype+"' and b.familyaccount='城镇' and b.division MATCH (a.divisionpath||'*')) as cityperson, "
-                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and businesstype='"+businesstype+"' and b.familyaccount='城镇' and c.sex ='男' and b.division MATCH (a.divisionpath||'*')) as citymen, "
-                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and businesstype='"+businesstype+"' and b.familyaccount='城镇' and c.sex ='女' and b.division MATCH (a.divisionpath||'*')) as citygirls,"
-                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='城镇' and division MATCH (a.divisionpath||'*')) as citymoney,"
+            String sql_list="select divisionpath from "+DivisionsTable +" where parentid MATCH "+divisionpid;
+            ArrayList<Map<String,Object>> division_list=cd.getTableList(sql_list);
+            ArrayList<Map<String,Object>> result_list=new ArrayList<Map<String, Object>>();
 
+            CountDownLatch latch=new CountDownLatch(5);
+            for(Map<String,Object>division_item:division_list){
+                Map<String,Object> map=new HashMap<String, Object>();
+                map.put("division",divisionpath);
+                String sql_totalfamily="select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+
+                        "' and businesstype='"+businesstype+"' and  division like '"+division_item.get("divisionpath")+"%' ";
 
-                    +"(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='农村' and division MATCH (a.divisionpath||'*')) as villagefamily ,"
-                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and b.familyaccount='农村' and businesstype='"+businesstype+"' and b.division MATCH (a.divisionpath||'*')) as villageperson, "
-                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and b.familyaccount='农村' and businesstype='"+businesstype+"' and c.sex ='男' and b.division MATCH (a.divisionpath||'*')) as villagemen, "
-                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and b.familyaccount='农村' and businesstype='"+businesstype+"' and c.sex ='女' and b.division MATCH (a.divisionpath||'*')) as villagegirls,"
-                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='农村' and division MATCH (a.divisionpath||'*')) as villagemoney "
+                SigleSqlThread m=new SigleSqlThread(map,sql_totalfamily,"totalfamily",latch);
+                result_list.add(map);
+                Thread t=new Thread(m);
+                t.start();
+            }
+            try {
+                log.debug("wait begin at here");
+                latch.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            res.put("divisionname","");
+            res.put("children",result_list);
 
 
 
-                    +"  from "+DivisionsTable+" a where a.parentid MATCH "+divisionpid;
+
+/*
+
+            String sql_list="select a.divisionname  ,a.id," +
+                    "(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and  division like (a.divisionpath||'%')) as totalfamily ,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and c.businessid = b.id and b.division like (a.divisionpath||'%')) as totalperson, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and c.businessid = b.id and c.sex ='男' and b.division like (a.divisionpath||'%')) as totalmen, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and c.businessid = b.id and c.sex ='女' and b.division like (a.divisionpath||'%')) as totalgirls,"
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and division like (a.divisionpath||'%')) as totalmoney, "
+
+                    +"(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='城镇' and division like (a.divisionpath||'%')) as cityfamily ,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid = b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇' and b.division like (a.divisionpath||'%')) as cityperson, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid = b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇' and c.sex ='男' and b.division like (a.divisionpath||'%')) as citymen, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid = b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇' and c.sex ='女' and b.division like (a.divisionpath||'%')) as citygirls,"
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='城镇' and division like (a.divisionpath||'%')) as citymoney,"
+
+
+                    +"(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='农村' and division like (a.divisionpath||'%')) as villagefamily ,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid = b.id and b.familyaccount='农村' and businesstype='"+businesstype+"' and b.division like (a.divisionpath||'%')) as villageperson, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid = b.id and b.familyaccount='农村' and businesstype='"+businesstype+"' and c.sex ='男' and b.division like (a.divisionpath||'%')) as villagemen, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid = b.id and b.familyaccount='农村' and businesstype='"+businesstype+"' and c.sex ='女' and b.division like (a.divisionpath||'%')) as villagegirls,"
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='农村' and division like (a.divisionpath||'%')) as villagemoney "
+
+
+
+                    +"  from "+DivisionsTable+" a where a.parentid = "+divisionpid;
 
             ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
 
             res.put("divisionname","");
-            res.put("children",list);
+            res.put("children",list);*/
 
         }
         else if(type.equals(StatisticsType.UseStatisticsType.getChineseSeason(StatisticsType.ComplexOne))){
 
             BusinessProcess bp=new BusinessProcess();
             ComonDao cd=new ComonDao();
-            String sql_list="select a.divisionname  ,a.rowid as id," +
+            String sql_list="select divisionpath from "+DivisionsTable +" where parentid MATCH "+divisionpid;
+            ArrayList<Map<String,Object>> division_list=cd.getTableList(sql_list);
+            ArrayList<Map<String,Object>> result_list=new ArrayList<Map<String, Object>>();
+
+            CountDownLatch latch=new CountDownLatch(1);
+            for(Map<String,Object>division_item:division_list){
+                Map<String,Object> map=new HashMap<String, Object>();
+                String sql_totalfamily="select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+
+                        "' and businesstype='"+businesstype+"' and  division like '"+division_item.get("divisionpath")+"%' ";
+
+                SigleSqlThread m=new SigleSqlThread(map,sql_totalfamily,"totalfamily",latch);
+                result_list.add(map);
+                Thread t=new Thread(m);
+                t.start();
+            }
+            try {
+                latch.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            res.put("divisionname","");
+            res.put("children",result_list);
+
+            /*String sql_list="select a.divisionname  ,a.rowid as id," +
                     "(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and  division MATCH (a.divisionpath||'*')) as totalfamily ,"
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
                     "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and businesstype='"+businesstype+"' and b.division MATCH (a.divisionpath||'*')) as totalperson, "
@@ -659,7 +686,7 @@ public class BusinessProcessControl {
             ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
 
             res.put("divisionname","");
-            res.put("children",list);
+            res.put("children",list); */
 
 
 
@@ -1029,49 +1056,36 @@ public class BusinessProcessControl {
         SimpleDateFormat sDayFormat   =   new SimpleDateFormat("yyyy-MM-dd");
 
 
-        String basic_sql=" a.rowid = b.businessid  ";
+        String basic_sql=" a.id=b.businessid ";
 
-        basic_sql+=" and b.rowid in (select rowid from "+FamilyTable+" where relationship MATCH '"+RelationsType.UseRelationsType.getChineseSeason(RelationsType.ower)+"' )";
-        basic_sql+=" and c.rowid in (select rowid from "+DivisionsTable+" where divisionpath MATCH a.division )";
+        basic_sql+=" and b.relationship = '"+RelationsType.UseRelationsType.getChineseSeason(RelationsType.ower)+"' ";
+        //basic_sql+=" and  b.name = a.owername ";
+        //basic_sql+=" and c.divisionpath = a.division ";
 
-        basic_sql+=" and a.rowid in  (select rowid from "+BusinessTable+" where division MATCH ( '"+divisionpath+"' ||'*') )";
+        basic_sql+=" and a.division like '"+divisionpath+"%' ";
 
         if(!businesstype.equals("all")){
-            basic_sql+=" and a.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"')";
+            basic_sql+=" and a.businesstype = '"+businesstype+"'";
         }
 
 
 
         String sql_count="select count(*)"+
-                " from "+BusinessTable +" a,"+FamilyTable+" b, " + DivisionsTable+" c where "+basic_sql;
+                " from "+BusinessTable +" a,"+FamilyTable+" b where "+basic_sql;
 
 
                 //int totalnum =cd.getTotalCount(BusinessTable);
 
-        String sql_list="select a.rowid as businessid,a.rowid,c.divisionname,a.*,(select count(*)  from "+ FamilyTable+" b where " +
-                "b.businessid MATCH a.rowid)  as familynum," +
+        String sql_list="select a.*,(select count(*)  from "+ FamilyTable+" b where " +
+                "a.rowid =b.businessid )  as familynum," +
                 "(select count(*)  from "+ FamilyTable+" b where " +
-                "b.businessid = a.rowid and isenjoyed MATCH '享受')  as enjoynum"+
-                " from "+BusinessTable +" a,"+FamilyTable+" b, " + DivisionsTable+" c  where "+basic_sql;
+                "b.businessid = a.id and isenjoyed = '享受')  as enjoynum"+
+                " from "+BusinessTable +" a,"+FamilyTable+" b where "+basic_sql;
 
         String fulltable="("+sql_list+") as ff";
 
         if(name!=null&&name.length>0){
-            /*for(int i=0;i<name.length;i++){
-                if(logic[i].equals("and")){
-                    if(compare[i].equals(">=")){
-                        sql_list+=" and a.rowid in (select rowid from "+BusinessTable+" where CAST("+name[i]+" AS real) >= "+value[i]+") ";
-                        sql_count+=" and a.rowid in (select rowid from "+BusinessTable+" where CAST("+name[i]+" AS real) >= "+value[i]+") ";
 
-                    }else if(compare[i].equals("<=")){
-                        sql_list+=" and a.rowid in (select rowid from "+BusinessTable+" where CAST("+name[i]+" AS real) <= "+value[i]+") ";
-                        sql_count+=" and a.rowid in (select rowid from "+BusinessTable+" where CAST("+name[i]+" AS real) <= "+value[i]+") ";
-                    }else{
-                        sql_list+=" and a.rowid in (select rowid from "+BusinessTable+" where "+name[i]+" MATCH '"+value[i]+"*') ";
-                        sql_count+=" and a.rowid in (select rowid from "+BusinessTable+" where "+name[i]+" MATCH '"+value[i]+"*') ";
-                    }
-                }
-            }*/
 
             for(int i=0;i<name.length;i++){
                 String col_name=name[i].split("附")[0];
@@ -1079,10 +1093,10 @@ public class BusinessProcessControl {
                 if(compare[i].equals(">=")){
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" a.rowid in (select rowid from "+fulltable+" where CAST("+col_name+" AS real) >= "+value[i]+") ";
+                        sql=" "+logic[i]+" a.id in (select id from "+fulltable+" where CAST("+col_name+" AS real) >= "+value[i]+") ";
 
                     }else{
-                        sql=" "+logic[i]+" (a.rowid in (select rowid from "+fulltable+" where CAST("+col_name+" AS real) >= "+value[i]+") and ("+basic_sql+")) ";
+                        sql=" "+logic[i]+" (a.id in (select id from "+fulltable+" where CAST("+col_name+" AS real) >= "+value[i]+") and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
                     sql_count+=sql;
@@ -1091,20 +1105,20 @@ public class BusinessProcessControl {
                 }else if(compare[i].equals("<=")){
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" a.rowid in (select rowid from "+fulltable+" where CAST("+col_name+" AS real) <= "+value[i]+") ";
+                        sql=" "+logic[i]+" a.id in (select id from "+fulltable+" where CAST("+col_name+" AS real) <= "+value[i]+") ";
 
                     }else{
-                        sql=" "+logic[i]+" (a.rowid in (select rowid from "+fulltable+" where CAST("+col_name+" AS real) <= "+value[i]+") and ("+basic_sql+")) ";
+                        sql=" "+logic[i]+" (a.id in (select id from "+fulltable+" where CAST("+col_name+" AS real) <= "+value[i]+") and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
                     sql_count+=sql;
                 }else if(compare[i].equals("=")){
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+"  a.rowid in (select rowid from "+fulltable+" where "+col_name+" MATCH '"+value[i]+"') ";
+                        sql=" "+logic[i]+"  a.id in (select id from "+fulltable+" where "+col_name+" = '"+value[i]+"') ";
 
                     }else{
-                        sql=" "+logic[i]+"  (a.rowid in (select rowid from "+fulltable+" where "+col_name+" MATCH '"+value[i]+"') and ("+basic_sql+")) ";
+                        sql=" "+logic[i]+"  (a.id in (select id from "+fulltable+" where "+col_name+" = '"+value[i]+"') and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
                     sql_count+=sql;
@@ -1112,10 +1126,10 @@ public class BusinessProcessControl {
                 }else if(compare[i].equals("match")){
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+"  a.rowid in (select rowid from "+fulltable+" where "+col_name+" MATCH '"+value[i]+"*') ";
+                        sql=" "+logic[i]+"  a.id in (select id from "+fulltable+" where "+col_name+" like '"+value[i]+"%') ";
 
                     }else{
-                        sql=" "+logic[i]+"  (a.rowid in (select rowid from "+fulltable+" where "+col_name+" MATCH '"+value[i]+"*') and ("+basic_sql+")) ";
+                        sql=" "+logic[i]+"  (a.id in (select id from "+fulltable+" where "+col_name+" like '"+value[i]+"%') and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
                     sql_count+=sql;
@@ -1135,11 +1149,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endyear+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endyear+"') and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1160,11 +1174,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endyear+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endyear+"') and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1184,11 +1198,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+endyear
+                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+" where "+col_name+" Between '"+endyear
                                 +"' and  '"+value[i]+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+endyear
+                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+" where "+col_name+" Between '"+endyear
                                 +"' and  '"+value[i]+"') and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1210,11 +1224,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endmonth+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endmonth+"')  and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1236,11 +1250,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endmonth+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endmonth+"')  and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1261,11 +1275,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+endmonth
+                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+" where "+col_name+" Between '"+endmonth
                                 +"' and  '"+value[i]+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+endmonth
+                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+" where "+col_name+" Between '"+endmonth
                                 +"' and  '"+value[i]+"')  and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1288,11 +1302,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+value[i]+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+value[i]+"')  and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1314,11 +1328,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+"  where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+"  where "+col_name+" Between '"+value[i]
                                 +"' and  '"+enddate+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+"  where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+"  where "+col_name+" Between '"+value[i]
                                 +"' and  '"+enddate+"')  and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1339,11 +1353,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+"  where "+col_name+" Between '"+enddate
+                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+"  where "+col_name+" Between '"+enddate
                                 +"' and  '"+value[i]+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+"  where "+col_name+" Between '"+enddate
+                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+"  where "+col_name+" Between '"+enddate
                                 +"' and  '"+value[i]+"')  and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1369,11 +1383,11 @@ public class BusinessProcessControl {
             calendar.add(Calendar.YEAR, +100);    //得到下一个月
             String enddate=sDayFormat.format(calendar.getTime());
 
-            sql_list+=" and (a.rowid in (select rowid from "+fulltable+"  where helpbgtime Between '"+bgdate
-                    +"' and  '"+enddate+"')  and ("+basic_sql+")) ";
+            sql_list+=" and (a.helpbgtime Between '"+bgdate
+                    +"' and  '"+enddate+"') ";
 
-            sql_count+=" and (a.rowid in (select rowid from "+fulltable+"  where helpbgtime Between '"+bgdate
-                    +"' and  '"+enddate+"')  and ("+basic_sql+")) ";
+            sql_count+=" and (a.helpbgtime Between '"+bgdate
+                    +"' and  '"+enddate+"') ";
 
         }
         if(eddate!=null&&!eddate.equals("")){
@@ -1389,50 +1403,23 @@ public class BusinessProcessControl {
             calendar.add(Calendar.YEAR, -100);    //得到下一个月
             String enddate=sDayFormat.format(calendar.getTime());
 
-            sql_list+=" and (a.rowid in (select rowid from "+fulltable+"  where helpbgtime Between '"+enddate
-                    +"' and  '"+eddate+"')  and ("+basic_sql+")) ";
+            sql_list+=" and (a.helpbgtime Between '"+enddate
+                    +"' and  '"+eddate+"' ) ";
 
-            sql_count+=" and (a.rowid in (select rowid from "+fulltable+"  where helpbgtime Between '"+enddate
-                    +"' and  '"+eddate+"')  and ("+basic_sql+")) ";
+            sql_count+=" and (a.helpbgtime Between '"+enddate
+                    +"' and  '"+eddate+"' ) ";
 
         }
 
         if (keyword!=null&&!keyword.equals("")){
-            if(keyword.indexOf("and")>0){
-                String[] arr=keyword.split("and");
-                for(int i=0;i<arr.length;i++){
-                    sql_list+=" and a.rowid in (select rowid from "+BusinessTable+" where "+BusinessTable+" MATCH '"+arr[i]+"*') ";
-                    sql_count+=" and a.rowid in (select rowid from "+BusinessTable+" where "+BusinessTable+" MATCH '"+arr[i]+"*') ";
+            sql_list+=" and (a.owerid like '"+keyword+"%' or a.owername like '"+keyword+"%')" +
+                    " ";
 
-                }
-            }
-            else if(keyword.indexOf("or")>0){
-
-                String[] arr=keyword.split("or");
-                sql_list+=" and a.rowid IN (";
-                sql_count+=" and a.rowid IN (";
-                for(int i=0;i<arr.length;i++){
-                    //sql_list+=arr[i]+"* OR ";
-                    sql_list+=
-                            "    SELECT ROWID FROM "+BusinessTable+" WHERE "+BusinessTable+" MATCH '"+arr[i]+"*' " +
-                                    "UNION ";
-
-                    sql_count+=
-                            "    SELECT ROWID FROM "+BusinessTable+" WHERE "+BusinessTable+" MATCH '"+arr[i]+"*' " +
-                                    "UNION ";
-
-                }
-                sql_list=sql_list.substring(0,sql_list.lastIndexOf("UNION"))+") ";
-                sql_count=sql_count.substring(0,sql_count.lastIndexOf("UNION"))+") ";
-            }
-            else{
-                sql_list+=" and a.rowid in (select rowid from "+BusinessTable+" where "+BusinessTable+" MATCH '"+keyword+"*') ";
-                sql_count+=" and a.rowid in (select rowid from "+BusinessTable+" where "+BusinessTable+" MATCH '"+keyword+"*') ";
-
-            }
+            sql_list+=" and (a.owerid like '"+keyword+"%' or a.owername like '"+keyword+"%')" +
+                    " ";
 
         }
-        sql_list+="Limit "+limit+" Offset "+start;
+        sql_list+=" Limit "+limit+" Offset "+start;
 
         ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
         int totalnum=cd.getTotalCountBySql(sql_count);
@@ -1440,7 +1427,6 @@ public class BusinessProcessControl {
             map.put("process", ProcessType.UseProcessType.getNext(ProcessType.UseProcessType.
                     getProcessFromChinese(map.get("processstatus").toString())));
         }
-
         Map<String,Object>res=new HashMap<String, Object>();
         res.put("totalCount",totalnum);
         res.put("results",list);
@@ -1457,21 +1443,27 @@ public class BusinessProcessControl {
         SimpleDateFormat syearFormat   =   new SimpleDateFormat("yyyy");
         SimpleDateFormat sDayFormat   =   new SimpleDateFormat("yyyy-MM-dd");
 
-        String basic_sql=" a.rowid = b.businessid  ";
-        basic_sql+=" and c.rowid in (select rowid from "+DivisionsTable+" where divisionpath MATCH a.division )";
+        String basic_sql=" a.id=b.businessid ";
+        /*if((keyword==null||keyword.equals(""))&&(name==null||name.length==0||name[0].equals(""))){
+            basic_sql+="MATCH a.rowid ";
+        }
+        else{
+            basic_sql+="= a.rowid ";
+        }*/
+        //basic_sql+=" and c.rowid in (select rowid from "+DivisionsTable+" where divisionpath MATCH a.division )";
 
-        basic_sql+=" and a.rowid in  (select rowid from "+BusinessTable+" where division MATCH ( '"+divisionpath+"' ||'*') )";
+        basic_sql+=" and a.division like '"+divisionpath+"%' ";
         if(!businesstype.equals("all")){
-            basic_sql+=" and a.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"')";
+            basic_sql+=" and a.businesstype = '"+businesstype+"' ";
         }
 
         String sql_count="select count(*)"+
-                " from "+BusinessTable +" a,"+FamilyTable+" b, " + DivisionsTable+" c "+
+                " from "+BusinessTable +" a,"+FamilyTable+" b "+
                 "where  "+basic_sql;
         //int totalnum =cd.getTotalCount(FamilyTable);
 
-        String sql_list="select a.division,a.owername,c.divisionname,a.processstatus,a.processstatustype,a.businesstype,b.rowid,a.owerid,b.* "+
-                " from "+BusinessTable +" a,"+FamilyTable+" b, " +  DivisionsTable+" c "+
+        String sql_list="select a.division,a.owername,a.processstatus,a.processstatustype,a.businesstype,a.owerid,b.* "+
+                " from "+BusinessTable +" a,"+FamilyTable+" b "+
                 "where  "+basic_sql;
         String fulltable="("+sql_list+") as ff";
 
@@ -1498,10 +1490,10 @@ public class BusinessProcessControl {
                 if(compare[i].equals(">=")){
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where CAST("+col_name+" AS real) >= "+value[i]+") ";
+                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+" where CAST("+col_name+" AS real) >= "+value[i]+") ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where CAST("+col_name+" AS real) >= "+value[i]+") and ("+basic_sql+")) ";
+                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+" where CAST("+col_name+" AS real) >= "+value[i]+") and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
                     sql_count+=sql;
@@ -1510,20 +1502,20 @@ public class BusinessProcessControl {
                 }else if(compare[i].equals("<=")){
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where CAST("+col_name+" AS real) <= "+value[i]+") ";
+                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+" where CAST("+col_name+" AS real) <= "+value[i]+") ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where CAST("+col_name+" AS real) <= "+value[i]+") and ("+basic_sql+")) ";
+                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+" where CAST("+col_name+" AS real) <= "+value[i]+") and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
                     sql_count+=sql;
                 }else if(compare[i].equals("=")){
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+"  b.rowid in (select rowid from "+fulltable+" where "+col_name+" MATCH '"+value[i]+"') ";
+                        sql=" "+logic[i]+"  b.id in (select id from "+fulltable+" where "+col_name+" = '"+value[i]+"') ";
 
                     }else{
-                        sql=" "+logic[i]+"  (b.rowid in (select rowid from "+fulltable+" where "+col_name+" MATCH '"+value[i]+"') and ("+basic_sql+")) ";
+                        sql=" "+logic[i]+"  (b.id in (select id from "+fulltable+" where "+col_name+" = '"+value[i]+"') and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
                     sql_count+=sql;
@@ -1531,10 +1523,10 @@ public class BusinessProcessControl {
                 }else if(compare[i].equals("match")){
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+"  b.rowid in (select rowid from "+fulltable+" where "+col_name+" MATCH '"+value[i]+"*') ";
+                        sql=" "+logic[i]+"  b.id in (select id from "+fulltable+" where "+col_name+" like '"+value[i]+"%') ";
 
                     }else{
-                        sql=" "+logic[i]+"  (b.rowid in (select rowid from "+fulltable+" where "+col_name+" MATCH '"+value[i]+"*') and ("+basic_sql+")) ";
+                        sql=" "+logic[i]+"  (b.id in (select id from "+fulltable+" where "+col_name+" like '"+value[i]+"%') and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
                     sql_count+=sql;
@@ -1554,11 +1546,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endyear+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endyear+"') and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1579,11 +1571,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endyear+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endyear+"') and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1603,11 +1595,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+endyear
+                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+" where "+col_name+" Between '"+endyear
                                 +"' and  '"+value[i]+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+endyear
+                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+" where "+col_name+" Between '"+endyear
                                 +"' and  '"+value[i]+"') and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1629,11 +1621,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endmonth+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endmonth+"')  and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1655,11 +1647,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endmonth+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endmonth+"')  and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1680,11 +1672,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+endmonth
+                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+" where "+col_name+" Between '"+endmonth
                                 +"' and  '"+value[i]+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+endmonth
+                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+" where "+col_name+" Between '"+endmonth
                                 +"' and  '"+value[i]+"')  and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1706,11 +1698,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+value[i]+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+value[i]+"')  and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1732,11 +1724,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+"  where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+"  where "+col_name+" Between '"+value[i]
                                 +"' and  '"+enddate+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+"  where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+"  where "+col_name+" Between '"+value[i]
                                 +"' and  '"+enddate+"')  and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1757,11 +1749,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.rowid in (select rowid from "+fulltable+"  where "+col_name+" Between '"+enddate
+                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+"  where "+col_name+" Between '"+enddate
                                 +"' and  '"+value[i]+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.rowid in (select rowid from "+fulltable+"  where "+col_name+" Between '"+enddate
+                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+"  where "+col_name+" Between '"+enddate
                                 +"' and  '"+value[i]+"')  and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1792,11 +1784,11 @@ public class BusinessProcessControl {
             calendar.add(Calendar.YEAR, +100);    //得到下一个月
             String enddate=sDateFormat.format(calendar.getTime());
 
-            sql_list+=" and (b.rowid in (select rowid from "+fulltable+"  where birthday Between '"+bgdate
-                    +"' and  '"+enddate+"')  and ("+basic_sql+")) ";
+            sql_list+=" and b.birthday Between '"+bgdate
+                    +"' and  '"+enddate+"' ";
 
-            sql_count+=" and (b.rowid in (select rowid from "+fulltable+"  where birthday Between '"+bgdate
-                    +"' and  '"+enddate+"')  and ("+basic_sql+")) ";
+            sql_count+=" and b.birthday Between '"+bgdate
+                    +"' and  '"+enddate+"' ";
 
         }
         if(eddate!=null&&!eddate.equals("")){
@@ -1812,68 +1804,25 @@ public class BusinessProcessControl {
             calendar.add(Calendar.YEAR, -100);    //得到下一个月
             String enddate=sDateFormat.format(calendar.getTime());
 
-            sql_list+=" and (b.rowid in (select rowid from "+fulltable+"  where birthday Between '"+enddate
-                    +"' and  '"+eddate+"')  and ("+basic_sql+")) ";
+            sql_list+=" and b.birthday Between '"+enddate
+                    +"' and  '"+eddate+"' ";
 
-            sql_count+=" and (b.rowid in (select rowid from "+fulltable+"  where birthday Between '"+enddate
-                    +"' and  '"+eddate+"')  and ("+basic_sql+")) ";
+            sql_count+=" and b.birthday Between '"+enddate
+                    +"' and  '"+eddate+"' ";
 
         }
 
 
         if (keyword!=null&&!keyword.equals("")){
-            if(keyword.indexOf("and")>0){
-                String[] arr=keyword.split("and");
-                for(int i=0;i<arr.length;i++){
-                    sql_list+=" and b.rowid in (select rowid from "+FamilyTable+" where "+FamilyTable+" MATCH '"+arr[i]+"*'"+
-                            " UNION   SELECT a.ROWID FROM "+FamilyTable+" a,"+BusinessTable+" b WHERE a.businessid=b.rowid and "
-                            +BusinessTable+" MATCH '"+arr[i]+"*' " +
-
-                            ") ";
-                    sql_count+=" and b.rowid in (select rowid from "+FamilyTable+" where "+FamilyTable+" MATCH '"+arr[i]+"*'"+
-                            " UNION   SELECT a.ROWID FROM "+FamilyTable+" a,"+BusinessTable+" b WHERE a.businessid=b.rowid and "
-                            +BusinessTable+" MATCH '"+arr[i]+"*' " +
-                            ") ";
-                }
-            }
-            else if(keyword.indexOf("or")>0){
-                //sql_list+=" and "+FamilyTable+" MATCH '";
-                sql_list+=" and b.rowid IN (";
-                sql_count+=" and b.rowid IN (";
-                String[] arr=keyword.split("or");
-                for(int i=0;i<arr.length;i++){
-                    sql_list+=
-                            "    SELECT ROWID FROM "+FamilyTable+" WHERE "+FamilyTable+" MATCH '"+arr[i]+"*' " +
-                                    "UNION "//;
-                                    +"    SELECT a.ROWID FROM "+FamilyTable+" a,"+BusinessTable+" b WHERE a.businessid=b.rowid and "
-                                    +BusinessTable+" MATCH '"+arr[i]+"*' " +
-                                    "UNION ";
-
-                    sql_count+=
-                            "    SELECT ROWID FROM "+FamilyTable+" WHERE "+FamilyTable+" MATCH '"+arr[i]+"*' " +
-                                    "UNION "
-                            +"    SELECT a.ROWID FROM "+FamilyTable+" a,"+BusinessTable+" b WHERE a.businessid=b.rowid and "
-                                    +BusinessTable+" MATCH '"+arr[i]+"*' " +
-                                    "UNION ";
 
 
-                }
-                sql_list=sql_list.substring(0,sql_list.lastIndexOf("UNION"))+") ";
-                sql_count=sql_count.substring(0,sql_count.lastIndexOf("UNION"))+") ";
-            }
-            else{
+
                 //sql_list+=" and "+FamilyTable+" MATCH '"+keyword.toUpperCase()+"*' ";
-                sql_list+=" and b.rowid in (select rowid from "+FamilyTable+" where "+FamilyTable+" MATCH '"+keyword+"*'" +
-                        " UNION select d.rowid from "+BusinessTable+" c,"+FamilyTable+" d where " +
-                        " c.rowid=d.businessid and "+BusinessTable+" MATCH '"+keyword+"*') ";
+                sql_list+=" and (b.personid like '"+keyword+"%' or b.name like '"+keyword+"%')" +
+                         " ";
 
-                sql_count+=" and b.rowid in (select rowid from "+FamilyTable+" where "+FamilyTable+" MATCH '"+keyword+"*'" +
-                        " UNION select d.rowid from "+BusinessTable+" c,"+FamilyTable+" d where " +
-                        " c.rowid=d.businessid and "+BusinessTable+" MATCH '"+keyword+"*') ";
-
-
-
-            }
+                sql_list+=" and (b.personid like '"+keyword+"%' or b.name like '"+keyword+"%')" +
+                        " ";
 
         }
         sql_list+="Limit "+limit+" Offset "+start;
@@ -2018,27 +1967,27 @@ public class BusinessProcessControl {
         String sql_count="select count(*) from "+BusinessTable+" a  where 1=1 ";
 
         String sql_list="select a.*,a.rowid as businessid,b.displayname,(select count(*)  from " +
-                FamilyTable+" c  where c.businessid MATCH a.rowid) as familynum" +
-                ",(select count(*)  from " +FamilyTable+" i  where i.businessid = a.rowid and i.isenjoyed MATCH '享受') as enjoyednum" +
+                FamilyTable+" c  where c.businessid = a.id) as familynum" +
+                ",(select count(*)  from " +FamilyTable+" i  where i.businessid = a.id and i.isenjoyed = '享受') as enjoyednum" +
                 ",(select count(*)  from " +
-                FamilyHistoryTable+" g  where g.businessid MATCH a.rowid) as beforepeople"+
+                FamilyHistoryTable+" g  where g.businessid = a.id) as beforepeople"+
                 ",(select totalhelpmoney  from " +
-                BusinessChangeTable+" h  where h.businessid MATCH a.rowid order by time desc limit 1) as beforetotalhelpmoney"+
-                ",(select d.time from " + ApprovalTable+" d where d.businessid MATCH a.rowid order by d.time desc limit 1"+
+                BusinessChangeTable+" h  where h.businessid = a.id order by time desc limit 1) as beforetotalhelpmoney"+
+                ",(select d.time from " + ApprovalTable+" d where d.businessid = a.id order by d.time desc limit 1"+
                 " ) as approvaltime" +
-                ",(select f.displayname from "+UserTable+" f where f.id=(select e.userid from " + ApprovalTable+" e where e.businessid MATCH a.rowid  order by e.time desc limit 1 "+
+                ",(select f.displayname from "+UserTable+" f where f.id=(select e.userid from " + ApprovalTable+" e where e.businessid = a.id  order by e.time desc limit 1 "+
                 " )) as approvaluser" +
-                ",(select e.userid from " + ApprovalTable+" e where e.businessid MATCH a.rowid  order by e.time desc limit 1 "+
+                ",(select e.userid from " + ApprovalTable+" e where e.businessid =a.id  order by e.time desc limit 1 "+
                 " ) as approvaluserid" +
                 " from "+BusinessTable +" a,"+UserTable+" b " +
                 "where a.userid = b.id  ";
 
-        sql_list+=" and a.rowid in  (select rowid from "+BusinessTable+" where division MATCH ( '"+divisionpath+"' ||'*') )";
-        sql_count+=" and a.rowid in  (select rowid from "+BusinessTable+" where division MATCH ( '"+divisionpath+"' ||'*') )";
+        sql_list+=" and a.division like '"+divisionpath+"%'";
+        sql_count+=" and a.division like  '"+divisionpath+"%'";
 
         if(!businesstype.equals("all")){
-            sql_list+=" and a.businesstype MATCH '"+businesstype+"'";
-            sql_count+=" and a.businesstype MATCH '"+businesstype+"' ";
+            sql_list+=" and a.businesstype = '"+businesstype+"'";
+            sql_count+=" and a.businesstype = '"+businesstype+"' ";
         }
         //log.debug("---------------::"+ispublicinfo);
         if(ispublicinfo){
@@ -2050,17 +1999,17 @@ public class BusinessProcessControl {
             calendar.add(Calendar.MONTH, +1);    //得到下一个月
             String eddate=sDateFormat.format(calendar.getTime());
 
-            sql_list+=" and a.rowid in  (select rowid from "+BusinessTable+" where publicityedtm Between '"
-                    +datenow+"' and '"+eddate+"')";
-            sql_count+=" and a.rowid in  (select rowid from "+BusinessTable+" where publicityedtm Between '"
-                    +datenow+"' and '"+eddate+"')";
+            sql_list+=" and a.publicityedtm Between '"
+                    +datenow+"' and '"+eddate+"'";
+            sql_count+=" and a.publicityedtm Between '"
+                    +datenow+"' and '"+eddate+"'";
 
 
         }
 
         if(type!=null&&!type.equals("")){
-            sql_list+=" and a.rowid in  (select rowid from "+BusinessTable+" where processstatustype MATCH '"+type+"')";
-            sql_count+=" and a.rowid in  (select rowid from "+BusinessTable+" where processstatustype MATCH '"+type+"')";
+            sql_list+=" and a.processstatustype = '"+type+"'";
+            sql_count+=" and a.processstatustype = '"+type+"'";
 
         }
         if(bgdate!=null&&!bgdate.equals("")){
@@ -2075,10 +2024,10 @@ public class BusinessProcessControl {
             calendar.add(Calendar.YEAR, +100);    //得到下一个月
             String enddate=sDayFormat.format(calendar.getTime());
 
-            sql_list+=" and a.rowid in  (select rowid from "+BusinessTable+" where helpbgtime Between '"+bgdate
-                    +"' and  '"+enddate+"' or changedate Between '"+bgdate+"' and '"+enddate+"' or logoutdate Between '"+bgdate+"' and '"+enddate+"')";
-            sql_count+=" and a.rowid in  (select rowid from "+BusinessTable+" where helpbgtime Between '"+bgdate
-                    +"' and  '"+enddate+"' or changedate Between '"+bgdate+"' and '"+enddate+"' or logoutdate Between '"+bgdate+"' and '"+enddate+"')";
+            sql_list+=" and (a.helpbgtime Between '"+bgdate
+                    +"' and  '"+enddate+"' or a.changedate Between '"+bgdate+"' and '"+enddate+"' or a.logoutdate Between '"+bgdate+"' and '"+enddate+"')";
+            sql_count+=" and (a.helpbgtime Between '"+bgdate
+                    +"' and  '"+enddate+"' or a.changedate Between '"+bgdate+"' and '"+enddate+"' or a.logoutdate Between '"+bgdate+"' and '"+enddate+"')";
 
 
         }
@@ -2095,10 +2044,10 @@ public class BusinessProcessControl {
             calendar.add(Calendar.YEAR, -100);    //得到下一个月
             String enddate=sDayFormat.format(calendar.getTime());
 
-            sql_list+=" and a.rowid in  (select rowid from "+BusinessTable+" where helpbgtime Between '"+enddate
-                    +"' and  '"+edddate+"' or changedate Between '"+enddate+"' and '"+edddate+"' or logoutdate Between '"+enddate+"' and '"+edddate+"')";
-            sql_count+=" and a.rowid in  (select rowid from "+BusinessTable+" where helpbgtime Between '"+enddate
-                    +"' and  '"+edddate+"' or changedate Between '"+enddate+"' and '"+edddate+"' or logoutdate Between '"+enddate+"' and '"+edddate+"')";
+            sql_list+=" and a.helpbgtime Between '"+enddate
+                    +"' and  '"+edddate+"' or a.changedate Between '"+enddate+"' and '"+edddate+"' or a.logoutdate Between '"+enddate+"' and '"+edddate+"'";
+            sql_count+=" and a.helpbgtime Between '"+enddate
+                    +"' and  '"+edddate+"' or a.changedate Between '"+enddate+"' and '"+edddate+"' or a.logoutdate Between '"+enddate+"' and '"+edddate+"'";
         }
 
 
@@ -2106,8 +2055,8 @@ public class BusinessProcessControl {
             if(keyword.indexOf("and")>0){
                 String[] arr=keyword.split("and");
                 for(int i=0;i<arr.length;i++){
-                    sql_list+=" and a.rowid in (select rowid from "+BusinessTable+" where "+BusinessTable+" MATCH '"+arr[i]+"*') ";
-                    sql_count+=" and a.rowid in (select rowid from "+BusinessTable+" where "+BusinessTable+" MATCH '"+arr[i]+"*') ";
+                    sql_list+=" and a.owerid  like '"+arr[i]+"%' ";
+                    sql_count+=" and a.owerid like '"+arr[i]+"%' ";
                 }
             }
             else if(keyword.indexOf("or")>0){
@@ -2118,11 +2067,11 @@ public class BusinessProcessControl {
                 for(int i=0;i<arr.length;i++){
                     //sql_list+=arr[i]+"* OR ";
                     sql_list+=
-                            "    SELECT ROWID FROM "+BusinessTable+" WHERE "+BusinessTable+" MATCH '"+arr[i]+"*' " +
+                            "    SELECT ROWID FROM "+BusinessTable+" WHERE owerid like '"+arr[i]+"%' " +
                                     "UNION ";
 
                     sql_count+=
-                            "    SELECT ROWID FROM "+BusinessTable+" WHERE "+BusinessTable+" MATCH '"+arr[i]+"*' " +
+                            "    SELECT ROWID FROM "+BusinessTable+" WHERE owerid like '"+arr[i]+"%' " +
                                     "UNION ";
 
                 }
@@ -2131,8 +2080,8 @@ public class BusinessProcessControl {
 
             }
             else{
-                sql_list+=" and a.rowid in (select rowid from "+BusinessTable+" where "+BusinessTable+" MATCH '"+keyword+"*') ";
-                sql_count+=" and a.rowid in (select rowid from "+BusinessTable+" where "+BusinessTable+" MATCH '"+keyword+"*') ";
+                sql_list+=" and a.owerid like '"+keyword+"%' ";
+                sql_count+=" and a.owerid like '"+keyword+"%' ";
 
             }
 
@@ -2280,6 +2229,8 @@ public class BusinessProcessControl {
     public String delBusinessbybid(int businessid){
         BusinessProcess bp=new BusinessProcess();
         int result=bp.delBusinessbybid(businessid);
+        ComonDao cd=new ComonDao();
+        cd.delbysql("delete from "+VirtualindexTable +" where oid="+businessid+" and otable='"+BusinessTable+"'");
         if(result>0)return "{success:true}";
         else  return "{success:false}";
 
@@ -2324,7 +2275,9 @@ public class BusinessProcessControl {
             this.changeStatusbybid(businessid,ProcessType.UseProcessType.getChineseSeason(ProcessType.Apply));
             bp.updateApplyBusiness(businessid,params);
             bp.updateAffixFiles(affixfiles, businessid);
+            log.debug("start============================");
             bp.updateFamilyMembers(familymembers,businessid);
+            log.debug("end============================");
             bp.updateSignatures(signatures,businessid);
             conn.commit();
             conn.setAutoCommit(true);
@@ -2382,15 +2335,47 @@ public class BusinessProcessControl {
     public String saveNewBusinessApply(Map<String,Object> params,String familymembers,
                                        String affixfiles,String businessType,boolean isprocess){
 
+
+
         BusinessProcess bp=new BusinessProcess();
         params.put("businesstype",businessType);
         int businessid=bp.saveApplyBusiness(params,isprocess);
+
         bp.saveAffixFiles(affixfiles, businessid);
-        bp.saveFamilyMembers(familymembers,businessid,FamilyTable);
+        int aid=bp.saveFamilyMembers(familymembers,businessid,FamilyTable);
+        /*ComonDao cd =new ComonDao();
+        String insert_sql="insert into "+VirtualindexTable+"(oid,aid,otable,atable) values("+businessid+","+
+                aid+",'"+BusinessTable+"','"+FamilyTable+"')";
+        cd.delbysql(insert_sql);*/
+
         if(businessid>0)return "{success:true}";
         else  return "{success:false}";
 
     }
 
+
+}
+
+class SigleSqlThread implements Runnable{
+    private Map<String, Object> params = null;
+    private String sql="";
+    private String name="";
+    private CountDownLatch latch;
+    public SigleSqlThread(Map<String, Object> pa,String  sql,String name,CountDownLatch latch){
+        this.params =pa;
+        this.sql=sql;
+        this.name=name;
+        this.latch=latch;
+
+
+    }
+
+    @Override
+    public void run() {
+        ComonDao cd=new ComonDao();
+        params.put(name,cd.getTotalCountBySql(sql));
+        latch.countDown();//工人完成工作，计数器减一
+
+    }
 
 }
