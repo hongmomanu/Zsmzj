@@ -842,8 +842,10 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         if(form.down('#dbglaccountimg')){
             affixfiles.push({"accountimgpath":[{'attachmentname':'照片','attachmentpath':form.down('#dbglaccountimg').value}]});
         }
-
-
+         //testobj=form;
+        if(businesstype==businessTableType.rangershelp){
+            familymembers=[{name:form.getValues().owername}];
+        }
         var params = {
             businesstype:businesstype,
             userid:userid,
