@@ -14,6 +14,7 @@ Ext.define('ZSMZJ.store.dbgl.StatisticsFulls', {
     proxy: {
         type: 'ajax',
         url: 'ajax/getstatisticsbytype.jsp',
+        timeout:100000,
         getMethod:function(request){ return 'POST'; },
         extraParams:{
             type:'full'
@@ -21,6 +22,15 @@ Ext.define('ZSMZJ.store.dbgl.StatisticsFulls', {
         }
     }
     ,
+    listeners: {
+        beforeload: function(store, operation, eOpts){
+            //var kode_jabatan = operation.node.raw.divisionpath;
+            //console.log(operation.node);
+            //testobj=operation.node;
+
+            operation.params.divisionpath = operation.node.raw.divisionpath;
+        }
+    },
     root: {
         text: '舟山市',
         divisionpath:'舟山市',

@@ -30,6 +30,6 @@ Ext.define('ZSMZJ.model.dbgl.PeopleQuery', {
         {name:'monthlyincome',type:'float'},
         {name:'persontype'},
         {name:'isenjoyed'},
-        {name:'rowid'}
+        {name:'rowid',mapping:'id'}
     ]
 });

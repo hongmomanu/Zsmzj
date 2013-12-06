@@ -44,7 +44,7 @@ Ext.define('ZSMZJ.model.dbgl.FamilyQuery', {
         {name:'bankower'},
         {name:'bankid'},
         {name:'aidnum'},
-        {name:'businessid'}
+        {name:'businessid',mapping:'id'}
 
     ]
 });

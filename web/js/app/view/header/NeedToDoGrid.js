@@ -11,6 +11,7 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
     extend: 'Ext.grid.Panel',
     alias : 'widget.needtodopanel',
     cls:'navigation-grid',
+    isnewgrid:true,
     requires: [
 
     ],
