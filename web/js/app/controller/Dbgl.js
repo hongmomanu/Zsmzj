@@ -844,7 +844,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         }
          //testobj=form;
         if(businesstype==businessTableType.rangershelp){
-            familymembers=[{name:form.getValues().owername}];
+            familymembers=[{name:form.getValues().owername,relationship:'户主'}];
         }
         var params = {
             businesstype:businesstype,
