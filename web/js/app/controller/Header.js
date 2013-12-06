@@ -293,13 +293,13 @@ Ext.define('ZSMZJ.controller.Header', {
                       }
 
                       //清空高级搜索
-                      store.on('load', function (store, options) {
+                      /*store.on('load', function (store, options) {
                           store.proxy.extraParams.name=null;
                           store.proxy.extraParams.logic=null;
                           store.proxy.extraParams.compare=null;
                           store.proxy.extraParams.value=null;
                           //CommonFunc.widgetdolayout("mainContent-panel",1);
-                      });
+                      });*/
                   }
 
                 },

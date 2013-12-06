@@ -58,11 +58,11 @@ public class BusinessProcessDao {
     public int insertFamilyChange(int businessid,String table,String changetable){
         Connection testConn= JdbcFactory.getConn("sqlite");
         String sql_update=  "update "+changetable+"  set isnewest=0 "
-                +" where businessid MATCH ?";
+                +" where businessid = ?";
         PreparedStatement pstmt_update = JdbcFactory.getPstmt(testConn, sql_update);
 
         String sql=  "insert into "+changetable+"  select *,1 as isnewest from "+
-                table+" where businessid MATCH ?";
+                table+" where businessid = ?";
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
         try {
             pstmt_update.setInt(1,businessid);
@@ -79,7 +79,7 @@ public class BusinessProcessDao {
         Connection testConn= JdbcFactory.getConn("sqlite");
         String sql=  "insert into "+changetable+"  select *,"+businessid+" as businessid,'"+
                 StringHelper.getTimeStrFormat("yyyy-MM-dd HH:mm:ss")+"' as insertdate from "+
-                businesstable+" where rowid=?";
+                businesstable+" where id=?";
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
         try {
             pstmt.setInt(1,businessid);
@@ -139,7 +139,7 @@ public class BusinessProcessDao {
 
         Connection testConn= JdbcFactory.getConn("sqlite");
         String sql=  "select * ,(strftime('%Y',date('now'))-strftime('%Y',birthday)) as age from "+
-                tablename+"  where businessid MATCH ?";
+                tablename+"  where businessid = ?";
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
 
         ArrayList<Map<String,Object>> list=new ArrayList<Map<String, Object>>();
@@ -171,7 +171,7 @@ public class BusinessProcessDao {
     public Map<String,Object> getApplyForm(int businessid,String tablename){
         Connection testConn= JdbcFactory.getConn("sqlite");
         String sql=  "select a.*,b.displayname   from "+
-                tablename+" a,"+UserTable+" b where a.rowid =? and a.userid=b.id ";
+                tablename+" a,"+UserTable+" b where a.id =? and a.userid=b.id ";
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
         Map<String,Object> map=new HashMap<String, Object>();
         try {
@@ -203,25 +203,24 @@ public class BusinessProcessDao {
         Connection testConn= JdbcFactory.getConn("sqlite");
         String match_str="";
         for(Map<String,Object> item:arr){
-            match_str+=item.get("name").toString()+" OR ";
+            match_str+="'"+item.get("name").toString()+"' , ";
         }
-        match_str=match_str.substring(0,match_str.lastIndexOf("OR"));
-        String sql=  "select a.processstatus,b.displayname,a.owername,a.time,a.rowid,a.processstatustype,a.businesstype   from "+
-                tablename+" a,"+UserTable+" b where processstatus  MATCH ?  and a.rowid in( select rowid from "+tablename+" where division MATCH ( ? ||'*'))";
+        match_str=match_str.substring(0,match_str.lastIndexOf(","));
+        String sql=  "select a.processstatus,b.displayname,a.owername,a.time,a.id as rowid,a.processstatustype,a.businesstype   from "+
+                tablename+" a,"+UserTable+" b where processstatus  in ("+match_str+")  and a.division like (?||'%') ";
         if(keyword!=null)sql+="AND ? ";
         sql+="and a.userid=b.id Limit ? Offset ?";
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
         ArrayList<Map<String,Object>> list=new ArrayList<Map<String, Object>>();
         try {
-            pstmt.setString(1,match_str);
+            pstmt.setString(1, divisionpath);
             if(keyword!=null){
                 pstmt.setString(2,keyword);
                 pstmt.setInt(3, limit);
                 pstmt.setInt(4,start);
             }else{
-                pstmt.setString(2, divisionpath);
-                pstmt.setInt(3, limit);
-                pstmt.setInt(4,start);
+                pstmt.setInt(2, limit);
+                pstmt.setInt(3,start);
             }
 
             ResultSet rs = pstmt.executeQuery();
@@ -267,7 +266,7 @@ public class BusinessProcessDao {
     }
     public int changeStatus(int businessid,String status,String tablename){
         Connection testConn= JdbcFactory.getConn("sqlite");
-        String sql=  "update  "+tablename+" set processstatus=?  where rowid=?";
+        String sql=  "update  "+tablename+" set processstatus=?  where id=?";
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
         try {
             pstmt.setString(1,status);
@@ -328,11 +327,9 @@ public class BusinessProcessDao {
         Connection testConn= JdbcFactory.getConn("sqlite");
         String sql=  "delete   from  "+
                 tablename+" where "+colname;
-        if(isrowid){
-            sql+="=?";
-        }else{
-            sql+="  MATCH ? ";
-        }
+
+        sql+="=?";
+
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
         try {
             pstmt.setInt(1,id);
@@ -353,18 +350,20 @@ public class BusinessProcessDao {
         Connection testConn= JdbcFactory.getConn("sqlite");
         String match_str="";
         for(Map<String,Object> item:arr){
-            match_str+=item.get("name").toString()+" OR ";
+            match_str+="'"+item.get("name").toString()+"' ,";
         }
-        match_str=match_str.substring(0,match_str.lastIndexOf("OR"));
+        match_str=match_str.substring(0,match_str.lastIndexOf(","));
+        log.debug(match_str);
+        log.debug(divisionpath);
+
         String sql=  "select count(*)   from "+
-                tablename+"  where  processstatus  MATCH ?  and rowid in( select rowid from "+tablename+" where division MATCH ( ? ||'*'))";
+                tablename+"  where  processstatus  in ("+match_str+")  and division like ( ? ||'%') ";
         if(keyword!=null)sql+="AND ?";
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
         int totalnums=0;
         try {
-            pstmt.setString(1,match_str);
-            pstmt.setString(2,divisionpath);
-            if(keyword!=null)pstmt.setString(1,keyword);
+            pstmt.setString(1,divisionpath);
+            if(keyword!=null)pstmt.setString(2,keyword);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 totalnums=rs.getInt(1);

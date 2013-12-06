@@ -854,10 +854,16 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         };
         var successFunc = function (myform, action) {
 
-            var hc=me.application.getController("Header");
+            /*var hc=me.application.getController("Header");
             hc.closetab(form.id);
+            Ext.Msg.alert("提示信息", "保存成功");*/
 
-            Ext.Msg.alert("提示信息", "保存成功");
+            function fn(){
+                me.formSubmit(form, params, 'ajax/sendapply.jsp', successFunc, failFunc,"正在提交数据");
+            }
+            var task = new Ext.util.DelayedTask(fn);
+            task.delay(100);
+
 
         };
         var failFunc = function (form, action) {

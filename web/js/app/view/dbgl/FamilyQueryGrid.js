@@ -211,6 +211,12 @@ Ext.define('ZSMZJ.view.dbgl.FamilyQueryGrid' ,{
                                 store.proxy.extraParams.bgdate=bgdate;
                                 store.proxy.extraParams.eddate=eddate;
                                 store.proxy.extraParams.keyword = keyword;
+
+                                store.proxy.extraParams.name=null;
+                                store.proxy.extraParams.logic=null;
+                                store.proxy.extraParams.compare=null;
+                                store.proxy.extraParams.value=null;
+
                                 store.loadPage(1);
                             }
                         }
@@ -230,6 +236,10 @@ Ext.define('ZSMZJ.view.dbgl.FamilyQueryGrid' ,{
                             store.proxy.extraParams.bgdate=bgdate;
                             store.proxy.extraParams.eddate=eddate;
                             store.proxy.extraParams.keyword = keyword;
+                            store.proxy.extraParams.name=null;
+                            store.proxy.extraParams.logic=null;
+                            store.proxy.extraParams.compare=null;
+                            store.proxy.extraParams.value=null;
                             store.loadPage(1);
                         }
                     }
