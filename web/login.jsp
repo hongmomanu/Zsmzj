@@ -38,6 +38,16 @@
         #demoUsers {margin:25px 0px -15px 0px;}
         #demoUsers span{color:white}
         #demoUsers a{color:yellow}
+        #browserlinkdiv{
+            position: absolute;
+            left: 10px;
+            bottom: 20px;
+            text-align: left;
+            font-size: 13px;
+        }
+        #browserlinkdiv a{
+
+        }
     </style>
 
     <%--<link rel="stylesheet" type="text/css" href="css/login.css" />--%>
@@ -100,6 +110,9 @@
 
         <div id='poweredby'>
             技术支持：浙江省海予信息技术有限公司
+        </div>
+        <div id='browserlinkdiv'>
+            <span>如果系统不流畅，建议使用谷歌浏览器:</span><a href="http://172.25.102.101:8080/ext-4.2/ChromeStandaloneSetup.exe">下载</a>
         </div>
     </form>
         <%

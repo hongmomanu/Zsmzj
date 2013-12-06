@@ -2150,6 +2150,7 @@ public class BusinessProcessControl {
                 conn.setAutoCommit(true);
                 return "{success:true}";
             } catch (Exception e) {
+                e.printStackTrace();
                 log.debug(e.getMessage());
                 try {
                     conn.rollback();

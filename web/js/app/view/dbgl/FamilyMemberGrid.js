@@ -261,7 +261,7 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                     dataIndex: 'jobstatus',
                     //width: 160,
                     editor: {
-                        //allowBlank: false,
+                        allowBlank: false,
                         xtype:'dbglaplytype',
                         searchtype:"jobstatus"
                         //vtype: 'email'

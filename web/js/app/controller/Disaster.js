@@ -60,7 +60,7 @@ Ext.define('ZSMZJ.controller.Disaster', {
                 click:Ext.bind(dbgl_cl.delperson, dbgl_cl)
             },
 
-            'disasterhelpbusinessapplyform component,disasterhelpbusinessalterform component': {
+            'disasterhelpbusinessapplyform component,disasterhelpbusinessalterform component,disasterhelpcalamitybusinessapplyform component,disasterhelpcalamitybusinessalterform component,disasterhelpcalamitybusinesschangeform component,disasterhelpcalamitybusinesscheckform component,disasterhelpcalamitybusinesslogoutform component': {
                 imgclick: function (c) {
                     dbgl_cl.showUploadImgWin(c);
                 },

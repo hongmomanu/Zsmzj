@@ -77,7 +77,6 @@ Ext.define('ZSMZJ.view.propertycheck.familyinfoCheck', {
     findCheckRoleName:function(a,name){
         for(var i=0;i< a.length;i++){
             if(a[i].name==name){
-                console.log(a[i].name)
                 return true;
             }
         }

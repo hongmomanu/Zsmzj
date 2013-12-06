@@ -38,6 +38,12 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
             //view: new Ext.grid.GridView({ scrollToTop: Ext.emptyFn }),
 
             //hideHeaders:true,
+
+            columnLines: true,
+            selModel: {
+                selType:'checkboxmodel'
+            },
+
             columns: [
 
                 {header: '业务操作', width: 250,
@@ -155,6 +161,8 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
                     return "已"+val;
                 }},
                 {header: '当前流程',dataIndex:'process'},
+                {header: '人员姓名',dataIndex:'owername'},
+                {header: '救助类别',dataIndex:'businesstype'},
                 {header: '类型',renderer:function(val,obj,record){
                     return "待办";
                 }},
@@ -172,6 +180,17 @@ Ext.define('ZSMZJ.view.header.NeedToDoGrid' ,{
 
             ],
             flex: 1,
+            tbar:[
+                {
+                    text:'批量操作',
+                    action:'bulkoperation',
+                    listeners:{
+                        click:function(c){
+                            c.fireEvent('bulkoperationclick',c);
+                        }
+                    }
+                }
+            ],
             bbar: Ext.create('Ext.PagingToolbar', {
                 store: 'header.NeedToDos',
                 displayInfo: true,

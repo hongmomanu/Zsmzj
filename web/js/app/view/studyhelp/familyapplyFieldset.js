@@ -102,6 +102,35 @@ Ext.define('ZSMZJ.view.studyhelp.familyapplyFieldset', {
                         name: 'ticketnumber',
                         fieldLabel: '准考证号',
                         allowBlank: true
+                    },
+                    {
+                        xtype:'dbglaplytype',
+                        searchtype:"educationalbackground",
+                        name: 'educationalbackground',
+                        fieldLabel: '学历',
+                        allowBlank: true
+                    } ,
+                    {
+                        xtype:'dbglaplytype',
+                        searchtype:"studenthelptype",
+                        name: 'studenthelptype',
+                        fieldLabel: '助学类型',
+                        allowBlank: true
+                    } ,
+                    {
+                        name: 'lengthofschooling',
+                        fieldLabel: '学制（年）',
+                        allowBlank: true
+                    },
+                    {
+                        name: 'grade',
+                        fieldLabel: '就读年级',
+                        allowBlank: true
+                    },
+                    {
+                        name: 'overtheyearstotalamount',
+                        fieldLabel: '历年累计救助金额',
+                        allowBlank: true
                     }
 
 

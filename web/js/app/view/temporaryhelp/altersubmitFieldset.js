@@ -79,10 +79,10 @@ Ext.define('ZSMZJ.view.temporaryhelp.altersubmitFieldset', {
                         xtype: 'dbglaplytype',
                         searchtype: "temporaryhelpobject",
                         name: 'helpobject',
-                        fieldLabel: '救助对象',
+                        fieldLabel: '困难类型',
                         afterLabelTextTpl: required,
-                        emptyText: '请选择救助对象',
-                        blankText: '请选择救助对象',
+                        emptyText: '请选择困难类型',
+                        blankText: '请选择困难类型',
                         allowBlank: false
                     }
                     ,
@@ -143,6 +143,13 @@ Ext.define('ZSMZJ.view.temporaryhelp.altersubmitFieldset', {
                         afterLabelTextTpl: required,
                         value: 0,
                         allowBlank: false
+                    } ,{
+                        name: 'thistimedisbursement',
+                        fieldLabel: '本次发放资金(元)',
+                        afterLabelTextTpl: required,
+                        emptyText: '请输入本次发放资金',
+                        blankText: '请输入本次发放资金',
+                        allowBlank: false
                     }
                     ,
                     {
@@ -150,13 +157,12 @@ Ext.define('ZSMZJ.view.temporaryhelp.altersubmitFieldset', {
                         fieldLabel: '公示结束日期',
                         xtype: 'datefield',
                         format: 'Y-m-d',
-                        colspan: 2,
                         allowBlank: true
                     }
                     ,
                     {
                         name: 'helpreason',
-                        fieldLabel: '救助原因',
+                        fieldLabel: '申请原因',
                         colspan: 3,
                         minWidth: 600,
                         width: 800,
@@ -167,8 +173,8 @@ Ext.define('ZSMZJ.view.temporaryhelp.altersubmitFieldset', {
                         grow: true,
 
                         afterLabelTextTpl: required,
-                        emptyText: '输入救助原因',
-                        emptyText: '输入救助原因',
+                        emptyText: '输入申请原因',
+                        emptyText: '输入申请原因',
                         allowBlank: false
                     },
                     {
@@ -210,7 +216,8 @@ Ext.define('ZSMZJ.view.temporaryhelp.altersubmitFieldset', {
                         xtype: 'textarea',
                         grow: true,
                         allowBlank: true
-                    },
+                    }
+                    ,
                     {
                         name: 'helpunit',
                         fieldLabel: '救助单位',

@@ -44,37 +44,7 @@ Ext.define('ZSMZJ.view.disaster.applysubmitFieldset', {
 
                 items: [
 
-                    {
-                        //xtype: 'dbglaplytype',
-                        //searchtype: "temporaryhelpway",
-                        name: 'hitdisasterkind',
 
-                        fieldLabel: '受灾种类',
-                        afterLabelTextTpl: required,
-                        emptyText: '请输入受灾种类',
-                        blankText: '请输入受灾种类',
-                        allowBlank: false
-                    },{
-                        //xtype: 'dbglaplytype',
-                        //searchtype: "temporaryhelpway",
-                        name: 'hitdisastersituation',
-
-                        fieldLabel: '受灾情况',
-                        afterLabelTextTpl: required,
-                        emptyText: '请输入受灾情况',
-                        blankText: '请输入受灾情况',
-                        allowBlank: false
-                    },{
-                        xtype: 'dbglaplytype',
-                        searchtype: "applydisasterhelpkind",
-                        name: 'applydisasterhelpkind',
-
-                        fieldLabel: '救助种类',
-                        afterLabelTextTpl: required,
-                        emptyText: '请选择申请救助种类',
-                        blankText: '请选择申请救助种类',
-                        allowBlank: false
-                    },
                     {
                         xtype: 'dbglaplytype',
                         searchtype: "temporaryhelpway",

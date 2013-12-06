@@ -74,11 +74,20 @@ Ext.define('ZSMZJ.view.disaster.businessAlter', {
                         afterLabelTextTpl: required,
                         emptyText: '请输入行政区划',
                         blankText : '请输入行政区划',
-                        colspan:2,//合并列
+                        //colspan:2,//合并列
                         allowBlank: false
                     }
 
                         ,{
+                            name: 'realaddress',
+                            itemId:'realaddress',
+                            fieldLabel: '避灾安置场所地址',
+                            afterLabelTextTpl: required,
+
+                            blankText: '请输入避灾安置场所地址',
+                            emptyText: '请输入避灾安置场所地址',
+                            allowBlank: false
+                        },{
                             name: 'owername',
                             itemId:'owername',
                             fieldLabel: '避灾安置场所名称',

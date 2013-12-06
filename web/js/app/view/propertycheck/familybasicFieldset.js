@@ -107,21 +107,11 @@ Ext.define('ZSMZJ.view.propertycheck.familybasicFieldset', {
                         emptyText: '请输入户主姓名',
                         allowBlank: false
                     },{
-                        name: 'accountaddress',
-                        fieldLabel: '户口所在地',
-
+                        name: 'telnum',
+                        fieldLabel: '联系电话',
                         //afterLabelTextTpl: required,
                         //emptyText: '低保户类型',
                         allowBlank: true
-                    },{
-                        xtype:'dbglaplytype',
-                        searchtype:"dbedgepoorfamilytype",
-                        name: 'poorfamilytype',
-                        fieldLabel: '致贫原因',
-                        afterLabelTextTpl: required,
-                        blankText: '致贫原因',
-                        emptyText: '致贫原因',
-                        allowBlank: false
                     },{
                         xtype:'dbglaplytype',
                         searchtype:"dbglfamilyaccount",
@@ -130,6 +120,7 @@ Ext.define('ZSMZJ.view.propertycheck.familybasicFieldset', {
                         fieldLabel: '家庭户口',
                         blankText: '请选择家庭户口',
                         emptyText: '请选择家庭户口',
+                        colspan:2,
                         allowBlank: false
                     }
 
@@ -153,14 +144,7 @@ Ext.define('ZSMZJ.view.propertycheck.familybasicFieldset', {
                         emptyText: '请输入身份证号',
                         allowBlank: false
                     },{
-                        name: 'accountzipcode',
-                        fieldLabel: '邮政编码',
-                        //afterLabelTextTpl: required,
-                        //emptyText: '低保户类型',
-                        allowBlank: true
-                    },{
                         name: 'realaddress',
-                        colspan:2,
                         fieldLabel: '实际居住地',
                         allowBlank: true
                     },{
@@ -194,10 +178,16 @@ Ext.define('ZSMZJ.view.propertycheck.familybasicFieldset', {
                         }
                     }
                     ,{
-                        name: 'telnum',
-                        fieldLabel: '联系电话',
+                        name: 'accountaddress',
+                        fieldLabel: '户口所在地',
+
                         //afterLabelTextTpl: required,
                         //emptyText: '低保户类型',
+                        allowBlank: true
+                    },{
+                        name: 'accountzipcode',
+                        fieldLabel: '邮政编码',
+                        colspan:2,
                         allowBlank: true
                     },{
                         xtype:'dbglaplytype',

@@ -107,20 +107,19 @@ Ext.define('ZSMZJ.view.studyhelp.familybasicFieldset', {
                         emptyText: '请输入户主姓名',
                         allowBlank: false
                     },{
-                        name: 'accountaddress',
-                        fieldLabel: '户口所在地',
-
+                        name: 'telnum',
+                        fieldLabel: '联系电话',
                         //afterLabelTextTpl: required,
                         //emptyText: '低保户类型',
                         allowBlank: true
                     },{
                         xtype:'dbglaplytype',
-                        searchtype:"dbedgepoorfamilytype",
-                        name: 'poorfamilytype',
-                        fieldLabel: '致贫原因',
+                        searchtype:"studydifficulttype",
+                        name: 'difficulttype',
+                        fieldLabel: '困难类型',
                         afterLabelTextTpl: required,
-                        blankText: '致贫原因',
-                        emptyText: '致贫原因',
+                        blankText: '请选择困难类型',
+                        emptyText: '请选择困难类型',
                         allowBlank: false
                     },{
                         xtype:'dbglaplytype',
@@ -153,21 +152,12 @@ Ext.define('ZSMZJ.view.studyhelp.familybasicFieldset', {
                         emptyText: '请输入身份证号',
                         allowBlank: false
                     },{
-                        name: 'accountzipcode',
-                        fieldLabel: '邮政编码',
-                        //afterLabelTextTpl: required,
-                        //emptyText: '低保户类型',
-                        allowBlank: true
-                    },{
                         name: 'realaddress',
-                        colspan:2,
                         fieldLabel: '实际居住地',
                         allowBlank: true
                     },{
                         name: 'realzipcode',
                         fieldLabel: '邮政编码',
-                        //afterLabelTextTpl: required,
-                        //emptyText: '低保户类型',
                         allowBlank: true
                     },{
                         itemId: 'FamilyPersons',
@@ -177,22 +167,22 @@ Ext.define('ZSMZJ.view.studyhelp.familybasicFieldset', {
                         blankText:'家庭总人口',
                         value:0,
                         disabled:true,
-                        //emptyText: '低保户类型',
                         allowBlank: false
                     }
                     ,{
-                        name: 'telnum',
-                        fieldLabel: '联系电话',
-                        //afterLabelTextTpl: required,
-                        //emptyText: '低保户类型',
+                        name: 'accountaddress',
+                        fieldLabel: '户口所在地',
+                        allowBlank: true
+                    },{
+                        name: 'accountzipcode',
+                        fieldLabel: '邮政编码',
+                        colspan:2,
                         allowBlank: true
                     },{
                         xtype:'dbglaplytype',
                         searchtype:"dbglbank",
                         name: 'bank',
                         fieldLabel: '开户银行',
-                        //afterLabelTextTpl: required,
-                        //emptyText: '低保户类型',
                         allowBlank: true
                     }
                     ,{

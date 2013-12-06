@@ -92,6 +92,42 @@ Ext.define('ZSMZJ.view.disaster.familybasicFieldset', {
                     }
 
                     ,{
+                        xtype:'dbglaplytype',
+                        searchtype:"dbglfamilyaccount",
+                        afterLabelTextTpl: required,
+                        name: 'familyaccount',
+                        fieldLabel: '家庭户口',
+                        blankText: '请选择家庭户口',
+                        emptyText: '请选择家庭户口',
+                        allowBlank: false
+                    }
+                    ,{
+                        name: 'telnum',
+                        fieldLabel: '联系电话',
+                        //afterLabelTextTpl: required,
+                        //emptyText: '低保户类型',
+                        allowBlank: true
+                    },{
+                        /*xtype:'dbglaplytype',
+                        searchtype:"dbedgepoorfamilytype",*/
+                        name: 'hitdisasterkind',
+                        fieldLabel: '受灾种类',
+                        afterLabelTextTpl: required,
+                        blankText: '请输入受灾种类',
+                        emptyText: '请输入受灾种类',
+                        allowBlank: false
+                    },{
+                        xtype: 'dbglaplytype',
+                        searchtype: "applydisasterhelpkind",
+                        name: 'applydisasterhelpkind',
+
+                        fieldLabel: '救助种类',
+                        afterLabelTextTpl: required,
+                        emptyText: '请选择申请救助种类',
+                        blankText: '请选择申请救助种类',
+                        allowBlank: false
+                    },
+                    {
                         name: 'owername',
                         itemId:'owername',
                         fieldLabel: '户主姓名',
@@ -108,36 +144,11 @@ Ext.define('ZSMZJ.view.disaster.familybasicFieldset', {
                         emptyText: '请输入户主姓名',
                         allowBlank: false
                     },{
-                        name: 'accountaddress',
-                        fieldLabel: '户口所在地',
-                        //afterLabelTextTpl: required,
-                        //emptyText: '低保户类型',
-                        allowBlank: true
-                    },{
-                        xtype:'dbglaplytype',
-                        searchtype:"dbedgepoorfamilytype",
-                        name: 'poorfamilytype',
-                        fieldLabel: '致贫原因',
-                        afterLabelTextTpl: required,
-                        blankText: '致贫原因',
-                        emptyText: '致贫原因',
-                        allowBlank: false
-                    },{
-                        xtype:'dbglaplytype',
-                        searchtype:"dbglfamilyaccount",
-                        afterLabelTextTpl: required,
-                        name: 'familyaccount',
-                        fieldLabel: '家庭户口',
-                        blankText: '请选择家庭户口',
-                        emptyText: '请选择家庭户口',
-                        allowBlank: false
-                    }
-                    ,{
                         name: 'owerid',
                         itemId:'owerid',
                         vtype:'personid',
                         xtype:'personidsearchcombo',
-                        colspan:2,
+                        //colspan:2,
                         fieldLabel: '户主身份证',
                         listeners: {
 
@@ -153,21 +164,12 @@ Ext.define('ZSMZJ.view.disaster.familybasicFieldset', {
                         allowBlank: false
                     }
                     ,{
+                        name: 'accountaddress',
+                        fieldLabel: '户口所在地',
+                        allowBlank: true
+                    },{
                         name: 'accountzipcode',
                         fieldLabel: '邮政编码',
-                        //afterLabelTextTpl: required,
-                        //emptyText: '低保户类型',
-                        allowBlank: true
-                    },{
-                        name: 'realaddress',
-                        colspan:2,
-                        fieldLabel: '实际居住地',
-                        allowBlank: true
-                    },{
-                        name: 'realzipcode',
-                        fieldLabel: '邮政编码',
-                        //afterLabelTextTpl: required,
-                        //emptyText: '低保户类型',
                         allowBlank: true
                     },{
                         itemId: 'FamilyPersons',
@@ -181,10 +183,14 @@ Ext.define('ZSMZJ.view.disaster.familybasicFieldset', {
                         allowBlank: false
                     }
                     ,{
-                        name: 'telnum',
-                        fieldLabel: '联系电话',
-                        //afterLabelTextTpl: required,
-                        //emptyText: '低保户类型',
+                        name: 'realaddress',
+
+                        fieldLabel: '实际居住地',
+                        allowBlank: true
+                    },{
+                        name: 'realzipcode',
+                        fieldLabel: '邮政编码',
+                        colspan:2,
                         allowBlank: true
                     },{
                         xtype:'dbglaplytype',
@@ -207,6 +213,16 @@ Ext.define('ZSMZJ.view.disaster.familybasicFieldset', {
                         //colspan:2,
                         //afterLabelTextTpl: required,
                         //emptyText: '低保户类型',
+                        allowBlank: true
+                    },{
+                        name: 'hitdisastersituation',
+                        fieldLabel: '受灾情况',
+                        colspan:3,
+                        minWidth:600,
+                        width:800,
+                        anchor : '100%',
+                        xtype : 'textarea',
+                        grow : true,
                         allowBlank: true
                     },
                     {

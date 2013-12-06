@@ -20,7 +20,7 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
         'propertycheck.FamilyPropertyItems'
     ],
     refs: [
-        {ref: 'myprocessvector', selector: 'dbglprocessvector'}
+        {ref: 'myprocessvector', selector: 'propertycheckprocessvector'}
     ],
     views: [
         'propertycheck.familyinfoRegister',
@@ -34,6 +34,7 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
         'propertycheck.familyinfoAlter',
         'propertycheck.familyinfoCheck',
         'propertycheck.propertyCheckWin',
+        'propertycheck.processWin',
         'propertycheck.processCheckWin',
         'propertycheck.PorpertyProcessHistoryGrid',
         'propertycheck.applyhistoryFieldset'
@@ -174,7 +175,6 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                 },
                 'propertycheckneedtocheckbusinesspanel,propertycheckneedtodobusinesspanel':{
                     gridshowfresh:function(grid){
-                        mytesttestgrid=grid;
                         var store=grid.getStore();
                         if(store.proxy.extraParams){
 
@@ -184,14 +184,14 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                             store.proxy.extraParams.ispublicinfo=grid.ispublicinfo;
                             store.proxy.extraParams.eventName='getfamilypropertyinfo';
                             if(grid.xtype=='propertycheckneedtocheckbusinesspanel'){
-                                store.proxy.extraParams.addontype='1';
+                                store.proxy.extraParams.addontype='1'; //核定查询
                                 store.proxy.extraParams.eventName='getfamilypropertyinfobycheckrole';
                                 //store.proxy.extraParams.checkitem=propertyCheckRoleBtn[0].name;
                                 //store.proxy.extraParams.checkitem=this.checkEnum.toString();
                                 store.proxy.extraParams.checkitem=grid.title;
 
                             }else{
-                                store.proxy.extraParams.addontype='0';
+                                store.proxy.extraParams.addontype='0'; //正常查询
                             }
                             if(grid.isnewgrid){
                                 store.load();
@@ -260,17 +260,18 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                         for(var i=0;i<recordList.length;i++){
                             //console.log(recordList[i].data.owerid);
                         }
-                        myrecordList=recordList;
                     }
                 },
                 'propertycheckfamilyinfoalter button[action=process]':{
                     click:function (c,r,grid){
-                        //alert('查看流程')
                         this.showProcessWin(c,r,grid);
                     }
                 },
+                'propertycheckfamilyinfoalter button[action=cancelsendbusiness]':{
+                    click:this.cancelsendbusiness
+                },
                 'propertycheckfamilyinfoalter button[action=print]':{
-                    click: function(c,r,grid){alert('打印')}//Ext.bind(header_cl.formprint,header_cl)
+                    click: Ext.bind(header_cl.formprint,header_cl)
                 }
             }
         )
@@ -349,6 +350,7 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
 
             }
             tmp.processstatustype=processstatustype.ok;
+            tmp.userid=userid;
             var params = {
                 eventName:eventName,
                 userid:userid,
@@ -797,12 +799,51 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
         });
 
     },
+    delbusinessapply:function(c,r,grid){
+        var fmy001=r.get('fmy001');
+        var me=this;
+        Ext.Msg.show({
+            title: '确定要删除此申请?',
+            msg: '你正在试图删除选中的 <a><font color="red">'+ r.get('displayname')+'</font></a> 的申请.你想继续么?',
+            buttons: Ext.Msg.YESNO,
+            fn: function (btn) {
+                if(btn=='yes'){
+                    if(r.get('processstatustype')===processstatustype.ok){
+                        me.delapplybybid(fmy001,grid.getStore());
+                    }else{
+                        me.recoverapplybybid(fmy001,grid.getStore());
+                    }
+
+                }
+            },
+            icon: Ext.Msg.QUESTION
+        });
+
+    },
+    delapplybybid:function(fmy001,store){
+        var me=this;
+        var params = {
+            eventName:'delfamilypropertybyfmy001',
+            fmy001:fmy001
+        };
+        var successFunc = function (form, action) {
+            store.load({callback:function(){
+                var header_cl = me.application.getController("Header");
+                header_cl.widgetdolayout("mainContent-panel");
+            }});
+
+        };
+        var failFunc = function (form, action) {
+            Ext.Msg.alert("提示信息", "删除失败，检查web服务或数据库服务");
+
+        };
+        this.ajaxSend(params, 'ajax/sendfamilypropertyinfo.jsp', successFunc, failFunc,'POST');
+
+
+    },
     showProcessWin:function(c,r,grid){//显示进程窗口
         var me=this;
-        //var header_cl = this.application.getController("Header");
         //窗口初始化显示
-        myMM=this;
-        console.log(me.getMyprocessvector())
         if(!me.processWin){
             me.processWin=Ext.widget('propertyprocesswin');
             me.processWin.show();
@@ -819,14 +860,23 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
             mysurface.remove(mysurface.items.items[i-1]);
         }
         //显示历史审批表
+
+        var fmy001='-1';
+        try{
+            fmy001=r.get('fmy001')
+        }catch(e){
+            fmy001= c.up('form').objdata.record.get('fmy001');
+            r= c.up('form').objdata.record;
+        }
         var store=me.processWin.down('grid').getStore();
         store.proxy.extraParams = {
-            businessid: r.get('businessid')
+            eventName:'getprocesscheckbyfmy001',
+            fmy001: fmy001
+            //
         };
         store.load();
         //绘制流程图
         if(r.get("processstatus")==processdiction.stepzero){
-
             mysurface.add({
                 type: "path",
                 text:"muhahaaaa",
@@ -926,8 +976,79 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                 stroke: "red"/*,
                  fill: "blue"*/
             }).show(true);
+
+
             me.processWin.doLayout();
         }
+
+    },
+    //删除申请
+    delpropertybusinessapply:function(c,r,grid){
+        myc=c;
+        var fmy001=r.get('fmy001');
+        var me=this;
+        Ext.Msg.show({
+            title: '确定要删除此申请?',
+            msg: '你正在试图删除选中的 <a><font color="red">'+ r.get('displayname')+'</font></a> 的申请.你想继续么?',
+            buttons: Ext.Msg.YESNO,
+            fn: function (btn) {
+                if(btn=='yes'){
+                    if(r.get('processstatustype')===processstatustype.ok){
+                        me.delpropertyapplybybid(fmy001,grid.getStore());
+                    }else{
+                        me.recoverpropertyapplybybid(fmy001,grid.getStore());
+                    }
+
+                }
+            },
+            icon: Ext.Msg.QUESTION
+        });
+
+    },
+    //取消提交业务
+    cancelsendbusiness:function(btn){
+        var form=btn.up('form');
+        var c=form.objdata.item;
+        var r=form.objdata.record;
+        var grid=form.objdata.grid;
+        this.cancelpropertybusinesssubmit(c,r,grid,form);
+    },
+    //取消业务提交
+    cancelpropertybusinesssubmit:function(c,r,grid,form){
+        var fmy001=r.get('fmy001');
+        var me=this;
+        Ext.Msg.show({
+            title: '确定要删除此申请?',
+            msg: '你正在试图取消选中的 <a><font color="red">'+ r.get('displayname')+'</font></a> 的提交.你想继续么?',
+            buttons: Ext.Msg.YESNO,
+            fn: function (btn) {
+                if(btn=='yes'){
+                    me.cancelsubmitbyfmy001(fmy001,grid.getStore(),form);
+                }
+            },
+            icon: Ext.Msg.QUESTION
+        });
+    },
+    cancelsubmitbyfmy001:function(fmy001,store,form){
+        var me=this;
+        var params = {
+            eventName:'cancelsubmitbyfmy001',
+            fmy001:fmy001,
+            status:processdiction.stepzero
+        };
+        var successFunc = function (myform, action) {
+            var header_cl = me.application.getController("Header");
+            header_cl.closetab(form.id);
+            store.load({callback:function(){
+                header_cl.widgetdolayout("mainContent-panel");
+            }});
+
+        };
+        var failFunc = function (form, action) {
+            Ext.Msg.alert("提示信息", "取消提交失败，检查web服务或数据库服务");
+
+        };
+        this.ajaxSend(params, 'ajax/sendfamilypropertyinfo.jsp', successFunc, failFunc,'POST');
 
     }
 

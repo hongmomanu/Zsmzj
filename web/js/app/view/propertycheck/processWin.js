@@ -26,8 +26,25 @@ Ext.define('ZSMZJ.view.propertycheck.processWin' ,{
                 //xtype: 'fieldset',
 
                 items: [
-                    {xtype:'processhistorygrid'},
-                    {xtype:'processpicturepanel'}
+                    {xtype:'propertyprocesshistorygrid'},
+                    {
+                        xtype:'panel',
+                        border: false,
+                        layout:'fit',
+                        padding:10,
+                        margin:10,
+
+                        items:[
+
+                            {
+                                xtype:'propertycheckprocessvector'
+                            }
+
+                        ]
+
+
+
+                    }
                 ],
                 border: false
             }

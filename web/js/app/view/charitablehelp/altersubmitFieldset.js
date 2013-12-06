@@ -105,7 +105,7 @@ Ext.define('ZSMZJ.view.charitablehelp.altersubmitFieldset', {
                     }
                     ,{
                         name: 'helpreason',
-                        fieldLabel: '救助原因',
+                        fieldLabel: '备注',
                         colspan:3,
                         minWidth:600,
                         width:800,
@@ -116,8 +116,8 @@ Ext.define('ZSMZJ.view.charitablehelp.altersubmitFieldset', {
                         grow : true,
 
                         afterLabelTextTpl: required,
-                        emptyText: '输入救助原因',
-                        emptyText: '输入救助原因',
+                        emptyText: '输入备注',
+                        emptyText: '输入备注',
                         allowBlank: false
                     },{
                         name: 'villageopinion',

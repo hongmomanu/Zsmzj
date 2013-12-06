@@ -77,10 +77,21 @@ Ext.define('ZSMZJ.view.studyhelp.applysubmitFieldset', {
                     {
                         name: 'totalhelpmoney',
                         itemId:'totalhelpmoney',
-                        fieldLabel: '总救助金额',
+                        fieldLabel: '救助金额',
                         afterLabelTextTpl: required,
                         emptyText: '请输入救助金额',
                         blankText : '请输入救助金额',
+                        afterLabelTextTpl: required,
+                        value:0,
+                        allowBlank: false
+                    },
+                    {
+                        name: 'mzamountofrelief',
+                        itemId:'mzamountofrelief',
+                        fieldLabel: '民政救助金额',
+                        afterLabelTextTpl: required,
+                        emptyText: '请输入民政救助金额',
+                        blankText : '请输入民政救助金额',
                         afterLabelTextTpl: required,
                         value:0,
                         allowBlank: false

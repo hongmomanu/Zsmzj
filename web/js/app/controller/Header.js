@@ -333,6 +333,21 @@ Ext.define('ZSMZJ.controller.Header', {
                 cancelclick:function(c,r,grid){//未审核前取消提交
                     this.cancelbusinesssubmit(c,r,grid);
                 }
+            },
+            'needtodopanel button[action=bulkoperation]':{
+                  test:function(){
+                      alert('MGO')
+                  },
+                  bulkoperationclick:function(c){
+                      var me=this;
+                      this.bulkoperationchangeprocessstatus(c);
+                      var fn=function(){
+                          me.headerRenderEvents();
+                          c.up('grid').getStore().load();
+                      }
+                      /*var task = new Ext.util.DelayedTask(fn);
+                      task.delay(9500);*/
+                  }
             }
 
         }, this);
@@ -623,6 +638,7 @@ Ext.define('ZSMZJ.controller.Header', {
         if(!this.checkprocessWin)this.checkprocessWin=Ext.widget('processcheckwin');
         this.checkprocessWin.show();
         this.checkprocessWin.dataform=btn.up('form');
+        this.checkprocessWin.dataformbtn=btn;
         this.checkprocessWin.approvalname=btn.namevalue;
         //testobj=this.checkprocessWin;
 
@@ -1721,7 +1737,7 @@ Ext.define('ZSMZJ.controller.Header', {
             store.load({callback:function(){
                 me.widgetdolayout("mainContent-panel");
             }});
-
+            me.headerRenderEvents();
         };
         var failFunc = function (form, action) {
             Ext.Msg.alert("提示信息", "删除失败，检查web服务或数据库服务");
@@ -1759,6 +1775,7 @@ Ext.define('ZSMZJ.controller.Header', {
                 }});
             }
 
+            me.headerRenderEvents();
 
         };
         var failFunc = function (form, action) {
@@ -2199,7 +2216,9 @@ Ext.define('ZSMZJ.controller.Header', {
     //显示待办事务
     showneedthings:function(c){
 
+        Ext.widget('needtodopanel').getStore().load();
         this.showtab('待办业务','needtodopanel','widget');
+        this.headerRenderEvents();
 
     },
     //关闭tab
@@ -2369,6 +2388,8 @@ Ext.define('ZSMZJ.controller.Header', {
 
                 ]
             }).show();
+
+
         }
         var task = new Ext.util.DelayedTask(fn);
         task.delay(100);
@@ -2399,6 +2420,54 @@ Ext.define('ZSMZJ.controller.Header', {
         pathTree.setValue(divisionpath);
         pathTree.setRawValue(divisionpath);
         pathTree.validate();
+    },
+    bulkoperationchangeprocessstatus:function(c){
+        var me=this;
+        var recordList=c.up('grid').getSelectionModel().getSelection();
+
+        var len=recordList.length;
+        var changecheckapplystatus=function(recordList,n){
+            if(n>=len){
+                me.headerRenderEvents();
+                c.up('grid').getStore().load();
+                return;
+            }
+            var step=recordList[n].data.processstatus;
+            var obj=recordList[n].data;
+
+            var fun=function(response, action){
+                changecheckapplystatus(recordList,n+1)
+            }
+            if(step==processdiction.stepone||step==processdiction.steptwo){
+                var approvalname=null;
+                if(step==processdiction.stepone){
+                    approvalname='街道/乡镇审核';
+                }else{
+                    approvalname='区/县/市审批';
+                }
+                var params = {
+                    businessid:recordList[n].data.businessid,
+                    processstatus:recordList[n].data.processstatus,
+                    userid:userid,
+                    //submituid:userid,
+                    approvalresult:'同意',
+                    approvalopinion:'通过',
+                    approvalname:approvalname,
+                    isapproval:true
+                };
+                me.ajaxSend(params, 'ajax/sendcheckform.jsp', fun, fun,'POST');
+            }else if(step==processdiction.stepzero){
+                var params = {
+                    businessid:recordList[n].data.businessid,
+                    status:recordList[n].data.process
+                };
+                me.ajaxSend(params, 'ajax/changeapplystatus.jsp', fun, fun,'POST');
+            }
+        }
+        changecheckapplystatus(recordList,0)
+
+
+
     },
     onLaunch: function() {
         var me = this;
