@@ -88,7 +88,7 @@ CREATE VIRTUAL TABLE IF NOT EXISTS attachment USING fts3
   );
 
 --业务信息表
-CREATE VIRTUAL TABLE IF NOT EXISTS business USING fts3
+CREATE TABLE IF NOT EXISTS business
 (
 
   id integer primary key autoincrement,                             --自增主键
@@ -359,8 +359,9 @@ CREATE VIRTUAL TABLE IF NOT EXISTS businesschange USING fts3
 
 
 
+
 ---家庭成员表
-CREATE VIRTUAL TABLE IF NOT EXISTS familymembers  USING fts3
+CREATE TABLE IF NOT EXISTS familymembers
 (
 
   id integer primary key autoincrement,                             --自增主键
@@ -403,6 +404,8 @@ CREATE VIRTUAL TABLE IF NOT EXISTS familymembers  USING fts3
 suppliesbuytime                 VARCHAR(50),                              --购入时间
 suppliesmoney                 VARCHAR(50)                              --购入资金
 );
+
+
 
 
 ---家庭成员表
@@ -507,4 +510,28 @@ CREATE VIRTUAL TABLE IF NOT EXISTS medicalstandard USING fts3
 
 
 
+--ALTER TABLE business_content RENAME TO business_content;
 ----技巧说明 日期比较 time Between '2008-06-10' and  '2013-09-11'   数值比较CAST(totalhelpmoney AS real)
+-- create index business_division on business(division);
+-- create index business_businesstype on business(businesstype);
+-- create index business_owername on business(owername);
+-- create index business_owerid on business(owerid);
+-- create index business_totalhelpmoney on business(owerid);
+-- create index familymembers_relationship on familymembers(relationship);
+-- create index familymembers_businessid on familymembers(businessid);
+-- create index familymembers_name on familymembers(name);
+-- create index familymembers_birthday on familymembers(birthday);
+
+/*
+
+insert into  familymembers_test
+(businessid,time,birthday,isenjoyed,persontype,jobstatus,bodystatus ,specialobject,workunits ,
+ monthlyincome,accounttype,maritalstatus,education,political,disabledtype,disabledlevel,disablenum ,
+ workability,ispension,ismedical,medicaltype,medicalnum,isunemployment,unemploymentnum,relationship,
+ name,personid,sex ,other,noenjoyedreason,personresource,disastertype,disasterintime,disasterouttime,
+ unit,suppliesbuytime,suppliesmoney) select
+                                       businessid,time,birthday,isenjoyed,persontype,jobstatus,bodystatus ,specialobject,workunits ,
+                                       monthlyincome,accounttype ,maritalstatus,education,political,disabledtype,disabledlevel,disablenum ,
+                                       workability,ispension,ismedical,medicaltype,medicalnum,isunemployment,unemploymentnum,relationship,
+                                       name,personid,sex ,other,noenjoyedreason,personresource,disastertype,disasterintime,disasterouttime,
+                                       unit,suppliesbuytime,suppliesmoney from familymembers;*/
