@@ -216,7 +216,21 @@ fundsresource                   VARCHAR(50),                           --资金�
 helpobject                      VARCHAR(50),                           --救助对象
 helpprojecttype                 VARCHAR(50),                           --救助项目类型
 illexpenses                     VARCHAR(50),                           --因病支出
-educationexpenses               VARCHAR(50)                            --因教育支出
+educationexpenses               VARCHAR(50),                            --因教育支出
+
+
+hitdisasterkind					      VARCHAR(50),							--灾害救助种类
+hitdisastersituation			    VARCHAR(50),							--灾害受灾情况
+applydisasterhelpkind			    VARCHAR(50),							--灾害申请救助种类
+thistimedisbursement			    real,									--本次发放资金
+medicalhelptype					      VARCHAR(50),							--医疗救助类别
+educationalbackground			    VARCHAR(50),						--学历
+mzamountofrelief				      VARCHAR(50),								--民政救助金额
+difficulttype					        VARCHAR(50),								--困难类型
+studenthelptype					      VARCHAR(50),								--助学类型
+lengthofschooling					    VARCHAR(50),								--学制（年）
+grade					                VARCHAR(50),								--就读年级
+overtheyearstotalamount					VARCHAR(50)								--历年累计救助金额
 );
 
 
@@ -352,6 +366,19 @@ CREATE VIRTUAL TABLE IF NOT EXISTS businesschange USING fts3
   helpprojecttype                 VARCHAR(50),                           --救助项目类型
   illexpenses                     VARCHAR(50),                           --因病支出
   educationexpenses               VARCHAR(50),                            --因教育支出
+
+  hitdisasterkind					      VARCHAR(50),							--灾害救助种类
+  hitdisastersituation			    VARCHAR(50),							--灾害受灾情况
+  applydisasterhelpkind			    VARCHAR(50),							--灾害申请救助种类
+  thistimedisbursement			    real,									--本次发放资金
+  medicalhelptype					      VARCHAR(50),							--医疗救助类别
+  educationalbackground			    VARCHAR(50),						--学历
+  mzamountofrelief				      VARCHAR(50),								--民政救助金额
+  difficulttype					        VARCHAR(50),								--困难类型
+  studenthelptype					      VARCHAR(50),								--助学类型
+  lengthofschooling					    VARCHAR(50),								--学制（年）
+  grade					                VARCHAR(50),								--就读年级
+  overtheyearstotalamount					VARCHAR(50),								--历年累计救助金额
 
   businessid               integer,                                 --业务id
   insertdate               VARCHAR(50)                              --charuriq
@@ -524,7 +551,7 @@ CREATE VIRTUAL TABLE IF NOT EXISTS medicalstandard USING fts3
 
 /*
 
-insert into  familymembers_test
+insert into  familymembers
 (businessid,time,birthday,isenjoyed,persontype,jobstatus,bodystatus ,specialobject,workunits ,
  monthlyincome,accounttype,maritalstatus,education,political,disabledtype,disabledlevel,disablenum ,
  workability,ispension,ismedical,medicaltype,medicalnum,isunemployment,unemploymentnum,relationship,
@@ -534,4 +561,4 @@ insert into  familymembers_test
                                        monthlyincome,accounttype ,maritalstatus,education,political,disabledtype,disabledlevel,disablenum ,
                                        workability,ispension,ismedical,medicaltype,medicalnum,isunemployment,unemploymentnum,relationship,
                                        name,personid,sex ,other,noenjoyedreason,personresource,disastertype,disasterintime,disasterouttime,
-                                       unit,suppliesbuytime,suppliesmoney from familymembers;*/
+                                       unit,suppliesbuytime,suppliesmoney from familymembers_test;*/
