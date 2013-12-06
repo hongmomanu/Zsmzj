@@ -991,7 +991,7 @@ var menu_shjz=[
     {
         layout: 'fit',
         title: '财产核定',
-        //icon:icons+'12.png',
+        icon:icons+'11.png',
         items:[
             {xtype:'dbglconfigtree',searchtype:"财产核定",businesstype:businessTableType.propertycheck}
         ],
