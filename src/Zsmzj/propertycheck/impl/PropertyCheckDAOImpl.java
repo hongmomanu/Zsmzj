@@ -3,7 +3,9 @@ package Zsmzj.propertycheck.impl;
 import Zsmzj.business.impl.BusinessProcess;
 import Zsmzj.enums.ProcessType;
 import Zsmzj.jdbc.JdbcFactory;
+import Zsmzj.propertycheck.FamilyMemberDAO;
 import Zsmzj.propertycheck.PropertyCheckDAO;
+import Zsmzj.propertycheck.PropertyCommonDAO;
 import Zsmzj.propertycheck.ResultInfo;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
@@ -24,10 +26,16 @@ import java.util.Date;
 public class PropertyCheckDAOImpl implements PropertyCheckDAO {
     private static final Logger log = Logger.getLogger( PropertyCheckDAOImpl.class);
 	private Connection conn=null;
-    private String[] checkItemArray={"核定住房","核定收入","核定现有资产"};
+    FamilyMemberDAO familymemberdao=null;
+    PropertyCommonDAO commondao=null;
     private SimpleDateFormat fmt=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	public PropertyCheckDAOImpl(Connection conn){
 		this.conn=conn;
+	}
+    public PropertyCheckDAOImpl(Connection conn,FamilyMemberDAO familymemberdao,PropertyCommonDAO commondao){
+		this.conn=conn;
+        this.familymemberdao=familymemberdao;
+        this.commondao=commondao;
 	}
 	@Override
 	public int doCreate(Map<String, Object> params) {
@@ -40,61 +48,19 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
         }
         log.debug((String)params.get("fm01"));
         JSONObject jsonObj=  JSONObject.fromObject((String)params.get("fm01"));
+        jsonObj.put("time",fmt.format(new   java.util.Date()));
         jsonObj.put("processstatus",proStatus) ;
 		int result=-1;
-		String col_str="";
-		String val_str="";
-		ArrayList<String> val_arr=new ArrayList<String>();
-		Iterator iter = jsonObj.keys();
-        while(iter.hasNext()){
-            String key=iter.next().toString();
-            String val= jsonObj.get(key).toString();
-            //System.out.println(key+":"+jsonObj.get(key));
-            val_arr.add(val);//列的值
-            val_str+="?,";	//列的占位符
-            col_str+=key+",";//列名
-        }
-
-
-		col_str+="time";
-		val_str+="?";
-
-		String sql="insert into fm01("+col_str+")values("+val_str+")";
-        log.debug(sql);
-		PreparedStatement pstmt=null;
-
-
-		try {
-			int i=0;
-			pstmt=conn.prepareStatement(sql);
-			for(;i<val_arr.size();i++){
-				pstmt.setString(i+1,val_arr.get(i));
-			}
-			pstmt.setString(i+1,fmt.format(new java.util.Date()));
-			result=pstmt.executeUpdate();
-
-
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				if(null!=pstmt){
-					pstmt.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+        result=commondao.insertTableVales(this.json2Map(jsonObj),"fm01");
 
 		return result;
 	}
 
 	@Override
 	public int doUpdate(Map<String, Object> param) {
-        String sql_column="select * from fm01 where 1=0";
+        //String sql_column="select * from fm01 where 1=0";
         JSONObject jsonFm01=JSONObject.fromObject((String)param.get("fm01"));
-        Statement stmt=null;
+        /*Statement stmt=null;
         int result=1;
         try {
             stmt=conn.createStatement();
@@ -138,8 +104,10 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }
-        return result;
+        }*/
+        Map<String,String> colnames= new HashMap<String, String>();
+        colnames.put("fmy001",(String)jsonFm01.get("fmy001"));
+        return commondao.updateTableValesSpecail(this.json2Map(jsonFm01), "fm01",null,"fmy001="+(String)jsonFm01.get("fmy001") );
 	}
 
 	@Override
@@ -672,5 +640,18 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
             }
         }
         return new ResultInfo(list.size(),list);
+    }
+
+
+
+    private Map<String,Object> json2Map(JSONObject jsonObj){
+        Iterator<String> it=jsonObj.keys();
+        Map<String,Object> map=new HashMap<String,Object>();
+        while(it.hasNext()){
+            String name=it.next();
+            map.put(name,jsonObj.get(name));
+        }
+        log.debug(map.toString());
+        return map;
     }
 }
