@@ -552,7 +552,7 @@ public class BusinessProcessControl {
             BusinessProcess bp=new BusinessProcess();
             ComonDao cd=new ComonDao();
 
-            String sql_list="select divisionpath from "+DivisionsTable +" where parentid MATCH "+divisionpid;
+            /*String sql_list="select divisionpath from "+DivisionsTable +" where parentid MATCH "+divisionpid;
             ArrayList<Map<String,Object>> division_list=cd.getTableList(sql_list);
             ArrayList<Map<String,Object>> result_list=new ArrayList<Map<String, Object>>();
 
@@ -577,12 +577,11 @@ public class BusinessProcessControl {
             res.put("divisionname","");
             res.put("children",result_list);
 
+*/
 
 
 
-/*
-
-            String sql_list="select a.divisionname  ,a.id," +
+            String sql_list="select a.divisionname  ,a.rowid as id," +
                     "(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and  division like (a.divisionpath||'%')) as totalfamily ,"
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
                     "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and c.businessid = b.id and b.division like (a.divisionpath||'%')) as totalperson, "
@@ -618,14 +617,14 @@ public class BusinessProcessControl {
             ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
 
             res.put("divisionname","");
-            res.put("children",list);*/
+            res.put("children",list);
 
         }
         else if(type.equals(StatisticsType.UseStatisticsType.getChineseSeason(StatisticsType.ComplexOne))){
 
             BusinessProcess bp=new BusinessProcess();
             ComonDao cd=new ComonDao();
-            String sql_list="select divisionpath from "+DivisionsTable +" where parentid MATCH "+divisionpid;
+            /*String sql_list="select divisionpath from "+DivisionsTable +" where parentid MATCH "+divisionpid;
             ArrayList<Map<String,Object>> division_list=cd.getTableList(sql_list);
             ArrayList<Map<String,Object>> result_list=new ArrayList<Map<String, Object>>();
 
@@ -647,37 +646,37 @@ public class BusinessProcessControl {
             }
             res.put("divisionname","");
             res.put("children",result_list);
+*/
+            String sql_list="select a.divisionname  ,a.rowid as id," +
+                    "(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and  division like (a.divisionpath||'%')) as totalfamily ,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.division like (a.divisionpath||'%')) as totalperson, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and c.jobstatus ='老年人' and b.division like (a.divisionpath||'%')) as oldperson, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and  c.jobstatus ='登记失业' and b.division like (a.divisionpath||'%')) as loginnojob,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and c.jobstatus ='在校生' and b.division like (a.divisionpath||'%')) as student,"
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and division like (a.divisionpath||'%')) as totalmoney, "
 
-            /*String sql_list="select a.divisionname  ,a.rowid as id," +
-                    "(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and  division MATCH (a.divisionpath||'*')) as totalfamily ,"
+                    +"(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='城镇' and division like (a.divisionpath||'%')) as cityfamily ,"
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and businesstype='"+businesstype+"' and b.division MATCH (a.divisionpath||'*')) as totalperson, "
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇' and b.division like (a.divisionpath||'%')) as cityperson, "
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and businesstype='"+businesstype+"' and c.jobstatus ='老年人' and b.division MATCH (a.divisionpath||'*')) as oldperson, "
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇' and c.sex ='男' and b.division like (a.divisionpath||'%')) as citymen, "
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and businesstype='"+businesstype+"' and  c.jobstatus ='登记失业' and b.division MATCH (a.divisionpath||'*')) as loginnojob,"
-                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and businesstype='"+businesstype+"' and c.jobstatus ='在校生' and b.division MATCH (a.divisionpath||'*')) as student,"
-                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and division MATCH (a.divisionpath||'*')) as totalmoney, "
-
-                    +"(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='城镇' and division MATCH (a.divisionpath||'*')) as cityfamily ,"
-                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and businesstype='"+businesstype+"' and b.familyaccount='城镇' and b.division MATCH (a.divisionpath||'*')) as cityperson, "
-                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and businesstype='"+businesstype+"' and b.familyaccount='城镇' and c.sex ='男' and b.division MATCH (a.divisionpath||'*')) as citymen, "
-                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and businesstype='"+businesstype+"' and b.familyaccount='城镇' and c.sex ='女' and b.division MATCH (a.divisionpath||'*')) as citygirls,"
-                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='城镇' and division MATCH (a.divisionpath||'*')) as citymoney,"
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇' and c.sex ='女' and b.division like (a.divisionpath||'%')) as citygirls,"
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='城镇' and division like (a.divisionpath||'%')) as citymoney,"
 
 
-                    +"(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and familyaccount='农村' and businesstype='"+businesstype+"' and division MATCH (a.divisionpath||'*')) as villagefamily ,"
+                    +"(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and familyaccount='农村' and businesstype='"+businesstype+"' and division like (a.divisionpath||'%')) as villagefamily ,"
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and b.familyaccount='农村' and businesstype='"+businesstype+"' and b.division MATCH (a.divisionpath||'*')) as villageperson, "
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and b.familyaccount='农村' and businesstype='"+businesstype+"' and b.division like (a.divisionpath||'%')) as villageperson, "
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and b.familyaccount='农村' and businesstype='"+businesstype+"' and c.sex ='男' and b.division MATCH (a.divisionpath||'*')) as villagemen, "
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and b.familyaccount='农村' and businesstype='"+businesstype+"' and c.sex ='男' and b.division like (a.divisionpath||'%')) as villagemen, "
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.rowid and b.familyaccount='农村' and businesstype='"+businesstype+"' and c.sex ='女' and b.division MATCH (a.divisionpath||'*')) as villagegirls,"
-                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='农村' and division MATCH (a.divisionpath||'*')) as villagemoney "
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and b.familyaccount='农村' and businesstype='"+businesstype+"' and c.sex ='女' and b.division like (a.divisionpath||'%')) as villagegirls,"
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='农村' and division like (a.divisionpath||'%')) as villagemoney "
 
 
 
@@ -686,7 +685,7 @@ public class BusinessProcessControl {
             ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
 
             res.put("divisionname","");
-            res.put("children",list); */
+            res.put("children",list);
 
 
 
@@ -2044,51 +2043,22 @@ public class BusinessProcessControl {
             calendar.add(Calendar.YEAR, -100);    //得到下一个月
             String enddate=sDayFormat.format(calendar.getTime());
 
-            sql_list+=" and a.helpbgtime Between '"+enddate
-                    +"' and  '"+edddate+"' or a.changedate Between '"+enddate+"' and '"+edddate+"' or a.logoutdate Between '"+enddate+"' and '"+edddate+"'";
-            sql_count+=" and a.helpbgtime Between '"+enddate
-                    +"' and  '"+edddate+"' or a.changedate Between '"+enddate+"' and '"+edddate+"' or a.logoutdate Between '"+enddate+"' and '"+edddate+"'";
+            sql_list+=" and (a.helpbgtime Between '"+enddate
+                    +"' and  '"+edddate+"' or a.changedate Between '"+enddate+"' and '"+edddate+"' or a.logoutdate Between '"+enddate+"' and '"+edddate+"')";
+            sql_count+=" and (a.helpbgtime Between '"+enddate
+                    +"' and  '"+edddate+"' or a.changedate Between '"+enddate+"' and '"+edddate+"' or a.logoutdate Between '"+enddate+"' and '"+edddate+"')";
         }
 
 
         if (keyword!=null&&!keyword.equals("")){
-            if(keyword.indexOf("and")>0){
-                String[] arr=keyword.split("and");
-                for(int i=0;i<arr.length;i++){
-                    sql_list+=" and a.owerid  like '"+arr[i]+"%' ";
-                    sql_count+=" and a.owerid like '"+arr[i]+"%' ";
-                }
-            }
-            else if(keyword.indexOf("or")>0){
 
-                String[] arr=keyword.split("or");
-                sql_list+=" and a.rowid IN (";
-                sql_count+=" and a.rowid IN (";
-                for(int i=0;i<arr.length;i++){
-                    //sql_list+=arr[i]+"* OR ";
-                    sql_list+=
-                            "    SELECT ROWID FROM "+BusinessTable+" WHERE owerid like '"+arr[i]+"%' " +
-                                    "UNION ";
 
-                    sql_count+=
-                            "    SELECT ROWID FROM "+BusinessTable+" WHERE owerid like '"+arr[i]+"%' " +
-                                    "UNION ";
-
-                }
-                sql_list=sql_list.substring(0,sql_list.lastIndexOf("UNION"))+") ";
-                sql_count=sql_count.substring(0,sql_count.lastIndexOf("UNION"))+") ";
-
-            }
-            else{
-                sql_list+=" and a.owerid like '"+keyword+"%' ";
-                sql_count+=" and a.owerid like '"+keyword+"%' ";
-
-            }
+                sql_list+=" and (a.owerid  like '"+keyword+"%' or a.owername like '"+keyword+"%') ";
+                sql_count+=" and (a.owerid  like '"+keyword+"%' or a.owername like '"+keyword+"%') ";
 
         }
         sql_list+="Limit "+limit+" Offset "+start;
-		System.out.println("***************************************************************************************************");
-		System.out.println(sql_list);
+
         ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
         for(Map<String,Object> map:list){
             map.put("process", ProcessType.UseProcessType.getNext(ProcessType.UseProcessType.
