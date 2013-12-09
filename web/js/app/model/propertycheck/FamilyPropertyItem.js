@@ -15,6 +15,8 @@ Ext.define('ZSMZJ.model.propertycheck.FamilyPropertyItem', {
         {name:'checkresult'},
         {name:'checkcomment'},
         {name:'userid'},
+        {name:'username'},
+        {name:'displayname'},
         {name:'roleid'}
 
     ]

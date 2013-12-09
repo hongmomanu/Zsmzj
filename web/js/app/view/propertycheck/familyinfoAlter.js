@@ -16,7 +16,6 @@ Ext.define('ZSMZJ.view.propertycheck.familyinfoAlter', {
     listeners: {
         show: function(panel) {
             this.fireEvent('initformaftershow',this);
-            this.fireEvent('test',this);
             this.fireEvent('alterapplyaftershow',this);
         }
     },
@@ -54,7 +53,7 @@ Ext.define('ZSMZJ.view.propertycheck.familyinfoAlter', {
                 },
                 {
                     text: '注销',
-                    hidden:true||!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
                         {name:"name",value:this.objdata.record.get("processstatus")})?CommonFunc.lookup(processRoleBtn,
                         {name:"name",value:this.objdata.record.get("processstatus")}).children:null,
                         {name:"name",value:"注销"}),
@@ -62,7 +61,7 @@ Ext.define('ZSMZJ.view.propertycheck.familyinfoAlter', {
                 },
                 {
                     text: '变更',
-                    hidden:true||!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
                         {name:"name",value:this.objdata.record.get("processstatus")})?CommonFunc.lookup(processRoleBtn,
                         {name:"name",value:this.objdata.record.get("processstatus")}).children:null,
                         {name:"name",value:"变更"}),

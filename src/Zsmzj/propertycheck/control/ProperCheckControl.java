@@ -195,6 +195,20 @@ public class ProperCheckControl {
         closeConnection();
         return JSONObject.fromObject(res).toString();
     }
+
+
+    public String getfamilymembersbyfmy001(Map paraMap){
+        Map<String,Object>res=new HashMap<String, Object>();
+        ResultInfo ri=familymemberdao.getfamilymembersbyfmy001(paraMap);
+        List<Map<String, Object>> list=ri.getList();
+        res.put("totalCount",ri.getCount());
+        res.put("results",list);
+        closeConnection();
+        return JSONArray.fromObject(list).toString();
+        //return JSONObject.fromObject(res).toString();
+    }
+
+
     public static void main(String[] args){
         ProperCheckControl pc=new ProperCheckControl();
         PreparedStatement pstmt=null;

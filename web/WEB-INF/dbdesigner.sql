@@ -614,7 +614,49 @@ CREATE  VIRTUAL TABLE FM04 USING fts3(
   approvalopinion         VARCHAR(500),                             --审批意见
   submituid               integer                                   --提交人id
 );
+CREATE VIRTUAL TABLE fm02  USING fts3
+(
 
+  id integer primary key autoincrement,                             --自增主键
+  businessid  integer                 ,                             --业务id外键
+  time DATETIME DEFAULT (datetime(CURRENT_TIMESTAMP,'localtime')),  --时间
+  birthday                DATETIME,                                 --出生日期*
+  isenjoyed               VARCHAR(50) ,                             --是否享受
+  persontype              VARCHAR(50),                              --人员类别
+  jobstatus               VARCHAR(50),                              --职业状况*
+  bodystatus              VARCHAR(50),                              --健康状况*
+  specialobject           VARCHAR(50),                              --特定救助对象
+  workunits               VARCHAR(50),                              --工作单位
+  monthlyincome           real,                                     --月收入
+  accounttype             VARCHAR(50),                              --户口性质
+  maritalstatus           varchar(50),                              --婚姻状况
+  education               varchar(50),                              --文化程度
+  political               varchar(50),                              --政治面貌
+  disabledtype            varchar(50),                              --残疾类别
+  disabledlevel           varchar(50),                              --残疾等级
+  disablenum              varchar(50),                              --残疾证号
+  workability             varchar(50),                              --劳动能力
+  ispension               VARCHAR(50),                              --是否有养老保险
+  ismedical               VARCHAR(50),                              --是否医疗保险
+  medicaltype             varchar(50),                              --医保类型
+  medicalnum              varchar(50),                              --医保卡号
+  isunemployment          VARCHAR(50),                              --是否有失业保险
+  unemploymentnum         VARCHAR(50),                              --失业证号
+  relationship            VARCHAR(50),                              --与户主关系*
+  name                    VARCHAR(50),                              --姓名
+  personid                VARCHAR(50),                              --身份证*
+  sex                     VARCHAR(50),                              --性别
+  other                   VARCHAR(50),                               --备注
+  noenjoyedreason         VARCHAR(50),                              --不享受原因
+
+  personresource         VARCHAR(50),                              --人员来源
+  disastertype         VARCHAR(50),                              --避灾种类
+  disasterintime         VARCHAR(50),                              --入场所时间
+  disasterouttime         VARCHAR(50),                              --出场所时间
+  unit                 VARCHAR(50),                              --单位
+  suppliesbuytime                 VARCHAR(50),                              --购入时间
+  suppliesmoney                 VARCHAR(50)                              --购入资金
+);
 CREATE  VIRTUAL TABLE fm03 USING fts3(
 --核定过程表
   fmy001 			        integer,

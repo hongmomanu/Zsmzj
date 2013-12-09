@@ -51,64 +51,58 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
         jsonObj.put("time",fmt.format(new   java.util.Date()));
         jsonObj.put("processstatus",proStatus) ;
 		int result=-1;
-        result=commondao.insertTableVales(this.json2Map(jsonObj),"fm01");
+        try {
+            conn.setAutoCommit(false);
+            result=commondao.insertTableVales(this.json2Map(jsonObj),"fm01");
 
-		return result;
+            familymemberdao.saveFamilyMembers(params,result);
+            conn.commit();
+        } catch (SQLException e) {
+            try {
+                conn.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        }  finally {
+            try {
+                conn.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
 	}
 
 	@Override
 	public int doUpdate(Map<String, Object> param) {
-        //String sql_column="select * from fm01 where 1=0";
         JSONObject jsonFm01=JSONObject.fromObject((String)param.get("fm01"));
-        /*Statement stmt=null;
-        int result=1;
+        //Map<String,String> colnames= new HashMap<String, String>();
+        int result=0;
+        //colnames.put("fmy001",(String)jsonFm01.get("fmy001"));
         try {
-            stmt=conn.createStatement();
-            ResultSet rs=stmt.executeQuery(sql_column);
-            ResultSetMetaData md=rs.getMetaData();
-            int count=md.getColumnCount();
-            String setStr="";
-            for(int i=1;i<=count;i++){
-                String name=md.getColumnName(i);
-                if("fmy001".equals(name)){
-                    continue;
-                }
-
-                String value="";
-
-
-                try{
-                    value=(String)jsonFm01.get(name);
-                } catch(Exception e){
-                    value=jsonFm01.get(name)+"";
-                    //e.printStackTrace();
-                }
-
-                if(null!=value){
-                    setStr+=name+"='"+value+"',";
-                }
-
-            }
-            setStr="update fm01 set "+setStr.substring(0,setStr.lastIndexOf(','))+ " where owerid='"+(String)jsonFm01.get("owerid")+"'";
-            System.out.println(setStr);
-            log.debug(setStr);
-
-            stmt.execute(setStr);
-            rs.close();
+            conn.setAutoCommit(false);
+            familymemberdao.doUpdate(param);
+            result=commondao.updateTableValesSpecail(this.json2Map(jsonFm01), "fm01",null,"fmy001="+(String)jsonFm01.get("fmy001") );
         } catch (SQLException e) {
             e.printStackTrace();
             result=-1;
-        } finally {
             try {
-                if(null!=stmt)stmt.close();
+                conn.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        }finally {
+            try {
+                conn.setAutoCommit(true);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }*/
-        Map<String,String> colnames= new HashMap<String, String>();
-        colnames.put("fmy001",(String)jsonFm01.get("fmy001"));
-        return commondao.updateTableValesSpecail(this.json2Map(jsonFm01), "fm01",null,"fmy001="+(String)jsonFm01.get("fmy001") );
-	}
+        }
+
+
+        return result;
+    }
 
 	@Override
 	public int doDelete(int fmy001) {
@@ -503,7 +497,7 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
     public ResultInfo getPropertyCheckItemDatilByFmy001(Map<String, Object> param) {
 
         ArrayList<Map<String,Object>> list=new ArrayList<Map<String, Object>>();
-        String sql="select * from fm03 where fmy001=?";
+        String sql="select a.*,u.username,u.displayname from fm03 a ,users u where a.fmy001=? and a.userid=u.id";
         PreparedStatement pstmt=null;
         Integer fmy001= Integer.parseInt((String)param.get("fmy001"));
         try {

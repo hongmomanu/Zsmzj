@@ -11,4 +11,6 @@ import java.util.Map;
  */
 public interface FamilyMemberDAO {
     int saveFamilyMembers(Map<String,Object> params,int fmy001);
+    int doUpdate(Map<String,Object> param);
+    ResultInfo getfamilymembersbyfmy001(Map paraMap);
 }

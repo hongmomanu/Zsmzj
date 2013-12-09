@@ -164,6 +164,50 @@ public class ProperCommonDAOImpl implements PropertyCommonDAO{
         return list;
     }
 
+    @Override
+    public int deleteTableValues(String stmt) {
+        int result=0;
+        PreparedStatement pstmt=null;
+        try {
+            pstmt=conn.prepareStatement(stmt);
+            result=pstmt.execute()?1:0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            result=-1;
+        } finally {
+            try {
+                pstmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public boolean isExist(String sql) {
+        boolean flag=false;
+        Statement pstmt=null;
+        try {
+            pstmt=conn.createStatement();
+            ResultSet rs=pstmt.executeQuery(sql);
+            if(rs.next()){
+                flag=true;
+            }
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            flag=false;
+        } finally {
+            try {
+                pstmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return flag;
+    }
+
     public static void main(String[] args){
         ProperCommonDAOImpl p=new ProperCommonDAOImpl(JdbcFactory.getConn("sqlite"));
         Map<String,Object> map=new HashMap<String, Object>();
