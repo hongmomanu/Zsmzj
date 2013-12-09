@@ -17,6 +17,7 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
     stores: [
         'propertycheck.FamilyPropertyQuerys',
         'propertycheck.ProcessHistorys',
+        'propertycheck.FamilyMembers',
         'propertycheck.FamilyPropertyItems'
     ],
     refs: [
@@ -37,6 +38,12 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
         'propertycheck.processWin',
         'propertycheck.processCheckWin',
         'propertycheck.PorpertyProcessHistoryGrid',
+        'propertycheck.FamilyPropertyItemGrid',
+        'propertycheck.itemhistoryFieldset',
+        'propertycheck.FamilyMemberGrid',
+        'propertycheck.familymemberFieldset',
+        'propertycheck.familyinfoChange',
+
         'propertycheck.applyhistoryFieldset'
 
     ],
@@ -47,7 +54,7 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
         var dbgl_cl = this.application.getController("Dbgl");
         var header_cl = this.application.getController("Header");
         this.control({
-                'propertycheckneedtocheckbusinesspanel,propertycheckneedtodobusinesspanel,propertycheckfamilyinforegister,propertycheckfamilyinputfieldset,propertycheckfamilyhousefieldset,propertycheckfamilymoneyfieldset,propertycheckapplyhistoryfieldset':{
+                'propertycheckneedtocheckbusinesspanel,propertycheckneedtodobusinesspanel,propertycheckfamilyinforegister,propertycheckfamilyinputfieldset,propertycheckfamilyhousefieldset,propertycheckfamilymoneyfieldset,propertycheckapplyhistoryfieldset,propertycheckitemhistoryfieldset,propertycheckfamilymemberfieldset':{
                     afterrender: dbgl_cl.afterrenderEvents,
                     initformaftershow:Ext.bind(dbgl_cl.initformaftershow, dbgl_cl)
 
@@ -73,7 +80,7 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                         task.delay(500);
                     }
                 },
-                'propertycheckfamilyinfoalter':{
+                'propertycheckfamilyinfoalter,propertycheckfamilyinfochange':{
                     afterrender: dbgl_cl.afterrenderEvents,
                     initformaftershow:Ext.bind(dbgl_cl.initformaftershow, dbgl_cl),
                     alterapplyaftershow:function(form){
@@ -87,78 +94,80 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                                 division.focus();
                                 division.validateValue();
                             }
-                            var g=form.down('#propertyprocesshistorygrid');
-                            if(g){
-                                var store=g.getStore();
+                            var familyfun=function(){
+                                var familymembergrid=form.down('#familymembergrid');
+                                if(familymembergrid){
+                                    var store=familymembergrid.getStore();
+                                    if(store.proxy.extraParams){
+                                        store.proxy.extraParams.fmy001=r.data.fmy001
+                                    }
+                                    store.load();
+                                }
+                            }
+
+                            var historyfun=function(){
+                                var historygrid=form.down('#propertyprocesshistorygrid');
+                                if(historygrid){
+                                    var store=historygrid.getStore();
+                                    var params={
+                                        eventName:'getprocesscheckbyfmy001',
+                                        fmy001: r.data.fmy001
+                                    }
+                                    if(store.proxy.extraParams){
+                                        store.proxy.extraParams=params;
+                                    }
+                                    store.load({callback:familyfun});
+                                }
+                            }
+
+
+                            checkitemdetail=form.down('#propertycheckfamilypropertyitemgrid');
+                            if(checkitemdetail){
+                                var store=checkitemdetail.getStore();
                                 var params={
-                                    eventName:'getprocesscheckbyfmy001',
+                                    eventName:'getperopertycheckitemdetailbyowerid',
                                     fmy001: r.data.fmy001
                                 }
                                 if(store.proxy.extraParams){
                                     store.proxy.extraParams=params;
                                 }
-                                store.load();
-                            }
-                            var params={
-                                eventName:'getperopertycheckitemdetailbyowerid',
-                                fmy001: r.data.fmy001
-                            }
-                            var store=me.getStore("propertycheck.FamilyPropertyItems");
-                            if(store.proxy.extraParams){
-                                store.proxy.extraParams=params;
-                            }
-                            store.load({callback:function(){
-                                var items=store.data.items;
-                                for( var p in me.checkItemMap){
-                                    for(var i=0;i<items.length;i++){
-                                        var o= items[i].data;
-                                        if(me.checkItemMap[p]==o.checkitem&&o.checkresult==1){
-                                            form.query(p)[0].disable();
+                                store.load({callback:function(){
+                                    var items=store.data.items;
+                                    if(r.data.processstatus!=processdiction.stepthree){
+
+                                        for( var p in me.checkItemMap){
+                                            for(var i=0;i<items.length;i++){
+                                                var o= items[i].data;
+                                                if(me.checkItemMap[p]==o.checkitem&&o.checkresult==1){
+                                                    try{
+                                                        form.query(p)[0].disable();
+                                                    }catch (e){
+
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
-                                }
-                                var grid=Ext.create('Ext.grid.Panel', {
-                                    store: store,
-                                    columns: [
-                                        { header: '核定项目', dataIndex: 'checkitem',flex:1,width:30},
-                                        { header: '核定结果', dataIndex: 'checkresult',flex:1,width:30,
-                                            renderer:function(v,c,r){
-                                                var rs='';
-                                               switch(parseInt(v)){
-                                                   case 0:rs="不通过";break;
-                                                   case 1:rs="通过";break;
-                                               }
-                                               return rs;
-                                        }},
-                                        { header: '核定备注', dataIndex: 'checkcomment',flex:2 } ,
-                                        { header: '操作员', dataIndex: 'userid' },
-                                        { header: '操作员角色', dataIndex: 'roleid' }
-                                    ],
-                                    style: {
-                                        border:'1px solid green',
-                                        marginBottom: '10px',
-                                        marginLeft:'10px',
-                                        marginRight:'10px'
-                                    }
-                                });
-                                form.add(grid);
-                            }});
 
+                                    historyfun();
+
+                                }});
+                            }
 
                         }
 
                         var task = new Ext.util.DelayedTask(function(){fn(form)});
-                        task.delay(500);
+                        task.delay(800);
                     }
                 },
-                'propertycheckfamilyinforegister button[action=applysubmit],propertycheckfamilyinfoalter button[action=applysubmit]':{
+                'propertycheckfamilyinforegister button[action=applysubmit],propertycheckfamilyinfoalter button[action=applysubmit],propertycheckfamilyinfochange button[action=applysubmit]':{
                     click: this.applysubmit
                 },
 
                 'propertycheckfamilyinfocheck button[action=checkbusiness]':{
                     click: this.showpropertycheckwin
                 },
-                'propertycheckfamilyinfocheck button[action=cancel],propertycheckfamilyinfoalter button[action=cancel]':{
+                'propertycheckfamilyinfocheck button[action=cancel],propertycheckfamilyinfoalter button[action=cancel],propertycheckfamilyinfochange button[action=cancel]':{
                     click: Ext.bind(header_cl.cancelcheck,header_cl)
                 },
                 'propertycheckwin button[action=send]':{
@@ -167,10 +176,10 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                 'propertyprocesscheckwin button[action=send]':{
                     click:this.sendPropertyCheckForm
                 },
-                'propertycheckfamilyinfoalter button[action=sendbusiness]':{
+                'propertycheckfamilyinfoalter button[action=sendbusiness],propertycheckfamilyinfochange button[action=sendbusiness]':{
                     click:this.sendbusiness
                 },
-                'propertycheckfamilyinfoalter button[action=checkbusiness]':{
+                'propertycheckfamilyinfoalter button[action=checkbusiness],propertycheckfamilyinfochange button[action=checkbusiness]':{
                     click: this.showcheckwin
                 },
                 'propertycheckneedtocheckbusinesspanel,propertycheckneedtodobusinesspanel':{
@@ -262,16 +271,32 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                         }
                     }
                 },
-                'propertycheckfamilyinfoalter button[action=process]':{
+                'propertycheckfamilyinfoalter button[action=process],propertycheckfamilyinfochange button[action=process]':{
                     click:function (c,r,grid){
                         this.showProcessWin(c,r,grid);
                     }
                 },
-                'propertycheckfamilyinfoalter button[action=cancelsendbusiness]':{
+                'propertycheckfamilyinfoalter button[action=cancelsendbusiness],propertycheckfamilyinfochange button[action=cancelsendbusiness]':{
                     click:this.cancelsendbusiness
                 },
-                'propertycheckfamilyinfoalter button[action=print]':{
+                'propertycheckfamilyinfoalter button[action=print],propertycheckfamilyinfochange button[action=print]':{
                     click: Ext.bind(header_cl.formprint,header_cl)
+                },
+                'propertycheckfamilymembergrid button[action=addnewperson]':{
+
+                    click:Ext.bind(dbgl_cl.addnewperson, dbgl_cl)
+                },
+                'propertycheckfamilymembergrid button[action=delperson]':{
+
+                    click:Ext.bind(dbgl_cl.delperson, dbgl_cl)
+                },
+                'propertycheckfamilyinfoalter button[action=change]':{
+                    click: function(btn){                                       //,propertycheckfamilyinfochange button[action=change]
+                        this.ischangeclick=true;
+                        var form=btn.up('form');
+                        var widgetname="propertycheckfamilyinfochange";
+                        this.showtab(form.objdata.record.get('owername'),widgetname,'widget',form.objdata);
+                    }
                 }
             }
         )
@@ -327,13 +352,23 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
         }
 
     },
-
-    submitcommon:function(btn,businesstype,isprocess){
+    //业务提交共用入口
+    applysubmit:function(btn){
+        this.submitcommon(btn,true,processstatustype.ok);
+    },
+    //业务变更提交
+    applysubmitchange:function(btn){
+        this.submitcommon(btn,true,processstatustype.change);
+    },
+    submitcommon:function(btn,isprocess,statustype){
         var me=this;
         var myform =btn.up('form');
         var eventName='updatefamilyinfo';
+        var fmy001='';
         if('propertycheckfamilyinforegister'==myform.xtype){
             eventName='registerfamilyinfo';
+        }else{
+            fmy001=myform.objdata.record.data.fmy001;
         }
 
         var form=myform.getForm();
@@ -349,12 +384,23 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                 eval(json);
 
             }
-            tmp.processstatustype=processstatustype.ok;
+            var familymembers=[];
+            var familygrid=btn.up('form').down('#familymembergrid');
+            if(familygrid){
+                var store=familygrid.getStore();
+                Ext.each(store.data.items,function(a){
+                    familymembers.push(a.data);
+                });
+            }
+            tmp.processstatustype=statustype;
             tmp.userid=userid;
+
             var params = {
                 eventName:eventName,
                 userid:userid,
                 fm01:Ext.encode(tmp),
+                fmy001:fmy001,
+                familymembers:Ext.JSON.encode(familymembers),
                 isprocess:isprocess
             };
             Ext.Ajax.request({
@@ -521,10 +567,7 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
         }
 
     },
-    //业务提交共用入口
-    applysubmit:function(btn){
-        this.submitcommon(btn,businessTableType.dbgl,true);
-    },
+
     onLaunch: function () {
         var me = this;
 
@@ -547,11 +590,7 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                }
 
         }else if(r.get('processstatustype')==processstatustype.change){
-            if(r.get('businesstype')==businessTableType.dbgl){
-                widgetname='dbglbusinesschangeform';
-            }else if(r.get('businesstype')==businessTableType.dbbyh){
-                widgetname='dbedgebusinesschangeform';
-            }
+            //widgetname='propertycheckfamilyinfochange';
 
         }else if(r.get('processstatustype')==processstatustype.logout){
             if(r.get('businesstype')==businessTableType.dbgl){
@@ -563,6 +602,7 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
         this.showtab(r.get('owername'),widgetname,'widget',objdata);
 
     },
+
     checkItemMap:{
         propertycheckfamilyhousefieldset:'核定住房',
         propertycheckfamilyinputfieldset:'核定收入',
@@ -591,7 +631,7 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
         //mybtn=btn;
         var processstatus=btn.up('form').objdata.record.data.processstatus;
         if('申请'!=processstatus){
-            Ext.Msg.alert("提示信息", "人员信息已经提交，无法进行核定");
+            Ext.Msg.alert("提示信息", "人员信息已经提交进入审批流程中，暂时无法进行核定");
             return;
         }
 
@@ -660,7 +700,7 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
             btn.up('window').close();
             Ext.Msg.alert("提示信息", "操作成功");
             var hc=me.application.getController("Header");
-            //hc.closetab(form.id);
+            hc.closetab(form.id);
 
         };
         var failFunc = function (form, action) {
@@ -982,6 +1022,49 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
         }
 
     },
+    initchangelogoutbtns:function(form){
+        if(this.ischangeclick){
+            this.showchangebtn(form);
+            var invaliditem=form.down('#businesscheckinfo');
+
+            if(invaliditem){
+                var formcontent=form.getDefaultContentTarget();
+                var target=invaliditem.getEl();
+                target.scrollIntoView(formcontent,true,true,true);
+            }
+
+        }
+        if(this.islogoutclick){
+            this.showlogoutbtn(form);
+            var invaliditem=form.down('#businesscheckinfo');
+            if(invaliditem){
+                var formcontent=form.getDefaultContentTarget();
+                var target=invaliditem.getEl();
+                target.scrollIntoView(formcontent,true,true,true);
+            }
+
+        }
+    },
+    ischangeclick:false,
+    islogoutclick:false,
+    //显示变更表单按钮
+    showchangebtn:function(form){
+        console.log('保存变更')
+        var btns=form.getDockedItems('toolbar[dock="bottom"]')[0].items.items;
+        Ext.each(btns,function(a){
+            a.setVisible(a.text=="保存变更"||a.text=="返回")
+        });
+        this.ischangeclick=false;
+    },
+    //显示注销表单按钮
+    showlogoutbtn:function(form){
+        var btns=form.getDockedItems('toolbar[dock="bottom"]')[0].items.items;
+        Ext.each(btns,function(a){
+            a.setVisible(a.text=="保存注销"||a.text=="返回")
+        });
+        this.islogoutclick=false;
+    },
+
     //删除申请
     delpropertybusinessapply:function(c,r,grid){
         myc=c;

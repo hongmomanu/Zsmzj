@@ -2,8 +2,12 @@ package Zsmzj.propertycheck.control;
 
 import Zsmzj.enums.ProcessType;
 import Zsmzj.jdbc.JdbcFactory;
+import Zsmzj.propertycheck.FamilyMemberDAO;
 import Zsmzj.propertycheck.PropertyCheckDAO;
+import Zsmzj.propertycheck.PropertyCommonDAO;
 import Zsmzj.propertycheck.ResultInfo;
+import Zsmzj.propertycheck.impl.FamilyMemberDAOImpl;
+import Zsmzj.propertycheck.impl.ProperCommonDAOImpl;
 import Zsmzj.propertycheck.impl.PropertyCheckDAOImpl;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -22,11 +26,16 @@ import java.util.Map;
  * To change this template use File | Settings | File Templates.
  */
 public class ProperCheckControl {
-	private PropertyCheckDAO dao=null;
+	private PropertyCheckDAO checkdao=null;
+    private PropertyCommonDAO commondao=null;
+	private FamilyMemberDAO familymemberdao=null;
     private Connection conn=null;
 	public ProperCheckControl(){
         conn=JdbcFactory.getConn("sqlite");
-		dao=new PropertyCheckDAOImpl(conn );
+        commondao=new ProperCommonDAOImpl(conn);
+        familymemberdao=new FamilyMemberDAOImpl(conn,commondao);
+        checkdao=new PropertyCheckDAOImpl(conn,familymemberdao,commondao );
+
 	}
     private void closeConnection(){
             try{
@@ -43,7 +52,7 @@ public class ProperCheckControl {
 	public String saveFamliyPropertyInfo(Map<String,Object> params){
 		int result= 0;
         try{
-            result=dao.doCreate(params);
+            result=checkdao.doCreate(params);
         } catch(Exception e){
             e.printStackTrace();
         } finally {
@@ -62,7 +71,7 @@ public class ProperCheckControl {
 	public String updateFamliyPropertyInfo(Map<String,Object> params){
 		int result= 0;
         try{
-            result=dao.doUpdate(params);
+            result=checkdao.doUpdate(params);
         } catch(Exception e){
             e.printStackTrace();
         } finally {
@@ -88,7 +97,7 @@ public class ProperCheckControl {
             return  "{success:false}";
         }
 		int result= 0;
-        result=dao.doDelete(fmy001);
+        result=checkdao.doDelete(fmy001);
         closeConnection();
 
         return  result>0? "{success:true}": "{success:false}";
@@ -101,7 +110,7 @@ public class ProperCheckControl {
 	*/
 	public String getFamilyPropertyInfo(Map paraMap){
 		Map<String,Object>res=new HashMap<String, Object>();
-		ResultInfo ri=dao.findAll(paraMap);
+		ResultInfo ri=checkdao.findAll(paraMap);
         List<Map<String, Object>> list=ri.getList();
         for(Map<String,Object> map:list){
             map.put("process", ProcessType.UseProcessType.getNext(ProcessType.UseProcessType.
@@ -117,7 +126,7 @@ public class ProperCheckControl {
      */
     public String getFamilyPropertyInfoByCheckRole(Map paraMap){
 		Map<String,Object>res=new HashMap<String, Object>();
-		ResultInfo ri=dao.findAllByCheckRole(paraMap);
+		ResultInfo ri=checkdao.findAllByCheckRole(paraMap);
         List<Map<String, Object>> list=ri.getList();
         res.put("totalCount",ri.getCount());
 		res.put("results",list);
@@ -129,7 +138,7 @@ public class ProperCheckControl {
      */
     public String getPropertyCheckItemDatilByFmy001(Map paraMap){
 		Map<String,Object>res=new HashMap<String, Object>();
-		ResultInfo ri=dao.getPropertyCheckItemDatilByFmy001(paraMap);
+		ResultInfo ri=checkdao.getPropertyCheckItemDatilByFmy001(paraMap);
         List<Map<String, Object>> list=ri.getList();
         res.put("totalCount",ri.getCount());
 		res.put("results",list);
@@ -143,7 +152,7 @@ public class ProperCheckControl {
         int result= 0;
 
         try{
-            result=dao.doCheckItem(paraMap);
+            result=checkdao.doCheckItem(paraMap);
         }catch(Exception e){
             e.printStackTrace();
         }finally {
@@ -162,7 +171,7 @@ public class ProperCheckControl {
        申请 -- 提交 状态的改变
      */
     public String changeBusinessStatus(Map paraMap){
-        int result=dao.changeBusinessProcessStatus(paraMap);
+        int result=checkdao.changeBusinessProcessStatus(paraMap);
         this.closeConnection();
         if(result>0)return "{success:true}";
         else  return "{success:false}";
@@ -172,20 +181,34 @@ public class ProperCheckControl {
     审核审批
      */
     public String processCheck(Map paraMap){
-        String result=dao.makeApproval(paraMap);
+        String result=checkdao.makeApproval(paraMap);
         this.closeConnection();
         return result;
     }
 
     public String getProcessCheck(Map paraMap){
         Map<String,Object>res=new HashMap<String, Object>();
-        ResultInfo ri=dao.getPorcessCheck(paraMap);
+        ResultInfo ri=checkdao.getPorcessCheck(paraMap);
         List<Map<String, Object>> list=ri.getList();
         res.put("totalCount",ri.getCount());
         res.put("results",list);
         closeConnection();
         return JSONObject.fromObject(res).toString();
     }
+
+
+    public String getfamilymembersbyfmy001(Map paraMap){
+        Map<String,Object>res=new HashMap<String, Object>();
+        ResultInfo ri=familymemberdao.getfamilymembersbyfmy001(paraMap);
+        List<Map<String, Object>> list=ri.getList();
+        res.put("totalCount",ri.getCount());
+        res.put("results",list);
+        closeConnection();
+        return JSONArray.fromObject(list).toString();
+        //return JSONObject.fromObject(res).toString();
+    }
+
+
     public static void main(String[] args){
         ProperCheckControl pc=new ProperCheckControl();
         PreparedStatement pstmt=null;

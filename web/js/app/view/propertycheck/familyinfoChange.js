@@ -6,9 +6,9 @@
  * To change this template use File | Settings | File Templates.
  */
 
-Ext.define('ZSMZJ.view.propertycheck.familyinfoAlter', {
+Ext.define('ZSMZJ.view.propertycheck.familyinfoChange', {
     extend : 'Ext.form.Panel',
-    alias : 'widget.propertycheckfamilyinfoalter',
+    alias : 'widget.propertycheckfamilyinfochange',
     requires: [
 
 
@@ -36,6 +36,15 @@ Ext.define('ZSMZJ.view.propertycheck.familyinfoAlter', {
 
             ],
             buttons:[
+                {
+                    text: '保存变更',
+                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                        {name:"name",value:this.objdata.record.get("processstatus")})?CommonFunc.lookup(processRoleBtn,
+                        {name:"name",value:this.objdata.record.get("processstatus")}).children:null,
+                        {name:"name",value:"保存变更"}),
+                    action:'saveapplysubmit'
+                },
+
                 {text: '打印预览',
                     hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
                         {name:"name",value:this.objdata.record.get("processstatus")})?CommonFunc.lookup(processRoleBtn,
@@ -133,6 +142,7 @@ Ext.define('ZSMZJ.view.propertycheck.familyinfoAlter', {
                         {name:"name",value:"返回"}),
                     action:'cancel'
                 }
+
             ]
 
 

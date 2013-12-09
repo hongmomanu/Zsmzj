@@ -25,10 +25,13 @@
 
         if("registerfamilyinfo".equals(eventName)){
             params.put("fm01",request.getParameter("fm01"));
+            params.put("familymembers",request.getParameter("familymembers"));
             params.put("isprocess",request.getParameter("isprocess"));
             out.print(propchk.saveFamliyPropertyInfo(params));
         }else if("updatefamilyinfo".equals(eventName)){
             params.put("fm01",request.getParameter("fm01"));
+            params.put("fmy001",request.getParameter("fmy001"));
+            params.put("familymembers",request.getParameter("familymembers"));
             params.put("isprocess",request.getParameter("isprocess"));
             out.print(propchk.updateFamliyPropertyInfo(params));
         }else if("delfamilypropertybyfmy001".equals(eventName)){ //未提交前删除
@@ -105,6 +108,16 @@
                 paraMap.put(name,request.getParameter(name));
             }
             out.print(propchk.getProcessCheck(paraMap));
+        }
+
+        else if("getfamilymembersbyfmy001".equals(eventName)){      //获得家庭人员信息
+            Enumeration e  =(Enumeration) request.getParameterNames();
+            Map paraMap=new HashMap<String,Object>();
+            while(e.hasMoreElements()){
+                String name=(String)e.nextElement();
+                paraMap.put(name,request.getParameter(name));
+            }
+            out.print(propchk.getfamilymembersbyfmy001(paraMap));
         }
 
 
