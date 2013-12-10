@@ -2312,18 +2312,31 @@ Ext.define('ZSMZJ.controller.Header', {
         } else {
             //alert(1);
             if (type == 'widget') {
-
                 function fn(){
-                    tabs.add({
-                        closable: true,
-                        id: tabid,
-                        xtype: value,
-                        objdata:objdata,
-                        businesstype:objdata?objdata.record.get('businesstype'):null,
-                        autoScroll: true,
-                        iconCls: 'tabs',
-                        title: label
-                    }).show();
+                    if(objdata.objdata){
+
+                        tabs.add({
+                            closable: true,
+                            id: tabid,
+                            xtype: value,
+                            objdata:objdata,
+                            businesstype:objdata?objdata.objdata.record.get('businesstype'):null,
+                            autoScroll: true,
+                            iconCls: 'tabs',
+                            title: label
+                        }).show();
+                    }else{
+                        tabs.add({
+                            closable: true,
+                            id: tabid,
+                            xtype: value,
+                            objdata:objdata,
+                            businesstype:objdata?objdata.record.get('businesstype'):null,
+                            autoScroll: true,
+                            iconCls: 'tabs',
+                            title: label
+                        }).show();
+                    }
                     if(tabs.items.items.length==3){
                         tabs.items.items[1].close();
                         //tabs.remove(tabs.items.items[1]);

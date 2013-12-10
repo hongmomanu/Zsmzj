@@ -7,8 +7,8 @@
  */
 var extLocation="http://192.168.2.112/ext-4.2.1/";
 
-/* extLocation="http://127.168.2.141/ext-4.2.1/";
- extLocation="http://192.168.2.141:8080/extjs4.2/";*/
+ extLocation="http://127.168.2.141/ext-4.2.1/";
+ extLocation="http://192.168.2.141:8080/extjs4.2/";
 
 var businessTableType=
         {   'dbgl':"低保",
@@ -55,7 +55,8 @@ var formwidgettype={
     'disasterhelpcalamitychange':'disasterhelpcalamitybusinesschangeform',
     'disasterhelpcalamitylogout':'disasterhelpcalamitybusinesslogoutform',
     'propertycheckregister':'propertycheckfamilyinforegister',
-    'propertycheckalter':'propertycheckfamilyinfoalter',/*家庭基本信息修改*/
+    'propertycheckalter':'propertycheckfamilyinfoalter',
+    'propertycheckchange':'propertycheckfamilyinfochange',
     'propertycheckitemalter':'propertycheckfamilyinfocheck'/*家庭基本信息核定*/
 
 };
@@ -883,15 +884,28 @@ var applyformviews={
 
     ],'propertycheckregister':[/* 家庭基本信息登记*/
         'propertycheckfamilybasicfieldset',
+        'propertycheckfamilymemberfieldset',
         'propertycheckfamilymoneyfieldset',
         'propertycheckfamilyhousefieldset',
         'propertycheckfamilyinputfieldset'
 
     ],'propertycheckalter':[/* 家庭基本信息修改*/
         'propertycheckfamilybasicfieldset',
+        'propertycheckfamilymemberfieldset',
         'propertycheckfamilymoneyfieldset',
         'propertycheckfamilyhousefieldset',
-        'propertycheckfamilyinputfieldset'
+        'propertycheckfamilyinputfieldset',
+        'propertycheckitemhistoryfieldset',
+        'propertycheckapplyhistoryfieldset'
+
+    ],'propertycheckchange':[
+        'propertycheckfamilybasicfieldset',
+        'propertycheckfamilymemberfieldset',
+        'propertycheckfamilymoneyfieldset',
+        'propertycheckfamilyhousefieldset',
+        'propertycheckfamilyinputfieldset',
+        'propertycheckitemhistoryfieldset',
+        'propertycheckapplyhistoryfieldset'
 
     ],'propertycheckitemalter':[/* 家庭基本信息核定*/
         'propertycheckfamilybasicfieldset',
@@ -987,7 +1001,7 @@ var menu_shjz=[
             {xtype:'dbglconfigtree',searchtype:"综合查询",businesstype:businessTableType.allquery}
         ],
         iconCls: 'nav'
-    }/*,
+    },
     {
         layout: 'fit',
         title: '财产核定',
@@ -996,7 +1010,7 @@ var menu_shjz=[
             {xtype:'dbglconfigtree',searchtype:"财产核定",businesstype:businessTableType.propertycheck}
         ],
         iconCls: 'nav'
-    }*/
+    }
 ];
 
 var menu_qxgl=[{layout: 'fit',title: '权限设置',items:[{xtype:'userconfiggrid'}],iconCls: 'nav' },

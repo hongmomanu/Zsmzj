@@ -77,13 +77,11 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
 	@Override
 	public int doUpdate(Map<String, Object> param) {
         JSONObject jsonFm01=JSONObject.fromObject((String)param.get("fm01"));
-        //Map<String,String> colnames= new HashMap<String, String>();
         int result=0;
-        //colnames.put("fmy001",(String)jsonFm01.get("fmy001"));
         try {
             conn.setAutoCommit(false);
             familymemberdao.doUpdate(param);
-            result=commondao.updateTableValesSpecail(this.json2Map(jsonFm01), "fm01",null,"fmy001="+(String)jsonFm01.get("fmy001") );
+            result=commondao.updateTableValesSpecail(this.json2Map(jsonFm01), "fm01",null,"rowid="+param.get("fmy001") );
         } catch (SQLException e) {
             e.printStackTrace();
             result=-1;
@@ -104,7 +102,44 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
         return result;
     }
 
-	@Override
+    @Override
+    public int doChange(Map<String, Object> param) {
+        JSONObject jsonFm01=JSONObject.fromObject((String)param.get("fm01"));
+        Integer fmy001=-1;
+        try{
+
+            fmy001=Integer.parseInt((String)param.get("fmy001"));
+        } catch (Exception e){
+            log.debug(e);
+            fmy001=(Integer)param.get("fmy001");
+        }
+        int result=0;
+        try {
+            conn.setAutoCommit(false);
+            familymemberdao.doUpdate(param);
+            commondao.deleteTableValues("select * from fm03 where fmy001="+fmy001);
+            result=commondao.updateTableValesSpecail(this.json2Map(jsonFm01), "fm01",null,"rowid="+fmy001 );
+        } catch (SQLException e) {
+            e.printStackTrace();
+            result=-1;
+            try {
+                conn.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        }finally {
+            try {
+                conn.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        return result;
+    }
+
+    @Override
 	public int doDelete(int fmy001) {
         //PreparedStatement pstmt=null;
         Statement stmt=null;
@@ -604,7 +639,7 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
     public ResultInfo getPorcessCheck(Map<String, Object> param) {
 
         ArrayList<Map<String,Object>> list=new ArrayList<Map<String, Object>>();
-        String sql="select * from fm04 where fmy001=?";
+        String sql="select a.*,u.displayname from fm04 a,users u where fmy001=? and a.userid=u.id";
         PreparedStatement pstmt=null;
         Integer fmy001= Integer.parseInt((String)param.get("fmy001"));
         try {

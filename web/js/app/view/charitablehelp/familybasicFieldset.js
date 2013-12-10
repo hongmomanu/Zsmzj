@@ -169,7 +169,12 @@ Ext.define('ZSMZJ.view.charitablehelp.familybasicFieldset', {
                         value:0,
                         disabled:true,
                         //emptyText: '低保户类型',
-                        allowBlank: false
+                        allowBlank: false ,
+                        listeners: {
+                            "change":function(field,e){
+                                this.fireEvent('familyincomechange', field);
+                            }
+                        }
                     }
                     ,{
                         name: 'accountaddress',

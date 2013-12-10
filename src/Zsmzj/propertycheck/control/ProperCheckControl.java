@@ -84,6 +84,25 @@ public class ProperCheckControl {
 			return "{success:false}";
 		}
 	}
+    /*
+    变更业务;fm001的处理状态由正常或者变更到变更，并保存家庭人员信息，删除核定内容
+     */
+	public String changeFamliyPropertyInfo(Map<String,Object> params){
+		int result= 0;
+        try{
+            result=checkdao.doChange(params);
+        } catch(Exception e){
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        if(result>0){
+			return "{success:true}";
+		}
+		else{
+			return "{success:false}";
+		}
+	}
 
 	/*
     删除家庭财产信息，正常状态下的未提交，可以进行删除操作

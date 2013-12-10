@@ -56,6 +56,7 @@ Ext.define('ZSMZJ.view.charitablehelp.familyapplyFieldset', {
                     },
                     {
                         name: 'familyincome',
+                        itemId:'familyincome',
                         fieldLabel: '家庭总收入',
                         afterLabelTextTpl: required,
                         value:0,

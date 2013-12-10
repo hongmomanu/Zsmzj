@@ -29,7 +29,7 @@ Ext.define('ZSMZJ.view.propertycheck.processCheckWin' ,{
 
                 items: [
                     {xtype:'processcheckform'},
-                    {xtype:'processhistorygrid'}
+                    {xtype:'propertyprocesshistorygrid'}
 
                 ],
                 buttons:[
