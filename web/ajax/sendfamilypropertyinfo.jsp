@@ -55,7 +55,7 @@
                 String name=(String)e.nextElement();
                 paraMap.put(name,request.getParameter(name));
             }
-            //out.print(propchk.cancelsubmitbyfmy001(paraMap));
+            out.print(propchk.cancelsubmitbyfmy001(paraMap));
         }else if("getfamilypropertyinfo".equals(eventName)){
             Enumeration e  =(Enumeration) request.getParameterNames();
             Map paraMap=new HashMap<String,Object>();

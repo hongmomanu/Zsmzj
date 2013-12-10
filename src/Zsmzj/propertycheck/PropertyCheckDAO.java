@@ -17,6 +17,8 @@ public interface PropertyCheckDAO {
 	public int doUpdate(Map<String,Object> param);
 	public int doChange(Map<String,Object> param);
 	public int doDelete(int fmy001);
+	public int cancelSubmit(Map<String,Object> param);
+
 	public ResultInfo findAll(Map paraMap);
 	public ResultInfo findAllByCheckRole(Map paraMap);
 	public int getCount(String keyword,int type);

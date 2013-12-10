@@ -186,9 +186,9 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
 
         if(testbg||tested){
             if(testbg&&tested){
-                sql+=" and a.rowid in  (select rowid from fm01 where date(time) Between '"+bgdate
+                sql+=" and  (date(a.time) Between '"+bgdate
                         +"' and  '"+eddate+"')";
-                sql_count+=" and a.rowid in  (select rowid from fm01 where date(time) Between '"+bgdate
+                sql_count+=" and  (date(a.time) Between '"+bgdate
                         +"' and  '"+eddate+"')";
             }else if(testbg){
                 Date date = null;
@@ -201,9 +201,9 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
                 calendar.setTime(date);
                 calendar.add(Calendar.YEAR, +100);
                 String enddate=sDayFormat.format(calendar.getTime());
-                sql+=" and a.rowid in  (select rowid from fm01 where date(time) Between '"+bgdate
+                sql+=" and  (date(a.time) Between '"+bgdate
                         +"' and  '"+enddate+"')";
-                sql_count+=" and a.rowid in  (select rowid from fm01 where date(time) Between '"+bgdate
+                sql_count+=" and  (date(a.time) Between '"+bgdate
                         +"' and  '"+enddate+"')";
             }else if(tested){
                 Date date = null;
@@ -217,9 +217,9 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
                 calendar.add(Calendar.YEAR, -100);
                 String bgddate=sDayFormat.format(calendar.getTime());
 
-                sql+=" and a.rowid in  (select rowid from fm01 where date(time) Between '"+bgddate
+                sql+=" and  (date(a.time) Between '"+bgddate
                         +"' and  '"+eddate+"')";
-                sql_count+=" and a.rowid in  (select rowid from fm01 where date(time) Between '"+bgddate
+                sql_count+=" and  (date(a.time) Between '"+bgddate
                         +"' and  '"+eddate+"')";
             }
         }
@@ -328,7 +328,7 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
             calendar.add(Calendar.YEAR, +100);
             String enddate=sDayFormat.format(calendar.getTime());
 
-            date_string+=" and a.rowid in  (select rowid from fm01 where date(time) Between '"+bgdate
+            date_string+=" and  (date(a.time) Between '"+bgdate
                     +"' and  '"+enddate+"')";
 
         }
@@ -345,7 +345,7 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
             calendar.add(Calendar.YEAR, -100);
             String begindate=sDayFormat.format(calendar.getTime());
 
-            date_string+=" and a.rowid in  (select rowid from fm01 where date(time) Between '"+begindate
+            date_string+=" and  (date(a.time) Between '"+begindate
                     +"' and  '"+eddate+"')";
         }
         log.debug(keyword);
@@ -357,7 +357,7 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
         String sql_comm="select a.rowid fmy001,a.*,"+ t+ ",b.checkitem checkitem,b.checkresult checkresult,b.checkcomment checkcomment  from fm01 a,fm03 b where 1=1 and "+
                 "a.rowid=b.fmy001 and b.checkitem = '"+checkitem+"' "+ date_string+  keyword_string
                 +" union  select a.rowid fmy001,a.*,"+ t+
-                ",'"+checkitem+"' checkitem,0 checkresult,'' checkcomment  from fm01 a where 1=1 and not exists (select * from fm03 c where c.fmy001=a.rowid and c.checkitem ='"+checkitem+"') "  +
+                ",'"+checkitem+"' checkitem,0 checkresult,'' checkcomment  from fm01 a where 1=1 and not exists (select 1 from fm03 c where c.fmy001=a.rowid and c.checkitem ='"+checkitem+"') "  +
                 date_string+  keyword_string+
                 " order by checkresult,fmy001 desc";
 
@@ -634,6 +634,36 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
         return result;
     }
 
+    @Override
+    public int cancelSubmit(Map<String,Object> param) {
+        PreparedStatement pstmt=null;
+        String processstatus=(String)param.get("processstatus");
+        Integer fmy001=-1;
+        fmy001=Integer.parseInt((String)param.get("fmy001"));
+        /*try{
+            fmy001=Integer.parseInt((String)param.get("fmy001"));
+        }catch (Exception e){
+            e.printStackTrace();
+            fmy001=(Integer)param.get("fmy001");
+        }*/
+        int result=0;
+        try {
+            pstmt=conn.prepareStatement("update fm01 set processstatus=? where rowid=?");
+            pstmt.setString(1,processstatus);
+            pstmt.setInt(2,fmy001);
+            result=pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            result=-1;
+        } finally {
+            try {
+                pstmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
 
     @Override
     public ResultInfo getPorcessCheck(Map<String, Object> param) {
