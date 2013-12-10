@@ -22,19 +22,11 @@ Ext.define('ZSMZJ.store.dbgl.StatisticsFulls', {
         }
     }
     ,
-    listeners: {
-        beforeload: function(store, operation, eOpts){
-            //var kode_jabatan = operation.node.raw.divisionpath;
-            //console.log(operation.node);
-            //testobj=operation.node;
 
-            operation.params.divisionpath = operation.node.raw.divisionpath;
-        }
-    },
     root: {
         text: '舟山市',
         divisionpath:'舟山市',
-        id:0,
+        id:divisionid,
         expanded: false
     }
 

@@ -578,11 +578,56 @@ public class BusinessProcessControl {
             res.put("children",result_list);
 
 */
+            String sql_list_division="select divisionpath,rowid,divisionname from "+DivisionsTable +" where parentid MATCH "+divisionpid;
+            ArrayList<Map<String,Object>> division_list=cd.getTableList(sql_list_division);
+            ArrayList<Map<String,Object>> result_list=new ArrayList<Map<String, Object>>();
+
+            for(Map<String,Object>division_item:division_list){
+                String division_item_path="'"+division_item.get("divisionpath")+"%'";
+                String division_id=division_item.get("rowid").toString();
+                String division_name=division_item.get("divisionname").toString();
+
+                Map<String,Object> map=new HashMap<String, Object>();
+
+
+                String sql_list="select  count (CASE when c.relationship= '户主' THEN 1 ELSE null  END) AS totalfamily  " +
+                        ",count (*) AS totalperson " +
+                        ",count (CASE when c.sex= '男' THEN 1 ELSE null  END) AS totalmen " +
+                        ",count (CASE when c.sex= '女' THEN 1 ELSE null  END) AS totalgirls " +
+                        ",sum(case when c.relationship='户主' then totalhelpmoney else 0 end) as totalmoney " +
+
+                        ",count (CASE when c.relationship= '户主' and b.familyaccount='城镇' THEN 1 ELSE null  END) AS cityfamily "+
+                        ",count (CASE when b.familyaccount='城镇' THEN 1 ELSE null  END) AS cityperson " +
+                        ",count (CASE when b.familyaccount='城镇' and c.sex= '男' THEN 1 ELSE null  END) AS citymen " +
+                        ",count (CASE when b.familyaccount='城镇' and c.sex= '女' THEN 1 ELSE null  END) AS citygirls " +
+                        ",sum(case when c.relationship='户主' and b.familyaccount='城镇' then totalhelpmoney else 0 end) as citymoney " +
+
+                        ",count (CASE when c.relationship= '户主' and b.familyaccount='农村' THEN 1 ELSE null  END) AS villagefamily "+
+                        ",count (CASE when b.familyaccount='农村' THEN 1 ELSE null  END) AS villageperson " +
+                        ",count (CASE when b.familyaccount='农村' and c.sex= '男' THEN 1 ELSE null  END) AS villagemen " +
+                        ",count (CASE when b.familyaccount='农村' and c.sex= '女' THEN 1 ELSE null  END) AS villagegirls " +
+                        ",sum(case when c.relationship='户主' and b.familyaccount='农村' then totalhelpmoney else 0 end) as villagemoney " +
+
+                        "from "+BusinessTable+" b, "+FamilyTable +
+                        " c  where  c.businessid= b.id and b.time Between '"+bgmonth+"' and  '"+edmonth
+                        +"' and b.businesstype='"+businesstype+"' and  b.division like " +division_item_path+
+                        "" ;
+
+                map=cd.getSigleObj(sql_list);
+                map.put("divisionname",division_name);
+                map.put("id",division_id);
+                result_list.add(map);
+
+            }
+
+            res.put("divisionname","");
+            res.put("children",result_list);
 
 
 
-            String sql_list="select a.divisionname  ,a.rowid as id," +
-                    "(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and  division like (a.divisionpath||'%')) as totalfamily ,"
+
+            /*String sql_list="select a.divisionname  ,a.rowid as id," +
+                        "(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and  division like (a.divisionpath||'%')) as totalfamily ,"
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
                     "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and c.businessid = b.id and b.division like (a.divisionpath||'%')) as totalperson, "
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
@@ -613,11 +658,11 @@ public class BusinessProcessControl {
 
 
                     +"  from "+DivisionsTable+" a where a.parentid = "+divisionpid;
-
-            ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
+*/
+            /*ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
 
             res.put("divisionname","");
-            res.put("children",list);
+            res.put("children",list);*/
 
         }
         else if(type.equals(StatisticsType.UseStatisticsType.getChineseSeason(StatisticsType.ComplexOne))){

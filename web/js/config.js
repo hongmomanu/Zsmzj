@@ -8,6 +8,7 @@
 var extLocation="http://192.168.2.112/ext-4.2.1/";
 
  extLocation="http://127.168.2.141/ext-4.2.1/";
+ extLocation="http://192.168.2.141:8080/extjs4.2/";
 
 var businessTableType=
         {   'dbgl':"低保",
