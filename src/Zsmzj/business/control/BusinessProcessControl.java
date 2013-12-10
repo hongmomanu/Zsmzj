@@ -515,8 +515,8 @@ public class BusinessProcessControl {
         if (keyword!=null&&!keyword.equals("")){
 
 
-                sql_list+=" and a.owerid like '"+keyword+"%' ";
-                sql_count+=" and a.owerid like '"+keyword+"%' ";
+                sql_list+=" and (a.owerid like '"+keyword+"%' or a.owername like '"+keyword+"%' ) ";
+                sql_count+=" and (a.owerid like '"+keyword+"%' or a.owername like '"+keyword+"%' ) ";
 
         }
 
