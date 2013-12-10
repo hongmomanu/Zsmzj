@@ -159,7 +159,7 @@ public class BusinessProcessControl {
         String num_sql="select count(*) from "+GrantTable+" a,"+BusinessTable+
                 " b where a.businessid = b.id and (a.grantdate Between '"
                 +bgdate+"' and  '"+eddate+"' or a.grantdate Between '"+grantdate+"' and '"
-                +grantdate+"')  and b.businesstype = '"+businesstype+"' and b.division like  '"+divisionpath+"'%' " +
+                +grantdate+"')  and b.businesstype = '"+businesstype+"' and b.division like  '"+divisionpath+"%' " +
                 "and b.processstatustype = '"+processstatustype+"' " ;
         String ids="";
         if(grant_arr!=null&&grant_arr.length>0){
@@ -1459,7 +1459,7 @@ public class BusinessProcessControl {
             sql_list+=" and (a.owerid like '"+keyword+"%' or a.owername like '"+keyword+"%')" +
                     " ";
 
-            sql_list+=" and (a.owerid like '"+keyword+"%' or a.owername like '"+keyword+"%')" +
+            sql_count+=" and (a.owerid like '"+keyword+"%' or a.owername like '"+keyword+"%')" +
                     " ";
 
         }
@@ -1865,7 +1865,7 @@ public class BusinessProcessControl {
                 sql_list+=" and (b.personid like '"+keyword+"%' or b.name like '"+keyword+"%')" +
                          " ";
 
-                sql_list+=" and (b.personid like '"+keyword+"%' or b.name like '"+keyword+"%')" +
+                sql_count+=" and (b.personid like '"+keyword+"%' or b.name like '"+keyword+"%')" +
                         " ";
 
         }
