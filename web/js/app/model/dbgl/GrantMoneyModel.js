@@ -12,6 +12,7 @@ Ext.define('ZSMZJ.model.dbgl.GrantMoneyModel', {
         {name: 'processstatustype'},
         {name: 'processstatus'},
         {name:'businesstype'},
+        {name:'id',mapping:"fid"},
         {name: 'division'},
         {name:'owername'},
         {name:'owerid'},
