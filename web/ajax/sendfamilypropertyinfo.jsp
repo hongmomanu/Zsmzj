@@ -34,6 +34,12 @@
             params.put("familymembers",request.getParameter("familymembers"));
             params.put("isprocess",request.getParameter("isprocess"));
             out.print(propchk.updateFamliyPropertyInfo(params));
+        }else if("changefamilyinfo".equals(eventName)){
+            params.put("fm01",request.getParameter("fm01"));
+            params.put("fmy001",request.getParameter("fmy001"));
+            params.put("familymembers",request.getParameter("familymembers"));
+            params.put("isprocess",request.getParameter("isprocess"));
+            out.print(propchk.changeFamliyPropertyInfo(params));
         }else if("delfamilypropertybyfmy001".equals(eventName)){ //未提交前删除
             Enumeration e  =(Enumeration) request.getParameterNames();
             Map paraMap=new HashMap<String,Object>();

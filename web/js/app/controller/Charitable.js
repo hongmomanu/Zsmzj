@@ -57,6 +57,9 @@ Ext.define('ZSMZJ.controller.Charitable', {
                 },
                 owerchange:function(c){
                     dbgl_cl.owerchanged(c);
+                },
+                familyincomechange:function(c){
+                    this.familyincomechange(c);
                 }
             },
             'charitablehelpbusinessapplyform button[action=applysubmit]': {
@@ -116,7 +119,15 @@ Ext.define('ZSMZJ.controller.Charitable', {
         dbgl_cl.submitcommon(btn, businessTableType.charitableinstitutionhelp,false);
 
     },
-
+    familyincomechange:function(c){
+        c= c.up('form').down('#familyincome')
+        var formpanel= c.up('form');
+        var person_nums=parseInt(formpanel.down('#FamilyPersons').getValue());
+        var thisvalue= parseInt(c.getValue())/12;
+        var avgmoney=parseInt(person_nums==0?thisvalue:thisvalue/person_nums);
+        console.log(avgmoney)
+        c.nextNode().setValue(avgmoney);
+    },
     onLaunch: function () {
         var me = this;
         // for dev purpose
