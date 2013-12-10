@@ -264,6 +264,7 @@ Ext.define('ZSMZJ.view.dbgl.applysubmitFieldset', {
                         fieldLabel:"制表人",
                         name:'mkperson',
                         value:displayname,
+                        //submitValue:true,
                         readOnly: true
 
 
