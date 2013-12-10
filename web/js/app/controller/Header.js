@@ -563,14 +563,19 @@ Ext.define('ZSMZJ.controller.Header', {
         var r=form.objdata.record;
         var grid=form.objdata.grid;
         var callback=function fn(){
+
             me.closetab(form.id);
             me.closemask();
+            Ext.Msg.alert("提示信息", "操作成功");
+
             //me.widgetdolayout("mainContent-panel");
             //console.log(grid.id);
             /*if(grid.isLocked)grid=grid.up('panel')
             me.showoldtab(grid.id);*/
 
         };
+        ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"数据生成中..."});
+        ViewWaitMask.show();
         this.showBusinessCheckContent(c,r,grid,callback);
 
     },
@@ -1693,16 +1698,23 @@ Ext.define('ZSMZJ.controller.Header', {
             status:processdiction.stepzero
         };
         var successFunc = function (myform, action) {
+
             me.closetab(form.id);
-            store.load({callback:function(){
+            me.closemask();
+            Ext.Msg.alert("提示信息", "操作成功");
+            /*store.load({callback:function(){
                  me.widgetdolayout("mainContent-panel");
-            }});
+            }});*/
 
         };
         var failFunc = function (form, action) {
+            me.closemask();
             Ext.Msg.alert("提示信息", "取消提交失败，检查web服务或数据库服务");
 
         };
+        ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"数据处理中..."});
+        ViewWaitMask.show();
+
         this.ajaxSend(params, 'ajax/changestatusbybid.jsp', successFunc, failFunc,'POST');
 
     },
@@ -1779,6 +1791,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
         };
         var failFunc = function (form, action) {
+            me.closemask();
             Ext.Msg.alert("提示信息", "提交失败，检查web服务或数据库服务");
 
         };
@@ -2312,31 +2325,18 @@ Ext.define('ZSMZJ.controller.Header', {
         } else {
             //alert(1);
             if (type == 'widget') {
-                function fn(){
-                    if(objdata.objdata){
 
-                        tabs.add({
-                            closable: true,
-                            id: tabid,
-                            xtype: value,
-                            objdata:objdata,
-                            businesstype:objdata?objdata.objdata.record.get('businesstype'):null,
-                            autoScroll: true,
-                            iconCls: 'tabs',
-                            title: label
-                        }).show();
-                    }else{
-                        tabs.add({
-                            closable: true,
-                            id: tabid,
-                            xtype: value,
-                            objdata:objdata,
-                            businesstype:objdata?objdata.record.get('businesstype'):null,
-                            autoScroll: true,
-                            iconCls: 'tabs',
-                            title: label
-                        }).show();
-                    }
+                function fn(){
+                    tabs.add({
+                        closable: true,
+                        id: tabid,
+                        xtype: value,
+                        objdata:objdata,
+                        businesstype:objdata?(  objdata.record?objdata.record.get('businesstype'):null):null,
+                        autoScroll: true,
+                        iconCls: 'tabs',
+                        title: label
+                    }).show();
                     if(tabs.items.items.length==3){
                         tabs.items.items[1].close();
                         //tabs.remove(tabs.items.items[1]);

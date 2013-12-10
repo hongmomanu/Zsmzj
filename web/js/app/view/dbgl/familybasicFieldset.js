@@ -226,6 +226,7 @@ Ext.define('ZSMZJ.view.dbgl.familybasicFieldset', {
                         blankText:'家庭总人口',
                         value:0,
                         disabled:true,
+
                         //emptyText: '低保户类型',
                         disabledCls:'yw-disabled-field-cls',
 

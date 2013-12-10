@@ -742,6 +742,24 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             affixfiles.push({"accountimgpath":[{'attachmentname':'照片','attachmentpath':form.down('#dbglaccountimg').value}]});
         }
 
+        if(familymembers.length==0){
+            Ext.Msg.alert("提示信息", "家庭成员为空");
+            return;
+
+        }else{
+            var isower=false;
+            for(var i=0;i<familymembers.length;i++){
+                if(familymembers[i].relationship=='户主'){
+                    isower=true;
+                    break;
+                }
+            }
+            if(!isower){
+                Ext.Msg.alert("提示信息", "没有户主");
+                return;
+            }
+        }
+
         var params = {
             businessid:form.objdata.businessid,
             familymembers:Ext.JSON.encode(familymembers),
@@ -846,6 +864,23 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         if(businesstype==businessTableType.rangershelp){
             familymembers=[{name:form.getValues().owername,relationship:'户主'}];
         }
+        if(familymembers.length==0){
+            Ext.Msg.alert("提示信息", "家庭成员为空");
+            return;
+
+        }else{
+            var isower=false;
+            for(var i=0;i<familymembers.length;i++){
+                if(familymembers[i].relationship=='户主'){
+                    isower=true;
+                    break;
+                }
+            }
+            if(!isower){
+                Ext.Msg.alert("提示信息", "没有户主");
+                return;
+            }
+        }
         var params = {
             businesstype:businesstype,
             userid:userid,
@@ -859,12 +894,11 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             var hc=me.application.getController("Header");
             hc.closetab(form.id);
             Ext.Msg.alert("提示信息", "保存成功");
-
-            /*function fn(){
+           /* function fn(){
                 me.formSubmit(form, params, 'ajax/sendapply.jsp', successFunc, failFunc,"正在提交数据");
             }
             var task = new Ext.util.DelayedTask(fn);
-            task.delay(100);*/
+            task.delay(10);*/
 
 
         };
