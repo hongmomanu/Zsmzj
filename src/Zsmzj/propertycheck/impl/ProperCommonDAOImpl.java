@@ -208,6 +208,23 @@ public class ProperCommonDAOImpl implements PropertyCommonDAO{
         return flag;
     }
 
+    @Override
+    public void execute(String sql) {
+        PreparedStatement pstmt=null;
+        try {
+            pstmt=conn.prepareStatement(sql);
+            pstmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                pstmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public static void main(String[] args){
         ProperCommonDAOImpl p=new ProperCommonDAOImpl(JdbcFactory.getConn("sqlite"));
         Map<String,Object> map=new HashMap<String, Object>();

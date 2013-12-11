@@ -82,6 +82,7 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
             conn.setAutoCommit(false);
             familymemberdao.doUpdate(param);
             result=commondao.updateTableValesSpecail(this.json2Map(jsonFm01), "fm01",null,"rowid="+param.get("fmy001") );
+
         } catch (SQLException e) {
             e.printStackTrace();
             result=-1;
@@ -110,14 +111,19 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
 
             fmy001=Integer.parseInt((String)param.get("fmy001"));
         } catch (Exception e){
-            log.debug(e);
+            e.printStackTrace();
             fmy001=(Integer)param.get("fmy001");
         }
         int result=0;
         try {
             conn.setAutoCommit(false);
             familymemberdao.doUpdate(param);
-            commondao.deleteTableValues("select * from fm03 where fmy001="+fmy001);
+            commondao.execute("insert into fm01change select *,"+fmy001+",'"+fmt.format(new Date())+"' from fm01 a where a.rowid="+fmy001);
+            commondao.deleteTableValues("delete from fm03 where fmy001="+fmy001);
+            familymemberdao.doUpdate(param);
+
+            jsonFm01.remove("checkstatus");
+            jsonFm01.put("checkstatus",0);
             result=commondao.updateTableValesSpecail(this.json2Map(jsonFm01), "fm01",null,"rowid="+fmy001 );
         } catch (SQLException e) {
             e.printStackTrace();
@@ -147,10 +153,41 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
         try {
             conn.setAutoCommit(false);
             stmt=conn.createStatement();
+            String processstatus="";
+            String processstatustype="";
+            String checkstatus="";
+            String sql="select processstatus,processstatustype from fm01 where rowid=" +fmy001;
+            ResultSet rs=stmt.executeQuery(sql);
+            if(rs.next()){
+                processstatus=rs.getString("processstatus");
+                processstatustype=rs.getString("processstatustype");
+            }
+            rs.close();
+            String sql2="select checkstatus from fm01change where rowid=" +fmy001+
+                    "  and insertdate=(select max(insertdate) from fm01change where changeid="+fmy001+")";
+            ResultSet rs2=stmt.executeQuery(sql2);
+            if(rs.next()){
+                checkstatus=rs.getString("checkstatus");
+            }
+            rs2.close();
 
-            stmt.execute("delete from fm01 where rowid="+fmy001);
-            stmt.execute("delete from fm03 where fmy001="+fmy001);
-            stmt.execute("delete from fm04 where fmy001="+fmy001);
+            log.debug(processstatus+processstatustype+"后的删除操作");
+            if("申请".equals(processstatus)&&"变更".equals(processstatustype)){
+                Map<String,Object> map=new HashMap<String, Object>();
+                map.put("processstatus","审批");
+                map.put("checkstatus",checkstatus);
+                commondao.updateTableValesSpecail(map,"fm01",null,"rowid="+fmy001);
+            }else if("申请".equals(processstatus)&&"注销".equals(processstatustype)){
+                Map<String,Object> map=new HashMap<String, Object>();
+                map.put("processstatus","审批");
+                map.put("checkstatus",checkstatus);
+                commondao.updateTableValesSpecail(map,"fm01",null,"rowid="+fmy001);
+            }else {
+                stmt.execute("delete from fm01 where rowid="+fmy001);
+                stmt.execute("delete from fm02 where businessid="+fmy001);
+                stmt.execute("delete from fm03 where fmy001="+fmy001);
+                stmt.execute("delete from fm04 where fmy001="+fmy001);
+            }
 
             conn.commit();
             conn.setAutoCommit(true);
@@ -175,6 +212,7 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
         SimpleDateFormat sDayFormat   =   new SimpleDateFormat("yyyy-MM-dd");
         String addontype=(String)paraMap.get("addontype");
         String keyword=(String)paraMap.get("keyword");
+        String processstatustype=(String)paraMap.get("processstatustype");
         String bgdate=(String)paraMap.get("bgdate");
         String eddate=(String)paraMap.get("eddate");
         int start=Integer.parseInt((String)paraMap.get("start"));
@@ -224,9 +262,13 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
             }
         }
 
+        if(null!=processstatustype&&!"".equals(processstatustype.trim())){
+            sql+=  " and processstatustype='"+processstatustype+"'" ;
+            sql_count+=  " and processstatustype='"+processstatustype+"'";
+        }
         if(null!=keyword&&!"".equals(keyword.trim())){
-            sql+=  " and fm01 match '"+keyword+"*'";
-            sql_count+=  " and fm01 match '"+keyword+"*'";
+            sql+=  "  and fm01 match '"+keyword+"*'" ;
+            sql_count+=  "  and fm01 match '"+keyword+"*'";
         }
         String divisionpath=(String) paraMap.get("divisionpath");
         if(!"".equals(divisionpath)){
@@ -312,7 +354,6 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
         String eddate=(String)paraMap.get("eddate");
         int start=Integer.parseInt((String)paraMap.get("start"));
         int limit=Integer.parseInt((String)paraMap.get("limit"));
-        log.debug(checkitem);
         String date_string="";
         String keyword_string="";
 
@@ -348,7 +389,6 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
             date_string+=" and  (date(a.time) Between '"+begindate
                     +"' and  '"+eddate+"')";
         }
-        log.debug(keyword);
         if(null!=keyword&&!"".equals(keyword.trim())){
             keyword_string+=  " and fm01 match '"+keyword+"*'";
         }
@@ -584,12 +624,14 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
         String result=null;
         Integer fmy001=Integer.parseInt((String)jsonfm04.get("fmy001"));
         try {
-            pstmt1=conn.prepareStatement("select processstatus from fm01 where rowid=?");
+            pstmt1=conn.prepareStatement("select processstatus,processstatustype from fm01 where rowid=?");
             pstmt1.setInt(1,fmy001);
             ResultSet rs=pstmt1.executeQuery();
             String rsstatus="";
+            String processstatustype="";
             if(rs.next()){
                 rsstatus=rs.getString(1);
+                processstatustype=rs.getString(2);
                 rs.close();
             }
             if(rsstatus.equals(processstatus)){
@@ -605,6 +647,7 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
                 pstmt2.setString(7,fmt.format(new java.util.Date()));
                 pstmt2.execute();
 
+                //pstmt3=conn.prepareStatement("update fm01 set processstatus=?,sptatustype='"+processstatustype+"' where rowid=?");
                 pstmt3=conn.prepareStatement("update fm01 set processstatus=? where rowid=?");
                 pstmt3.setString(1,staus);
                 log.debug(staus);
@@ -713,4 +756,5 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
         log.debug(map.toString());
         return map;
     }
+
 }

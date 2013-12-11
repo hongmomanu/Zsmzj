@@ -2,6 +2,8 @@ package Zsmzj.propertycheck.control;
 
 import Zsmzj.enums.ProcessType;
 import Zsmzj.jdbc.JdbcFactory;
+import Zsmzj.jdbc.PostgreSql;
+import Zsmzj.jdbc.SqliteSql;
 import Zsmzj.propertycheck.FamilyMemberDAO;
 import Zsmzj.propertycheck.PropertyCheckDAO;
 import Zsmzj.propertycheck.PropertyCommonDAO;
@@ -29,22 +31,16 @@ public class ProperCheckControl {
 	private PropertyCheckDAO checkdao=null;
     private PropertyCommonDAO commondao=null;
 	private FamilyMemberDAO familymemberdao=null;
-    private Connection conn=null;
+    private static Connection conn=null;
 	public ProperCheckControl(){
-        conn=JdbcFactory.getConn("sqlite");
+        conn=ProperCheckControl.getConn("sqlite");
         commondao=new ProperCommonDAOImpl(conn);
         familymemberdao=new FamilyMemberDAOImpl(conn,commondao);
         checkdao=new PropertyCheckDAOImpl(conn,familymemberdao,commondao );
 
 	}
     private void closeConnection(){
-            try{
-                if(null!=conn){
-                    conn.close();
-                }
-            }catch (SQLException e){
-                e.printStackTrace();
-            }
+
     }
     /*
     登记模块中保存家庭财产信息
@@ -237,6 +233,35 @@ public class ProperCheckControl {
         //return JSONObject.fromObject(res).toString();
     }
 
+
+
+    public static  Connection getConn(String dbtype) {
+        try {
+
+            if(conn==null||conn.isClosed()){
+                if(dbtype.equalsIgnoreCase("sqlite")){
+                    SqliteSql db=new SqliteSql();
+                    conn=db.getConn();
+                    //conn.setAutoCommit(false);
+
+                }
+                else if(dbtype.equalsIgnoreCase("postgres")){
+                    PostgreSql db = new PostgreSql();
+                    conn = db.getConn();
+
+                }
+            }
+
+        }catch (SQLException ex){
+              ex.printStackTrace();
+            //log.debug(ex.getMessage());
+
+        }
+        return conn;
+
+
+
+    }
 
     public static void main(String[] args){
         ProperCheckControl pc=new ProperCheckControl();
