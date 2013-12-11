@@ -125,7 +125,6 @@ Ext.define('ZSMZJ.controller.Charitable', {
         var person_nums=parseInt(formpanel.down('#FamilyPersons').getValue());
         var thisvalue= parseInt(c.getValue())/12;
         var avgmoney=parseInt(person_nums==0?thisvalue:thisvalue/person_nums);
-        console.log(avgmoney)
         c.nextNode().setValue(avgmoney);
     },
     onLaunch: function () {

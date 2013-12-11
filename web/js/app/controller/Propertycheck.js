@@ -55,6 +55,14 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
         var dbgl_cl = this.application.getController("Dbgl");
         var header_cl = this.application.getController("Header");
         this.control({
+                'propertycheckneedtodobusinesspanel button[action=outexcel],propertycheckneedtodobusinesspanel menuitem[action=outexcel]':{
+                    click:Ext.bind(header_cl.outexcel,header_cl)
+
+                },
+                'propertycheckneedtocheckbusinesspanel button[action=outexcel],propertycheckneedtocheckbusinesspanel menuitem[action=outexcel]':{
+                    click:Ext.bind(header_cl.outexcel,header_cl)
+
+                },
                 'propertycheckneedtocheckbusinesspanel,propertycheckneedtodobusinesspanel,propertycheckfamilyinforegister,propertycheckfamilyinputfieldset,propertycheckfamilyhousefieldset,propertycheckfamilymoneyfieldset,propertycheckapplyhistoryfieldset,propertycheckitemhistoryfieldset,propertycheckfamilymemberfieldset':{
                     afterrender: dbgl_cl.afterrenderEvents,
                     initformaftershow:Ext.bind(dbgl_cl.initformaftershow, dbgl_cl)
@@ -305,6 +313,12 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                         var widgetname="propertycheckfamilyinfochange";
                         this.showtab(form.objdata.record.get('owername'),widgetname,'widget',form.objdata);
                     }
+                },
+                'propertycheckfamilyinfoalter button[action=signature],propertycheckfamilyinfochange button[action=signature]':{
+                    click: Ext.bind(header_cl.showsignature,header_cl)
+                },
+                'propertycheckfamilyinfoalter button[action=unsignature],propertycheckfamilyinfochange button[action=unsignature]':{
+                    click: Ext.bind(header_cl.delsignature,header_cl)
                 },
                 'propertycheckbusinessprintform':{
 
@@ -1153,7 +1167,7 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
         var params = {
             eventName:'cancelsubmitbyfmy001',
             fmy001:fmy001,
-            status:processdiction.stepzero
+            processstatus:processdiction.stepzero
         };
         var successFunc = function (myform, action) {
             var header_cl = me.application.getController("Header");
@@ -1161,7 +1175,7 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
             store.load({callback:function(){
                 header_cl.widgetdolayout("mainContent-panel");
             }});
-
+            Ext.Msg.alert("提示信息", "操作成功");
         };
         var failFunc = function (form, action) {
             Ext.Msg.alert("提示信息", "取消提交失败，检查web服务或数据库服务");

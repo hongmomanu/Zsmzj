@@ -145,7 +145,12 @@ public class ProperCheckControl {
      */
     public String getFamilyPropertyInfoByCheckRole(Map paraMap){
 		Map<String,Object>res=new HashMap<String, Object>();
-		ResultInfo ri=checkdao.findAllByCheckRole(paraMap);
+		ResultInfo ri=null;
+        try{
+            ri=checkdao.findAllByCheckRole(paraMap);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         List<Map<String, Object>> list=ri.getList();
         res.put("totalCount",ri.getCount());
 		res.put("results",list);
@@ -203,6 +208,11 @@ public class ProperCheckControl {
         String result=checkdao.makeApproval(paraMap);
         this.closeConnection();
         return result;
+    }
+    public String cancelsubmitbyfmy001(Map paraMap){
+        int result=checkdao.cancelSubmit(paraMap);
+        this.closeConnection();
+        return  result>0? "{success:true}": "{success:false}";
     }
 
     public String getProcessCheck(Map paraMap){
