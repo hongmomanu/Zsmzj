@@ -230,7 +230,16 @@ difficulttype					        VARCHAR(50),								--困难类型
 studenthelptype					      VARCHAR(50),								--助学类型
 lengthofschooling					    VARCHAR(50),								--学制（年）
 grade					                VARCHAR(50),								--就读年级
-overtheyearstotalamount					VARCHAR(50)								--历年累计救助金额
+overtheyearstotalamount					VARCHAR(50),								--历年累计救助金额
+
+familynum					            integer,								--家庭人数
+enjoyednum					          integer,								--享受人数
+beforepeople					        integer,								--变更前人数
+beforetotalhelpmoney					real,								--变更前救助金
+approvaltime                  DATETIME,           --审核时间
+approvaluser                  VARCHAR(50),           --审核人
+approvaluserid                  VARCHAR(50)           --审核id
+
 );
 
 
@@ -379,6 +388,15 @@ CREATE VIRTUAL TABLE IF NOT EXISTS businesschange USING fts3
   lengthofschooling					    VARCHAR(50),								--学制（年）
   grade					                VARCHAR(50),								--就读年级
   overtheyearstotalamount					VARCHAR(50),								--历年累计救助金额
+
+
+  familynum					            integer,								--家庭人数
+  enjoyednum					          integer,								--享受人数
+  beforepeople					        integer,								--变更前人数
+  beforetotalhelpmoney					real,								--变更前救助金
+  approvaltime                  DATETIME,           --审核时间
+  approvaluser                  VARCHAR(50),           --审核人
+  approvaluserid                  VARCHAR(50),           --审核id
 
   businessid               integer,                                 --业务id
   insertdate               VARCHAR(50)                              --charuriq
@@ -752,6 +770,12 @@ CREATE  VIRTUAL TABLE fm03 USING fts3(
 -- create index familymembers_birthday on familymembers(birthday);
 
 /*
+更新一些数据信息，提高查询速度
+update business   set familynum=(select count(*)  from familymembers c  where c.businessid = business.id),enjoyednum=(select count(*)  from familymembers i  where i.businessid = business.id and i.isenjoyed = '享受'),beforepeople=(select count(*)  from familymembershistory g  where g.businessid = business.id),beforetotalhelpmoney=(select totalhelpmoney  from businesschange h  where h.businessid = business.id order by time desc limit 1),approvaltime=(select d.time from approvalprocess d where d.businessid = business.id order by d.time desc limit 1 ) ,approvaluser=(select f.displayname from users f where f.id=(select e.userid from approvalprocess e where e.businessid = business.id  order by e.time desc limit 1  )) ,approvaluserid=(select e.userid from approvalprocess e where e.businessid =business.id  order by e.time desc limit 1  ) where  division like '舟山市%'
+update businesschange   set familynum=(select count(*)  from familymembershistory c  where c.businessid = businesschange.businessid),enjoyednum=(select count(*)  from familymembershistory i  where i.businessid = businesschange.businessid and i.isenjoyed = '享受'),beforepeople=(select count(*)  from familymembershistory g  where g.businessid = businesschange.businessid),beforetotalhelpmoney=(select totalhelpmoney  from businesschange h  where h.businessid = businesschange.businessid order by time desc limit 1),approvaltime=(select d.time from approvalprocess d where d.businessid = businesschange.businessid order by d.time desc limit 1 ) ,approvaluser=(select f.displayname from users f where f.id=(select e.userid from approvalprocess e where e.businessid = businesschange.businessid  order by e.time desc limit 1  )) ,approvaluserid=(select e.userid from approvalprocess e where e.businessid =businesschange.businessid  order by e.time desc limit 1  ) where  division like '舟山市%' and a.businesstype = '低保'Limit 15 Offset 0
+
+
+
 
 insert into  familymembers
 (businessid,time,birthday,isenjoyed,persontype,jobstatus,bodystatus ,specialobject,workunits ,

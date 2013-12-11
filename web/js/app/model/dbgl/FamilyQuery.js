@@ -40,7 +40,7 @@ Ext.define('ZSMZJ.model.dbgl.FamilyQuery', {
         {name:'familynum',type:'int'},
         {name:'familyaccount'},
         {name:'poorfamilytype'},
-        {name:'enjoynum'},
+        {name:'enjoynum',mapping:'enjoyednum'},
         {name:'bankower'},
         {name:'bankid'},
         {name:'aidnum'},

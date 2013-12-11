@@ -220,12 +220,13 @@ Ext.define('ZSMZJ.view.dbgl.familybasicFieldset', {
                         allowBlank: true
                     },{
                         itemId: 'FamilyPersons',
-                        name: 'households',
+                        name: 'familynum',
                         fieldLabel: '家庭总人口',
                         afterLabelTextTpl: required,
                         blankText:'家庭总人口',
                         value:0,
-                        disabled:true,
+                        /*disabled:true,*/
+                        readOnly:true,
 
                         //emptyText: '低保户类型',
                         disabledCls:'yw-disabled-field-cls',
