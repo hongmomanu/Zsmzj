@@ -238,10 +238,13 @@ public class BusinessProcessControl {
         basic_sql+=" and a.division like '"+divisionpath+"%' ";
 
         String sql_list="select a.*,b.businessid,b.bgdate,b.eddate,b.grantdate,b.time as granttime,b.adjustmoney," +
-                "c.displayname as grantuser,(select count(*)  from "+ FamilyTable+" d where " +
+                "c.displayname as grantuser" +
+               /* ",(select count(*)  from "+ FamilyTable+" d where " +
                 "  d.businessid = a.id)  as familynum," +
                 " (select count(*)  from "+ FamilyTable+" e where " +
-                " e.businessid = a.id and e.isenjoyed = '享受')  as enjoynum from "+BusinessTable +" a,"+GrantTable+" b,"+UserTable
+                " e.businessid = a.id and e.isenjoyed = '享受')  as enjoynum " +*/
+                "" +
+                "from "+BusinessTable +" a,"+GrantTable+" b,"+UserTable
                 +" c where"+basic_sql;
 
         String sql_count="select count(*) from "+GrantTable+" b,"+BusinessTable+
@@ -1120,10 +1123,16 @@ public class BusinessProcessControl {
 
                 //int totalnum =cd.getTotalCount(BusinessTable);
 
-        String sql_list="select a.*,(select count(*)  from "+ FamilyTable+" b where " +
+        String sql_list="select a.*" +
+
+                /*
+
+                ",(select count(*)  from "+ FamilyTable+" b where " +
                 "a.rowid =b.businessid )  as familynum," +
                 "(select count(*)  from "+ FamilyTable+" b where " +
                 "b.businessid = a.id and isenjoyed = '享受')  as enjoynum"+
+
+                */
                 " from "+BusinessTable +" a,"+FamilyTable+" b where "+basic_sql;
 
         String fulltable="("+sql_list+") as ff";
@@ -2010,7 +2019,8 @@ public class BusinessProcessControl {
         int totalnum =0;
         String sql_count="select count(*) from "+BusinessTable+" a  where 1=1 ";
 
-        String sql_list="select a.*,a.rowid as businessid,b.displayname,(select count(*)  from " +
+        String sql_list="select a.*,a.rowid as businessid,b.displayname" +
+                /*",(select count(*)  from " +
                 FamilyTable+" c  where c.businessid = a.id) as familynum" +
                 ",(select count(*)  from " +FamilyTable+" i  where i.businessid = a.id and i.isenjoyed = '享受') as enjoyednum" +
                 ",(select count(*)  from " +
@@ -2022,7 +2032,7 @@ public class BusinessProcessControl {
                 ",(select f.displayname from "+UserTable+" f where f.id=(select e.userid from " + ApprovalTable+" e where e.businessid = a.id  order by e.time desc limit 1 "+
                 " )) as approvaluser" +
                 ",(select e.userid from " + ApprovalTable+" e where e.businessid =a.id  order by e.time desc limit 1 "+
-                " ) as approvaluserid" +
+                " ) as approvaluserid" +*/
                 " from "+BusinessTable +" a,"+UserTable+" b " +
                 "where a.userid = b.id  ";
 
@@ -2159,7 +2169,18 @@ public class BusinessProcessControl {
 
             try {
                 conn.setAutoCommit(false);
-                bp.makeApproval(param);
+                int approvaluserid=bp.makeApproval(param);
+
+                String sql_select="select a.time as approvaltime,b.displayname as approvaluser,a.userid as approvaluserid from " +
+                        ApprovalTable +" a,"+UserTable +" b where a.userid=b.id  and a.businessid match "+businessid+" " +
+                        "order by a.time desc limit 1";
+                Map<String,Object> newprocess=cd.getSigleObj(sql_select);
+
+                String sql_update="update "+BusinessTable +" set approvaltime='"+newprocess.get("approvaltime")+
+                        "',approvaluser='"+newprocess.get("approvaluser")+"',approvaluserid='"
+                        +newprocess.get("approvaluserid")+"' where id="+businessid;
+                cd.delbysql(sql_update);
+
                 bp.changeStatus(Integer.parseInt(businessid), staus);
                 conn.commit();
                 conn.setAutoCommit(true);
@@ -2288,6 +2309,16 @@ public class BusinessProcessControl {
             conn.setAutoCommit(false);
             bp.insertBusinessChange(businessid);
             bp.insertFamilyChange(businessid);
+
+            /** jack 新增算法   ***/
+            ComonDao cd=new ComonDao();
+            String sql_familycount="select count(*) from "+FamilyTable+" where businessid="+businessid;
+            String sql_beforetotalhelpmoney="select totalhelpmoney from "+BusinessTable+" WHERE id="+businessid;
+
+            params.put("beforepeople",cd.getTotalCountBySql(sql_familycount));
+            params.put("beforetotalhelpmoney",cd.getSingleCol(sql_beforetotalhelpmoney));
+            /** jack 新增算法结束***/
+
             this.changeStatusbybid(businessid,ProcessType.UseProcessType.getChineseSeason(ProcessType.Apply));
             bp.updateApplyBusiness(businessid,params);
             bp.updateAffixFiles(affixfiles, businessid);

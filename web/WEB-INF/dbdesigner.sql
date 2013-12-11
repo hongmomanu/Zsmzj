@@ -230,7 +230,16 @@ difficulttype					        VARCHAR(50),								--困难类型
 studenthelptype					      VARCHAR(50),								--助学类型
 lengthofschooling					    VARCHAR(50),								--学制（年）
 grade					                VARCHAR(50),								--就读年级
-overtheyearstotalamount					VARCHAR(50)								--历年累计救助金额
+overtheyearstotalamount					VARCHAR(50),								--历年累计救助金额
+
+familynum					            integer,								--家庭人数
+enjoyednum					          integer,								--享受人数
+beforepeople					        integer,								--变更前人数
+beforetotalhelpmoney					real,								--变更前救助金
+approvaltime                  DATETIME,           --审核时间
+approvaluser                  VARCHAR(50),           --审核人
+approvaluserid                  VARCHAR(50)           --审核id
+
 );
 
 
@@ -379,6 +388,15 @@ CREATE VIRTUAL TABLE IF NOT EXISTS businesschange USING fts3
   lengthofschooling					    VARCHAR(50),								--学制（年）
   grade					                VARCHAR(50),								--就读年级
   overtheyearstotalamount					VARCHAR(50),								--历年累计救助金额
+
+
+  familynum					            integer,								--家庭人数
+  enjoyednum					          integer,								--享受人数
+  beforepeople					        integer,								--变更前人数
+  beforetotalhelpmoney					real,								--变更前救助金
+  approvaltime                  DATETIME,           --审核时间
+  approvaluser                  VARCHAR(50),           --审核人
+  approvaluserid                  VARCHAR(50),           --审核id
 
   businessid               integer,                                 --业务id
   insertdate               VARCHAR(50)                              --charuriq
@@ -536,7 +554,7 @@ CREATE VIRTUAL TABLE IF NOT EXISTS medicalstandard USING fts3
   );
 
 
-CREATE  VIRTUAL TABLE fm01  USING fts3
+CREATE  VIRTUAL TABLE IF NOT EXISTS fm01  USING fts3
 (	--家庭基本信息核定表（收入、现有财产和住房）
   id 			 integer primary key autoincrement,             --自增主键
   owerid                  VARCHAR(50) unique,                  --户主身份证* 主键
@@ -604,7 +622,7 @@ CREATE  VIRTUAL TABLE fm01  USING fts3
   houseaverageusearea             VARCHAR(50)                         --住房人均使用面积
 
 );
-CREATE  VIRTUAL TABLE FM04 USING fts3(
+CREATE  VIRTUAL TABLE IF NOT EXISTS FM04 USING fts3(
 --审批过程表
   fmy001 			 integer,
   time DATETIME DEFAULT (datetime(CURRENT_TIMESTAMP,'localtime')),  --时间
@@ -614,7 +632,7 @@ CREATE  VIRTUAL TABLE FM04 USING fts3(
   approvalopinion         VARCHAR(500),                             --审批意见
   submituid               integer                                   --提交人id
 );
-CREATE VIRTUAL TABLE fm02  USING fts3
+CREATE VIRTUAL TABLE  IF NOT EXISTS fm02  USING fts3
 (
 
   id integer primary key autoincrement,                             --自增主键
@@ -657,7 +675,7 @@ CREATE VIRTUAL TABLE fm02  USING fts3
   suppliesbuytime                 VARCHAR(50),                              --购入时间
   suppliesmoney                 VARCHAR(50)                              --购入资金
 );
-CREATE  VIRTUAL TABLE fm03 USING fts3(
+CREATE  VIRTUAL TABLE IF NOT EXISTS fm03 USING fts3(
 --核定过程表
   fmy001 			        integer,
   checkitem			      VARCHAR(50),					--核定内容（收入、现有财产、住房)
@@ -666,7 +684,7 @@ CREATE  VIRTUAL TABLE fm03 USING fts3(
   checkcomment			  VARCHAR(50),					--核定备注
   userid              integer,                               --核定人id
   roleid              integer                              --角色id;
-)
+);
 
 --ALTER TABLE business_content RENAME TO business_content;
 ----技巧说明 日期比较 time Between '2008-06-10' and  '2013-09-11'   数值比较CAST(totalhelpmoney AS real)
@@ -681,6 +699,12 @@ CREATE  VIRTUAL TABLE fm03 USING fts3(
 -- create index familymembers_birthday on familymembers(birthday);
 
 /*
+更新一些数据信息，提高查询速度
+update business   set familynum=(select count(*)  from familymembers c  where c.businessid = business.id),enjoyednum=(select count(*)  from familymembers i  where i.businessid = business.id and i.isenjoyed = '享受'),beforepeople=(select count(*)  from familymembershistory g  where g.businessid = business.id),beforetotalhelpmoney=(select totalhelpmoney  from businesschange h  where h.businessid = business.id order by time desc limit 1),approvaltime=(select d.time from approvalprocess d where d.businessid = business.id order by d.time desc limit 1 ) ,approvaluser=(select f.displayname from users f where f.id=(select e.userid from approvalprocess e where e.businessid = business.id  order by e.time desc limit 1  )) ,approvaluserid=(select e.userid from approvalprocess e where e.businessid =business.id  order by e.time desc limit 1  ) where  division like '舟山市%'
+update businesschange   set familynum=(select count(*)  from familymembershistory c  where c.businessid = businesschange.businessid),enjoyednum=(select count(*)  from familymembershistory i  where i.businessid = businesschange.businessid and i.isenjoyed = '享受'),beforepeople=(select count(*)  from familymembershistory g  where g.businessid = businesschange.businessid),beforetotalhelpmoney=(select totalhelpmoney  from businesschange h  where h.businessid = businesschange.businessid order by time desc limit 1),approvaltime=(select d.time from approvalprocess d where d.businessid = businesschange.businessid order by d.time desc limit 1 ) ,approvaluser=(select f.displayname from users f where f.id=(select e.userid from approvalprocess e where e.businessid = businesschange.businessid  order by e.time desc limit 1  )) ,approvaluserid=(select e.userid from approvalprocess e where e.businessid =businesschange.businessid  order by e.time desc limit 1  ) where  division like '舟山市%' and a.businesstype = '低保'Limit 15 Offset 0
+
+
+
 
 insert into  familymembers
 (businessid,time,birthday,isenjoyed,persontype,jobstatus,bodystatus ,specialobject,workunits ,

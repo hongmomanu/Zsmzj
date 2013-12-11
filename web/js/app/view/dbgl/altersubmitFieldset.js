@@ -103,9 +103,11 @@ Ext.define('ZSMZJ.view.dbgl.altersubmitFieldset', {
                     {
                         fieldLabel: '享受人数',
                         value:0,
+                        name:'enjoyednum',
                         itemId: 'enjoyPersons',
                         afterLabelTextTpl: required,
-                        disabled:true,
+                        readOnly:true,
+                        /*disabled:true,*/
                         allowBlank: false
                     },
                     {

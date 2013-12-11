@@ -894,7 +894,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
             var hc=me.application.getController("Header");
             hc.closetab(form.id);
             Ext.Msg.alert("提示信息", "保存成功");
-           /* function fn(){
+            /*function fn(){
                 me.formSubmit(form, params, 'ajax/sendapply.jsp', successFunc, failFunc,"正在提交数据");
             }
             var task = new Ext.util.DelayedTask(fn);

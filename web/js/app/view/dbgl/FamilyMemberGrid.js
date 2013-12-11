@@ -44,7 +44,10 @@ Ext.define('ZSMZJ.view.dbgl.FamilyMemberGrid' ,{
                      if(!grid.editor.isValid()){
                          //Ext.Msg.alert("提示信息", "请填上必要信息");
                          //grid.startEdit(0, 0);
-                         e.grid.store.remove(e.record);
+                         //testobj=grid;
+                         var btn=grid.grid.down('#removePerson');
+                         btn.fireHandler();
+                         //e.grid.store.remove(e.record);
                      }
                 }
 
