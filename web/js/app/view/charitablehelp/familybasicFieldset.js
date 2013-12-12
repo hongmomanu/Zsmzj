@@ -162,12 +162,14 @@ Ext.define('ZSMZJ.view.charitablehelp.familybasicFieldset', {
                         allowBlank: true
                     },{
                         itemId: 'FamilyPersons',
-                        name: 'households',
+                        //name: 'households',
                         fieldLabel: '家庭总人口',
+                        name: 'familynum',
                         afterLabelTextTpl: required,
                         blankText:'家庭总人口',
                         value:0,
-                        disabled:true,
+                        readOnly:true,
+                       // disabled:true,
                         //emptyText: '低保户类型',
                         allowBlank: false ,
                         listeners: {
