@@ -554,9 +554,9 @@ CREATE VIRTUAL TABLE IF NOT EXISTS medicalstandard USING fts3
   );
 
 
-CREATE  VIRTUAL TABLE fm01  USING fts3
+CREATE   TABLE fm01
 (	--家庭基本信息核定表（收入、现有财产和住房）
-  id 			 integer primary key autoincrement,             --自增主键
+  fmy001 			 integer primary key autoincrement,             --自增主键
   owerid                  VARCHAR(50) unique,                  --户主身份证* 主键
   time DATETIME DEFAULT (datetime(CURRENT_TIMESTAMP,'localtime')),  --家庭登记时间
   division                VARCHAR(50),                              --行政区划
@@ -622,10 +622,10 @@ CREATE  VIRTUAL TABLE fm01  USING fts3
   houseaverageusearea             VARCHAR(50)                         --住房人均使用面积
 
 );
-CREATE  VIRTUAL TABLE fm01change  USING fts3
+CREATE   TABLE fm01change
 (	--家庭基本信息核定表（收入、现有财产和住房）
-  id 			 integer primary key autoincrement,             --自增主键
-  owerid                  VARCHAR(50) unique,                  --户主身份证* 主键
+  fmy001 			 integer ,
+  owerid                  VARCHAR(50) ,                  --户主身份证
   time DATETIME DEFAULT (datetime(CURRENT_TIMESTAMP,'localtime')),  --家庭登记时间
   division                VARCHAR(50),                              --行政区划
   applytype               VARCHAR(50),                              --申请类别
@@ -691,7 +691,8 @@ CREATE  VIRTUAL TABLE fm01change  USING fts3
   changeid                  integer,                                   --家庭id
   insertdate               VARCHAR(50)                              --charuriq
 );
-CREATE  VIRTUAL TABLE FM04 USING fts3(
+CREATE  TABLE FM04
+(
 --审批过程表
   fmy001 			 integer,
   time DATETIME DEFAULT (datetime(CURRENT_TIMESTAMP,'localtime')),  --时间
@@ -701,7 +702,7 @@ CREATE  VIRTUAL TABLE FM04 USING fts3(
   approvalopinion         VARCHAR(500),                             --审批意见
   submituid               integer                                   --提交人id
 );
-CREATE VIRTUAL TABLE fm02  USING fts3
+CREATE  TABLE fm02
 (
 
   id integer primary key autoincrement,                             --自增主键
@@ -745,13 +746,15 @@ CREATE VIRTUAL TABLE fm02  USING fts3
   suppliesmoney                 VARCHAR(50)                              --购入资金
 );
 
-CREATE  VIRTUAL TABLE fm03 USING fts3(
+CREATE   TABLE fm03
+(
 --核定过程表
   fmy001 			        integer,
   checkitem			      VARCHAR(50),					--核定内容（收入、现有财产、住房)
   checkitemstatus		  INTEGER,					--核定状态(0为保存,1为提交)
   checkresult				  INTEGER,					--核定结果
   checkcomment			  VARCHAR(50),					--核定备注
+  bgflag              integer,              --家庭人员信息由(正常/变更)进行变更的标志,保存变更进设置为0,回退时设置为1(1为有效)
   userid              integer,                               --核定人id
   roleid              integer                              --角色id;
 );

@@ -229,7 +229,7 @@ public class ProperCommonDAOImpl implements PropertyCommonDAO{
         ProperCommonDAOImpl p=new ProperCommonDAOImpl(JdbcFactory.getConn("sqlite"));
         Map<String,Object> map=new HashMap<String, Object>();
         map.put("name","lisi");
-        p.getColumnData("fm01");
-        p.insertTableVales(map,"demo");
+        List list=p.getColumnData("fm01change");
+        System.out.println(list.size());
     }
 }
