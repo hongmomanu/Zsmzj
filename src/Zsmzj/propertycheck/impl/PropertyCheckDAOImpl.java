@@ -81,7 +81,8 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
         try {
             conn.setAutoCommit(false);
             familymemberdao.doUpdate(param);
-            result=commondao.updateTableValesSpecail(this.json2Map(jsonFm01), "fm01",null,"rowid="+param.get("fmy001") );
+            result=commondao.updateTableValesSpecail(this.json2Map(jsonFm01), "fm01",null,"fmy001="+param.get("fmy001") );
+
         } catch (SQLException e) {
             e.printStackTrace();
             result=-1;
@@ -110,15 +111,20 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
 
             fmy001=Integer.parseInt((String)param.get("fmy001"));
         } catch (Exception e){
-            log.debug(e);
+            e.printStackTrace();
             fmy001=(Integer)param.get("fmy001");
         }
         int result=0;
         try {
             conn.setAutoCommit(false);
             familymemberdao.doUpdate(param);
-            commondao.deleteTableValues("select * from fm03 where fmy001="+fmy001);
-            result=commondao.updateTableValesSpecail(this.json2Map(jsonFm01), "fm01",null,"rowid="+fmy001 );
+            commondao.execute("insert into fm01change select *,"+fmy001+",'"+fmt.format(new Date())+"' from fm01 a where a.fmy001="+fmy001);
+            commondao.deleteTableValues("update fm03 set bgflag=0 where fmy001="+fmy001);
+            familymemberdao.doUpdate(param);
+
+            jsonFm01.remove("checkstatus");
+            jsonFm01.put("checkstatus",0);
+            result=commondao.updateTableValesSpecail(this.json2Map(jsonFm01), "fm01",null,"fmy001="+fmy001 );
         } catch (SQLException e) {
             e.printStackTrace();
             result=-1;
@@ -141,16 +147,43 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
 
     @Override
 	public int doDelete(int fmy001) {
-        //PreparedStatement pstmt=null;
         Statement stmt=null;
         int result=1;
         try {
             conn.setAutoCommit(false);
             stmt=conn.createStatement();
+            String processstatus="";
+            String processstatustype="";
+            String checkstatus="";
+            String sql="select processstatus,processstatustype from fm01 where fmy001=" +fmy001;
+            ResultSet rs=stmt.executeQuery(sql);
+            if(rs.next()){
+                processstatus=rs.getString("processstatus");
+                processstatustype=rs.getString("processstatustype");
+            }
+            rs.close();
+            String sql2="select checkstatus from fm01change where fmy001=" +fmy001+
+                    "  and insertdate=(select max(insertdate) from fm01change where changeid="+fmy001+")";
+            ResultSet rs2=stmt.executeQuery(sql2);
+            if(rs.next()){
+                checkstatus=rs.getString("checkstatus");
+            }
+            rs2.close();
 
-            stmt.execute("delete from fm01 where rowid="+fmy001);
-            stmt.execute("delete from fm03 where fmy001="+fmy001);
-            stmt.execute("delete from fm04 where fmy001="+fmy001);
+            log.debug(processstatus+processstatustype+"后的删除操作");
+            if("申请".equals(processstatus)&&("变更".equals(processstatustype)||"注销".equals(processstatustype))){
+                Map<String,Object> map=new HashMap<String, Object>();
+                map.put("processstatus","审批");
+                map.put("checkstatus",checkstatus);
+                commondao.updateTableValesSpecail(map,"fm01",null,"fmy001="+fmy001); //回退fm01审批,核定结果的状态
+                stmt.execute("delete from fm03 where bgflag=1 and fmy001="+fmy001);   //回退核定记录
+                stmt.execute("update fm03 set bgflag=1 where bgflag=0 and fmy001="+fmy001);
+            }else {
+                stmt.execute("delete from fm01 where fmy001="+fmy001);
+                stmt.execute("delete from fm02 where businessid="+fmy001);
+                stmt.execute("delete from fm03 where fmy001="+fmy001);
+                stmt.execute("delete from fm04 where fmy001="+fmy001);
+            }
 
             conn.commit();
             conn.setAutoCommit(true);
@@ -175,11 +208,12 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
         SimpleDateFormat sDayFormat   =   new SimpleDateFormat("yyyy-MM-dd");
         String addontype=(String)paraMap.get("addontype");
         String keyword=(String)paraMap.get("keyword");
+        String processstatustype=(String)paraMap.get("processstatustype");
         String bgdate=(String)paraMap.get("bgdate");
         String eddate=(String)paraMap.get("eddate");
         int start=Integer.parseInt((String)paraMap.get("start"));
         int limit=Integer.parseInt((String)paraMap.get("limit"));
-        String sql="select a.rowid fmy001,a.*,0 addontype,b.displayname from fm01 a,users b where a.userid=b.id   ";
+        String sql="select a.*,0 addontype,b.displayname from fm01 a,users b where a.userid=b.id   ";
         String sql_count="select count(*) from fm01 a,users b where a.userid=b.id  ";
         boolean testbg=bgdate!=null&&!bgdate.equals("");
         boolean tested=eddate!=null&&!eddate.equals("");
@@ -224,17 +258,21 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
             }
         }
 
+        if(null!=processstatustype&&!"".equals(processstatustype.trim())){
+            sql+=  " and processstatustype='"+processstatustype+"'" ;
+            sql_count+=  " and processstatustype='"+processstatustype+"'";
+        }
         if(null!=keyword&&!"".equals(keyword.trim())){
-            sql+=  " and fm01 match '"+keyword+"*'";
-            sql_count+=  " and fm01 match '"+keyword+"*'";
+            sql+=  "  and (a.division like '"+keyword+"%' or a.owerid like '"+keyword+"%' or a.owername like '"+keyword+"%')" ;
+            sql_count+=  "  and (a.division like '"+keyword+"%' or a.owerid like '"+keyword+"%' or a.owername like '"+keyword+"%')" ;;
         }
         String divisionpath=(String) paraMap.get("divisionpath");
         if(!"".equals(divisionpath)){
             sql+=" and a.division like '"+divisionpath+"%'";
             sql_count+=" and a.division like '"+divisionpath+"%'";
         }
-        sql+= " order by a.rowid limit "+limit+" offset "+start ;
-        sql_count+= " order by a.rowid limit "+limit+" offset "+start ;
+        sql+= " order by a.fmy001 limit "+limit+" offset "+start ;
+        sql_count+= " order by a.fmy001 limit "+limit+" offset "+start ;
 
         log.debug(sql);
         log.debug(sql_count);
@@ -287,7 +325,7 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
     @Override
     public int changeBusinessProcessStatus(Map<String, Object> param) {
         JSONObject jsonObject=JSONObject.fromObject(param.get("rc"));
-        String sql="update fm01 set processstatus=? where rowid=?";
+        String sql="update fm01 set processstatus=? where fmy001=?";
         PreparedStatement pstmt=null;
         int result=0;
         try {
@@ -312,7 +350,6 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
         String eddate=(String)paraMap.get("eddate");
         int start=Integer.parseInt((String)paraMap.get("start"));
         int limit=Integer.parseInt((String)paraMap.get("limit"));
-        log.debug(checkitem);
         String date_string="";
         String keyword_string="";
 
@@ -348,16 +385,15 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
             date_string+=" and  (date(a.time) Between '"+begindate
                     +"' and  '"+eddate+"')";
         }
-        log.debug(keyword);
         if(null!=keyword&&!"".equals(keyword.trim())){
-            keyword_string+=  " and fm01 match '"+keyword+"*'";
+            keyword_string+=  "  and (a.division like '"+keyword+"%' or a.owerid like '"+keyword+"%' or a.owername like '"+keyword+"%')" ;
         }
         String t="1".equals(addontype)?"1":"0";
         t+=" addontype";
-        String sql_comm="select a.rowid fmy001,a.*,"+ t+ ",b.checkitem checkitem,b.checkresult checkresult,b.checkcomment checkcomment  from fm01 a,fm03 b where 1=1 and "+
-                "a.rowid=b.fmy001 and b.checkitem = '"+checkitem+"' "+ date_string+  keyword_string
-                +" union  select a.rowid fmy001,a.*,"+ t+
-                ",'"+checkitem+"' checkitem,0 checkresult,'' checkcomment  from fm01 a where 1=1 and not exists (select 1 from fm03 c where c.fmy001=a.rowid and c.checkitem ='"+checkitem+"') "  +
+        String sql_comm="select a.*,"+ t+ ",b.checkitem checkitem,b.checkresult checkresult,b.checkcomment checkcomment  from fm01 a,fm03 b where 1=1 and "+
+                "a.fmy001=b.fmy001 and b.bgflag=1 and b.checkitem = '"+checkitem+"' "+ date_string+  keyword_string
+                +" union  select a.*,"+ t+
+                ",'"+checkitem+"' checkitem,0 checkresult,'' checkcomment  from fm01 a where 1=1 and not exists (select 1 from fm03 c where c.fmy001=a.fmy001 and c.bgflag=1 and c.checkitem ='"+checkitem+"') "  +
                 date_string+  keyword_string+
                 " order by checkresult,fmy001 desc";
 
@@ -452,12 +488,12 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
     public int doCheckItem(Map<String, Object> param) {
         JSONObject jsonObj=  JSONObject.fromObject((String)param.get("fm03"));
         log.debug(jsonObj.toString());
-        String sql="select * from fm03 where fmy001=? and checkitem=?";
+        String sql="select * from fm03 where fmy001=? and checkitem=? and bgflag=1";
 
-        String sql_updateFm03="update fm03 set checkresult=?,checkcomment=?,userid=?,userid=?,roleid=? where  fmy001=? and checkitem=?";
-        String sql_insertFm03="insert into fm03(fmy001,checkitem,checkresult,checkitemstatus)values(?,?,0,0)";
+        String sql_updateFm03="update fm03 set checkresult=?,checkcomment=?,userid=?,userid=?,roleid=? where  fmy001=? and checkitem=? and bgflag=1";
+        String sql_insertFm03="insert into fm03(fmy001,checkitem,checkresult,checkitemstatus,bgflag)values(?,?,0,0,1)";
         String sql2="select sum(checkresult) from fm03 where fmy001=?";
-        String sql3="update fm01 set checkstatus=? where rowid=?";
+        String sql3="update fm01 set checkstatus=? where fmy001=?";
         int result=0;
         PreparedStatement pstmt=null;
         PreparedStatement pstmt_updateFm03=null;
@@ -532,7 +568,7 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
     public ResultInfo getPropertyCheckItemDatilByFmy001(Map<String, Object> param) {
 
         ArrayList<Map<String,Object>> list=new ArrayList<Map<String, Object>>();
-        String sql="select a.*,u.username,u.displayname from fm03 a ,users u where a.fmy001=? and a.userid=u.id";
+        String sql="select a.*,u.username,u.displayname from fm03 a ,users u where a.fmy001=? and a.userid=u.id and a.bgflag=1";
         PreparedStatement pstmt=null;
         Integer fmy001= Integer.parseInt((String)param.get("fmy001"));
         try {
@@ -584,12 +620,14 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
         String result=null;
         Integer fmy001=Integer.parseInt((String)jsonfm04.get("fmy001"));
         try {
-            pstmt1=conn.prepareStatement("select processstatus from fm01 where rowid=?");
+            pstmt1=conn.prepareStatement("select processstatus,processstatustype from fm01 where fmy001=?");
             pstmt1.setInt(1,fmy001);
             ResultSet rs=pstmt1.executeQuery();
             String rsstatus="";
+            String processstatustype="";
             if(rs.next()){
                 rsstatus=rs.getString(1);
+                processstatustype=rs.getString(2);
                 rs.close();
             }
             if(rsstatus.equals(processstatus)){
@@ -605,7 +643,7 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
                 pstmt2.setString(7,fmt.format(new java.util.Date()));
                 pstmt2.execute();
 
-                pstmt3=conn.prepareStatement("update fm01 set processstatus=? where rowid=?");
+                pstmt3=conn.prepareStatement("update fm01 set processstatus=? where fmy001=?");
                 pstmt3.setString(1,staus);
                 log.debug(staus);
                 pstmt3.setInt(2,fmy001);
@@ -648,7 +686,7 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
         }*/
         int result=0;
         try {
-            pstmt=conn.prepareStatement("update fm01 set processstatus=? where rowid=?");
+            pstmt=conn.prepareStatement("update fm01 set processstatus=? where fmy001=?");
             pstmt.setString(1,processstatus);
             pstmt.setInt(2,fmy001);
             result=pstmt.executeUpdate();
@@ -713,4 +751,5 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
         log.debug(map.toString());
         return map;
     }
+
 }

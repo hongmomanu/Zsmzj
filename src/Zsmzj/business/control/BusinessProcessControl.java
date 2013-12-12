@@ -1472,7 +1472,7 @@ public class BusinessProcessControl {
                     " ";
 
         }
-        sql_list+=" Limit "+limit+" Offset "+start;
+        sql_list+=" order by a.id desc Limit "+limit+" Offset "+start;
 
         ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
         int totalnum=cd.getTotalCountBySql(sql_count);
@@ -1878,7 +1878,7 @@ public class BusinessProcessControl {
                         " ";
 
         }
-        sql_list+="Limit "+limit+" Offset "+start;
+        sql_list+=" order by a.id desc Limit "+limit+" Offset "+start;
 
         ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
 
@@ -2112,7 +2112,7 @@ public class BusinessProcessControl {
                 sql_count+=" and (a.owerid  like '"+keyword+"%' or a.owername like '"+keyword+"%') ";
 
         }
-        sql_list+="Limit "+limit+" Offset "+start;
+        sql_list+=" order by a.id desc Limit "+limit+" Offset "+start;
 
         ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
         for(Map<String,Object> map:list){

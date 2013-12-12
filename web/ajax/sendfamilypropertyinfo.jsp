@@ -48,6 +48,14 @@
                 paraMap.put(name,request.getParameter(name));
             }
             out.print(propchk.delFamliyPropertyInfoByFmy001(paraMap));
+        }else if("recoverapplybyfmy001".equals(eventName)){ //未提交前恢复之前的状态
+            Enumeration e  =(Enumeration) request.getParameterNames();
+            Map paraMap=new HashMap<String,Object>();
+            while(e.hasMoreElements()){
+                String name=(String)e.nextElement();
+                paraMap.put(name,request.getParameter(name));
+            }
+            out.print(propchk.delFamliyPropertyInfoByFmy001(paraMap));
         }else if("cancelsubmitbyfmy001".equals(eventName)){ //未审核前取消提交
             Enumeration e  =(Enumeration) request.getParameterNames();
             Map paraMap=new HashMap<String,Object>();

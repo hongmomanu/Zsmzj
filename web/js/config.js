@@ -8,7 +8,7 @@
 var extLocation="http://192.168.2.112/ext-4.2.1/";
 
  extLocation="http://127.168.2.141/ext-4.2.1/";
- extLocation="http://192.168.2.141:8080/extjs4.2/";
+ //extLocation="http://192.168.2.141:8080/extjs4.2/";
 
 var businessTableType=
         {   'dbgl':"低保",
@@ -57,6 +57,7 @@ var formwidgettype={
     'propertycheckregister':'propertycheckfamilyinforegister',
     'propertycheckalter':'propertycheckfamilyinfoalter',
     'propertycheckchange':'propertycheckfamilyinfochange',
+    'propertychecklogout':'propertycheckfamilyinfologout',
     'propertycheckitemalter':'propertycheckfamilyinfocheck'/*家庭基本信息核定*/
 
 };
@@ -899,6 +900,15 @@ var applyformviews={
         'propertycheckapplyhistoryfieldset'
 
     ],'propertycheckchange':[
+        'propertycheckfamilybasicfieldset',
+        'propertycheckfamilymemberfieldset',
+        'propertycheckfamilymoneyfieldset',
+        'propertycheckfamilyhousefieldset',
+        'propertycheckfamilyinputfieldset',
+        'propertycheckitemhistoryfieldset',
+        'propertycheckapplyhistoryfieldset'
+
+    ],'propertychecklogout':[
         'propertycheckfamilybasicfieldset',
         'propertycheckfamilymemberfieldset',
         'propertycheckfamilymoneyfieldset',

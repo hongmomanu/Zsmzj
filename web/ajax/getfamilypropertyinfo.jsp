@@ -1,4 +1,4 @@
-<%@ page import="Zsmzj.propertycheck.control.ProperCheckControl" %>
+<%@ page import="Zsmzj.propertycheck.control.FamilyPropertyQuery" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.Enumeration" %>
@@ -13,25 +13,15 @@
 <%@ page language="java"  contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%
-    if(false&&request.getParameter("businesstype")==null){
-       out.print("缺少参数businesstype");
+
+    FamilyPropertyQuery propchk=new FamilyPropertyQuery();
+    Enumeration e  =(Enumeration) request.getParameterNames();
+    Map paraMap=new HashMap<String,Object>();
+    while(e.hasMoreElements()){
+        String name=(String)e.nextElement();
+        paraMap.put(name,request.getParameter(name));
     }
-    else{
+    out.print(propchk.findAll(paraMap));
 
-        Map<String,Object> params=new HashMap<String,Object>();
 
-        /*
-        *获取请求参数
-        */
-        Enumeration e  =(Enumeration) request.getParameterNames();
-        while(e.hasMoreElements()){
-
-            String  parName=(String)e.nextElement();
-
-            params.put(parName,request.getParameter(parName));
-        }
-
-        ProperCheckControl propchk=new ProperCheckControl();
-        out.print(propchk.getFamilyPropertyInfo());
-    }
 %>

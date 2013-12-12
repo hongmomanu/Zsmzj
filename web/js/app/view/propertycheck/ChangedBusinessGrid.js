@@ -6,9 +6,9 @@
  * To change this template use File | Settings | File Templates.
  */
 
-Ext.define('ZSMZJ.view.propertycheck.NeedToCheckBusinessGrid' ,{
+Ext.define('ZSMZJ.view.propertycheck.ChangedBusinessGrid' ,{
     extend: 'Ext.grid.Panel',
-    alias : 'widget.propertycheckneedtocheckbusinesspanel',
+    alias : 'widget.propertycheckchangebusinesspanel',
     cls:'navigation-grid',
     requires: [
 
@@ -24,7 +24,6 @@ Ext.define('ZSMZJ.view.propertycheck.NeedToCheckBusinessGrid' ,{
     initComponent: function() {
         Ext.apply(this, {
             border: false,
-
             viewConfig: {
                 trackOver: false,
                 loadMask: true,
@@ -32,6 +31,10 @@ Ext.define('ZSMZJ.view.propertycheck.NeedToCheckBusinessGrid' ,{
                 enableTextSelection:true,
                 stripeRows: true
             },
+            /*features: [{
+                ftype: 'summary'//Ext.grid.feature.Summary表格汇总特性
+            }],*/
+            //hideHeaders:true,
             columns: [
 
 
@@ -47,9 +50,13 @@ Ext.define('ZSMZJ.view.propertycheck.NeedToCheckBusinessGrid' ,{
                                 Ext.widget('button', {
                                     renderTo: id0,
                                     margin: '0 5 0 5',
-                                    text: '核定',
+                                    text: '修改',
                                     icon:'img/busiicon/change.png',
-                                    hidden:r.data.checkresult==1,
+                                    hidden:!(r.get('processstatus').toString()==processdiction.stepzero
+                                     ||r.get('processstatus').toString()==processdiction.stepback),
+                                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                                        {name:"name",value:r.get("processstatus")}).children,
+                                        {name:"name",value:"修改"}),
                                     width: 55,
                                     listeners: {
 
@@ -66,18 +73,53 @@ Ext.define('ZSMZJ.view.propertycheck.NeedToCheckBusinessGrid' ,{
                             }
 
                         }, 50);
-                        var id1=Ext.id();
+
+
+                        var id1 = Ext.id();
                         Ext.defer(function () {
                             if(Ext.get(id1)){
                                 Ext.widget('button', {
-                                    renderTo: id0,
+                                    renderTo: id1,
                                     margin: '0 5 0 5',
-                                    text: '查看',
-                                    icon:'img/form_show.png',
-                                    hidden:false,
+                                    icon:'img/process.png',
+                                    text: '流程' ,
                                     width: 55,
+                                     hidden: r.get('processstatus').toString()==processdiction.stepzero||
+                                     r.get('processstatus').toString()==processdiction.stepback,
+                                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                                        {name:"name",value:r.get("processstatus")}).children,
+                                        {name:"name",value:"流程"}),
                                     listeners: {
 
+                                        render: function(c){
+                                            c.getEl().on('click', function(){
+                                                //Ext.Msg.alert('Info', r.get('processstatus'))
+                                                //me.fireEvent('processclick', c,r,me);
+                                                me.up('panel').fireEvent('processclick', c,r,me);
+
+                                            }, c);
+                                        }
+
+                                    }
+                                });
+                            }
+
+                        }, 50);
+
+                        var id2=Ext.id();
+                        Ext.defer(function () {
+                            if(Ext.get(id2)){
+                                Ext.widget('button', {
+                                    renderTo: id2,
+                                    text: '查看',
+                                    margin: '0 5 0 5',
+                                     hidden:(r.get('processstatus').toString()==processdiction.stepzero),
+                                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                                        {name:"name",value:r.get("processstatus")}).children,
+                                        {name:"name",value:"查看"}),
+                                    icon:'img/form_show.png',
+                                    width: 55,
+                                    listeners: {
                                         render: function(c){
                                             c.getEl().on('click', function(){
                                                 me.up('panel').fireEvent('alterclick', c,r,me);
@@ -87,7 +129,32 @@ Ext.define('ZSMZJ.view.propertycheck.NeedToCheckBusinessGrid' ,{
 
                                     }
                                 });
+                            }
 
+                        }, 50);
+
+                        var id5=Ext.id();
+                        Ext.defer(function () {
+                            if(Ext.get(id5)){
+                                Ext.widget('button', {
+                                    renderTo: id5,
+                                    margin: '0 5 0 5',
+                                    text: '提交',
+                                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                                        {name:"name",value:r.get("processstatus")}).children,
+                                        {name:"name",value:"提交"}),
+                                    icon:'img/busiicon/busiapproval.png',
+                                    width: 55,
+                                    listeners: {
+                                        render: function(c){
+                                            c.getEl().on('click', function(){
+                                                me.up('panel').fireEvent('businessclick', c,r,me);
+
+                                            }, c);
+                                        }
+
+                                    }
+                                });
                             }
 
                         }, 50);
@@ -95,36 +162,89 @@ Ext.define('ZSMZJ.view.propertycheck.NeedToCheckBusinessGrid' ,{
 
 
 
-                        return Ext.String.format('<span id="{0}"></span>'+
-                            '<span id="{1}" ></span>',id0,id1);
+                        var id3=Ext.id();
+                        Ext.defer(function () {
+                            if(Ext.get(id3)){
+                                Ext.widget('button', {
+                                    renderTo: id3,
+                                    text: '删除',
+                                    margin: '0 5 0 5',
+                                    icon:'img/busiicon/del.gif',
+                                    hidden:!(r.get('processstatus').toString()==processdiction.stepzero
+                                     ||r.get('processstatus').toString()==processdiction.stepback),
+                                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                                        {name:"name",value:r.get("processstatus")}).children,
+                                        {name:"name",value:"删除"}),
+                                    width: 55,
+                                    listeners: {
+
+                                        render: function(c){
+                                            c.getEl().on('click', function(){
+                                                me.up('panel').fireEvent('delclick', c,r,me);
+
+                                            }, c);
+                                        }
+
+                                    }
+                                });
+                            }
+
+                        }, 50);
+
+                        var id4=Ext.id();
+                        Ext.defer(function () {
+                            if(Ext.get(id4)){
+                                Ext.widget('button', {
+                                    renderTo: id4,
+                                    text: '取消',
+                                    icon:'img/sp.gif',
+                                    //hidden:!(r.get('processstatus').toString()==processdiction.stepone),
+                                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                                        {name:"name",value:r.get("processstatus")}).children,
+                                        {name:"name",value:"取消"}),
+                                    width: 55,
+                                    margin: '0 5 0 5',
+                                    listeners: {
+
+                                        render: function(c){
+                                            c.getEl().on('click', function(){
+
+                                                me.up('panel').fireEvent('cancelclick', c,r,me);
+                                            }, c);
+                                        }
+
+                                    }
+                                });
+                            }
+
+                        }, 50);
+
+                        return Ext.String.format('<span id="{0}"></span>' +
+                            '<span id="{1}"></span><span id="{2}"></span>' +
+                            '</span><span id="{5}"></span>'+
+                            '<span id="{3}" ></span>'+
+                            '<span id="{4}" ></span>',id0, id1,id2,id3,id4,id5);
                     }
                 },
                 {header: '户主姓名',align:'center',dataIndex:'owername'},
-
-                {header: '核定项目',align:'center',dataIndex:'checkitem',hidden:true},
                 {header: '户主身份证',align:'center',dataIndex:'owerid',width: 250},
-                {header: '核定',align:'center',dataIndex:'checkresult',itemId:'checkresult',
-                    renderer:function(v, m, r){
-                        if(r.data.checkresult=='1'){
-                            return '通过'
-                        }else{
-                            return '未通过'
-                        }
-                    }
-                } ,
-                {header: '备注',align:'left',dataIndex:'checkcomment',itemId:'checkcomment',width:200},
-                {header: '收入合计',align:'center',dataIndex:'incomesum',itemId:'incomesum',hidden:false,
-                    renderer:function(v,m,r){
-                        if(r.data.checkitem!='核定收入'){
-                               //return 'X'
-                            return v;
-                        }else{
-                            return v;
-                        }
-                    }
-                },
+                {header: '收入合计',align:'center',dataIndex:'incomesum',itemId:'incomesum'},
                 {header: '财产合计',align:'center',dataIndex:'propertysum',itemId:'propertysum'},
                 {header: '住房总使用面积',align:'center',dataIndex:'houseusearea',itemId:'houseusearea'},
+                {header: '流程状态',align:'center',dataIndex:'processstatus',itemId:'processstatus'},
+                {header: '核定状态',align:'center',dataIndex:'checkstatus',itemId:'checkstatus',
+                    renderer:function(v, m, r){
+                        var rs='';
+                        switch (parseInt(v)){
+                            case 0: rs='未核定';break;
+                            case 1:;
+                            case 2: rs='核定中';break;
+                            case 3: rs='核定完成';break;
+                            default:;
+                        }
+                        return rs;
+                    }
+                },
                 {header: '行政区划',align:'center',dataIndex:'division',itemId:'division'},
                 {header: '家庭类别',align:'center',dataIndex:'familytype',itemId:'familytype'},
                 {header: '户口所在地',align:'center',dataIndex:'accountaddress',itemId:'accountaddress'},
@@ -134,9 +254,7 @@ Ext.define('ZSMZJ.view.propertycheck.NeedToCheckBusinessGrid' ,{
                 {header: '开户银行',align:'center',dataIndex:'bank',itemId:'bank'},
                 {header: '开户人',align:'center',dataIndex:'bankower',itemId:'bankower'},
                 {header: '银行账号',align:'center',dataIndex:'bankid',itemId:'bankid'}
-               /* ,
-                {header: '流程状态',align:'center',dataIndex:'processstatus',itemId:'processstatus'},
-                {header: '核定状态',align:'center',dataIndex:'checkstatus',itemId:'checkstatus'}*/
+
 
 
 

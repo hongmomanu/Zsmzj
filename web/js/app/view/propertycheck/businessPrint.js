@@ -51,7 +51,7 @@ Ext.define('ZSMZJ.view.propertycheck.businessPrint', {
                                 type: 'table',
 
                                 // The total column count must be specified here
-                                columns: 6,
+                                columns: 4,
                                 tableAttrs: {
                                     border: 1,
                                     cellpadding: 5,
@@ -76,7 +76,7 @@ Ext.define('ZSMZJ.view.propertycheck.businessPrint', {
                                 }
                                 ,{
                                     text:'',
-                                    colspan:3,
+                                    //colspan:3,
                                     itemId:'owerid'
                                 },
                                 {
@@ -85,7 +85,7 @@ Ext.define('ZSMZJ.view.propertycheck.businessPrint', {
                                 },
                                 {
                                     itemId: 'accountaddress',
-                                    colspan:3,
+                                    //colspan:3,
                                     text: ''
                                 },
                                 {
@@ -100,7 +100,7 @@ Ext.define('ZSMZJ.view.propertycheck.businessPrint', {
                                 },
                                 {
                                     itemId: 'realaddress',
-                                    colspan:3,
+                                    //colspan:3,
                                     text: ''
                                 },{
                                     name: 'telnum',
@@ -128,6 +128,7 @@ Ext.define('ZSMZJ.view.propertycheck.businessPrint', {
 
                                 },{
                                     itemId: 'poorreason',
+                                    colspan:5,
                                     text: ''
                                 }
                             ]
@@ -154,10 +155,10 @@ Ext.define('ZSMZJ.view.propertycheck.businessPrint', {
                         ,
                         {
                             xtype: 'fieldset',
-                            title: '<a>低保业务办理信息</a>',
+                            title: '<a>财产信息</a>',
                             itemId:'businesscheckinfo',
                             defaultType: 'label',
-                            height: 350,
+                            //height: 350,
                             //layout: 'anchor',
                             layout: {
                                 type: 'table',
@@ -203,13 +204,7 @@ Ext.define('ZSMZJ.view.propertycheck.businessPrint', {
                                     itemId: 'FamilyPersons',
                                     text: ''
                                 },
-                                {
-                                    text: '低保类型'
-                                },
-                                {
-                                    itemId: 'poortype',
-                                    text: ''
-                                },
+
                                 {
                                     text: '救助证编号'
                                 }
@@ -218,79 +213,25 @@ Ext.define('ZSMZJ.view.propertycheck.businessPrint', {
                                     itemId: 'aidnum',
                                     text: ''
                                 }
+                                ,{
+                                    text: '现有资产'
+                                }
                                 ,
-
                                 {
-
-                                    text: '低保标准(元)'
-                                },
-                                {
-                                    itemId: 'poorstandard',
-                                    text: ''
-                                },
-                                {
-                                    text: '享受人数'
-                                },
-                                {
-                                    text: '',
-                                    itemId: 'enjoyPersons'
-                                },
-                                {
-                                    text: '救助日期'
-                                },
-                                {
-                                    text: '',
-                                    itemId: 'helpbgtime'
-                                },
-                                {
-                                    text: '救助金额'
-                                },
-                                {
-                                    text: '',
-                                    itemId: 'totalhelpmoney'
-                                },
-                                {
-                                    text: '救助原因',
-                                    height:180,
-                                    colspan:1
-                                },
-                                {
-                                    itemId: 'helpreason',
-                                    text: '',
-                                    height:180,
-                                    colspan:5
-
-                                },
-
-                                {
-                                    text: '社区/村意见'
-                                },
-                                {
-                                    itemId: 'villageopinion',
-                                    text: '',
-                                    colspan:2
-
-                                },
-                                {
-                                    text: '街道/乡镇意见'
-
-                                },{
-                                    itemId: 'townopinion',
-
-
-                                    colspan:2,
-                                    text: ''
-                                },{
-                                    text: '民政局意见',
-                                    rowspan:3,
-                                    height:100
-                                },{
-                                    itemId: 'civilopinion',
-                                    colspan:5,
-                                    rowspan:3,
-                                    height:100,
+                                    itemId: 'propertysum',
                                     text: ''
                                 }
+                                ,{
+                                    text: '住房总面积'
+                                }
+                                ,
+                                {
+                                    itemId: 'housearea',
+                                    text: ''
+                                }
+
+
+
                             ]
                         }
 

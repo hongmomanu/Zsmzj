@@ -32,6 +32,8 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
         'propertycheck.FamilyPropertyQueryGrid',
         'propertycheck.NeedToDoBusinessGrid',
         'propertycheck.NeedToCheckBusinessGrid',
+        'propertycheck.ChangedBusinessGrid',
+        'propertycheck.LogoutBusinessGrid',
         'propertycheck.familyinfoAlter',
         'propertycheck.familyinfoCheck',
         'propertycheck.propertyCheckWin',
@@ -43,6 +45,7 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
         'propertycheck.FamilyMemberGrid',
         'propertycheck.familymemberFieldset',
         'propertycheck.familyinfoChange',
+        'propertycheck.familyinfoLogout',
         'propertycheck.businessPrint',
 
         'propertycheck.applyhistoryFieldset'
@@ -89,11 +92,10 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                         task.delay(500);
                     }
                 },
-                'propertycheckfamilyinfoalter,propertycheckfamilyinfochange':{
+                'propertycheckfamilyinfoalter,propertycheckfamilyinfochange,propertycheckfamilyinfologout':{
                     afterrender: dbgl_cl.afterrenderEvents,
                     initformaftershow:Ext.bind(dbgl_cl.initformaftershow, dbgl_cl),
                     alterapplyaftershow:function(form){
-                        mytestform=form;
                         var fn=function(form){
                             var r=form.objdata.record;
                             form.loadRecord(r);
@@ -159,28 +161,31 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                                     }
 
                                     historyfun();
-                                    me.initchangelogoutbtns(form);
+
 
                                 }});
                             }
 
                         }
-
+                        me.initchangelogoutbtns(form);
                         var task = new Ext.util.DelayedTask(function(){fn(form)});
                         task.delay(800);
                         //setFormValuesPieces
                     }
                 },
-                'propertycheckfamilyinforegister button[action=applysubmit],propertycheckfamilyinfoalter button[action=applysubmit],propertycheckfamilyinfochange button[action=applysubmit]':{
+                'propertycheckfamilyinforegister button[action=applysubmit],propertycheckfamilyinfoalter button[action=applysubmit],propertycheckfamilyinfochange button[action=applysubmit],propertycheckfamilyinfologout button[action=applysubmit]':{
                     click: this.applysubmit
                 },
                 'propertycheckfamilyinfochange button[action=saveapplysubmit]':{
                     click: this.applysubmitchange
                 },
-                'propertycheckfamilyinfocheck button[action=checkbusiness]':{
+                'propertycheckfamilyinfologout button[action=savelogoutapplysubmit]':{
+                    click: this.applysubmitlogout
+                },
+                'propertycheckfamilyinfocheck button[action=checkbusiness],propertycheckfamilyinfologout button[action=checkbusiness]':{
                     click: this.showpropertycheckwin
                 },
-                'propertycheckfamilyinfocheck button[action=cancel],propertycheckfamilyinfoalter button[action=cancel],propertycheckfamilyinfochange button[action=cancel]':{
+                'propertycheckfamilyinfocheck button[action=cancel],propertycheckfamilyinfoalter button[action=cancel],propertycheckfamilyinfochange button[action=cancel],propertycheckfamilyinfologout button[action=cancel]':{
                     click: Ext.bind(header_cl.cancelcheck,header_cl)
                 },
                 'propertycheckwin button[action=send]':{
@@ -189,13 +194,13 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                 'propertyprocesscheckwin button[action=send]':{
                     click:this.sendPropertyCheckForm
                 },
-                'propertycheckfamilyinfoalter button[action=sendbusiness],propertycheckfamilyinfochange button[action=sendbusiness]':{
+                'propertycheckfamilyinfoalter button[action=sendbusiness],propertycheckfamilyinfochange button[action=sendbusiness],propertycheckfamilyinfologout button[action=sendbusiness]':{
                     click:this.sendbusiness
                 },
-                'propertycheckfamilyinfoalter button[action=checkbusiness],propertycheckfamilyinfochange button[action=checkbusiness]':{
+                'propertycheckfamilyinfoalter button[action=checkbusiness],propertycheckfamilyinfochange button[action=checkbusiness],propertycheckfamilyinfologout button[action=checkbusiness]':{
                     click: this.showcheckwin
                 },
-                'propertycheckneedtocheckbusinesspanel,propertycheckneedtodobusinesspanel':{
+                'propertycheckneedtocheckbusinesspanel,propertycheckneedtodobusinesspanel,propertycheckchangebusinesspanel,propertychecklogoutbusinesspanel':{
                     gridshowfresh:function(grid){
                         var store=grid.getStore();
                         if(store.proxy.extraParams){
@@ -214,6 +219,13 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
 
                             }else{
                                 store.proxy.extraParams.addontype='0'; //正常查询
+                                if(grid.xtype=='propertycheckneedtodobusinesspanel'){
+                                    store.proxy.extraParams.processstatustype='';
+                                }else if(grid.xtype=='propertycheckchangebusinesspanel'){
+                                    store.proxy.extraParams.processstatustype=processstatustype.change;
+                                }else if(grid.xtype=='propertychecklogoutbusinesspanel'){
+                                    store.proxy.extraParams.processstatustype=processstatustype.logout;
+                                }
                             }
                             if(grid.isnewgrid){
                                 store.load();
@@ -284,15 +296,15 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                         }
                     }
                 },
-                'propertycheckfamilyinfoalter button[action=process],propertycheckfamilyinfochange button[action=process]':{
+                'propertycheckfamilyinfoalter button[action=process],propertycheckfamilyinfochange button[action=process],propertycheckfamilyinfologout button[action=process]':{
                     click:function (c,r,grid){
                         this.showProcessWin(c,r,grid);
                     }
                 },
-                'propertycheckfamilyinfoalter button[action=cancelsendbusiness],propertycheckfamilyinfochange button[action=cancelsendbusiness]':{
+                'propertycheckfamilyinfoalter button[action=cancelsendbusiness],propertycheckfamilyinfochange button[action=cancelsendbusiness],propertycheckfamilyinfologout button[action=cancelsendbusiness]':{
                     click:this.cancelsendbusiness
                 },
-                'propertycheckfamilyinfoalter button[action=print],propertycheckfamilyinfochange button[action=print]':{
+                'propertycheckfamilyinfoalter button[action=print],propertycheckfamilyinfochange button[action=print],propertycheckfamilyinfologout button[action=print]':{
                     click: function(c){
                         var form=c.up('form');
                         this.showtab("打印","propertycheckbusinessprintform","widget",form);
@@ -314,10 +326,18 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                         this.showtab(form.objdata.record.get('owername'),widgetname,'widget',form.objdata);
                     }
                 },
-                'propertycheckfamilyinfoalter button[action=signature],propertycheckfamilyinfochange button[action=signature]':{
+                'propertycheckfamilyinfoalter button[action=logout],propertycheckfamilyinfochange button[action=logout]':{
+                    click: function(btn){
+                        this.islogoutclick=true;
+                        var form=btn.up('form');
+                        var widgetname="propertycheckfamilyinfologout";
+                        this.showtab(form.objdata.record.get('owername')+'注销',widgetname,'widget',form.objdata);
+                    }
+                },
+                'propertycheckfamilyinfoalter button[action=signature],propertycheckfamilyinfochange button[action=signature],propertycheckfamilyinfologout button[action=signature]':{
                     click: Ext.bind(header_cl.showsignature,header_cl)
                 },
-                'propertycheckfamilyinfoalter button[action=unsignature],propertycheckfamilyinfochange button[action=unsignature]':{
+                'propertycheckfamilyinfoalter button[action=unsignature],propertycheckfamilyinfochange button[action=unsignature],propertycheckfamilyinfologout button[action=unsignature]':{
                     click: Ext.bind(header_cl.delsignature,header_cl)
                 },
                 'propertycheckbusinessprintform':{
@@ -403,6 +423,10 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
     applysubmitchange:function(btn){
         this.submitcommon(btn,true,processstatustype.change);
     },
+    //业务注销
+    applysubmitlogout:function(btn){
+        this.submitcommon(btn,true,processstatustype.logout);
+    },
     submitcommon:function(btn,isprocess,statustype){
         var me=this;
         var myform =btn.up('form');
@@ -442,6 +466,11 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
             if(processstatus=='审批'&&statustype==processstatustype.change){
                 tmp.processstatus='申请';
                 eventName='changefamilyinfo';
+                checkstatus='0';
+            }else if(processstatus=='审批'&&statustype==processstatustype.logout){
+                tmp.processstatus='申请';
+                eventName='changefamilyinfo';
+                checkstatus='0';
             }
             var params = {
                 eventName:eventName,
@@ -651,13 +680,8 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                 widgetname='propertycheckfamilyinfoalter';
             }else if(r.get('processstatustype')==processstatustype.change){
                 widgetname='propertycheckfamilyinfochange';
-
             }else if(r.get('processstatustype')==processstatustype.logout){
-                if(r.get('businesstype')==businessTableType.dbgl){
-                    widgetname='dbglbusinesslogoutform';
-                }else if(r.get('businesstype')==businessTableType.dbbyh){
-                    widgetname='dbedgebusinesslogoutform';
-                }
+                widgetname='propertycheckfamilyinfologout';
             }
         }
         this.showtab(r.get('owername'),widgetname,'widget',objdata);
@@ -930,6 +954,27 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
         };
         this.ajaxSend(params, 'ajax/sendfamilypropertyinfo.jsp', successFunc, failFunc,'POST');
 
+
+    },
+    recoverapplybybid:function(fmy001,store){
+        var me=this;
+        var params = {
+            fmy001:fmy001,
+            eventName:'recoverapplybyfmy001',
+            processstatustype:processstatustype.ok,
+            processstatus:processdiction.stepthree
+        };
+        var successFunc = function (form, action) {
+            store.load({callback:function(){
+                me.widgetdolayout("mainContent-panel");
+            }});
+
+        };
+        var failFunc = function (form, action) {
+            Ext.Msg.alert("提示信息", "删除失败，检查web服务或数据库服务");
+
+        };
+        this.ajaxSend(params, 'ajax/sendfamilypropertyinfo.jsp', successFunc, failFunc,'POST');
 
     },
     showProcessWin:function(c,r,grid){//显示进程窗口

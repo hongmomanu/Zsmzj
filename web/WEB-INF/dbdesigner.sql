@@ -554,9 +554,9 @@ CREATE VIRTUAL TABLE IF NOT EXISTS medicalstandard USING fts3
   );
 
 
-CREATE  VIRTUAL TABLE IF NOT EXISTS fm01  USING fts3
+CREATE   TABLE fm01
 (	--家庭基本信息核定表（收入、现有财产和住房）
-  id 			 integer primary key autoincrement,             --自增主键
+  fmy001 			 integer primary key autoincrement,             --自增主键
   owerid                  VARCHAR(50) unique,                  --户主身份证* 主键
   time DATETIME DEFAULT (datetime(CURRENT_TIMESTAMP,'localtime')),  --家庭登记时间
   division                VARCHAR(50),                              --行政区划
@@ -622,7 +622,77 @@ CREATE  VIRTUAL TABLE IF NOT EXISTS fm01  USING fts3
   houseaverageusearea             VARCHAR(50)                         --住房人均使用面积
 
 );
-CREATE  VIRTUAL TABLE IF NOT EXISTS FM04 USING fts3(
+CREATE   TABLE fm01change
+(	--家庭基本信息核定表（收入、现有财产和住房）
+  fmy001 			 integer ,
+  owerid                  VARCHAR(50) ,                  --户主身份证
+  time DATETIME DEFAULT (datetime(CURRENT_TIMESTAMP,'localtime')),  --家庭登记时间
+  division                VARCHAR(50),                              --行政区划
+  applytype               VARCHAR(50),                              --申请类别
+  familytype              VARCHAR(50),                              --家庭类别*
+  owername                VARCHAR(50),                              --户主姓名*
+  poorfamilytype          VARCHAR(50),                              --低保户类型*
+  familyaccount           VARCHAR(50),                              --家庭户口
+  accountaddress          VARCHAR(50),                              --户口所在地
+  accountzipcode          VARCHAR(50),                              --户口所在地邮政编码
+  realaddress             VARCHAR(50),                              --实际居住地
+  realzipcode             VARCHAR(50),                              --实际所在地邮政编码
+  households              VARCHAR(50),                              --家庭总人口
+  telnum                  VARCHAR(50),                              --联系电话
+  bank                    VARCHAR(50),                              --开户银行
+  bankower                VARCHAR(50),                              --开户人
+  bankid                  VARCHAR(50),                              --银行账号
+  otherfamilyinfo         VARCHAR(50),                              --家庭备注
+
+  processstatus           VARCHAR(50),                              --流程状态
+  checkstatus				VARCHAR(50),                              --核定状态
+  processstatustype       VARCHAR(50),                              --业务流程类型（正常，变更，注销）
+  changedate               VARCHAR(50),                              --变更日期
+  changereason             VARCHAR(50),                              --变更原因
+  logoutdate                VARCHAR(50),                              --注销日期
+  logoutreason                VARCHAR(50),                             --注销原因
+
+
+  interest                VARCHAR(50),                              --利息、股息、红利
+  wages                   VARCHAR(50),                              --工资、薪金
+  planting                VARCHAR(50),                              --种植、养殖、捕捞
+  pension                 VARCHAR(50),                              --离退休金、养老保险等
+  management              VARCHAR(50),                              --承包经营
+  alimony                 VARCHAR(50),                              --赡（抚、扶）养费
+  incidentalincome        VARCHAR(50),                              --赔偿、继承、赠与、偶然所得
+  remuneration            VARCHAR(50),                              --劳务报酬
+  allowance               VARCHAR(50),                              --各类生活补助
+  paidservices            VARCHAR(50),                              --生产经营、有偿服务
+  propertylease           VARCHAR(50),                              --财产租赁、转让
+  otherincome             VARCHAR(50),                              --其他收入
+  userid                  integer,                                  --制单人id
+  incomesumarea                   VARCHAR(50),                         --家庭上年度月平均现金收入信息
+  incomesumareaperson             VARCHAR(50),                         --家庭上年度人平均现金收入信息
+  incomesum                       VARCHAR(50),                         --收入合计
+
+
+  cash                    VARCHAR(50),                              --现金
+  banksecurities          VARCHAR(50),                              --银行存款及有价证券
+  debt                    VARCHAR(50),                              --债权
+  vehicle                 VARCHAR(50),                              --机动车辆
+  nonresidentialhouse     VARCHAR(50),                              --非居住类房屋
+  nolifeneededmachine     VARCHAR(50),                         		--非生活必须船只等机械类折价
+  insurance               VARCHAR(50),                              --商业保险
+  registeredcapital       VARCHAR(50),                              --工商注册资金（资本）
+  propertysum                     VARCHAR(50),                          --财产合计
+
+
+  houseproperties         VARCHAR(50),                              --住房性质
+  housestructure          VARCHAR(50),                              --住房结构
+  housearea               VARCHAR(50),                              --住房总面积
+  houseaveragearea        VARCHAR(50),                              --住房人均面积
+  houseusearea            VARCHAR(50),                      		--住房总使用面积
+  houseaverageusearea             VARCHAR(50),                         --住房人均使用面积
+  changeid                  integer,                                   --家庭id
+  insertdate               VARCHAR(50)                              --charuriq
+);
+CREATE  TABLE FM04
+(
 --审批过程表
   fmy001 			 integer,
   time DATETIME DEFAULT (datetime(CURRENT_TIMESTAMP,'localtime')),  --时间
@@ -632,7 +702,7 @@ CREATE  VIRTUAL TABLE IF NOT EXISTS FM04 USING fts3(
   approvalopinion         VARCHAR(500),                             --审批意见
   submituid               integer                                   --提交人id
 );
-CREATE VIRTUAL TABLE  IF NOT EXISTS fm02  USING fts3
+CREATE  TABLE fm02
 (
 
   id integer primary key autoincrement,                             --自增主键
@@ -675,16 +745,20 @@ CREATE VIRTUAL TABLE  IF NOT EXISTS fm02  USING fts3
   suppliesbuytime                 VARCHAR(50),                              --购入时间
   suppliesmoney                 VARCHAR(50)                              --购入资金
 );
-CREATE  VIRTUAL TABLE IF NOT EXISTS fm03 USING fts3(
+
+CREATE   TABLE fm03
+(
 --核定过程表
   fmy001 			        integer,
   checkitem			      VARCHAR(50),					--核定内容（收入、现有财产、住房)
   checkitemstatus		  INTEGER,					--核定状态(0为保存,1为提交)
   checkresult				  INTEGER,					--核定结果
   checkcomment			  VARCHAR(50),					--核定备注
+  bgflag              integer,              --家庭人员信息由(正常/变更)进行变更的标志,保存变更进设置为0,回退时设置为1(1为有效)
   userid              integer,                               --核定人id
   roleid              integer                              --角色id;
 );
+
 
 --ALTER TABLE business_content RENAME TO business_content;
 ----技巧说明 日期比较 time Between '2008-06-10' and  '2013-09-11'   数值比较CAST(totalhelpmoney AS real)
