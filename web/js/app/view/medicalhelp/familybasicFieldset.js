@@ -161,12 +161,14 @@ Ext.define('ZSMZJ.view.medicalhelp.familybasicFieldset', {
                         allowBlank: true
                     },{
                         itemId: 'FamilyPersons',
-                        name: 'households',
+                        //name: 'households',
                         fieldLabel: '家庭总人口',
+                        readOnly:true,
                         afterLabelTextTpl: required,
                         blankText:'家庭总人口',
+                        name: 'familynum',
                         value:0,
-                        disabled:true,
+                        //disabled:true,
                         //emptyText: '低保户类型',
                         allowBlank: false
                     }

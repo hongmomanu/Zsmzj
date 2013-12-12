@@ -71,7 +71,9 @@ Ext.define('ZSMZJ.view.studyhelp.applysubmitFieldset', {
                         value:0,
                         itemId: 'enjoyPersons',
                         afterLabelTextTpl: required,
-                        disabled:true,
+                        //disabled:true,
+                        readOnly:true,
+                        name:'enjoyednum',
                         allowBlank: false
                     },
                     {

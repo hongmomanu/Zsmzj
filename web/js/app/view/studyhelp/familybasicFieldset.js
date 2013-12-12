@@ -161,12 +161,14 @@ Ext.define('ZSMZJ.view.studyhelp.familybasicFieldset', {
                         allowBlank: true
                     },{
                         itemId: 'FamilyPersons',
-                        name: 'households',
+                        //name: 'households',
                         fieldLabel: '家庭总人口',
                         afterLabelTextTpl: required,
                         blankText:'家庭总人口',
                         value:0,
-                        disabled:true,
+                        readOnly:true,
+                        name: 'familynum',
+                        //disabled:true,
                         allowBlank: false
                     }
                     ,{

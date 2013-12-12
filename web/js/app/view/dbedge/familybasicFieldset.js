@@ -193,12 +193,14 @@ Ext.define('ZSMZJ.view.dbedge.familybasicFieldset', {
                         allowBlank: true
                     },{
                         itemId: 'FamilyPersons',
-                        name: 'households',
+                        //name: 'households',
+                        name: 'familynum',
                         fieldLabel: '家庭总人口',
                         afterLabelTextTpl: required,
                         blankText:'家庭总人口',
                         value:0,
-                        disabled:true,
+                        readOnly:true,
+                        //disabled:true,
                         //emptyText: '低保户类型',
                         allowBlank: false
                     }
