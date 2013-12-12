@@ -885,7 +885,7 @@ var applyformviews={
 
     ],'propertycheckregister':[/* 家庭基本信息登记*/
         'propertycheckfamilybasicfieldset',
-        'propertycheckfamilymemberfieldset',
+        'dbglfamilymemberfieldset',
         'propertycheckfamilymoneyfieldset',
         'propertycheckfamilyhousefieldset',
         'propertycheckfamilyinputfieldset'

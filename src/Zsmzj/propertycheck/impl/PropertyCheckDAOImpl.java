@@ -119,7 +119,8 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
             conn.setAutoCommit(false);
             familymemberdao.doUpdate(param);
             commondao.execute("insert into fm01change select *,"+fmy001+",'"+fmt.format(new Date())+"' from fm01 a where a.fmy001="+fmy001);
-            commondao.deleteTableValues("update fm03 set bgflag=0 where fmy001="+fmy001);
+            commondao.execute("delete from fm03 where bgflag=0 and fmy001="+fmy001);
+            commondao.execute("update fm03 set bgflag=0 where fmy001="+fmy001);
             familymemberdao.doUpdate(param);
 
             jsonFm01.remove("checkstatus");
@@ -154,6 +155,7 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
             stmt=conn.createStatement();
             String processstatus="";
             String processstatustype="";
+            String processstatustypeold="正常";
             String checkstatus="";
             String sql="select processstatus,processstatustype from fm01 where fmy001=" +fmy001;
             ResultSet rs=stmt.executeQuery(sql);
@@ -162,11 +164,11 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
                 processstatustype=rs.getString("processstatustype");
             }
             rs.close();
-            String sql2="select checkstatus from fm01change where fmy001=" +fmy001+
-                    "  and insertdate=(select max(insertdate) from fm01change where changeid="+fmy001+")";
+            String sql2="select checkstatus,processstatustype,max(insertdate) from fm01change where fmy001=" +fmy001 +" group by checkstatus,processstatustype";
             ResultSet rs2=stmt.executeQuery(sql2);
             if(rs.next()){
                 checkstatus=rs.getString("checkstatus");
+                processstatustypeold= rs.getString("processstatustype");
             }
             rs2.close();
 
@@ -175,6 +177,7 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
                 Map<String,Object> map=new HashMap<String, Object>();
                 map.put("processstatus","审批");
                 map.put("checkstatus",checkstatus);
+                map.put("processstatustype",processstatustypeold);
                 commondao.updateTableValesSpecail(map,"fm01",null,"fmy001="+fmy001); //回退fm01审批,核定结果的状态
                 stmt.execute("delete from fm03 where bgflag=1 and fmy001="+fmy001);   //回退核定记录
                 stmt.execute("update fm03 set bgflag=1 where bgflag=0 and fmy001="+fmy001);
