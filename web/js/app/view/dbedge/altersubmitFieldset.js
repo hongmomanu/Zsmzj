@@ -91,7 +91,9 @@ Ext.define('ZSMZJ.view.dbedge.altersubmitFieldset', {
                         value:0,
                         itemId: 'enjoyPersons',
                         afterLabelTextTpl: required,
-                        disabled:true,
+                        readOnly:true,
+                        name:'enjoyednum',
+                        //disabled:true,
                         allowBlank: false
                     },
                     {
