@@ -11,6 +11,7 @@ Ext.define('ZSMZJ.store.dbgl.FamilyQuerys', {
     model: 'ZSMZJ.model.dbgl.FamilyQuery',
     autoLoad:false,
     pageSize: 15,
+    sorters: { property: 'businessid', direction : 'DESC' },
     proxy: {
         type: 'ajax',
         url: 'ajax/getfamilyinfo.jsp',

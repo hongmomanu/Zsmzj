@@ -2221,7 +2221,7 @@ Ext.define('ZSMZJ.controller.Header', {
     ajaxSend:function(params,url,sucFun,failFunc,method){
         Ext.Ajax.request({
             url: url,
-            timeout: 60000,
+            timeout: 600000,
             method:method,
             params: params,
             success:sucFun,

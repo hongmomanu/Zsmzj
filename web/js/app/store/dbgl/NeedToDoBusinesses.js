@@ -10,6 +10,7 @@ Ext.define('ZSMZJ.store.dbgl.NeedToDoBusinesses', {
     alias : 'widget.needtodobusinessesstore',
     model: 'ZSMZJ.model.dbgl.NeedToDoBusiness',
     autoLoad:false,
+    sorters: { property: 'businessid', direction : 'DESC' },
     pageSize: 15,
     proxy: {
         type: 'ajax',

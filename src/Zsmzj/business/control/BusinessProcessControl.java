@@ -238,7 +238,7 @@ public class BusinessProcessControl {
         basic_sql+=" and a.division like '"+divisionpath+"%' ";
 
         String sql_list="select a.*,b.businessid,b.bgdate,b.eddate,b.grantdate,b.time as granttime,b.adjustmoney," +
-                "c.displayname as grantuser" +
+                "c.displayname as grantuser " +
                /* ",(select count(*)  from "+ FamilyTable+" d where " +
                 "  d.businessid = a.id)  as familynum," +
                 " (select count(*)  from "+ FamilyTable+" e where " +
@@ -525,7 +525,10 @@ public class BusinessProcessControl {
 
         ComonDao cd=new ComonDao();
         int totalnum=cd.getTotalCountBySql(sql_count);
-        sql_list+=" Limit "+limit+" Offset "+start;
+        if(start>=0){
+            sql_list+=" Limit "+limit+" Offset "+start;
+        }
+
         ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
 
         Map<String,Object>res=new HashMap<String, Object>();
@@ -1472,10 +1475,21 @@ public class BusinessProcessControl {
                     " ";
 
         }
-        sql_list+=" order by a.id desc Limit "+limit+" Offset "+start;
+        int totalnum=cd.getTotalCountBySql(sql_count);
+        if(start>=0){
+            /**关于desc排序的hack处理，可以加快性能**/
+            int page=start/limit;
+            start=totalnum-(page+1)*limit;
+            if(start<0)limit=limit+start;
+            /**hack 结束**/
+            sql_list+="  Limit "+limit+" Offset "+start;
+
+        }
+
+
 
         ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
-        int totalnum=cd.getTotalCountBySql(sql_count);
+
         for(Map<String,Object> map:list){
             map.put("process", ProcessType.UseProcessType.getNext(ProcessType.UseProcessType.
                     getProcessFromChinese(map.get("processstatus").toString())));
@@ -1878,12 +1892,23 @@ public class BusinessProcessControl {
                         " ";
 
         }
-        sql_list+=" order by a.id desc Limit "+limit+" Offset "+start;
+
+        int totalnum=cd.getTotalCountBySql(sql_count);
+        if(start>=0){
+            /**关于desc排序的hack处理，可以加快性能**/
+            int page=start/limit;
+            start=totalnum-(page+1)*limit;
+            if(start<0)limit=limit+start;
+            /**hack 结束**/
+
+            sql_list+=" Limit "+limit+" Offset "+start;
+
+        }
+
 
         ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
 
         Map<String,Object>res=new HashMap<String, Object>();
-        int totalnum=cd.getTotalCountBySql(sql_count);
         for(Map<String,Object> map:list){
             map.put("process", ProcessType.UseProcessType.getNext(ProcessType.UseProcessType.
                     getProcessFromChinese(map.get("processstatus").toString())));
@@ -2000,7 +2025,10 @@ public class BusinessProcessControl {
             }
 
         }
-        sql_list+=" Limit "+limit+" Offset "+start;
+        if(start>=0){
+            sql_list+=" Limit "+limit+" Offset "+start;
+        }
+
 
         ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
         totalnum=cd.getTotalCountBySql(sql_count);
@@ -2112,7 +2140,19 @@ public class BusinessProcessControl {
                 sql_count+=" and (a.owerid  like '"+keyword+"%' or a.owername like '"+keyword+"%') ";
 
         }
-        sql_list+=" order by a.id desc Limit "+limit+" Offset "+start;
+
+        totalnum=cd.getTotalCountBySql(sql_count);
+
+        if(start>=0){
+            /**关于desc排序的hack处理，可以加快性能**/
+            int page=start/limit;
+            start=totalnum-(page+1)*limit;
+            if(start<0)limit=limit+start;
+            /**hack 结束**/
+
+            sql_list+="   Limit "+limit+" Offset "+start;
+        }
+
 
         ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
         for(Map<String,Object> map:list){
@@ -2120,7 +2160,7 @@ public class BusinessProcessControl {
                     getProcessFromChinese(map.get("processstatus").toString())));
         }
 
-        totalnum=cd.getTotalCountBySql(sql_count);
+        //totalnum=cd.getTotalCountBySql(sql_count);
         Map<String,Object>res=new HashMap<String, Object>();
         res.put("totalCount",totalnum);
         res.put("results",list);

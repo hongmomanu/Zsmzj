@@ -64,7 +64,7 @@ public class ExcelHelper {
                     }
 
                 }
-                urlparamsstr+="limit=100000&start=0";
+                urlparamsstr+="limit=0&start=-1";
 
                 rowdatas=JSONObject.fromObject(UrlConnectHelper.sendPost(url,urlparamsstr)).getJSONArray("results");
                 Map<String,Double> sum_new=new HashMap<String, Double>();
