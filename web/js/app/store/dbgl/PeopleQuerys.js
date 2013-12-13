@@ -11,6 +11,7 @@ Ext.define('ZSMZJ.store.dbgl.PeopleQuerys', {
     model: 'ZSMZJ.model.dbgl.PeopleQuery',
     autoLoad:false,
     pageSize: 15,
+    sorters: { property: 'id', direction : 'DESC' },
     proxy: {
         type: 'ajax',
         url: 'ajax/getpeopleinfo.jsp',
