@@ -274,7 +274,7 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
             sql+=" and a.division like '"+divisionpath+"%'";
             sql_count+=" and a.division like '"+divisionpath+"%'";
         }
-        sql+= " order by a.fmy001 limit "+limit+" offset "+start ;
+        sql+= " order by a.fmy001 desc limit "+limit+" offset "+start ;
         sql_count+= " order by a.fmy001 limit "+limit+" offset "+start ;
 
         log.debug(sql);
@@ -398,7 +398,7 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
                 +" union  select a.*,"+ t+
                 ",'"+checkitem+"' checkitem,0 checkresult,'' checkcomment  from fm01 a where 1=1 and not exists (select 1 from fm03 c where c.fmy001=a.fmy001 and c.bgflag=1 and c.checkitem ='"+checkitem+"') "  +
                 date_string+  keyword_string+
-                " order by checkresult,fmy001 desc";
+                " order by fmy001 desc";
 
         sql_comm="select * from ("+sql_comm+") y where y.division like '"+divisionpath+"%'";
         String sql_count="select count(*) from ("+sql_comm+") ";

@@ -16,6 +16,9 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
     ],
     stores: [
         'propertycheck.FamilyPropertyQuerys',
+        'propertycheck.NeedToDoBusinesses',
+        'propertycheck.ChangedBusinesses',
+        'propertycheck.LogoutBusinesses',
         'propertycheck.ProcessHistorys',
         'propertycheck.FamilyMembers',
         'propertycheck.FamilyPropertyItems'
@@ -29,7 +32,7 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
         'propertycheck.familyinputFieldset',
         'propertycheck.familyhouseFieldset',
         'propertycheck.familymoneyFieldset',
-        'propertycheck.FamilyPropertyQueryGrid',
+        //'propertycheck.FamilyPropertyQueryGrid', 废弃
         'propertycheck.NeedToDoBusinessGrid',
         'propertycheck.NeedToCheckBusinessGrid',
         'propertycheck.ChangedBusinessGrid',
@@ -59,12 +62,16 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
         var header_cl = this.application.getController("Header");
         this.control({
                 'propertycheckneedtodobusinesspanel button[action=outexcel],propertycheckneedtodobusinesspanel menuitem[action=outexcel]':{
-                    click:Ext.bind(header_cl.outexcel,header_cl)
-
+                    click:this.perpertyoutexcel
+                },
+                'propertycheckchangebusinesspanel button[action=outexcel],propertycheckchangebusinesspanel menuitem[action=outexcel]':{
+                    click:this.perpertyoutexcel
+                },
+                'propertychecklogoutbusinesspanel button[action=outexcel],propertychecklogoutbusinesspanel menuitem[action=outexcel]':{
+                    click:this.perpertyoutexcel
                 },
                 'propertycheckneedtocheckbusinesspanel button[action=outexcel],propertycheckneedtocheckbusinesspanel menuitem[action=outexcel]':{
-                    click:Ext.bind(header_cl.outexcel,header_cl)
-
+                    click:this.perpertyoutexcel
                 },
                 'propertycheckneedtocheckbusinesspanel,propertycheckneedtodobusinesspanel,propertycheckfamilyinforegister,propertycheckfamilyinputfieldset,propertycheckfamilyhousefieldset,propertycheckfamilymoneyfieldset,propertycheckapplyhistoryfieldset,propertycheckitemhistoryfieldset,propertycheckfamilymemberfieldset':{
                     afterrender: dbgl_cl.afterrenderEvents,
@@ -213,8 +220,6 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                             if(grid.xtype=='propertycheckneedtocheckbusinesspanel'){
                                 store.proxy.extraParams.addontype='1'; //核定查询
                                 store.proxy.extraParams.eventName='getfamilypropertyinfobycheckrole';
-                                //store.proxy.extraParams.checkitem=propertyCheckRoleBtn[0].name;
-                                //store.proxy.extraParams.checkitem=this.checkEnum.toString();
                                 store.proxy.extraParams.checkitem=grid.title;
 
                             }else{
@@ -287,15 +292,7 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                     }
                 },
 
-                'familypropertyquerygrid button[action=delete]':{
-                    click:function(btn){
 
-                        var recordList=btn.up('grid').getSelectionModel().getSelection();
-                        for(var i=0;i<recordList.length;i++){
-                            //console.log(recordList[i].data.owerid);
-                        }
-                    }
-                },
                 'propertycheckfamilyinfoalter button[action=process],propertycheckfamilyinfochange button[action=process],propertycheckfamilyinfologout button[action=process]':{
                     click:function (c,r,grid){
                         this.showProcessWin(c,r,grid);
@@ -1228,6 +1225,23 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
 
         };
         this.ajaxSend(params, 'ajax/sendfamilypropertyinfo.jsp', successFunc, failFunc,'POST');
+
+    },
+    perpertyoutexcel: function (btn) {
+        var grid = btn.up('grid');
+        var store = grid.getStore();
+        var rows = [];
+        Ext.each(store.data.items, function (item) {
+            rows.push(item.raw);
+        });
+        if (rows.length == 0) {
+            Ext.Msg.alert("提示信息", "无相关数据可导出");
+            return;
+        }
+        var header_cl = this.application.getController("Header");
+        var headers = header_cl.makecommon_headers(grid);
+        var sum = {};
+        header_cl.outexcel_common(btn, sum, 1, rows, headers, null, grid);
 
     },
     //同步分组件加载form表单

@@ -364,7 +364,7 @@ Ext.define('ZSMZJ.view.propertycheck.ChangedBusinessGrid' ,{
                 }
             ],
             bbar: Ext.create('Ext.PagingToolbar', {
-                store: 'propertycheck.FamilyPropertyQuerys',
+                store: 'propertycheck.ChangedBusinesses',
                 displayInfo: true,
                 displayMsg: '显示 {0} - {1}条记录,共 {2}条记录',
                 beforePageText:'第',
@@ -374,7 +374,7 @@ Ext.define('ZSMZJ.view.propertycheck.ChangedBusinessGrid' ,{
 
                 ]
             }),
-            store: 'propertycheck.FamilyPropertyQuerys'//'dbgl.NeedToDoBusinesses'
+            store: 'propertycheck.ChangedBusinesses'//'dbgl.NeedToDoBusinesses'
 
         });
         this.callParent(arguments);

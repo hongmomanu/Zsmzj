@@ -364,7 +364,7 @@ Ext.define('ZSMZJ.view.propertycheck.NeedToDoBusinessGrid' ,{
                 }
             ],
             bbar: Ext.create('Ext.PagingToolbar', {
-                store: 'propertycheck.FamilyPropertyQuerys',
+                store: 'propertycheck.NeedToDoBusinesses',
                 displayInfo: true,
                 displayMsg: '显示 {0} - {1}条记录,共 {2}条记录',
                 beforePageText:'第',
@@ -374,7 +374,7 @@ Ext.define('ZSMZJ.view.propertycheck.NeedToDoBusinessGrid' ,{
 
                 ]
             }),
-            store: 'propertycheck.FamilyPropertyQuerys'//'dbgl.NeedToDoBusinesses'
+            store: 'propertycheck.NeedToDoBusinesses'//'dbgl.NeedToDoBusinesses'
 
         });
         this.callParent(arguments);

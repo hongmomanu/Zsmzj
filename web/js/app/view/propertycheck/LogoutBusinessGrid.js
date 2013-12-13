@@ -363,7 +363,7 @@ Ext.define('ZSMZJ.view.propertycheck.LogoutBusinessGrid' ,{
                 }
             ],
             bbar: Ext.create('Ext.PagingToolbar', {
-                store: 'propertycheck.FamilyPropertyQuerys',
+                store: 'propertycheck.LogoutBusinesses',
                 displayInfo: true,
                 displayMsg: '显示 {0} - {1}条记录,共 {2}条记录',
                 beforePageText:'第',
@@ -373,7 +373,7 @@ Ext.define('ZSMZJ.view.propertycheck.LogoutBusinessGrid' ,{
 
                 ]
             }),
-            store: 'propertycheck.FamilyPropertyQuerys'//'dbgl.NeedToDoBusinesses'
+            store: 'propertycheck.LogoutBusinesses'//'dbgl.NeedToDoBusinesses'
 
         });
         this.callParent(arguments);
