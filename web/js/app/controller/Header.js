@@ -1954,6 +1954,9 @@ Ext.define('ZSMZJ.controller.Header', {
         for(var i=0;i<num;i++){
             if(data[i].attachmenttype!='accountimgpath'){
                 var item=form.down('#'+data[i].attachmenttype);
+                if(!item){
+                    continue
+                }
                 var count=data[i].results.length;
                 CommonFunc.updateitemnum(item,count);
                 var formdata=[];

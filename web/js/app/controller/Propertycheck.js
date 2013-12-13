@@ -966,7 +966,8 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
         };
         var successFunc = function (form, action) {
             store.load({callback:function(){
-                me.widgetdolayout("mainContent-panel");
+                var header_cl = me.application.getController("Header");
+                header_cl.widgetdolayout("mainContent-panel");
             }});
 
         };

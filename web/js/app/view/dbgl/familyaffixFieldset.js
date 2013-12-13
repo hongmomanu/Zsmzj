@@ -13,7 +13,7 @@ Ext.define('ZSMZJ.view.dbgl.familyaffixFieldset', {
 
     ],
     listeners:{
-        afterrender:function(c){
+        beforerender:function(c){
 
             var currentxtype=c.up('form').xtype;
             if(currentxtype.indexOf('studyhelp')==0||currentxtype.indexOf('medicalhelp')==0){
@@ -66,7 +66,7 @@ Ext.define('ZSMZJ.view.dbgl.familyaffixFieldset', {
                         },
                         items:[
                             {
-                                html: ' 【申请人】身份证(0)',
+                                html: '<a>【申请人】身份证(0)<a>',
 
                                 cls:'mouseover',
                                 type:'personid',
@@ -75,6 +75,7 @@ Ext.define('ZSMZJ.view.dbgl.familyaffixFieldset', {
 
                                     render: function(c){
                                         c.getEl().on('click', function(){ this.fireEvent('affixclick', c); }, c);
+
                                     }
 
                                 }
