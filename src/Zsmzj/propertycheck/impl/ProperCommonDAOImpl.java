@@ -17,12 +17,19 @@ import java.util.*;
  */
 public class ProperCommonDAOImpl implements PropertyCommonDAO{
     private Connection conn=null;
-    private static final Logger log = Logger.getLogger( PropertyCheckDAOImpl.class);
+    private static final Logger log = Logger.getLogger( ProperCommonDAOImpl.class);
     public  ProperCommonDAOImpl(Connection conn){
         this.conn=conn;
     }
     @Override
     public int insertTableVales(Map<String, Object> col_vals, String tablename) {
+        return insertOrReplaceInto(col_vals,tablename,"INSERT INTO ");
+    }
+    @Override
+    public int insertOrReplace(Map<String, Object> col_vals, String tablename) {
+        return insertOrReplaceInto(col_vals,tablename,"INSERT OR REPLACE INTO ");
+    }
+    private int insertOrReplaceInto(Map<String, Object> col_vals, String tablename,String insertorreplace) {
         List<String> list=this.getColumnData(tablename);
         int result=0;
         String col_str="";
@@ -44,7 +51,7 @@ public class ProperCommonDAOImpl implements PropertyCommonDAO{
         col_str=col_str.substring(0,col_str.length()-1);
         val_str=val_str.substring(0,val_str.length()-1);
 
-        String sql = "insert  into " + tablename +
+        String sql = insertorreplace+" " + tablename +
                 " ("+col_str+") values " +"("+val_str+")";
         log.debug(sql);
         PreparedStatement pstmt=null;
@@ -65,6 +72,7 @@ public class ProperCommonDAOImpl implements PropertyCommonDAO{
         } catch (SQLException ex) {
 
             log.debug(ex.getMessage());
+            ex.printStackTrace();
             result= -1;
 
 
@@ -79,6 +87,7 @@ public class ProperCommonDAOImpl implements PropertyCommonDAO{
         }
         return  result;
     }
+
 
     @Override
     public int updateTableValesSpecail(Map<String, Object> col_vals, String tablename, Map<String, String> colnames, String kandv) {
@@ -159,8 +168,7 @@ public class ProperCommonDAOImpl implements PropertyCommonDAO{
                 e.printStackTrace();
             }
         }
-        log.debug(list.toString());
-        log.debug(list.size());
+
         return list;
     }
 
@@ -210,6 +218,7 @@ public class ProperCommonDAOImpl implements PropertyCommonDAO{
 
     @Override
     public void execute(String sql) {
+        log.debug(sql);
         PreparedStatement pstmt=null;
         try {
             pstmt=conn.prepareStatement(sql);

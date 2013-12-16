@@ -13,6 +13,7 @@ import java.util.Map;
  */
 public interface PropertyCommonDAO {
     public int insertTableVales(Map<String,Object> col_vals,String tablename);
+    public int insertOrReplace(Map<String,Object> col_vals,String tablename);
     public int updateTableVales(Map<String,Object> col_vals,String tablename,Map<String,String> colnames);
     public int updateTableValesSpecail(Map<String,Object> col_vals,String tablename,Map<String,String> colnames,String kandv);
     public List<String> getColumnData(String tablename);

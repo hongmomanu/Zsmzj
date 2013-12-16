@@ -328,7 +328,7 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                         this.islogoutclick=true;
                         var form=btn.up('form');
                         var widgetname="propertycheckfamilyinfologout";
-                        this.showtab(form.objdata.record.get('owername')+'注销',widgetname,'widget',form.objdata);
+                        this.showtab(form.objdata.record.get('owername'),widgetname,'widget',form.objdata);
                     }
                 },
                 'propertycheckfamilyinfoalter button[action=signature],propertycheckfamilyinfochange button[action=signature],propertycheckfamilyinfologout button[action=signature]':{
