@@ -493,7 +493,7 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
 
         String sql_updateFm03="update fm03 set checkresult=?,checkcomment=?,userid=?,userid=?,roleid=? where  fmy001=? and checkitem=? and bgflag=1";
         String sql_insertFm03="insert into fm03(fmy001,checkitem,checkresult,checkitemstatus,bgflag)values(?,?,0,0,1)";
-        String sql2="select sum(checkresult) from fm03 where fmy001=?";
+        String sql2="select sum(checkresult) from fm03 where fmy001=? and bgflag=1";
         String sql3="update fm01 set checkstatus=? where fmy001=?";
         int result=0;
         PreparedStatement pstmt=null;

@@ -21,7 +21,7 @@
         String name=(String)e.nextElement();
         paraMap.put(name,request.getParameter(name));
     }
-    out.print(propchk.findAll(paraMap));
+    propchk.test(paraMap);
 
 
 %>
