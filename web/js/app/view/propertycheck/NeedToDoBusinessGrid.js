@@ -231,7 +231,7 @@ Ext.define('ZSMZJ.view.propertycheck.NeedToDoBusinessGrid' ,{
                 {header: '收入合计',align:'center',dataIndex:'incomesum',itemId:'incomesum'},
                 {header: '财产合计',align:'center',dataIndex:'propertysum',itemId:'propertysum'},
                 {header: '住房总使用面积',align:'center',dataIndex:'houseusearea',itemId:'houseusearea'},
-                {header: '流程状态',align:'center',dataIndex:'processstatus',itemId:'processstatus'},
+                {header: '操作',align:'center',dataIndex:'processstatustype',itemId:'processstatustype'},
                 {header: '核定状态',align:'center',dataIndex:'checkstatus',itemId:'checkstatus',
                     renderer:function(v, m, r){
                         var rs='';
@@ -245,6 +245,12 @@ Ext.define('ZSMZJ.view.propertycheck.NeedToDoBusinessGrid' ,{
                         return rs;
                     }
                 },
+                {header: '状态',align:'center',dataIndex:'processstatus',renderer:function(val, obj, record){
+                    if(val==processdiction.steptwo)return val+"中";
+                    else return "已"+val;
+
+                }},
+                {header: '审核人',align:'center',dataIndex:'approvaluser'},
                 {header: '行政区划',align:'center',dataIndex:'division',itemId:'division'},
                 {header: '家庭类别',align:'center',dataIndex:'familytype',itemId:'familytype'},
                 {header: '户口所在地',align:'center',dataIndex:'accountaddress',itemId:'accountaddress'},

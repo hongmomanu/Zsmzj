@@ -414,7 +414,7 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
     },
     //业务提交共用入口
     applysubmit:function(btn){
-        this.submitcommon(btn,true,processstatustype.ok);
+        this.submitcommon(btn,true);
     },
     //业务变更提交
     applysubmitchange:function(btn){
@@ -430,12 +430,7 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
         var eventName='updatefamilyinfo';
         var fmy001='';
         var processstatus='';
-        if('propertycheckfamilyinforegister'==myform.xtype){
-            eventName='registerfamilyinfo';
-        }else{
-            fmy001=myform.objdata.record.data.fmy001;
-            processstatus=myform.objdata.record.data.processstatus;
-        }
+
 
         var form=myform.getForm();
         if (form.isValid()) {
@@ -450,6 +445,14 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                 eval(json);
 
             }
+            if('propertycheckfamilyinforegister'==myform.xtype){
+                eventName='registerfamilyinfo';
+                tmp.processstatustype='正常';
+            }else{
+                fmy001=myform.objdata.record.data.fmy001;
+                processstatus=myform.objdata.record.data.processstatus;
+            }
+
             var familymembers=[];
             var familygrid=btn.up('form').down('#familymembergrid');
             if(familygrid){
@@ -458,7 +461,9 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                     familymembers.push(a.data);
                 });
             }
-            tmp.processstatustype=statustype;
+            if(statustype){
+                tmp.processstatustype=statustype;
+            }
             tmp.userid=userid;
             if(processstatus=='审批'&&statustype==processstatustype.change){
                 tmp.processstatus='申请';

@@ -774,9 +774,9 @@ var applyformviews={
 
     ],'medicalhelpapply':[/*医疗救助申请表单分隔的各个小表单*/
         'medicalhelpfamilybasicfieldset',
-        'medicalhelpfamilyhousefieldset',
+        /*'medicalhelpfamilyhousefieldset',
         'medicalhelpfamilyinputfieldset',
-        'medicalhelpfamilypropertyfieldset',
+        'medicalhelpfamilypropertyfieldset',*/
         'dbglfamilymemberfieldset',//家庭成员信息
         'dbglfamilyaffixfieldset',//电子附件信息
         'medicalhelpfamilyapplyfieldset',
