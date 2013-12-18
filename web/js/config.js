@@ -1027,6 +1027,18 @@ var menu_qxgl=[{layout: 'fit',title: '权限设置',items:[{xtype:'userconfiggri
     {title: '系统配置',items:[{xtype:'systemconfiggrid'}],iconCls: 'nav'}, {
     title: '服务日志',items:[{xtype:'funcconfiggrid'}],iconCls: 'nav'}];
 
+var menu_propertycheck=[
+    {
+        layout: 'fit',
+        title: '财产核定',
+        icon:icons+'11.png',
+        items:[
+            {xtype:'dbglconfigtree',searchtype:"财产核定",businesstype:businessTableType.propertycheck}
+        ],
+        iconCls: 'nav'
+    }
+];
+
 var imgfiletype={'jpg':true,'jpeg':true,'gif':true};
 
 var ViewWaitMask=null;

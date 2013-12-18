@@ -49,7 +49,8 @@ public class BusinessProcessControl {
     public String searchbusinessbypid(int start,int limit,String query,String[]types){
         ComonDao cd =new ComonDao();
         String sql_count= "select count(*)   from "+
-                BusinessTable+" a  where 1=1";
+                BusinessTable+" a,"+FamilyTable+" b where a.id=b.businessid "+
+                "and b.personid=a.owerid ";
         String sql_list=  "select a.*,b.sex,b.businessid   from "+
                 BusinessTable+" a,"+FamilyTable+" b where a.id=b.businessid " +
                 "and b.personid=a.owerid ";
@@ -59,6 +60,9 @@ public class BusinessProcessControl {
             sql_list+=" and a.owerid like '"+query+"%' ";
         }
 
+        sql_count+=" and b.relationship =  '"+
+                RelationsType.UseRelationsType.getChineseSeason(RelationsType.ower)
+                +"' ";
 
         sql_list+=" and b.relationship =  '"+
                 RelationsType.UseRelationsType.getChineseSeason(RelationsType.ower)

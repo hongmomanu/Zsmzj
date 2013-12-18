@@ -2420,7 +2420,12 @@ Ext.define('ZSMZJ.controller.Header', {
             if(store.data.items.length==1){
                 me.getMyviewheadViewPanel().items.items[0].setVisible(false);
                 Ext.getCmp('west-panel').removeAll();
-                Ext.getCmp('west-panel').add(menu_shjz);
+                //Ext.getCmp('west-panel').add(menu_shjz);
+
+                //console.log(store.data.items[0]);
+                //testobj=store.data.items[0];
+                Ext.getCmp('west-panel').add(eval(store.data.items[0].raw.value));
+
 
             }else{
                 var viewpanel=me.getMyviewheadViewPanel().items.items[0];

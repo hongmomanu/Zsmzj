@@ -523,7 +523,9 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                     array.push("'"+arr[i].name+"'")
                 }
                 return array;
-            })(propertyCheckRoleBtn),
+            })(propertyCheckRoleBtn);
+            /*Ext.getCmp('west-panel').removeAll();
+            Ext.getCmp('west-panel').add(menu_qxgl);*/
             me.initCheckItemCmp.call(me,propertyCheckRoleBtn)  ;
         };
         var failFunc = function (form, action) {
