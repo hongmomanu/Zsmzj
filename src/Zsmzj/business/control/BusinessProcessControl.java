@@ -60,11 +60,11 @@ public class BusinessProcessControl {
             sql_list+=" and a.owerid like '"+query+"%' ";
         }
 
-        sql_count+=" and b.relationship =  '"+
+        sql_count+=" and a.processstatus='"+ProcessType.UseProcessType.getChineseSeason(ProcessType.Approval)+"' and b.relationship =  '"+
                 RelationsType.UseRelationsType.getChineseSeason(RelationsType.ower)
                 +"' ";
 
-        sql_list+=" and b.relationship =  '"+
+        sql_list+=" and a.processstatus='"+ProcessType.UseProcessType.getChineseSeason(ProcessType.Approval)+"' and b.relationship =  '"+
                 RelationsType.UseRelationsType.getChineseSeason(RelationsType.ower)
                 +"' ";
 

@@ -610,20 +610,21 @@ Ext.define('ZSMZJ.controller.Dbgl', {
     //资金发放
     grantmoney:function(btn){
         var me=this;
+        mytestbtn=btn
         var win=btn.up('window');
 
         var ajaxform=btn.up('form');
-        var recordList=win.down('#query_result').getSelectionModel().getSelection();
+        /*var recordList=win.down('#query_result').getSelectionModel().getSelection();
         var businessidList=[];
         for(var i=0;i<recordList.length;i++){
             businessidList.push(recordList[i].data.businessid);
-        }
+        }*/
         var grid=win.dataobj;
         var params = {
             userid:userid,
             isnew:btn.isnew,
             divisionpath:divisionpath,
-            grantid:businessidList,
+            grantid:ajaxform.down('dbglsearchbusinessgrid').selectItmes,
             businesstype:grid.businesstype
         };
         var successFunc = function (myform, action) {

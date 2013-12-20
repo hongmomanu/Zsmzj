@@ -16,7 +16,30 @@ Ext.define('ZSMZJ.view.dbgl.SearchBusinessGrid' ,{
     listeners: {
         show: function(panel) {
             this.fireEvent('gridshowfresh',this);
+        },
+        afterrender:function(panel){
+            var sm=panel.getSelectionModel();
+            var selectItmes=panel.selectItmes;
+            sm.on('select', function(c, r, index){
+                if(selectItmes.indexOf(r.data.id)==-1){
+                    selectItmes.push(r.data.id);
+                }
+                //console.log(selectItmes)
+            });
+            sm.on('deselect', function(c, r, index){
+                selectItmes.splice(selectItmes.indexOf(r.data.id));
+                //console.log(selectItmes)
+            });
+            this.getStore().on('load',function(s,rs,sf){
+                for(var i=0;i<rs.length;i++){
+                    if(selectItmes.indexOf(rs[i].data.id)>-1){
+                        panel.getSelectionModel().select(i,true);
+                    }
+                }
+
+            })
         }
+
     },
 
 
@@ -61,8 +84,8 @@ Ext.define('ZSMZJ.view.dbgl.SearchBusinessGrid' ,{
             }),
             height: 195,
             selModel: selModel,
-            store: 'dbgl.SearchBusinesses'
-
+            store: 'dbgl.SearchBusinesses',
+            selectItmes:[]
 
         });
         this.callParent(arguments);
