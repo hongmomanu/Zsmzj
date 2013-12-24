@@ -97,7 +97,9 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.changesubmitFieldset',
         'dbgl.logoutsubmitFieldset',
         'dbgl.SearchBusinessGrid',
-        'dbgl.SearchBusinessGridPanel'
+        'dbgl.SearchBusinessGrid',
+        'dbgl.TheSameMonthBusinessPeopleGrid',
+        'dbgl.TheSameMonthBusinessFamilyGrid'
 
     ],
 
@@ -593,12 +595,28 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         var grid=win.dataobj;
         var values=ajaxform.getValues();
         var store=grid.getStore();
+        if(grid.xtype=='thesamemonthbusinesspeoplegrid'||grid.xtype=='thesamemonthbusinessfamilygrid'){
+            values.name=me.addconditiontosearch(values.name,grid.thesamemonthqueryparams.name)
+            values.value=me.addconditiontosearch(values.value,grid.thesamemonthqueryparams.value)
+            values.logic=me.addconditiontosearch(values.logic,grid.thesamemonthqueryparams.logic)
+            values.compare=me.addconditiontosearch(values.compare,grid.thesamemonthqueryparams.compare)
+        }
         store.proxy.extraParams.name = values.name;
         store.proxy.extraParams.value = values.value;
         store.proxy.extraParams.logic = values.logic;
         store.proxy.extraParams.compare = values.compare;
         store.loadPage(1);
 
+    },
+    addconditiontosearch:function(a1,a2){
+        if(!Ext.isArray(a1)){
+            a1=new Array(a1);
+        }
+        var fn=function(element,index){
+            a1.push(element)
+        }
+        a2.forEach(fn)
+        return a1;
     },
     //删除选中的文件
     delslectfile:function(btn){

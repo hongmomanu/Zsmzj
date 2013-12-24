@@ -181,11 +181,11 @@ Ext.define('ZSMZJ.controller.Header', {
                 click: this.outexcel_logout
 
             },
-            'familyquerypanel button[action=outexcel],familyquerypanel menuitem[action=outexcel]':{
+            'familyquerypanel button[action=outexcel],familyquerypanel menuitem[action=outexcel],thesamemonthbusinessfamilygrid button[action=outexcel],thesamemonthbusinessfamilygrid menuitem[action=outexcel]':{
                 click: this.outexcel_family
 
             },
-            'familyquerypanel button[action=moresearch]':{
+            'familyquerypanel button[action=moresearch],thesamemonthbusinessfamilygrid button[action=moresearch],thesamemonthbusinesspeoplegrid button[action=moresearch]':{
                 click: this.moresearch_family
 
             },'dbglgrantmoneypanel button[action=moresearch]':{
@@ -197,7 +197,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
             },
 
-            'peoplequerypanel button[action=outexcel],peoplequerypanel menuitem[action=outexcel]':{
+            'peoplequerypanel button[action=outexcel],peoplequerypanel menuitem[action=outexcel],thesamemonthbusinesspeoplegrid button[action=outexcel],thesamemonthbusinesspeoplegrid menuitem[action=outexcel]':{
                 click: this.outexcel_person
 
             },
@@ -332,6 +332,14 @@ Ext.define('ZSMZJ.controller.Header', {
                 },
                 cancelclick:function(c,r,grid){//未审核前取消提交
                     this.cancelbusinesssubmit(c,r,grid);
+                }
+            },
+            'thesamemonthbusinessfamilygrid,thesamemonthbusinesspeoplegrid':{
+                afterrender: this.afterrenderEvents,
+                gridshowfresh:this.thesamemonthbusinessquery,
+                alterclick:function(c,r,grid){//未提交前修改
+
+                    this.showAlterContent(c,r,grid);
                 }
             },
             'needtodopanel button[action=bulkoperation]':{
@@ -2489,6 +2497,67 @@ Ext.define('ZSMZJ.controller.Header', {
 
 
 
+    },
+    thesamemonthbusinessquery:function(grid){
+        var titleObj=spatialchildTableType[grid.businesstype];
+        grid.businesstype=titleObj.businesstype;
+        grid.querystatus=titleObj.querystatus;
+        if(grid.xtype=='thesamemonthbusinessfamilygrid'){
+            var result_arr=Ext.clone(familyheaders[CommonFunc.lookupitemname(businessTableType,grid.businesstype)]);
+            Ext.Array.insert(result_arr,0,[Ext.create('Ext.grid.RowNumberer')]);
+            grid.reconfigure(undefined,result_arr);
+        }
+        var store=grid.getStore();
+        if(store.proxy.extraParams){
+            var date=new Date();
+            var month=date.getMonth()+1;
+            month=month<10?'0'+month:month;
+            var yn=date.getFullYear()+'-'+month;
+
+            var params={
+                businesstype : grid.businesstype,
+                type:grid.stype,
+                divisionpath:divisionpath,
+                ispublicinfo:grid.ispublicinfo
+            }
+            if(grid.querystatus=='正常'){
+                var a={
+                    name:['processstatustype',"strftime('%Y-%m',time)"],
+                    compare:['=','='],
+                    value:[grid.querystatus,yn],
+                    logic:['and','and']
+                }
+                grid.thesamemonthqueryparams=a;
+                Ext.apply(params,a)
+            }else if(grid.querystatus=='变更'){
+                var a={
+                    name:['processstatustype',"strftime('%Y-%m',changedate)"],
+                    compare:['=','='],
+                    value:[grid.querystatus,yn],
+                    logic:['and','and']
+                }
+                grid.thesamemonthqueryparams=a;
+                Ext.apply(params,a);
+            }else if(grid.querystatus=='注销'){
+                var a={
+                    name:['processstatustype',"strftime('%Y-%m',logoutdate)"],
+                    compare:['=','='],
+                    value:[grid.querystatus,yn],
+                    logic:['and','and']
+                }
+                grid.thesamemonthqueryparams=a;
+                Ext.apply(params,a);
+            }
+            store.proxy.extraParams=params;
+            if(grid.isnewgrid){
+                if(grid.xtype==="tree-grid"){
+                    grid.getRootNode().expand();
+                    return;
+                }
+                store.load();
+                grid.isnewgrid=false;
+            }
+        }
     },
     onLaunch: function() {
         var me = this;

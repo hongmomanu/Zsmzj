@@ -30,6 +30,18 @@ var spatialchildTableType={
     '核定收入':'checkinput',
     '核定住房':'checkhouse',
     '核定现有资产':'checknowmoney',
+    '当月新增低保家庭':{businesstype:'低保',querystatus:'正常'},
+    '当月变更低保家庭':{businesstype:'低保',querystatus:'变更'},
+    '当月注销低保家庭':{businesstype:'低保',querystatus:'注销'},
+    '当月新增低保人员':{businesstype:'低保',querystatus:'正常'},
+    '当月变更低保人员':{businesstype:'低保',querystatus:'变更'},
+    '当月注销低保人员':{businesstype:'低保',querystatus:'注销'},
+    '当月新增低保边缘家庭':{businesstype:'边缘户',querystatus:'正常'},
+    '当月变更低保边缘家庭':{businesstype:'边缘户',querystatus:'变更'},
+    '当月注销低保边缘家庭':{businesstype:'边缘户',querystatus:'注销'},
+    '当月新增低保边缘人员':{businesstype:'边缘户',querystatus:'正常'},
+    '当月变更低保边缘人员':{businesstype:'边缘户',querystatus:'变更'},
+    '当月注销低保边缘人员':{businesstype:'边缘户',querystatus:'注销'},
     'shenshispatial':'嵊泗县'
 };
 
