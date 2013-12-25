@@ -1312,7 +1312,7 @@ Ext.define('ZSMZJ.controller.Header', {
     moresearch_family:function(btn){
         var grid=btn.up('panel');
         if(this.newMoreSearchWin){
-            if(btn.searchtype==this.newMoreSearchWin.searchtype){
+            if(false&&btn.searchtype==this.newMoreSearchWin.searchtype){ //设置为false,则每次显示高级查询,都会先销毁再创建
                 this.newMoreSearchWin.show();
             }
             else{
@@ -2502,6 +2502,13 @@ Ext.define('ZSMZJ.controller.Header', {
         var titleObj=spatialchildTableType[grid.businesstype];
         grid.businesstype=titleObj.businesstype;
         grid.querystatus=titleObj.querystatus;
+
+        /*var title=grid.title.substr(2,2);
+        if('新增'==title){
+            title='正常';
+        }
+        grid.querystatus=title;*/
+
         if(grid.xtype=='thesamemonthbusinessfamilygrid'){
             var result_arr=Ext.clone(familyheaders[CommonFunc.lookupitemname(businessTableType,grid.businesstype)]);
             Ext.Array.insert(result_arr,0,[Ext.create('Ext.grid.RowNumberer')]);
@@ -2554,7 +2561,8 @@ Ext.define('ZSMZJ.controller.Header', {
                     grid.getRootNode().expand();
                     return;
                 }
-                store.load();
+                //store.load();
+                store.loadPage(1);
                 grid.isnewgrid=false;
             }
         }

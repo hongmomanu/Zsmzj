@@ -595,12 +595,24 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         var grid=win.dataobj;
         var values=ajaxform.getValues();
         var store=grid.getStore();
+
         if(grid.xtype=='thesamemonthbusinesspeoplegrid'||grid.xtype=='thesamemonthbusinessfamilygrid'){
             values.name=me.addconditiontosearch(values.name,grid.thesamemonthqueryparams.name)
             values.value=me.addconditiontosearch(values.value,grid.thesamemonthqueryparams.value)
             values.logic=me.addconditiontosearch(values.logic,grid.thesamemonthqueryparams.logic)
             values.compare=me.addconditiontosearch(values.compare,grid.thesamemonthqueryparams.compare)
         }
+        if(Ext.isArray(values.name)){
+            for(var i=0;i<values.name.length;i++){
+                if('age'==values.name[i]){
+                    values.name[i]="strftime('%Y','now')-strftime('%Y',birthday) "
+                }
+            }
+
+        }else if('age'==values.name){
+            values.name="strftime('%Y','now')-strftime('%Y',birthday) ";
+        }
+
         store.proxy.extraParams.name = values.name;
         store.proxy.extraParams.value = values.value;
         store.proxy.extraParams.logic = values.logic;

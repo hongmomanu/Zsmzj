@@ -493,7 +493,11 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                         hc.closetab(myform.id);
                         Ext.Msg.alert("提示信息", "操作成功");
                     }else{
-                        Ext.Msg.alert("异常提示", "操作失败");
+                        var msg="操作失败";
+                        if("registerfamilyinfo"==opts.params.eventName){
+                            msg= "操作失败或者已经存在相同的身份证号码";
+                        }
+                        Ext.Msg.alert("异常提示", msg);
                     }
                 },
                 failure: function(response, opts) {

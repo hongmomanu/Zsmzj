@@ -19,6 +19,7 @@ Ext.define('ZSMZJ.view.dbgl.TheSameMonthBusinessFamilyGrid' ,{
         }
     },
     initComponent: function() {
+        var newStrore=Ext.create('ZSMZJ.store.dbgl.FamilyQuerys');
         Ext.apply(this, {
             border: false,
             stype:businessTableType.dbgl,
@@ -217,7 +218,7 @@ Ext.define('ZSMZJ.view.dbgl.TheSameMonthBusinessFamilyGrid' ,{
                             var month=date.getMonth()+1;
                             month=month<10?'0'+month:month;
                             var yn=date.getFullYear()+'-'+month;
-                            Ext.apply(store.proxy.extraParams,panel.familyqueryparams);
+                            Ext.apply(store.proxy.extraParams,panel.thesamemonthqueryparams);
                             store.proxy.extraParams.value[1]=yn;
 
                             store.loadPage(1);
@@ -245,11 +246,6 @@ Ext.define('ZSMZJ.view.dbgl.TheSameMonthBusinessFamilyGrid' ,{
                                 store.proxy.extraParams.eddate=eddate;
                                 store.proxy.extraParams.keyword = keyword;
                                 Ext.apply(store.proxy.extraParams,panel.thesamemonthqueryparams);
-                                /*store.proxy.extraParams.name=null;
-                                store.proxy.extraParams.logic=null;
-                                store.proxy.extraParams.compare=null;
-                                store.proxy.extraParams.value=null;*/
-
                                 store.loadPage(1);
                             }
                         }
@@ -269,16 +265,13 @@ Ext.define('ZSMZJ.view.dbgl.TheSameMonthBusinessFamilyGrid' ,{
                             store.proxy.extraParams.bgdate=bgdate;
                             store.proxy.extraParams.eddate=eddate;
                             store.proxy.extraParams.keyword = keyword;
-                            store.proxy.extraParams.name=null;
-                            store.proxy.extraParams.logic=null;
-                            store.proxy.extraParams.compare=null;
-                            store.proxy.extraParams.value=null;
+                            Ext.apply(store.proxy.extraParams,panel.thesamemonthqueryparams);
                             store.loadPage(1);
                         }
                     }
 
                 },
-                {
+                /*{
                     xtype: 'button',
                     text: '<span style="font-weight:bold">>></span>',
                     tooltip: '显示/隐藏日期',
@@ -297,7 +290,7 @@ Ext.define('ZSMZJ.view.dbgl.TheSameMonthBusinessFamilyGrid' ,{
                         }
 
                     }
-                },
+                },*/
                 {
                     //fieldLabel: '发放开始日期',
                     emptyText: '请选择开始日期',
@@ -350,7 +343,7 @@ Ext.define('ZSMZJ.view.dbgl.TheSameMonthBusinessFamilyGrid' ,{
                 }
             ],
             bbar: Ext.create('Ext.PagingToolbar', {
-                store: 'dbgl.FamilyQuerys',
+                store: newStrore,
                 displayInfo: true,
                 displayMsg: '显示待家庭 {0} - {1} of {2}',
                 emptyMsg: "无家庭数据",
@@ -358,7 +351,7 @@ Ext.define('ZSMZJ.view.dbgl.TheSameMonthBusinessFamilyGrid' ,{
 
                 ]
             }),
-            store: 'dbgl.FamilyQuerys'
+            store: newStrore
 
         });
         this.callParent(arguments);

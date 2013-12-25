@@ -99,10 +99,13 @@ Ext.define('ZSMZJ.view.propertycheck.NeedToCheckBusinessGrid' ,{
                             '<span id="{1}" ></span>',id0,id1);
                     }
                 },
-                {header: '户主姓名',align:'center',dataIndex:'owername'},
+                {header: '状态',align:'center',dataIndex:'processstatus',width:70,renderer:function(val, obj, record){
+                    if(val==processdiction.steptwo)return val+"中";
+                    else return "已"+val;
 
-                {header: '核定项目',align:'center',dataIndex:'checkitem',hidden:true},
-                {header: '户主身份证',align:'center',dataIndex:'owerid',width: 250},
+                }},
+                {header: '户主姓名',align:'center',dataIndex:'owername',width:70},
+                {header: '户主身份证',align:'center',dataIndex:'owerid',width: 150},
                 {header: '核定',align:'center',dataIndex:'checkresult',itemId:'checkresult',
                     renderer:function(v, m, r){
                         if(r.data.checkresult=='1'){
@@ -113,30 +116,20 @@ Ext.define('ZSMZJ.view.propertycheck.NeedToCheckBusinessGrid' ,{
                     }
                 } ,
                 {header: '备注',align:'left',dataIndex:'checkcomment',itemId:'checkcomment',width:200},
-                {header: '收入合计',align:'center',dataIndex:'incomesum',itemId:'incomesum',hidden:false,
-                    renderer:function(v,m,r){
-                        if(r.data.checkitem!='核定收入'){
-                               //return 'X'
-                            return v;
-                        }else{
-                            return v;
-                        }
-                    }
-                },
-                {header: '财产合计',align:'center',dataIndex:'propertysum',itemId:'propertysum'},
-                {header: '住房总使用面积',align:'center',dataIndex:'houseusearea',itemId:'houseusearea'},
-                {header: '行政区划',align:'center',dataIndex:'division',itemId:'division'},
+                {header: '收入合计',align:'center',dataIndex:'incomesum',itemId:'incomesum',width:70},
+                {header: '财产合计',align:'center',dataIndex:'propertysum',itemId:'propertysum',width:70},
+                {header: '住房总使用面积',align:'center',dataIndex:'houseusearea',itemId:'houseusearea',width:100},
+
+                {header: '核定人',align:'center',dataIndex:'displayname'},
+                {header: '行政区划',align:'center',dataIndex:'division',itemId:'division',width:200},
                 {header: '家庭类别',align:'center',dataIndex:'familytype',itemId:'familytype'},
-                {header: '户口所在地',align:'center',dataIndex:'accountaddress',itemId:'accountaddress'},
-                {header: '实际居住地',align:'center',dataIndex:'realaddress',itemId:'realaddress'},
+                {header: '户口所在地',align:'center',dataIndex:'accountaddress',itemId:'accountaddress',width:150},
+                {header: '实际居住地',align:'center',dataIndex:'realaddress',itemId:'realaddress',width:150},
                 {header: '家庭总人口',align:'center',dataIndex:'households',itemId:'households'},
-                {header: '联系电话',align:'center',dataIndex:'telnum',itemId:'telnum'},
+                {header: '联系电话',align:'center',dataIndex:'telnum',itemId:'telnum',width:120},
                 {header: '开户银行',align:'center',dataIndex:'bank',itemId:'bank'},
                 {header: '开户人',align:'center',dataIndex:'bankower',itemId:'bankower'},
-                {header: '银行账号',align:'center',dataIndex:'bankid',itemId:'bankid'}
-               /* ,
-                {header: '流程状态',align:'center',dataIndex:'processstatus',itemId:'processstatus'},
-                {header: '核定状态',align:'center',dataIndex:'checkstatus',itemId:'checkstatus'}*/
+                {header: '银行账号',align:'center',dataIndex:'bankid',itemId:'bankid',width:120}
 
 
 

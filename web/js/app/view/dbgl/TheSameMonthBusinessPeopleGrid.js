@@ -269,10 +269,6 @@ Ext.define('ZSMZJ.view.dbgl.TheSameMonthBusinessPeopleGrid' ,{
                                 store.proxy.extraParams.eddate=eddate;
                                 store.proxy.extraParams.keyword = keyword;
                                 Ext.apply(store.proxy.extraParams,panel.thesamemonthqueryparams);
-                                /*store.proxy.extraParams.name=null;
-                                store.proxy.extraParams.logic=null;
-                                store.proxy.extraParams.compare=null;
-                                store.proxy.extraParams.value=null;*/
                                 store.loadPage(1);
 
                             }
@@ -294,16 +290,13 @@ Ext.define('ZSMZJ.view.dbgl.TheSameMonthBusinessPeopleGrid' ,{
                             store.proxy.extraParams.bgdate=bgdate;
                             store.proxy.extraParams.eddate=eddate;
                             store.proxy.extraParams.keyword = keyword;
-                            store.proxy.extraParams.name=null;
-                            store.proxy.extraParams.logic=null;
-                            store.proxy.extraParams.compare=null;
-                            store.proxy.extraParams.value=null;
+                            Ext.apply(store.proxy.extraParams,panel.thesamemonthqueryparams);
                             store.loadPage(1);
 
                         }
                     }
 
-                },{
+                }/*,{
                     xtype: 'button',
                     text: '<span style="font-weight:bold">>></span>',
                     tooltip: '显示/隐藏日期',
@@ -322,7 +315,7 @@ Ext.define('ZSMZJ.view.dbgl.TheSameMonthBusinessPeopleGrid' ,{
                         }
 
                     }
-                },{
+                }*/,{
                     //fieldLabel: '发放开始日期',
                     emptyText: '请选择开始日期',
                     hidden:true,

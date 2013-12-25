@@ -1186,10 +1186,23 @@ public class BusinessProcessControl {
                 }else if(compare[i].equals("match")){
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+"  a.id in (select id from "+fulltable+" where "+col_name+" like '"+value[i]+"%') ";
+                        if("division".equalsIgnoreCase(col_name)){ //行政区划为 两个%%
+
+                            sql=" "+logic[i]+"  a.id in (select id from "+fulltable+" where "+col_name+" like '%"+value[i]+"%') ";
+                        }else{
+
+                            sql=" "+logic[i]+"  a.id in (select id from "+fulltable+" where "+col_name+" like '"+value[i]+"%') ";
+                        }
+
 
                     }else{
-                        sql=" "+logic[i]+"  (a.id in (select id from "+fulltable+" where "+col_name+" like '"+value[i]+"%') and ("+basic_sql+")) ";
+                        if("division".equalsIgnoreCase(col_name)){
+
+                            sql=" "+logic[i]+"  (a.id in (select id from "+fulltable+" where "+col_name+" like '%"+value[i]+"%') and ("+basic_sql+")) ";
+                        }else{
+
+                            sql=" "+logic[i]+"  (a.id in (select id from "+fulltable+" where "+col_name+" like '"+value[i]+"%') and ("+basic_sql+")) ";
+                        }
                     }
                     sql_list+=sql;
                     sql_count+=sql;
@@ -1472,10 +1485,10 @@ public class BusinessProcessControl {
         }
 
         if (keyword!=null&&!keyword.equals("")){
-            sql_list+=" and (a.owerid like '"+keyword+"%' or a.owername like '"+keyword+"%')" +
+            sql_list+=" and (a.owerid like '"+keyword+"%' or a.owername like '%"+keyword+"%')" +
                     " ";
 
-            sql_count+=" and (a.owerid like '"+keyword+"%' or a.owername like '"+keyword+"%')" +
+            sql_count+=" and (a.owerid like '"+keyword+"%' or a.owername like '%"+keyword+"%')" +
                     " ";
 
         }
@@ -1594,10 +1607,21 @@ public class BusinessProcessControl {
                 }else if(compare[i].equals("match")){
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+"  b.id in (select id from "+fulltable+" where "+col_name+" like '"+value[i]+"%') ";
+                        if("division".equalsIgnoreCase(col_name)){ //行政区划为 两个%%
+                            sql=" "+logic[i]+"  b.id in (select id from "+fulltable+" where "+col_name+" like '%"+value[i]+"%') ";
+                        }else{
+
+                            sql=" "+logic[i]+"  b.id in (select id from "+fulltable+" where "+col_name+" like '"+value[i]+"%') ";
+                        }
 
                     }else{
-                        sql=" "+logic[i]+"  (b.id in (select id from "+fulltable+" where "+col_name+" like '"+value[i]+"%') and ("+basic_sql+")) ";
+                        if("division".equalsIgnoreCase(col_name)){
+
+                            sql=" "+logic[i]+"  (b.id in (select id from "+fulltable+" where "+col_name+" like '%"+value[i]+"%') and ("+basic_sql+")) ";
+                        }else{
+
+                            sql=" "+logic[i]+"  (b.id in (select id from "+fulltable+" where "+col_name+" like '"+value[i]+"%') and ("+basic_sql+")) ";
+                        }
                     }
                     sql_list+=sql;
                     sql_count+=sql;
@@ -1889,10 +1913,10 @@ public class BusinessProcessControl {
 
 
                 //sql_list+=" and "+FamilyTable+" MATCH '"+keyword.toUpperCase()+"*' ";
-                sql_list+=" and (b.personid like '"+keyword+"%' or b.name like '"+keyword+"%')" +
+                sql_list+=" and (b.personid like '"+keyword+"%' or b.name like '%"+keyword+"%')" +
                          " ";
 
-                sql_count+=" and (b.personid like '"+keyword+"%' or b.name like '"+keyword+"%')" +
+                sql_count+=" and (b.personid like '"+keyword+"%' or b.name like '%"+keyword+"%')" +
                         " ";
 
         }

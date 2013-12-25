@@ -42,6 +42,20 @@ var spatialchildTableType={
     '当月新增低保边缘人员':{businesstype:'边缘户',querystatus:'正常'},
     '当月变更低保边缘人员':{businesstype:'边缘户',querystatus:'变更'},
     '当月注销低保边缘人员':{businesstype:'边缘户',querystatus:'注销'},
+
+    '当月新增临时救助家庭':{businesstype:'临时救助',querystatus:'正常'},
+    '当月变更临时救助家庭':{businesstype:'临时救助',querystatus:'变更'},
+    '当月注销临时救助家庭':{businesstype:'临时救助',querystatus:'注销'},
+    '当月新增临时救助人员':{businesstype:'临时救助',querystatus:'正常'},
+    '当月变更临时救助人员':{businesstype:'临时救助',querystatus:'变更'},
+    '当月注销临时救助人员':{businesstype:'临时救助',querystatus:'注销'},
+    
+    '当月新增医疗救助家庭':{businesstype:'医疗救助',querystatus:'正常'},
+    '当月变更医疗救助家庭':{businesstype:'医疗救助',querystatus:'变更'},
+    '当月注销医疗救助家庭':{businesstype:'医疗救助',querystatus:'注销'},
+    '当月新增医疗救助人员':{businesstype:'医疗救助',querystatus:'正常'},
+    '当月变更医疗救助人员':{businesstype:'医疗救助',querystatus:'变更'},
+    '当月注销医疗救助人员':{businesstype:'医疗救助',querystatus:'注销'},
     'shenshispatial':'嵊泗县'
 };
 

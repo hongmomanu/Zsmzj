@@ -392,10 +392,10 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
         }
         String t="1".equals(addontype)?"1":"0";
         t+=" addontype";
-        String sql_comm="select a.*,"+ t+ ",b.checkitem checkitem,b.checkresult checkresult,b.checkcomment checkcomment  from fm01 a,fm03 b where 1=1 and "+
+        String sql_comm="select a.*,"+ t+ ",b.checkitem checkitem,b.checkresult checkresult,b.checkcomment checkcomment,u.displayname  from fm01 a,fm03 b,users u where 1=1 and u.id=b.userid and "+
                 "a.fmy001=b.fmy001 and b.bgflag=1 and b.checkitem = '"+checkitem+"' "+ date_string+  keyword_string
                 +" union  select a.*,"+ t+
-                ",'"+checkitem+"' checkitem,0 checkresult,'' checkcomment  from fm01 a where 1=1 and not exists (select 1 from fm03 c where c.fmy001=a.fmy001 and c.bgflag=1 and c.checkitem ='"+checkitem+"') "  +
+                ",'"+checkitem+"' checkitem,0 checkresult,'' checkcomment,'' displayname  from fm01 a where 1=1 and not exists (select 1 from fm03 c where c.fmy001=a.fmy001 and c.bgflag=1 and c.checkitem ='"+checkitem+"') "  +
                 date_string+  keyword_string+
                 " order by fmy001 desc";
 

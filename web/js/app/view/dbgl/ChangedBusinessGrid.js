@@ -228,9 +228,17 @@ Ext.define('ZSMZJ.view.dbgl.ChangedBusinessGrid' ,{
                             '<span id="{4}" ></span>',id0, id1,id2,id3,id4,id5);
                     }
                 },
+                {header: '状态',align:'center',dataIndex:'processstatus',width: 70,renderer:function(val, obj, record){
+
+
+                    if (val==processdiction.stepzero) return "未提交";
+                    else if(val==processdiction.steptwo)return val+"中";
+                    else return "已"+val;
+
+                }},
                 //{header: '审批名称', dataIndex: 'rolename',width: 150},
                 ////行政区划 户主姓名 户主身份证 申请类别 家庭类别 救助金额 救助开始日期 救助结束日期 家庭人数 享受人数 状态 状态描述 审核人 审核日期 制单人
-                {header: '行政区划', dataIndex: 'division',align:'center',width: 250},
+                {header: '行政区划', dataIndex: 'division',align:'center',width: 200},
                 {header: '市',hidden:true, dataIndex: 'city',align:'center',width: 250,renderer:function(val, obj, record){
                     var re=/[^市]+(市)/g;
                     var revillage=/[^乡镇街道]+(社区|村)/g;
@@ -293,34 +301,26 @@ Ext.define('ZSMZJ.view.dbgl.ChangedBusinessGrid' ,{
                     })(result,record);
                     return result;
                 }},
-                {header: '户主姓名',align:'center',dataIndex:'owername'},
-                {header: '户主身份证',align:'center',dataIndex:'owerid',width: 250},
-                //变更前人数	变更前金额	变更后人数	变更后金额	变更日期	变更原因	状态	状态描述	审核人	审核日期	制单人	制单日期
+                {header: '户主姓名',align:'center',dataIndex:'owername',width: 70},
+                {header: '户主身份证',align:'center',dataIndex:'owerid',width: 150},
 
-                {header: '变更前人数',align:'center',dataIndex:'beforepeople'},
-                {header: '变更前金额',align:'center',dataIndex:'beforetotalhelpmoney'},
-                {header: '变更后人数',align:'center',dataIndex:'familynum',summaryType: 'sum',width:150,//求数量
+                //变更前人数	变更前金额	变更后人数	变更后金额	变更日期	变更原因	状态	状态描述	审核人	审核日期	制单人	制单日期
+                {header: '变更前人数',align:'center',dataIndex:'beforepeople',width: 70},
+                {header: '变更前金额',align:'center',dataIndex:'beforetotalhelpmoney',width: 70},
+
+                {header: '变更后人数',align:'center',dataIndex:'familynum',summaryType: 'sum',width:120,//求数量
                     summaryRenderer: function(value){
                         return '总人数:'+value
                     }},
-
-                {header: '变更后金额',align:'center',dataIndex:'totalhelpmoney',summaryType: 'sum', width:150,//求数量
+                {header: '变更后金额',align:'center',dataIndex:'totalhelpmoney',summaryType: 'sum', width:120,//求数量
                     summaryRenderer: function(value){
                         return '总金额:'+value
                     }},
                 {header: '变更日期',align:'center',dataIndex:'changedate'},
+
                 {header: '变更原因',align:'center',dataIndex:'changereason'},
-
-                {header: '状态',align:'center',dataIndex:'processstatus',renderer:function(val, obj, record){
-
-
-                        if (val==processdiction.stepzero) return "未提交";
-                        else if(val==processdiction.steptwo)return val+"中";
-                        else return "已"+val;
-
-                }},
                 {header: '审核人',align:'center',dataIndex:'approvaluser'},
-                {header: '审核日期',align:'center',dataIndex:'approvaltime',width:200,renderer: function (val, obj, record) {
+                {header: '审核日期',align:'center',dataIndex:'approvaltime',width:120,renderer: function (val, obj, record) {
                     var time =Ext.Date.parse(val, "Y-m-d H:i:s");
                     val = Ext.util.Format.date(time, 'Y-m-d H:i');
                     return val;

@@ -41,7 +41,7 @@ Ext.define('ZSMZJ.view.dbgl.GrantMoneyGrid' ,{
             columns: [
 
 
-                {header: '操作栏', width: 230,locked : true,summaryType: 'count', align:'center',//求数量
+                {header: '操作栏', width: 100,locked : true,summaryType: 'count', align:'center',//求数量
                     summaryRenderer: function(value){
                         return '本页合计'
                     },
@@ -76,7 +76,7 @@ Ext.define('ZSMZJ.view.dbgl.GrantMoneyGrid' ,{
                 },
                 //发放年月	行政区划	户主姓名	户主身份证	申请类别	家庭类别	救助金额	家庭人数	享受人数	发放人	发放日期	数据生成日期
 
-                {header: '发放年月', dataIndex: 'grantdate',width: 150,renderer: function (val, obj, record) {
+                {header: '发放年月', dataIndex: 'grantdate',width: 100,renderer: function (val, obj, record) {
                     var yearindex=val.indexOf("00-00");
                     if(yearindex>0){
                        return val.substring(0,yearindex-1)+"第十三月";
@@ -88,20 +88,20 @@ Ext.define('ZSMZJ.view.dbgl.GrantMoneyGrid' ,{
                     }
 
                 }},
-                {header: '行政区划', dataIndex: 'division',align:'center',width: 250},
+                {header: '行政区划', dataIndex: 'division',align:'center',width: 200},
                 {header: '户主姓名',align:'center',dataIndex:'owername'},
-                {header: '户主身份证',align:'center',dataIndex:'owerid',width: 250},
+                {header: '户主身份证',align:'center',dataIndex:'owerid',width: 150},
 
                 {header: '申请类别',align:'center',dataIndex:'applytype'},
-                {header: '家庭类别',align:'center',dataIndex:'familytype'},
+                {header: '家庭类别',align:'center',dataIndex:'familytype',width:70},
 
-                {header: '家庭类别',align:'center',dataIndex:'familytype'},
-                {header: '救助金额',align:'center',dataIndex:'totalhelpmoney'},
-                {header: '调整金额',align:'center',dataIndex:'adjustmoney'},
-                {header: '家庭人数',align:'center',dataIndex:'familynum'},
-                {header: '享受人数',align:'center',dataIndex:'enjoynum'},
+                {header: '家庭类别',align:'center',dataIndex:'familytype',width:70},
+                {header: '救助金额',align:'center',dataIndex:'totalhelpmoney',width:70},
+                {header: '调整金额',align:'center',dataIndex:'adjustmoney',width:70},
+                {header: '家庭人数',align:'center',dataIndex:'familynum',width:70},
+                {header: '享受人数',align:'center',dataIndex:'enjoynum',width:70},
                 {header: '发放人',align:'center',dataIndex:'grantuser'},
-                {header: '发放日期',align:'center',dataIndex:'grantdate',width:200,renderer: function (val, obj, record) {
+                {header: '发放日期',align:'center',dataIndex:'grantdate',width:100,renderer: function (val, obj, record) {
                     var yearindex=val.indexOf("00-00");
                     if(yearindex>0){
                         return val.substring(0,yearindex-1)+"第十三月";
@@ -113,7 +113,7 @@ Ext.define('ZSMZJ.view.dbgl.GrantMoneyGrid' ,{
                     }
 
                 }},
-                {header: '数据生成日期',align:'center',dataIndex:'granttime',width:200,renderer: function (val, obj, record) {
+                {header: '数据生成日期',align:'center',dataIndex:'granttime',width:120,renderer: function (val, obj, record) {
                     var time =Ext.Date.parse(val, "Y-m-d H:i:s");
                     val = Ext.util.Format.date(time, 'Y-m-d H:i');
                     return val;
