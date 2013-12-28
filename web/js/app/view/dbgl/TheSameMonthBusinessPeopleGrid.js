@@ -30,7 +30,8 @@ Ext.define('ZSMZJ.view.dbgl.TheSameMonthBusinessPeopleGrid' ,{
                 loadMask: true,
                 scrollToTop: Ext.emptyFn,
                 enableTextSelection:true,
-                stripeRows: true
+                stripeRows: true,
+                getRowClass: manangerRowClass
             },
             features: [{
                 ftype: 'summary'//Ext.grid.feature.Summary表格汇总特性
@@ -76,7 +77,7 @@ Ext.define('ZSMZJ.view.dbgl.TheSameMonthBusinessPeopleGrid' ,{
                 }},
                 //行政区划名称	户主姓名	户主身份证	与户主关系	姓名	身份证	性别	年龄	户口性质	文化程度	政治面貌
                 // 健康状况	婚姻状况	月人均收入	人员类别	是否享受
-                {header: '行政区划', dataIndex: 'division',align:'center',width: 250},
+                {header: '行政区划', dataIndex: 'division',align:'center',width: 200},
                 {header: '市',hidden:true, dataIndex: 'city',align:'center',width: 250,renderer:function(val, obj, record){
                     var re=/[^市]+(市)/g;
                     var revillage=/[^乡镇街道]+(社区|村)/g;
@@ -139,14 +140,14 @@ Ext.define('ZSMZJ.view.dbgl.TheSameMonthBusinessPeopleGrid' ,{
                     })(result,record);
                     return result;
                 }},
-                {header: '户主身份证',align:'center',dataIndex:'owerid',width: 250},
-                {header: '与户主关系',align:'center',dataIndex:'relationship'},
-                {header: '姓名',align:'center',dataIndex:'name'},
-                {header: '业务类型',align:'center',dataIndex:'businesstype',itemId:'businesstype'},
-                {header: '身份证',align:'center',dataIndex:'personid'},
-                {header: '性别',align:'center',dataIndex:'sex'},
+                {header: '户主身份证',align:'center',dataIndex:'owerid',width: 150},
+                {header: '与户主关系',align:'center',dataIndex:'relationship',width: 70},
+                {header: '姓名',align:'center',dataIndex:'name',width: 70},
+                {header: '业务类型',align:'center',dataIndex:'businesstype',itemId:'businesstype',width: 70},
+                {header: '身份证',align:'center',dataIndex:'personid',width: 150},
+                {header: '性别',align:'center',dataIndex:'sex',width: 70},
 
-                {header: '年龄',align:'center',dataIndex:'age',renderer: function (v, m, r) {
+                {header: '年龄',align:'center',dataIndex:'age',width: 70,renderer: function (v, m, r) {
                     var time =Ext.Date.parse(r.get('birthday'), "Y-m-dTH:i:s");
                     var now =new Date();
                     var val =now.getFullYear()-time.getFullYear();
@@ -154,17 +155,17 @@ Ext.define('ZSMZJ.view.dbgl.TheSameMonthBusinessPeopleGrid' ,{
 
                 }},
 
-                {header: '户口性质',align:'center',dataIndex:'accounttype'},
-                {header: '文化程度',align:'center',dataIndex:'education'},
-                {header: '政治面貌',align:'center',dataIndex:'political'},
-                {header: '健康状况',align:'center',dataIndex:'bodystatus'},
-                {header: '婚姻状况',align:'center',dataIndex:'maritalstatus'},
-                {header: '月人均收入',align:'center',dataIndex:'monthlyincome',summaryType: 'sum',
+                {header: '户口性质',align:'center',dataIndex:'accounttype',width: 70},
+                {header: '文化程度',align:'center',dataIndex:'education',width: 100},
+                {header: '政治面貌',align:'center',dataIndex:'political',width: 70},
+                {header: '健康状况',align:'center',dataIndex:'bodystatus',width: 70},
+                {header: '婚姻状况',align:'center',dataIndex:'maritalstatus',width: 70},
+                {header: '月人均收入',align:'center',dataIndex:'monthlyincome',width: 120,summaryType: 'sum',
                     summaryRenderer: function(value){
                         return '总金额:'+value
                     }},
-                {header: '人员类别',align:'center',dataIndex:'persontype'},
-                {header: '是否享受',align:'center',dataIndex:'isenjoyed'},
+                {header: '人员类别',align:'center',dataIndex:'persontype',width: 70},
+                {header: '是否享受',align:'center',dataIndex:'isenjoyed',width: 70},
 
                 {header: '人员id',align:'center', width: 150,dataIndex:'rowid',hidden:true}
 
@@ -242,8 +243,9 @@ Ext.define('ZSMZJ.view.dbgl.TheSameMonthBusinessPeopleGrid' ,{
                             var month=date.getMonth()+1;
                             month=month<10?'0'+month:month;
                             var yn=date.getFullYear()+'-'+month;
+                            panel.thesamemonthqueryparams.value[1]=yn;
                             Ext.apply(store.proxy.extraParams,panel.thesamemonthqueryparams);
-                            store.proxy.extraParams.value[1]=yn;
+
 
                             store.loadPage(1);
                         }
@@ -263,18 +265,17 @@ Ext.define('ZSMZJ.view.dbgl.TheSameMonthBusinessPeopleGrid' ,{
                                 var keyword = field.getValue().replace(/\s+/g, "");
                                 var panel=this.up('panel');
                                 var store=panel.getStore();
-                                var bgdate=panel.down('#bgdate').getRawValue();
-                                var eddate=panel.down('#eddate').getRawValue();
-                                store.proxy.extraParams.bgdate=bgdate;
-                                store.proxy.extraParams.eddate=eddate;
+
                                 store.proxy.extraParams.keyword = keyword;
+                                panel.thesamemonthqueryparams.value[1]=panel.down('#thesamemonth_year').getRawValue()+'-'+panel.down('#thesamemonth_month').getRawValue();
                                 Ext.apply(store.proxy.extraParams,panel.thesamemonthqueryparams);
                                 store.loadPage(1);
+                                store.proxy.extraParams.keyword='';
 
                             }
                         }
                     },
-                    emptyText: '输入搜索关键字'
+                    emptyText: '输入身份证或者姓名'
 
                 },{
                     text:'检索',
@@ -285,13 +286,11 @@ Ext.define('ZSMZJ.view.dbgl.TheSameMonthBusinessPeopleGrid' ,{
 
                             var panel=this.up('panel');
                             var store=panel.getStore();
-                            var bgdate=panel.down('#bgdate').getRawValue();
-                            var eddate=panel.down('#eddate').getRawValue();
-                            store.proxy.extraParams.bgdate=bgdate;
-                            store.proxy.extraParams.eddate=eddate;
                             store.proxy.extraParams.keyword = keyword;
+                            panel.thesamemonthqueryparams.value[1]=panel.down('#thesamemonth_year').getRawValue()+'-'+panel.down('#thesamemonth_month').getRawValue();
                             Ext.apply(store.proxy.extraParams,panel.thesamemonthqueryparams);
                             store.loadPage(1);
+                            store.proxy.extraParams.keyword='';
 
                         }
                     }

@@ -23,13 +23,14 @@ Ext.define('ZSMZJ.view.propertycheck.familyinfoRegister', {
 
         Ext.apply(this, {
             bodyPadding: 10,
-            cls: 'shadowdiv',
+            //cls: 'shadowdiv',
             buttonAlign : 'center',
             fieldDefaults: {
                 labelAlign: 'right',
                 labelWidth: 100,
                 msgTarget: 'side'
             },
+
             autoScroll: true,
             items:[
 

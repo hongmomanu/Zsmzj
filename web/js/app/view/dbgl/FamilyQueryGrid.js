@@ -221,7 +221,7 @@ Ext.define('ZSMZJ.view.dbgl.FamilyQueryGrid' ,{
                             }
                         }
                     },
-                    emptyText: '输入搜索关键字'
+                    emptyText: '输入身份证或者姓名'
 
                 },{
                     text:'检索',

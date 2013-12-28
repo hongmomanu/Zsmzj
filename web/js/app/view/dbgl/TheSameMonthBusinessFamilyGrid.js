@@ -218,8 +218,9 @@ Ext.define('ZSMZJ.view.dbgl.TheSameMonthBusinessFamilyGrid' ,{
                             var month=date.getMonth()+1;
                             month=month<10?'0'+month:month;
                             var yn=date.getFullYear()+'-'+month;
+                            panel.thesamemonthqueryparams.value[1]=yn;
                             Ext.apply(store.proxy.extraParams,panel.thesamemonthqueryparams);
-                            store.proxy.extraParams.value[1]=yn;
+
 
                             store.loadPage(1);
                         }
@@ -240,17 +241,16 @@ Ext.define('ZSMZJ.view.dbgl.TheSameMonthBusinessFamilyGrid' ,{
                                 var keyword = field.getValue().replace(/\s+/g, "");
                                 var panel=this.up('panel');
                                 var store=panel.getStore();
-                                var bgdate=panel.down('#bgdate').getRawValue();
-                                var eddate=panel.down('#eddate').getRawValue();
-                                store.proxy.extraParams.bgdate=bgdate;
-                                store.proxy.extraParams.eddate=eddate;
+
                                 store.proxy.extraParams.keyword = keyword;
+                                panel.thesamemonthqueryparams.value[1]=panel.down('#thesamemonth_year').getRawValue()+'-'+panel.down('#thesamemonth_month').getRawValue();
                                 Ext.apply(store.proxy.extraParams,panel.thesamemonthqueryparams);
                                 store.loadPage(1);
+                                store.proxy.extraParams.keyword='';
                             }
                         }
                     },
-                    emptyText: '输入搜索关键字'
+                    emptyText: '输入身份证或者姓名'
 
                 },{
                     text:'检索',
@@ -260,13 +260,12 @@ Ext.define('ZSMZJ.view.dbgl.TheSameMonthBusinessFamilyGrid' ,{
                             var keyword = field.getValue().replace(/\s+/g, "");
                             var panel=this.up('panel');
                             var store=panel.getStore();
-                            var bgdate=panel.down('#bgdate').getRawValue();
-                            var eddate=panel.down('#eddate').getRawValue();
-                            store.proxy.extraParams.bgdate=bgdate;
-                            store.proxy.extraParams.eddate=eddate;
+
                             store.proxy.extraParams.keyword = keyword;
+                            panel.thesamemonthqueryparams.value[1]=panel.down('#thesamemonth_year').getRawValue()+'-'+panel.down('#thesamemonth_month').getRawValue();
                             Ext.apply(store.proxy.extraParams,panel.thesamemonthqueryparams);
                             store.loadPage(1);
+                            store.proxy.extraParams.keyword='';
                         }
                     }
 
