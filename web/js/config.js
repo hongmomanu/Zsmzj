@@ -7,7 +7,7 @@
  */
 var extLocation="http://192.168.2.112/ext-4.2.1/";
 
- extLocation="http://127.168.2.141/ext-4.2.1/";
+ extLocation="http://192.168.2.5/ext-4.2.1/";
  //extLocation="http://172.25.102.101:8080/ext-4.2";//舟山市
 
 var businessTableType=
@@ -1077,13 +1077,21 @@ var disabledtype={"heavy":"||一级,二级||"};
 
 var manangerRowClass=function (record) {
     var processstatus=record.get('processstatus');
+    var vprocessstatustype=record.get('processstatustype');
     var rowclass='';
     switch (processstatus){
-        case  processdiction.stepzero:rowclass='processdictionstepzero';break;
-        case  processdiction.stepone:rowclass='processdictionstepone';break;
-        case  processdiction.steptwo:rowclass='processdictionsteptwo';break;
-        case  processdiction.stepthree:rowclass='processdictionstepthree';break;
-        case  processdiction.stepback:rowclass='processdictionstepback';break;
+        case  processdiction.stepzero:rowclass='yw-stepzero';break;
+        case  processdiction.stepone:rowclass='yw-stepone';break;
+        case  processdiction.steptwo:rowclass='yw-steptwo';break;
+        case  processdiction.stepthree:
+            rowclass='yw-stepthree';
+            if(vprocessstatustype==processstatustype.change){
+                rowclass='yw-change';
+            }else if(vprocessstatustype==processstatustype.logout){
+                rowclass='yw-logout';
+            }
+            break;
+        case  processdiction.stepback:rowclass='';break;
     }
     return rowclass;
 }

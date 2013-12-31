@@ -29,7 +29,7 @@ Ext.define('ZSMZJ.controller.Header', {
         {ref: 'myheaderPanel', selector: 'myheader'}
     ],
     views: [
-        'Header','header.headViewPanel','header.NeedToDoGrid','header.AnnounceGrid'
+        'Header','header.headViewPanel','header.NeedToDoGrid','header.BriefNeedToDoGrid','header.AnnounceGrid'
     ],
     //初始化
     init: function() {
@@ -51,7 +51,7 @@ Ext.define('ZSMZJ.controller.Header', {
             },
             'mainpanel':{
                 //indexmsginit:function a(panel){this.initIndexMsg();},
-                afterrender:function a(){this.initIndexMsg();}
+                afterrender:function a(p){this.initIndexMsg();this.showBriefNeedThing(p);}
             },
             //获取表单信息
             'dbglbusinessalterform,dbedgebusinessalterform,temporaryhelpbusinessalterform,medicalhelpbusinessalterform,studyhelpbusinessalterform,charitablehelpbusinessalterform,disasterhelpwarealterform,disasterhelpbusinessalterform,rangershelpbusinessalterform,disasterhelpcalamitybusinessalterform':{
@@ -266,7 +266,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
             },
             //dbglsearchbusinessgrid
-            'needtodopanel,dbglsearchbusinessgridpanel,announcegridpanel,enumerateconfigmanager,usermanagerpanel,rolemanagerpanel,funcmanagerpanel,needtodobusinesspanel,changedbusinesspanel,logoutbusinesspanel,peoplequerypanel,familyquerypanel,dbglstatisticsfullpanel,dbglgrantmoneypanel,dbglstatisticscomplexonepanel,dbglstatisticscomplextwopanel,dbglstatisticscomplexthreepanel,dbglstatisticscomplexfourpanel,dbglstatisticscomplexcountrypanel,dbglstatisticscomplexnewlogoutpanel,medicalstandardgridpanel':{
+            'briefneedtodogrid,needtodopanel,dbglsearchbusinessgridpanel,announcegridpanel,enumerateconfigmanager,usermanagerpanel,rolemanagerpanel,funcmanagerpanel,needtodobusinesspanel,changedbusinesspanel,logoutbusinesspanel,peoplequerypanel,familyquerypanel,dbglstatisticsfullpanel,dbglgrantmoneypanel,dbglstatisticscomplexonepanel,dbglstatisticscomplextwopanel,dbglstatisticscomplexthreepanel,dbglstatisticscomplexfourpanel,dbglstatisticscomplexcountrypanel,dbglstatisticscomplexnewlogoutpanel,medicalstandardgridpanel':{
 
                 gridshowfresh:function(grid){
                   if(grid.xtype=='familyquerypanel'){
@@ -356,6 +356,9 @@ Ext.define('ZSMZJ.controller.Header', {
                       /*var task = new Ext.util.DelayedTask(fn);
                       task.delay(9500);*/
                   }
+            },
+            'briefneedtodogrid button[action=lookformore]':{
+                needthingsclick:this.showneedthings
             }
 
         }, this);
@@ -2566,6 +2569,23 @@ Ext.define('ZSMZJ.controller.Header', {
                 grid.isnewgrid=false;
             }
         }
+    },
+    showBriefNeedThing:function(p){
+        var fn=function(){
+            p.add({
+                width: 600,
+                xtype:'briefneedtodogrid',
+                //height:100,
+                loyout:'absolute',
+                x: 10,
+                y: 230
+            })
+            Ext.widget('briefneedtodogrid').getStore().load();
+        }
+
+        var task = new Ext.util.DelayedTask(fn);
+        task.delay(2000);
+
     },
     onLaunch: function() {
         var me = this;

@@ -208,10 +208,32 @@
 {
     background: url(/img/title.png) no-repeat;position:absolute; top:38%; left:50%; margin-left:-232px;
 }*/
-.child-row .x-grid-cell { background-color: #ffe2e2; color: #900; }
-.adult-row .x-grid-cell { background-color: #e2ffe2; color: #090; }
-.processdictionstepzero {color: #006600; }
-.processdictionstepone {color: #CC0000; }
-.processdictionsteptow {color: #CC0000; }
-.processdictionstepthree {color: #000099; }
+
+.yw-stepzero {color: #006600; }
+.yw-stepzerobgcolor {background-color: #006600;}
+.yw-stepone {color: #CC0000; }
+.yw-steponebgcolor {background-color: #CC0000; }
+.yw-steptwo {color: #CC0000; }
+.yw-steptwobgcolor {background-color: #CC0000;}
+.yw-stepthree {color: #000099; }
+.yw-stepthreebgcolor {background-color: #000099; }
+.yw-change {color: #aa0099; }
+.yw-changebgcolor {background-color: #aa0099; }
+.yw-logout {color: darkslategrey; }
+.yw-logoutbgcolor {background-color: darkslategrey; }
+div.yw-block{
+    height: 14px;
+}
+div.yw-block > div{
+
+    width: 12px;
+    height: 12px;
+    float: left;
+}
+div.yw-block > span{
+    line-height:14px;
+    font-family: 'Courier New';
+    display: block;
+    float: left;
+}
 

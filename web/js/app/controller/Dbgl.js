@@ -98,6 +98,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.logoutsubmitFieldset',
         'dbgl.SearchBusinessGrid',
         'dbgl.SearchBusinessGrid',
+        'dbgl.SquareshapedDiv',
         'dbgl.TheSameMonthBusinessPeopleGrid',
         'dbgl.TheSameMonthBusinessFamilyGrid'
 

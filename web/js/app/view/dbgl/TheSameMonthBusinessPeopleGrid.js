@@ -337,6 +337,8 @@ Ext.define('ZSMZJ.view.dbgl.TheSameMonthBusinessPeopleGrid' ,{
                     //value: Ext.Date.format(new Date(), 'Y-m-d'),
                     allowBlank: true
                 },'->',
+                {xtype:'squareshapeddiv'},
+
                 {
                     xtype:'splitbutton',
                     text: 'excel输出',
