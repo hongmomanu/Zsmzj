@@ -171,7 +171,7 @@ Ext.define('ZSMZJ.view.Header', {
                                                 {
                                                     html: '  <a>在线人数:'+onlinenums+'</a>',
                                                     baseCls: 'main-header',
-                                                    width:60,
+                                                    width:70,
                                                     cls:'mouseover',
                                                     //type:'needthings',
                                                     listeners: {
@@ -199,7 +199,7 @@ Ext.define('ZSMZJ.view.Header', {
                                                 {
                                                     baseCls: 'main-header',
 
-                                                    html:'</span><img src="img/head/7.png">'
+                                                    html:'<img src="img/head/7.png">'
                                                 },
                                                 {
                                                     baseCls: 'main-header',
