@@ -29,7 +29,8 @@ Ext.define('ZSMZJ.view.dbgl.TheSameMonthBusinessFamilyGrid' ,{
                 loadingText: '读取中...',
                 scrollToTop: Ext.emptyFn,
                 enableTextSelection:true,
-                stripeRows: true
+                stripeRows: true,
+                getRowClass: manangerRowClass
             },
             features: [{
                 ftype: 'summary'//Ext.grid.feature.Summary表格汇总特性
@@ -313,6 +314,7 @@ Ext.define('ZSMZJ.view.dbgl.TheSameMonthBusinessFamilyGrid' ,{
                     //value: Ext.Date.format(new Date(), 'Y-m-d'),
                     allowBlank: true
                 },'->',
+                {xtype:'squareshapeddiv'},
                 {
                     xtype:'splitbutton',
                     text: 'excel输出',

@@ -28,6 +28,7 @@ Ext.define('ZSMZJ.view.dbgl.LogoutBusinessGrid' ,{
                 loadMask: true,
                 scrollToTop: Ext.emptyFn,
                 enableTextSelection:true,
+                getRowClass: manangerRowClass,
                 stripeRows: true
             },
             features: [{
@@ -438,6 +439,7 @@ Ext.define('ZSMZJ.view.dbgl.LogoutBusinessGrid' ,{
                     //value: Ext.Date.format(new Date(), 'Y-m-d'),
                     allowBlank: true
                 },'->',
+                {xtype:'squareshapeddiv'},
                 {
                     xtype:'splitbutton',
                     text: 'excel输出',
