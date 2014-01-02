@@ -2276,6 +2276,48 @@ public class BusinessProcessControl {
 
 
     }
+    public String cancelApproval(Map<String,Object> param,boolean isapproval,String processstatus){
+        BusinessProcess bp=new BusinessProcess();
+        String staus="";
+        staus= ProcessType.UseProcessType.getPrevious(ProcessType.UseProcessType.getProcessFromChinese(processstatus));
+        String businessid=param.get("businessid").toString();
+        ComonDao cd=new ComonDao();
+
+        if(cd.getSingleCol("select processstatus from business where rowid="+businessid).equals(processstatus)){
+            Connection conn= JdbcFactory.getConn("sqlite");
+
+            try {
+                conn.setAutoCommit(false);
+                String sql_delete="delete from approvalprocess where rowid=(select max(rowid) from approvalprocess where businessid='" +
+                        Integer.parseInt(businessid)+"' and approvalname='"+param.get("approvalname").toString()+"')";
+
+                cd.delbysql(sql_delete); //删除当前的审核信息
+                bp.changeStatus(Integer.parseInt(businessid), staus); //更新表单状态为前一个状态
+                conn.commit();
+                conn.setAutoCommit(true);
+                return "{success:true}";
+            } catch (Exception e) {
+                e.printStackTrace();
+                log.debug(e.getMessage());
+                try {
+                    conn.rollback();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                }finally {
+                    return"{success:false,msg:\""+e.getMessage()+"\"}";
+                }
+            }
+
+        }else{
+            return"{success:false,msg:\"已操作\"}";
+
+        }
+
+
+
+
+
+    }
     public String changeBusinessStatus(int businessid,String status){
         BusinessProcess bp=new BusinessProcess();
         int result=bp.changeStatus(businessid,status);

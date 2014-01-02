@@ -332,6 +332,9 @@ Ext.define('ZSMZJ.controller.Header', {
                 },
                 cancelclick:function(c,r,grid){//未审核前取消提交
                     this.cancelbusinesssubmit(c,r,grid);
+                },
+                cancelprocessdictiontwo:function(c,r,grid){
+                    this.cancelprocessdictiontwo(c, r,grid);
                 }
             },
             'thesamemonthbusinessfamilygrid,thesamemonthbusinesspeoplegrid':{
@@ -2585,6 +2588,53 @@ Ext.define('ZSMZJ.controller.Header', {
 
         var task = new Ext.util.DelayedTask(fn);
         task.delay(2000);
+
+    },
+    cancelprocessdictiontwo:function(c,r,grid){
+        var businessid=r.get('businessid');
+        var me=this;
+        Ext.Msg.show({
+            title: '确定要删除此申请?',
+            msg: '你正在试图取消选中的 <a><font color="red">'+ r.get('displayname')+'</font></a> 的审核.你想继续么?',
+            buttons: Ext.Msg.YESNO,
+            fn: function (btn) {
+                if(btn=='yes'){
+                    me.cancelprocessdictiontwobybid(businessid,r,grid.getStore());
+                }
+            },
+            icon: Ext.Msg.QUESTION
+        });
+
+    },
+    cancelprocessdictiontwobybid:function(businessid,r,store){
+        var me=this;
+        var status='';
+        var approvalname='';
+        if(r.get('processstatus')==processdiction.steptwo){
+            status=processdiction.steptwo;
+            approvalname='街道/乡镇审核';
+        }else if(r.get('processstatus')==processdiction.stepthree){
+            status=processdiction.stepthree;
+            approvalname='区/县/市审批';
+        }
+        var params = {
+            businessid:businessid,
+            processstatus:status,
+            approvalname:approvalname
+        };
+        var successFunc = function (myform, action) {
+            me.closemask();
+            Ext.Msg.alert("提示信息", "操作成功");
+            store.load();
+        };
+        var failFunc = function (form, action) {
+            me.closemask();
+            Ext.Msg.alert("提示信息", "取消提交失败，检查web服务或数据库服务");
+
+        };
+        ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"数据处理中..."});
+        ViewWaitMask.show();
+        this.ajaxSend(params, 'ajax/cancelApproval.jsp', successFunc, failFunc,'POST');
 
     },
     onLaunch: function() {
