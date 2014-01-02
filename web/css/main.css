@@ -237,3 +237,9 @@ div.yw-block > span{
     float: left;
 }
 
+.businessapplyform{
+    width: 1000px !important;
+    margin:0px auto !important;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}

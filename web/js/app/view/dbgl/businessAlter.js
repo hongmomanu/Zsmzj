@@ -19,6 +19,8 @@ Ext.define('ZSMZJ.view.dbgl.businessAlter', {
             this.fireEvent('alterapplyaftershow',this);
         }
     },
+    maxWidth:formMaxWidth,
+    baseCls:'businessapplyform',
    /* afterShow: function(animateTarget, cb, scope) {
         this.fireEvent('alterapplyaftershow',this);
     },*/
