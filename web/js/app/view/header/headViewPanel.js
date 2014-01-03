@@ -12,6 +12,11 @@ Ext.define('ZSMZJ.view.header.headViewPanel' ,{
     requires: [
     ],
     initComponent: function() {
+        var zsj='舟山市';
+        var localdivisionpath=divisionpath;
+        if(divisionpath.indexOf(zsj)==0&&divisionpath!=zsj){
+            localdivisionpath=divisionpath.substring(zsj.length);
+        }
         Ext.apply(this, {
             id: 'images-view',
             frame: false,
@@ -30,7 +35,19 @@ Ext.define('ZSMZJ.view.header.headViewPanel' ,{
                     '<div class="thumb"><img src="{url}" title="{name}"></div>',
                     '<span class="x-editable">{shortName}</span></div>',
                     '</tpl>',
-                    '<div class="x-clear"></div>'
+                    //'<div class="x-clear"></div>',
+
+                    '<div id="navspace">'+
+                    '<div style="width: 50px;height: 20px;float: right;"></div>' +
+                    '<ul id="headnavul">' +
+                    '<li style="width: width: 250px;"><img src="img/head/1.png"/><a>欢迎您:'+displayname+'('+localdivisionpath+')</a></li>' +
+                    '<li style="width: width: 100px;"><img src="img/head/2.png"/><a id="domneedtodocount">待办业务(55)</a></li>' +
+                    '<li style="width: width: 100px;"><img src="img/head/4.png"/><a>在线人数('+onlinenums+')</a></li>' +
+                    '<li style="width: width: 80px;"><img src="img/head/5.png"/><a id="domshowalterpwd">重设密码</a></li>' +
+                    '<li style="width: width: 50px;"><img src="img/head/7.png"/>' +
+                        '<a id="domlogout" href="logout" style="text-decoration: none;">退出</a></li>' +
+                    '</ul>'+
+                    '</div>'
                 ],
                 multiSelect: false,
                 //height: 80,

@@ -2216,11 +2216,17 @@ Ext.define('ZSMZJ.controller.Header', {
             divisionpath:divisionpath,
             type:'count'
         };
-        var changeItem=this.getMyheaderPanel().down('#needtodopanel');
+        //var changeItem=this.getMyheaderPanel().down('#needtodopanel');
+
         var successFunc = function (response, option) {
-            var res = Ext.JSON.decode(response.responseText);
-            var count=res.count;
-            CommonFunc.updateitemnum(changeItem,count)
+            window.setTimeout(function(){
+                var changeItem={};changeItem.el=Ext.get('domneedtodocount');
+                mytestChangeItem=changeItem;
+                var res = Ext.JSON.decode(response.responseText);
+                var count=res.count;
+                CommonFunc.updateitemnum(changeItem,count)
+            },1000)
+
 
 
         };
@@ -2432,7 +2438,7 @@ Ext.define('ZSMZJ.controller.Header', {
         var store=this.getHeaderHeaderViewersStore();
         store.on('load', function (store, options) {
             if(store.data.items.length==1){
-                me.getMyviewheadViewPanel().items.items[0].setVisible(false);
+                //me.getMyviewheadViewPanel().items.items[0].setVisible(false);
                 Ext.getCmp('west-panel').removeAll();
                 //Ext.getCmp('west-panel').add(menu_shjz);
 
@@ -2444,6 +2450,8 @@ Ext.define('ZSMZJ.controller.Header', {
             }else{
                 var viewpanel=me.getMyviewheadViewPanel().items.items[0];
                 viewpanel.select(0);
+
+
             }
 
         });
@@ -2581,7 +2589,7 @@ Ext.define('ZSMZJ.controller.Header', {
                 //height:100,
                 loyout:'absolute',
                 x: 10,
-                y: 230
+                y: 200
             })
             Ext.widget('briefneedtodogrid').getStore().load();
         }

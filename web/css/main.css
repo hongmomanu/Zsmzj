@@ -1,16 +1,3 @@
-.main-header {
-    /*background-color: #252F49;*/
-
-    border-bottom: 0px solid #16191D;
-    color: #16191D;
-    font-size: 12px;
-    /*font-weight: bold;*/
-    padding: 0px;
-    /*text-align: center;*/
-    /*height: 300px;*/
-    text-shadow: 0 1px 0 #16191D;
-
-}
 
 .main-header-all{
     background-image: url('../img/head.jpg');
@@ -27,7 +14,7 @@
 
 
 /*设置开头li横向排列*/
-.main-header li{
+.main-header > li{
     list-style: none;
     font-size: 11px;
     padding: 2px;
@@ -242,4 +229,44 @@ div.yw-block > span{
     margin:0px auto !important;
     border-left: 1px solid black;
     border-right: 1px solid black;
+}
+
+#navspace{
+    clear: both;
+    height: 30px;
+}
+#headnavul{
+    float: right;
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+
+    color: black;
+    height: 30px;
+    width: 730px;
+    visibility:hidden;
+}
+#headnavul li{
+    list-style: none;
+    font-size: 13px;
+    float: left;
+    text-align:center;
+    margin: 5px;
+
+}
+#headnavul img{
+    position:relative;
+    top: 3px;
+}
+#headnavul a{
+    height: 30px;
+}
+#headnavul a:hover{
+    color: orange;
+}
+#headnavul > li:first-child{
+    text-align: right;
+    margin-right: 10px;
+}
+#headnavul > li:last-child>a:visited  {
+    color:black;
 }

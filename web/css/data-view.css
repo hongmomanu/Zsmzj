@@ -7,7 +7,6 @@
     padding: 3px;
     text-align: center;
     vertical-align:middle ;
-
     padding-bottom: 0;
 }
 
@@ -21,11 +20,15 @@
     width: 20px;
 }
 #images-view .thumb-wrap{
-    float: left;
+    float: right;
     margin: 4px;
-    margin-right: 0;
+    margin-right: 0px;
     padding: 5px;
     height:58 ;
+    visibility:hidden;
+}
+#images-view div.thumb-wrap:first-child{
+   margin-right: 50px;
 }
 #images-view .thumb-wrap span {
 

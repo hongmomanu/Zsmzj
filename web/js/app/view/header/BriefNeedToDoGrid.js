@@ -28,7 +28,7 @@ Ext.define('ZSMZJ.view.header.BriefNeedToDoGrid' ,{
             fields:['name','url','businessid','processstatus','processstatustype',
                 'businesstype','owername','process','displayname','time','lastmod'],
             autoLoad:false,
-            pageSize: 4,
+            pageSize: 7,
             proxy: {
                 type: 'ajax',
                 url: 'ajax/getneedtodos.jsp',

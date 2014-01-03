@@ -276,7 +276,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
          },
          'dbglapplytype': {
 
-             beforeload:function(store){alert(1)}
+             beforeload:function(store){/*alert(1)*/}
          }
          }, this);
 
