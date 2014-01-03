@@ -2583,13 +2583,26 @@ Ext.define('ZSMZJ.controller.Header', {
     },
     showBriefNeedThing:function(p){
         var fn=function(){
-            p.add({
+            p.add(
+                {
+                    width: 600,
+                    border:false,
+                    html: '<div class="welmsg" style="height: 180px; display: block;background-image: url(img/welimg.gif)">' +
+                        '<p>' + displayname + '</p>' +
+                        '<p>欢迎您登录舟山市救灾救济系统！</p>' +
+
+                        '</div>',
+                    loyout: 'absolute',
+                    x: 10,
+                    y: 10
+                },
+                {
                 width: 600,
                 xtype:'briefneedtodogrid',
                 //height:100,
                 loyout:'absolute',
                 x: 10,
-                y: 200
+                y: 20
             })
             Ext.widget('briefneedtodogrid').getStore().load();
         }

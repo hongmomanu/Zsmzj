@@ -26,7 +26,6 @@ Ext.define('ZSMZJ.view.charitablehelp.businessAlter', {
         var required = '<span style="color:red;font-weight:bold" data-qtip="必填字段">*</span>';
         Ext.apply(this, {
             bodyPadding: 10,
-            cls: 'shadowdiv',
             buttonAlign : 'center',
             fieldDefaults: {
                 labelAlign: 'right',

@@ -1,6 +1,6 @@
 #images-view .x-panel-body{
     background: white;
-    font: 11px Arial, Helvetica, sans-serif;
+    /*font: 11px Arial, Helvetica, sans-serif;*/
 }
 #images-view .thumb{
     background: #dddddd;
@@ -16,8 +16,8 @@
 
 #images-view .thumb img{
 
-    height: 20px;
-    width: 20px;
+    height: 25px;
+    width: 30px;
 }
 #images-view .thumb-wrap{
     float: right;

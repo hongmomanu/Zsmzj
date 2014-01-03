@@ -78,13 +78,13 @@
 /*.x-fieldset-header{font-size: 24px;color: #999;}*/
 /*.x-fieldset{border:1px solid #B5B8C8;padding:10px;margin-bottom:10px;display:block;font-size: 24px;}*/
 /*extjs表格阴影效果*/
-.shadowdiv
+/*.shadowdiv
 {
-    filter: ''; /*ie*/
-    -moz-box-shadow: 20px 20px 5px black; /*firefox*/
-    -webkit-box-shadow: 20px 20px 5px black; /*safari或chrome*/
-    box-shadow: 5px 5px 5px black; /*opera或ie9*/
-}
+    filter: ''; *//*ie*//*
+    -moz-box-shadow: 20px 20px 5px black; *//*firefox*//*
+    -webkit-box-shadow: 20px 20px 5px black; *//*safari或chrome*//*
+    box-shadow: 5px 5px 5px black; *//*opera或ie9*//*
+}*/
 
 .process{background-image: url(../img/process.gif) !important;}
 .sp{background-image: url(../img/sp.gif) !important;}
@@ -103,7 +103,7 @@
     height: 14px !important;
     line-height: 14px !important;
 }
-*{font-family:'微软雅黑',Tahoma,arial,verdana,sans-serif;font-size:12;font-weight:normal;!important;}
+*{font-family:'微软雅黑',Tahoma,arial,verdana,sans-serif;font-size:12px;/*font-weight:normal;!important;*/}
 /*.x-panel-header-text-default { color: #04408C; font-family: '微软雅黑',Tahoma,arial,verdana,sans-serif; font-size: 12px; font-weight: bold;}
 .x-column-header { border-style: none solid none none; font: 12px '微软雅黑',tahoma,arial,verdana,sans-serif; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);}
 .x-body { color: black; font-family: '微软雅黑',tahoma,arial,verdana,sans-serif; font-size: 12px;}
@@ -227,8 +227,6 @@ div.yw-block > span{
 .businessapplyform{
     width: 1000px !important;
     margin:0px auto !important;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
 }
 
 #navspace{
@@ -239,7 +237,6 @@ div.yw-block > span{
     float: right;
     padding: 0 0 0 0;
     margin: 0 0 0 0;
-
     color: black;
     height: 30px;
     width: 730px;
@@ -247,7 +244,6 @@ div.yw-block > span{
 }
 #headnavul li{
     list-style: none;
-    font-size: 13px;
     float: left;
     text-align:center;
     margin: 5px;
@@ -259,6 +255,9 @@ div.yw-block > span{
 }
 #headnavul a{
     height: 30px;
+    font-size: 13px;
+    font-family: '华文中宋','微软雅黑',arial,georgia,verdana,helvetica,sans-serif;
+    font-weight: 100;
 }
 #headnavul a:hover{
     color: orange;
@@ -269,4 +268,10 @@ div.yw-block > span{
 }
 #headnavul > li:last-child>a:visited  {
     color:black;
+}
+
+
+div.welmsg{
+    padding-left: 10px;
+
 }
