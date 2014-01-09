@@ -10,7 +10,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>用户登入</title>
-
+    <script src="js/md5.js" type="text/javascript"></script>
     <style type="text/css">
             /*html {background-color:#06294e;}*/
         body {background-image:url(img/loginbg.jpg); background-position:50% 50%; background-repeat:no-repeat;}
@@ -98,7 +98,7 @@
 
             <tr>
                 <td class='rowhead'>密&nbsp;&nbsp;&nbsp;码：</td>
-                <td><input tabindex="2" class='text-2' type='password' required="true" placeholder="在这里输入密码"
+                <td><input tabindex="2" class='text-2' id="password" type='password' required="true" placeholder="在这里输入密码"
                            name='password' onkeydown="javascript:onEnterKeyDown(this,event);"/></td>
 
             </tr>
@@ -114,6 +114,7 @@
         <div id='browserlinkdiv'>
             <span>如果系统不流畅，建议使用谷歌浏览器:</span><a href="http://172.25.102.101:8080/ext-4.2/ChromeStandaloneSetup.exe">下载</a>
         </div>
+        <input type="hidden" name="params" id="params" value=""/>
     </form>
         <%
             request.getSession().setAttribute("loginerromsg",null);
@@ -142,7 +143,13 @@
 
 
     function btnClick(){
-        document.getElementById("myform").submit();
+        var password=document.getElementById("password");
+        var username=document.getElementById("username");
+        if(''!=username||''!=password){
+            password.value=hex_md5(password.value)
+            document.getElementById("myform").submit();
+        }
+
     }
     function onEnterKeyDown(src,e){
         var keyPressed;
