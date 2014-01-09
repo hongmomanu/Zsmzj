@@ -38,7 +38,6 @@ Ext.define('ZSMZJ.view.header.headViewPanel' ,{
                     //'<div class="x-clear"></div>',
 
                     '<div id="navspace">'+
-                    '<div style="width: 50px;height: 20px;float: right;"></div>' +
                     '<ul id="headnavul">' +
                     '<li style="width: width: 250px;"><img src="img/head/1.png"/><a>欢迎您:'+displayname+'('+localdivisionpath+')</a></li>' +
                     '<li style="width: width: 100px;"><img src="img/head/2.png"/><a id="domneedtodocount">待办业务(55)</a></li>' +

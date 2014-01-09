@@ -234,12 +234,12 @@ div.yw-block > span{
     height: 30px;
 }
 #headnavul{
-    float: right;
+    /*float: right;*/
     padding: 0 0 0 0;
     margin: 0 0 0 0;
     color: black;
     height: 30px;
-    width: 730px;
+    width: 1024px;
     visibility:hidden;
 }
 #headnavul li{
@@ -265,6 +265,7 @@ div.yw-block > span{
 #headnavul > li:first-child{
     text-align: right;
     margin-right: 10px;
+    margin-left: 500px;
 }
 #headnavul > li:last-child>a:visited  {
     color:black;

@@ -7,7 +7,7 @@
  */
 var extLocation="http://192.168.2.112/ext-4.2.1/";
 
- extLocation="http://192.168.2.5/ext-4.2.1/";
+ extLocation="http://127.168.2.8/ext-4.2.1/";
  //extLocation="http://172.25.102.101:8080/ext-4.2";//舟山市
 
 var businessTableType=
@@ -1095,4 +1095,4 @@ var manangerRowClass=function (record) {
     }
     return rowclass;
 }
-
+var formMaxWidth=1001;
