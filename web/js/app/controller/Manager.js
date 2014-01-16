@@ -859,7 +859,7 @@ Ext.define('ZSMZJ.controller.Manager', {
         for(var i=0;i<array.length;i++){
             var f=form.findField(array[i]);
             if(f){
-                f.setValue(hex_md5(f.value))
+                f.setValue(CryptoJS.enc.Base64.stringify(CryptoJS.MD5(f.value)))
             }
         }
     },

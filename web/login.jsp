@@ -11,6 +11,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>用户登入</title>
     <script src="js/md5.js" type="text/javascript"></script>
+    <script src="js/enc-base64-min.js" type="text/javascript"></script>
     <style type="text/css">
             /*html {background-color:#06294e;}*/
         body {background-image:url(img/loginbg.jpg); background-position:50% 50%; background-repeat:no-repeat;}
@@ -130,6 +131,9 @@
 <script type="text/javascript">
 
     window.onload=function(){
+        /*var a=CryptoJS.MD5("hvit");
+        a= CryptoJS.enc.Base64.stringify(a);
+        alert(a)*/
         document.getElementById("account").focus();
 
         var imgdiv=document.getElementById('img_div');
@@ -146,7 +150,8 @@
         var password=document.getElementById("password");
         var username=document.getElementById("username");
         if(''!=username||''!=password){
-            password.value=hex_md5(password.value)
+            password.value=CryptoJS.enc.Base64.stringify(CryptoJS.MD5(password.value));
+
             document.getElementById("myform").submit();
         }
 

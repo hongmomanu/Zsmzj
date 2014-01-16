@@ -14,7 +14,7 @@
       <script type="text/javascript" src="js/config.js">
       </script>
       <script src="js/md5.js" type="text/javascript"></script>
-
+      <script src="js/enc-base64-min.js" type="text/javascript"></script>
       <script type="text/javascript">
           /*session全局变量*/
           var onlinenums=<%= SessionListener.size()%>;
@@ -43,7 +43,7 @@
       <link rel="stylesheet" type="text/css" href="css/data-view.css" />
      <%-- 加载web应用层--%>
 
-      <%--<script type="text/javascript" src="app-all.js"></script>--%>
+      <script type="text/javascript" src="app-all.js"></script>
       <script type="text/javascript" src="js/app.js"></script>
       <script type="text/javascript" src="js/app/commonfunc.js"></script>
     <title>欢迎使用舟山市民政救助系统</title>
