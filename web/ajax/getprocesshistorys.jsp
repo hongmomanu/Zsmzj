@@ -17,8 +17,10 @@
         int businessid=Integer.parseInt(request.getParameter("businessid"));
         int start=Integer.parseInt(request.getParameter("start"));
         int limit=Integer.parseInt(request.getParameter("limit"));
+        String totalname=request.getParameter("totalname");
+        String rowsname=request.getParameter("rowsname");
         BusinessProcessControl bc=new BusinessProcessControl();
 
-        out.print(bc.getProcessHistorybid(businessid,start,limit));
+        out.print(bc.getProcessHistorybid(businessid,start,limit,totalname,rowsname));
     }
 %>
