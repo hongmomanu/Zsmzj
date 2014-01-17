@@ -91,6 +91,7 @@ define(['commonfuncs/PersonidValidator'], function (PersonidValidator) {
         $('#familymembersgrid').datagrid({
             width: $('#familymembersdiv').width()-15,
             onClickRow:function(index, rowData){
+                if(rowData.relationship!='户主') $('#delfamilymemer_btn').linkbutton('enable');
                 if (editIndex != index){
                     if (endEditing()){
                         $('#familymembersgrid').datagrid('selectRow', index)
@@ -125,8 +126,11 @@ define(['commonfuncs/PersonidValidator'], function (PersonidValidator) {
         });
 
         $('#delfamilymemer_btn').bind('click', function () {
-            var editIndex = $('#familymembersgrid').datagrid('getRows').length - 1;
-            $('#familymembersgrid').datagrid('deleteRow', editIndex);
+            var selectrow= $('#familymembersgrid').datagrid('getSelected');
+
+            var index=$('#familymembersgrid').datagrid('getRowIndex',selectrow);
+            //var editIndex = $('#familymembersgrid').datagrid('getRows').length - 1;
+            $('#familymembersgrid').datagrid('deleteRow', index);
             $('#FamilyPersons').val($('#familymembersgrid').datagrid('getRows').length);
         });
         $('#newfamilymemer_save').bind('click', function () {

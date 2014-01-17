@@ -32,12 +32,15 @@
             <a  id="affixwin_submit" class="easyui-linkbutton" >上传</a>
             <a id="affixwin_cancel"  class="easyui-linkbutton" >取消</a>
             <a id="affixwin_confirm"  class="easyui-linkbutton" >确定</a>
+            <a id="affixwin_del"  class="easyui-linkbutton" data-options="disabled:true" >删除</a>
         </div>
         <table class="easyui-datagrid" id="affixfilegrid" title="附件列表" style="height:130px;"
-               data-options="singleSelect:true,collapsible:true">
+               data-options="singleSelect:false,collapsible:true">
             <thead>
             <tr>
-                <th data-options="field:'attachmentname',width:300">附件名</th>
+                <th data-options="field:'attachmentname',width:300,formatter:function(val,rowData,rowIndex){
+                     return '<span data-p1='+rowIndex+' class=&quot;easyui-tooltip&quot;>' + val + '</span>';
+                }">附件名</th>
                 <th data-options="field:'attachmentpath',width:100,hidden:true">附件路径</th>
             </tr>
             </thead>

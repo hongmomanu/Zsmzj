@@ -33,10 +33,47 @@ define( function () {
 
             $('#affixwin').window('open');
             $('#affixwin').window('window').clickitem=this;
-            testobj=this;
             var data=$('#affixwin').window('window').clickitem.formdata?
                 $('#affixwin').window('window').clickitem.formdata:[];
             $('#affixfilegrid').datagrid('loadData',data);
+            $('#affixfilegrid').datagrid({
+                onClickRow:function(rowIndex, rowData){
+                    $('#affixwin_del').linkbutton('enable');
+                }
+
+            });
+            $('#affixwin_del').bind('click',function(){
+                var rows = $('#affixfilegrid').datagrid('getSelections');
+                $.messager.progress();
+                for(var i=0;i<rows.length;i++){
+                    var index=$('#affixfilegrid').datagrid('getRowIndex',rows[i]);
+                    $('#affixfilegrid').datagrid('deleteRow',index);
+
+                }
+                $.messager.progress('close');
+                $('#affixwin_del').linkbutton('disable');
+
+
+            });
+            $('#affixfilegrid').datagrid('getPanel').find('.easyui-tooltip').each(function(){
+                var index = parseInt($(this).attr('data-p1'));
+                $(this).tooltip({
+                    content: $('<div></div>'),
+                    onUpdate: function(cc){
+                        var row = $('#affixfilegrid').datagrid('getRows')[index];
+                        var content = '<div><img width="200" height="190" src="'+row.attachmentpath+'"></div>';
+
+                        cc.panel({
+                            width:200,
+                            height:200,
+                            content:content
+                        });
+                    },
+                    position:'right'
+                });
+            });
+
+
         });
         $('#affixwin_confirm').bind('click',function(){
 
