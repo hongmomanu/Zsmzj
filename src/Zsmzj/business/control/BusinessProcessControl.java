@@ -2397,6 +2397,10 @@ public class BusinessProcessControl {
             conn.setAutoCommit(false);
             this.changeStatusbybid(businessid,ProcessType.UseProcessType.getChineseSeason(ProcessType.Apply));
             bp.updateApplyBusiness(businessid,params);
+
+            if(affixfiles!=null&&!affixfiles.equals(""))bp.updateAffixFiles(affixfiles, businessid);
+            if(familymembers!=null&&!familymembers.equals(""))bp.updateFamilyMembers(familymembers,businessid);
+            if(signatures!=null&&!signatures.equals(""))bp.updateSignatures(signatures,businessid);
             //bp.updateAffixFiles(affixfiles, businessid);
             //bp.updateFamilyMembers(familymembers,businessid);
             //bp.updateSignatures(signatures,businessid);
@@ -2438,11 +2442,9 @@ public class BusinessProcessControl {
 
             this.changeStatusbybid(businessid,ProcessType.UseProcessType.getChineseSeason(ProcessType.Apply));
             bp.updateApplyBusiness(businessid,params);
-            bp.updateAffixFiles(affixfiles, businessid);
-            log.debug("start============================");
-            bp.updateFamilyMembers(familymembers,businessid);
-            log.debug("end============================");
-            bp.updateSignatures(signatures,businessid);
+            if(affixfiles!=null&&!affixfiles.equals(""))bp.updateAffixFiles(affixfiles, businessid);
+            if(familymembers!=null&&!familymembers.equals(""))bp.updateFamilyMembers(familymembers,businessid);
+            if(signatures!=null&&!signatures.equals(""))bp.updateSignatures(signatures,businessid);
             conn.commit();
             conn.setAutoCommit(true);
             return "{success:true}";
@@ -2469,9 +2471,9 @@ public class BusinessProcessControl {
         try {
             conn.setAutoCommit(false);
             bp.updateApplyBusiness(businessid,params);
-            bp.updateAffixFiles(affixfiles, businessid);
-            bp.updateFamilyMembers(familymembers,businessid);
-            bp.updateSignatures(signatures,businessid);
+            if(affixfiles!=null&&!affixfiles.equals(""))bp.updateAffixFiles(affixfiles, businessid);
+            if(familymembers!=null&&!familymembers.equals(""))bp.updateFamilyMembers(familymembers,businessid);
+            if(signatures!=null&&!signatures.equals(""))bp.updateSignatures(signatures,businessid);
             conn.commit();
             conn.setAutoCommit(true);
 
