@@ -56,9 +56,10 @@ var CommonFunc = {
             }
             var before_str = text.slice(0, text.indexOf("(") + 1);
             var after_str = text.slice(text.indexOf(")"));
+            item.el.dom.innerHTML=before_str + count + after_str;
 
-            item.update(before_str + count + after_str);
-            item.doLayout();
+            /*item.update(before_str + count + after_str);
+            item.doLayout();*/
         }
 
 

@@ -97,7 +97,10 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         'dbgl.changesubmitFieldset',
         'dbgl.logoutsubmitFieldset',
         'dbgl.SearchBusinessGrid',
-        'dbgl.SearchBusinessGridPanel'
+        'dbgl.SearchBusinessGrid',
+        'dbgl.SquareshapedDiv',
+        'dbgl.TheSameMonthBusinessPeopleGrid',
+        'dbgl.TheSameMonthBusinessFamilyGrid'
 
     ],
 
@@ -273,7 +276,7 @@ Ext.define('ZSMZJ.controller.Dbgl', {
          },
          'dbglapplytype': {
 
-             beforeload:function(store){alert(1)}
+             beforeload:function(store){/*alert(1)*/}
          }
          }, this);
 
@@ -593,12 +596,40 @@ Ext.define('ZSMZJ.controller.Dbgl', {
         var grid=win.dataobj;
         var values=ajaxform.getValues();
         var store=grid.getStore();
+
+        if(grid.xtype=='thesamemonthbusinesspeoplegrid'||grid.xtype=='thesamemonthbusinessfamilygrid'){
+            values.name=me.addconditiontosearch(values.name,grid.thesamemonthqueryparams.name);
+            values.value=me.addconditiontosearch(values.value,grid.thesamemonthqueryparams.value);
+            values.logic=me.addconditiontosearch(values.logic,grid.thesamemonthqueryparams.logic);
+            values.compare=me.addconditiontosearch(values.compare,grid.thesamemonthqueryparams.compare);
+        }
+        if(Ext.isArray(values.name)){
+            for(var i=0;i<values.name.length;i++){
+                if('age'==values.name[i]){
+                    values.name[i]="strftime('%Y','now')-strftime('%Y',birthday) "
+                }
+            }
+
+        }else if('age'==values.name){
+            values.name="strftime('%Y','now')-strftime('%Y',birthday) ";
+        }
+
         store.proxy.extraParams.name = values.name;
         store.proxy.extraParams.value = values.value;
         store.proxy.extraParams.logic = values.logic;
         store.proxy.extraParams.compare = values.compare;
         store.loadPage(1);
 
+    },
+    addconditiontosearch:function(a1,a2){
+        if(!Ext.isArray(a1)){
+            a1=new Array(a1);
+        }
+        var fn=function(element,index){
+            a1.push(element)
+        }
+        a2.forEach(fn)
+        return a1;
     },
     //删除选中的文件
     delslectfile:function(btn){
@@ -610,20 +641,21 @@ Ext.define('ZSMZJ.controller.Dbgl', {
     //资金发放
     grantmoney:function(btn){
         var me=this;
+        mytestbtn=btn
         var win=btn.up('window');
 
         var ajaxform=btn.up('form');
-        var recordList=win.down('#query_result').getSelectionModel().getSelection();
+        /*var recordList=win.down('#query_result').getSelectionModel().getSelection();
         var businessidList=[];
         for(var i=0;i<recordList.length;i++){
             businessidList.push(recordList[i].data.businessid);
-        }
+        }*/
         var grid=win.dataobj;
         var params = {
             userid:userid,
             isnew:btn.isnew,
             divisionpath:divisionpath,
-            grantid:businessidList,
+            grantid:ajaxform.down('dbglsearchbusinessgrid').selectItmes,
             businesstype:grid.businesstype
         };
         var successFunc = function (myform, action) {

@@ -24,7 +24,7 @@ Ext.define('ZSMZJ.view.dbgl.familybasicFieldset', {
                 layout: {
                     type: 'table',
                     columns: 3,
-                    tdAttrs:{style: "border:1px solid #2E2E2E;"},
+                    tdAttrs:{style: "border:1px solid #2E2E2E;width:330px"},
                     tableAttrs: {
                         border: 1,
                         cellpadding: 5,

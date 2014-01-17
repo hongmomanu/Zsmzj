@@ -1,16 +1,3 @@
-.main-header {
-    /*background-color: #252F49;*/
-
-    border-bottom: 0px solid #16191D;
-    color: #16191D;
-    font-size: 12px;
-    /*font-weight: bold;*/
-    padding: 0px;
-    /*text-align: center;*/
-    /*height: 300px;*/
-    text-shadow: 0 1px 0 #16191D;
-
-}
 
 .main-header-all{
     background-image: url('../img/head.jpg');
@@ -27,7 +14,7 @@
 
 
 /*设置开头li横向排列*/
-.main-header li{
+.main-header > li{
     list-style: none;
     font-size: 11px;
     padding: 2px;
@@ -91,13 +78,13 @@
 /*.x-fieldset-header{font-size: 24px;color: #999;}*/
 /*.x-fieldset{border:1px solid #B5B8C8;padding:10px;margin-bottom:10px;display:block;font-size: 24px;}*/
 /*extjs表格阴影效果*/
-.shadowdiv
+/*.shadowdiv
 {
-    filter: ''; /*ie*/
-    -moz-box-shadow: 20px 20px 5px black; /*firefox*/
-    -webkit-box-shadow: 20px 20px 5px black; /*safari或chrome*/
-    box-shadow: 5px 5px 5px black; /*opera或ie9*/
-}
+    filter: ''; *//*ie*//*
+    -moz-box-shadow: 20px 20px 5px black; *//*firefox*//*
+    -webkit-box-shadow: 20px 20px 5px black; *//*safari或chrome*//*
+    box-shadow: 5px 5px 5px black; *//*opera或ie9*//*
+}*/
 
 .process{background-image: url(../img/process.gif) !important;}
 .sp{background-image: url(../img/sp.gif) !important;}
@@ -116,7 +103,7 @@
     height: 14px !important;
     line-height: 14px !important;
 }
-*{font-family:'微软雅黑',Tahoma,arial,verdana,sans-serif;font-size:12;font-weight:normal;!important;}
+*{font-family:'微软雅黑',Tahoma,arial,verdana,sans-serif;font-size:12px;/*font-weight:normal;!important;*/}
 /*.x-panel-header-text-default { color: #04408C; font-family: '微软雅黑',Tahoma,arial,verdana,sans-serif; font-size: 12px; font-weight: bold;}
 .x-column-header { border-style: none solid none none; font: 12px '微软雅黑',tahoma,arial,verdana,sans-serif; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);}
 .x-body { color: black; font-family: '微软雅黑',tahoma,arial,verdana,sans-serif; font-size: 12px;}
@@ -208,3 +195,84 @@
 {
     background: url(/img/title.png) no-repeat;position:absolute; top:38%; left:50%; margin-left:-232px;
 }*/
+
+.yw-stepzero {color: #006600; }
+.yw-stepzerobgcolor {background-color: #006600;}
+.yw-stepone {color: #CC0000; }
+.yw-steponebgcolor {background-color: #CC0000; }
+.yw-steptwo {color: #CC0000; }
+.yw-steptwobgcolor {background-color: #CC0000;}
+.yw-stepthree {color: #000099; }
+.yw-stepthreebgcolor {background-color: #000099; }
+.yw-change {color: #aa0099; }
+.yw-changebgcolor {background-color: #aa0099; }
+.yw-logout {color: darkslategrey; }
+.yw-logoutbgcolor {background-color: darkslategrey; }
+div.yw-block{
+    height: 14px;
+}
+div.yw-block > div{
+
+    width: 12px;
+    height: 12px;
+    float: left;
+}
+div.yw-block > span{
+    line-height:14px;
+    font-family: 'Courier New';
+    display: block;
+    float: left;
+}
+
+.businessapplyform{
+    width: 1000px !important;
+    margin:0px auto !important;
+}
+
+#navspace{
+    clear: both;
+    height: 30px;
+}
+#headnavul{
+    /*float: right;*/
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+    color: black;
+    height: 30px;
+    width: 1024px;
+    visibility:hidden;
+}
+#headnavul li{
+    list-style: none;
+    float: left;
+    text-align:center;
+    margin: 5px;
+
+}
+#headnavul img{
+    position:relative;
+    top: 3px;
+}
+#headnavul a{
+    height: 30px;
+    font-size: 13px;
+    font-family: '华文中宋','微软雅黑',arial,georgia,verdana,helvetica,sans-serif;
+    font-weight: 100;
+}
+#headnavul a:hover{
+    color: orange;
+}
+#headnavul > li:first-child{
+    text-align: right;
+    margin-right: 10px;
+    margin-left: 500px;
+}
+#headnavul > li:last-child>a:visited  {
+    color:black;
+}
+
+
+div.welmsg{
+    padding-left: 10px;
+
+}

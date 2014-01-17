@@ -49,7 +49,8 @@ public class BusinessProcessControl {
     public String searchbusinessbypid(int start,int limit,String query,String[]types){
         ComonDao cd =new ComonDao();
         String sql_count= "select count(*)   from "+
-                BusinessTable+" a  where 1=1";
+                BusinessTable+" a,"+FamilyTable+" b where a.id=b.businessid "+
+                "and b.personid=a.owerid ";
         String sql_list=  "select a.*,b.sex,b.businessid   from "+
                 BusinessTable+" a,"+FamilyTable+" b where a.id=b.businessid " +
                 "and b.personid=a.owerid ";
@@ -59,8 +60,11 @@ public class BusinessProcessControl {
             sql_list+=" and a.owerid like '"+query+"%' ";
         }
 
+        sql_count+=" and a.processstatus='"+ProcessType.UseProcessType.getChineseSeason(ProcessType.Approval)+"' and b.relationship =  '"+
+                RelationsType.UseRelationsType.getChineseSeason(RelationsType.ower)
+                +"' ";
 
-        sql_list+=" and b.relationship =  '"+
+        sql_list+=" and a.processstatus='"+ProcessType.UseProcessType.getChineseSeason(ProcessType.Approval)+"' and b.relationship =  '"+
                 RelationsType.UseRelationsType.getChineseSeason(RelationsType.ower)
                 +"' ";
 
@@ -1182,10 +1186,23 @@ public class BusinessProcessControl {
                 }else if(compare[i].equals("match")){
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+"  a.id in (select id from "+fulltable+" where "+col_name+" like '"+value[i]+"%') ";
+                        if("division".equalsIgnoreCase(col_name)){ //行政区划为 两个%%
+
+                            sql=" "+logic[i]+"  a.id in (select id from "+fulltable+" where "+col_name+" like '%"+value[i]+"%') ";
+                        }else{
+
+                            sql=" "+logic[i]+"  a.id in (select id from "+fulltable+" where "+col_name+" like '"+value[i]+"%') ";
+                        }
+
 
                     }else{
-                        sql=" "+logic[i]+"  (a.id in (select id from "+fulltable+" where "+col_name+" like '"+value[i]+"%') and ("+basic_sql+")) ";
+                        if("division".equalsIgnoreCase(col_name)){
+
+                            sql=" "+logic[i]+"  (a.id in (select id from "+fulltable+" where "+col_name+" like '%"+value[i]+"%') and ("+basic_sql+")) ";
+                        }else{
+
+                            sql=" "+logic[i]+"  (a.id in (select id from "+fulltable+" where "+col_name+" like '"+value[i]+"%') and ("+basic_sql+")) ";
+                        }
                     }
                     sql_list+=sql;
                     sql_count+=sql;
@@ -1468,10 +1485,10 @@ public class BusinessProcessControl {
         }
 
         if (keyword!=null&&!keyword.equals("")){
-            sql_list+=" and (a.owerid like '"+keyword+"%' or a.owername like '"+keyword+"%')" +
+            sql_list+=" and (a.owerid like '"+keyword+"%' or a.owername like '%"+keyword+"%')" +
                     " ";
 
-            sql_count+=" and (a.owerid like '"+keyword+"%' or a.owername like '"+keyword+"%')" +
+            sql_count+=" and (a.owerid like '"+keyword+"%' or a.owername like '%"+keyword+"%')" +
                     " ";
 
         }
@@ -1590,10 +1607,21 @@ public class BusinessProcessControl {
                 }else if(compare[i].equals("match")){
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+"  b.id in (select id from "+fulltable+" where "+col_name+" like '"+value[i]+"%') ";
+                        if("division".equalsIgnoreCase(col_name)){ //行政区划为 两个%%
+                            sql=" "+logic[i]+"  b.id in (select id from "+fulltable+" where "+col_name+" like '%"+value[i]+"%') ";
+                        }else{
+
+                            sql=" "+logic[i]+"  b.id in (select id from "+fulltable+" where "+col_name+" like '"+value[i]+"%') ";
+                        }
 
                     }else{
-                        sql=" "+logic[i]+"  (b.id in (select id from "+fulltable+" where "+col_name+" like '"+value[i]+"%') and ("+basic_sql+")) ";
+                        if("division".equalsIgnoreCase(col_name)){
+
+                            sql=" "+logic[i]+"  (b.id in (select id from "+fulltable+" where "+col_name+" like '%"+value[i]+"%') and ("+basic_sql+")) ";
+                        }else{
+
+                            sql=" "+logic[i]+"  (b.id in (select id from "+fulltable+" where "+col_name+" like '"+value[i]+"%') and ("+basic_sql+")) ";
+                        }
                     }
                     sql_list+=sql;
                     sql_count+=sql;
@@ -1885,10 +1913,10 @@ public class BusinessProcessControl {
 
 
                 //sql_list+=" and "+FamilyTable+" MATCH '"+keyword.toUpperCase()+"*' ";
-                sql_list+=" and (b.personid like '"+keyword+"%' or b.name like '"+keyword+"%')" +
+                sql_list+=" and (b.personid like '"+keyword+"%' or b.name like '%"+keyword+"%')" +
                          " ";
 
-                sql_count+=" and (b.personid like '"+keyword+"%' or b.name like '"+keyword+"%')" +
+                sql_count+=" and (b.personid like '"+keyword+"%' or b.name like '%"+keyword+"%')" +
                         " ";
 
         }
@@ -2236,6 +2264,48 @@ public class BusinessProcessControl {
                     return"{success:false,msg:\""+e.getMessage()+"\"}";
                 }
                 //e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+
+        }else{
+            return"{success:false,msg:\"已操作\"}";
+
+        }
+
+
+
+
+
+    }
+    public String cancelApproval(Map<String,Object> param,boolean isapproval,String processstatus){
+        BusinessProcess bp=new BusinessProcess();
+        String staus="";
+        staus= ProcessType.UseProcessType.getPrevious(ProcessType.UseProcessType.getProcessFromChinese(processstatus));
+        String businessid=param.get("businessid").toString();
+        ComonDao cd=new ComonDao();
+
+        if(cd.getSingleCol("select processstatus from business where rowid="+businessid).equals(processstatus)){
+            Connection conn= JdbcFactory.getConn("sqlite");
+
+            try {
+                conn.setAutoCommit(false);
+                String sql_delete="delete from approvalprocess where rowid=(select max(rowid) from approvalprocess where businessid='" +
+                        Integer.parseInt(businessid)+"' and approvalname='"+param.get("approvalname").toString()+"')";
+
+                cd.delbysql(sql_delete); //删除当前的审核信息
+                bp.changeStatus(Integer.parseInt(businessid), staus); //更新表单状态为前一个状态
+                conn.commit();
+                conn.setAutoCommit(true);
+                return "{success:true}";
+            } catch (Exception e) {
+                e.printStackTrace();
+                log.debug(e.getMessage());
+                try {
+                    conn.rollback();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                }finally {
+                    return"{success:false,msg:\""+e.getMessage()+"\"}";
+                }
             }
 
         }else{

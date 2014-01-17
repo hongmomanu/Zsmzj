@@ -16,6 +16,9 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
     ],
     stores: [
         'propertycheck.FamilyPropertyQuerys',
+        'propertycheck.NeedToDoBusinesses',
+        'propertycheck.ChangedBusinesses',
+        'propertycheck.LogoutBusinesses',
         'propertycheck.ProcessHistorys',
         'propertycheck.FamilyMembers',
         'propertycheck.FamilyPropertyItems'
@@ -29,7 +32,7 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
         'propertycheck.familyinputFieldset',
         'propertycheck.familyhouseFieldset',
         'propertycheck.familymoneyFieldset',
-        'propertycheck.FamilyPropertyQueryGrid',
+        //'propertycheck.FamilyPropertyQueryGrid', 废弃
         'propertycheck.NeedToDoBusinessGrid',
         'propertycheck.NeedToCheckBusinessGrid',
         'propertycheck.ChangedBusinessGrid',
@@ -59,12 +62,16 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
         var header_cl = this.application.getController("Header");
         this.control({
                 'propertycheckneedtodobusinesspanel button[action=outexcel],propertycheckneedtodobusinesspanel menuitem[action=outexcel]':{
-                    click:Ext.bind(header_cl.outexcel,header_cl)
-
+                    click:this.perpertyoutexcel
+                },
+                'propertycheckchangebusinesspanel button[action=outexcel],propertycheckchangebusinesspanel menuitem[action=outexcel]':{
+                    click:this.perpertyoutexcel
+                },
+                'propertychecklogoutbusinesspanel button[action=outexcel],propertychecklogoutbusinesspanel menuitem[action=outexcel]':{
+                    click:this.perpertyoutexcel
                 },
                 'propertycheckneedtocheckbusinesspanel button[action=outexcel],propertycheckneedtocheckbusinesspanel menuitem[action=outexcel]':{
-                    click:Ext.bind(header_cl.outexcel,header_cl)
-
+                    click:this.perpertyoutexcel
                 },
                 'propertycheckneedtocheckbusinesspanel,propertycheckneedtodobusinesspanel,propertycheckfamilyinforegister,propertycheckfamilyinputfieldset,propertycheckfamilyhousefieldset,propertycheckfamilymoneyfieldset,propertycheckapplyhistoryfieldset,propertycheckitemhistoryfieldset,propertycheckfamilymemberfieldset':{
                     afterrender: dbgl_cl.afterrenderEvents,
@@ -213,8 +220,6 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                             if(grid.xtype=='propertycheckneedtocheckbusinesspanel'){
                                 store.proxy.extraParams.addontype='1'; //核定查询
                                 store.proxy.extraParams.eventName='getfamilypropertyinfobycheckrole';
-                                //store.proxy.extraParams.checkitem=propertyCheckRoleBtn[0].name;
-                                //store.proxy.extraParams.checkitem=this.checkEnum.toString();
                                 store.proxy.extraParams.checkitem=grid.title;
 
                             }else{
@@ -287,15 +292,7 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                     }
                 },
 
-                'familypropertyquerygrid button[action=delete]':{
-                    click:function(btn){
 
-                        var recordList=btn.up('grid').getSelectionModel().getSelection();
-                        for(var i=0;i<recordList.length;i++){
-                            //console.log(recordList[i].data.owerid);
-                        }
-                    }
-                },
                 'propertycheckfamilyinfoalter button[action=process],propertycheckfamilyinfochange button[action=process],propertycheckfamilyinfologout button[action=process]':{
                     click:function (c,r,grid){
                         this.showProcessWin(c,r,grid);
@@ -331,7 +328,7 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                         this.islogoutclick=true;
                         var form=btn.up('form');
                         var widgetname="propertycheckfamilyinfologout";
-                        this.showtab(form.objdata.record.get('owername')+'注销',widgetname,'widget',form.objdata);
+                        this.showtab(form.objdata.record.get('owername'),widgetname,'widget',form.objdata);
                     }
                 },
                 'propertycheckfamilyinfoalter button[action=signature],propertycheckfamilyinfochange button[action=signature],propertycheckfamilyinfologout button[action=signature]':{
@@ -417,7 +414,7 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
     },
     //业务提交共用入口
     applysubmit:function(btn){
-        this.submitcommon(btn,true,processstatustype.ok);
+        this.submitcommon(btn,true);
     },
     //业务变更提交
     applysubmitchange:function(btn){
@@ -433,12 +430,7 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
         var eventName='updatefamilyinfo';
         var fmy001='';
         var processstatus='';
-        if('propertycheckfamilyinforegister'==myform.xtype){
-            eventName='registerfamilyinfo';
-        }else{
-            fmy001=myform.objdata.record.data.fmy001;
-            processstatus=myform.objdata.record.data.processstatus;
-        }
+
 
         var form=myform.getForm();
         if (form.isValid()) {
@@ -453,6 +445,14 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                 eval(json);
 
             }
+            if('propertycheckfamilyinforegister'==myform.xtype){
+                eventName='registerfamilyinfo';
+                tmp.processstatustype='正常';
+            }else{
+                fmy001=myform.objdata.record.data.fmy001;
+                processstatus=myform.objdata.record.data.processstatus;
+            }
+
             var familymembers=[];
             var familygrid=btn.up('form').down('#familymembergrid');
             if(familygrid){
@@ -461,7 +461,9 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                     familymembers.push(a.data);
                 });
             }
-            tmp.processstatustype=statustype;
+            if(statustype){
+                tmp.processstatustype=statustype;
+            }
             tmp.userid=userid;
             if(processstatus=='审批'&&statustype==processstatustype.change){
                 tmp.processstatus='申请';
@@ -491,7 +493,11 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                         hc.closetab(myform.id);
                         Ext.Msg.alert("提示信息", "操作成功");
                     }else{
-                        Ext.Msg.alert("异常提示", "操作失败");
+                        var msg="操作失败";
+                        if("registerfamilyinfo"==opts.params.eventName){
+                            msg= "操作失败或者已经存在相同的身份证号码";
+                        }
+                        Ext.Msg.alert("异常提示", msg);
                     }
                 },
                 failure: function(response, opts) {
@@ -521,7 +527,9 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
                     array.push("'"+arr[i].name+"'")
                 }
                 return array;
-            })(propertyCheckRoleBtn),
+            })(propertyCheckRoleBtn);
+            /*Ext.getCmp('west-panel').removeAll();
+            Ext.getCmp('west-panel').add(menu_qxgl);*/
             me.initCheckItemCmp.call(me,propertyCheckRoleBtn)  ;
         };
         var failFunc = function (form, action) {
@@ -1228,6 +1236,23 @@ Ext.define('ZSMZJ.controller.Propertycheck', {
 
         };
         this.ajaxSend(params, 'ajax/sendfamilypropertyinfo.jsp', successFunc, failFunc,'POST');
+
+    },
+    perpertyoutexcel: function (btn) {
+        var grid = btn.up('grid');
+        var store = grid.getStore();
+        var rows = [];
+        Ext.each(store.data.items, function (item) {
+            rows.push(item.raw);
+        });
+        if (rows.length == 0) {
+            Ext.Msg.alert("提示信息", "无相关数据可导出");
+            return;
+        }
+        var header_cl = this.application.getController("Header");
+        var headers = header_cl.makecommon_headers(grid);
+        var sum = {};
+        header_cl.outexcel_common(btn, sum, 1, rows, headers, null, grid);
 
     },
     //同步分组件加载form表单

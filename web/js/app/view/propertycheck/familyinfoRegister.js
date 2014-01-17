@@ -18,18 +18,21 @@ Ext.define('ZSMZJ.view.propertycheck.familyinfoRegister', {
             this.fireEvent('initformaftershow',this);
         }
     },
+    maxWidth:formMaxWidth,
+    baseCls:'businessapplyform',
     initComponent: function() {
         var required = '<span style="color:red;font-weight:bold" data-qtip="必填字段">*</span>';
 
         Ext.apply(this, {
             bodyPadding: 10,
-            cls: 'shadowdiv',
+            //cls: 'shadowdiv',
             buttonAlign : 'center',
             fieldDefaults: {
                 labelAlign: 'right',
                 labelWidth: 100,
                 msgTarget: 'side'
             },
+
             autoScroll: true,
             items:[
 

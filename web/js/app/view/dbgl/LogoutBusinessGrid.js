@@ -28,6 +28,7 @@ Ext.define('ZSMZJ.view.dbgl.LogoutBusinessGrid' ,{
                 loadMask: true,
                 scrollToTop: Ext.emptyFn,
                 enableTextSelection:true,
+                getRowClass: manangerRowClass,
                 stripeRows: true
             },
             features: [{
@@ -218,16 +219,53 @@ Ext.define('ZSMZJ.view.dbgl.LogoutBusinessGrid' ,{
 
                         }, 50);
 
+                        var id6=Ext.id();
+                        Ext.defer(function () {
+                            if(Ext.get(id6)){
+                                Ext.widget('button', {
+                                    renderTo: id6,
+                                    text: '取消审核',
+                                    icon:'img/sp.gif',
+                                    //hidden:!(r.get('processstatus').toString()==processdiction.stepone),
+                                    hidden:!CommonFunc.lookup(CommonFunc.lookup(processRoleBtn,
+                                        {name:"name",value:r.get("processstatus")}).children,
+                                        {name:"name",value:"取消审核"}),
+                                    width: 70,
+                                    margin: '0 5 0 5',
+                                    listeners: {
+
+                                        render: function(c){
+                                            c.getEl().on('click', function(){
+
+                                                me.up('panel').fireEvent('cancelprocessdictiontwo', c,r,me);
+                                            }, c);
+                                        }
+
+                                    }
+                                });
+                            }
+
+                        }, 50);
+
                         return Ext.String.format('<span id="{0}"></span>' +
                             '<span id="{1}"></span><span id="{2}"></span>' +
                             '</span><span id="{5}"></span>'+
                             '<span id="{3}" ></span>'+
-                            '<span id="{4}" ></span>',id0, id1,id2,id3,id4,id5);
+                            '<span id="{4}" ></span>'+
+                            '<span id="{6}" ></span>',id0, id1,id2,id3,id4,id5,id6);
                     }
                 },
                 //{header: '审批名称', dataIndex: 'rolename',width: 150},
                 ////行政区划 户主姓名 户主身份证 申请类别 家庭类别 救助金额 救助开始日期 救助结束日期 家庭人数 享受人数 状态 状态描述 审核人 审核日期 制单人
-                {header: '行政区划', dataIndex: 'division',align:'center',width: 250},
+                {header: '状态',align:'center',dataIndex:'processstatus',width:70,renderer:function(val, obj, record){
+
+
+                    if (val==processdiction.stepzero) return "未提交";
+                    else if(val==processdiction.steptwo)return val+"中";
+                    else return "已"+val;
+
+                }},
+                {header: '行政区划', dataIndex: 'division',align:'center',width: 200},
                 {header: '市',hidden:true, dataIndex: 'city',align:'center',width: 250,renderer:function(val, obj, record){
                     var re=/[^市]+(市)/g;
                     var revillage=/[^乡镇街道]+(社区|村)/g;
@@ -277,6 +315,7 @@ Ext.define('ZSMZJ.view.dbgl.LogoutBusinessGrid' ,{
                     //record.set('town',result);
                     return result;
                 }},
+
                 {header: '村/社区',hidden:true, dataIndex: 'village',align:'center',width: 250,renderer:function(val, obj, record){
                     var re=/[^乡镇街道]+(社区|村)/g;
                     var result=record.get('division').match(re)?record.get('division').match(re)[0]:"";
@@ -290,28 +329,19 @@ Ext.define('ZSMZJ.view.dbgl.LogoutBusinessGrid' ,{
                     })(result,record);
                     return result;
                 }},
-
-                {header: '户主姓名',align:'center',dataIndex:'owername'},
-                {header: '户主身份证',align:'center',dataIndex:'owerid',width: 250},
+                {header: '户主姓名',align:'center',dataIndex:'owername',width:70},
+                {header: '户主身份证',align:'center',dataIndex:'owerid',width: 150},
                 //变更前人数	变更前金额	变更后人数	变更后金额	变更日期	变更原因	状态	状态描述	审核人	审核日期	制单人	制单日期
                 //家庭类别	注销日期	注销原因
                 {header: '申请类别',align:'center',dataIndex:'applytype'},
                 /*{header: '家庭类别',align:'center',dataIndex:'familytype'},*/
+
                 {header: '分类管理',align:'center',dataIndex:'poortype',itemId:'familytype'},
-
                 {header: '注销日期',align:'center',dataIndex:'logoutdate'},
+
                 {header: '注销原因',align:'center',dataIndex:'logoutreason'},
-
-                {header: '状态',align:'center',dataIndex:'processstatus',renderer:function(val, obj, record){
-
-
-                        if (val==processdiction.stepzero) return "未提交";
-                        else if(val==processdiction.steptwo)return val+"中";
-                        else return "已"+val;
-
-                }},
                 {header: '审核人',align:'center',dataIndex:'approvaluser'},
-                {header: '审核日期',align:'center',dataIndex:'approvaltime',width:200,renderer: function (val, obj, record) {
+                {header: '审核日期',align:'center',dataIndex:'approvaltime',width:120,renderer: function (val, obj, record) {
                     var time =Ext.Date.parse(val, "Y-m-d H:i:s");
                     val = Ext.util.Format.date(time, 'Y-m-d H:i');
                     return val;
@@ -409,6 +439,7 @@ Ext.define('ZSMZJ.view.dbgl.LogoutBusinessGrid' ,{
                     //value: Ext.Date.format(new Date(), 'Y-m-d'),
                     allowBlank: true
                 },'->',
+                {xtype:'squareshapeddiv'},
                 {
                     xtype:'splitbutton',
                     text: 'excel输出',

@@ -20,7 +20,7 @@ Ext.define('ZSMZJ.view.MainPanel', {
 
     initComponent: function() {
         Ext.apply(this, {
-            html:'',
+            html:'<div id="briefneedthing"></div>',
             id:'tabindex',
             bodyCls : ['indexbackground','welcome-title'],
             title: '首页',

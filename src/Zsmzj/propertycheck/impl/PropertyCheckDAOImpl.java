@@ -46,7 +46,6 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
         }else{
             proStatus= ProcessType.UseProcessType.getChineseSeason(ProcessType.NoProcess);
         }
-        log.debug((String)params.get("fm01"));
         JSONObject jsonObj=  JSONObject.fromObject((String)params.get("fm01"));
         jsonObj.put("time",fmt.format(new   java.util.Date()));
         jsonObj.put("processstatus",proStatus) ;
@@ -82,7 +81,7 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
             conn.setAutoCommit(false);
             familymemberdao.doUpdate(param);
             result=commondao.updateTableValesSpecail(this.json2Map(jsonFm01), "fm01",null,"fmy001="+param.get("fmy001") );
-
+            conn.commit();
         } catch (SQLException e) {
             e.printStackTrace();
             result=-1;
@@ -274,7 +273,7 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
             sql+=" and a.division like '"+divisionpath+"%'";
             sql_count+=" and a.division like '"+divisionpath+"%'";
         }
-        sql+= " order by a.fmy001 limit "+limit+" offset "+start ;
+        sql+= " order by a.fmy001 desc limit "+limit+" offset "+start ;
         sql_count+= " order by a.fmy001 limit "+limit+" offset "+start ;
 
         log.debug(sql);
@@ -393,12 +392,12 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
         }
         String t="1".equals(addontype)?"1":"0";
         t+=" addontype";
-        String sql_comm="select a.*,"+ t+ ",b.checkitem checkitem,b.checkresult checkresult,b.checkcomment checkcomment  from fm01 a,fm03 b where 1=1 and "+
+        String sql_comm="select a.*,"+ t+ ",b.checkitem checkitem,b.checkresult checkresult,b.checkcomment checkcomment,u.displayname  from fm01 a,fm03 b,users u where 1=1 and u.id=b.userid and "+
                 "a.fmy001=b.fmy001 and b.bgflag=1 and b.checkitem = '"+checkitem+"' "+ date_string+  keyword_string
                 +" union  select a.*,"+ t+
-                ",'"+checkitem+"' checkitem,0 checkresult,'' checkcomment  from fm01 a where 1=1 and not exists (select 1 from fm03 c where c.fmy001=a.fmy001 and c.bgflag=1 and c.checkitem ='"+checkitem+"') "  +
+                ",'"+checkitem+"' checkitem,0 checkresult,'' checkcomment,'' displayname  from fm01 a where 1=1 and not exists (select 1 from fm03 c where c.fmy001=a.fmy001 and c.bgflag=1 and c.checkitem ='"+checkitem+"') "  +
                 date_string+  keyword_string+
-                " order by checkresult,fmy001 desc";
+                " order by fmy001 desc";
 
         sql_comm="select * from ("+sql_comm+") y where y.division like '"+divisionpath+"%'";
         String sql_count="select count(*) from ("+sql_comm+") ";
@@ -490,12 +489,11 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
     @Override
     public int doCheckItem(Map<String, Object> param) {
         JSONObject jsonObj=  JSONObject.fromObject((String)param.get("fm03"));
-        log.debug(jsonObj.toString());
         String sql="select * from fm03 where fmy001=? and checkitem=? and bgflag=1";
 
         String sql_updateFm03="update fm03 set checkresult=?,checkcomment=?,userid=?,userid=?,roleid=? where  fmy001=? and checkitem=? and bgflag=1";
         String sql_insertFm03="insert into fm03(fmy001,checkitem,checkresult,checkitemstatus,bgflag)values(?,?,0,0,1)";
-        String sql2="select sum(checkresult) from fm03 where fmy001=?";
+        String sql2="select sum(checkresult) from fm03 where fmy001=? and bgflag=1";
         String sql3="update fm01 set checkstatus=? where fmy001=?";
         int result=0;
         PreparedStatement pstmt=null;
@@ -636,7 +634,6 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
             if(rsstatus.equals(processstatus)){
                 conn.setAutoCommit(false);
                 pstmt2=conn.prepareStatement("insert into fm04(fmy001,approvalname,approvalresult,userid,approvalopinion,submituid,time)values(?,?,?,?,?,?,?)");
-                log.debug(jsonfm04.toString());
                 pstmt2.setInt(1,fmy001);
                 pstmt2.setString(2,(String)jsonfm04.get("approvalname"));
                 pstmt2.setString(3,(String)jsonfm04.get("approvalresult"));
@@ -648,7 +645,6 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
 
                 pstmt3=conn.prepareStatement("update fm01 set processstatus=? where fmy001=?");
                 pstmt3.setString(1,staus);
-                log.debug(staus);
                 pstmt3.setInt(2,fmy001);
                 pstmt3.executeUpdate();
 
@@ -751,7 +747,6 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
             String name=it.next();
             map.put(name,jsonObj.get(name));
         }
-        log.debug(map.toString());
         return map;
     }
 

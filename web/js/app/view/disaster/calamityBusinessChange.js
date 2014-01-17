@@ -17,6 +17,8 @@ Ext.define('ZSMZJ.view.disaster.calamityBusinessChange', {
             this.fireEvent('alterapplyaftershow',this);
         }
     },
+    maxWidth:formMaxWidth,
+    baseCls:'businessapplyform',
     initComponent: function() {
         var required = '<span style="color:red;font-weight:bold" data-qtip="必填字段">*</span>';
 

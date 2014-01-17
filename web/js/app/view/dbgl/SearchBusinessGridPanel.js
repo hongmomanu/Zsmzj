@@ -47,21 +47,22 @@ Ext.define('ZSMZJ.view.dbgl.SearchBusinessGridPanel' ,{
                             listeners:{
                                 click:function(){
                                     var query_text=this.up('panel').down('#query_text').value;
-                                    var grid=this.up('window').down('#query_result');
+                                    var grid=this.up('form').down('dbglsearchbusinessgrid');
                                     var store=grid.getStore();
                                     store.proxy.extraParams.type=this.up('window').dataobj.businesstype;
                                     store.proxy.extraParams.query=query_text;
                                     store.pageSize=20;
                                     store.start=0;
-                                    store.load();
+                                    grid.selectItmes.length=0;
+                                    grid.getSelectionModel().deselectAll();
+                                    store.loadPage(1);
                                 }
                             }
                         }
                     ]
 
             },{
-                xtype: 'dbglsearchbusinessgrid',
-                itemId:'query_result'
+                xtype: 'dbglsearchbusinessgrid'
             }]
         });
         this.callParent(arguments);

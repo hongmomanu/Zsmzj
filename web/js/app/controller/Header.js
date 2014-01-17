@@ -29,7 +29,7 @@ Ext.define('ZSMZJ.controller.Header', {
         {ref: 'myheaderPanel', selector: 'myheader'}
     ],
     views: [
-        'Header','header.headViewPanel','header.NeedToDoGrid','header.AnnounceGrid'
+        'Header','header.headViewPanel','header.NeedToDoGrid','header.BriefNeedToDoGrid','header.AnnounceGrid'
     ],
     //初始化
     init: function() {
@@ -51,7 +51,7 @@ Ext.define('ZSMZJ.controller.Header', {
             },
             'mainpanel':{
                 //indexmsginit:function a(panel){this.initIndexMsg();},
-                afterrender:function a(){this.initIndexMsg();}
+                afterrender:function a(p){this.initIndexMsg();this.showBriefNeedThing(p);}
             },
             //获取表单信息
             'dbglbusinessalterform,dbedgebusinessalterform,temporaryhelpbusinessalterform,medicalhelpbusinessalterform,studyhelpbusinessalterform,charitablehelpbusinessalterform,disasterhelpwarealterform,disasterhelpbusinessalterform,rangershelpbusinessalterform,disasterhelpcalamitybusinessalterform':{
@@ -181,11 +181,11 @@ Ext.define('ZSMZJ.controller.Header', {
                 click: this.outexcel_logout
 
             },
-            'familyquerypanel button[action=outexcel],familyquerypanel menuitem[action=outexcel]':{
+            'familyquerypanel button[action=outexcel],familyquerypanel menuitem[action=outexcel],thesamemonthbusinessfamilygrid button[action=outexcel],thesamemonthbusinessfamilygrid menuitem[action=outexcel]':{
                 click: this.outexcel_family
 
             },
-            'familyquerypanel button[action=moresearch]':{
+            'familyquerypanel button[action=moresearch],thesamemonthbusinessfamilygrid button[action=moresearch],thesamemonthbusinesspeoplegrid button[action=moresearch]':{
                 click: this.moresearch_family
 
             },'dbglgrantmoneypanel button[action=moresearch]':{
@@ -197,7 +197,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
             },
 
-            'peoplequerypanel button[action=outexcel],peoplequerypanel menuitem[action=outexcel]':{
+            'peoplequerypanel button[action=outexcel],peoplequerypanel menuitem[action=outexcel],thesamemonthbusinesspeoplegrid button[action=outexcel],thesamemonthbusinesspeoplegrid menuitem[action=outexcel]':{
                 click: this.outexcel_person
 
             },
@@ -266,7 +266,7 @@ Ext.define('ZSMZJ.controller.Header', {
 
             },
             //dbglsearchbusinessgrid
-            'needtodopanel,dbglsearchbusinessgridpanel,announcegridpanel,enumerateconfigmanager,usermanagerpanel,rolemanagerpanel,funcmanagerpanel,needtodobusinesspanel,changedbusinesspanel,logoutbusinesspanel,peoplequerypanel,familyquerypanel,dbglstatisticsfullpanel,dbglgrantmoneypanel,dbglstatisticscomplexonepanel,dbglstatisticscomplextwopanel,dbglstatisticscomplexthreepanel,dbglstatisticscomplexfourpanel,dbglstatisticscomplexcountrypanel,dbglstatisticscomplexnewlogoutpanel,medicalstandardgridpanel':{
+            'briefneedtodogrid,needtodopanel,dbglsearchbusinessgridpanel,announcegridpanel,enumerateconfigmanager,usermanagerpanel,rolemanagerpanel,funcmanagerpanel,needtodobusinesspanel,changedbusinesspanel,logoutbusinesspanel,peoplequerypanel,familyquerypanel,dbglstatisticsfullpanel,dbglgrantmoneypanel,dbglstatisticscomplexonepanel,dbglstatisticscomplextwopanel,dbglstatisticscomplexthreepanel,dbglstatisticscomplexfourpanel,dbglstatisticscomplexcountrypanel,dbglstatisticscomplexnewlogoutpanel,medicalstandardgridpanel':{
 
                 gridshowfresh:function(grid){
                   if(grid.xtype=='familyquerypanel'){
@@ -332,6 +332,17 @@ Ext.define('ZSMZJ.controller.Header', {
                 },
                 cancelclick:function(c,r,grid){//未审核前取消提交
                     this.cancelbusinesssubmit(c,r,grid);
+                },
+                cancelprocessdictiontwo:function(c,r,grid){
+                    this.cancelprocessdictiontwo(c, r,grid);
+                }
+            },
+            'thesamemonthbusinessfamilygrid,thesamemonthbusinesspeoplegrid':{
+                afterrender: this.afterrenderEvents,
+                gridshowfresh:this.thesamemonthbusinessquery,
+                alterclick:function(c,r,grid){//未提交前修改
+
+                    this.showAlterContent(c,r,grid);
                 }
             },
             'needtodopanel button[action=bulkoperation]':{
@@ -348,6 +359,9 @@ Ext.define('ZSMZJ.controller.Header', {
                       /*var task = new Ext.util.DelayedTask(fn);
                       task.delay(9500);*/
                   }
+            },
+            'briefneedtodogrid button[action=lookformore]':{
+                needthingsclick:this.showneedthings
             }
 
         }, this);
@@ -1304,7 +1318,7 @@ Ext.define('ZSMZJ.controller.Header', {
     moresearch_family:function(btn){
         var grid=btn.up('panel');
         if(this.newMoreSearchWin){
-            if(btn.searchtype==this.newMoreSearchWin.searchtype){
+            if(false&&btn.searchtype==this.newMoreSearchWin.searchtype){ //设置为false,则每次显示高级查询,都会先销毁再创建
                 this.newMoreSearchWin.show();
             }
             else{
@@ -2202,11 +2216,17 @@ Ext.define('ZSMZJ.controller.Header', {
             divisionpath:divisionpath,
             type:'count'
         };
-        var changeItem=this.getMyheaderPanel().down('#needtodopanel');
+        //var changeItem=this.getMyheaderPanel().down('#needtodopanel');
+
         var successFunc = function (response, option) {
-            var res = Ext.JSON.decode(response.responseText);
-            var count=res.count;
-            CommonFunc.updateitemnum(changeItem,count)
+            window.setTimeout(function(){
+                var changeItem={};changeItem.el=Ext.get('domneedtodocount');
+                mytestChangeItem=changeItem;
+                var res = Ext.JSON.decode(response.responseText);
+                var count=res.count;
+                CommonFunc.updateitemnum(changeItem,count)
+            },1000)
+
 
 
         };
@@ -2418,13 +2438,20 @@ Ext.define('ZSMZJ.controller.Header', {
         var store=this.getHeaderHeaderViewersStore();
         store.on('load', function (store, options) {
             if(store.data.items.length==1){
-                me.getMyviewheadViewPanel().items.items[0].setVisible(false);
+                //me.getMyviewheadViewPanel().items.items[0].setVisible(false);
                 Ext.getCmp('west-panel').removeAll();
-                Ext.getCmp('west-panel').add(menu_shjz);
+                //Ext.getCmp('west-panel').add(menu_shjz);
+
+                //console.log(store.data.items[0]);
+                //testobj=store.data.items[0];
+                Ext.getCmp('west-panel').add(eval(store.data.items[0].raw.value));
+
 
             }else{
                 var viewpanel=me.getMyviewheadViewPanel().items.items[0];
                 viewpanel.select(0);
+
+
             }
 
         });
@@ -2483,6 +2510,152 @@ Ext.define('ZSMZJ.controller.Header', {
         changecheckapplystatus(recordList,0)
 
 
+
+    },
+    thesamemonthbusinessquery:function(grid){
+        var titleObj=spatialchildTableType[grid.businesstype];
+        grid.businesstype=titleObj.businesstype;
+        grid.querystatus=titleObj.querystatus;
+
+        /*var title=grid.title.substr(2,2);
+        if('新增'==title){
+            title='正常';
+        }
+        grid.querystatus=title;*/
+
+        if(grid.xtype=='thesamemonthbusinessfamilygrid'){
+            var result_arr=Ext.clone(familyheaders[CommonFunc.lookupitemname(businessTableType,grid.businesstype)]);
+            Ext.Array.insert(result_arr,0,[Ext.create('Ext.grid.RowNumberer')]);
+            grid.reconfigure(undefined,result_arr);
+        }
+        var store=grid.getStore();
+        if(store.proxy.extraParams){
+            var date=new Date();
+            var month=date.getMonth()+1;
+            month=month<10?'0'+month:month;
+            var yn=date.getFullYear()+'-'+month;
+
+            var params={
+                businesstype : grid.businesstype,
+                type:grid.stype,
+                divisionpath:divisionpath,
+                ispublicinfo:grid.ispublicinfo
+            }
+            if(grid.querystatus=='正常'){
+                var a={
+                    name:['processstatustype',"strftime('%Y-%m',time)"],
+                    compare:['=','='],
+                    value:[grid.querystatus,yn],
+                    logic:['and','and']
+                }
+                grid.thesamemonthqueryparams=a;
+                Ext.apply(params,a)
+            }else if(grid.querystatus=='变更'){
+                var a={
+                    name:['processstatustype',"strftime('%Y-%m',changedate)"],
+                    compare:['=','='],
+                    value:[grid.querystatus,yn],
+                    logic:['and','and']
+                }
+                grid.thesamemonthqueryparams=a;
+                Ext.apply(params,a);
+            }else if(grid.querystatus=='注销'){
+                var a={
+                    name:['processstatustype',"strftime('%Y-%m',logoutdate)"],
+                    compare:['=','='],
+                    value:[grid.querystatus,yn],
+                    logic:['and','and']
+                }
+                grid.thesamemonthqueryparams=a;
+                Ext.apply(params,a);
+            }
+            store.proxy.extraParams=params;
+            if(grid.isnewgrid){
+                if(grid.xtype==="tree-grid"){
+                    grid.getRootNode().expand();
+                    return;
+                }
+                //store.load();
+                store.loadPage(1);
+                grid.isnewgrid=false;
+            }
+        }
+    },
+    showBriefNeedThing:function(p){
+        var fn=function(){
+            p.add(
+                {
+                    width: 600,
+                    border:false,
+                    html: '<div class="welmsg" style="height: 180px; display: block;background-image: url(img/welimg.gif)">' +
+                        '<p>' + displayname + '</p>' +
+                        '<p>欢迎您登录舟山市救灾救济系统！</p>' +
+
+                        '</div>',
+                    loyout: 'absolute',
+                    x: 10,
+                    y: 10
+                },
+                {
+                width: 600,
+                xtype:'briefneedtodogrid',
+                //height:100,
+                loyout:'absolute',
+                x: 10,
+                y: 20
+            })
+            Ext.widget('briefneedtodogrid').getStore().load();
+        }
+
+        var task = new Ext.util.DelayedTask(fn);
+        task.delay(2000);
+
+    },
+    cancelprocessdictiontwo:function(c,r,grid){
+        var businessid=r.get('businessid');
+        var me=this;
+        Ext.Msg.show({
+            title: '确定要删除此申请?',
+            msg: '你正在试图取消选中的 <a><font color="red">'+ r.get('displayname')+'</font></a> 的审核.你想继续么?',
+            buttons: Ext.Msg.YESNO,
+            fn: function (btn) {
+                if(btn=='yes'){
+                    me.cancelprocessdictiontwobybid(businessid,r,grid.getStore());
+                }
+            },
+            icon: Ext.Msg.QUESTION
+        });
+
+    },
+    cancelprocessdictiontwobybid:function(businessid,r,store){
+        var me=this;
+        var status='';
+        var approvalname='';
+        if(r.get('processstatus')==processdiction.steptwo){
+            status=processdiction.steptwo;
+            approvalname='街道/乡镇审核';
+        }else if(r.get('processstatus')==processdiction.stepthree){
+            status=processdiction.stepthree;
+            approvalname='区/县/市审批';
+        }
+        var params = {
+            businessid:businessid,
+            processstatus:status,
+            approvalname:approvalname
+        };
+        var successFunc = function (myform, action) {
+            me.closemask();
+            Ext.Msg.alert("提示信息", "操作成功");
+            store.load();
+        };
+        var failFunc = function (form, action) {
+            me.closemask();
+            Ext.Msg.alert("提示信息", "取消提交失败，检查web服务或数据库服务");
+
+        };
+        ViewWaitMask=new Ext.LoadMask(Ext.getCmp('mainContent-panel').getEl(), {msg:"数据处理中..."});
+        ViewWaitMask.show();
+        this.ajaxSend(params, 'ajax/cancelApproval.jsp', successFunc, failFunc,'POST');
 
     },
     onLaunch: function() {

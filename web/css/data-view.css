@@ -1,13 +1,12 @@
 #images-view .x-panel-body{
     background: white;
-    font: 11px Arial, Helvetica, sans-serif;
+    /*font: 11px Arial, Helvetica, sans-serif;*/
 }
 #images-view .thumb{
     background: #dddddd;
     padding: 3px;
     text-align: center;
     vertical-align:middle ;
-
     padding-bottom: 0;
 }
 
@@ -17,15 +16,19 @@
 
 #images-view .thumb img{
 
-    height: 20px;
-    width: 20px;
+    height: 25px;
+    width: 30px;
 }
 #images-view .thumb-wrap{
-    float: left;
+    float: right;
     margin: 4px;
-    margin-right: 0;
+    margin-right: 0px;
     padding: 5px;
     height:58 ;
+    visibility:hidden;
+}
+#images-view div.thumb-wrap:first-child{
+   margin-right: 50px;
 }
 #images-view .thumb-wrap span {
 

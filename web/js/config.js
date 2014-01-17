@@ -7,8 +7,8 @@
  */
 var extLocation="http://192.168.2.112/ext-4.2.1/";
 
- extLocation="http://127.168.2.141/ext-4.2.1/";
- //extLocation="http://192.168.2.141:8080/extjs4.2/";
+ extLocation="http://127.168.2.8/ext-4.2.1/";
+ //extLocation="http://172.25.102.101:8080/ext-4.2";//舟山市
 
 var businessTableType=
         {   'dbgl':"低保",
@@ -30,6 +30,32 @@ var spatialchildTableType={
     '核定收入':'checkinput',
     '核定住房':'checkhouse',
     '核定现有资产':'checknowmoney',
+    '当月新增低保家庭':{businesstype:'低保',querystatus:'正常'},
+    '当月变更低保家庭':{businesstype:'低保',querystatus:'变更'},
+    '当月注销低保家庭':{businesstype:'低保',querystatus:'注销'},
+    '当月新增低保人员':{businesstype:'低保',querystatus:'正常'},
+    '当月变更低保人员':{businesstype:'低保',querystatus:'变更'},
+    '当月注销低保人员':{businesstype:'低保',querystatus:'注销'},
+    '当月新增低保边缘家庭':{businesstype:'边缘户',querystatus:'正常'},
+    '当月变更低保边缘家庭':{businesstype:'边缘户',querystatus:'变更'},
+    '当月注销低保边缘家庭':{businesstype:'边缘户',querystatus:'注销'},
+    '当月新增低保边缘人员':{businesstype:'边缘户',querystatus:'正常'},
+    '当月变更低保边缘人员':{businesstype:'边缘户',querystatus:'变更'},
+    '当月注销低保边缘人员':{businesstype:'边缘户',querystatus:'注销'},
+
+    '当月新增临时救助家庭':{businesstype:'临时救助',querystatus:'正常'},
+    '当月变更临时救助家庭':{businesstype:'临时救助',querystatus:'变更'},
+    '当月注销临时救助家庭':{businesstype:'临时救助',querystatus:'注销'},
+    '当月新增临时救助人员':{businesstype:'临时救助',querystatus:'正常'},
+    '当月变更临时救助人员':{businesstype:'临时救助',querystatus:'变更'},
+    '当月注销临时救助人员':{businesstype:'临时救助',querystatus:'注销'},
+    
+    '当月新增医疗救助家庭':{businesstype:'医疗救助',querystatus:'正常'},
+    '当月变更医疗救助家庭':{businesstype:'医疗救助',querystatus:'变更'},
+    '当月注销医疗救助家庭':{businesstype:'医疗救助',querystatus:'注销'},
+    '当月新增医疗救助人员':{businesstype:'医疗救助',querystatus:'正常'},
+    '当月变更医疗救助人员':{businesstype:'医疗救助',querystatus:'变更'},
+    '当月注销医疗救助人员':{businesstype:'医疗救助',querystatus:'注销'},
     'shenshispatial':'嵊泗县'
 };
 
@@ -102,30 +128,30 @@ var familyheaders={
         }},
 
 
-        {header: '行政区划', dataIndex: 'division',align:'center',width: 250},
-        {header: '户主身份证',align:'center',dataIndex:'owerid',width: 250},
+        {header: '行政区划', dataIndex: 'division',align:'center',width: 200},
+        {header: '户主身份证',align:'center',dataIndex:'owerid',width: 150},
 
 
-        {header: '申请类别',align:'center',dataIndex:'applytype',itemId:'applytype'},
-        {header: '业务类型',align:'center',dataIndex:'businesstype',itemId:'businesstype'},
+        {header: '申请类别',align:'center',dataIndex:'applytype',itemId:'applytype',width: 70},
+        {header: '业务类型',align:'center',dataIndex:'businesstype',itemId:'businesstype',width: 70},
 
-        {header: '家庭类别',align:'center',dataIndex:'familytype',itemId:'familytype'},
+        {header: '家庭类别',align:'center',dataIndex:'familytype',itemId:'familytype',width: 70},
         {header: '救助金额',align:'center',dataIndex:'totalhelpmoney',summaryType: 'sum',width:150,//求数量
             summaryRenderer: function(value){
                 return '总金额:'+value
             }},
-        {header: '救助开始日期',align:'center',dataIndex:'helpbgtime'},
-        {header: '救助结束日期',align:'center',dataIndex:'helpedtime'},
+        {header: '救助开始日期',align:'center',dataIndex:'helpbgtime',width: 100},
+        {header: '救助结束日期',align:'center',dataIndex:'helpedtime',width: 100},
         {header: '家庭人数',align:'center',dataIndex:'familynum',summaryType: 'sum', width:150,//求数量
             summaryRenderer: function(value){
                 return '总人数:'+value
             }},
 
-        {header: '家庭户口性质',align:'center',dataIndex:'familyaccount'},
-        {header: '享受人数',align:'center',dataIndex:'enjoynum'},
-        {header: '开户人',align:'center',dataIndex:'bankower'},
-        {header: '银行帐号',align:'center',dataIndex:'bankid'},
-        {header: '救助证编号',align:'center',dataIndex:'aidnum'},
+        {header: '家庭户口性质',align:'center',dataIndex:'familyaccount',width: 100},
+        {header: '享受人数',align:'center',dataIndex:'enjoynum',width: 70},
+        {header: '开户人',align:'center',dataIndex:'bankower',width: 70},
+        {header: '银行帐号',align:'center',dataIndex:'bankid',width: 120},
+        {header: '救助证编号',align:'center',dataIndex:'aidnum',width: 120},
 
 
         {header: '人员id',align:'center', width: 150,dataIndex:'businessid',hidden:true}
@@ -168,30 +194,30 @@ var familyheaders={
         }},
 
 
-        {header: '行政区划', dataIndex: 'division',align:'center',width: 250},
-        {header: '户主身份证',align:'center',dataIndex:'owerid',width: 250},
+        {header: '行政区划', dataIndex: 'division',align:'center',width: 200},
+        {header: '户主身份证',align:'center',dataIndex:'owerid',width: 150},
 
 
-        {header: '申请类别',align:'center',dataIndex:'applytype',itemId:'applytype'},
-        {header: '业务类型',align:'center',dataIndex:'businesstype',itemId:'businesstype'},
+        {header: '申请类别',align:'center',dataIndex:'applytype',itemId:'applytype',width: 70},
+        {header: '业务类型',align:'center',dataIndex:'businesstype',itemId:'businesstype',width: 70},
 
-        {header: '家庭类别',align:'center',dataIndex:'familytype',itemId:'familytype'},
+        {header: '家庭类别',align:'center',dataIndex:'familytype',itemId:'familytype',width: 100},
         {header: '救助金额',align:'center',dataIndex:'totalhelpmoney',summaryType: 'sum',width:150,//求数量
             summaryRenderer: function(value){
                 return '总金额:'+value
             }},
-        {header: '救助开始日期',align:'center',dataIndex:'helpbgtime'},
-        {header: '救助结束日期',align:'center',dataIndex:'helpedtime'},
+        {header: '救助开始日期',align:'center',dataIndex:'helpbgtime',width: 100},
+        {header: '救助结束日期',align:'center',dataIndex:'helpedtime',width: 100},
         {header: '家庭人数',align:'center',dataIndex:'familynum',summaryType: 'sum', width:150,//求数量
             summaryRenderer: function(value){
                 return '总人数:'+value
             }},
 
-        {header: '家庭户口性质',align:'center',dataIndex:'familyaccount'},
-        {header: '享受人数',align:'center',dataIndex:'enjoynum'},
-        {header: '开户人',align:'center',dataIndex:'bankower'},
-        {header: '银行帐号',align:'center',dataIndex:'bankid'},
-        {header: '救助证编号',align:'center',dataIndex:'aidnum'},
+        {header: '家庭户口性质',align:'center',dataIndex:'familyaccount',width: 100},
+        {header: '享受人数',align:'center',dataIndex:'enjoynum',width: 70},
+        {header: '开户人',align:'center',dataIndex:'bankower',width: 70},
+        {header: '银行帐号',align:'center',dataIndex:'bankid',width: 120},
+        {header: '救助证编号',align:'center',dataIndex:'aidnum',width: 120},
 
 
         {header: '人员id',align:'center', width: 150,dataIndex:'businessid',hidden:true}
@@ -232,29 +258,29 @@ var familyheaders={
 
             return Ext.String.format('<span id="{0}"></span>',id0);
         }},
-        {header: '行政区划', dataIndex: 'division',align:'center',width: 250},
-        {header: '户主身份证',align:'center',dataIndex:'owerid',width: 250},
-        {header: '致贫原因',align:'center',dataIndex:'poorfamilytype',itemId:'poorfamilytype'},
-        {header: '家庭类别',align:'center',dataIndex:'familytype',itemId:'familytype'},
+        {header: '行政区划', dataIndex: 'division',align:'center',width: 200},
+        {header: '户主身份证',align:'center',dataIndex:'owerid',width: 150},
+        {header: '致贫原因',align:'center',dataIndex:'poorfamilytype',itemId:'poorfamilytype',width: 70},
+        {header: '家庭类别',align:'center',dataIndex:'familytype',itemId:'familytype',width: 70},
         {header: '救助金额',align:'center',dataIndex:'totalhelpmoney',summaryType: 'sum',width:150,//求数量
             summaryRenderer: function(value){
                 return '总金额:'+value
             }},
-        {header: '救助开始日期',align:'center',dataIndex:'helpbgtime'},
-        {header: '救助结束日期',align:'center',dataIndex:'helpedtime'},
+        {header: '救助开始日期',align:'center',dataIndex:'helpbgtime',width: 100},
+        {header: '救助结束日期',align:'center',dataIndex:'helpedtime',width: 100},
         {header: '家庭人数',align:'center',dataIndex:'familynum',summaryType: 'sum', width:150,//求数量
             summaryRenderer: function(value){
                 return '总人数:'+value
             }},
 
-        {header: '家庭户口性质',align:'center',dataIndex:'familyaccount'},
+        {header: '家庭户口性质',align:'center',dataIndex:'familyaccount',width: 100},
 
-        {header: '低保户类型',align:'center',dataIndex:'poorfamilytype',itemId:'dbpoorfamilytype'},
+        {header: '低保户类型',align:'center',dataIndex:'poorfamilytype',itemId:'dbpoorfamilytype',width: 100},
 
-        {header: '享受人数',align:'center',dataIndex:'enjoynum'},
-        {header: '开户人',align:'center',dataIndex:'bankower'},
-        {header: '银行帐号',align:'center',dataIndex:'bankid'},
-        {header: '救助证编号',align:'center',dataIndex:'aidnum'},
+        {header: '享受人数',align:'center',dataIndex:'enjoynum',width: 70},
+        {header: '开户人',align:'center',dataIndex:'bankower',width: 70},
+        {header: '银行帐号',align:'center',dataIndex:'bankid',width: 120},
+        {header: '救助证编号',align:'center',dataIndex:'aidnum',width: 120},
         {header: '人员id',align:'center', width: 150,dataIndex:'businessid',hidden:true}
 
     ],
@@ -774,9 +800,9 @@ var applyformviews={
 
     ],'medicalhelpapply':[/*医疗救助申请表单分隔的各个小表单*/
         'medicalhelpfamilybasicfieldset',
-        'medicalhelpfamilyhousefieldset',
+        /*'medicalhelpfamilyhousefieldset',
         'medicalhelpfamilyinputfieldset',
-        'medicalhelpfamilypropertyfieldset',
+        'medicalhelpfamilypropertyfieldset',*/
         'dbglfamilymemberfieldset',//家庭成员信息
         'dbglfamilyaffixfieldset',//电子附件信息
         'medicalhelpfamilyapplyfieldset',
@@ -1027,6 +1053,18 @@ var menu_qxgl=[{layout: 'fit',title: '权限设置',items:[{xtype:'userconfiggri
     {title: '系统配置',items:[{xtype:'systemconfiggrid'}],iconCls: 'nav'}, {
     title: '服务日志',items:[{xtype:'funcconfiggrid'}],iconCls: 'nav'}];
 
+var menu_propertycheck=[
+    {
+        layout: 'fit',
+        title: '财产核定',
+        icon:icons+'11.png',
+        items:[
+            {xtype:'dbglconfigtree',searchtype:"财产核定",businesstype:businessTableType.propertycheck}
+        ],
+        iconCls: 'nav'
+    }
+];
+
 var imgfiletype={'jpg':true,'jpeg':true,'gif':true};
 
 var ViewWaitMask=null;
@@ -1036,3 +1074,25 @@ var processRoleBtn=null;
 var processstatustype={"ok":"正常","change":"变更","logout":"注销"};
 var isenjoyedtype={"yes":"享受","no":"不享受"};
 var disabledtype={"heavy":"||一级,二级||"};
+
+var manangerRowClass=function (record) {
+    var processstatus=record.get('processstatus');
+    var vprocessstatustype=record.get('processstatustype');
+    var rowclass='';
+    switch (processstatus){
+        case  processdiction.stepzero:rowclass='yw-stepzero';break;
+        case  processdiction.stepone:rowclass='yw-stepone';break;
+        case  processdiction.steptwo:rowclass='yw-steptwo';break;
+        case  processdiction.stepthree:
+            rowclass='yw-stepthree';
+            if(vprocessstatustype==processstatustype.change){
+                rowclass='yw-change';
+            }else if(vprocessstatustype==processstatustype.logout){
+                rowclass='yw-logout';
+            }
+            break;
+        case  processdiction.stepback:rowclass='';break;
+    }
+    return rowclass;
+}
+var formMaxWidth=1001;

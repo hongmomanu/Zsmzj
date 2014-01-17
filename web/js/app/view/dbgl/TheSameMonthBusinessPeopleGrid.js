@@ -1,15 +1,14 @@
-
 /**
  * Created with IntelliJ IDEA.
- * User: jack
- * Date: 13-8-23
- * Time: 上午9:48
+ * User: Administrator
+ * Date: 13-12-24
+ * Time: 下午2:14
  * To change this template use File | Settings | File Templates.
  */
 
-Ext.define('ZSMZJ.view.dbgl.PeopleQueryGrid' ,{
+Ext.define('ZSMZJ.view.dbgl.TheSameMonthBusinessPeopleGrid' ,{
     extend: 'Ext.grid.Panel',
-    alias : 'widget.peoplequerypanel',
+    alias : 'widget.thesamemonthbusinesspeoplegrid',
     cls:'navigation-grid',
     requires: [
 
@@ -20,8 +19,8 @@ Ext.define('ZSMZJ.view.dbgl.PeopleQueryGrid' ,{
         }
     },
     /*afterShow: function(animateTarget, cb, scope) {
-        this.fireEvent('alterapplyaftershow',this);
-    },*/
+     this.fireEvent('alterapplyaftershow',this);
+     },*/
     initComponent: function() {
         Ext.apply(this, {
             border: false,
@@ -31,8 +30,8 @@ Ext.define('ZSMZJ.view.dbgl.PeopleQueryGrid' ,{
                 loadMask: true,
                 scrollToTop: Ext.emptyFn,
                 enableTextSelection:true,
-                getRowClass: manangerRowClass,
-                stripeRows: true
+                stripeRows: true,
+                getRowClass: manangerRowClass
             },
             features: [{
                 ftype: 'summary'//Ext.grid.feature.Summary表格汇总特性
@@ -44,8 +43,8 @@ Ext.define('ZSMZJ.view.dbgl.PeopleQueryGrid' ,{
                 Ext.create('Ext.grid.RowNumberer'),
                 {header: '户主姓名',align:'center',dataIndex:'owername',locked : true,
                     summaryRenderer: function(value){
-                    return '本页合计'
-                },renderer: function (v, m, r) {
+                        return '本页合计'
+                    },renderer: function (v, m, r) {
                     var me=this;
                     var id0=Ext.id();
                     Ext.defer(function () {
@@ -174,6 +173,87 @@ Ext.define('ZSMZJ.view.dbgl.PeopleQueryGrid' ,{
             flex: 1,
             tbar:[
                 {
+                    fieldLabel: '年份',
+                    xtype: 'combobox',
+                    queryMode: 'local',
+                    displayField: 'name',
+                    valueField: 'name',
+                    itemId:'thesamemonth_year',
+                    labelWidth: 30,
+                    width: 120,
+                    listeners:{
+                        afterrender:function(c){
+                            this.setValue(new Date().getFullYear())
+                        }
+                    },
+                    store:Ext.create('Ext.data.Store', {
+                        fields: [ 'name'],
+                        data : [
+                            {"name":"2014"},
+                            {"name":"2013"},
+                            {"name":"2012"},
+                            {"name":"2011"},
+                            {"name":"2010"},
+                            {"name":"2009"}
+                        ]
+                    })
+                },{
+                    fieldLabel: '月份',
+                    xtype: 'combobox',
+                    queryMode: 'local',
+                    displayField: 'name',
+                    valueField: 'name',
+                    itemId:'thesamemonth_month',
+                    labelWidth: 30,
+                    width: 120,
+                    listeners:{
+                        afterrender:function(c){
+                            var month=new Date().getMonth()+1;
+                            month=month<10?'0'+month:month;
+                            this.setValue(month)
+                        }
+                    },
+                    store:Ext.create('Ext.data.Store', {
+                        fields: [ 'name'],
+                        data : [
+                            {"name":"01"},
+                            {"name":"02"},
+                            {"name":"03"},
+                            {"name":"04"},
+                            {"name":"05"},
+                            {"name":"06"},
+                            {"name":"07"},
+                            {"name":"08"},
+                            {"name":"09"},
+                            {"name":"10"},
+                            {"name":"11"},
+                            {"name":"12"}
+                        ]
+                    })
+                },{
+                    text:'查询',
+                    listeners:{
+                        "click":function(btn){
+
+                            var panel=this.up('panel');
+                            var store=panel.getStore();
+                            var thesamemonth_year=panel.down('#thesamemonth_year').getRawValue();
+                            var thesamemonth_month=panel.down('#thesamemonth_month').getRawValue();
+                            var date=new Date(thesamemonth_year,Number(thesamemonth_month),0);
+                            var month=date.getMonth()+1;
+                            month=month<10?'0'+month:month;
+                            var yn=date.getFullYear()+'-'+month;
+                            panel.thesamemonthqueryparams.value[1]=yn;
+                            Ext.apply(store.proxy.extraParams,panel.thesamemonthqueryparams);
+
+
+                            store.loadPage(1);
+                        }
+                    }
+
+                },
+                '-'
+                ,{
                     fieldLabel:'快速全文检索',
                     xtype: 'textfield',
                     hidden: false,
@@ -185,16 +265,12 @@ Ext.define('ZSMZJ.view.dbgl.PeopleQueryGrid' ,{
                                 var keyword = field.getValue().replace(/\s+/g, "");
                                 var panel=this.up('panel');
                                 var store=panel.getStore();
-                                var bgdate=panel.down('#bgdate').getRawValue();
-                                var eddate=panel.down('#eddate').getRawValue();
-                                store.proxy.extraParams.bgdate=bgdate;
-                                store.proxy.extraParams.eddate=eddate;
+
                                 store.proxy.extraParams.keyword = keyword;
-                                store.proxy.extraParams.name=null;
-                                store.proxy.extraParams.logic=null;
-                                store.proxy.extraParams.compare=null;
-                                store.proxy.extraParams.value=null;
+                                panel.thesamemonthqueryparams.value[1]=panel.down('#thesamemonth_year').getRawValue()+'-'+panel.down('#thesamemonth_month').getRawValue();
+                                Ext.apply(store.proxy.extraParams,panel.thesamemonthqueryparams);
                                 store.loadPage(1);
+                                store.proxy.extraParams.keyword='';
 
                             }
                         }
@@ -210,21 +286,16 @@ Ext.define('ZSMZJ.view.dbgl.PeopleQueryGrid' ,{
 
                             var panel=this.up('panel');
                             var store=panel.getStore();
-                            var bgdate=panel.down('#bgdate').getRawValue();
-                            var eddate=panel.down('#eddate').getRawValue();
-                            store.proxy.extraParams.bgdate=bgdate;
-                            store.proxy.extraParams.eddate=eddate;
                             store.proxy.extraParams.keyword = keyword;
-                            store.proxy.extraParams.name=null;
-                            store.proxy.extraParams.logic=null;
-                            store.proxy.extraParams.compare=null;
-                            store.proxy.extraParams.value=null;
+                            panel.thesamemonthqueryparams.value[1]=panel.down('#thesamemonth_year').getRawValue()+'-'+panel.down('#thesamemonth_month').getRawValue();
+                            Ext.apply(store.proxy.extraParams,panel.thesamemonthqueryparams);
                             store.loadPage(1);
+                            store.proxy.extraParams.keyword='';
 
                         }
                     }
 
-                },{
+                }/*,{
                     xtype: 'button',
                     text: '<span style="font-weight:bold">>></span>',
                     tooltip: '显示/隐藏日期',
@@ -243,7 +314,7 @@ Ext.define('ZSMZJ.view.dbgl.PeopleQueryGrid' ,{
                         }
 
                     }
-                },{
+                }*/,{
                     //fieldLabel: '发放开始日期',
                     emptyText: '请选择开始日期',
                     hidden:true,
@@ -267,6 +338,7 @@ Ext.define('ZSMZJ.view.dbgl.PeopleQueryGrid' ,{
                     allowBlank: true
                 },'->',
                 {xtype:'squareshapeddiv'},
+
                 {
                     xtype:'splitbutton',
                     text: 'excel输出',
@@ -320,4 +392,4 @@ Ext.define('ZSMZJ.view.dbgl.PeopleQueryGrid' ,{
      formatLable:function(value, p, record) {
      return Ext.String.format('<div class="navitem-div"><span class="author">{0}</span></div>', value);
      }*/
-});
+})

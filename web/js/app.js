@@ -57,6 +57,22 @@ Ext.application({
     launch: function() {
 
         splashscreen.hide();
+        var header_ctl=this.getController("Header");
+        var manager_cl=this.getController("Manager");
+        window.setTimeout(function(){
+            Ext.get('domneedtodocount').on('click',function(){header_ctl.showneedthings()});
+            Ext.fly('domshowalterpwd').on('click',function(){
+                manager_cl.editcommonuserwin(userid,{"displayname":displayname,"username":username,"userid":userid});
+            });
+            Ext.fly('headnavul').dom.style.visibility="visible";
+            var picarray=Ext.query('div.thumb-wrap');
+            if(picarray.length>1){
+                for(var i=0;i<picarray.length;i++){
+                    picarray[i].style.visibility="visible";
+                }
+            }
+
+        },1000)
     },
 
     autoCreateViewport: true

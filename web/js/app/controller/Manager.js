@@ -563,6 +563,8 @@ Ext.define('ZSMZJ.controller.Manager', {
     },
     saveeditusercommon:function(btn){
         var me=this;
+        me.formPasswdToMd5(btn);
+
         var params = {
             userid:btn.up('window').editdata.userid,
             iscommon:true
@@ -586,6 +588,7 @@ Ext.define('ZSMZJ.controller.Manager', {
     },
     saveedituser:function(btn){
         var me=this;
+        me.formPasswdToMd5(btn);
         var params = {
             userid:btn.up('window').editdata.userid,
             iscommon:false
@@ -778,6 +781,8 @@ Ext.define('ZSMZJ.controller.Manager', {
     addnewuser:function(btn){
 
         var me=this;
+        me.formPasswdToMd5(btn);
+
         var params = {
 
         };
@@ -800,6 +805,7 @@ Ext.define('ZSMZJ.controller.Manager', {
 
     addnewrole: function(btn) {
         var me=this;
+
         var params = {
 
         };
@@ -847,7 +853,16 @@ Ext.define('ZSMZJ.controller.Manager', {
 
 
     },
-
+    formPasswdToMd5:function(btn){
+        var form = btn.up('form').getForm();
+        var array=['password','passwordagain','oldpassword'];
+        for(var i=0;i<array.length;i++){
+            var f=form.findField(array[i]);
+            if(f){
+                f.setValue(CryptoJS.enc.Base64.stringify(CryptoJS.MD5(f.value)))
+            }
+        }
+    },
 
 
     onLaunch: function() {
