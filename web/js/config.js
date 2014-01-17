@@ -1036,3 +1036,28 @@ var processRoleBtn=null;
 var processstatustype={"ok":"正常","change":"变更","logout":"注销"};
 var isenjoyedtype={"yes":"享受","no":"不享受"};
 var disabledtype={"heavy":"||一级,二级||"};
+
+
+var manangerRowClass=function (record) {
+    var processstatus=record.get('processstatus');
+    var vprocessstatustype=record.get('processstatustype');
+    var rowclass='';
+    switch (processstatus){
+        case  processdiction.stepzero:rowclass='yw-stepzero';break;
+        case  processdiction.stepone:rowclass='yw-stepone';break;
+        case  processdiction.steptwo:rowclass='yw-steptwo';break;
+        case  processdiction.stepthree:
+            rowclass='yw-stepthree';
+            if(vprocessstatustype==processstatustype.change){
+                rowclass='yw-change';
+            }else if(vprocessstatustype==processstatustype.logout){
+                rowclass='yw-logout';
+            }
+            break;
+        case  processdiction.stepback:rowclass='';break;
+    }
+    return rowclass;
+
+}
+var formMaxWidth=1001;
+
