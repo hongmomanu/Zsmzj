@@ -42,6 +42,7 @@ public class DivisionDao {
                 obj.put("signaturepath",rs.getString("signaturepath"));
                 obj.put("iconCls",Integer.parseInt(rs.getString("leaf"))>0?"":"division-tree-leaf");
                 obj.put("leaf",Integer.parseInt(rs.getString("leaf"))>0?false:true);
+                obj.put("state",Integer.parseInt(rs.getString("leaf"))>0?"closed":"open");
                 if(rs.getString("signaturepath")==null||rs.getString("signaturepath").equals("")){
                     obj.put("qtip","无签章图片");
                 }else{

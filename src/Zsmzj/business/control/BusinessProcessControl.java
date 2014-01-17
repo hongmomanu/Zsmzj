@@ -233,7 +233,9 @@ public class BusinessProcessControl {
     }
     public String getGrantMoneyBytype(String type,String bgmonth,String keyword,String[]name,
                                       String[]compare,String[]value,String[]logic,int start,int limit,
-                                      String bgdate,String eddate,String divisionpath){
+                                      String bgdate,String eddate,String divisionpath,String totalname,String rowsname){
+        totalname=totalname==null?"totalCount":totalname;
+        rowsname=rowsname==null?"results":rowsname;
         SimpleDateFormat sDateFormat   =   new SimpleDateFormat("yyyy-MM");
         SimpleDateFormat syearFormat   =   new SimpleDateFormat("yyyy");
         String basic_sql= " a.id=b.businessid "
@@ -536,8 +538,8 @@ public class BusinessProcessControl {
         ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
 
         Map<String,Object>res=new HashMap<String, Object>();
-        res.put("totalCount",totalnum);
-        res.put("results",list);
+        res.put(totalname,totalnum);
+        res.put(rowsname,list);
         return JSONObject.fromObject(res).toString();
     }
 
@@ -2068,7 +2070,10 @@ public class BusinessProcessControl {
     }
 
     public String getNeedTodoBusinessList(int start,int limit,String keyword,String type,
-                                          String businesstype,boolean ispublicinfo,String bgdate,String edddate,String divisionpath){
+                                          String businesstype,boolean ispublicinfo,String bgdate,
+                                          String edddate,String divisionpath,String totalname,String rowsname){
+        totalname=totalname==null?"totalCount":totalname;
+        rowsname=rowsname==null?"results":rowsname;
         BusinessProcess bp=new BusinessProcess();
         ComonDao cd=new ComonDao();
         SimpleDateFormat sDayFormat   =   new SimpleDateFormat("yyyy-MM-dd");
@@ -2190,8 +2195,8 @@ public class BusinessProcessControl {
 
         //totalnum=cd.getTotalCountBySql(sql_count);
         Map<String,Object>res=new HashMap<String, Object>();
-        res.put("totalCount",totalnum);
-        res.put("results",list);
+        res.put(totalname,totalnum);
+        res.put(rowsname,list);
         return JSONObject.fromObject(res).toString();
 
     }
@@ -2199,7 +2204,9 @@ public class BusinessProcessControl {
 
 
 
-    public String getProcessHistorybid(int businessid,int start,int limit){
+    public String getProcessHistorybid(int businessid,int start,int limit,String totalname,String rowsname){
+        totalname=totalname==null?"totalCount":totalname;
+        rowsname=rowsname==null?"results":rowsname;
         ComonDao cd=new ComonDao();
         String sql="select count(*) from "+ApprovalTable +" where businessid MATCH "+businessid;
         int totalnum= cd.getTotalCountBySql(sql);
@@ -2208,8 +2215,8 @@ public class BusinessProcessControl {
                 +" and a.userid = b.id order by a.time desc Limit "+limit+" Offset "+start;
         ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
         Map<String,Object>res=new HashMap<String, Object>();
-        res.put("totalCount",totalnum);
-        res.put("results",list);
+        res.put(totalname,totalnum);
+        res.put(rowsname,list);
         return JSONObject.fromObject(res).toString();
 
     }

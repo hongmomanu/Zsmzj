@@ -51,6 +51,12 @@ public class FuncControl {
         if(leaf !=null){
             for(Map<String, Object> item:result){
                 item.put("leaf",true);
+                item.put("state","open");
+            }
+        }
+        else{
+            for(Map<String, Object> item:result){
+                item.put("state","closed");
             }
         }
 

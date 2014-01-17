@@ -89,7 +89,7 @@ public class FuncDao {
 
         Connection testConn= JdbcFactory.getConn("sqlite");
 
-        String sql=  "select a.funcname,a.imgurl,a.label from "+FuncTable+" as a,"+
+        String sql=  "select a.id,a.funcname,a.imgurl,a.label from "+FuncTable+" as a,"+
                 FuncToRoleTable+" as b where a.id=b.funcid and b.roleid=? and a.functype=?" +
                 " order by a.sortnum asc";
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
@@ -101,6 +101,8 @@ public class FuncDao {
             while (rs.next()) {
                 Map<String,Object> func=new HashMap<String, Object>();
                 func.put("name",rs.getString("funcname"));
+                func.put("id",rs.getString("id"));
+                func.put("text",rs.getString("funcname"));
                 func.put("value",rs.getString("label"));
                 func.put("url",rs.getString("imgurl"));
                 func.put("iconCls",rs.getString("imgurl"));
@@ -108,6 +110,7 @@ public class FuncDao {
                 list.add(func);
 
             }
+
             return list;
         }catch (Exception E){
             log.debug(E.getMessage());
