@@ -1,0 +1,89 @@
+/**
+ * Created by jack on 14-1-6.
+ */
+define(function(){
+
+    function setCookie(name,value) {//两个参数，一个是cookie的名子，一个是值
+        var Days = 30; //此 cookie 将被保存 30 天
+        var exp = new Date();    //new Date("December 31, 9998");
+        exp.setTime(exp.getTime() + Days*24*60*60*1000);
+        document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+    }
+
+    function getCookie(name) {//取cookies函数
+        var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
+        if(arr != null) return unescape(arr[2]); return null;
+    }
+
+
+    function inithead() {
+        var themes = {
+            'gray' : extLocation+'themes/gray/easyui.css',
+            'black' :extLocation+ 'themes/black/easyui.css',
+            'bootstrap' :extLocation+ 'themes/bootstrap/easyui.css',
+            'default' : extLocation+'themes/default/easyui.css',
+            'metro' : extLocation+'themes/metro/easyui.css',
+            'pepper-grinder' : extLocation+'themes/pepper-grinder/easyui.css',
+            'blue' : extLocation+'themes/default/easyui.css',
+            'cupertino' : extLocation+'themes/cupertino/easyui.css',
+            'dark-hive' : extLocation+'themes/dark-hive/easyui.css',
+            'sunny' : extLocation+'themes/sunny/easyui.css'
+        };
+
+        var skins = $('.li-skinitem span').click(function() {
+            var $this = $(this);
+            if($this.hasClass('cs-skin-on')) return;
+            skins.removeClass('cs-skin-on');
+            $this.addClass('cs-skin-on');
+            var skin = $this.attr('rel');
+            $('#swicth-style').attr('href', themes[skin]);
+            setCookie('cs-skin', skin);
+            skin == 'dark-hive' ? $('.cs-north-logo').css('color', '#FFFFFF') : $('.cs-north-logo').css('color', '#000000');
+        });
+
+        if(getCookie('cs-skin')) {
+            var skin = getCookie('cs-skin');
+            $('#swicth-style').attr('href', themes[skin]);
+            $this = $('.li-skinitem span[rel='+skin+']');
+            $this.addClass('cs-skin-on');
+            skin == 'dark-hive' ? $('.cs-north-logo').css('color', '#FFFFFF') : $('.cs-north-logo').css('color', '#000000');
+        }
+    }
+
+
+    //$('#routermenu').hide()
+    //$('#routermenu').attr("href",'#mainview');
+    //$('#routermenu').click();
+
+    function initroutnavigation(){
+        $('#routermenu').combobox({
+            onBeforeLoad: function(param){
+                param.roleid=roleid;
+                param.type="系统菜单";
+            },
+            onSelect: function(rec){
+
+
+                $('#westpanel').panel({
+                    onLoad:function(){
+                        var router='#'+rec.value;
+                        window.location.hash=router;
+                    }
+
+                });
+                $('#westpanel').panel('refresh','jsnew/views/navigation/'+rec.value+'.html');
+
+
+            },
+            onLoadSuccess:function(){
+                $('#routermenu').combobox('select',$('#routermenu').combobox('getData')[0].value);
+            }
+        });
+    }
+
+     return {
+         inithead :inithead,
+         initroutnavigation:initroutnavigation
+     }
+
+})
