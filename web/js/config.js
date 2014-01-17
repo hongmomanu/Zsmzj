@@ -1094,5 +1094,6 @@ var manangerRowClass=function (record) {
         case  processdiction.stepback:rowclass='';break;
     }
     return rowclass;
+
 }
 var formMaxWidth=1001;
