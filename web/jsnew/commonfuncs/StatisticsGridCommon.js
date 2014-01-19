@@ -33,13 +33,44 @@ define(function(){
                     }
 
                 });
-            $('#businesstb .bgmonth').datebox('setValue', $.formatDateTime('yy-mm',new Date()));
+            var year=parseInt($.formatDateTime('yy',new Date()));
+            var month=parseInt($.formatDateTime('mm',new Date()));
+            var data=[];
+            var mdata=[];
+            for(var i=0;i<10;i++){
+                data.push({
+                    label:(year-i)+"年",
+                    value:year-i
+                });
+            }
+            for(var i=0;i<12;i++){
+                mdata.push({
+                    label:(i+1)+"月",
+                    value:i+1
+                });
+            }
+
+            $('#businesstb .year').combobox({
+                valueField: 'value',
+                textField: 'label',
+                value:year,
+                data:data
+            });
+
+            $('#businesstb .month').combobox({
+                valueField: 'value',
+                textField: 'label',
+                value:month,
+                data:mdata
+            });
+
             $('#businesstb .bgmonth,#businesstb .search').bind('click keypress',function(e){
 
                 var keycode = (event.keyCode ? event.keyCode : event.which);
                 if($(this).attr("type")==='bgmonth'&&keycode!=13)return;
                 $('#staticsgrid').treegrid('load',{
-                    bgmonth:$('#businesstb .bgmonth').datebox('getValue')
+                    bgmonth:$('#businesstb .year').combobox('getValue')+"-"+
+                        ($('#businesstb .month').combobox('getValue')<10?'0'+$('#businesstb .month').combobox('getValue'):$('#businesstb .month').combobox('getValue'))
                 });
             });
 
