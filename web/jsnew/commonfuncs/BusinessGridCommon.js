@@ -62,11 +62,14 @@ define(function(){
                                     var isfind=LookupItemName.lookup(LookupItemName.lookup(processRoleBtn,
                                         {name:'name',value:rows[i]['processstatus']}).children,
                                         {name:'name',value:$(btns_arr[j][i]).text()});
-                                    if(isfind){
+                                    if(isfind||$(btns_arr[j][i]).attr("isshow")==='true'){
                                         var classname=$(btns_arr[j][i]).attr("class");
-                                        $(btns_arr[j][i]).linkbutton({
-                                            iconCls: 'icon-'+classname
-                                        });
+                                        if($(btns_arr[j][i]).attr("istext")!=='true'){
+                                            $(btns_arr[j][i]).linkbutton({
+                                                iconCls: 'icon-'+classname
+                                            });
+                                        }
+
                                         (function(index){
                                             $(btns_arr[j][i]).click(function(){
                                                 var clickitem=this;

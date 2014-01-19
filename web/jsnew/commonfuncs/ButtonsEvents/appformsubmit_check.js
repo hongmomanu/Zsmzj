@@ -63,7 +63,10 @@ define(function(){
 
                                     };
                                     var success=function(res){
-                                        var resitem=$.evalJSON(res)
+                                        //alert(1);
+                                        var resitem=$.evalJSON(res);
+                                        //console.log(res);
+                                        //alert(2);
                                         if(resitem.success){
                                             $.messager.alert('操作成功','审核成功!');
                                             $('#checkwin').dialog('close');
