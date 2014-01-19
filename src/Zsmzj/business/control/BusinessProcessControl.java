@@ -182,7 +182,7 @@ public class BusinessProcessControl {
         }
         int totalnum=cd.getTotalCountBySql(num_sql);
         if(totalnum>0&&isnew){
-            return "{success:true,msg:\"资金已发放，若想重新发放请点击资金重新发放\"}";
+            return "{\"success\":true,\"msg\":\"资金已发放，若想重新发放请点击资金重新发放\"}";
         }
         else{
             String delsql="delete from "+GrantTable+" where rowid in(select a.rowid from "+GrantTable+" a,"+BusinessTable+
@@ -213,21 +213,21 @@ public class BusinessProcessControl {
                 param.put("adjustmoney",adjustmoney);
                 bDao.insertTableVales(param, GrantTable);
             }
-            return "{success:true,msg:\"资金已发\"}";
+            return "{\"success\":true,\"msg\":\"资金已发\"}";
         }
 
     }
     public String changeStatusbybid(int businessid,String status){
         BusinessProcess bp=new BusinessProcess();
         int result=bp.changeStatus(businessid,status);
-        if(result>0)return "{success:true}";
-        else  return "{success:false}";
+        if(result>0)return "{\"success\":true}";
+        else  return "{\"success\":false}";
     }
     public String changeProcessStatustype(int businessid,String processstatustype,String processstatus){
         BusinessProcess bp=new BusinessProcess();
         int result=bp.changeProcessStatustype(businessid,processstatustype,processstatus);
-        if(result>0)return "{success:true}";
-        else  return "{success:false}";
+        if(result>0)return "{\"success\":true}";
+        else  return "{\"success\":false}";
 
 
     }
@@ -1521,7 +1521,11 @@ public class BusinessProcessControl {
 
     }
     public String getPeopleInfoList(int start ,int limit,String keyword,String businesstype,String[]name,
-                                    String[]compare,String[]value,String[]logic,String bgdate,String eddate,String divisionpath){
+                                    String[]compare,String[]value,String[]logic,String bgdate,String eddate,
+                                    String divisionpath,String totalname,String rowsname){
+        totalname=totalname==null?"totalCount":totalname;
+        rowsname=rowsname==null?"results":rowsname;
+
         BusinessProcess bp=new BusinessProcess();
         ComonDao cd=new ComonDao();
 
@@ -1943,8 +1947,8 @@ public class BusinessProcessControl {
             map.put("process", ProcessType.UseProcessType.getNext(ProcessType.UseProcessType.
                     getProcessFromChinese(map.get("processstatus").toString())));
         }
-        res.put("totalCount",totalnum);
-        res.put("results",list);
+        res.put(totalname,totalnum);
+        res.put(rowsname,list);
         return JSONObject.fromObject(res).toString();
 
     }
@@ -2259,7 +2263,7 @@ public class BusinessProcessControl {
                 bp.changeStatus(Integer.parseInt(businessid), staus);
                 conn.commit();
                 conn.setAutoCommit(true);
-                return "{success:true}";
+                return "{\"success\":true}";
             } catch (Exception e) {
                 e.printStackTrace();
                 log.debug(e.getMessage());
@@ -2268,13 +2272,13 @@ public class BusinessProcessControl {
                 } catch (SQLException e1) {
                     e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                 }finally {
-                    return"{success:false,msg:\""+e.getMessage()+"\"}";
+                    return"{\"success\":false,\"msg\":\""+e.getMessage()+"\"}";
                 }
                 //e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }
 
         }else{
-            return"{success:false,msg:\"已操作\"}";
+            return"{\"success\":false,\"msg\":\"已操作\"}";
 
         }
 
@@ -2302,7 +2306,7 @@ public class BusinessProcessControl {
                 bp.changeStatus(Integer.parseInt(businessid), staus); //更新表单状态为前一个状态
                 conn.commit();
                 conn.setAutoCommit(true);
-                return "{success:true}";
+                return "{\"success\":true}";
             } catch (Exception e) {
                 e.printStackTrace();
                 log.debug(e.getMessage());
@@ -2311,12 +2315,12 @@ public class BusinessProcessControl {
                 } catch (SQLException e1) {
                     e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                 }finally {
-                    return"{success:false,msg:\""+e.getMessage()+"\"}";
+                    return"{\"success\":false,\"msg\":\""+e.getMessage()+"\"}";
                 }
             }
 
         }else{
-            return"{success:false,msg:\"已操作\"}";
+            return"{\"success\":false,\"msg\":\"已操作\"}";
 
         }
 
@@ -2328,8 +2332,8 @@ public class BusinessProcessControl {
     public String changeBusinessStatus(int businessid,String status){
         BusinessProcess bp=new BusinessProcess();
         int result=bp.changeStatus(businessid,status);
-        if(result>0)return "{success:true}";
-        else  return "{success:false}";
+        if(result>0)return "{\"success\":true}";
+        else  return "{\"success\":false}";
 
     }
 
@@ -2385,8 +2389,8 @@ public class BusinessProcessControl {
         int result=bp.delBusinessbybid(businessid);
         ComonDao cd=new ComonDao();
         cd.delbysql("delete from "+VirtualindexTable +" where oid="+businessid+" and otable='"+BusinessTable+"'");
-        if(result>0)return "{success:true}";
-        else  return "{success:false}";
+        if(result>0)return "{\"success\":true}";
+        else  return "{\"success\":false}";
 
     }
     public String logoutUpdateBusinessApply(int businessid,Map<String,Object> params,String familymembers,
@@ -2406,7 +2410,7 @@ public class BusinessProcessControl {
             //bp.updateSignatures(signatures,businessid);
             conn.commit();
             conn.setAutoCommit(true);
-            return "{success:true}";
+            return "{\"success\":true}";
         } catch (Exception e) {
             log.debug(e.getMessage());
             try {
@@ -2414,7 +2418,7 @@ public class BusinessProcessControl {
             } catch (SQLException e1) {
                 e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }finally {
-                return"{success:false}";
+                return"{\"success\":false}";
             }
             //e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
@@ -2447,7 +2451,7 @@ public class BusinessProcessControl {
             if(signatures!=null&&!signatures.equals(""))bp.updateSignatures(signatures,businessid);
             conn.commit();
             conn.setAutoCommit(true);
-            return "{success:true}";
+            return "{\"success\":true}";
         } catch (Exception e) {
             log.debug(e.getMessage());
             try {
@@ -2455,7 +2459,7 @@ public class BusinessProcessControl {
             } catch (SQLException e1) {
                 e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }finally {
-                return"{success:false}";
+                return"{\"success\":false}";
             }
             //e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
@@ -2477,7 +2481,7 @@ public class BusinessProcessControl {
             conn.commit();
             conn.setAutoCommit(true);
 
-            return "{success:true}";
+            return "{\"success\":true}";
         } catch (Exception e) {
             log.debug(e.getMessage());
             try {
@@ -2485,7 +2489,7 @@ public class BusinessProcessControl {
             } catch (SQLException e1) {
                 e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }finally {
-                return"{success:false}";
+                return"{\"success\":false}";
             }
             //e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
@@ -2494,8 +2498,8 @@ public class BusinessProcessControl {
     public String saveCommonForm(Map<String,Object> params,String tablename){
         BusinessProcessDao bDao=new BusinessProcessDao();
         int result= bDao.insertTableVales(params, tablename);
-        if(result>0)return "{success:true}";
-        else  return "{success:false}";
+        if(result>0)return "{\"success\":true}";
+        else  return "{\"success\":false}";
 
     }
     public String saveNewBusinessApply(Map<String,Object> params,String familymembers,
@@ -2514,8 +2518,8 @@ public class BusinessProcessControl {
                 aid+",'"+BusinessTable+"','"+FamilyTable+"')";
         cd.delbysql(insert_sql);*/
 
-        if(businessid>0)return "{success:true}";
-        else  return "{success:false}";
+        if(businessid>0)return "{\"success\":true}";
+        else  return "{\"success\":false}";
 
     }
 
