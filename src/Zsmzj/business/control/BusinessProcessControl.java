@@ -1103,7 +1103,12 @@ public class BusinessProcessControl {
     }
 
     public String getFamilyInfoList(int start,int limit,String keyword,String businesstype,String[]name,
-                                    String[]compare,String[]value,String[]logic,String bgdate,String eddate,String divisionpath){
+                                    String[]compare,String[]value,String[]logic,String bgdate,String eddate,
+                                    String divisionpath,String totalname,String rowsname){
+
+        totalname=totalname==null?"totalCount":totalname;
+        rowsname=rowsname==null?"results":rowsname;
+
         BusinessProcess bp=new BusinessProcess();
         ComonDao cd=new ComonDao();
 
@@ -1514,8 +1519,8 @@ public class BusinessProcessControl {
                     getProcessFromChinese(map.get("processstatus").toString())));
         }
         Map<String,Object>res=new HashMap<String, Object>();
-        res.put("totalCount",totalnum);
-        res.put("results",list);
+        res.put(totalname,totalnum);
+        res.put(rowsname,list);
         return JSONObject.fromObject(res).toString();
 
 
