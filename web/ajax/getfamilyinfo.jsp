@@ -28,7 +28,9 @@
         String[] value=request.getParameterValues("value");
         String[] logic=request.getParameterValues("logic");
         String divisionpath=request.getParameter("divisionpath");
+        String totalname=request.getParameter("totalname");
+        String rowsname=request.getParameter("rowsname");
 
-        out.print(bp.getFamilyInfoList(start,limit,keyword,type,name,compare,value,logic,bgdate,eddate,divisionpath));
+        out.print(bp.getFamilyInfoList(start,limit,keyword,type,name,compare,value,logic,bgdate,eddate,divisionpath,totalname,rowsname));
     }
 %>
