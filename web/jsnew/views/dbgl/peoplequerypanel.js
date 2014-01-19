@@ -4,11 +4,8 @@
 define(function () {
 
     function render(parameters) {
-        var businesstype=$('#tabs').tabs('getSelected').panel('options').businesstype;
-        var type=businesstype;
-        require(['commonfuncs/BusinessGridCommon','jqueryplugin/jquery-formatDateTime'],function(BusinessGridCommon){
-            BusinessGridCommon.initbusinessgrid(type,businesstype);
-
+        require(['views/dbgl/dbglgrantmoneypanel'],function(js){
+            js.render();
         });
 
     }

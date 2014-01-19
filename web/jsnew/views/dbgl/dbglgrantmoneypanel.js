@@ -13,12 +13,9 @@ define(function () {
 
     }
 
-    function rowformater(value, rowData, rowIndex) {
-        return '<a>查看</a>'
-    }
+
 
     return {
-        render: render,
-        rowformater: rowformater
+        render: render
     };
 });
