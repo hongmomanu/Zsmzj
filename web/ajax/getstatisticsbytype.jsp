@@ -22,6 +22,8 @@
         String businesstype=request.getParameter("businesstype");
         String bgmonth=request.getParameter("bgmonth");
         int divisionpid=Integer.parseInt(request.getParameter("node"));
-        out.print(bp.getStatisticsBytype(type,bgmonth,divisionpid,businesstype,divisionpath));
+        boolean isonlychild=request.getParameter("isonlychild")==null?
+                Boolean.parseBoolean(request.getParameter("isonlychild")):false;
+        out.print(bp.getStatisticsBytype(type,bgmonth,divisionpid,businesstype,divisionpath,isonlychild));
     }
 %>
