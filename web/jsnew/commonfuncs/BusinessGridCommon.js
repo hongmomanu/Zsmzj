@@ -6,7 +6,7 @@ define(function(){
 
     var a={
 
-        initbusinessgrid:function(type,businesstype){
+        initbusinessgrid:function(type,businesstype,columns){
 
             $('#businessgrid').datagrid(
                 {
@@ -14,10 +14,12 @@ define(function(){
                     collapsible: true,
                     rownumbers: true,
                     method:'post',
+                    columns:columns,
                     remoteSort: false,
                     sortName:'time',
                     sortOrder:'desc',
                     fit:true,
+
                     toolbar:'#businesstb',
                     pagination:true,
                     pageSize:10,

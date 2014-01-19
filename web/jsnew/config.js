@@ -67,70 +67,23 @@ var formwidgettype={
 var familyheaders={
     'dbgl':[
 
-        {header: '户主姓名',align:'center',dataIndex:'owername',locked : true, name:'tests',
-            summaryRenderer: function(value){
-                return '本页合计'
-            },renderer: function (v, m, r) {
-            var me=this;
-            var id0=Ext.id();
-            Ext.defer(function () {
-                //console.log(document.getElementById(id0));
-                if(Ext.get(id0)){
-                    Ext.widget('label', {
-                        renderTo: id0,
-                        //margin: '0 5 0 5',
-                        border:0,
-                        text: v,
-                        overCls:'mouseover',
-                        width: 55,
-                        listeners: {
 
-                            render: function(c){
-                                c.getEl().on('click', function(){
-                                    testobj=me.up('panel');
-                                    me.up('panel').fireEvent('alterclick', c,r,me);
-                                }, c);
-                            }
-
-                        }
-                    });
-                }
-
-            }, 50);
-
-
-
-            return Ext.String.format('<span id="{0}"></span>',id0);
-        }},
-
-
-        {header: '行政区划', dataIndex: 'division',align:'center',width: 250},
-        {header: '户主身份证',align:'center',dataIndex:'owerid',width: 250},
-
-
-        {header: '申请类别',align:'center',dataIndex:'applytype',itemId:'applytype'},
-        {header: '业务类型',align:'center',dataIndex:'businesstype',itemId:'businesstype'},
-
-        {header: '家庭类别',align:'center',dataIndex:'familytype',itemId:'familytype'},
-        {header: '救助金额',align:'center',dataIndex:'totalhelpmoney',summaryType: 'sum',width:150,//求数量
-            summaryRenderer: function(value){
-                return '总金额:'+value
-            }},
-        {header: '救助开始日期',align:'center',dataIndex:'helpbgtime'},
-        {header: '救助结束日期',align:'center',dataIndex:'helpedtime'},
-        {header: '家庭人数',align:'center',dataIndex:'familynum',summaryType: 'sum', width:150,//求数量
-            summaryRenderer: function(value){
-                return '总人数:'+value
-            }},
-
-        {header: '家庭户口性质',align:'center',dataIndex:'familyaccount'},
-        {header: '享受人数',align:'center',dataIndex:'enjoynum'},
-        {header: '开户人',align:'center',dataIndex:'bankower'},
-        {header: '银行帐号',align:'center',dataIndex:'bankid'},
-        {header: '救助证编号',align:'center',dataIndex:'aidnum'},
-
-
-        {header: '人员id',align:'center', width: 150,dataIndex:'businessid',hidden:true}
+        {title: '行政区划', field: 'division',align:'center',width: 250},
+        {title: '户主身份证',align:'center',field:'owerid',width: 250},
+        {title: '申请类别',align:'center',field:'applytype'},
+        {title: '业务类型',align:'center',field:'businesstype'},
+        {title: '家庭类别',align:'center',field:'familytype'},
+        {title: '救助金额',align:'center',field:'totalhelpmoney',width:150},
+        {title: '救助开始日期',align:'center',field:'helpbgtime'},
+        {title: '救助结束日期',align:'center',field:'helpedtime'},
+        {title: '家庭人数',align:'center',field:'familynum',width:150},
+        {title: '家庭户口性质',align:'center',field:'familyaccount'},
+        {title: '享受人数',align:'center',field:'enjoyednum'},
+        {title: '开户人',align:'center',field:'bankower'},
+        {title: '银行帐号',align:'center',field:'bankid'},
+        {title: '救助证编号',align:'center',field:'aidnum'},
+        {field:'time',title:'时间',width:80,hidden:true,align:'center',sortable:true},
+        {title: '业务id',align:'center', width: 150,field:'businessid',hidden:true}
 
     ],
     'dbbyh':[

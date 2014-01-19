@@ -74,6 +74,7 @@ define(function(){
                 //console.log(res);
             };
             require(['commonfuncs/GetFormData'],function(GetFormData){
+                //alert(businessid);
                 GetFormData.getValueBybusinessid(businessid,sucfun);
             });
         }
