@@ -545,7 +545,8 @@ public class BusinessProcessControl {
 
 
 
-    public String getStatisticsBytype(String type,String bgmonth,int divisionpid,String businesstype,String divisionpath){
+    public String getStatisticsBytype(String type,String bgmonth,int divisionpid,String businesstype,
+                                      String divisionpath,boolean isonlychild){
         SimpleDateFormat sDateFormat   =   new SimpleDateFormat("yyyy-MM");
         String edmonth="";
         if(bgmonth==null||bgmonth.equals("")) bgmonth=sDateFormat.format(new   java.util.Date());
@@ -1097,8 +1098,12 @@ public class BusinessProcessControl {
             res.put("children",list);
 
         }
+        if(isonlychild){
+            return  JSONArray.fromObject(res.get("children")).toString();
+        }else{
+            return JSONObject.fromObject(res).toString();
+        }
 
-        return JSONObject.fromObject(res).toString();
 
     }
 
