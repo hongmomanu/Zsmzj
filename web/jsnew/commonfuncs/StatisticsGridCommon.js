@@ -33,14 +33,14 @@ define(function(){
                     }
 
                 });
-
+            $('#businesstb .bgmonth').datebox('setValue', $.formatDateTime('yy-mm',new Date()));
             $('#businesstb .bgmonth,#businesstb .search').bind('click keypress',function(e){
 
                 var keycode = (event.keyCode ? event.keyCode : event.which);
                 if($(this).attr("type")==='bgmonth'&&keycode!=13)return;
                 $('#staticsgrid').treegrid('load',{
                     bgmonth:$('#businesstb .bgmonth').datebox('getValue')
-                })
+                });
             });
 
 
