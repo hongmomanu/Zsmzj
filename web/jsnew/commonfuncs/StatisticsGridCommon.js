@@ -16,7 +16,7 @@ define(function(){
                     method:'post',
                     columns:columns,
                     remoteSort: false,
-
+                    idField:"id",
                     fit:true,
 
                     toolbar:'#businesstb',
@@ -34,17 +34,12 @@ define(function(){
 
                 });
 
-            $('#businesstb .search,#businesstb .keyword').bind('click keypress',function(e){
+            $('#businesstb .bgmonth,#businesstb .search').bind('click keypress',function(e){
+
                 var keycode = (event.keyCode ? event.keyCode : event.which);
-
-                if($(this).attr("type")==='keyword'&&keycode!=13)return;
-
-                $('#businessgrid').treegrid('load',{
-
-                    bgdate:$('#businesstb .bgdate').datebox('getValue'),
-                    eddate:$('#businesstb .eddate').datebox('getValue'),
-                    keyword:$('#businesstb .keyword').val()
-
+                if($(this).attr("type")==='bgmonth'&&keycode!=13)return;
+                $('#staticsgrid').treegrid('load',{
+                    bgmonth:$('#businesstb .bgmonth').datebox('getValue')
                 })
             });
 
