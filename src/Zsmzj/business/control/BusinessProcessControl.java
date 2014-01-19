@@ -1137,7 +1137,7 @@ public class BusinessProcessControl {
 
                 //int totalnum =cd.getTotalCount(BusinessTable);
 
-        String sql_list="select a.*" +
+        String sql_list="select a.*,a.id as businessid " +
 
                 /*
 
