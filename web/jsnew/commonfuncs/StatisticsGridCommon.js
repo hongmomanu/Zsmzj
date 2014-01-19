@@ -21,8 +21,7 @@ define(function(){
 
                     toolbar:'#businesstb',
                     onBeforeLoad: function (rows,params) {
-                        console.log(rows);
-                        var options = $('#staticsgrid').treegrid('options');
+                        //var options = $('#staticsgrid').treegrid('options');
 
                         params.businesstype = businesstype;
                         params.type=type;
