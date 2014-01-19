@@ -24,12 +24,15 @@
         String keyword=request.getParameter("keyword");
         String type=request.getParameter("businesstype");
 
+        String totalname=request.getParameter("totalname");
+        String rowsname=request.getParameter("rowsname");
+
         String[] name=request.getParameterValues("name");
         String[] compare=request.getParameterValues("compare");
         String[] value=request.getParameterValues("value");
         String[] logic=request.getParameterValues("logic");
         String divisionpath=request.getParameter("divisionpath");
 
-        out.print(bp.getPeopleInfoList(start,limit,keyword,type,name,compare,value,logic,bgdate,eddate,divisionpath));
+        out.print(bp.getPeopleInfoList(start,limit,keyword,type,name,compare,value,logic,bgdate,eddate,divisionpath,totalname,rowsname));
     }
 %>
