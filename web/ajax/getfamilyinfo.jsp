@@ -23,10 +23,14 @@
         String eddate=request.getParameter("eddate");
         String keyword=request.getParameter("keyword");
         String type=request.getParameter("businesstype");
-        String[] name=request.getParameterValues("name");
-        String[] compare=request.getParameterValues("compare");
-        String[] value=request.getParameterValues("value");
-        String[] logic=request.getParameterValues("logic");
+        String[] name=request.getParameterValues("name")!=null?
+                request.getParameterValues("name"):request.getParameterValues("name[]");
+        String[] compare=request.getParameterValues("compare")!=null?
+                request.getParameterValues("compare"):request.getParameterValues("compare[]");
+        String[] value=request.getParameterValues("value")!=null?
+                request.getParameterValues("value"):request.getParameterValues("value[]");
+        String[] logic=request.getParameterValues("logic")!=null?
+                request.getParameterValues("logic"):request.getParameterValues("logic[]");
         String divisionpath=request.getParameter("divisionpath");
         String totalname=request.getParameter("totalname");
         String rowsname=request.getParameter("rowsname");

@@ -7,32 +7,36 @@
 --%>
 
 <%@ page import="Zsmzj.business.control.BusinessProcessControl" %>
-<%@ page language="java"  contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
 <%
-    if(request.getParameter("limit")==null){
-       out.print("缺少参数limit");
-    }if(request.getParameter("start")==null){
-        out.print("缺少参数start");
+    if (request.getParameter("limit") == null) {
+        out.print("缺少参数limit");
     }
-    else{
-        BusinessProcessControl bp=new BusinessProcessControl();
-        int start=Integer.parseInt(request.getParameter("start"));
-        int limit=Integer.parseInt(request.getParameter("limit"));
-        String bgdate=request.getParameter("bgdate");
-        String eddate=request.getParameter("eddate");
-        String keyword=request.getParameter("keyword");
-        String type=request.getParameter("businesstype");
+    if (request.getParameter("start") == null) {
+        out.print("缺少参数start");
+    } else {
+        BusinessProcessControl bp = new BusinessProcessControl();
+        int start = Integer.parseInt(request.getParameter("start"));
+        int limit = Integer.parseInt(request.getParameter("limit"));
+        String bgdate = request.getParameter("bgdate");
+        String eddate = request.getParameter("eddate");
+        String keyword = request.getParameter("keyword");
+        String type = request.getParameter("businesstype");
 
-        String totalname=request.getParameter("totalname");
-        String rowsname=request.getParameter("rowsname");
+        String totalname = request.getParameter("totalname");
+        String rowsname = request.getParameter("rowsname");
 
-        String[] name=request.getParameterValues("name");
-        String[] compare=request.getParameterValues("compare");
-        String[] value=request.getParameterValues("value");
-        String[] logic=request.getParameterValues("logic");
-        String divisionpath=request.getParameter("divisionpath");
+        String[] name = request.getParameterValues("name") != null ?
+                request.getParameterValues("name") : request.getParameterValues("name[]");
+        String[] compare = request.getParameterValues("compare") != null ?
+                request.getParameterValues("compare") : request.getParameterValues("compare[]");
+        String[] value = request.getParameterValues("value") != null ?
+                request.getParameterValues("value") : request.getParameterValues("value[]");
+        String[] logic = request.getParameterValues("logic") != null ?
+                request.getParameterValues("logic") : request.getParameterValues("logic[]");
+        String divisionpath = request.getParameter("divisionpath");
 
-        out.print(bp.getPeopleInfoList(start,limit,keyword,type,name,compare,value,logic,bgdate,eddate,divisionpath,totalname,rowsname));
+        out.print(bp.getPeopleInfoList(start, limit, keyword, type, name, compare, value, logic, bgdate, eddate, divisionpath, totalname, rowsname));
     }
 %>
