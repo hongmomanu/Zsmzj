@@ -57,6 +57,9 @@ define(function () {
                     url:'ajax/getenumbytype.jsp?type='+me.searchtype,
                     textField: 'label'
                 });
+                newitem.find('img').click(function(){
+                    $(this).parent().parent().remove()
+                });
             });
         },
         render:function(searchtype){
