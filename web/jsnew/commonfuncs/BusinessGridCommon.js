@@ -126,7 +126,14 @@ define(function(){
                 }else{
                     $('#businesstb .newgrant').hide();
                 }
-            })
+            });
+
+            $('#businesstb .moresearch').bind('click',function(e){
+                var searchtype=$(this).attr('searchtype');
+                require(['views/dbgl/moresearchwin','jqueryplugin/jquery-formatDateTime'],function(js){
+                    js.render(searchtype);
+                });
+            });
 
 
 
