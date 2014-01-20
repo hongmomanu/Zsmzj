@@ -82,7 +82,10 @@ define(function () {
                     textField: 'label'
                 });
                 newitem.find('img').click(function(){
-                    $(this).parent().parent().remove()
+                    $(this).parent().parent().remove();
+                    if($('#moresearchwin table').find('tr').length==1){
+                        $('#moresearchwin_search').linkbutton('disable');
+                    }
                 });
             });
         },
