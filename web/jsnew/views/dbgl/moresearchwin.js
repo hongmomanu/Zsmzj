@@ -25,23 +25,51 @@ define(function () {
             });*/
         },
         newcondition:function(btn){
+            var me=this;
             require(['text!views/dbgl/moresearchwinitem.htm'],function(itemhtml){
 
                 $('#moresearchwin table').append(itemhtml);
-                $.parser.parse($('#moresearchwin table').parent());
+                var newitem=$('#moresearchwin table').find('tr').last();
+                $.parser.parse(newitem);
+                newitem.find('.moresearchcomb').combobox({
+                    onShowPanel: function () {
+                        var mysearchtype = $(this).attr('searchtype');
+                        mysearchtype=mysearchtype?mysearchtype:me.searchtype;
+                        if(mysearchtype=='compare'){
+                            var previtem=$(this).parent().prev().find('.moresearchcomb');
+                            mysearchtype=me.searchtype
+                                + previtem.combobox('getValue');
+                        }
+                        var url = 'ajax/getenumbytype.jsp?type=' + mysearchtype;
+                        $(this).combobox('reload', url);
+                    },
+                    onSelect:function(record){
+                        if(!$(this).attr('searchtype')){
+                            var nextitem=$(this).parent().next().find('.moresearchcomb');
+                            nextitem.combobox('enable');
+                        }
+                    }
+
+                });
+
+                newitem.find('.name').combobox({
+                    valueField: 'value',
+                    url:'ajax/getenumbytype.jsp?type='+me.searchtype,
+                    textField: 'label'
+                });
             });
         },
         render:function(searchtype){
             var me=this;
+            me.searchtype=searchtype;
             var moresearchwindiv=$('#moresearchwin');
             if(moresearchwindiv.length>0){
                 moresearchwindiv.dialog('open');
             }
             else{
-                require(['text!views/dbgl/moresearchwin.htm','text!views/dbgl/moresearchwinitem.htm'],function(windiv,itemhtml){
+                require(['text!views/dbgl/moresearchwin.htm'],function(windiv,itemhtml){
 
                     $('body').append(windiv);
-                    $('#moresearchwin table').append(itemhtml);
 
                     $('#moresearchwin').dialog({
                         title: '高级搜索',
@@ -77,29 +105,7 @@ define(function () {
                     });
                     $.parser.parse($('#moresearchwin').parent());
 
-                    $('#moresearchwin .moresearchcomb').combobox({
-                        onShowPanel: function () {
-                            var mysearchtype = $(this).attr('searchtype');
-                            mysearchtype=mysearchtype?mysearchtype:searchtype;
-                            if(mysearchtype=='compare')mysearchtype=searchtype
-                                + $('#moresearchwin .name').combobox('getValue');
-                            var url = 'ajax/getenumbytype.jsp?type=' + mysearchtype;
-                            $(this).combobox('reload', url);
-                        },
-                        onSelect:function(record){
-                            if(!$(this).attr('searchtype')){
-                                $('#moresearchwin .compare').combobox('enable');
-                            }
-                        }
-
-                    });
-
-                    $('#moresearchwin .name').combobox({
-                        valueField: 'value',
-                        url:'ajax/getenumbytype.jsp?type='+searchtype,
-                        textField: 'label'
-                    });
-
+                    me.newcondition(null);
 
                 });
 
