@@ -24,6 +24,13 @@ define(function () {
                 ajax.ajaxform(form,'ajax/grantmoneyform.jsp',onsubmit,success);
             });*/
         },
+        newcondition:function(btn){
+            require(['text!views/dbgl/moresearchwinitem.htm'],function(itemhtml){
+
+                $('#moresearchwin table').append(itemhtml);
+                $.parser.parse($('#moresearchwin table').parent());
+            });
+        },
         render:function(searchtype){
             var me=this;
             var moresearchwindiv=$('#moresearchwin');
@@ -31,8 +38,10 @@ define(function () {
                 moresearchwindiv.dialog('open');
             }
             else{
-                require(['text!views/dbgl/moresearchwin.htm'],function(windiv){
+                require(['text!views/dbgl/moresearchwin.htm','text!views/dbgl/moresearchwinitem.htm'],function(windiv,itemhtml){
+
                     $('body').append(windiv);
+                    $('#moresearchwin table').append(itemhtml);
 
                     $('#moresearchwin').dialog({
                         title: '高级搜索',
@@ -55,7 +64,7 @@ define(function () {
                         },{
                             text:'新增',
                             handler:function(){
-                                me.grantmoney(this);
+                                me.newcondition(this);
                             }
                         },{
                             text:'取消',
@@ -88,9 +97,9 @@ define(function () {
                     $('#moresearchwin .name').combobox({
                         valueField: 'value',
                         url:'ajax/getenumbytype.jsp?type='+searchtype,
-                        width:60,
                         textField: 'label'
                     });
+
 
                 });
 
