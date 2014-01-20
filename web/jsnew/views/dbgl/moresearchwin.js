@@ -24,12 +24,29 @@ define(function () {
                 ajax.ajaxform(form,'ajax/grantmoneyform.jsp',onsubmit,success);
             });*/
         },
+        search:function(){
+            /**多条件数组**/
+            var conditions=$('#moresearchwin form').form('serialize');
+            for(var item in conditions){
+                conditions[item]=conditions[item].split(",");
+            }
+            $('#businessgrid').datagrid('load',conditions);
+
+        },
         newcondition:function(btn){
             var me=this;
-            require(['text!views/dbgl/moresearchwinitem.htm'],function(itemhtml){
-
+            require(['text!views/dbgl/moresearchwinitem.htm','jqueryplugin/easyui-form'],function(itemhtml){
                 $('#moresearchwin table').append(itemhtml);
                 var newitem=$('#moresearchwin table').find('tr').last();
+                var searchitems=newitem.find('.searchitem');
+                searchitems.bind('change',function () {
+                    var isvalid=$('#moresearchwin form').form('validate');
+                    if(isvalid){
+                        $('#moresearchwin_search').linkbutton('enable');
+                    }else{
+                        $('#moresearchwin_search').linkbutton('disable');
+                    }
+                });
                 $.parser.parse(newitem);
                 newitem.find('.moresearchcomb').combobox({
                     onShowPanel: function () {
@@ -47,6 +64,13 @@ define(function () {
                         if(!$(this).attr('searchtype')){
                             var nextitem=$(this).parent().next().find('.moresearchcomb');
                             nextitem.combobox('enable');
+                        };
+
+                        var isvalid=$('#moresearchwin form').form('validate');
+                        if(isvalid){
+                            $('#moresearchwin_search').linkbutton('enable');
+                        }else{
+                            $('#moresearchwin_search').linkbutton('disable');
                         }
                     }
 
@@ -87,13 +111,15 @@ define(function () {
                         },
                         buttons:[{
                             text:'检索',
+                            id:'moresearchwin_search',
                             disabled:true,
                             handler:function(){
-                                me.grantmoney(this);
+                                me.search();
 
                             }
                         },{
                             text:'新增',
+
                             handler:function(){
                                 me.newcondition(this);
                             }
