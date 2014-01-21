@@ -27,8 +27,10 @@ define(function () {
         search:function(){
             /**多条件数组**/
             var conditions=$('#moresearchwin form').form('serialize');
+            var options=$('#businessgrid').datagrid('options');
             for(var item in conditions){
                 conditions[item]=conditions[item].split(",");
+                options.search_params[item]=conditions[item];
             }
             $('#businessgrid').datagrid('load',conditions);
 

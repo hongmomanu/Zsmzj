@@ -23,6 +23,7 @@ define(function(){
                         $('#tabs').tabs('close',1);
 
                     }
+
                     $('#tabs').tabs('add',options);
                     var lookupname=LookupItemName.lookupitemname(formwidgettype,value);
                     if(lookupname){
