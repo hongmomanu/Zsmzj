@@ -5,9 +5,7 @@
 define(function(){
 
     var a={
-
         initbusinessgrid:function(type,businesstype,columns){
-
             $('#businessgrid').datagrid(
                 {
                     singleSelect: true,
@@ -19,7 +17,6 @@ define(function(){
                     sortName:'time',
                     sortOrder:'desc',
                     fit:true,
-
                     toolbar:'#businesstb',
                     pagination:true,
                     pageSize:10,
@@ -91,27 +88,31 @@ define(function(){
                             }
 
                         });
-
-
-
-
-
                     }
 
                 });
 
+            var options=$('#businessgrid').datagrid('options');
+            options.search_params={};
+            options.search_params.businesstype = businesstype;
+            options.search_params.type=type;
+            options.search_params.divisionpath = divisionpath;
+
             $('#businesstb .search,#businesstb .keyword').bind('click keypress',function(e){
                 var keycode = (event.keyCode ? event.keyCode : event.which);
-
                 if($(this).attr("type")==='keyword'&&keycode!=13)return;
-
-                $('#businessgrid').datagrid('load',{
-
+                var search_params={
                     bgdate:$('#businesstb .bgdate').datebox('getValue'),
                     eddate:$('#businesstb .eddate').datebox('getValue'),
                     keyword:$('#businesstb .keyword').val()
+                };
+                $('#businessgrid').datagrid('load',search_params);
+                for(var item in search_params){
+                    var options=$('#businessgrid').datagrid('options');
+                    options.search_params[item]=search_params[item];
+                }
 
-                })
+
             });
 
             require(['commonfuncs/LookupItemName'],function(lookjs){
@@ -135,12 +136,20 @@ define(function(){
                 });
             });
 
+            $('#excelmenu_btn').menubutton({
+                iconCls: 'icon-excel',
+                menu: '#excelmenu'
+            });
+            $('#excelmenu').menu({
+                onClick:function(item){
+                    require(['commonfuncs/ExcelExport'],function(excel){
+                        //console.log(item);
+                        excel.exportbygrid($('#businessgrid'),item);
+                    });
 
-
-
+                }
+            });
         }
-
     }
-
     return a;
 });
