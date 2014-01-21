@@ -33,7 +33,6 @@
                 request.getParameterValues("value"):request.getParameterValues("value[]");
         String[] logic=request.getParameterValues("logic")!=null?
                 request.getParameterValues("logic"):request.getParameterValues("logic[]");
-        System.out.println(name[0]);
         name=name==null?new String[0]:(name.length==1&&name[0].indexOf("]")>0? Arrays.copyOf(JSONArray.fromObject(name[0]).toArray(), JSONArray.fromObject(name[0]).toArray().length, String[].class):name);
         compare=compare==null?new String[0]:(compare.length==1&&compare[0].indexOf("]")>0?Arrays.copyOf(JSONArray.fromObject(compare[0]).toArray(), JSONArray.fromObject(compare[0]).toArray().length, String[].class):compare);
         value=value==null?new String[0]:(value.length==1&&value[0].indexOf(']')>0?Arrays.copyOf(JSONArray.fromObject(value[0]).toArray(), JSONArray.fromObject(value[0]).toArray().length, String[].class):value);
