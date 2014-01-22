@@ -30,7 +30,7 @@ define(function () {
             var options=$('#businessgrid').datagrid('options');
             for(var item in conditions){
                 conditions[item]=conditions[item].split(",");
-                options.search_params[item]=conditions[item];
+                options.search_params[item]=options.search_params[item]?options.search_params[item].concat(conditions[item]):conditions[item];
             }
             $('#businessgrid').datagrid('load',conditions);
 

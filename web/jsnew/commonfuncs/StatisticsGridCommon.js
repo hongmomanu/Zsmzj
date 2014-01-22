@@ -6,7 +6,7 @@ define(function(){
 
     var a={
 
-        initbusinessgrid:function(type,businesstype,columns){
+        initbusinessgrid:function(type,businesstype,columns,customparamfunc){
 
             $('#staticsgrid').treegrid(
                 {

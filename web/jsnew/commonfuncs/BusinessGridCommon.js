@@ -5,7 +5,7 @@
 define(function(){
 
     var a={
-        initbusinessgrid:function(type,businesstype,columns){
+        initbusinessgrid:function(type,businesstype,columns,customparamfunc){
             $('#businessgrid').datagrid(
                 {
                     singleSelect: true,
@@ -36,7 +36,6 @@ define(function(){
                     },
                     onBeforeLoad: function (params) {
                         var options = $('#businessgrid').datagrid('options');
-
                         params.businesstype = businesstype;
                         params.type=type;
                         params.divisionpath = divisionpath;
@@ -44,6 +43,10 @@ define(function(){
                         params.limit = options.pageSize;
                         params.totalname = "total";
                         params.rowsname = "rows";
+                        if(customparamfunc){
+                            customparamfunc(params);
+                        }
+
                     },
                     onLoadSuccess:function(data){
                         var viewbtns=$('#businessgrid,.viewbtn');
@@ -92,18 +95,29 @@ define(function(){
 
                 });
 
+
             var options=$('#businessgrid').datagrid('options');
-            options.search_params={};
-            options.search_params.businesstype = businesstype;
-            options.search_params.type=type;
-            options.search_params.divisionpath = divisionpath;
+            options.search_params={
+                businesstype:businesstype,
+                type:type,
+                divisionpath:divisionpath
+            };
+
+            if(options.type==='month'){
+                options.search_params.name=['time'];
+                options.search_params.compare=['month'];
+                options.search_params.value=[$('#businesstb .year').combobox('getValue')+"-"+
+                    ($('#businesstb .month').combobox('getValue')<10?'0'+
+                        $('#businesstb .month').combobox('getValue'):$('#businesstb .month').combobox('getValue'))];
+                options.search_params.logic =['and'];
+            }
 
             $('#businesstb .search,#businesstb .keyword').bind('click keypress',function(e){
                 var keycode = (event.keyCode ? event.keyCode : event.which);
                 if($(this).attr("type")==='keyword'&&keycode!=13)return;
                 var search_params={
-                    bgdate:$('#businesstb .bgdate').datebox('getValue'),
-                    eddate:$('#businesstb .eddate').datebox('getValue'),
+                    bgdate:$('#businesstb .bgdate').length>0?$('#businesstb .bgdate').datebox('getValue'):null,
+                    eddate:$('#businesstb .eddate').length>0?$('#businesstb .eddate').datebox('getValue'):null,
                     keyword:$('#businesstb .keyword').val()
                 };
                 $('#businessgrid').datagrid('load',search_params);
