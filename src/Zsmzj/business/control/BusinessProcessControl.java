@@ -1099,7 +1099,14 @@ public class BusinessProcessControl {
 
         }
         if(isonlychild){
-            return  JSONArray.fromObject(res.get("children")).toString();
+            JSONArray array_list=JSONArray.fromObject(res.get("children"));
+            JSONArray new_list=new JSONArray();
+            for(Object list_item:array_list){
+                JSONObject new_item=JSONObject.fromObject(list_item);
+                new_item.put("state","closed");
+                new_list.add(new_item);
+            }
+            return  JSONArray.fromObject(new_list).toString();
         }else{
             return JSONObject.fromObject(res).toString();
         }
@@ -1259,11 +1266,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" a.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endyear+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" (a.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endyear+"') and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1283,11 +1290,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+" where "+col_name+" Between '"+endyear
+                        sql=" "+logic[i]+" a.id in (select id from "+fulltable+" where "+col_name+" Between '"+endyear
                                 +"' and  '"+value[i]+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+" where "+col_name+" Between '"+endyear
+                        sql=" "+logic[i]+" (a.id in (select id from "+fulltable+" where "+col_name+" Between '"+endyear
                                 +"' and  '"+value[i]+"') and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1309,11 +1316,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" a.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endmonth+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" (a.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endmonth+"')  and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1335,11 +1342,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" a.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endmonth+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" (a.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endmonth+"')  and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1360,11 +1367,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+" where "+col_name+" Between '"+endmonth
+                        sql=" "+logic[i]+" a.id in (select id from "+fulltable+" where "+col_name+" Between '"+endmonth
                                 +"' and  '"+value[i]+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+" where "+col_name+" Between '"+endmonth
+                        sql=" "+logic[i]+" (a.id in (select id from "+fulltable+" where "+col_name+" Between '"+endmonth
                                 +"' and  '"+value[i]+"')  and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1387,11 +1394,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" a.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+value[i]+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" (a.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+value[i]+"')  and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1413,11 +1420,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+"  where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" a.id in (select id from "+fulltable+"  where "+col_name+" Between '"+value[i]
                                 +"' and  '"+enddate+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+"  where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" (a.id in (select id from "+fulltable+"  where "+col_name+" Between '"+value[i]
                                 +"' and  '"+enddate+"')  and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1438,11 +1445,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+"  where "+col_name+" Between '"+enddate
+                        sql=" "+logic[i]+" a.id in (select id from "+fulltable+"  where "+col_name+" Between '"+enddate
                                 +"' and  '"+value[i]+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+"  where "+col_name+" Between '"+enddate
+                        sql=" "+logic[i]+" (a.id in (select id from "+fulltable+"  where "+col_name+" Between '"+enddate
                                 +"' and  '"+value[i]+"')  and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
