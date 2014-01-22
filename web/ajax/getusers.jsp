@@ -20,7 +20,10 @@
         int start=Integer.parseInt(request.getParameter("start"));
         int limit=Integer.parseInt(request.getParameter("limit"));
         String keyword=request.getParameter("keyword");
+        String totalname = request.getParameter("totalname");
+        String rowsname = request.getParameter("rowsname");
+
         UserControl user=new UserControl();
-        out.print(user.getUsers(start,limit,keyword));
+        out.print(user.getUsers(start,limit,keyword,totalname,rowsname));
     }
 %>
