@@ -4,7 +4,7 @@ define(['commonfuncs/PersonidValidator'], function (PersonidValidator) {
         $.parser.parse($(parameters));
 
         if(res){
-            $('#mainform').form('load',res.form);
+            //$('#mainform').form('load',res.form);
             var params = {
                 businessid:res.form.id
             };

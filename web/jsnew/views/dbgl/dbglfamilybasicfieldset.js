@@ -1,7 +1,6 @@
 define(['commonfuncs/PersonidValidator'], function (PersonidValidator) {
 
     function render(parameters,res) {
-        //console.log(parameters);
         $.parser.parse($(parameters));
         $.extend($.fn.validatebox.defaults.rules, {
             personid: {
@@ -9,22 +8,12 @@ define(['commonfuncs/PersonidValidator'], function (PersonidValidator) {
                 message: '身份证不合法,请确认身份证是否正确输入!'
             }
         });
-        if(res){
-            $(parameters).form('load',res.form);
-            var affix=res.affixfile;
-            for(var i=0;i<affix.length;i++){
-                if(affix[i].attachmenttype=="accountimgpath"){
-                    $('#personimg').attr('src',affix[i].results[0].attachmentpath);
-                    break;
-                }
-            }
-        }
 
         $('#divisiontree').combotree({
             url:'ajax/gettreedivision.jsp?onlychild=true&node=-1',
             method: 'get',
             onLoadSuccess:function(){
-                if(!this.firstloaded){
+                if(!this.firstloaded&&!res){
                     $('#divisiontree').combotree('setValue', divisionpath);
                     this.firstloaded=true;
                 }
@@ -38,6 +27,19 @@ define(['commonfuncs/PersonidValidator'], function (PersonidValidator) {
                     $('#divisiontree').combotree('tree').tree('getSelected').divisionpath);
             }
         });
+
+        if(res){
+            $(parameters).form('load',res.form);
+            var affix=res.affixfile;
+            for(var i=0;i<affix.length;i++){
+                if(affix[i].attachmenttype=="accountimgpath"){
+                    $('#personimg').attr('src',affix[i].results[0].attachmentpath);
+                    break;
+                }
+            }
+        }
+
+
 
         $('.lazy-combobox').combobox({
             onShowPanel: function () {
