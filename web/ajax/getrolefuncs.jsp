@@ -20,8 +20,10 @@
         int roleid=Integer.parseInt(request.getParameter("roleid"));
         String keyword=request.getParameter("keyword");
         String type=request.getParameter("type");
+        String totalname = request.getParameter("totalname");
+        String rowsname = request.getParameter("rowsname");
         RoleControl role=new RoleControl();
-        out.print(role.getRoleFuncs(start,limit,keyword,roleid,type));
+        out.print(role.getRoleFuncs(start,limit,keyword,roleid,type,totalname,rowsname));
     }
     //out.print("ok");
 %>

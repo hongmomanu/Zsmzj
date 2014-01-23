@@ -19,6 +19,9 @@
         int start=Integer.parseInt(request.getParameter("start"));
         int limit=Integer.parseInt(request.getParameter("limit"));
         String keyword=request.getParameter("keyword");
+
+
+
         RoleControl role=new RoleControl();
         out.print(role.getRoles(start,limit,keyword));
     }
