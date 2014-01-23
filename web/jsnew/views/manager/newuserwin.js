@@ -65,7 +65,7 @@ define(function () {
 
         $.parser.parse($('#newuserwin'));
 
-        $('#newuserwin input').bind('change input',function(){
+        $('#newuserwin input').on('change',function(){
             var form=$('#newuserwin form');
             if(form.form('validate')){
                 $('#savenewuserbtn').linkbutton('enable');
