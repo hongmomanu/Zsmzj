@@ -16,8 +16,9 @@
     }
     else{
         int parentid=Integer.parseInt(request.getParameter("node"));
+        boolean onlychild=request.getParameter("onlychild")==null?false:true;
         DivisionControl dc=new DivisionControl();
-        out.print(dc.getDivisions(parentid));
+        out.print(dc.getDivisions(parentid,onlychild));
         /*out.print("{\"text\":\"\",\"value\":1,\"children\":[{\"text\": \"舟山市\",\"id\":12,\"expanded\": false}]}");*/
     }
 %>
