@@ -19,7 +19,10 @@
         int start=Integer.parseInt(request.getParameter("start"));
         int limit=Integer.parseInt(request.getParameter("limit"));
         String keyword=request.getParameter("keyword");
+        String totalname = request.getParameter("totalname");
+        String rowsname = request.getParameter("rowsname");
+
         FuncControl role=new FuncControl();
-        out.print(role.getFuncs(start,limit,keyword));
+        out.print(role.getFuncs(start,limit,keyword,totalname,rowsname));
     }
 %>
