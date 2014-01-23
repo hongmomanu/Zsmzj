@@ -8,6 +8,30 @@ define(function () {
                 $('#rolemanagerpanel').datagrid('load',{keyword:$('#rolepaneltb .keyword').val()});
             }
         );
+
+        $('#rolefuncgrid').datagrid({
+
+            pagination:true,
+            pageSize:10,
+            onBeforeLoad: function (params) {
+                var options = $('#rolefuncgrid').datagrid('options');
+                params.start = (options.pageNumber - 1) * options.pageSize;
+                params.limit = options.pageSize;
+                params.totalname = "total";
+                params.rowsname = "rows";
+            },
+            onLoadSuccess : function(data) {
+                if (data) {
+                    $.each(data.rows, function(index, item) {
+                        if (item.selected) {
+                            console.log(111);
+                            $('#rolefuncgrid').datagrid('selectRow',index);
+                        }
+                    });
+                }
+            }
+        });
+
         $('#rolemanagerpanel').datagrid({
             singleSelect: true,
             collapsible: true,
@@ -29,6 +53,9 @@ define(function () {
             },
             onClickRow:function(index, rowData){
                 $('#roleinfoform').form('load',rowData);
+                $('#rolefuncgrid').datagrid('load', {
+                    roleid: rowData.roleid
+                });
                 $('#roleformbtns .save,#roleformbtns .del').linkbutton('enable');
                 $('#rolemanagerlayout').layout('expand','east');
             }
