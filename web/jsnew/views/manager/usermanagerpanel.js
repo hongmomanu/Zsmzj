@@ -29,14 +29,49 @@ define(function () {
                 params.rowsname = "rows";
             },
             onClickRow:function(index, rowData){
-                //alert(index);
                 $('#userinfoform').form('load',rowData);
                 $('#userformbtns .save,#userformbtns .del').linkbutton('enable');
+                $('#usermanagerlayout').layout('expand','east');
             }
 
         });
         $('#userformbtns .save').click(function(){
-           //alert(1);
+            $.messager.confirm('确定要修改用户么?', '你正在试图修改用户?', function(r){
+                    if (r){
+                        require(['commonfuncs/md5','jqueryplugin/easyui-form','commonfuncs/AjaxForm']
+                            ,function(md5,easyform,ajaxfrom){
+
+
+                            var params=$('#userinfoform').form("serialize");
+                            params.password=CryptoJS.enc.Base64.stringify(CryptoJS.MD5(params.password));
+                            params.iscommon=false;
+                            var success=function(){
+                                $.messager.alert('操作成功','修改用户成功!');
+                                $('#usermanagerpanel').datagrid('reload');
+                            };
+                            var errorfunc=function(){
+                                $.messager.alert('操作失败','修改用户失败!');
+                            }
+                            ajaxfrom.ajaxsend('post','json','ajax/edituser.jsp',params,success,null,errorfunc)
+
+                        });
+                    }
+                }
+            );
+
+        });
+
+        $('#userpaneltb .newuser').click(function(){
+            if($('#newuserwin').length>0){
+                $('#newuserwin').dialog('open');
+            }else{
+                require(['text!views/manager/newuserwin.htm','views/manager/newuserwin'],
+                    function(div,newuserjs){
+                        $('body').append(div);
+                        newuserjs.render();
+                    });
+            }
+
         });
 
     }
