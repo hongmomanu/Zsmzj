@@ -35,6 +35,26 @@ define(function () {
             }
 
         });
+
+        $('#userformbtns .del').click(function(){
+            $.messager.confirm('确定要删除用户么?', '你正在试图删除用户?', function(r){
+                if (r){
+                    require(['jqueryplugin/easyui-form','commonfuncs/AjaxForm']
+                        ,function(easyuifrom,ajaxfrom){
+                            var params=$('#userinfoform').form("serialize");
+                            var success=function(){
+                                $.messager.alert('操作成功','删除用户成功!');
+                                $('#usermanagerpanel').datagrid('reload');
+                            };
+                            var errorfunc=function(){
+                                $.messager.alert('操作失败','删除用户失败!');
+                            }
+                            ajaxfrom.ajaxsend('post','json','ajax/deluser.jsp',params,success,null,errorfunc)
+
+                        });
+                }
+            });
+        });
         $('#userformbtns .save').click(function(){
             $.messager.confirm('确定要修改用户么?', '你正在试图修改用户?', function(r){
                     if (r){

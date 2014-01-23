@@ -12,13 +12,31 @@ define(function () {
                 id:'savenewuserbtn',
                 disabled:true,
                 handler:function(){
-                   alert(1);
+                   //alert(1);
+                    require(['commonfuncs/md5','jqueryplugin/easyui-form','commonfuncs/AjaxForm']
+                        ,function(md5,easyform,ajaxfrom){
+
+
+                            var params=$('#newuserwin form').form("serialize");
+                            params.password=CryptoJS.enc.Base64.stringify(CryptoJS.MD5(params.password));
+                            params.iscommon=false;
+                            var success=function(){
+                                $.messager.alert('操作成功','新增用户成功!');
+                                $('#newuserwin').dialog('close');
+                                $('#usermanagerpanel').datagrid('reload');
+                            };
+                            var errorfunc=function(){
+                                $.messager.alert('操作失败','新增用户失败!');
+                            }
+                            ajaxfrom.ajaxsend('post','json','ajax/addnewuser.jsp',params,success,null,errorfunc)
+
+                        });
 
                 }
             },{
                 text:'取消',
                 handler:function(){
-
+                    $('#newuserwin').dialog('close');
                 }
             }],
             //href: 'get_content.php',
@@ -38,10 +56,10 @@ define(function () {
             url:'ajax/gettreedivision.jsp?onlychild=true&node=-1',
             method: 'get',
             onLoadSuccess:function(){
-                if(!this.firstloaded){
+                /*if(!this.firstloaded){
                     divitiontree.combotree('setValue', divisionpath);
                     this.firstloaded=true;
-                }
+                }*/
             },
             onBeforeExpand: function (node) {
                 divitiontree.combotree("tree").tree("options").url
