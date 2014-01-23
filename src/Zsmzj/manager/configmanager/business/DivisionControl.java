@@ -1,6 +1,7 @@
 package Zsmzj.manager.configmanager.business;
 
 import Zsmzj.manager.configmanager.impl.DivisionImplement;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import java.util.HashMap;
@@ -43,9 +44,13 @@ public class DivisionControl {
 
 
     }
-    public String getDivisions(int parentid){
+    public String getDivisions(int parentid,boolean onlychildren){
         Map<String,Object> res=new HashMap<String, Object>();
+
         DivisionImplement di=new DivisionImplement();
+        if(onlychildren){
+            return JSONArray.fromObject(di.getDivisions(parentid)).toString();
+        }
         res.put("text","");
         res.put("children",di.getDivisions(parentid));
         return JSONObject.fromObject(res).toString();
