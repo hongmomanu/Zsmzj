@@ -16,9 +16,9 @@ define(function(){
                         var birthday = $('#familymembersgrid').datagrid('getEditor', {index:index,field:'birthday'});
                         var sex=$('#familymembersgrid').datagrid('getEditor', {index:index,field:'sex'});
                         var age=$('#familymembersgrid').datagrid('getEditor', {index:index,field:'age'});
-                       $(birthday.target).val(sex_birth.birthday);
-                       $(sex.target).val(sex_birth.sex);
-                       $(age.target).val((new Date()).getFullYear()-parseInt(sex_birth.birthday.split("-")[0]));
+                        $(birthday.target).val(sex_birth.birthday);
+                        $(sex.target).val(sex_birth.sex);
+                        $(age.target).val((new Date()).getFullYear()-parseInt(sex_birth.birthday.split("-")[0]));
                     }
                 })
             });

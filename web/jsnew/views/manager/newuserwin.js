@@ -12,6 +12,7 @@ define(function () {
                 id:'savenewuserbtn',
                 disabled:true,
                 handler:function(){
+                   alert(1);
 
                 }
             },{
@@ -64,12 +65,26 @@ define(function () {
 
         $.parser.parse($('#newuserwin'));
 
-        $('#newuserwin input').on('change',function(){
+        $('#newuserwin input').bind('change input',function(){
             var form=$('#newuserwin form');
             if(form.form('validate')){
                 $('#savenewuserbtn').linkbutton('enable');
             }
+            else{
+                $('#savenewuserbtn').linkbutton('disable');
+            }
         });
+
+        $('#newuserwin .easyui-combobox,#newuserwin .easyui-combotree').combobox({
+            onHidePanel:function(){
+                var form=$('#newuserwin form');
+                if(form.form('validate')){
+                    $('#savenewuserbtn').linkbutton('enable');
+                }else{
+                    $('#savenewuserbtn').linkbutton('disable');
+                }
+            }
+        })
 
     }
 
