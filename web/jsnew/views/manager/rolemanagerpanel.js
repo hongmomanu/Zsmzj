@@ -24,7 +24,6 @@ define(function () {
                 if (data) {
                     $.each(data.rows, function(index, item) {
                         if (item.selected) {
-                            console.log(111);
                             $('#rolefuncgrid').datagrid('selectRow',index);
                         }
                     });
@@ -88,17 +87,34 @@ define(function () {
                             ,function(easyform,ajaxfrom){
 
 
-                            var params=$('#roleinfoform').form("serialize");
+                               var formitem=$('#roleinfoform').form("serialize");
+
+                                var selectItems=$('#rolefuncgrid').datagrid('getChecked');
+                                var rows=$('#rolefuncgrid').datagrid('getRows');
+                                var funcid_arr=[];
+                                var delete_arr=[];
+                                $.each(selectItems,function(index,item){
+                                    funcid_arr.push(item.funcid);
+                                });
+                                $.each(rows,function(index,item){
+                                    delete_arr.push(item.funcid);
+                                });
+                                var params = {
+                                    roleid:formitem.roleid,
+                                    deleteid:delete_arr,
+                                    funcid:funcid_arr
+
+                                };
+
 
                             var success=function(){
-                                $.messager.alert('操作成功','修改功能成功!');
+                                $.messager.alert('操作成功','配置角色功能成功!');
                                 $('#rolemanagerpanel').datagrid('reload');
                             };
                             var errorfunc=function(){
-                                $.messager.alert('操作失败','修改功能失败!');
+                                $.messager.alert('操作失败','配置角色功能失败!');
                             };
-                            //ajaxfrom.ajaxsend('post','json','ajax/editfunc.jsp',params,success,null,errorfunc);
-
+                            ajaxfrom.ajaxsend('post','json','ajax/makerolefunc.jsp',params,success,null,errorfunc);
                         });
                     }
                 }
