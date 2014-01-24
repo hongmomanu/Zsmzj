@@ -41,21 +41,27 @@ define(function () {
                     require(['jqueryplugin/easyui-form','commonfuncs/AjaxForm']
                         ,function(easyuifrom,ajaxfrom){
                             var params=$('#enuminfoform').form("serialize");
+
+                            params.id=params.enumid;
+                            params.isrowid=true;
+                            params.idname='rowid';
+                            params.tablename='enumerate';
+
                             var success=function(){
-                                $.messager.alert('操作成功','删除功能成功!');
+                                $.messager.alert('操作成功','删除枚举成功!');
                                 $('#enummanagerpanel').datagrid('reload');
                             };
                             var errorfunc=function(){
-                                $.messager.alert('操作失败','删除功能失败!');
+                                $.messager.alert('操作失败','删除枚举失败!');
                             }
-                            ajaxfrom.ajaxsend('post','json','ajax/delenum.jsp',params,success,null,errorfunc)
+                            ajaxfrom.ajaxsend('post','json','ajax/delcommonbyid.jsp',params,success,null,errorfunc)
 
                         });
                 }
             });
         });
         $('#enumformbtns .save').click(function(){
-            $.messager.confirm('确定要修改功能么?', '你正在试图修改功能?', function(r){
+            $.messager.confirm('确定要修改枚举么?', '你正在试图修改枚举?', function(r){
                     if (r){
                         require(['jqueryplugin/easyui-form','commonfuncs/AjaxForm']
                             ,function(easyform,ajaxfrom){
@@ -63,12 +69,18 @@ define(function () {
 
                             var params=$('#enuminfoform').form("serialize");
 
+
+                            params.id=params.enumid;
+                            params.isrowid=true;
+                            params.idname='rowid';
+                            params.tablename='enumerate';
+                            delete  params.enumid;
                             var success=function(){
-                                $.messager.alert('操作成功','修改功能成功!');
+                                $.messager.alert('操作成功','修改枚举成功!');
                                 $('#enummanagerpanel').datagrid('reload');
                             };
                             var errorfunc=function(){
-                                $.messager.alert('操作失败','修改功能失败!');
+                                $.messager.alert('操作失败','修改枚举失败!');
                             };
                             ajaxfrom.ajaxsend('post','json','ajax/updatecommonbyid.jsp',params,success,null,errorfunc);
 
