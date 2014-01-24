@@ -1988,10 +1988,10 @@ public class BusinessProcessControl {
         BusinessProcessDao bpdao=new BusinessProcessDao();
         int result=bpdao.updatedatabyid(id,tablename,idname,isrowid,params);
         if(result>0){
-            return "{isok:true,success:true}";
+            return "{\"isok\":true,\"success\":true}";
         }
         else{
-            return "{isok:false,success:false}";
+            return "{\"isok\":false,\"success\":false}";
         }
 
     }
@@ -1999,10 +1999,10 @@ public class BusinessProcessControl {
         BusinessProcessDao bpdao=new BusinessProcessDao();
         int result=bpdao.deldatabyid(id,tablename,idname,isrowid);
         if(result>0){
-            return "{isok:true}";
+            return "{\"isok\":true}";
         }
         else{
-            return "{isok:false}";
+            return "{\"isok\":false}";
         }
 
     }
