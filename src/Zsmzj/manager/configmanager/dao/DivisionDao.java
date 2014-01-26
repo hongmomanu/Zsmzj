@@ -39,6 +39,7 @@ public class DivisionDao {
                 obj.put("text",rs.getString("divisionname"));
                 obj.put("divisionpath",rs.getString("divisionpath"));
                 obj.put("id",rs.getInt("rowid"));
+                obj.put("parentid",parentid);
                 obj.put("signaturepath",rs.getString("signaturepath"));
                 obj.put("iconCls",Integer.parseInt(rs.getString("leaf"))>0?"":"division-tree-leaf");
                 obj.put("leaf",Integer.parseInt(rs.getString("leaf"))>0?false:true);

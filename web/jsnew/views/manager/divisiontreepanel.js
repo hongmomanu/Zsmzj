@@ -59,34 +59,22 @@ define(function () {
                             ,function(easyform,ajaxfrom){
 
 
-                               var formitem=$('#divisioninfoform').form("serialize");
+                             var params=$('#divisioninfoform').form("serialize");
+;
 
-                                var selectItems=$('#divisionfuncgrid').datagrid('getChecked');
-                                var rows=$('#divisionfuncgrid').datagrid('getRows');
-                                var funcid_arr=[];
-                                var delete_arr=[];
-                                $.each(selectItems,function(index,item){
-                                    funcid_arr.push(item.funcid);
-                                });
-                                $.each(rows,function(index,item){
-                                    delete_arr.push(item.funcid);
-                                });
-                                var params = {
-                                    divisionid:formitem.divisionid,
-                                    deleteid:delete_arr,
-                                    funcid:funcid_arr
-
-                                };
 
 
                             var success=function(){
-                                $.messager.alert('操作成功','配置角色功能成功!');
-                                $('#divisionmanagerpanel').datagrid('reload');
+                                $.messager.alert('操作成功','修改行政区划成功!');
+                                //console.log(params.divisionid);
+                                //var parentid=$('#divisionmanagerpanel').treegrid('getParent',params.divisionid) ;
+                                //console.log(parentid);
+                                $('#divisionmanagerpanel').treegrid('reload',params.parentid);
                             };
                             var errorfunc=function(){
-                                $.messager.alert('操作失败','配置角色功能失败!');
+                                $.messager.alert('操作失败','修改行政区划失败!');
                             };
-                            ajaxfrom.ajaxsend('post','json','ajax/makedivisionfunc.jsp',params,success,null,errorfunc);
+                            ajaxfrom.ajaxsend('post','json','ajax/editdivision.jsp',params,success,null,errorfunc);
                         });
                     }
                 }

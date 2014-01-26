@@ -15,7 +15,9 @@ define(function () {
                     require(['jqueryplugin/jquery-form'],function(AjaxFormjs){
                         var success=function(data, jqForm, options)
                         {
-                            console.log(data);
+                            //console.log(data);
+                            $('#newchapterwin').dialog('close');
+                            $('#divisioninfoform').form('load',{signaturepath:data.filepath});
                             /*$('#affixfilegrid').datagrid('appendRow',{
                                 attachmentname: data.filename,
                                 attachmentpath:data.filepath
