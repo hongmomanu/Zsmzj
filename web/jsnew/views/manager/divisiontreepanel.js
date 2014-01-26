@@ -106,6 +106,18 @@ define(function () {
             }
 
         });
+        $('#divisioninfoform .resetchapter').click(function(){
+            if($('#newchapterwin').length>0){
+                $('#newchapterwin').dialog('open');
+            }else{
+                require(['text!views/manager/newchapter.htm','views/manager/newchapter'],
+                    function(div,newchapterjs){
+                        $('body').append(div);
+                        newchapterjs.render();
+                    });
+            }
+
+        });
 
     }
 

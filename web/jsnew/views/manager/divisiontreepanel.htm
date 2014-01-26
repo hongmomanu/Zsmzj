@@ -23,19 +23,31 @@
             <div style="padding:10px 0 10px 60px;">
 
             <form id="divisioninfoform" method="post">
-            <table>
+            <table class="formtable">
                 <tr>
                     <td>行政区划名:</td>
                     <td><input class="easyui-validatebox" type="text" name="divisionname" data-options="required:true"></td>
                 </tr>
 
                 <tr>
-                    <td>上传图章:</td>
+                    <td>图章地址:</td>
                     <td>
                     <input type="text" name="signaturepath" >
                     </td>
                 </tr>
+
                 <tr>
+                    <td>重设图章:</td>
+                    <td>
+                        <a class="easyui-linkbutton resetchapter"  data-options="iconCls:'icon-edit'" >选择图片</a>
+                    </td>
+                </tr>
+
+
+
+
+
+                <tr style="display: none;">
                     <td>
                         <input type="text" name="divisionid" style="display: none;">
                     </td>

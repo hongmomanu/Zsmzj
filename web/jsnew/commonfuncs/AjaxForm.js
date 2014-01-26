@@ -130,7 +130,7 @@ define(function(){
            var compfunc=function(){
                $.messager.progress('close');
                if(complete)complete();
-           }
+           };
            $.ajax({
                type: method,
                dataType: type,
