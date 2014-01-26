@@ -12,7 +12,7 @@ define(function(){
                var success=function(res){
                    require(['jqueryplugin/raphael-min'],function(js){
                        var paper = Raphael('signatures',200, 200);
-                       var c = paper.image(res.signaturepath,0,0,200,200);
+                       var c = paper.image(res.signaturepath,50,50,200,200);
                        $('#signatures').draggable();
 
                    });
@@ -22,8 +22,6 @@ define(function(){
                };
                ajax.ajaxsend('post','json','ajax/getsignaturebyuid.jsp',params,success,null,errorfunc);
             });
-            /*console.log(item);
-            console.log(datares);*/
 
         }
 
