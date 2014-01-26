@@ -5,10 +5,8 @@ define(function () {
 
     function render(parameters,res) {
         $.parser.parse($(parameters));
-        testobj=$(parameters);
         var grid=$(parameters).find('.easyui-datagrid');
         var options = grid.datagrid('options');
-        //console.log(options);
         grid.datagrid(
             {
                 onBeforeLoad: function (params) {
