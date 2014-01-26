@@ -13,8 +13,12 @@ define(function () {
                 else params.node=row.id;
 
             },
-            onLoadSuccess : function() {
-                //为每个节点增加desc描述
+            onLoadSuccess : function(row,data) {
+                require(['commonfuncs/treegridtip'],function(){
+                    $("#divisionmanagerpanel").treegrid('tooltip',['text']);
+                });
+
+                //为每个节点增加描述
 
             },
             onClickRow:function(rowData){

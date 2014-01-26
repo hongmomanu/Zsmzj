@@ -5,7 +5,10 @@
         <table id="divisionmanagerpanel" >
             <thead>
             <tr>
-                <th data-options="field:'text',width:300">行政区划名</th>
+                <th data-options="field:'text',width:300,formatter:function(val,rowData,rowIndex){
+                     var signaturepath=rowData.signaturepath;
+                     return '<span signaturepath=&quot;'+signaturepath+'&quot; class=&quot;treedivision&quot;>' + val + '</span>';
+                }">行政区划名</th>
 
             </tr>
 
