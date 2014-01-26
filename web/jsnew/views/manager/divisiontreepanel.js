@@ -41,7 +41,8 @@ define(function () {
                             var params=$('#divisioninfoform').form("serialize");
                             var success=function(){
                                 $.messager.alert('操作成功','删除行政区划成功!');
-                                $('#divisionmanagerpanel').datagrid('reload');
+                                if(params.parentid==-1)$('#divisionmanagerpanel').treegrid('reload');
+                                else $('#divisionmanagerpanel').treegrid('reload',params.parentid);
                             };
                             var errorfunc=function(){
                                 $.messager.alert('操作失败','删除行政区划失败!');
@@ -57,18 +58,9 @@ define(function () {
                     if (r){
                         require(['jqueryplugin/easyui-form','commonfuncs/AjaxForm']
                             ,function(easyform,ajaxfrom){
-
-
                              var params=$('#divisioninfoform').form("serialize");
-;
-
-
-
                             var success=function(){
                                 $.messager.alert('操作成功','修改行政区划成功!');
-                                //console.log(params.divisionid);
-                                //var parentid=$('#divisionmanagerpanel').treegrid('getParent',params.divisionid) ;
-                                //console.log(parentid);
                                 $('#divisionmanagerpanel').treegrid('reload',params.parentid);
                             };
                             var errorfunc=function(){
@@ -81,6 +73,26 @@ define(function () {
             );
 
         });
+
+        $('#divisionformbtns .new').click(function(){
+
+                    require(['jqueryplugin/easyui-form','commonfuncs/AjaxForm']
+                        ,function(easyform,ajaxfrom){
+                            var params=$('#divisioninfoform').form("serialize");
+                            params.parentid=params.divisionid;
+                            var success=function(){
+                                $.messager.alert('操作成功','新增行政区划成功!');
+                                $('#divisionmanagerpanel').treegrid('reload',params.divisionid);
+                            };
+                            var errorfunc=function(){
+                                $.messager.alert('操作失败','新增行政区划失败!');
+                            };
+                            ajaxfrom.ajaxsend('post','json','ajax/addnewdivision.jsp',params,success,null,errorfunc);
+                        });
+            }
+            );
+
+
 
         $('#divisionpaneltb .newdivision').click(function(){
             if($('#newdivisionwin').length>0){
