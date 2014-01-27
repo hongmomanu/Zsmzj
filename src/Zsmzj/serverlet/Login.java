@@ -10,7 +10,10 @@ package Zsmzj.serverlet;
 import Zsmzj.manager.usermanager.business.UserControl;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Map;
+import java.util.StringTokenizer;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +42,19 @@ public class Login extends HttpServlet {
         String username=request.getParameter("username");
         //System.out.println(request.getCharacterEncoding());
         String password=request.getParameter("password");
+        String userpwd=request.getParameter("userpwd"); //兼容统一登陆
+        if(null==password){
+            password=userpwd;
+            String decodeing="UTF-8";
+            StringTokenizer st = new StringTokenizer(request.getHeader("User-Agent"),";");
+            st.nextToken();//得到用户的浏览器名
+            String userbrowser = st.nextToken();
+            if(userbrowser.toUpperCase().contains("MSIE")){ //如果是ie浏览器进行GBK解码
+                decodeing="GBK";
+            }
+            username=new String(username.getBytes("ISO-8859-1"),decodeing); //处理url中用户名的编码
+        }
+
         UserControl user=new UserControl();
         Map<String,Object> login_obj=user.login(username, password);
         if(Boolean.parseBoolean(login_obj.get("issuccess").toString())){
@@ -97,5 +113,7 @@ public class Login extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+
 }
 
