@@ -24,7 +24,9 @@ public class EnumDao {
     public ArrayList<Map<String, Object>>  getEnums(int start, int limit, String keyword){
         Connection testConn= JdbcFactory.getConn("sqlite");
         String sql=  "select enumeratelabel,enumeratevalue,rowid,enumeratetype from "+
-                Enum_Table+" Limit "+limit+" Offset "+ start;
+                Enum_Table;
+        if(keyword!=null &&!keyword.equals(""))sql+=" where enumeratelabel like '%"+keyword+"%'";
+        sql+=" Limit "+limit+" Offset "+ start;
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
         ArrayList<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         try {

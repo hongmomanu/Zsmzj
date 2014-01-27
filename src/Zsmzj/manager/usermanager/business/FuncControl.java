@@ -19,7 +19,9 @@ import java.util.Map;
  */
 public class FuncControl {
     private  final String FuncTable="functions";
-    public String getFuncs(int start,int limit,String keyword){
+    public String getFuncs(int start,int limit,String keyword,String totalname,String rowsname){
+        if(totalname==null||totalname.equals(""))totalname="totalCount";
+        if(rowsname==null||rowsname.equals(""))rowsname="results";
 
         FuncImplement func=new FuncImplement();
         ComonDao cd=new ComonDao();
@@ -33,8 +35,8 @@ public class FuncControl {
         int totalnum= cd.getTotalCountBySql(sqlCount);
         ArrayList<Map<String,Object>> list=func.getFuncs(start, limit, keyword);
         Map<String,Object>res=new HashMap<String, Object>();
-        res.put("totalCount",totalnum);
-        res.put("results",list);
+        res.put(totalname,totalnum);
+        res.put(rowsname,list);
         return JSONObject.fromObject(res).toString();
 
     }
@@ -51,6 +53,12 @@ public class FuncControl {
         if(leaf !=null){
             for(Map<String, Object> item:result){
                 item.put("leaf",true);
+                item.put("state","open");
+            }
+        }
+        else{
+            for(Map<String, Object> item:result){
+                item.put("state","closed");
             }
         }
 

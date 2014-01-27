@@ -1,5 +1,7 @@
 package Zsmzj.manager.usermanager.business;
 
+import Zsmzj.conmmon.ComonDao;
+import Zsmzj.manager.usermanager.dao.UserDao;
 import Zsmzj.manager.usermanager.impl.UserImplement;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -16,10 +18,25 @@ import java.util.Map;
  * To change this template use File | Settings | File Templates.
  */
 public class UserControl {
-    public String getUsers(int start,int limit,String keyword){
+    private static String  UserTable="users";
+    public String getUsers(int start,int limit,String keyword,String totalname,String rowsname){
 
         UserImplement user=new UserImplement();
-        return JSONArray.fromObject(user.getUsers(start, limit, keyword)).toString();
+        ArrayList list=user.getUsers(start, limit, keyword);
+
+        if(totalname==null){
+            return   JSONArray.fromObject(list).toString();
+        }else{
+            String sql="select count(*) from "+ UserTable;
+            if(keyword!=null)sql+=" where username like '%"+keyword+"%'";
+            ComonDao cd=new ComonDao();
+
+            Map<String,Object> res=new HashMap<String, Object>();
+            res.put(rowsname,list);
+            res.put(totalname,cd.getTotalCountBySql(sql));
+            return  JSONObject.fromObject(res).toString();
+        }
+
 
     }
     public String EditUser(int userid,String username,String displayname,String password,boolean iscommon,String oldpassword){

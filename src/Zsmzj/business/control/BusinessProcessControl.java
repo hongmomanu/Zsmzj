@@ -182,7 +182,7 @@ public class BusinessProcessControl {
         }
         int totalnum=cd.getTotalCountBySql(num_sql);
         if(totalnum>0&&isnew){
-            return "{success:true,msg:\"资金已发放，若想重新发放请点击资金重新发放\"}";
+            return "{\"success\":true,\"msg\":\"资金已发放，若想重新发放请点击资金重新发放\"}";
         }
         else{
             String delsql="delete from "+GrantTable+" where rowid in(select a.rowid from "+GrantTable+" a,"+BusinessTable+
@@ -213,27 +213,29 @@ public class BusinessProcessControl {
                 param.put("adjustmoney",adjustmoney);
                 bDao.insertTableVales(param, GrantTable);
             }
-            return "{success:true,msg:\"资金已发\"}";
+            return "{\"success\":true,\"msg\":\"资金已发\"}";
         }
 
     }
     public String changeStatusbybid(int businessid,String status){
         BusinessProcess bp=new BusinessProcess();
         int result=bp.changeStatus(businessid,status);
-        if(result>0)return "{success:true}";
-        else  return "{success:false}";
+        if(result>0)return "{\"success\":true}";
+        else  return "{\"success\":false}";
     }
     public String changeProcessStatustype(int businessid,String processstatustype,String processstatus){
         BusinessProcess bp=new BusinessProcess();
         int result=bp.changeProcessStatustype(businessid,processstatustype,processstatus);
-        if(result>0)return "{success:true}";
-        else  return "{success:false}";
+        if(result>0)return "{\"success\":true}";
+        else  return "{\"success\":false}";
 
 
     }
     public String getGrantMoneyBytype(String type,String bgmonth,String keyword,String[]name,
                                       String[]compare,String[]value,String[]logic,int start,int limit,
-                                      String bgdate,String eddate,String divisionpath){
+                                      String bgdate,String eddate,String divisionpath,String totalname,String rowsname){
+        totalname=totalname==null?"totalCount":totalname;
+        rowsname=rowsname==null?"results":rowsname;
         SimpleDateFormat sDateFormat   =   new SimpleDateFormat("yyyy-MM");
         SimpleDateFormat syearFormat   =   new SimpleDateFormat("yyyy");
         String basic_sql= " a.id=b.businessid "
@@ -536,14 +538,15 @@ public class BusinessProcessControl {
         ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
 
         Map<String,Object>res=new HashMap<String, Object>();
-        res.put("totalCount",totalnum);
-        res.put("results",list);
+        res.put(totalname,totalnum);
+        res.put(rowsname,list);
         return JSONObject.fromObject(res).toString();
     }
 
 
 
-    public String getStatisticsBytype(String type,String bgmonth,int divisionpid,String businesstype,String divisionpath){
+    public String getStatisticsBytype(String type,String bgmonth,int divisionpid,String businesstype,
+                                      String divisionpath,boolean isonlychild){
         SimpleDateFormat sDateFormat   =   new SimpleDateFormat("yyyy-MM");
         String edmonth="";
         if(bgmonth==null||bgmonth.equals("")) bgmonth=sDateFormat.format(new   java.util.Date());
@@ -1095,13 +1098,29 @@ public class BusinessProcessControl {
             res.put("children",list);
 
         }
+        if(isonlychild){
+            JSONArray array_list=JSONArray.fromObject(res.get("children"));
+            JSONArray new_list=new JSONArray();
+            for(Object list_item:array_list){
+                JSONObject new_item=JSONObject.fromObject(list_item);
+                new_item.put("state","closed");
+                new_list.add(new_item);
+            }
+            return  JSONArray.fromObject(new_list).toString();
+        }else{
+            return JSONObject.fromObject(res).toString();
+        }
 
-        return JSONObject.fromObject(res).toString();
 
     }
 
     public String getFamilyInfoList(int start,int limit,String keyword,String businesstype,String[]name,
-                                    String[]compare,String[]value,String[]logic,String bgdate,String eddate,String divisionpath){
+                                    String[]compare,String[]value,String[]logic,String bgdate,String eddate,
+                                    String divisionpath,String totalname,String rowsname){
+
+        totalname=totalname==null?"totalCount":totalname;
+        rowsname=rowsname==null?"results":rowsname;
+
         BusinessProcess bp=new BusinessProcess();
         ComonDao cd=new ComonDao();
 
@@ -1130,7 +1149,7 @@ public class BusinessProcessControl {
 
                 //int totalnum =cd.getTotalCount(BusinessTable);
 
-        String sql_list="select a.*" +
+        String sql_list="select a.*,a.id as businessid " +
 
                 /*
 
@@ -1247,11 +1266,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" a.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endyear+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" (a.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endyear+"') and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1271,11 +1290,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+" where "+col_name+" Between '"+endyear
+                        sql=" "+logic[i]+" a.id in (select id from "+fulltable+" where "+col_name+" Between '"+endyear
                                 +"' and  '"+value[i]+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+" where "+col_name+" Between '"+endyear
+                        sql=" "+logic[i]+" (a.id in (select id from "+fulltable+" where "+col_name+" Between '"+endyear
                                 +"' and  '"+value[i]+"') and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1297,11 +1316,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" a.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endmonth+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" (a.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endmonth+"')  and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1323,11 +1342,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" a.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endmonth+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" (a.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+endmonth+"')  and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1348,11 +1367,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+" where "+col_name+" Between '"+endmonth
+                        sql=" "+logic[i]+" a.id in (select id from "+fulltable+" where "+col_name+" Between '"+endmonth
                                 +"' and  '"+value[i]+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+" where "+col_name+" Between '"+endmonth
+                        sql=" "+logic[i]+" (a.id in (select id from "+fulltable+" where "+col_name+" Between '"+endmonth
                                 +"' and  '"+value[i]+"')  and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1375,11 +1394,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" a.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+value[i]+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" (a.id in (select id from "+fulltable+" where "+col_name+" Between '"+value[i]
                                 +"' and  '"+value[i]+"')  and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1401,11 +1420,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+"  where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" a.id in (select id from "+fulltable+"  where "+col_name+" Between '"+value[i]
                                 +"' and  '"+enddate+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+"  where "+col_name+" Between '"+value[i]
+                        sql=" "+logic[i]+" (a.id in (select id from "+fulltable+"  where "+col_name+" Between '"+value[i]
                                 +"' and  '"+enddate+"')  and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1426,11 +1445,11 @@ public class BusinessProcessControl {
 
                     String sql=" ";
                     if(logic[i].equals("and")){
-                        sql=" "+logic[i]+" b.id in (select id from "+fulltable+"  where "+col_name+" Between '"+enddate
+                        sql=" "+logic[i]+" a.id in (select id from "+fulltable+"  where "+col_name+" Between '"+enddate
                                 +"' and  '"+value[i]+"') ";
 
                     }else{
-                        sql=" "+logic[i]+" (b.id in (select id from "+fulltable+"  where "+col_name+" Between '"+enddate
+                        sql=" "+logic[i]+" (a.id in (select id from "+fulltable+"  where "+col_name+" Between '"+enddate
                                 +"' and  '"+value[i]+"')  and ("+basic_sql+")) ";
                     }
                     sql_list+=sql;
@@ -1512,14 +1531,18 @@ public class BusinessProcessControl {
                     getProcessFromChinese(map.get("processstatus").toString())));
         }
         Map<String,Object>res=new HashMap<String, Object>();
-        res.put("totalCount",totalnum);
-        res.put("results",list);
+        res.put(totalname,totalnum);
+        res.put(rowsname,list);
         return JSONObject.fromObject(res).toString();
 
 
     }
     public String getPeopleInfoList(int start ,int limit,String keyword,String businesstype,String[]name,
-                                    String[]compare,String[]value,String[]logic,String bgdate,String eddate,String divisionpath){
+                                    String[]compare,String[]value,String[]logic,String bgdate,String eddate,
+                                    String divisionpath,String totalname,String rowsname){
+        totalname=totalname==null?"totalCount":totalname;
+        rowsname=rowsname==null?"results":rowsname;
+
         BusinessProcess bp=new BusinessProcess();
         ComonDao cd=new ComonDao();
 
@@ -1941,8 +1964,8 @@ public class BusinessProcessControl {
             map.put("process", ProcessType.UseProcessType.getNext(ProcessType.UseProcessType.
                     getProcessFromChinese(map.get("processstatus").toString())));
         }
-        res.put("totalCount",totalnum);
-        res.put("results",list);
+        res.put(totalname,totalnum);
+        res.put(rowsname,list);
         return JSONObject.fromObject(res).toString();
 
     }
@@ -1965,10 +1988,10 @@ public class BusinessProcessControl {
         BusinessProcessDao bpdao=new BusinessProcessDao();
         int result=bpdao.updatedatabyid(id,tablename,idname,isrowid,params);
         if(result>0){
-            return "{isok:true,success:true}";
+            return "{\"isok\":true,\"success\":true}";
         }
         else{
-            return "{isok:false,success:false}";
+            return "{\"isok\":false,\"success\":false}";
         }
 
     }
@@ -1976,10 +1999,10 @@ public class BusinessProcessControl {
         BusinessProcessDao bpdao=new BusinessProcessDao();
         int result=bpdao.deldatabyid(id,tablename,idname,isrowid);
         if(result>0){
-            return "{isok:true}";
+            return "{\"isok\":true}";
         }
         else{
-            return "{isok:false}";
+            return "{\"isok\":false}";
         }
 
     }
@@ -2068,7 +2091,10 @@ public class BusinessProcessControl {
     }
 
     public String getNeedTodoBusinessList(int start,int limit,String keyword,String type,
-                                          String businesstype,boolean ispublicinfo,String bgdate,String edddate,String divisionpath){
+                                          String businesstype,boolean ispublicinfo,String bgdate,
+                                          String edddate,String divisionpath,String totalname,String rowsname){
+        totalname=totalname==null?"totalCount":totalname;
+        rowsname=rowsname==null?"results":rowsname;
         BusinessProcess bp=new BusinessProcess();
         ComonDao cd=new ComonDao();
         SimpleDateFormat sDayFormat   =   new SimpleDateFormat("yyyy-MM-dd");
@@ -2190,8 +2216,8 @@ public class BusinessProcessControl {
 
         //totalnum=cd.getTotalCountBySql(sql_count);
         Map<String,Object>res=new HashMap<String, Object>();
-        res.put("totalCount",totalnum);
-        res.put("results",list);
+        res.put(totalname,totalnum);
+        res.put(rowsname,list);
         return JSONObject.fromObject(res).toString();
 
     }
@@ -2199,7 +2225,9 @@ public class BusinessProcessControl {
 
 
 
-    public String getProcessHistorybid(int businessid,int start,int limit){
+    public String getProcessHistorybid(int businessid,int start,int limit,String totalname,String rowsname){
+        totalname=totalname==null?"totalCount":totalname;
+        rowsname=rowsname==null?"results":rowsname;
         ComonDao cd=new ComonDao();
         String sql="select count(*) from "+ApprovalTable +" where businessid MATCH "+businessid;
         int totalnum= cd.getTotalCountBySql(sql);
@@ -2208,8 +2236,8 @@ public class BusinessProcessControl {
                 +" and a.userid = b.id order by a.time desc Limit "+limit+" Offset "+start;
         ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
         Map<String,Object>res=new HashMap<String, Object>();
-        res.put("totalCount",totalnum);
-        res.put("results",list);
+        res.put(totalname,totalnum);
+        res.put(rowsname,list);
         return JSONObject.fromObject(res).toString();
 
     }
@@ -2252,7 +2280,7 @@ public class BusinessProcessControl {
                 bp.changeStatus(Integer.parseInt(businessid), staus);
                 conn.commit();
                 conn.setAutoCommit(true);
-                return "{success:true}";
+                return "{\"success\":true}";
             } catch (Exception e) {
                 e.printStackTrace();
                 log.debug(e.getMessage());
@@ -2261,13 +2289,13 @@ public class BusinessProcessControl {
                 } catch (SQLException e1) {
                     e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                 }finally {
-                    return"{success:false,msg:\""+e.getMessage()+"\"}";
+                    return"{\"success\":false,\"msg\":\""+e.getMessage()+"\"}";
                 }
                 //e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }
 
         }else{
-            return"{success:false,msg:\"已操作\"}";
+            return"{\"success\":false,\"msg\":\"已操作\"}";
 
         }
 
@@ -2295,7 +2323,7 @@ public class BusinessProcessControl {
                 bp.changeStatus(Integer.parseInt(businessid), staus); //更新表单状态为前一个状态
                 conn.commit();
                 conn.setAutoCommit(true);
-                return "{success:true}";
+                return "{\"success\":true}";
             } catch (Exception e) {
                 e.printStackTrace();
                 log.debug(e.getMessage());
@@ -2304,12 +2332,12 @@ public class BusinessProcessControl {
                 } catch (SQLException e1) {
                     e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                 }finally {
-                    return"{success:false,msg:\""+e.getMessage()+"\"}";
+                    return"{\"success\":false,\"msg\":\""+e.getMessage()+"\"}";
                 }
             }
 
         }else{
-            return"{success:false,msg:\"已操作\"}";
+            return"{\"success\":false,\"msg\":\"已操作\"}";
 
         }
 
@@ -2321,8 +2349,8 @@ public class BusinessProcessControl {
     public String changeBusinessStatus(int businessid,String status){
         BusinessProcess bp=new BusinessProcess();
         int result=bp.changeStatus(businessid,status);
-        if(result>0)return "{success:true}";
-        else  return "{success:false}";
+        if(result>0)return "{\"success\":true}";
+        else  return "{\"success\":false}";
 
     }
 
@@ -2378,8 +2406,8 @@ public class BusinessProcessControl {
         int result=bp.delBusinessbybid(businessid);
         ComonDao cd=new ComonDao();
         cd.delbysql("delete from "+VirtualindexTable +" where oid="+businessid+" and otable='"+BusinessTable+"'");
-        if(result>0)return "{success:true}";
-        else  return "{success:false}";
+        if(result>0)return "{\"success\":true}";
+        else  return "{\"success\":false}";
 
     }
     public String logoutUpdateBusinessApply(int businessid,Map<String,Object> params,String familymembers,
@@ -2390,12 +2418,16 @@ public class BusinessProcessControl {
             conn.setAutoCommit(false);
             this.changeStatusbybid(businessid,ProcessType.UseProcessType.getChineseSeason(ProcessType.Apply));
             bp.updateApplyBusiness(businessid,params);
+
+            if(affixfiles!=null&&!affixfiles.equals(""))bp.updateAffixFiles(affixfiles, businessid);
+            if(familymembers!=null&&!familymembers.equals(""))bp.updateFamilyMembers(familymembers,businessid);
+            if(signatures!=null&&!signatures.equals(""))bp.updateSignatures(signatures,businessid);
             //bp.updateAffixFiles(affixfiles, businessid);
             //bp.updateFamilyMembers(familymembers,businessid);
             //bp.updateSignatures(signatures,businessid);
             conn.commit();
             conn.setAutoCommit(true);
-            return "{success:true}";
+            return "{\"success\":true}";
         } catch (Exception e) {
             log.debug(e.getMessage());
             try {
@@ -2403,7 +2435,7 @@ public class BusinessProcessControl {
             } catch (SQLException e1) {
                 e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }finally {
-                return"{success:false}";
+                return"{\"success\":false}";
             }
             //e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
@@ -2431,14 +2463,12 @@ public class BusinessProcessControl {
 
             this.changeStatusbybid(businessid,ProcessType.UseProcessType.getChineseSeason(ProcessType.Apply));
             bp.updateApplyBusiness(businessid,params);
-            bp.updateAffixFiles(affixfiles, businessid);
-            log.debug("start============================");
-            bp.updateFamilyMembers(familymembers,businessid);
-            log.debug("end============================");
-            bp.updateSignatures(signatures,businessid);
+            if(affixfiles!=null&&!affixfiles.equals(""))bp.updateAffixFiles(affixfiles, businessid);
+            if(familymembers!=null&&!familymembers.equals(""))bp.updateFamilyMembers(familymembers,businessid);
+            if(signatures!=null&&!signatures.equals(""))bp.updateSignatures(signatures,businessid);
             conn.commit();
             conn.setAutoCommit(true);
-            return "{success:true}";
+            return "{\"success\":true}";
         } catch (Exception e) {
             log.debug(e.getMessage());
             try {
@@ -2446,7 +2476,7 @@ public class BusinessProcessControl {
             } catch (SQLException e1) {
                 e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }finally {
-                return"{success:false}";
+                return"{\"success\":false}";
             }
             //e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
@@ -2462,13 +2492,13 @@ public class BusinessProcessControl {
         try {
             conn.setAutoCommit(false);
             bp.updateApplyBusiness(businessid,params);
-            bp.updateAffixFiles(affixfiles, businessid);
-            bp.updateFamilyMembers(familymembers,businessid);
-            bp.updateSignatures(signatures,businessid);
+            if(affixfiles!=null&&!affixfiles.equals(""))bp.updateAffixFiles(affixfiles, businessid);
+            if(familymembers!=null&&!familymembers.equals(""))bp.updateFamilyMembers(familymembers,businessid);
+            if(signatures!=null&&!signatures.equals(""))bp.updateSignatures(signatures,businessid);
             conn.commit();
             conn.setAutoCommit(true);
 
-            return "{success:true}";
+            return "{\"success\":true}";
         } catch (Exception e) {
             log.debug(e.getMessage());
             try {
@@ -2476,7 +2506,7 @@ public class BusinessProcessControl {
             } catch (SQLException e1) {
                 e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }finally {
-                return"{success:false}";
+                return"{\"success\":false}";
             }
             //e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
@@ -2485,8 +2515,8 @@ public class BusinessProcessControl {
     public String saveCommonForm(Map<String,Object> params,String tablename){
         BusinessProcessDao bDao=new BusinessProcessDao();
         int result= bDao.insertTableVales(params, tablename);
-        if(result>0)return "{success:true}";
-        else  return "{success:false}";
+        if(result>0)return "{\"success\":true}";
+        else  return "{\"success\":false}";
 
     }
     public String saveNewBusinessApply(Map<String,Object> params,String familymembers,
@@ -2505,8 +2535,8 @@ public class BusinessProcessControl {
                 aid+",'"+BusinessTable+"','"+FamilyTable+"')";
         cd.delbysql(insert_sql);*/
 
-        if(businessid>0)return "{success:true}";
-        else  return "{success:false}";
+        if(businessid>0)return "{\"success\":true}";
+        else  return "{\"success\":false}";
 
     }
 

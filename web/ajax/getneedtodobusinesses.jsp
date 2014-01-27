@@ -21,13 +21,15 @@
         int start=Integer.parseInt(request.getParameter("start"));
         int limit=Integer.parseInt(request.getParameter("limit"));
         String keyword=request.getParameter("keyword");
+        String totalname=request.getParameter("totalname");
+        String rowsname=request.getParameter("rowsname");
         String type=request.getParameter("type");
         String bgdate=request.getParameter("bgdate");
         String eddate=request.getParameter("eddate");
         String businesstype=request.getParameter("businesstype");
         String divisionpath=request.getParameter("divisionpath");
         boolean ispublicinfo=request.getParameter("ispublicinfo")!=null?Boolean.parseBoolean(request.getParameter("ispublicinfo")):false;
-        out.print(bp.getNeedTodoBusinessList(start,limit,keyword,type,businesstype,ispublicinfo,bgdate,eddate,divisionpath));
+        out.print(bp.getNeedTodoBusinessList(start,limit,keyword,type,businesstype,ispublicinfo,bgdate,eddate,divisionpath,totalname,rowsname));
     }
     //out.print("ok");
 %>

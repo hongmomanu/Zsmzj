@@ -332,7 +332,7 @@ public class BusinessProcessDao {
 
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
         try {
-            pstmt.setInt(1,id);
+            pstmt.setString(1,String.valueOf(id));
             return pstmt.executeUpdate();
 
         }catch (Exception E){

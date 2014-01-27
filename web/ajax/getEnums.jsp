@@ -18,8 +18,10 @@
     else{
         int start=Integer.parseInt(request.getParameter("start"));
         int limit=Integer.parseInt(request.getParameter("limit"));
+        String totalname = request.getParameter("totalname");
+        String rowsname = request.getParameter("rowsname");
         String keyword=request.getParameter("keyword");
         EnumControl obj=new EnumControl();
-        out.print(obj.getEnums(start,limit,keyword));
+        out.print(obj.getEnums(start,limit,keyword,totalname,rowsname));
     }
 %>

@@ -43,7 +43,10 @@ public class RoleControl {
         return JSONObject.fromObject(res).toString();
 
     }
-    public String getRoleFuncs(int start,int limit,String keyword,int roleid,String type){
+    public String getRoleFuncs(int start,int limit,String keyword,int roleid,
+                               String type,String totalname,String rowsname){
+        totalname=totalname==null?"totalCount":totalname;
+        rowsname=rowsname==null?"results":rowsname;
         FuncImplement func=new FuncImplement();
         ComonDao cd=new ComonDao();
 
@@ -81,8 +84,8 @@ public class RoleControl {
         }
 
         Map<String,Object>res=new HashMap<String, Object>();
-        res.put("totalCount",totalnum);
-        res.put("results",result);
+        res.put(totalname,totalnum);
+        res.put(rowsname,result);
         return JSONObject.fromObject(res).toString();
 
     }

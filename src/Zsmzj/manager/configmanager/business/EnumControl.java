@@ -1,9 +1,11 @@
 package Zsmzj.manager.configmanager.business;
 
+import Zsmzj.conmmon.ComonDao;
 import Zsmzj.manager.configmanager.impl.EnumImplement;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,10 +17,24 @@ import java.util.Map;
  * To change this template use File | Settings | File Templates.
  */
 public class EnumControl {
-    public String getEnums(int start,int limit,String keyword){
+    private static String Enum_Table="enumerate";
+    public String getEnums(int start,int limit,String keyword,String totalname,String rowsname){
 
         EnumImplement myenum= new EnumImplement();
-        return JSONArray.fromObject(myenum.getEnums(start, limit, keyword)).toString();
+        ArrayList list=myenum.getEnums(start, limit, keyword);
+        if(totalname==null){
+            return JSONArray.fromObject(list).toString();
+        }
+        else{
+            String sql="select count(*) from "+ Enum_Table;
+            if(keyword!=null)sql+=" where enumeratelabel like '%"+keyword+"%'";
+            ComonDao cd=new ComonDao();
+            Map<String,Object> res=new HashMap<String, Object>();
+            res.put(rowsname,list);
+            res.put(totalname,cd.getTotalCountBySql(sql));
+            return  JSONObject.fromObject(res).toString();
+        }
+
 
     }
 

@@ -27,7 +27,10 @@ public class UserDao {
     public ArrayList<Map<String, Object>> getUsers(int start, int limit, String keyword) {
         Connection testConn= JdbcFactory.getConn("sqlite");
         String sql=  "select a.username,a.time,a.id,a.password,a.displayname,b.rolename from "+UserTable+" as a,"+RoleTable+" as b " +
-                " where a.roleid=b.id Limit "+limit+" Offset "+ start;
+                " where a.roleid=b.id ";
+        if(keyword!=null)sql+=" and username like '%"+keyword+"%' ";
+        sql+=" Limit "+limit+" Offset "+ start;
+
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
         ArrayList<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         try {
