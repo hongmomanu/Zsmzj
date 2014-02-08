@@ -76,6 +76,7 @@ define(function(){
                        affixfiles.push({"accountimgpath":[{'attachmentname':'照片',
                            'attachmentpath':$('#personimg').attr('src')}]});
                        var signatures=[];
+
                        if(submitype==='new'){
                            var businesstype=$('#tabs').tabs('getSelected').panel('options').businesstype;
                            param.businesstype=businesstype;
@@ -84,7 +85,16 @@ define(function(){
                            param.isprocess=$('#appformsubmit').attr('isprocess');
                        }else if(submitype==='save'){
                            param.businessid=datares.record.id;
+
+                           var item_obj={};
+                           item_obj['businessid']=datares.record.id;
+                           item_obj['userid']=userid;
+                           item_obj['x']=$('#signatures').offset().top+$('#signatures').parent().scrollTop();
+                           item_obj['y']=$('#signatures').offset().left;
+                           signatures.push(item_obj);
+
                            param.signatures=$.toJSON(signatures);
+
                            me.caculatefutrue(datares,FilterGridrow,param);
                        }else if(submitype==='savechange'){
                            param.businessid=datares.record.id;
