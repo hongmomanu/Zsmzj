@@ -13,17 +13,26 @@ define(function(){
                var familyincome=parseFloat(incomesum)+parseFloat(propertysum);
                var poorstandard=parseFloat($('#poorstandard').length>0?$('#poorstandard').val():form['poorstandard']);
                var incomesumareaperson=parseFloat(incomesum)/12/rows.length;
-
-               var disablednum =FilterGridrow.ByFields(rows,['isenjoyed'],[isenjoyedtype.yes]).length;
+               var disablednum=FilterGridrow.ByFields(rows,['disabledlevel'],disabledtype.heavy);
+               //var disablednum =FilterGridrow.ByFields(rows,['isenjoyed'],[isenjoyedtype.yes]).length;
                var totalmoney=poorstandard*disablednum;
                var averageincome=(familyincome/rows.length/12).toFixed(1);
-               var minpercent=0.4;
-               var helpmomey=poorstandard-averageincome;
-               if(helpmomey<minpercent*poorstandard){
-                   totalmoney+=(minpercent*poorstandard)*(rows.length-disablednum);
-               }else{
-                   totalmoney+=helpmomey.toFixed(1)*(rows.length-disablednum);
+
+               var businesstype=$('#tabs').tabs('getSelected').panel('options').businesstype;
+               if(businesstype===businessTableType.dbgl){
+                   var minpercent=0.4;
+                   var helpmomey=poorstandard-averageincome;
+                   if(helpmomey<minpercent*poorstandard){
+                       totalmoney+=(minpercent*poorstandard)*(rows.length-disablednum);
+                   }else{
+                       totalmoney+=helpmomey.toFixed(1)*(rows.length-disablednum);
+                   }
+               }else if(businesstype===businessTableType.dbbyh){
+                   var totalmoney=poorstandard*disablednum;
+                   totalmoney+=poorstandard*0.2*(rows.length-disablednum);
+                   console.log(totalmoney);
                }
+
 
                params.disabledpersons=disablednum;
                params.enjoyednum=FilterGridrow.ByFields(rows,['isenjoyed'],[isenjoyedtype.yes]).length;
