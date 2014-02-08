@@ -30,7 +30,6 @@ define(function(){
                }else if(businesstype===businessTableType.dbbyh){
                    var totalmoney=poorstandard*disablednum;
                    totalmoney+=poorstandard*0.2*(rows.length-disablednum);
-                   console.log(totalmoney);
                }
 
 
@@ -119,7 +118,7 @@ define(function(){
 
                        }
                        if($('#familymembersgrid').length>0)param.familymembers=$.toJSON($('#familymembersgrid').datagrid('getRows'));
-                       if($('.affixfile').length>0)param.affixfiles=$.toJSON(affixfiles);//附件数据
+                       if($('.affixfile').length>0||affixfiles.length>0)param.affixfiles=$.toJSON(affixfiles);//附件数据
 
                    }
                    return isValid;
