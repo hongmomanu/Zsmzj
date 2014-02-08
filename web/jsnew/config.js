@@ -713,12 +713,12 @@ var applyformviews={
 
     ],'dbedgeapply':[
         'dbedgefamilybasicfieldset',
-        'dbglfamilymemberfieldset',
-        'dbglfamilymoneyfieldset',
-        'dbglfamilyhousefieldset',
-        'dbglfamilyinputfieldset',
-        'dbglfamilyaffixfieldset',
-        'dbglfamilyapplyfieldset',
+        '../dbgl/dbglfamilymemberfieldset',
+        '../dbgl/dbglfamilymoneyfieldset',
+        '../dbgl/dbglfamilyhousefieldset',
+        '../dbgl/dbglfamilyinputfieldset',
+        '../dbgl/dbglfamilyaffixfieldset',
+        '../dbgl/dbglfamilyapplyfieldset',
         'dbedgeapplysubmitfieldset'
     ],
     'dbedgealter':[

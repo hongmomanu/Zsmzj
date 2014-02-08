@@ -67,16 +67,25 @@ define(function(){
                 $('#familyincome').val(familyincome);
                 var poorstandard=$('#poorstandard');
                 if(poorstandard.length>0){
-                    var minpercent=0.4;
-                    var helpmomey=parseInt(poorstandard.val())-$('#averageincome').val();
-                    var disablednum=parseInt($('#disabledpersons').val());
-                    var totalmoney=parseFloat(poorstandard.val())*disablednum;
-                    if(helpmomey<minpercent*parseFloat(poorstandard.val())){
-                        totalmoney+=(minpercent*parseFloat(poorstandard.val()))*(num-disablednum);
-                    }else{
-                        totalmoney+=helpmomey.toFixed(1)*(num-disablednum)
+                    var businesstype=$('#tabs').tabs('getSelected').panel('options').businesstype;
+                    if(businesstype===businessTableType.dbgl){
+                        var minpercent=0.4;
+                        var helpmomey=parseInt(poorstandard.val())-$('#averageincome').val();
+                        var disablednum=parseInt($('#disabledpersons').val());
+                        var totalmoney=parseFloat(poorstandard.val())*disablednum;
+                        if(helpmomey<minpercent*parseFloat(poorstandard.val())){
+                            totalmoney+=(minpercent*parseFloat(poorstandard.val()))*(num-disablednum);
+                        }else{
+                            totalmoney+=helpmomey.toFixed(1)*(num-disablednum)
+                        }
+                        $('#totalhelpmoney').val(totalmoney.toFixed(1));
+
+                    }else if(businesstype===businessTableType.dbbyh){
+                        var disablednum=parseInt($('#disabledpersons').val());
+                        var totalmoney=parseInt(poorstandard.val())*disablednum;
+                        totalmoney+=parseFloat(poorstandard.val())*0.2*(num-disablednum)
+                        $('#totalhelpmoney').val(totalmoney.toFixed(1));
                     }
-                    $('#totalhelpmoney').val(totalmoney.toFixed(1));
 
 
                 }

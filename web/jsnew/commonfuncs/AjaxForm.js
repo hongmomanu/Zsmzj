@@ -89,8 +89,8 @@ define(function(){
                            var item_obj={};
                            item_obj['businessid']=datares.record.id;
                            item_obj['userid']=userid;
-                           item_obj['x']=$('#signatures').offset().top+$('#signatures').parent().scrollTop();
-                           item_obj['y']=$('#signatures').offset().left;
+                           item_obj['y']=$('#signatures').offset().top+$('#signatures').parent().scrollTop();
+                           item_obj['x']=$('#signatures').offset().left;
                            signatures.push(item_obj);
 
                            param.signatures=$.toJSON(signatures);

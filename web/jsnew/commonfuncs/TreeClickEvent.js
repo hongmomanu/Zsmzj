@@ -8,7 +8,7 @@ define(function(){
         ShowContent:function(htmlfile,jsfile,title,value,folder,res,id,businesstype){
             require(['commonfuncs/LookupItemName','commonfuncs/LoadingMask'],function(LookupItemName,LoadingMask){
                 LoadingMask.ajaxLoading();
-                require([htmlfile,jsfile],function(htmlfile,jsfile){
+                var require_render=function(htmlfile,jsfile){
 
                     var options= {
                         title: title,
@@ -45,7 +45,9 @@ define(function(){
 
                     //jsfile.render(lookupname,folder,LoadingMask,res);
 
-                });
+                };
+                require([htmlfile,jsfile],require_render);
+
 
             });
 
