@@ -28,16 +28,7 @@ define(['commonfuncs/PersonidValidator'], function (PersonidValidator) {
             }
         });
 
-        if(res){
-            $(parameters).form('load',res.form);
-            var affix=res.affixfile;
-            for(var i=0;i<affix.length;i++){
-                if(affix[i].attachmenttype=="accountimgpath"){
-                    $('#personimg').attr('src',affix[i].results[0].attachmentpath);
-                    break;
-                }
-            }
-        }
+
 
 
 
@@ -50,6 +41,16 @@ define(['commonfuncs/PersonidValidator'], function (PersonidValidator) {
 
         });
 
+        if(res){
+            $(parameters).form('load',res.form);
+            var affix=res.affixfile;
+            for(var i=0;i<affix.length;i++){
+                if(affix[i].attachmenttype=="accountimgpath"){
+                    $('#personimg').attr('src',affix[i].results[0].attachmentpath);
+                    break;
+                }
+            }
+        }
 
         $('#personimg').click(function () {
             $('#imgwin').window('open');
