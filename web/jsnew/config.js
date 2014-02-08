@@ -44,6 +44,7 @@ var formwidgettype={
     'dbedgealter':'dbedgebusinessalterform' ,
     'dbedgechange':'dbedgebusinesschangeform' ,
     'dbedgechangeclick':'dbedgebusinesschangeclickform',
+    'dbedgelogoutclick':'dbedgebusinesslogoutclickform',
     'dbedgelogout':'dbedgebusinesslogoutform',
     'medicalhelpapply':'medicalhelpbusinessapplyform',/*医疗救助申请表单*/
     'medicalhelpalter':'medicalhelpbusinessalterform',/*医疗救助申请表单修改*/
@@ -758,14 +759,25 @@ var applyformviews={
 
     ],'dbedgelogout':[
         'dbedgefamilybasicfieldset',
-        'dbglfamilymemberfieldset',
-        'dbglfamilymoneyfieldset',
-        'dbglfamilyhousefieldset',
-        'dbglfamilyinputfieldset',
-        'dbglfamilyaffixfieldset',
-        'dbglfamilyapplyfieldset',
+        '../dbgl/dbglfamilymemberfieldset',
+        '../dbgl/dbglfamilymoneyfieldset',
+        '../dbgl/dbglfamilyhousefieldset',
+        '../dbgl/dbglfamilyinputfieldset',
+        '../dbgl/dbglfamilyaffixfieldset',
+        '../dbgl/dbglfamilyapplyfieldset',
         'dbedgelogoutsubmitfieldset',
-        'dbglapplyhistoryfieldset'
+        '../dbgl/dbglapplyhistoryfieldset'
+
+    ],'dbedgelogoutclick':[
+        'dbedgefamilybasicfieldset',
+        '../dbgl/dbglfamilymemberfieldset',
+        '../dbgl/dbglfamilymoneyfieldset',
+        '../dbgl/dbglfamilyhousefieldset',
+        '../dbgl/dbglfamilyinputfieldset',
+        '../dbgl/dbglfamilyaffixfieldset',
+        '../dbgl/dbglfamilyapplyfieldset',
+        'dbedgelogoutsubmitfieldset',
+        '../dbgl/dbglapplyhistoryfieldset'
 
     ],'medicalhelpapply':[/*医疗救助申请表单分隔的各个小表单*/
         'medicalhelpfamilybasicfieldset',
