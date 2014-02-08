@@ -17,6 +17,7 @@ define(function(){
                         widgetname='dbglbusinessalterform';
                         folder='views/dbgl/';
                     }else if(data['businesstype']==businessTableType.dbbyh){
+                        folder='views/dbedge/';
                         widgetname='dbedgebusinessalterform';
                     }
                     else if(data['businesstype']==businessTableType.temporaryhelp){

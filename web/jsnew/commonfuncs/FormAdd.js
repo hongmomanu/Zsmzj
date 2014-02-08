@@ -15,7 +15,7 @@ define(function(){
             require([formhtml,formjs],function(formhtml,formjs){
                 $('#mainform').append(formhtml);
 
-                if(res){
+                if(res&&res.signature.length>0){
                     var signatures=res.signature;
                     if($('#signatures').parent().scrollTop()<=parseInt(signatures[0].y)&&
                         parseInt(signatures[0].y)<=$('#signatures').parent().scrollTop()

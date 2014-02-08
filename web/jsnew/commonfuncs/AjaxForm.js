@@ -86,12 +86,15 @@ define(function(){
                        }else if(submitype==='save'){
                            param.businessid=datares.record.id;
 
-                           var item_obj={};
-                           item_obj['businessid']=datares.record.id;
-                           item_obj['userid']=userid;
-                           item_obj['y']=$('#signatures').offset().top+$('#signatures').parent().scrollTop();
-                           item_obj['x']=$('#signatures').offset().left;
-                           signatures.push(item_obj);
+                           if($('#signatures').find('image').length>0){
+                               var item_obj={};
+                               item_obj['businessid']=datares.record.id;
+                               item_obj['userid']=userid;
+
+                               item_obj['y']=$('#signatures').offset().top+$('#signatures').parent().scrollTop();
+                               item_obj['x']=$('#signatures').offset().left;
+                               signatures.push(item_obj);
+                           }
 
                            param.signatures=$.toJSON(signatures);
 
