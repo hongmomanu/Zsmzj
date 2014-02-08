@@ -98,6 +98,8 @@ h2 {
      background:url('img/busiquery.gif') no-repeat;
  }.icon-new{
      background:url('img/edit_add.png') no-repeat;
+ }.icon-add{
+     background:url('img/edit_add.png') no-repeat;
  }
 .layout-split-proxy-h{
     position:absolute;
@@ -110,6 +112,15 @@ h2 {
 }
 
 /*业务图标*/
+.accord-dbgl{
+    background: url('img/icon/1.png')  no-repeat center center;
+}
+.accord-dbedge{
+    background: url('img/icon/2.png')  no-repeat center center;
+}
+.accord-temporary{
+    background: url('img/icon/3.png')  no-repeat center center;
+}
 .yw-busiapply{
     background: url('img/busiicon/busiapply.png')  no-repeat center center;
 }
