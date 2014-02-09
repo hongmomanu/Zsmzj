@@ -7,20 +7,23 @@
 --%>
 
 <%@ page import="Zsmzj.business.control.BusinessProcessControl" %>
-<%@ page language="java"  contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
 <%
-    if(request.getParameter("limit")==null){
-       out.print("缺少参数limit");
-    }if(request.getParameter("start")==null){
-        out.print("缺少参数start");
+    if (request.getParameter("limit") == null) {
+        out.print("缺少参数limit");
     }
-    else{
-        BusinessProcessControl bp=new BusinessProcessControl();
-        int start=Integer.parseInt(request.getParameter("start"));
-        int limit=Integer.parseInt(request.getParameter("limit"));
-        String query=request.getParameter("query");
-        String[]types=request.getParameterValues("type");
-        out.print(bp.searchbusinessbypid(start,limit,query,types));
+    if (request.getParameter("start") == null) {
+        out.print("缺少参数start");
+    } else {
+        BusinessProcessControl bp = new BusinessProcessControl();
+        int start = Integer.parseInt(request.getParameter("start"));
+        int limit = Integer.parseInt(request.getParameter("limit"));
+        String query = request.getParameter("query");
+        String[] types = request.getParameterValues("type") == null ? request.getParameterValues("type[]")
+                : request.getParameterValues("type");
+        String totalname = request.getParameter("totalname");
+        String rowsname = request.getParameter("rowsname");
+        out.print(bp.searchbusinessbypid(start, limit, query, types,totalname,rowsname));
     }
 %>

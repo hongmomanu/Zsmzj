@@ -7,9 +7,12 @@ define(function () {
         });
 
         $('#appformmore').click(function(){
+
             var isValid = $('#mainform').form('validate');
             if(isValid){
+
                 require(['commonfuncs/FormAdd'],function(FormAdd){
+                    //console.log(res);
                     FormAdd.addnewchild(lookupname,folder,ajaxloading,true,res,null);
                 });
 

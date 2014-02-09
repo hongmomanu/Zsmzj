@@ -6,17 +6,26 @@ define(function () {
             $('#owerid').combogrid({
                 panelWidth:300,
                 url: 'ajax/searchbusinessbypid.jsp',
-                idField:'businessid',
+                idField:'owerid',
                 textField:'owerid',
+                validType:'personid',
                 mode:'remote',
                 fitColumns:true,
                 pagination:true,
                 onBeforeLoad: function(param){
                     var options = $('#owerid').combogrid('options');
-                    param.query=param.q;
-                    param.type=[businessTableType.dbgl,businessTableType.dbbyh];
-                    param.start = (options.pageNumber - 1) * options.pageSize;
-                    param.limit = options.pageSize;
+                    if(param.q!=null){
+                        param.query=param.q;
+                        param.type=[businessTableType.dbgl,businessTableType.dbbyh];
+                        param.start = (options.pageNumber - 1) * options.pageSize;
+                        param.limit = options.pageSize;
+                        param.totalname = "total";
+                        param.rowsname = "rows";
+                    }
+
+                },
+                onClickRow: function(rownum,record){
+                        console.log(record);
                 },
                 columns:[[
                     {field:'businessid',title:'',width:60,hidden:true},
