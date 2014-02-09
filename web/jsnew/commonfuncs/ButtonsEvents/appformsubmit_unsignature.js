@@ -8,7 +8,7 @@ define(function(){
         render:function(item,datares){
             $('#signatures').html('');
         }
-    }
+    };
 
     return a;
 });
