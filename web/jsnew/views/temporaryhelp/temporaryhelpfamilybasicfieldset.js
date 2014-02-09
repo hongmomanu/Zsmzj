@@ -2,7 +2,6 @@ define(function () {
 
     function render(parameters,res) {
         require(['views/dbgl/dbglfamilybasicfieldset'],function(js){
-             js.render(parameters,res);
             $('#owerid').combogrid({
                 panelWidth:300,
                 url: 'ajax/searchbusinessbypid.jsp',
@@ -25,7 +24,7 @@ define(function () {
 
                 },
                 onClickRow: function(rownum,record){
-                        //console.log(record);
+                    //console.log(record);
                     require(['commonfuncs/GetFormData'],function(GetFormData){
                         //alert(businessid);
                         var sucfun=function(res){
@@ -50,6 +49,9 @@ define(function () {
                     {field:'businesstype',title:'类型',align:'center',width:100}
                 ]]
             });
+
+            js.render(parameters,res);
+
         });
     }
 

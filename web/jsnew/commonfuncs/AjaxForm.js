@@ -10,13 +10,13 @@ define(function(){
                var form=datares.form;
                var incomesum=$('#incomesum').length>0?$('#incomesum').val():form['incomesum'];
                var propertysum=$('#propertysum').length>0?$('#propertysum').val():form['propertysum'];
-               var familyincome=parseFloat(incomesum)+parseFloat(propertysum);
+               var familyincome=$('#familyincome').length>0?parseFloat($('#familyincome').val()):parseFloat(incomesum)+parseFloat(propertysum);
                var poorstandard=parseFloat($('#poorstandard').length>0?$('#poorstandard').val():form['poorstandard']);
                var incomesumareaperson=parseFloat(incomesum)/12/rows.length;
                var disablednum=FilterGridrow.ByFields(rows,['disabledlevel'],disabledtype.heavy);
                //var disablednum =FilterGridrow.ByFields(rows,['isenjoyed'],[isenjoyedtype.yes]).length;
                var totalmoney=poorstandard*disablednum;
-               var averageincome=(familyincome/rows.length/12).toFixed(1);
+               var averageincome=$('#averageincome').length>0?parseFloat($('#averageincome').val()):(familyincome/rows.length/12).toFixed(1);
 
                var businesstype=$('#tabs').tabs('getSelected').panel('options').businesstype;
                if(businesstype===businessTableType.dbgl){
@@ -28,8 +28,10 @@ define(function(){
                        totalmoney+=helpmomey.toFixed(1)*(rows.length-disablednum);
                    }
                }else if(businesstype===businessTableType.dbbyh){
-                   var totalmoney=poorstandard*disablednum;
+                   totalmoney=poorstandard*disablednum;
                    totalmoney+=poorstandard*0.2*(rows.length-disablednum);
+               }else{
+                   totalmoney=$('#totalhelpmoney').length>0?parseFloat($('#totalhelpmoney').val()):form['totalhelpmoney'];
                }
 
 

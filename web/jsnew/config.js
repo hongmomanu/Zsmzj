@@ -853,15 +853,14 @@ var applyformviews={
         'temporaryhelpapplysubmitfieldset'
 
     ],'temporaryhelpalter':[/* 临时救助修改*/
-        'temporaryhelpalterfamilybasicfieldset',
-        /*'temporaryhelpfamilyhousefieldset',
-        'temporaryhelpfamilyinputfieldset',
-        'temporaryhelpfamilypropertyfieldset',*/
-        'dbglfamilymemberfieldset',
-        'dbglfamilyaffixfieldset',
+        'temporaryhelpfamilybasicfieldset',
+        '../dbgl/dbglfamilymemberfieldset',
+        '../dbgl/dbglfamilyaffixfieldset',
         'temporaryhelpfamilyapplyfieldset',
         'temporaryhelpaltersubmitfieldset',
-        'temporaryhelpaltersubmitlogfieldset'
+        '../dbgl/dbglapplyhistoryfieldset'
+       /* 'temporaryhelpaltersubmitfieldset',
+        'temporaryhelpaltersubmitlogfieldset'*/
 
     ],'disasterhelpcalamityapply':[
         'disasterhelpfamilybasicfieldset',

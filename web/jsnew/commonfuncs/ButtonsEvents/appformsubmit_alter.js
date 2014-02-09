@@ -21,6 +21,7 @@ define(function(){
                         widgetname='dbedgebusinessalterform';
                     }
                     else if(data['businesstype']==businessTableType.temporaryhelp){
+                        folder='views/temporaryhelp/';
                         widgetname='temporaryhelpbusinessalterform';
                     }else if(data['businesstype']==businessTableType.charitablehelp){
                         widgetname='charitablehelpbusinessalterform';
