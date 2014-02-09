@@ -46,8 +46,10 @@ public class BusinessProcessControl {
         return bp.getNeedTodoCounts(roleid,userid,divisionpath,null);
 
     }
-    public String searchbusinessbypid(int start,int limit,String query,String[]types){
+    public String searchbusinessbypid(int start,int limit,String query,String[]types,String totalname,String rowsname){
         ComonDao cd =new ComonDao();
+        totalname=totalname==null?"totalCount":totalname;
+        rowsname=rowsname==null?"results":rowsname;
         String sql_count= "select count(*)   from "+
                 BusinessTable+" a,"+FamilyTable+" b where a.id=b.businessid "+
                 "and b.personid=a.owerid ";
@@ -92,8 +94,8 @@ public class BusinessProcessControl {
         int totalCount=cd.getTotalCountBySql(sql_count);
         ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
         Map<String,Object>res=new HashMap<String, Object>();
-        res.put("totalCount",totalCount);
-        res.put("results",list);
+        res.put(totalname,totalCount);
+        res.put(rowsname,list);
         return JSONObject.fromObject(res).toString();
 
     }
