@@ -25,7 +25,23 @@ define(function () {
 
                 },
                 onClickRow: function(rownum,record){
-                        console.log(record);
+                        //console.log(record);
+                    require(['commonfuncs/GetFormData'],function(GetFormData){
+                        //alert(businessid);
+                        var sucfun=function(res){
+                            res.record=record;
+                            $('#appformmore').linkbutton('options').res=res;
+                            $('#mainform').form('load',res.form);
+                            var affix=res.affixfile;
+                            for(var i=0;i<affix.length;i++){
+                                if(affix[i].attachmenttype=="accountimgpath"){
+                                    $('#personimg').attr('src',affix[i].results[0].attachmentpath);
+                                    break;
+                                }
+                            }
+                        };
+                        GetFormData.getValueBybusinessid(record.businessid,sucfun);
+                    });
                 },
                 columns:[[
                     {field:'businessid',title:'',width:60,hidden:true},

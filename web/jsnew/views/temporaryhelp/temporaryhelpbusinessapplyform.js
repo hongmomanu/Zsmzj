@@ -13,6 +13,9 @@ define(function () {
 
                 require(['commonfuncs/FormAdd'],function(FormAdd){
                     //console.log(res);
+                    if(res==null){
+                        res=$('#appformmore').linkbutton('options').res;
+                    }
                     FormAdd.addnewchild(lookupname,folder,ajaxloading,true,res,null);
                 });
 
