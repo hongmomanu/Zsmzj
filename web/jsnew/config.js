@@ -847,8 +847,8 @@ var applyformviews={
         /*'temporaryhelpfamilyhousefieldset',
         'temporaryhelpfamilyinputfieldset',
         'temporaryhelpfamilypropertyfieldset',*/
-        'dbglfamilymemberfieldset',
-        'dbglfamilyaffixfieldset',
+        '../dbgl/dbglfamilymemberfieldset',
+        '../dbgl/dbglfamilyaffixfieldset',
         'temporaryhelpfamilyapplyfieldset',
         'temporaryhelpapplysubmitfieldset'
 
