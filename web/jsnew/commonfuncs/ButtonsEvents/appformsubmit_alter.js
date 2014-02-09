@@ -26,7 +26,9 @@ define(function(){
                     }else if(data['businesstype']==businessTableType.charitablehelp){
                         widgetname='charitablehelpbusinessalterform';
                     }else if(data['businesstype']==businessTableType.medicalhelp){
+                        folder='views/medicalhelp/';
                         widgetname='medicalhelpbusinessalterform';
+
                     }else if(data['businesstype']==businessTableType.studyhelp){
                         widgetname='studyhelpbusinessalterform';
                     }else if(data['businesstype']==businessTableType.disasterware){

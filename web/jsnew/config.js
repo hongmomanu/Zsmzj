@@ -791,15 +791,18 @@ var applyformviews={
         'medicalhelpapplysubmitfieldset'
 
     ],'medicalhelpalter':[/*医疗救助申请表单修改界面 分隔的各个小表单*/
-        'medicalhelpalterfamilybasicfieldset',
-        /*'medicalhelpfamilyhousefieldset',
+        'medicalhelpfamilybasicfieldset',
+        /*'medicalhelpalterfamilybasicfieldset',
+        'medicalhelpfamilyhousefieldset',
         'medicalhelpfamilyinputfieldset',
         'medicalhelpfamilypropertyfieldset',*/
-        'dbglfamilymemberfieldset',
-        'dbglfamilyaffixfieldset',
+        '../dbgl/dbglfamilymemberfieldset',
+        '../dbgl/dbglfamilyaffixfieldset',
         'medicalhelpfamilyapplyfieldset',
+        'medicalhelpapplysubmitfieldset',/*
         'medicalhelpaltersubmitfieldset',
-        'medicalhelpaltersubmitlogfieldset'
+        'medicalhelpaltersubmitlogfieldset'*/
+        '../dbgl/dbglapplyhistoryfieldset'
 
     ],'charitablehelpapply':[/*慈善救助申请*/
         'charitablehelpfamilybasicfieldset',

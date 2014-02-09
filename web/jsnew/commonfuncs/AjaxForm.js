@@ -13,7 +13,7 @@ define(function(){
                var familyincome=$('#familyincome').length>0?parseFloat($('#familyincome').val()):parseFloat(incomesum)+parseFloat(propertysum);
                var poorstandard=parseFloat($('#poorstandard').length>0?$('#poorstandard').val():form['poorstandard']);
                var incomesumareaperson=parseFloat(incomesum)/12/rows.length;
-               var disablednum=FilterGridrow.ByFields(rows,['disabledlevel'],disabledtype.heavy);
+               var disablednum=FilterGridrow.ByFields(rows,['disabledlevel'],disabledtype.heavy).length;
                //var disablednum =FilterGridrow.ByFields(rows,['isenjoyed'],[isenjoyedtype.yes]).length;
                var totalmoney=poorstandard*disablednum;
                var averageincome=$('#averageincome').length>0?parseFloat($('#averageincome').val()):(familyincome/rows.length/12).toFixed(1);
