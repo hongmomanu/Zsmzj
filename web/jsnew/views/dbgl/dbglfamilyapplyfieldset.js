@@ -1,7 +1,9 @@
 define(function () {
 
     function render(parameters,res) {
-        /**这里添加住房绑定事件**/
+        /**这里添加绑定事件**/
+        $.parser.parse($(parameters));
+
         $(parameters).find(".lazy-combobox").combobox({
             onShowPanel: function () {
                 var searchtype = $(this).attr('searchtype');

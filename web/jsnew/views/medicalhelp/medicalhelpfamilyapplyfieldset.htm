@@ -1,0 +1,48 @@
+<fieldset><legend>业务申请信息</legend>
+    <div >
+        <table class="formtable">
+            <tr>
+                <td class="formtdtext">申请类别:</td>
+                <td><input  type="text" name="helpway"
+                            class="easyui-combobox lazy-combobox"
+                            searchtype="medicalapplyhelpway"
+                            data-options="valueField: 'value',required:true,
+                                         textField: 'label' "></td>
+                <td class="formtdtext">救助性质:</td>
+                <td><input  type="text" name="helpnature"
+                            class="easyui-combobox lazy-combobox"
+                            searchtype="helpnature"
+                            data-options="valueField: 'value',required:true,
+                                         textField: 'label' "></td>
+                <td class="formtdtext">医保性质:</td>
+                <td><input  type="text" name="medicarenature"
+                            class="easyui-combobox lazy-combobox"
+                            searchtype="medicarenature"
+                            data-options="valueField: 'value',required:true,
+                                         textField: 'label' "></td>
+
+            </tr>
+            <tr>
+
+                <td class="formtdtext">家庭总收入:</td>
+                <td><input  type="text" name="familyincome" id="familyincome"
+                            class="easyui-validatebox"
+                            data-options="required:true"></td>
+                <td class="formtdtext">报销类型:</td>
+                <td><input  type="text" name="writeofftype"
+                            class="easyui-combobox lazy-combobox"
+                            searchtype="writeofftype"
+                            data-options="valueField: 'value', required:true,
+                                         textField: 'label' "></td>
+                <td class="formtdtext">医疗救助类别:</td>
+                <td><input  type="text" name="medicalhelptype"
+                            class="easyui-combobox lazy-combobox"
+                            searchtype="medicalhelptype"
+                            data-options="valueField: 'value',
+                                         textField: 'label' "></td>
+            </tr>
+
+        </table>
+    </div>
+
+</fieldset>
