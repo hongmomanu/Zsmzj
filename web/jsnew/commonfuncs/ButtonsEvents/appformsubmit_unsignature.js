@@ -7,9 +7,7 @@ define(function(){
     var a={
         render:function(item,datares){
             $('#signatures').html('');
-
         }
-
     }
 
     return a;
