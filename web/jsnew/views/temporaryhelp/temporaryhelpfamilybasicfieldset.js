@@ -20,6 +20,8 @@ define(function () {
                         param.limit = options.pageSize;
                         param.totalname = "total";
                         param.rowsname = "rows";
+                        $('#owerid').combogrid('setValue',param.q);
+                        $('#owerid').val(param.q);
                     }
 
                 },
