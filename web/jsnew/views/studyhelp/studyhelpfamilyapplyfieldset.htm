@@ -1,0 +1,70 @@
+<fieldset><legend>业务申请信息</legend>
+    <div >
+        <table class="formtable">
+            <tr>
+                <td class="formtdtext">现金收入累计月份:</td>
+                <td><input  value="12"  name="icomemonth"
+                            class="easyui-combobox lazy-combobox"
+                            searchtype="dbglicomemonth"
+                            data-options="valueField: 'value',required:true,
+                                         textField: 'label' "></td>
+                <td class="formtdtext">家庭总收入:</td>
+                <td><input  value="0"  name="familyincome" id="familyincome"
+                            class="easyui-validatebox"
+                            data-options="required:true"></td>
+                <td class="formtdtext">月人均收入:</td>
+                <td><input  value="0"  name="averageincome" id="averageincome"
+                            class="easyui-validatebox"
+                            data-options="required:true"></td>
+
+            </tr>
+            <tr>
+                <td class="formtdtext">就读学年:</td>
+                <td><input  type="text" name="studyyear"></td>
+                <td class="formtdtext">就读班级:</td>
+                <td><input  type="text" name="studyclass"></td>
+                <td class="formtdtext">时段:</td>
+                <td><input  type="text" name="studytime"></td>
+
+            </tr>
+
+            <tr>
+                <td class="formtdtext">录取分数:</td>
+                <td><input  type="text" name="admission"></td>
+                <td class="formtdtext">录取学校:</td>
+                <td><input  type="text" name="schoolenrollment"></td>
+                <td class="formtdtext">准考证号:</td>
+                <td><input  type="text" name="ticketnumber"></td>
+
+            </tr>
+
+            <tr>
+                <td class="formtdtext">学历:</td>
+                <td><input  type="text" name="educationalbackground"
+                            class="easyui-combobox lazy-combobox"
+                            searchtype="educationalbackground"
+                            data-options="valueField: 'value',
+                                         textField: 'label' "></td>
+
+                <td class="formtdtext">助学类型:</td>
+                <td><input  type="text" name="studenthelptype"
+                            class="easyui-combobox lazy-combobox"
+                            searchtype="studenthelptype"
+                            data-options="valueField: 'value',
+                                         textField: 'label' "></td>
+                <td class="formtdtext">学制（年）:</td>
+                <td><input  type="text" name="lengthofschooling"></td>
+
+            </tr>
+            <tr>
+                <td class="formtdtext">就读年级:</td>
+                <td><input  type="text" name="grade"></td>
+                <td class="formtdtext">历年累计救助金额:</td>
+                <td colspan="3"><input  type="text" name="overtheyearstotalamount"></td>
+
+            </tr>
+
+        </table>
+    </div>
+
+</fieldset>
