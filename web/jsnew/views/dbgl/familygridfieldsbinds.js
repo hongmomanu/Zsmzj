@@ -60,7 +60,7 @@ define(function(){
             $(edp.target).val($('#owerid').val());
         },
         caculatehelpmoney:function(){
-            if($('#averageincome').length>0&&$('#poorstandard').length>0){
+            if($('#averageincome').length>0){
                 var num=parseInt($('#FamilyPersons').val());
                 var familyincome= parseFloat($('#incomesum').val())+parseFloat($('#propertysum').val());
                 $('#averageincome').val((familyincome/12/num).toFixed(1));
@@ -99,6 +99,8 @@ define(function(){
                 if(i<inputs.length-1)sum+=parseFloat($(inputs[i]).val());
                 else $(inputs[i]).val(sum.toFixed(1));
             }
+            this.caculatehelpmoney();
+
 
 
 
