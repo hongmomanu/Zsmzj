@@ -1,0 +1,94 @@
+<fieldset><legend>审批信息</legend>
+    <div>
+        <table class="formtable">
+            <tr>
+                <td class="formtdtext">救助方式:</td>
+                <td><input  type="text" name="helpway"
+                            class="easyui-combobox lazy-combobox"
+                            searchtype="temporaryhelpway"
+                            data-options="valueField: 'value',required:true,
+                                         textField: 'label' "></td>
+                <td class="formtdtext">受助金额(元):</td>
+                <td><input class="easyui-validatebox" type="text" name="losemoney" data-options="required:true"></td>
+                <td class="formtdtext">资金来源:</td>
+                <td><input  type="text" name="fundsresource"
+                            class="easyui-combobox lazy-combobox"
+                            searchtype="temporaryfundsresource"
+                            data-options="valueField: 'value',required:true,
+                                         textField: 'label' "></td>
+            </tr>
+            <tr>
+                <td class="formtdtext">救助对象:</td>
+                <td><input  type="text" name="helpobject"
+                            class="easyui-combobox lazy-combobox"
+                            searchtype="temporaryhelpobject"
+                            data-options="valueField: 'value',required:true,
+                                         textField: 'label' "></td>
+                <td class="formtdtext">救助证编号:</td>
+                <td><input class="easyui-validatebox" type="text" name="aidnum" data-options="required:true"></td>
+                <td class="formtdtext">救助开始日期:</td>
+                <td ><input class="easyui-datebox" id="helpbgtime" type="text" name="helpbgtime" data-options="required:true"></td>
+            </tr>
+            <tr>
+                <td class="formtdtext">救助结束日期:</td>
+                <td><input class="easyui-datebox" type="text" id="helpedtime" name="helpedtime" data-options="required:false"></td>
+                <td class="formtdtext">享受人数:</td>
+                <td><input  id="enjoyPersons" type="text" name="enjoyednum" value="0" readonly ></td>
+                <td class="formtdtext">重残人数:</td>
+                <td><input  id="disabledpersons" type="text" value="0" name="disabledpersons" readonly ></td>
+            </tr>
+            <tr>
+                <td class="formtdtext">总救助金额(元/月/户):</td>
+                <td><input class="easyui-validatebox" type="text" name="totalhelpmoney" id="totalhelpmoney" data-options="required:true"></td>
+                <td class="formtdtext">公示结束日期:</td>
+                <td ><input class="easyui-datebox" type="text" name="publicityedtm"></td>
+                <td class="formtdtext">受灾日期:</td>
+                <td ><input class="easyui-datebox" type="text" name="damagetime" data-options="required:true"></td>
+
+            </tr>
+            <tr>
+                <td class="formtdtext">救助原因:</td>
+                <td colspan="5"><textarea class="easyui-validatebox"  name="helpreason" data-options="required:true"  style="height:60px;width: 60%;"></textarea></td>
+            </tr>
+            <tr>
+                <td class="formtdtext">注销时间:</td>
+                <td colspan="5"><input class="easyui-datebox" data-options="required:true" type="text" name="logoutdate"></td>
+            </tr>
+            <tr>
+                <td class="formtdtext">注销原因:</td>
+                <td colspan="5"><textarea class="easyui-validatebox"  name="logoutreason" data-options="required:true"  style="height:60px;width: 60%;"></textarea></td>
+            </tr>
+            <tr>
+                <td class="formtdtext">社区/村意见:</td>
+                <td colspan="5">
+                    <textarea name="villageopinion" style="height:60px;width: 60%;"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td class="formtdtext">街道/乡镇意见:</td>
+                <td colspan="5">
+                    <textarea name="townopinion" style="height:60px;width: 60%;"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>民政局意见:</td>
+                <td colspan="5">
+                    <textarea name="civilopinion" style="height:60px;width: 60%;"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>救助单位:</td>
+                <td colspan="5">
+                    <textarea name="helpunit" style="height:60px;width: 60%;"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>救助单位意见:</td>
+                <td colspan="5">
+                    <textarea name="helpunitopinion" style="height:60px;width: 60%;"></textarea>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</fieldset>
