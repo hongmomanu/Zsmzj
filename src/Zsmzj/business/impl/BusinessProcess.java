@@ -81,16 +81,19 @@ public class BusinessProcess implements BusinessProcessIntf {
             JSONObject jsonitem=JSONObject.fromObject(item);
             Iterator<?> it = jsonitem.keys();
             Map<String,Object> mp=new HashMap<String, Object>();
-            mp.put("businessid",businessid);
+
+
 
             while(it.hasNext()){//遍历JSONObject
                 String name = (String) it.next().toString();
-                if(name.equals("age"))continue;
+                if(name.equals("age")||name.equals("id"))continue;
                 String value = jsonitem.getString(name);
                 mp.put(name,value);
 
             }
+            mp.put("businessid",businessid);
             BusinessProcessDao bDao=new BusinessProcessDao();
+            log.debug(mp);
             result_num=bDao.insertTableVales(mp, familytablename);
 
         }

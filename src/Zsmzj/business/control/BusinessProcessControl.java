@@ -2009,11 +2009,14 @@ public class BusinessProcessControl {
 
     }
 
-    public String getMedicalStandardList(int start,int limit,String keyword,String type,String businesstype){
+    public String getMedicalStandardList(int start,int limit,String keyword,String type,String businesstype
+            ,String totalname,String rowsname){
 
         BusinessProcess bp=new BusinessProcess();
         ComonDao cd=new ComonDao();
         int totalnum =0;
+        totalname=totalname==null?"totalCount":totalname;
+        rowsname=rowsname==null?"results":rowsname;
 
         String sql_count="select count(*) from "+MeidicalStandard+" a,"+DivisionsTable+" b where a.divisionid=b.rowid ";
 
@@ -2086,8 +2089,8 @@ public class BusinessProcessControl {
         ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
         totalnum=cd.getTotalCountBySql(sql_count);
         Map<String,Object>res=new HashMap<String, Object>();
-        res.put("totalCount",totalnum);
-        res.put("results",list);
+        res.put(totalname,totalnum);
+        res.put(rowsname,list);
         return JSONObject.fromObject(res).toString();
 
     }
