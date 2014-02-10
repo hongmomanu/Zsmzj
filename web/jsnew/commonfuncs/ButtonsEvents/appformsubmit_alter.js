@@ -30,6 +30,7 @@ define(function(){
                         widgetname='medicalhelpbusinessalterform';
 
                     }else if(data['businesstype']==businessTableType.studyhelp){
+                        folder='views/studyhelp/';
                         widgetname='studyhelpbusinessalterform';
                     }else if(data['businesstype']==businessTableType.disasterware){
                         widgetname='disasterhelpwarealterform';

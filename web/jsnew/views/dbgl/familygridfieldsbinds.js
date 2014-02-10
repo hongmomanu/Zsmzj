@@ -62,9 +62,12 @@ define(function(){
         caculatehelpmoney:function(){
             if($('#averageincome').length>0){
                 var num=parseInt($('#FamilyPersons').val());
-                var familyincome= parseFloat($('#incomesum').val())+parseFloat($('#propertysum').val());
-                $('#averageincome').val((familyincome/12/num).toFixed(1));
-                $('#familyincome').val(familyincome);
+                if($('#incomesum').length>0&&$('#propertysum').length>0){
+                    var familyincome= parseFloat($('#incomesum').val())+parseFloat($('#propertysum').val());
+                    $('#averageincome').val((familyincome/12/num).toFixed(1));
+                    $('#familyincome').val(familyincome);
+                }
+
                 var poorstandard=$('#poorstandard');
                 if(poorstandard.length>0){
                     var businesstype=$('#tabs').tabs('getSelected').panel('options').businesstype;

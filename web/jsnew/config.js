@@ -830,20 +830,21 @@ var applyformviews={
         //'studyhelpfamilyhousefieldset',
         //'studyhelpfamilyinputfieldset',
         //'studyhelpfamilypropertyfieldset',
-        'dbglfamilymemberfieldset',
-        'dbglfamilyaffixfieldset',
+        '../dbgl/dbglfamilymemberfieldset',
+        '../dbgl/dbglfamilyaffixfieldset',
         'studyhelpfamilyapplyfieldset',
         'studyhelpapplysubmitfieldset'
 
     ],'studyhelpalter':[/*助学救助申请 修改*/
-        'studyhelpalterfamilybasicfieldset',
+        //'studyhelpalterfamilybasicfieldset',
         //'studyhelpfamilyhousefieldset',
         //'studyhelpfamilyinputfieldset',
         //'studyhelpfamilypropertyfieldset',
-        'dbglfamilymemberfieldset',
-        'dbglfamilyaffixfieldset',
+        'studyhelpfamilybasicfieldset',
+        '../dbgl/dbglfamilymemberfieldset',
+        '../dbgl/dbglfamilyaffixfieldset',
         'studyhelpfamilyapplyfieldset',
-        'studyhelpaltersubmitfieldset',
+        /*'studyhelpaltersubmitfieldset',*/
         'studyhelpapplysubmitfieldset'
 
     ],'temporaryhelpapply':[/* 临时救助申请*/
