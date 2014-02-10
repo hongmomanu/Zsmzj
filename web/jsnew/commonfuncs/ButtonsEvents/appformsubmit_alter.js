@@ -36,12 +36,14 @@ define(function(){
                     }else if(data['businesstype']==businessTableType.disasterware){
                         widgetname='disasterhelpwarealterform';
                     }else if(data['businesstype']==businessTableType.disasterplace){
+
                         widgetname='disasterhelpbusinessalterform';
                     }else if(data['businesstype']==businessTableType.rangershelp){
                         widgetname='rangershelpbusinessalterform';
                     }else if(data['businesstype']==businessTableType.charitableinstitutionhelp){
                         widgetname='charitablehelpinstitutionalterform';
                     }else if(data['businesstype']==businessTableType.disasterhelp){
+                        folder='views/disaster/'
                         widgetname='disasterhelpcalamitybusinessalterform';
                     }
 

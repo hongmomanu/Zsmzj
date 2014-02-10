@@ -24,15 +24,16 @@ define(['commonfuncs/PersonidValidator'], function (PersonidValidator) {
 
 
         }else{
-            require(['commonfuncs/ShowBirthDay'], function (ShowBirthDay) {
-                var sex_birth=ShowBirthDay.showBirthday($('#owerid').val());
+            require(['commonfuncs/ShowBirthDay','jqueryplugin/easyui-form'], function (ShowBirthDay) {
+                var oweridvalue=$('#mainform').form('getValue','owerid');
+                var sex_birth=ShowBirthDay.showBirthday(oweridvalue);
                 if(sex_birth.birthday){
                     $('#familymembersgrid').datagrid('appendRow',
                         {
                             name: $('#owername').val(),
                             relationship:'户主',
                             birthday:sex_birth.birthday,
-                            personid: $('#owerid').val(),
+                            personid: oweridvalue,
                             sex:sex_birth.sex,
                             isenjoyed:'享受',
                             persontype:'归正人员',
@@ -55,8 +56,9 @@ define(['commonfuncs/PersonidValidator'], function (PersonidValidator) {
 
         $('#owerid,#owername').bind('change propertychange input',function () {
 
-            require(['commonfuncs/ShowBirthDay'], function (ShowBirthDay) {
-                var sex_birth=ShowBirthDay.showBirthday($('#owerid').val());
+            require(['commonfuncs/ShowBirthDay','jqueryplugin/easyui-form'], function (ShowBirthDay) {
+                var oweridvalue=$('#mainform').form('getValue','owerid');
+                var sex_birth=ShowBirthDay.showBirthday(oweridvalue);
                 $('#familymembersgrid').datagrid('updateRow',{
                     index: 0,
                     row: {
@@ -64,7 +66,7 @@ define(['commonfuncs/PersonidValidator'], function (PersonidValidator) {
                         birthday:sex_birth.birthday,
                         sex:sex_birth.sex,
                         age:(new Date()).getFullYear()-parseInt(sex_birth.birthday.split("-")[0]),
-                        personid: $('#owerid').val()
+                        personid: oweridvalue
                     }
                 });
 

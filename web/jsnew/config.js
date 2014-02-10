@@ -881,7 +881,8 @@ var applyformviews={
         'disasterhelpfamilybasicfieldset',
         '../dbgl/dbglfamilymemberfieldset',
         '../dbgl/dbglfamilyaffixfieldset',
-        'disasterhelpaltersubmitfieldset',
+        //'disasterhelpaltersubmitfieldset',
+        'disasterhelpapplysubmitfieldset',
         '../dbgl/dbglapplyhistoryfieldset'
         /*'temporaryhelpaltersubmitlogfieldset'*/
 
