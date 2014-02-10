@@ -8,8 +8,8 @@ define(function(){
            if($('#familymembersgrid').length>0){
                rows=$('#familymembersgrid').datagrid('getRows');
                var form=datares.form;
-               var incomesum=$('#incomesum').length>0?$('#incomesum').val():form['incomesum'];
-               var propertysum=$('#propertysum').length>0?$('#propertysum').val():form['propertysum'];
+               var incomesum=$('#incomesum').length>0?$('#incomesum').val():(form['incomesum']==null?0:form['incomesum']);
+               var propertysum=$('#propertysum').length>0?$('#propertysum').val():(form['propertysum']==null?0:form['propertysum']);
                var familyincome=$('#familyincome').length>0?parseFloat($('#familyincome').val()):parseFloat(incomesum)+parseFloat(propertysum);
                var poorstandard=parseFloat($('#poorstandard').length>0?$('#poorstandard').val():form['poorstandard']);
                var incomesumareaperson=parseFloat(incomesum)/12/rows.length;

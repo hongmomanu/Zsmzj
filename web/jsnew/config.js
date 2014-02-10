@@ -879,10 +879,11 @@ var applyformviews={
 
     ],'disasterhelpcalamityalter':[
         'disasterhelpfamilybasicfieldset',
-        'dbglfamilymemberfieldset',
-        'dbglfamilyaffixfieldset',
+        '../dbgl/dbglfamilymemberfieldset',
+        '../dbgl/dbglfamilyaffixfieldset',
         'disasterhelpaltersubmitfieldset',
-        'temporaryhelpaltersubmitlogfieldset'
+        '../dbgl/dbglapplyhistoryfieldset'
+        /*'temporaryhelpaltersubmitlogfieldset'*/
 
     ],'disasterhelpcalamitychange':[
         'disasterhelpfamilybasicfieldset',
