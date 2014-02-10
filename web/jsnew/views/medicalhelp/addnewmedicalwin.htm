@@ -1,0 +1,51 @@
+
+<div id="addnewmedicalwin" >
+
+
+        <div  style="padding:10px">
+            <form method="post">
+                <table class="formtable">
+                    <tr>
+                        <td >行政区划:</td>
+                        <td><input class="easyui-combotree"
+                                   data-options="required:true,valueField:'id',value:0"
+                                   name="divisionid"></td>
+                    </tr>
+
+                    <tr>
+                        <td >救助类别:</td>
+                        <td><input class="easyui-combobox lazy-combobox" type="text"
+                                   name="helptype"   searchtype="helptype"
+                                   data-options="required:true,valueField: 'value',
+                                         textField: 'label'  "></td></td>
+                    </tr>
+                    <tr>
+                        <td >救助性质:</td>
+                        <td><input class="easyui-combobox lazy-combobox" type="text"
+                                   name="helpnature"   searchtype="helpnature"
+                                   data-options="required:true,valueField: 'value',
+                                         textField: 'label'  "></td></td>
+                    </tr>
+                    <tr>
+                        <td >医疗金额范围(起):</td>
+                        <td><input class="easyui-validatebox"  type="text" name="bgmoney" data-options="required:true"></td>
+
+                    </tr>
+                    <tr>
+                        <td >医疗金额范围(止):</td>
+                        <td><input class="easyui-validatebox"  type="text" name="edmoney" data-options="required:true"></td>
+
+                    </tr>
+
+                    <tr>
+                        <td >救助比例:</td>
+                        <td><input class="easyui-validatebox"  type="text" name="helppercent" data-options="required:true"></td>
+
+                    </tr>
+
+                </table>
+            </form>
+
+        </div>
+
+</div>

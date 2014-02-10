@@ -9,6 +9,12 @@ define(function () {
         require(['commonfuncs/BusinessGridCommon'],function(BusinessGridCommon){
             BusinessGridCommon.initbusinessgrid(type,businesstype);
 
+            $('#businesstb .newmedical').bind('click',function(e){
+                require(['views/medicalhelp/addnewmedicalwin'],function(js){
+                    js.render();
+                });
+            });
+
         });
 
     }
