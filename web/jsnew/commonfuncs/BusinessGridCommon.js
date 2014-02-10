@@ -49,42 +49,45 @@ define(function(){
 
                     },
                     onLoadSuccess:function(data){
-                        var viewbtns=$('#businessgrid,.viewbtn');
-                        var alterbtns=$('#businessgrid,.alterbtn');
-                        var processbtns=$('#businessgrid,.processbtn');
-                        var submitbtns=$('#businessgrid,.submitbtn');
-                        var delbtns=$('#businessgrid,.delbtn');
-                        var canceltns=$('#businessgrid,.cancelbtn');
+                        var viewbtns=$('#tabs .viewbtn');
+                        var alterbtns=$('#tabs .alterbtn');
+                        var processbtns=$('#tabs .processbtn');
+                        var submitbtns=$('#tabs .submitbtn');
+                        var delbtns=$('#tabs .delbtn');
+                        var canceltns=$('#tabs .cancelbtn');
                         var btns_arr=[viewbtns,alterbtns,processbtns,submitbtns,delbtns,canceltns];
                         require(['commonfuncs/LookupItemName'], function(LookupItemName){
                             var rows=data.rows;
                             for(var i=0;i<rows.length;i++){
 
                                 for(var j=0;j<btns_arr.length;j++){
-                                    var isfind=LookupItemName.lookup(LookupItemName.lookup(processRoleBtn,
-                                        {name:'name',value:rows[i]['processstatus']}).children,
-                                        {name:'name',value:$(btns_arr[j][i]).text()});
-                                    if(isfind||$(btns_arr[j][i]).attr("isshow")==='true'){
-                                        var classname=$(btns_arr[j][i]).attr("class");
-                                        if($(btns_arr[j][i]).attr("istext")!=='true'){
-                                            $(btns_arr[j][i]).linkbutton({
-                                                iconCls: 'icon-'+classname
-                                            });
-                                        }
-
-                                        (function(index){
-                                            $(btns_arr[j][i]).click(function(){
-                                                var clickitem=this;
-                                                var record=rows[index];
-                                                require(['commonfuncs/ButtonsEvent'],function(ButtonsEvent){
-                                                    var data={record:record};
-                                                    ButtonsEvent.approvl_btns(clickitem,data);
+                                    if(btns_arr[j].length>0){
+                                        var isfind=LookupItemName.lookup(LookupItemName.lookup(processRoleBtn,
+                                            {name:'name',value:rows[i]['processstatus']}).children,
+                                            {name:'name',value:$(btns_arr[j][i]).text()});
+                                        if(isfind||$(btns_arr[j][i]).attr("isshow")==='true'){
+                                            var classname=$(btns_arr[j][i]).attr("class");
+                                            if($(btns_arr[j][i]).attr("istext")!=='true'){
+                                                $(btns_arr[j][i]).linkbutton({
+                                                    iconCls: 'icon-'+classname
                                                 });
-                                            });
-                                        })(i);
+                                            }
 
-                                        $(btns_arr[j][i]).show();
+                                            (function(index){
+                                                $(btns_arr[j][i]).click(function(){
+                                                    var clickitem=this;
+                                                    var record=rows[index];
+                                                    require(['commonfuncs/ButtonsEvent'],function(ButtonsEvent){
+                                                        var data={record:record};
+                                                        ButtonsEvent.approvl_btns(clickitem,data);
+                                                    });
+                                                });
+                                            })(i);
+
+                                            $(btns_arr[j][i]).show();
+                                        }
                                     }
+
                                 }
 
 
