@@ -24,6 +24,7 @@ define(function(){
                         folder='views/temporaryhelp/';
                         widgetname='temporaryhelpbusinessalterform';
                     }else if(data['businesstype']==businessTableType.charitablehelp){
+                        folder='views/charitablehelp/';
                         widgetname='charitablehelpbusinessalterform';
                     }else if(data['businesstype']==businessTableType.medicalhelp){
                         folder='views/medicalhelp/';

@@ -809,21 +809,25 @@ var applyformviews={
         //'charitablehelpfamilyhousefieldset',
         //'charitablehelpfamilyinputfieldset',
         //'medicalhelpfamilypropertyfieldset',
-        'dbglfamilymemberfieldset',
-        'dbglfamilyaffixfieldset',
+        '../dbgl/dbglfamilymemberfieldset',
+        '../dbgl/dbglfamilyaffixfieldset',
         'charitablehelpfamilyapplyfieldset',
         'charitablehelpapplysubmitfieldset'
 
     ],'charitablehelpalter':[/*慈善救助申请 修改*/
-        'charitablehelpalterfamilybasicfieldset',
+        //'charitablehelpalterfamilybasicfieldset',
         //'charitablehelpfamilyhousefieldset',
         //'charitablehelpfamilyinputfieldset',
         //'medicalhelpfamilypropertyfieldset',
-        'dbglfamilymemberfieldset',
-        'dbglfamilyaffixfieldset',
+        'charitablehelpfamilybasicfieldset',
+        '../dbgl/dbglfamilymemberfieldset',
+        '../dbgl/dbglfamilyaffixfieldset',
         'charitablehelpfamilyapplyfieldset',
-        'charitablehelpaltersubmitfieldset',
-        'charitablehelpaltersubmitlogfieldset'
+        //'charitablehelpaltersubmitfieldset',
+        'charitablehelpapplysubmitfieldset',
+        '../dbgl/dbglapplyhistoryfieldset'
+        /*
+        'charitablehelpaltersubmitlogfieldset'*/
 
     ],'studyhelpapply':[/*助学救助申请 */
         'studyhelpfamilybasicfieldset',
@@ -869,8 +873,8 @@ var applyformviews={
 
     ],'disasterhelpcalamityapply':[
         'disasterhelpfamilybasicfieldset',
-        'dbglfamilymemberfieldset',
-        'dbglfamilyaffixfieldset',
+        '../dbgl/dbglfamilymemberfieldset',
+        '../dbgl/dbglfamilyaffixfieldset',
         'disasterhelpapplysubmitfieldset'
 
     ],'disasterhelpcalamityalter':[
