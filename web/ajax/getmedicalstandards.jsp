@@ -22,8 +22,10 @@
         int limit=Integer.parseInt(request.getParameter("limit"));
         String keyword=request.getParameter("keyword");
         String type=request.getParameter("type");
+        String totalname=request.getParameter("totalname");
+        String rowsname=request.getParameter("rowsname");
         String businesstype=request.getParameter("businesstype");
-        out.print(bp.getMedicalStandardList(start,limit,keyword,type,businesstype));
+        out.print(bp.getMedicalStandardList(start,limit,keyword,type,businesstype,totalname,rowsname));
     }
     //out.print("ok");
 %>
