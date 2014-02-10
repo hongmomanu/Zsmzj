@@ -891,10 +891,19 @@ var applyformviews={
 
     ],'disasterhelpcalamitychange':[
         'disasterhelpfamilybasicfieldset',
-        'dbglfamilymemberfieldset',
-        'dbglfamilyaffixfieldset',
+        '../dbgl/dbglfamilymemberfieldset',
+        '../dbgl/dbglfamilyaffixfieldset',
         'disasterhelpchangesubmitfieldset',
-        'temporaryhelpaltersubmitlogfieldset'
+        '../dbgl/dbglapplyhistoryfieldset'
+        //'temporaryhelpaltersubmitlogfieldset'
+
+    ],'disasterhelpcalamitychangeclick':[
+        'disasterhelpfamilybasicfieldset',
+        '../dbgl/dbglfamilymemberfieldset',
+        '../dbgl/dbglfamilyaffixfieldset',
+        'disasterhelpchangesubmitfieldset',
+        '../dbgl/dbglapplyhistoryfieldset'
+        //'temporaryhelpaltersubmitlogfieldset'
 
     ],'disasterhelpcalamitylogout':[
         'disasterhelpfamilybasicfieldset',

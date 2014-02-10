@@ -55,6 +55,7 @@ define(function(){
                         folder='views/dbedge/';
                         widgetname='dbedgebusinesschangeform';
                     }else if(data['businesstype']==businessTableType.disasterhelp){
+                        folder='views/disaster/';
                         widgetname='disasterhelpcalamitybusinesschangeform';
                     }
 
@@ -66,6 +67,7 @@ define(function(){
                         folder='views/dbedge/';
                         widgetname='dbedgebusinesslogoutform';
                     }else if(data['businesstype']==businessTableType.disasterhelp){
+                        folder='views/disaster/';
                         widgetname='disasterhelpcalamitybusinesslogoutform';
                     }
                 }
