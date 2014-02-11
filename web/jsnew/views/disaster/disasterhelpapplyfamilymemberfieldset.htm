@@ -1,0 +1,58 @@
+<fieldset ><legend>避灾对象信息</legend>
+    <div id="familymembersdiv" title="避灾对象信息">
+        <table class="easyui-datagrid" title="家庭成员列表" id="familymembersgrid"
+               style="height:200px;position:relative;"
+               data-options="rownumbers:true,toolbar:'#familymembertb',singleSelect:true,
+               showFooter: true">
+
+            <thead>
+            <tr>
+                <th data-options="field:'name',width:90,align:'center',editor:{
+                            type:'validatebox',
+                            options:{
+                                required:true
+                            }
+                        }">姓名</th>
+                <th data-options="field:'personid',width:120,align:'right',editor:{
+                            type:'validatebox',
+                            options:{
+                                required:true
+                            }
+                        }">身份证</th>
+                <th data-options="field:'sex',width:60,editor:'text'">性别</th>
+                <th data-options="field:'birthday',width:90,align:'center',editor:'text'">出生日期</th>
+                <th data-options="field:'age',width:60,editor:'text'">年龄</th>
+                <th data-options="field:'personresource',width:60,align:'center',editor:{
+							type:'combobox',
+							options:{
+								valueField: 'value',
+								url:'ajax/getenumbytype.jsp?type=personresource',
+								width:60,
+								required:true,
+                                textField: 'label'
+							}
+						}">人员来源</th>
+                <th data-options="field:'disastertype',width:60,align:'center',editor:{
+							type:'combobox',
+							options:{
+								valueField: 'value',
+								url:'ajax/getenumbytype.jsp?type=disastertype',
+								width:60,
+								required:true,
+                                textField: 'label'
+							}
+						}">所避灾害种类</th>
+                <th data-options="field:'disasterintime',width:60,align:'center',editor:'datebox'">入场所时间</th>
+                <th data-options="field:'disasterouttime',width:60,align:'center',editor:'datebox'">出场所时间</th>
+            </tr>
+            </thead>
+        </table>
+        <div id="familymembertb" style="height:auto">
+            <a id="newfamilymemer_btn" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">新增避灾对象</a>
+            <a id="newfamilymemer_save" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true">保存</a>
+            <a id="delfamilymemer_btn" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true,disabled:true">删除避灾对象</a>
+        </div>
+    </div>
+
+
+</fieldset>

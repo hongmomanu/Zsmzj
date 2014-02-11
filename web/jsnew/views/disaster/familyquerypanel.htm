@@ -1,5 +1,5 @@
 
-    <table id="businessgrid"  title="家庭查询" style="width:100%;height:100%"
+    <table id="businessgrid"  title="查询" style="width:100%;height:100%"
             data-options="url: 'ajax/getfamilyinfo.jsp' "
             >
         <thead data-options="frozen:true">
@@ -13,7 +13,7 @@
 
                 return str.html();
 
-            }">户主姓名</th>
+            }">避灾场所</th>
 
         </tr>
         </thead>
@@ -21,19 +21,18 @@
         <tr>
             <th data-options="field:'time',width:80,align:'center',sortable:true,hidden:true">时间</th>
             <th data-options="field:'division',width:250,align:'center'">行政区划</th>
-            <th data-options="field:'owerid',width:250,align:'center'">户主身份证</th>
-            <th data-options="field:'applytype',align:'center',width:80">申请类别</th>
-            <th data-options="field:'businesstype',align:'center',width:80">业务类型</th>
-            <th data-options="field:'familytype',align:'center',width:80">家庭类别</th>
-            <th data-options="field:'totalhelpmoney',align:'center',width:80">救助金额</th>
-            <th data-options="field:'helpbgtime',align:'center',width:80">救助开始日期</th>
-            <th data-options="field:'helpedtime',align:'center',width:80">救助结束日期</th>
-            <th data-options="field:'familynum',align:'center',width:80">家庭人数</th>
-            <th data-options="field:'familyaccount',align:'center',width:80">家庭户口性质</th>
-            <th data-options="field:'enjoyednum',align:'center',width:80">享受人数</th>
-            <th data-options="field:'bankower',align:'center',width:80">开户人</th>
-            <th data-options="field:'bankid',align:'center',width:80">银行帐号</th>
-            <th data-options="field:'aidnum',align:'center',width:80">救助证编号</th>
+            <th data-options="field:'familynum',width:250,align:'center'">避灾对象数</th>
+            <th data-options="field:'conectperson',align:'center',width:80">联系人1</th>
+            <th data-options="field:'telnum',align:'center',width:80">联系人1电话</th>
+            <th data-options="field:'conectperson2',align:'center',width:80">联系人2</th>
+            <th data-options="field:'telnum2',align:'center',width:80">联系人2电话</th>
+            <th data-options="field:'windresistance',align:'center',width:80">抗风能力</th>
+            <th data-options="field:'earthquakeresistance',align:'center',width:80">抗震能力</th>
+            <th data-options="field:'housestructure',align:'center',width:80">结构</th>
+            <th data-options="field:'escapingnum',align:'center',width:80">避灾人数</th>
+            <th data-options="field:'houseusearea',align:'center',width:80">使用面积</th>
+            <th data-options="field:'housearea',align:'center',width:80">建筑面积</th>
+            <th data-options="field:'coverage',align:'center',width:80">覆盖范围</th>
             <th data-options="field:'businessid',align:'center',hidden:true,width:80">业务id</th>
         </tr>
         </thead>
