@@ -9,6 +9,12 @@ define(function(){
         addnewchild:function(lookupname,folder,ajaxloading,isbottom,res,callback){
             if(isbottom)ajaxloading.ajaxLoading();
             var length=$('#mainform').children().length;
+            //alert(length);
+            //alert(lookupname);
+            if(length==applyformviews[lookupname].length){
+
+                return;
+            }
             var formname=applyformviews[lookupname][length];
             formhtml='text!'+folder+formname+'.htm';
             formjs=folder+formname;

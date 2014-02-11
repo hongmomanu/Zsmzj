@@ -20,7 +20,7 @@ define(function () {
                         {name:"name",value:res.form['processstatus']})?LookupItemName.lookup(processRoleBtn,
                         {name:"name",value:res.form['processstatus']}).children:null,
                         {name:'name',value:$(btns[index]).text()});
-                    if(isfind){
+                    if(isfind||$(btns[index]).attr('isshow')){
                         $(btns[index]).show();
                         $(btns[index]).linkbutton();
                         $(btns[index]).click(function(){

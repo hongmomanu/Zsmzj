@@ -1,0 +1,44 @@
+
+    <table id="businessgrid"  title="查询" style="width:100%;height:100%"
+            data-options="url: 'ajax/getfamilyinfo.jsp' "
+            >
+        <thead data-options="frozen:true">
+        <tr>
+            <th data-options="field:'owername',width:120,align:'center',formatter:function(value,rowData,rowIndex)
+            {
+
+                var str='<div></div>';
+
+                str=$(str).append('<a action=&quot;appformsubmit_alter&quot; class=&quot;viewbtn&quot; istext=&quot;true&quot; isshow=&quot;true&quot; style=&quot;display:none;&quot;>'+value+'</a>');
+
+                return str.html();
+
+            }">流浪人姓名</th>
+
+        </tr>
+        </thead>
+        <thead>
+        <tr>
+            <th data-options="field:'time',width:80,align:'center',sortable:true,hidden:true">时间</th>
+            <th data-options="field:'division',width:250,align:'center'">行政区划</th>
+            <th data-options="field:'accountaddress',width:250,align:'center'">户籍地</th>
+            <th data-options="field:'helpbgtime',align:'center',width:80">救助时间</th>
+            <th data-options="field:'helpreason',align:'center',width:80">救助原因</th>
+            <th data-options="field:'businessid',align:'center',hidden:true,width:80">业务id</th>
+        </tr>
+        </thead>
+    </table>
+    <div id="businesstb" style="padding:5px;height:auto;vertical-align: middle;">
+            <a>开始时间: <input class="easyui-datebox bgdate" style="width:80px"></a>
+            <a>结束时间: <input class="easyui-datebox eddate" style="width:80px"></a>
+            <a>快速搜索: <input class="easyui-validatebox keyword" type="keyword" data-options="required:false" style="width:120px"></a>
+            <a class="easyui-linkbutton search"  iconCls="icon-search" >搜索</a>
+            <a class="easyui-linkbutton moresearch"  iconCls="icon-search" searchtype="moresearchfamily" >高级搜索</a>
+            <a href="#" id="excelmenu_btn" >Excel导出</a>
+    </div>
+
+    <div id="excelmenu" style="width:100px;">
+        <div data-options="name:'false'">导出当前页</div>
+        <div data-options="name:'true'">导出所有</div>
+
+    </div>

@@ -62,9 +62,12 @@ define(function(){
 
                                 for(var j=0;j<btns_arr.length;j++){
                                     if(btns_arr[j].length>0){
-                                        var isfind=LookupItemName.lookup(LookupItemName.lookup(processRoleBtn,
-                                            {name:'name',value:rows[i]['processstatus']}).children,
-                                            {name:'name',value:$(btns_arr[j][i]).text()});
+                                        var isfind=false;
+                                        if(rows[i]['processstatus']!=processdiction.noprocess){
+                                            isfind=LookupItemName.lookup(LookupItemName.lookup(processRoleBtn,
+                                                {name:'name',value:rows[i]['processstatus']}).children,
+                                                {name:'name',value:$(btns_arr[j][i]).text()});
+                                        }
                                         if(isfind||$(btns_arr[j][i]).attr("isshow")==='true'){
                                             var classname=$(btns_arr[j][i]).attr("class");
                                             if($(btns_arr[j][i]).attr("istext")!=='true'){
