@@ -124,6 +124,18 @@ h2 {
 .accord-medicalhelp{
     background: url('img/icon/4.png')  no-repeat center center;
 }
+.accord-studyhelp{
+    background: url('img/icon/1.png')  no-repeat center center;
+}
+.accord-charitablehelp{
+    background: url('img/icon/3.png')  no-repeat center center;
+}
+.accord-disaster{
+    background: url('img/icon/10.png')  no-repeat center center;
+}
+.accord-rangers{
+    background: url('img/icon/9.png')  no-repeat center center;
+}
 .yw-busiapply{
     background: url('img/busiicon/busiapply.png')  no-repeat center center;
 }
