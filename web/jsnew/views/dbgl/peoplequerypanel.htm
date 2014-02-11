@@ -28,6 +28,7 @@
             <th data-options="field:'sex',width:80,align:'center'">性别</th>
             <th data-options="field:'age',width:80,align:'center',formatter:function(val,rowData,rowIndex)
             {
+                if(rowData['birthday']==null)return '';
                 var now =new Date();
                 var val =now.getFullYear()-parseInt(rowData['birthday'].split('-')[0]);
                 return val;
