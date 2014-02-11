@@ -1,0 +1,46 @@
+<fieldset ><legend>用户基本信息</legend>
+    <div>
+        <table class="formtable">
+            <tr>
+                <td class="formtdtext">行政区划:</td>
+                <td colspan="3">
+                    <input class="easyui-combotree" id="divisiontree"
+                           data-options="required:true,valueField:'divisionpath'"
+                           style="width: 300px;"  name="division"></td>
+                <td class="formtdtext">救灾仓库名称:</td>
+                <td><input class="easyui-validatebox"  type="text" name="owername" data-options="required:true"></td>
+
+            </tr>
+
+            <tr>
+                <td class="formtdtext">建筑面积:</td>
+                <td><input class="easyui-validatebox"  type="text" name="housearea" data-options="required:false"></td>
+                <td class="formtdtext">使用面积:</td>
+                <td><input  class="easyui-validatebox" name="houseusearea"
+                           data-options="required:false"></td>
+                <td class="formtdtext">结构:</td>
+                <td><input class="easyui-validatebox"  type="text" name="housestructure" data-options="required:false"></td>
+
+
+            </tr>
+            <tr>
+                <td class="formtdtext">地址:</td>
+                <td><input class="easyui-validatebox"  type="text" name="realaddress" data-options="required:false"></td>
+                <td class="formtdtext">联系人1:</td>
+                <td><input class="easyui-validatebox"  type="text" name="conectperson" data-options="required:false"></td>
+                <td class="formtdtext">联系电话1:</td>
+                <td><input class="easyui-validatebox"  type="text" name="telnum" data-options="required:false"></td>
+
+            </tr>
+            <tr>
+                <td class="formtdtext">联系人2:</td>
+                <td><input class="easyui-validatebox"  type="text" name="conectperson2" data-options="required:false"></td>
+                <td class="formtdtext">联系电话2:</td>
+                <td colspan="3"><input class="easyui-validatebox"  type="text" name="telnum2" data-options="required:false"></td>
+
+            </tr>
+
+        </table>
+    </div>
+
+</fieldset>

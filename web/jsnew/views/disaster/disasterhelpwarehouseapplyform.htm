@@ -1,10 +1,14 @@
-<div class="easyui-panel" id="formcontentpanel" style="overflow-y: scroll;" title="低保户信息" data-options="fit:true"  >
-    <div id="signatures" class="signatures">
-    </div>
+
+<div  id="formcontentpanel" title="低保户信息" data-options="fit:true"  >
     <div style="padding:10px 30px 30px 30px;" >
         <form id="mainform" method="post">
         </form>
 
+    </div>
+    <div style="text-align:center;padding:5px">
+        <a  id="appformmore" class="easyui-linkbutton" type="低保" >下一步</a>
+        <a  id="appformsubmit" class="easyui-linkbutton" type="低保" isprocess="true" style="display: none">提交</a>
+        <a  id="appformsubmitcancel" class="easyui-linkbutton" style="display: none">取消</a>
     </div>
 
     <div id="imgwin" class="easyui-window" title="选择头像" style="width:500px;height:160px"
@@ -17,7 +21,6 @@
         <div style="text-align:center;padding:5px">
             <a  id="imgwin_submit" class="easyui-linkbutton" >提交</a>
             <a id="imgwin_cancel"  class="easyui-linkbutton" >取消</a>
-
         </div>
 
     </div>
@@ -55,11 +58,3 @@
 
 </div>
 
-<div id="form_btns">
-    <div style="text-align:center;padding:5px">
-        <a  id="appformmore" class="aprovlfuncs_btns" type="低保">更多</a>
-        <a action="appformsubmit_save" class="aprovlfuncs_btns" style="display: none">保存</a>
-        <a action="appformsubmit_cancel" class="aprovlfuncs_btns" style="display: none">返回</a>
-    </div>
-
-</div>

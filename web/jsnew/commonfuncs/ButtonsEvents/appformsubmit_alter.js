@@ -34,9 +34,10 @@ define(function(){
                         folder='views/studyhelp/';
                         widgetname='studyhelpbusinessalterform';
                     }else if(data['businesstype']==businessTableType.disasterware){
+                        folder='views/disaster/';
                         widgetname='disasterhelpwarealterform';
                     }else if(data['businesstype']==businessTableType.disasterplace){
-
+                        folder='views/disaster/';
                         widgetname='disasterhelpbusinessalterform';
                     }else if(data['businesstype']==businessTableType.rangershelp){
                         widgetname='rangershelpbusinessalterform';

@@ -119,7 +119,23 @@ define(function(){
                            me.caculatefutrue(datares,FilterGridrow,param);
 
                        }
-                       if($('#familymembersgrid').length>0)param.familymembers=$.toJSON($('#familymembersgrid').datagrid('getRows'));
+                       if($('#familymembersgrid').length>0){
+                           if(spatialchildTableType[businesstype]){
+                               var rowdata=$('#familymembersgrid').datagrid('getRows');
+                               if(rowdata.length==0){
+                                   rowdata.push({relationship:'户主'});
+                               }else{
+                                   rowdata[0].relationship='户主';
+                               }
+                               param.familymembers=$.toJSON(rowdata);
+                               param.familynum=rowdata.length;
+                           }else{
+                               param.familymembers=$.toJSON($('#familymembersgrid').datagrid('getRows'));
+                           }
+
+
+                       }
+
                        if($('.affixfile').length>0||affixfiles.length>0)param.affixfiles=$.toJSON(affixfiles);//附件数据
 
                    }

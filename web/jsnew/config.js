@@ -60,6 +60,9 @@ var formwidgettype={
     'disasterhelpcalamitychangeclick':'disasterhelpcalamitybusinesschangeclickform',
     'disasterhelpcalamitylogout':'disasterhelpcalamitybusinesslogoutform',
     'disasterhelpcalamitylogoutclick':'disasterhelpcalamitybusinesslogoutclickform',
+    'disasterhelpapply':'disasterhelpbusinessapplyform',
+    'disasterhelpwarehouseapply':'disasterhelpwarehouseapplyform',
+    'disasterhelpalter':'disasterhelpbusinessalterform',
 
     'propertycheckregister':'propertycheckfamilyinforegister',
     'propertycheckalter':'propertycheckfamilyinfoalter',
@@ -920,6 +923,19 @@ var applyformviews={
         'disasterhelplogoutsubmitfieldset',
         '../dbgl/dbglapplyhistoryfieldset'
         //'temporaryhelpaltersubmitlogfieldset'
+
+    ],
+    'disasterhelpapply':[
+        'disasterhelpapplyfamilybasicfieldset',
+        'disasterhelpapplyfamilymemberfieldset'
+
+    ],'disasterhelpwarehouseapply':[
+        'disasterhelpwarehouseapplyfamilybasicfieldset',
+        'disasterhelpwarehouseapplyfamilymemberfieldset'
+
+    ],'disasterhelpalter':[
+        'disasterhelpapplyfamilybasicfieldset',
+        'disasterhelpapplyfamilymemberfieldset'
 
     ],'propertycheckregister':[/* 家庭基本信息登记*/
         'propertycheckfamilybasicfieldset',

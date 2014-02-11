@@ -11,7 +11,7 @@ define(function(){
                 require(['commonfuncs/ShowBirthDay'], function (ShowBirthDay) {
                     var sex_birth=ShowBirthDay.showBirthday($(ed.target).val());
                     var relationship=$('#familymembersgrid').datagrid('getEditor', {index:index,field:'relationship'});
-                    if($(relationship.target).val()==='户主')$('#owerid').val($(ed.target).val());
+                    if(relationship&&$(relationship.target).val()==='户主')$('#owerid').val($(ed.target).val());
                     if(sex_birth.birthday){
                         var birthday = $('#familymembersgrid').datagrid('getEditor', {index:index,field:'birthday'});
                         var sex=$('#familymembersgrid').datagrid('getEditor', {index:index,field:'sex'});

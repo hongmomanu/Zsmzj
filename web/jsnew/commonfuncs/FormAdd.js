@@ -40,7 +40,8 @@ define(function(){
                 formjs.render(newform,res);
                 if(isbottom)ajaxloading.ajaxLoadEnd();
                 require(['jqueryplugin/jquery-scrollto'], function (jqueryscroll) {
-                    if(isbottom)$('#formcontentpanel').scrollTo($(newform));
+                    if(isbottom)$('#formcontentpanel').parent().scrollTo($(newform));
+                    //if(isbottom)$('#formcontentpanel').parent().scrollTo($('#appformmore'));
                     //$('#formcontentpanel').scrollTo($(newform));
                 });
                 if($('#mainform').children().length==applyformviews[lookupname].length){

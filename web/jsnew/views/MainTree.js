@@ -12,6 +12,7 @@ define(function(){
 
                     var tree=$(this);
                     var businesstype=tree.attr('businesstype');
+
                     var me=this;
                     if(tree.tree('isLeaf', node.target)){
                         var isnew=false;
@@ -26,7 +27,7 @@ define(function(){
                             var value=node.value;
                             var title=node.text;
                             require(['commonfuncs/TreeClickEvent'],function(TreeClickEvent){
-
+                                if(spatialchildTableType[title]) businesstype=title;
                                 TreeClickEvent.ShowContent(htmlfile,jsfile,title,value,folder,null,node.id,businesstype);
                                 me.nodeid=node.id;
                             });

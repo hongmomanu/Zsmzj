@@ -1,0 +1,31 @@
+<fieldset ><legend>避灾对象信息</legend>
+    <div id="familymembersdiv" title="避灾仓库信息">
+        <table class="easyui-datagrid" title="避灾仓库信息" id="familymembersgrid"
+               style="height:200px;position:relative;"
+               data-options="rownumbers:true,toolbar:'#familymembertb',singleSelect:true,
+               showFooter: true">
+
+            <thead>
+            <tr>
+                <th data-options="field:'name',width:90,align:'center',editor:{
+                            type:'validatebox',
+                            options:{
+                                required:true
+                            }
+                        }">品名</th>
+                <th data-options="field:'suppliesnum',width:60,editor:'text'">数量</th>
+                <th data-options="field:'unit',width:90,align:'center',editor:'text'">单位</th>
+                <th data-options="field:'suppliesbuytime',width:60,align:'center',editor:'datebox'">购入时间</th>
+                <th data-options="field:'suppliesmoney',width:60,editor:'text'">购入资金</th>
+            </tr>
+            </thead>
+        </table>
+        <div id="familymembertb" style="height:auto">
+            <a id="newfamilymemer_btn" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">新增仓库对象</a>
+            <a id="newfamilymemer_save" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true">保存</a>
+            <a id="delfamilymemer_btn" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true,disabled:true">删除仓库对象</a>
+        </div>
+    </div>
+
+
+</fieldset>
