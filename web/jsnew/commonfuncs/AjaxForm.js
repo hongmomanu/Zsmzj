@@ -120,17 +120,20 @@ define(function(){
 
                        }
                        if($('#familymembersgrid').length>0){
+                           var rowdata=$('#familymembersgrid').datagrid('getRows');
                            if(spatialchildTableType[businesstype]){
-                               var rowdata=$('#familymembersgrid').datagrid('getRows');
                                if(rowdata.length==0){
                                    rowdata.push({relationship:'户主'});
+                                   /*$.messager.alert('注意','没有添加对象');
+                                   return;*/
                                }else{
                                    rowdata[0].relationship='户主';
                                }
                                param.familymembers=$.toJSON(rowdata);
                                param.familynum=rowdata.length;
                            }else{
-                               param.familymembers=$.toJSON($('#familymembersgrid').datagrid('getRows'));
+                               param.familynum=rowdata.length;
+                               param.familymembers=$.toJSON(rowdata);
                            }
 
 

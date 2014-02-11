@@ -23,6 +23,12 @@ define(['commonfuncs/PersonidValidator'], function (PersonidValidator) {
             });
 
 
+        }else{
+            $('#familymembersgrid').datagrid('appendRow',
+                {
+                    name: '默认救助对象',
+                    relationship:'户主'
+                });
         }
 
         var editIndex = undefined;

@@ -26,6 +26,7 @@ var businessTableType=
         };
 var spatialchildTableType={
     '避灾仓库':'disasterware',
+
     '避灾场所': 'disasterplace',
     '核定收入':'checkinput',
     '核定住房':'checkhouse',
@@ -63,7 +64,7 @@ var formwidgettype={
     'disasterhelpapply':'disasterhelpbusinessapplyform',
     'disasterhelpwarehouseapply':'disasterhelpwarehouseapplyform',
     'disasterhelpalter':'disasterhelpbusinessalterform',
-
+    'disasterhelpwarealter':'disasterhelpwarealterform',
     'propertycheckregister':'propertycheckfamilyinforegister',
     'propertycheckalter':'propertycheckfamilyinfoalter',
     'propertycheckchange':'propertycheckfamilyinfochange',
@@ -936,6 +937,10 @@ var applyformviews={
     ],'disasterhelpalter':[
         'disasterhelpapplyfamilybasicfieldset',
         'disasterhelpapplyfamilymemberfieldset'
+
+    ],'disasterhelpwarealter':[
+        'disasterhelpwarehouseapplyfamilybasicfieldset',
+        'disasterhelpwarehouseapplyfamilymemberfieldset'
 
     ],'propertycheckregister':[/* 家庭基本信息登记*/
         'propertycheckfamilybasicfieldset',

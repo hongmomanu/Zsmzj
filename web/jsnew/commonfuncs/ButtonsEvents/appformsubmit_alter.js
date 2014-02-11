@@ -40,6 +40,7 @@ define(function(){
                         folder='views/disaster/';
                         widgetname='disasterhelpbusinessalterform';
                     }else if(data['businesstype']==businessTableType.rangershelp){
+                        folder='views/rangers/';
                         widgetname='rangershelpbusinessalterform';
                     }else if(data['businesstype']==businessTableType.charitableinstitutionhelp){
                         widgetname='charitablehelpinstitutionalterform';
