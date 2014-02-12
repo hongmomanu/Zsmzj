@@ -73,6 +73,19 @@ define(function(){
         });
         $('#domneedtodocount').click(needtodoclick);
 
+        $('#domshowalterpwd').click(function(){
+            if($('#edituserpasswin').length>0){
+                $('#edituserpasswin').dialog('open');
+            }else{
+                require(['text!views/manager/edituserpasswin.htm','views/manager/edituserpasswin'],
+                    function(div,edituserjs){
+                        $('body').append(div);
+                        edituserjs.render();
+                    });
+            }
+
+        });
+
     }
 
     function initindextime(){

@@ -3,6 +3,21 @@ define(function () {
     function render(parameters,res) {
         require(['commonfuncs/PersonidValidator'],function(PersonidValidator){
 
+            if(res){
+                require(['jqueryplugin/jquery-form'],function(AjaxFormjs){
+                    $(parameters).form('load',res.form);
+                    var affix=res.affixfile;
+                    for(var i=0;i<affix.length;i++){
+                        if(affix[i].attachmenttype=="accountimgpath"){
+                            $('#personimg').attr('src',affix[i].results[0].attachmentpath);
+                            break;
+                        }
+                    }
+
+                });
+
+            }
+
             $.parser.parse($(parameters));
             $.extend($.fn.validatebox.defaults.rules, {
                 personid: {
@@ -43,16 +58,7 @@ define(function () {
 
             });
 
-            if(res){
-                $(parameters).form('load',res.form);
-                var affix=res.affixfile;
-                for(var i=0;i<affix.length;i++){
-                    if(affix[i].attachmenttype=="accountimgpath"){
-                        $('#personimg').attr('src',affix[i].results[0].attachmentpath);
-                        break;
-                    }
-                }
-            }
+
 
             $('#personimg').click(function () {
                 $('#imgwin').window('open');
