@@ -43,6 +43,8 @@ define(function(){
                         params.limit = options.pageSize;
                         params.totalname = "total";
                         params.rowsname = "rows";
+                        params.roleid = roleid;
+                        params.userid = userid;
                         if(customparamfunc){
                             customparamfunc(params);
                         }

@@ -15,7 +15,11 @@ define(function(){
         if(arr != null) return unescape(arr[2]); return null;
     }
 
-
+    function needtodoclick(){
+        require(['commonfuncs/TreeClickEvent'],function(TreeClickEvent){
+            TreeClickEvent.ShowContent('text!views/dbgl/needtodopanel.htm','views/dbgl/needtodopanel','待办事务');
+        });
+    }
     function inithead() {
         var themes = {
             'gray' : extLocation+'themes/gray/easyui.css',
@@ -48,13 +52,54 @@ define(function(){
             $this.addClass('cs-skin-on');
             skin == 'dark-hive' ? $('.cs-north-logo').css('color', '#FFFFFF') : $('.cs-north-logo').css('color', '#000000');
         }
+
+
+        require(['commonfuncs/UpdateItemNum','commonfuncs/AjaxForm'],function(updateitem,ajaxform){
+            $('#welcomename').text("欢迎您:"+displayname+'('+divisionpath+')');
+            updateitem.updateitemnum($('#onlinenums'),onlinenums,"(",")");
+            var params = {
+                roleid:roleid,
+                userid:userid,
+                divisionpath:divisionpath,
+                type:'count'
+            };
+            var successFunc = function(res){
+                var count=res.count;
+                updateitem.updateitemnum($('#domneedtodocount'),count,"(",")");
+            };
+
+           ajaxform.ajaxsend("post","json","ajax/getneedtodos.jsp",params,successFunc,null);
+
+        });
+        $('#domneedtodocount').click(needtodoclick);
+
     }
 
-
-    //$('#routermenu').hide()
-    //$('#routermenu').attr("href",'#mainview');
-    //$('#routermenu').click();
-
+    function initindextime(){
+        function t(){
+            var time=$("#indextime");
+            var d=new Date();
+            var year=d.getFullYear();// 获取4位的年份
+            var day=d.getDate();
+            var month=d.getMonth();// 从0-11
+            var week=d.getDay();// 从0-7
+            var hours=d.getHours();
+            var minutes=d.getMinutes();
+            var seconds=d.getSeconds()<10?"0"+d.getSeconds():d.getSeconds();
+            switch(parseInt(week)){// 零代表礼拜天
+                case 0:week="星期日";break;// break省略后，代码会一直向下执行。直到结束或遇到break。
+                case 1:week="星期一";break;
+                case 2:week="星期二";break;
+                case 3:week="星期三";break;
+                case 4:week="星期四";break;
+                case 5:week="星期五";break;
+                case 6:week="星期六";break;
+            }
+            time.html(hours+":"+minutes+":"+seconds+" "
+                +year+"年"+(month+1)+"月"+day+"日"+" "+week);
+        }
+        setInterval(t,1000);
+    }
     function initroutnavigation(){
         $('#routermenu').combobox({
             onBeforeLoad: function(param){
@@ -76,14 +121,21 @@ define(function(){
 
             },
             onLoadSuccess:function(){
-                $('#routermenu').combobox('select',$('#routermenu').combobox('getData')[0].value);
+                var data=$('#routermenu').combobox('getData');
+                $('#routermenu').combobox('select',data[0].value);
+                if(data.length==1)$('#routermenu + .combo').hide();
+                else{
+                    $('#routermenu + .combo').css('float','left');
+                    $('#routermenu + .combo').css('position','absolute');
+                }
             }
         });
     }
 
      return {
          inithead :inithead,
-         initroutnavigation:initroutnavigation
+         initroutnavigation:initroutnavigation,
+         initindextime:initindextime
      }
 
 })

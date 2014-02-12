@@ -6,6 +6,7 @@ require(['router','layoutinit'], function(Router,layoutinit){
     Router.startRouting();
     layoutinit.inithead();
     layoutinit.initroutnavigation();
+    layoutinit.initindextime();
 
 
 });
