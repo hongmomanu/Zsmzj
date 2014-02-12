@@ -55,7 +55,11 @@
 <body class="easyui-layout" id="mainlayoutpanel">
 <div region="north" border="true" class="cs-north" >
     <div class="cs-north-bg">
-        <div class="cs-north-logo">社会救助管理系统</div>
+        <div class="cs-north-logo">
+
+        </div>
+
+
         <ul class="ui-skin-nav">
             <li class="li-skinitem" title="gray"><span class="gray" rel="gray"></span></li>
             <li class="li-skinitem" title="default"><span class="default" rel="default"></span></li>
@@ -68,7 +72,17 @@
             <li class="li-skinitem" title="dark-hive"><span class="dark-hive" rel="dark-hive"></span></li>
             <li class="li-skinitem" title="sunny"><span class="sunny" rel="sunny"></span></li>
         </ul>
-        <input id="routermenu" class="easyui-combobox" data-options="
+
+        <ul id="headnavul">
+            <li class="li-skinitem" ><img src="img/head/1.png"/><a id="welcomename">欢迎您:</a></li>
+            <li class="li-skinitem"><img src="img/head/2.png"/><a id="domneedtodocount">待办业务(55)</a></li>
+            <li class="li-skinitem"><img src="img/head/4.png"/><a id="onlinenums">在线人数(1)</a></li>
+            <li class="li-skinitem"><img src="img/head/5.png"/><a id="domshowalterpwd">重设密码</a></li>
+            <li class="li-skinitem"><img src="img/head/7.png"/>
+                <a id="domlogout" href="logout" style="text-decoration: none;">退出</a></li>
+        </ul>
+
+        <input id="routermenu" class="easyui-combobox" style="position: absolute;top:20px;float: left;padding:0;" data-options="
         valueField: 'value',
         mode:'remote',
         textField: 'name',
@@ -81,9 +95,9 @@
 </div>
 <div id="mainPanle" region="center" border="true" border="false">
     <div id="tabs" class="easyui-tabs"   fit="true" border="false" >
-        <div title="主页">
+        <div title="主页" class="indexbackground">
             <div class="cs-home-remark">
-                <h1>jack的实验室</h1> <br>
+                <h1>欢迎使用舟山市民政局救灾救助系统</h1> <br>
                 测试人：jack <br>
                 说明：jQuery ui。
             </div>
@@ -91,7 +105,9 @@
     </div>
 </div>
 
-<div region="south" border="false" class="cs-south">@hongmomanu@gmail.com</div>
+<div region="south" border="false" class="cs-south">
+    <a  id="indextime"></a>
+</div>
 
 
 </body>
