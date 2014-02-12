@@ -24,15 +24,17 @@
         if(type.equals("count")){
             BusinessProcessControl bp=new BusinessProcessControl();
             int count=bp.getNeedTodoCounts(roleid,userid,divisionpath);
-            out.print("{count:"+count+"}");
+            out.print("{\"count\":"+count+"}");
 
         }
         else if(type.equals("list")){
             BusinessProcessControl bp=new BusinessProcessControl();
             int start=Integer.parseInt(request.getParameter("start"));
             int limit=Integer.parseInt(request.getParameter("limit"));
+            String totalname=request.getParameter("totalname");
+            String rowsname=request.getParameter("rowsname");
             String keyword=request.getParameter("keyword");
-            out.print(bp.getNeedTodoList(roleid,userid,divisionpath,start,limit,keyword));
+            out.print(bp.getNeedTodoList(roleid,userid,divisionpath,start,limit,keyword,totalname,rowsname));
         }
     }
     //out.print("ok");
