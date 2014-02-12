@@ -257,13 +257,14 @@ public class BusinessProcess implements BusinessProcessIntf {
     }
 
     @Override
-    public ArrayList<Map<String, Object>> getNeedTodoList(int roleid,int userid,String divisionpath,int start,int limit,String keyword) {
+    public ArrayList<Map<String, Object>> getNeedTodoList(int roleid,int userid,String divisionpath
+            ,int start,int limit,String keyword,int totalnum) {
         FuncImplement func=new FuncImplement();
         ArrayList<Map<String, Object>> status_arr =func.getFuncsByRole(roleid, NeedKey);
         ArrayList<Map<String,Object>> list=new ArrayList<Map<String, Object>>();
         if(status_arr.size()==0)return list;
         BusinessProcessDao bpDao=new BusinessProcessDao();
-        return bpDao.getNeedToDoLists(status_arr,start,limit,keyword,BusinessTable,userid,divisionpath);
+        return bpDao.getNeedToDoLists(status_arr,start,limit,keyword,BusinessTable,userid,divisionpath,totalnum);
 
 
 

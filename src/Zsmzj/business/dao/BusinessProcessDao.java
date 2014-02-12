@@ -198,18 +198,27 @@ public class BusinessProcessDao {
 
     }
     public ArrayList<Map<String,Object>> getNeedToDoLists(ArrayList<Map<String,Object>> arr,int start
-                                                          ,int limit,String keyword,String tablename,int userid,String divisionpath){
+                                                          ,int limit,String keyword,String tablename,
+                                                          int userid,String divisionpath,int totalnum){
 
         Connection testConn= JdbcFactory.getConn("sqlite");
         String match_str="";
         for(Map<String,Object> item:arr){
             match_str+="'"+item.get("name").toString()+"' , ";
         }
-        match_str=match_str.substring(0,match_str.lastIndexOf(","));
+        match_str=match_str.substring(0,match_str.lastIndexOf(",")) ;
         String sql=  "select a.processstatus,b.displayname,a.owername,a.time,a.id as rowid,a.processstatustype,a.businesstype   from "+
                 tablename+" a,"+UserTable+" b where processstatus  in ("+match_str+")  and a.division like (?||'%') ";
         if(keyword!=null)sql+="AND ? ";
         sql+="and a.userid=b.id Limit ? Offset ?";
+
+        if(start>=0){
+            /**关于desc排序的hack处理，可以加快性能**/
+            int page=start/limit;
+            start=totalnum-(page+1)*limit;
+            if(start<0)limit=limit+start;
+            /**hack 结束**/
+        }
         PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, sql);
         ArrayList<Map<String,Object>> list=new ArrayList<Map<String, Object>>();
         try {
@@ -231,6 +240,7 @@ public class BusinessProcessDao {
                 map.put("processstatustype",rs.getString("processstatustype"));
                 map.put("process", ProcessType.UseProcessType.getNext(ProcessType.UseProcessType.getProcessFromChinese(processstatus)));
                 map.put("businessid",rs.getInt("rowid"));
+                map.put("id",rs.getInt("rowid"));
                 map.put("displayname",rs.getString("displayname"));
                 map.put("time",rs.getString("time"));
                 map.put("owername",rs.getString("owername"));

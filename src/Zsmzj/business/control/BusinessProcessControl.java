@@ -2393,15 +2393,18 @@ public class BusinessProcessControl {
 
     }
 
-    public String getNeedTodoList(int roleid,int userid,String divisionpath,int start,int limit ,String keyword){
+    public String getNeedTodoList(int roleid,int userid,String divisionpath,int start,int limit ,
+                                  String keyword,String totalname,String rowsname){
 
+        totalname=totalname==null?"totalCount":totalname;
+        rowsname=rowsname==null?"results":rowsname;
         BusinessProcess bp=new BusinessProcess();
         int totalnum=bp.getNeedTodoCounts(roleid,userid,divisionpath,keyword);
         ArrayList<Map<String,Object>> list=new ArrayList<Map<String, Object>>();
-        list=bp.getNeedTodoList(roleid,userid,divisionpath,start,limit,keyword);
+        list=bp.getNeedTodoList(roleid,userid,divisionpath,start,limit,keyword,totalnum);
         Map<String,Object>res=new HashMap<String, Object>();
-        res.put("totalCount",totalnum);
-        res.put("results",list);
+        res.put(totalname,totalnum);
+        res.put(rowsname,list);
         return JSONObject.fromObject(res).toString();
 
     }
