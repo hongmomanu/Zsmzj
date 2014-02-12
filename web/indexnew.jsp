@@ -80,13 +80,16 @@
             <li class="li-skinitem"><img src="img/head/5.png"/><a id="domshowalterpwd">重设密码</a></li>
             <li class="li-skinitem"><img src="img/head/7.png"/>
                 <a id="domlogout" href="logout" style="text-decoration: none;">退出</a></li>
-        </ul>
-
-        <input id="routermenu" class="easyui-combobox" style="position: absolute;top:20px;float: left;padding:0;" data-options="
+            <li class="li-skinitem">
+                <input id="routermenu" class="easyui-combobox" style="position: absolute;top:20px;float: left;padding:0;" data-options="
         valueField: 'value',
         mode:'remote',
         textField: 'name',
         url: 'ajax/getfuncsbyrule.jsp'">
+
+            </li>
+        </ul>
+
 
     </div>
 </div>
