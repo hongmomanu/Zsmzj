@@ -201,6 +201,7 @@ a:active {
     height:20px;
 }.cs-north {
     height:90px;
+    overflow-y:hidden ;
 }
 .cs-north-bg {
     /*width: 100%;*/

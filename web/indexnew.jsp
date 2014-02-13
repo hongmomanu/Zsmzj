@@ -79,7 +79,7 @@
 
         <ul id="headnavul">
             <li class="li-skinitem" ><img src="img/head/1.png"/><a id="welcomename">欢迎您:</a></li>
-            <li class="li-skinitem"><img src="img/head/2.png"/><a id="domneedtodocount">待办业务(55)</a></li>
+            <li class="li-skinitem"><img src="img/head/2.png"/><a id="domneedtodocount" style="cursor:pointer">待办业务(55)</a></li>
             <li class="li-skinitem"><img src="img/head/4.png"/><a id="onlinenums">在线人数(1)</a></li>
             <li class="li-skinitem"><img src="img/head/5.png"/><a id="domshowalterpwd">重设密码</a></li>
             <li class="li-skinitem"><img src="img/head/7.png"/>

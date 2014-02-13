@@ -26,7 +26,15 @@
                                 required:true
                             }
                         }">身份证</th>
-                <th data-options="field:'sex',width:60,editor:'text'">性别</th>
+                <th data-options="field:'sex',width:60,editor:{
+							type:'combobox',
+							options:{
+								valueField: 'value',
+								url:'ajax/getenumbytype.jsp?type=dbglsex',
+								width:60,
+                                textField: 'label'
+							}
+						}">性别</th>
                 <th data-options="field:'birthday',width:90,align:'center',editor:'text'">出生日期</th>
                 <th data-options="field:'age',width:60,editor:'text'">年龄</th>
                 <th data-options="field:'isenjoyed',width:60,align:'center',editor:{
@@ -40,17 +48,73 @@
 							}
 						}">是否享受</th>
                 <th data-options="field:'noenjoyedreason',width:200,editor:'text'">不享受原因</th>
-                <th data-options="field:'persontype',width:60,align:'center',editor:'text'">人员类别</th>
-                <th data-options="field:'jobstatus',width:90,editor:'text'">职业状况</th>
-                <th data-options="field:'bodystatus',width:60,align:'center',editor:'text'">健康状况</th>
-                <th data-options="field:'specialobject',width:60,align:'center',editor:'text'">特定救助对象</th>
+                <th data-options="field:'persontype',width:60,align:'center',editor:{
+							type:'combobox',
+							options:{
+								valueField: 'value',
+								url:'ajax/getenumbytype.jsp?type=persontype',
+								width:60,
+                                textField: 'label'
+							}
+						}">人员类别</th>
+                <th data-options="field:'jobstatus',width:90,editor:{
+							type:'combobox',
+							options:{
+								valueField: 'value',
+								url:'ajax/getenumbytype.jsp?type=jobstatus',
+								width:60,
+                                textField: 'label'
+							}
+						}">职业状况</th>
+                <th data-options="field:'bodystatus',width:60,align:'center',editor:{
+							type:'combobox',
+							options:{
+								valueField: 'value',
+								url:'ajax/getenumbytype.jsp?type=bodystatus',
+								width:60,
+                                textField: 'label'
+							}
+						}">健康状况</th>
+                <th data-options="field:'specialobject',width:60,align:'center',editor:{
+							type:'combobox',
+							options:{
+								valueField: 'value',
+								url:'ajax/getenumbytype.jsp?type=specialobject',
+								width:60,
+                                textField: 'label'
+							}
+						}">特定救助对象</th>
                 <th data-options="field:'workunits',width:60,align:'center',editor:'text'">工作单位</th>
                 <th data-options="field:'monthlyincome',width:60,align:'center',editor:'text'">月收入</th>
                 <th data-options="field:'accounttype',width:60,align:'center',editor:'text'">户口性质</th>
-                <th data-options="field:'maritalstatus',width:60,align:'center',editor:'text'">婚姻状况</th>
-                <th data-options="field:'education',width:60,align:'center',editor:'text'">文化程度</th>
+                <th data-options="field:'maritalstatus',width:60,align:'center',editor:{
+							type:'combobox',
+							options:{
+								valueField: 'value',
+								url:'ajax/getenumbytype.jsp?type=maritalstatus',
+								width:60,
+                                textField: 'label'
+							}
+						}">婚姻状况</th>
+                <th data-options="field:'education',width:60,align:'center',editor:{
+							type:'combobox',
+							options:{
+								valueField: 'value',
+								url:'ajax/getenumbytype.jsp?type=education',
+								width:60,
+                                textField: 'label'
+							}
+						}">文化程度</th>
                 <th data-options="field:'political',width:60,align:'center',editor:'text'">政治面貌</th>
-                <th data-options="field:'disabledtype',width:60,align:'center',editor:'text'">残疾类别</th>
+                <th data-options="field:'disabledtype',width:60,align:'center',editor:{
+							type:'combobox',
+							options:{
+								valueField: 'value',
+								url:'ajax/getenumbytype.jsp?type=disabledtype',
+								width:60,
+                                textField: 'label'
+							}
+						}">残疾类别</th>
                 <th data-options="field:'disabledlevel',width:60,align:'center',editor:{
 							type:'combobox',
 							options:{
