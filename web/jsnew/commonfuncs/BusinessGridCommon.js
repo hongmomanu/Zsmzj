@@ -97,6 +97,7 @@ define(function(){
 
 
                             }
+                            $('#mainlayoutpanel').layout('resize');
 
                         });
                     }

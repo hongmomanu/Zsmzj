@@ -35,6 +35,7 @@ define(function(){
         };
 
         var skins = $('.li-skinitem span').click(function() {
+
             var $this = $(this);
             if($this.hasClass('cs-skin-on')) return;
             skins.removeClass('cs-skin-on');
