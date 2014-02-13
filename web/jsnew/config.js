@@ -5,6 +5,8 @@
  * Time: 上午10:54
  * To change this template use File | Settings | File Templates.
  */
+
+
 var extLocation="http://115.193.181.185/easyui/";
 
  //extLocation="http://127.168.2.141/ext-4.2.1/";
@@ -446,11 +448,7 @@ var applyformviews={
 
 }
 var icons='img/icon/';
-
-
-
 var imgfiletype={'jpg':true,'jpeg':true,'gif':true};
-
 var ViewWaitMask=null;
 var processdiction={"stepzero":"申请","stepone":"提交","steptwo":"审核","stepthree":"审批","stepback":"退回","noprocess":"无流程"};
 var approvalresult={"yes":"同意","no":"不同意"};
