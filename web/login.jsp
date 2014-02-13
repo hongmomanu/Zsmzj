@@ -9,6 +9,8 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1" >
+    <meta name="renderer" content="webkit">
     <title>用户登入</title>
     <script src="js/md5.js" type="text/javascript"></script>
     <script src="js/enc-base64-min.js" type="text/javascript"></script>
@@ -112,9 +114,9 @@
         <div id='poweredby'>
             技术支持：浙江省海予信息技术有限公司
         </div>
-        <div id='browserlinkdiv'>
+        <%--<div id='browserlinkdiv'>
             <span>如果系统不流畅，建议使用谷歌浏览器:</span><a href="http://172.25.102.101:8080/ext-4.2/ChromeStandaloneSetup.exe">下载</a>
-        </div>
+        </div>--%>
         <input type="hidden" name="params" id="params" value=""/>
     </form>
         <%
@@ -125,8 +127,43 @@
 
 <div id="center" style=" margin:50px auto; width:350px;">
 </div>
-
 </body>
+<!--[if lte IE 8]>
+   <script type="text/javascript"
+    src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js" charset="gb2312"></script>
+
+   <style>
+    .chromeFrameInstallDefaultStyle {
+      width: 100%; /* default is 800px */
+      border: 5px solid blue;
+    }
+   </style>
+
+   <div id="prompt">
+    <!-- if IE without GCF, prompt goes here -->
+</div>
+
+<script>
+    // The conditional ensures that this code will only execute in IE,
+    // Therefore we can use the IE-specific attachEvent without worry
+    window.attachEvent("onload", function() {
+        var sUserAgent = navigator.userAgent;
+        var isWinXP = sUserAgent.indexOf("Windows NT 5.1") > -1
+                || sUserAgent.indexOf("Windows XP") > -1;
+        if(isWinXP){
+            CFInstall.check({
+                mode: "overlay", // the default
+                node: "prompt",
+                url: "http://www.google.com/chromeframe/?user=true"
+            });
+        }else{
+            //alert("非xp");
+        }
+
+    });
+</script>
+<![endif]-->
+
 </html>
 <script type="text/javascript">
 

@@ -17,10 +17,14 @@
 <html>
 
 <head>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1" >
+    <meta name="renderer" content="webkit">
     <title>舟山市社会救助管理系统</title>
 
     <script type="text/javascript" src="jsnew/config.js"></script>
     <script type="text/javascript">
+
         /*session全局变量*/
         var onlinenums=<%= SessionListener.size()%>;
         var userid=<%=request.getSession().getAttribute("userid")%>;
