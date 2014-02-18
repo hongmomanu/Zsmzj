@@ -17,6 +17,13 @@ define(function () {
             familygridfieldsbinds.caculatehelpmoney();
         });
 
+        $('#familyincome').blur(function(){
+            var num=parseInt($('#FamilyPersons').val());
+            var familyincome= $('#familyincome').val();
+            $('#averageincome').val((familyincome/12/num).toFixed(1));
+            //$('#averageincome')
+        });
+
         if(res){
             $(parameters).form('load',res.form);
         }

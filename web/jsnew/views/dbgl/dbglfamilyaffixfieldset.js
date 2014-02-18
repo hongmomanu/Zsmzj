@@ -28,7 +28,7 @@ define( function () {
             var filename= $(this).val().slice($(this).val().lastIndexOf("\\")+1);
             $('#uploadaffixname').val(filename);
         });
-        $('.affixfile').click(function(){
+        $('.affixfile').unbind('click').click(function(){
             //console.log(this);
 
             $('#affixwin').window('open');
@@ -42,7 +42,7 @@ define( function () {
                 }
 
             });
-            $('#affixwin_del').bind('click',function(){
+            $('#affixwin_del').unbind('click').click(function(){
                 var rows = $('#affixfilegrid').datagrid('getSelections');
                 $.messager.progress();
                 for(var i=0;i<rows.length;i++){
@@ -75,7 +75,7 @@ define( function () {
 
 
         });
-        $('#affixwin_confirm').bind('click',function(){
+        $('#affixwin_confirm').unbind('click').click(function(){
 
             $('#affixwin').window('window').clickitem.formdata=$('#affixfilegrid').datagrid('getRows');
             require(['commonfuncs/UpdateItemNum'],function(UpdateItemNum){
@@ -84,7 +84,7 @@ define( function () {
                 $('#affixwin').window('close');
             });
         });
-        $('#affixwin_submit').bind('click', function () {
+        $('#affixwin_submit').unbind('click').click(function () {
             require(['jqueryplugin/jquery-form'],function(AjaxFormjs){
                 var success=function(data, jqForm, options)
                 {
@@ -104,7 +104,7 @@ define( function () {
             });
         });
 
-        $('#affixwin_cancel').bind('click', function () {
+        $('#affixwin_cancel').unbind('click').click(function () {
             $('#affixwin').window('close');
         });
 
