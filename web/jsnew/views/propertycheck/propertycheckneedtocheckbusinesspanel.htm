@@ -7,13 +7,12 @@
 			">
     <thead data-options="frozen:true">
     <tr>
-        <th data-options="field:'itemid',width:280,align:'center',formatter:function(value,rowData,rowIndex)
+        <th data-options="field:'itemid',width:100,align:'center',formatter:function(value,rowData,rowIndex)
             {
 
                 var str='<div></div>';
 
-                str=$(str).append('<a action=&quot;appformsubmit_alter&quot; class=&quot;viewbtn&quot; isshow=&quot;true&quot; style=&quot;display:none;&quot;>查看</a>');
-                str=$(str).append('<a action=&quot;appformsubmit_alter&quot; class=&quot;propertycheckbtn&quot; style=&quot;display:none;&quot;>核定</a>');
+                str=$(str).append('<a action=&quot;propertycheck_all&quot; class=&quot;viewbtn&quot; isshow=&quot;true&quot; style=&quot;display:none;&quot;>查看</a>');
                 return str.html();
 
             }">业务操作</th>
@@ -22,6 +21,15 @@
     </thead>
     <thead>
     <tr>
+        <th data-options="field:'checkresult',width:100,align:'right',formatter:function(v,r,i){
+            if(v=='1'){return '通过'}
+            else{return '尚未完成'}
+        }">核定</th>
+        <!--<th data-options="field:'processstatus',width:100,align:'right',formatter:function(v,r,i){
+            if(v==processdiction.stepzero){return '可以核定'}
+            else{return '不可核定'}
+        }">核定</th>-->
+        <th data-options="field:'checkcomment',width:220,align:'right'">核定备注</th>
         <th data-options="field:'division',width:220,align:'right'">行政区划</th>
         <th data-options="field:'owername',width:90,align:'right'">户主姓名</th>
         <th data-options="field:'owerid',width:230">户主身份证</th>
@@ -31,22 +39,7 @@
         <th data-options="field:'familyaccount',width:80,align:'center'">家庭户口</th>
         <th data-options="field:'totalhelpmoney',width:80,align:'center'">救助金额</th>
         <th data-options="field:'time',width:80,align:'center',sortable:true,hidden:true">救助开始日期</th>
-        <th data-options="field:'helpbgtime',width:80,align:'center',sortable:true">救助开始日期</th>
-        <th data-options="field:'helpedtime',width:80,align:'center'">救助结束日期</th>
-        <th data-options="field:'familynum',width:80,align:'center'">家庭人数</th>
-        <th data-options="field:'enjoyednum',width:80,align:'center'">享受人数</th>
-        <th data-options="field:'processstatus',width:80,align:'center',formatter:function(val,rowData,rowIndex)
-            {if(rowData['processstatustype']==processstatustype.ok){
-            if(val==processdiction.steptwo)return val+'中';
-                else return '已'+val;
-            }
-            else{
-            if(val==processdiction.stepzero)return '已审批'
-            else if(val==processdiction.steptwo)return val+'中';
-            else return '已'+val; }}">状态</th>
-        <th data-options="field:'approvaluser',width:80,align:'center'">审核人</th>
-        <th data-options="field:'approvaltime',width:80,align:'center'">审核日期</th>
-        <th data-options="field:'displayname',width:80,align:'center'">制单人</th>
+
 
 
     </tr>

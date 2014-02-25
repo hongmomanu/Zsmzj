@@ -6,13 +6,13 @@ define(function () {
             if(res){
                 require(['jqueryplugin/jquery-form'],function(AjaxFormjs){
                     $(parameters).form('load',res.form);
-                    var affix=res.affixfile;
+                    /*var affix=res.affixfile;
                     for(var i=0;i<affix.length;i++){
                         if(affix[i].attachmenttype=="accountimgpath"){
                             $('#personimg').attr('src',affix[i].results[0].attachmentpath);
                             break;
                         }
-                    }
+                    }*/
 
                 });
 

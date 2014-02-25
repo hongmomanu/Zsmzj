@@ -1,0 +1,37 @@
+<fieldset ><legend>核定记录</legend>
+    <div  title="核定记录信息">
+        <div class="siglecontent">
+            <table class="easyui-datagrid"
+                   style="height:200px;position:relative;"
+                   data-options="
+               rownumbers:true,
+               singleSelect:true,
+               url: 'ajax/sendfamilypropertyinfo.jsp?eventName=getperopertycheckitemdetailbyfmy001',
+               method:'post',
+               pagination:true,
+			   pageSize:3,
+			   pageList: [3, 6, 10,20],
+               showFooter: true">
+
+                <thead>
+                <tr>
+                    <th data-options="field:'checkitem',width:120,align:'center',editor:'text'">内容</th>
+
+                    <th data-options="field:'checkresult',width:150,formatter:function(v,r,i){
+                       if(v=='1'){return '通过'}
+                        else{return '尚未通过'}
+                    }">结果</th>
+                    <th data-options="field:'checkcomment',width:150,align:'center',editor:'text'">备注</th>
+                    <th data-options="field:'userid',width:150">核定人id</th>
+
+                </tr>
+                </thead>
+            </table>
+        </div>
+
+
+
+    </div>
+
+
+</fieldset>

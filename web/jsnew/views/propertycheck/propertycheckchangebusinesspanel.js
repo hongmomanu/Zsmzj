@@ -1,18 +1,12 @@
 
 define(function () {
-    function initpropertycheckgrid(){
-        $('#businessgrid').datagrid({
-
-        })
-    }
 
     function render(parameters) {
         var type=null;
         var businesstype=$('#tabs').tabs('getSelected').panel('options').businesstype;
         require(['commonfuncs/BusinessGridCommon'],function(BusinessGridCommon){
-            BusinessGridCommon.initbusinessgrid(type,businesstype,'',function(param){
-                param.checkitem=businesstype;
-                param.submituid=userid;
+            BusinessGridCommon.initbusinessgrid(type,businesstype,'',function(params){
+                params.processstatustype=processstatustype.change;
             });
 
         });

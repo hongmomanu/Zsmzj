@@ -22,6 +22,9 @@ define(function(){
             }else if(businesstype==businessTableType.disasterhelp){
                 widgetname='disasterhelpcalamitybusinesslogoutclickform';
                 folder='views/disaster/';
+            }else if(datares.record['addontype']=='0'){
+                widgetname='propertycheckbusinesslogoutclickform';
+                folder='views/propertycheck/';
             }else{
                 $.messager.alert('警告','没有对应的模块!');
                 return;
