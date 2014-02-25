@@ -137,6 +137,12 @@ define(function(){
                            }
 
 
+                       }else{
+                           var rowdata=[];
+                           rowdata.push({relationship:'户主'});
+                           param.familymembers=$.toJSON(rowdata);
+                           param.familynum=rowdata.length;
+
                        }
 
                        if($('.affixfile').length>0||affixfiles.length>0)param.affixfiles=$.toJSON(affixfiles);//附件数据
