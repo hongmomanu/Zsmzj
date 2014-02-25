@@ -302,7 +302,17 @@ define(function(){
             });
 
 
+        },
+        propertycheckfieldsetaddstyle:function(){
+            var ppitems=$('#checkdetailinfo').val()
+            $.each($.find('#formcontentpanel fieldset[checkitemname]'),function(i,v){
+                if(ppitems.indexOf($(v).attr('checkitemname'))!=-1){
+                    $(v).attr('disabled','disabled');
+                    $(v).css('color','green');
+                }
+            })
         }
+
 
     };
     return a;

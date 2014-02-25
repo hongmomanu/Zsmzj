@@ -2,14 +2,14 @@ define(function(){
 
     function appformsubmit_send(item,datares){
         var data=datares.record;
-        $.messager.confirm('确定提交申请?', '你正在试图提交申请.你想继续么?', function(r){
+        var checkmsg=Number(data['checkstatus'])<3?'并且财产核定正在进行中':'';
+        $.messager.confirm('确定提交申请?', '你正在试图提交申请.<br>'+checkmsg+'.<br>你想继续么?', function(r){
             if (r){
                 var callback=function(){
-                    /*$.messager.alert('操作成功','提交申请成功!');
+                    $.messager.alert('操作成功','提交申请成功!');
                     var freshgrid=$('#businessgrid');
                     if(freshgrid.length>0)$('#businessgrid').datagrid('reload');
-                    if($('#mainform').length>0)$('#tabs').tabs('close',1);*/
-                    alert(1)
+                    if($('#mainform').length>0)$('#tabs').tabs('close',1);
                 }
                 require(['commonfuncs/PropertyCheck'],function(js){
                     js.changeapplystatus(data.fmy001,processdiction.stepone,callback,'changebusinessprocessstatus');
@@ -29,7 +29,6 @@ define(function(){
                      var freshgrid=$('#businessgrid');
                      if(freshgrid.length>0)$('#businessgrid').datagrid('reload');
                      if($('#mainform').length>0)$('#tabs').tabs('close',1);*/
-                    alert(1)
                 }
                 require(['commonfuncs/PropertyCheck'],function(js){
                     js.changeapplystatus(data.fmy001,processdiction.stepzero,callback,'cancelsubmitbyfmy001');
@@ -43,11 +42,10 @@ define(function(){
         $.messager.confirm('确定删除?', '你正在试图删除.你想继续么?', function(r){
             if (r){
                 var callback=function(){
-                    /*$.messager.alert('操作成功','提交申请成功!');
+                    $.messager.alert('操作成功','提交申请成功!');
                      var freshgrid=$('#businessgrid');
                      if(freshgrid.length>0)$('#businessgrid').datagrid('reload');
-                     if($('#mainform').length>0)$('#tabs').tabs('close',1);*/
-                    alert(1)
+                     if($('#mainform').length>0)$('#tabs').tabs('close',1);
                 }
                 require(['commonfuncs/PropertyCheck'],function(js){
                     js.changeapplystatus(data.fmy001,processdiction.stepzero,callback,'delfamilypropertybyfmy001');
@@ -476,7 +474,6 @@ define(function(){
     }
     var a={
         render:function(item,datares){
-            console.log($(item).attr('namevalue'));
             if($(item).attr('addontype')=='1'){
                 formaddontype1(item,datares)
             }else if($(item).attr('addontype')+''=='0'){

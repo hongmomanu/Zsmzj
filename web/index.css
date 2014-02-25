@@ -286,3 +286,11 @@ a:active {
 .ui-skin-nav .li-skinitem span.cupertino{background-color:#D7EBF9;}
 .ui-skin-nav .li-skinitem span.dark-hive{background-color:black;}
 .ui-skin-nav .li-skinitem span.sunny{background-color:#FFE57E;}
+
+/*打印表彰设置宽度为1024px时两个table个单元的宽度*/
+.mywidth1 td{
+    width:255px;
+}
+.mywidth2 td{
+    width:170px;
+}

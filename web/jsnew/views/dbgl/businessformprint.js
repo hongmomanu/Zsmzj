@@ -17,8 +17,7 @@ define(function(){
 
         win.document.write('<link rel="stylesheet" type="text/css" id="swicth-style" href="'+extLocation+
             'themes/default/easyui.css"><\/>');
-        win.document.write('<link rel="stylesheet" type="text/css" id="swicth-style" href="index.css"><\/>');
-
+        win.document.write('<link rel="stylesheet" type="text/css" id="swicth-style" href="css/printform.css"><\/>');
         win.document.write('</head><body style="height: 500px">');
         win.document.write('<div style="width: 1024px">');
         win.document.write(el.html());
@@ -28,7 +27,7 @@ define(function(){
 
 
         win.focus();
-        //win.print();
+        win.print();
         //win.close();
 
     }

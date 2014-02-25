@@ -86,10 +86,33 @@ define(function () {
             });
         })
 
-
+        checkdetailinfo(res);
 
     }
+    function checkdetailinfo(res){
 
+        var successFun=function(datares){
+            mytestRRR=$.evalJSON(datares);
+            console.log(mytestRRR)
+            var arr=$.evalJSON(datares).results;
+            var rtarr=[];
+            for(var i=0;i<arr.length;i++){
+                if(arr[i]['checkresult']=='1'){
+                    rtarr.push(arr[i]['checkitem']);
+                }
+            }
+            $('#checkdetailinfo').val(rtarr)
+
+        }
+        var params={
+            eventName:'getperopertycheckitemdetailbyfmy001',
+            fmy001:res.form['fmy001']
+        }
+        require(['commonfuncs/PropertyCheck'],function(js){
+            js.ajaxsend('POST','','ajax/sendfamilypropertyinfo.jsp',params,successFun,null);
+
+        });
+    }
     return {
         render: render
     };

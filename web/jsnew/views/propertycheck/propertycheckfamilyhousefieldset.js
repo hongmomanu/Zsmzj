@@ -13,7 +13,9 @@ define( function () {
         if(res){
             $(parameters).form('load',res.form);
         }
-
+        require(['commonfuncs/PropertyCheck'],function(js){
+            js.propertycheckfieldsetaddstyle();//设置不可编辑
+        })
     }
 
     return {

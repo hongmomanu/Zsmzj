@@ -16,9 +16,7 @@ define(function () {
                 },
                 onLoadSuccess:function(data){
 
-                    $.each($.find('#formcontentpanel fieldset[checkitemname]'),function(i,v){
-                        $(v).css({ background: "darkgray" });
-                    })
+
                 }
             });
         if(res){

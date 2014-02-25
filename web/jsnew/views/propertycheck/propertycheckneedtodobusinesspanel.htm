@@ -27,6 +27,10 @@
         <tr>
             <th data-options="field:'division',width:220,align:'right'">行政区划</th>
             <th data-options="field:'owername',width:90,align:'right'">户主姓名</th>
+            <th data-options="field:'checkstatus',width:90,align:'right',formatter:function(v,r,i){
+                if(Number(v)<3){return '进行中'}
+                else{return '已完成'}
+            }">核定</th>
             <th data-options="field:'owerid',width:230">户主身份证</th>
             <th data-options="field:'applytype',width:80,align:'center'">申请类别</th>
             <th data-options="field:'poorfamilytype',width:80,align:'center'">致贫原因</th>
