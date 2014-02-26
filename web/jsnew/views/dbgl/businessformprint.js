@@ -59,6 +59,7 @@ define(function(){
 
         var btns=$('.aprovlfuncs_btns');
         btns.each(function(i){
+            $(this).linkbutton();
             $(this).on('click',function(){
                 printformFn($('#businessformprint'))
             })

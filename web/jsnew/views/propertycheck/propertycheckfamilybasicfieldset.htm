@@ -6,7 +6,7 @@
                 <td class="formtdtext">行政区划:</td>
                 <td colspan="3">
                     <input class="easyui-combotree" id="divisiontree"
-                           data-options="required:false,valueField:'divisionpath'"
+                           data-options="required:true,valueField:'divisionpath'"
                            style="width: 300px;"  name="division"></td>
                 <td rowspan="4" colspan="2" style="text-align: center;" >
                     <img src="img/noperson.gif" id="personimg" alt="用户照片" height="101" width="91"></td>
@@ -15,27 +15,27 @@
                 <td class="formtdtext">申请类别:</td>
                 <td><input class="easyui-combobox lazy-combobox" type="text" searchtype="dbglapplytype"
                            name="applytype"
-                           data-options="required:false,valueField: 'value',
+                           data-options="required:true,valueField: 'value',
                                          textField: 'label' "></td>
                 <td class="formtdtext">分类管理:</td>
                 <td><input class="easyui-combobox lazy-combobox" type="text"
                            name="poortype" searchtype="dbglpoortype"
-                           data-options="required:false,valueField: 'value',textField: 'label'"></td>
+                           data-options="required:true,valueField: 'value',textField: 'label'"></td>
 
             </tr>
             <tr>
                 <td class="formtdtext">户主姓名:</td>
-                <td><input class="easyui-validatebox" id="owername" type="text" name="owername" data-options="required:false"></td>
+                <td><input class="easyui-validatebox" id="owername" type="text" name="owername" data-options="required:true"></td>
                 <td class="formtdtext">户主身份证:</td>
                 <td><input class="easyui-validatebox"  id="owerid" type="text" name="owerid"
-                           data-options="required:false,invalidMessage:'请输入正确身份证号!',validType:'personid'"></td>
+                           data-options="required:true,invalidMessage:'请输入正确身份证号!',validType:'personid'"></td>
 
             </tr>
             <tr>
                 <td class="formtdtext">家庭户口:</td>
                 <td><input class="easyui-combobox lazy-combobox" type="text"
                            name="familyaccount"  searchtype="dbglfamilyaccount"
-                           data-options="required:false,valueField: 'value',
+                           data-options="required:true,valueField: 'value',
                                          textField: 'label'"></td>
                 <td class="formtdtext">户主户口所在地:</td>
                 <td><input  type="text" name="accountaddress"></td>
@@ -55,7 +55,7 @@
                 <td class="formtdtext">开户银行:</td>
                 <td><input class="easyui-combobox lazy-combobox" type="text"
                            name="bank" searchtype="dbglbank"
-                           data-options="required:false,valueField: 'value',
+                           data-options="required:true,valueField: 'value',
                                          textField: 'label'"></td>
                 <td class="formtdtext">开户人:</td>
                 <td><input type="text" name="bankower"></td>

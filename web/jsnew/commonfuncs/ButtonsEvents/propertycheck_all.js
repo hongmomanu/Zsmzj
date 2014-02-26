@@ -343,10 +343,8 @@ define(function(){
         var checkwindiv=$('#checkwin');
         if(checkwindiv.length>0){
             checkwindiv.window('open');
-            console.log(1)
         }
         else{
-            console.log(2)
             var me=this;
             require(['text!views/dbgl/dbglcheckwin.htm','text!views/propertycheck/propertycheckapplyhistoryfieldset.htm'],
                 function(div,table){

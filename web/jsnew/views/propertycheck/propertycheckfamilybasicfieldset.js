@@ -86,14 +86,15 @@ define(function () {
             });
         })
 
-        checkdetailinfo(res);
+        if(res){
+
+            checkdetailinfo(res);
+        }
 
     }
     function checkdetailinfo(res){
 
         var successFun=function(datares){
-            mytestRRR=$.evalJSON(datares);
-            console.log(mytestRRR)
             var arr=$.evalJSON(datares).results;
             var rtarr=[];
             for(var i=0;i<arr.length;i++){
