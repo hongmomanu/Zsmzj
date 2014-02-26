@@ -57,7 +57,10 @@ define(function(){
                         var submitbtns=$('#tabs .submitbtn');
                         var delbtns=$('#tabs .delbtn');
                         var canceltns=$('#tabs .cancelbtn');
-                        var btns_arr=[viewbtns,alterbtns,processbtns,submitbtns,delbtns,canceltns];
+                        var cancelsteptwobtn=$('#tabs .cancelsteptwobtn');
+                        var cancelstepthreebtn=$('#tabs .cancelstepthreebtn');
+                        var propertycheckbtns=$('#tabs .propertycheckbtn');
+                        var btns_arr=[viewbtns,alterbtns,processbtns,submitbtns,delbtns,canceltns,cancelsteptwobtn,cancelstepthreebtn,propertycheckbtns];
                         require(['commonfuncs/LookupItemName'], function(LookupItemName){
                             var rows=data.rows;
                             for(var i=0;i<rows.length;i++){
@@ -69,6 +72,7 @@ define(function(){
                                             isfind=LookupItemName.lookup(LookupItemName.lookup(processRoleBtn,
                                                 {name:'name',value:rows[i]['processstatus']}).children,
                                                 {name:'name',value:$(btns_arr[j][i]).text()});
+
                                         }
                                         if(isfind||$(btns_arr[j][i]).attr("isshow")==='true'){
                                             var classname=$(btns_arr[j][i]).attr("class");

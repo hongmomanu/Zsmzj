@@ -32,6 +32,9 @@ public class ProperCheckControl {
     private PropertyCommonDAO commondao=null;
 	private FamilyMemberDAO familymemberdao=null;
     private static Connection conn=null;
+    private String rowsname="results";
+    private String totalname="totalCount";
+
 	public ProperCheckControl(){
         conn=ProperCheckControl.getConn("sqlite");
         commondao=new ProperCommonDAOImpl(conn);
@@ -39,6 +42,15 @@ public class ProperCheckControl {
         checkdao=new PropertyCheckDAOImpl(conn,familymemberdao,commondao );
 
 	}
+
+    public void setRowsname(String rowsname) {
+        this.rowsname = rowsname;
+    }
+
+    public void setTotalname(String totalname) {
+        this.totalname = totalname;
+    }
+
     private void closeConnection(){
 
     }
@@ -131,8 +143,8 @@ public class ProperCheckControl {
             map.put("process", ProcessType.UseProcessType.getNext(ProcessType.UseProcessType.
                     getProcessFromChinese(map.get("processstatus").toString())));
         }
-		res.put("totalCount",ri.getCount());
-		res.put("results",list);
+		res.put(totalname,ri.getCount());
+		res.put(rowsname,list);
         closeConnection();          //负责创建连接并负责关闭连接
 		return JSONObject.fromObject(res).toString();
 	}
@@ -148,20 +160,20 @@ public class ProperCheckControl {
             e.printStackTrace();
         }
         List<Map<String, Object>> list=ri.getList();
-        res.put("totalCount",ri.getCount());
-		res.put("results",list);
+        res.put(totalname,ri.getCount());
+		res.put(rowsname,list);
         closeConnection();
 		return JSONObject.fromObject(res).toString();
 	}
     /*
-    根据owerid查询所有的核定信息
+    根据fmy001查询所有的核定信息
      */
     public String getPropertyCheckItemDatilByFmy001(Map paraMap){
 		Map<String,Object>res=new HashMap<String, Object>();
 		ResultInfo ri=checkdao.getPropertyCheckItemDatilByFmy001(paraMap);
         List<Map<String, Object>> list=ri.getList();
-        res.put("totalCount",ri.getCount());
-		res.put("results",list);
+        res.put(totalname,ri.getCount());
+		res.put(rowsname,list);
         closeConnection();
 		return JSONObject.fromObject(res).toString();
 	}
@@ -215,8 +227,8 @@ public class ProperCheckControl {
         Map<String,Object>res=new HashMap<String, Object>();
         ResultInfo ri=checkdao.getPorcessCheck(paraMap);
         List<Map<String, Object>> list=ri.getList();
-        res.put("totalCount",ri.getCount());
-        res.put("results",list);
+        res.put(totalname,ri.getCount());
+        res.put(rowsname,list);
         closeConnection();
         return JSONObject.fromObject(res).toString();
     }
@@ -226,11 +238,23 @@ public class ProperCheckControl {
         Map<String,Object>res=new HashMap<String, Object>();
         ResultInfo ri=familymemberdao.getfamilymembersbyfmy001(paraMap);
         List<Map<String, Object>> list=ri.getList();
-        res.put("totalCount",ri.getCount());
-        res.put("results",list);
+        res.put(totalname,ri.getCount());
+        res.put(rowsname,list);
         closeConnection();
         return JSONArray.fromObject(list).toString();
         //return JSONObject.fromObject(res).toString();
+    }
+    /*
+    根据fm01表的主键查询一个家庭信息
+     */
+    public String getFamilyPropertyInfoByFmy001(Map paraMap){
+        Map<String,Object> res=new HashMap<String, Object>();
+        Map m=checkdao.findById(Integer.parseInt(paraMap.get("fmy001").toString()),0);
+        closeConnection();
+        res.put("form",m);
+        res.put("affixfile",new ArrayList());
+        res.put("signature",new ArrayList());
+        return JSONObject.fromObject(res).toString();
     }
 
 

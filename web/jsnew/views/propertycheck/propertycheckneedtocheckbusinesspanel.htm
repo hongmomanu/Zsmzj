@@ -1,0 +1,58 @@
+
+<table id="businessgrid"  title="业务办理" style="width:100%;height:100%"
+       data-options="
+
+				url: 'ajax/sendfamilypropertyinfo.jsp?eventName=getfamilypropertyinfobycheckrole&addontype=1'
+
+			">
+    <thead data-options="frozen:true">
+    <tr>
+        <th data-options="field:'itemid',width:100,align:'center',formatter:function(value,rowData,rowIndex)
+            {
+
+                var str='<div></div>';
+
+                str=$(str).append('<a action=&quot;propertycheck_all&quot; class=&quot;viewbtn&quot; isshow=&quot;true&quot; style=&quot;display:none;&quot;>查看</a>');
+                return str.html();
+
+            }">业务操作</th>
+
+    </tr>
+    </thead>
+    <thead>
+    <tr>
+        <th data-options="field:'checkresult',width:100,align:'right',formatter:function(v,r,i){
+            if(v=='1'){return '通过'}
+            else{return '尚未完成'}
+        }">核定</th>
+        <!--<th data-options="field:'processstatus',width:100,align:'right',formatter:function(v,r,i){
+            if(v==processdiction.stepzero){return '可以核定'}
+            else{return '不可核定'}
+        }">核定</th>-->
+        <th data-options="field:'checkcomment',width:220,align:'right'">核定备注</th>
+        <th data-options="field:'division',width:220,align:'right'">行政区划</th>
+        <th data-options="field:'owername',width:90,align:'right'">户主姓名</th>
+        <th data-options="field:'owerid',width:230">户主身份证</th>
+        <th data-options="field:'applytype',width:80,align:'center'">申请类别</th>
+        <th data-options="field:'poorfamilytype',width:80,align:'center'">致贫原因</th>
+        <th data-options="field:'poortype',width:80,align:'center'">分类管理</th>
+        <th data-options="field:'familyaccount',width:80,align:'center'">家庭户口</th>
+        <th data-options="field:'totalhelpmoney',width:80,align:'center'">救助金额</th>
+        <th data-options="field:'time',width:80,align:'center',sortable:true,hidden:true">救助开始日期</th>
+
+
+
+    </tr>
+    </thead>
+</table>
+
+
+<div id="businesstb" style="padding:5px;height:auto;vertical-align: middle;">
+
+    <a>开始时间: <input class="easyui-datebox bgdate" style="width:80px"></a>
+    <a>结束时间: <input class="easyui-datebox eddate" style="width:80px"></a>
+    <a>快速搜索: <input class="easyui-validatebox keyword" type="keyword" data-options="required:false" style="width:120px"></a>
+
+    <a  class="easyui-linkbutton search"  iconCls="icon-search" >搜索</a>
+</div>
+

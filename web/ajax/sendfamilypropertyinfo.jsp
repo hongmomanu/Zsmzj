@@ -22,19 +22,27 @@
 
         Map<String,Object> params=new HashMap<String,Object>();
         ProperCheckControl propchk=new ProperCheckControl();
+        if(request.getParameter("rowsname")!=null){
+             propchk.setRowsname(request.getParameter("rowsname").toString());
+        }
+        if(request.getParameter("totalname")!=null){
+             propchk.setTotalname(request.getParameter("totalname").toString());
+        }
 
-        if("registerfamilyinfo".equals(eventName)){
+
+
+        if("registerfamilyinfo".equals(eventName)){                      //保存家庭财产信息和家庭人员信息
             params.put("fm01",request.getParameter("fm01"));
             params.put("familymembers",request.getParameter("familymembers"));
             params.put("isprocess",request.getParameter("isprocess"));
             out.print(propchk.saveFamliyPropertyInfo(params));
-        }else if("updatefamilyinfo".equals(eventName)){
+        }else if("updatefamilyinfo".equals(eventName)){               //更新家庭财产信息和家庭人员信息
             params.put("fm01",request.getParameter("fm01"));
             params.put("fmy001",request.getParameter("fmy001"));
             params.put("familymembers",request.getParameter("familymembers"));
             params.put("isprocess",request.getParameter("isprocess"));
             out.print(propchk.updateFamliyPropertyInfo(params));
-        }else if("changefamilyinfo".equals(eventName)){
+        }else if("changefamilyinfo".equals(eventName)){               //变更家庭财产信息和家庭人员信息     变更业务 //注销业务
             params.put("fm01",request.getParameter("fm01"));
             params.put("fmy001",request.getParameter("fmy001"));
             params.put("familymembers",request.getParameter("familymembers"));
@@ -64,7 +72,7 @@
                 paraMap.put(name,request.getParameter(name));
             }
             out.print(propchk.cancelsubmitbyfmy001(paraMap));
-        }else if("getfamilypropertyinfo".equals(eventName)){
+        }else if("getfamilypropertyinfo".equals(eventName)){       //查询家庭信息
             Enumeration e  =(Enumeration) request.getParameterNames();
             Map paraMap=new HashMap<String,Object>();
             while(e.hasMoreElements()){
@@ -72,7 +80,15 @@
                   paraMap.put(name,request.getParameter(name));
             }
             out.print(propchk.getFamilyPropertyInfo(paraMap));
-        }else if("getfamilypropertyinfobycheckrole".equals(eventName)){
+        }else if("getFamilyPropertyInfoByFmy001".equals(eventName)){       //根据fm01表的主键查询一个家庭信息
+            Enumeration e  =(Enumeration) request.getParameterNames();
+            Map paraMap=new HashMap<String,Object>();
+            while(e.hasMoreElements()){
+                  String name=(String)e.nextElement();
+                  paraMap.put(name,request.getParameter(name));
+            }
+            out.print(propchk.getFamilyPropertyInfoByFmy001(paraMap));
+        }else if("getfamilypropertyinfobycheckrole".equals(eventName)){    //核定人员查询家庭信息
             Enumeration e  =(Enumeration) request.getParameterNames();
             Map paraMap=new HashMap<String,Object>();
             while(e.hasMoreElements()){
@@ -80,7 +96,7 @@
                 paraMap.put(name,request.getParameter(name));
             }
             out.print(propchk.getFamilyPropertyInfoByCheckRole(paraMap));
-        }else if("checkpropertyitem".equals(eventName)){
+        }else if("checkpropertyitem".equals(eventName)){                 //提交核定信息
             Enumeration e  =(Enumeration) request.getParameterNames();
             Map paraMap=new HashMap<String,Object>();
             while(e.hasMoreElements()){
@@ -88,7 +104,8 @@
                 paraMap.put(name,request.getParameter(name));
             }
             out.print(propchk.doCheckItem(paraMap));
-        }else if("getperopertycheckitemdetailbyowerid".equals(eventName)){
+        }else if("getperopertycheckitemdetailbyowerid".equals(eventName)
+                ||"getperopertycheckitemdetailbyfmy001".equals(eventName)){     //根据fmy001查询fm03中的全部记录(核定信息)
             Enumeration e  =(Enumeration) request.getParameterNames();
             Map paraMap=new HashMap<String,Object>();
             while(e.hasMoreElements()){

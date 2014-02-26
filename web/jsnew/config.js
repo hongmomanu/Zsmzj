@@ -10,7 +10,7 @@
 var extLocation="http://115.193.181.185/easyui/";
 
  //extLocation="http://127.168.2.141/ext-4.2.1/";
- extLocation="http://192.168.2.112/easyui/";
+ extLocation="http://127.168.2.112/easyui/";
 
 var businessTableType=
         {   'dbgl':"低保",
@@ -73,6 +73,9 @@ var formwidgettype={
     'propertycheckalter':'propertycheckfamilyinfoalter',
     'propertycheckchange':'propertycheckfamilyinfochange',
     'propertychecklogout':'propertycheckfamilyinfologout',
+
+    'propertycheckchangeclick':'propertycheckbusinesschangeclickform',
+    'propertychecklogoutclick':'propertycheckbusinesslogoutclickform',
     'propertycheckitemalter':'propertycheckfamilyinfocheck'/*家庭基本信息核定*/
 
 };
@@ -406,7 +409,7 @@ var applyformviews={
 
     ],'propertycheckregister':[/* 家庭基本信息登记*/
         'propertycheckfamilybasicfieldset',
-        'dbglfamilymemberfieldset',
+        '../dbgl/dbglfamilymemberfieldset',
         'propertycheckfamilymoneyfieldset',
         'propertycheckfamilyhousefieldset',
         'propertycheckfamilyinputfieldset'
@@ -429,7 +432,25 @@ var applyformviews={
         'propertycheckitemhistoryfieldset',
         'propertycheckapplyhistoryfieldset'
 
+    ],'propertycheckchangeclick':[
+        'propertycheckfamilybasicfieldset',
+        'propertycheckfamilymemberfieldset',
+        'propertycheckfamilymoneyfieldset',
+        'propertycheckfamilyhousefieldset',
+        'propertycheckfamilyinputfieldset',
+        'propertycheckitemhistoryfieldset',
+        'propertycheckapplyhistoryfieldset'
+
     ],'propertychecklogout':[
+        'propertycheckfamilybasicfieldset',
+        'propertycheckfamilymemberfieldset',
+        'propertycheckfamilymoneyfieldset',
+        'propertycheckfamilyhousefieldset',
+        'propertycheckfamilyinputfieldset',
+        'propertycheckitemhistoryfieldset',
+        'propertycheckapplyhistoryfieldset'
+
+    ],'propertychecklogoutclick':[
         'propertycheckfamilybasicfieldset',
         'propertycheckfamilymemberfieldset',
         'propertycheckfamilymoneyfieldset',

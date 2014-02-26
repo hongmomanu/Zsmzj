@@ -1,0 +1,88 @@
+
+html,body {
+    font: 12px/20px "微软雅黑", "宋体", Arial, sans-serif, Verdana, Tahoma;
+    padding:20px;
+    font-size:13px;
+    margin: 0;
+    /*height:100%;*/
+}
+
+
+h2 {
+    font-size:18px;
+    font-weight:bold;
+    margin:0;
+    margin-bottom:15px;
+}
+.signatures{
+    position: absolute!important;
+    z-index: 1000;
+    top: 100px;
+}
+.demo-info{
+    background:#FFFEE6;
+    color:#8F5700;
+    padding:12px;
+}
+.demo-tip{
+    width:16px;
+    height:16px;
+    margin-right:8px;
+    float:left;
+}
+
+.formtable {
+    width:100%;
+    padding: 0px;
+    margin: 0px;
+    font-family:Arial, Tahoma, Verdana, Sans-Serif;
+    border-left:1px solid #ADD8E6;
+    border-top: 1px solid #ADD8E6;
+    border-collapse:collapse;
+}
+
+
+
+/*单元格样式。*/
+.formtable td {
+    border-right: 1px solid #ADD8E6;
+    border-bottom: 1px solid #ADD8E6;
+
+    /*background: #fff;*/
+
+    font-size:12px;
+    padding: 3px 3px 3px 6px;
+    color: #303030;
+    word-break:break-all;
+    word-wrap:break-word;
+    white-space:normal;
+}
+/*表头样式*/
+.formtable th {
+    font-size:12px;
+    font-weight:600;
+    color: #303030;
+    border-right: 1px solid #ADD8E6;
+    border-bottom: 1px solid #ADD8E6;
+    border-top: 1px solid #ADD8E6;
+    letter-spacing: 2px;
+    text-align: left;
+    padding: 10px 0px 10px 0px;
+    background: url(../img/tablehdbg.png);
+    white-space:nowrap;
+    text-align:center;
+    overflow: hidden;
+}
+.formtdtext {
+    width: 13%;
+}
+.panel-body {
+    position: relative;
+    overflow-x: hidden;
+}
+.mywidth1 td{
+    width:255px;
+}
+.mywidth2 td{
+    width:170px;
+}

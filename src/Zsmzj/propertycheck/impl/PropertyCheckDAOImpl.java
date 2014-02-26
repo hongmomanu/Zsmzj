@@ -163,9 +163,9 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
                 processstatustype=rs.getString("processstatustype");
             }
             rs.close();
-            String sql2="select checkstatus,processstatustype,max(insertdate) from fm01change where fmy001=" +fmy001 +" group by checkstatus,processstatustype";
+            String sql2="select checkstatus,processstatustype,max(insertdate) from fm01change where fmy001=" +fmy001 ;
             ResultSet rs2=stmt.executeQuery(sql2);
-            if(rs.next()){
+            if(rs2.next()){
                 checkstatus=rs.getString("checkstatus");
                 processstatustypeold= rs.getString("processstatustype");
             }
@@ -175,7 +175,10 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
             if("申请".equals(processstatus)&&("变更".equals(processstatustype)||"注销".equals(processstatustype))){
                 Map<String,Object> map=new HashMap<String, Object>();
                 map.put("processstatus","审批");
-                map.put("checkstatus",checkstatus);
+                if(null!=checkstatus){
+
+                    map.put("checkstatus",checkstatus);
+                }
                 map.put("processstatustype",processstatustypeold);
                 commondao.updateTableValesSpecail(map,"fm01",null,"fmy001="+fmy001); //回退fm01审批,核定结果的状态
                 stmt.execute("delete from fm03 where bgflag=1 and fmy001="+fmy001);   //回退核定记录
@@ -456,8 +459,30 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
 	}
 
 	@Override
-	public Map<String, Object> findById(int pid, int type) {
-		return null;
+	public Map<String, Object> findById(int fmy001, int type) {
+        PreparedStatement pstmt=null;
+        String sql="select * from fm01 where fmy001=?";
+        Map<String,Object> map=new HashMap<String, Object>();
+        try {
+            pstmt=conn.prepareStatement(sql);
+            pstmt.setInt(1,fmy001);
+            ResultSet rs = pstmt.executeQuery();
+            ResultSetMetaData data=rs.getMetaData();
+            int colnums=data.getColumnCount();
+            if (rs.next()) {
+                for(int i = 1;i<= colnums;i++){
+                    String columnName = data.getColumnName(i);
+                    String value=rs.getString(columnName);
+                    map.put(columnName,value);
+                }
+            }
+
+            rs.close();
+            pstmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return map;
 	}
 
 	@Override
@@ -491,7 +516,7 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
         JSONObject jsonObj=  JSONObject.fromObject((String)param.get("fm03"));
         String sql="select * from fm03 where fmy001=? and checkitem=? and bgflag=1";
 
-        String sql_updateFm03="update fm03 set checkresult=?,checkcomment=?,userid=?,userid=?,roleid=? where  fmy001=? and checkitem=? and bgflag=1";
+        String sql_updateFm03="update fm03 set checkresult=?,checkcomment=?,userid=?,roleid=? where  fmy001=? and checkitem=? and bgflag=1";
         String sql_insertFm03="insert into fm03(fmy001,checkitem,checkresult,checkitemstatus,bgflag)values(?,?,0,0,1)";
         String sql2="select sum(checkresult) from fm03 where fmy001=? and bgflag=1";
         String sql3="update fm01 set checkstatus=? where fmy001=?";
@@ -519,10 +544,9 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
             pstmt_updateFm03.setInt(1,(Integer)jsonObj.get("checkresult"));
             pstmt_updateFm03.setString(2, (String) jsonObj.get("checkcomment"));
             pstmt_updateFm03.setInt(3, (Integer) jsonObj.get("userid"));
-            pstmt_updateFm03.setInt(4, (Integer) jsonObj.get("userid"));
-            pstmt_updateFm03.setInt(5, (Integer) jsonObj.get("roleid"));
-            pstmt_updateFm03.setInt(6, fmy001);
-            pstmt_updateFm03.setString(7, (String) jsonObj.get("checkitem"));
+            pstmt_updateFm03.setInt(4, (Integer) jsonObj.get("roleid"));
+            pstmt_updateFm03.setInt(5, fmy001);
+            pstmt_updateFm03.setString(6, (String) jsonObj.get("checkitem"));
 
             result = pstmt_updateFm03.executeUpdate();  //更新fm03表
 
@@ -532,7 +556,6 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
             ResultSet rs=pstmt2.executeQuery();
             if(rs.next()){
                 checkstatus=rs.getString(1);
-                System.out.println(checkstatus);
             }
 
             pstmt3=conn.prepareStatement(sql3);
@@ -563,7 +586,7 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
     }
 
      /*
-     根据owerid查询fm03中的全部记录
+     根据fmy001查询fm03中的全部记录
       */
     @Override
     public ResultInfo getPropertyCheckItemDatilByFmy001(Map<String, Object> param) {
@@ -637,9 +660,9 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
                 pstmt2.setInt(1,fmy001);
                 pstmt2.setString(2,(String)jsonfm04.get("approvalname"));
                 pstmt2.setString(3,(String)jsonfm04.get("approvalresult"));
-                pstmt2.setInt(4,(Integer)jsonfm04.get("userid"));
+                pstmt2.setInt(4,Integer.parseInt(jsonfm04.get("userid").toString()));
                 pstmt2.setString(5,(String)jsonfm04.get("approvalopinion"));
-                pstmt2.setInt(6,(Integer)jsonfm04.get("submituid"));
+                pstmt2.setInt(6,Integer.parseInt(jsonfm04.get("submituid").toString()));
                 pstmt2.setString(7,fmt.format(new java.util.Date()));
                 pstmt2.execute();
 
@@ -703,6 +726,9 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
     }
 
     @Override
+    /*
+    查询审批流程中的审批信息
+     */
     public ResultInfo getPorcessCheck(Map<String, Object> param) {
 
         ArrayList<Map<String,Object>> list=new ArrayList<Map<String, Object>>();
