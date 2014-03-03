@@ -72,7 +72,7 @@ define(function () {
                         },
                         onHidePanel: function () {
                             divitiontree.combotree('setValue',
-                                divitiontree.combotree('tree').tree('getSelected').divisionpath);
+                                divitiontree.combotree('tree').tree('getSelected').id);
                         }
                     });
 
