@@ -292,6 +292,35 @@ a:active {
 .ui-skin-nav .li-skinitem span.dark-hive{background-color:black;}
 .ui-skin-nav .li-skinitem span.sunny{background-color:#FFE57E;}
 
+/*业务状态指示小方块*/
+.yw-stepzero {color: #006600; }
+.yw-stepzerobgcolor {background-color: #006600;}
+.yw-stepone {color: #CC0000; }
+.yw-steponebgcolor {background-color: #CC0000; }
+.yw-steptwo {color: #CC0000; }
+.yw-steptwobgcolor {background-color: #CC0000;}
+.yw-stepthree {color: #000099; }
+.yw-stepthreebgcolor {background-color: #000099; }
+.yw-change {color: #aa0099; }
+.yw-changebgcolor {background-color: #aa0099; }
+.yw-logout {color: darkslategrey; }
+.yw-logoutbgcolor {background-color: darkslategrey; }
+div.yw-block{
+    height: 14px;
+    float: right;
+}
+div.yw-block > div{
+
+    width: 12px;
+    height: 12px;
+    float: left;
+}
+div.yw-block > span{
+    line-height:14px;
+    font-family: 'Courier New';
+    display: block;
+    float: left;
+}
 /*打印表彰设置宽度为1024px时两个table个单元的宽度*/
 .mywidth1 td{
     width:255px;
