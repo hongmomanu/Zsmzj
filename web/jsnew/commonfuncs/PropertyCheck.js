@@ -55,7 +55,25 @@ define(function(){
                 success:successFunc
             })
         }
-    initPropertyCheckFromRole();
+        function initPropertyCheckFromRole2(){
+            var me=this;
+            var params = {
+                id:userid,
+                roleid:roleid,
+                type:'财产核定核定系统'
+            };
+            var successFunc = function (response) {
+                propertyCheckRoleBtn=eval(response);
+                initCheckItemCmp(propertyCheckRoleBtn)  ;
+            };
+            $.ajax({
+                url:'ajax/gettreefuncsbyrule.jsp',
+                data:params,
+                type:'POST',
+                success:successFunc
+            })
+        }
+    initPropertyCheckFromRole2();
     var a={
         submitForm:function(submitype,datares,callback){
 

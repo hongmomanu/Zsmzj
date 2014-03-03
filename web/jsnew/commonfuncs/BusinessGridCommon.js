@@ -59,8 +59,8 @@ define(function(){
                         var canceltns=$('#tabs .cancelbtn');
                         var cancelsteptwobtn=$('#tabs .cancelsteptwobtn');
                         var cancelstepthreebtn=$('#tabs .cancelstepthreebtn');
-                        var propertycheckbtns=$('#tabs .propertycheckbtn');
-                        var btns_arr=[viewbtns,alterbtns,processbtns,submitbtns,delbtns,canceltns,cancelsteptwobtn,cancelstepthreebtn,propertycheckbtns];
+                        //var propertycheckbtns=$('#tabs .propertycheckbtn');
+                        var btns_arr=[viewbtns,alterbtns,processbtns,submitbtns,delbtns,canceltns,cancelsteptwobtn,cancelstepthreebtn];
                         require(['commonfuncs/LookupItemName'], function(LookupItemName){
                             var rows=data.rows;
                             for(var i=0;i<rows.length;i++){
