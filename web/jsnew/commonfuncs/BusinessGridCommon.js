@@ -25,15 +25,15 @@ define(function(){
                         var vprocessstatustype=row['processstatustype'];
                         var rowclass='';
                         switch (processstatus){
-                            case  processdiction.stepzero:rowclass='color: #006600;';break;
-                            case  processdiction.stepone:rowclass='color: #CC0000;';break;
+                            case  processdiction.stepzero:rowclass='color: #33CC33;';break;
+                            case  processdiction.stepone:rowclass='color: darkgreen;';break;
                             case  processdiction.steptwo:rowclass='color: #CC0000;';break;
                             case  processdiction.stepthree:
                                 rowclass='color: #000099;';
                                 if(vprocessstatustype==processstatustype.change){
                                     rowclass='color: #aa0099; ';
                                 }else if(vprocessstatustype==processstatustype.logout){
-                                    rowclass='color: darkslategrey; ';
+                                    rowclass='color: #FF9900; ';
                                 }
                                 break;
                             case  processdiction.stepback:rowclass='';break;
