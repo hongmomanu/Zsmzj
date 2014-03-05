@@ -34,7 +34,8 @@ public class ProperCheckControl {
     private static Connection conn=null;
     private String rowsname="results";
     private String totalname="totalCount";
-
+    private String rtntypesuccess="{\"success\":true}";
+    private String rtntypeunsuccess ="{\"success\":false}";
 	public ProperCheckControl(){
         conn=ProperCheckControl.getConn("sqlite");
         commondao=new ProperCommonDAOImpl(conn);
@@ -67,10 +68,10 @@ public class ProperCheckControl {
             closeConnection();
         }
         if(result>0){
-			return "{success:true}";
+			return rtntypesuccess;
 		}
 		else{
-			return "{success:false}";
+			return rtntypeunsuccess;
 		}
 	}
 	/*
@@ -86,10 +87,10 @@ public class ProperCheckControl {
             closeConnection();
         }
         if(result>0){
-			return "{success:true}";
+			return rtntypesuccess;
 		}
 		else{
-			return "{success:false}";
+			return rtntypeunsuccess;
 		}
 	}
     /*
@@ -105,10 +106,10 @@ public class ProperCheckControl {
             closeConnection();
         }
         if(result>0){
-			return "{success:true}";
+			return rtntypesuccess;
 		}
 		else{
-			return "{success:false}";
+			return rtntypeunsuccess;
 		}
 	}
 
@@ -121,13 +122,13 @@ public class ProperCheckControl {
             fmy001=Integer.parseInt((String)params.get("fmy001"));
         }catch (NumberFormatException e){
             e.printStackTrace();
-            return  "{success:false}";
+            return  rtntypeunsuccess;
         }
 		int result= 0;
         result=checkdao.doDelete(fmy001);
         closeConnection();
 
-        return  result>0? "{success:true}": "{success:false}";
+        return  result>0? rtntypesuccess: rtntypeunsuccess;
 
 	}
 
@@ -192,10 +193,10 @@ public class ProperCheckControl {
         }
 
         if(result>0){
-            return "{success:true}";
+            return rtntypesuccess;
         }
         else{
-            return "{success:false}";
+            return rtntypeunsuccess;
         }
     }
 
@@ -205,8 +206,8 @@ public class ProperCheckControl {
     public String changeBusinessStatus(Map paraMap){
         int result=checkdao.changeBusinessProcessStatus(paraMap);
         this.closeConnection();
-        if(result>0)return "{success:true}";
-        else  return "{success:false}";
+        if(result>0)return rtntypesuccess;
+        else  return rtntypeunsuccess;
     }
 
     /*
@@ -220,7 +221,7 @@ public class ProperCheckControl {
     public String cancelsubmitbyfmy001(Map paraMap){
         int result=checkdao.cancelSubmit(paraMap);
         this.closeConnection();
-        return  result>0? "{success:true}": "{success:false}";
+        return  result>0? rtntypesuccess: rtntypeunsuccess;
     }
 
     public String getProcessCheck(Map paraMap){
