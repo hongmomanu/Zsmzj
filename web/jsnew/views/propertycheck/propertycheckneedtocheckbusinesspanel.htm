@@ -23,6 +23,7 @@
     <tr>
         <th data-options="field:'checkresult',width:100,align:'right',formatter:function(v,r,i){
             if(v=='1'){return '通过'}
+            else if(r['processstatus']!=processdiction.stepzero){return '已提交不能核定'}
             else{return '尚未完成'}
         }">核定</th>
         <!--<th data-options="field:'processstatus',width:100,align:'right',formatter:function(v,r,i){
