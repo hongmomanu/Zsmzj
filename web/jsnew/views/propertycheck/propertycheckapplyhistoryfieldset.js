@@ -7,7 +7,6 @@ define(function () {
         var options = grid.datagrid('options');
         grid.datagrid(
             {
-                url: 'ajax/sendfamilypropertyinfo.jsp?eventName=getprocesscheckbyfmy001',
                 onBeforeLoad: function (params) {
                     params.fmy001 =res.form.fmy001;
                     params.start = (options.pageNumber - 1) * options.pageSize;

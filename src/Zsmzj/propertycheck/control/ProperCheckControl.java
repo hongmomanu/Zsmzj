@@ -170,6 +170,9 @@ public class ProperCheckControl {
     根据fmy001查询所有的核定信息
      */
     public String getPropertyCheckItemDatilByFmy001(Map paraMap){
+        if(paraMap.get("fmy001")==null){
+            return "缺少参数fmy001";
+        }
 		Map<String,Object>res=new HashMap<String, Object>();
 		ResultInfo ri=checkdao.getPropertyCheckItemDatilByFmy001(paraMap);
         List<Map<String, Object>> list=ri.getList();
@@ -225,6 +228,9 @@ public class ProperCheckControl {
     }
 
     public String getProcessCheck(Map paraMap){
+        if(paraMap.get("fmy001")==null){
+            return "缺少参数fmy001";
+        }
         Map<String,Object>res=new HashMap<String, Object>();
         ResultInfo ri=checkdao.getPorcessCheck(paraMap);
         List<Map<String, Object>> list=ri.getList();

@@ -5,8 +5,9 @@
                    style="height:200px;position:relative;"
                    data-options="
                rownumbers:true,
+               fitColumns: true,
                singleSelect:true,
-
+               url: 'ajax/sendfamilypropertyinfo.jsp?eventName=getprocesscheckbyfmy001',
                method:'post',
                pagination:true,
 			   pageSize:3,
@@ -17,11 +18,11 @@
                 <tr>
                     <th data-options="field:'approvalname',width:120,align:'center',editor:'text'">审批名称</th>
 
-                    <th data-options="field:'approvalresult',width:150">审批结果</th>
+                    <th data-options="field:'approvalresult',width:80,align:'center'">审批结果</th>
                     <th data-options="field:'displayname',width:150,align:'center',editor:'text'">审批人</th>
-                    <th data-options="field:'time',width:150">审批时间</th>
+                    <th data-options="field:'time',width:150,align:'center'">审批时间</th>
 
-                    <th data-options="field:'approvalopinion',width:200,align:'center'">审批意见</th>
+                    <th data-options="field:'approvalopinion',width:190,align:'center'">审批意见</th>
                 </tr>
                 </thead>
             </table>
