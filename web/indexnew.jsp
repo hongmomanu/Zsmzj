@@ -104,9 +104,7 @@
     <div id="tabs" class="easyui-tabs"   fit="true" border="false" >
         <div title="主页" class="indexbackground">
             <div class="cs-home-remark">
-                <h1>欢迎使用舟山市民政局救灾救助系统</h1> <br>
-                测试人：jack <br>
-                说明：jQuery ui。
+                <h1>欢迎使用舟山市民政局救灾救助系统</h1>
             </div>
         </div>
     </div>
