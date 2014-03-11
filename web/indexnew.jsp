@@ -18,8 +18,8 @@
 
 <head>
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1" >
     <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge;chrome=1" >
     <title>舟山市社会救助管理系统</title>
 
     <script type="text/javascript" src="jsnew/config.js"></script>
@@ -48,7 +48,7 @@
         document.write('<script type="text/javascript"  src="'+extLocation+
                 'locale/easyui-lang-zh_CN.js"><\/script>');
         document.write('<link rel="stylesheet" type="text/css" id="swicth-style" href="'+extLocation+
-                'themes/default/easyui.css"><\/>');//resources/css/ext-all.css
+                'themes/gray/easyui.css"><\/>');//resources/css/ext-all.css
 
     </script>
     <link rel="stylesheet" type="text/css" href="index.css">
