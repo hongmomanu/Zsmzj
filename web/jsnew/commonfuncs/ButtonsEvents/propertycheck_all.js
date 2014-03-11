@@ -57,29 +57,34 @@ define(function(){
     function appformsubmit_check(item,datares){
         var record=datares.record;
         this.record=record;
-        var checkwindiv=$('#checkwin');
-        if(checkwindiv.length>0){
-            checkwindiv.window('open');
+
+        $('#propertycheckwin').dialog('close').parent().remove();
+        var propertycheckwindiv=$('#propertycheckwin');
+        if(propertycheckwindiv.length>0){
+            propertycheckwindiv.window('open');
         }
         else{
             var me=this;
-            require(['text!views/dbgl/dbglcheckwin.htm','text!views/propertycheck/propertycheckapplyhistoryfieldset.htm'],
+            require(['text!views/propertycheck/propertycheckwin.htm','text!views/propertycheck/propertycheckapplyhistoryfieldset.htm'],
                 function(div,table){
                     $('body').append(div);
-                    $('#checkwin').append($(table).find('div .siglecontent').html());
-                    $('#checkwin').dialog({
+                    if(!(propertycheckwindiv.length>0)){
+
+                        $('#propertycheckwin').append($(table).find('div .siglecontent').html());
+                    }
+                    $('#propertycheckwin').dialog({
                         title: '业务审核',
                         width: 650,
                         height: 370,
                         closed: false,
                         cache: false,
                         onOpen:function(){
-                            $.parser.parse($('#checkwin').parent());
-                            var grid=$('#checkwin').find('.easyui-datagrid');
+                            $.parser.parse($('#propertycheckwin').parent());
+                            var grid=$('#propertycheckwin').find('.easyui-datagrid');
                             var options = grid.datagrid('options');
                             //console.log(options);
                             grid.datagrid(
-                                {
+                                {   url: 'ajax/sendfamilypropertyinfo.jsp?eventName=getprocesscheckbyfmy001',
                                     onBeforeLoad: function (params) {
                                         params.businessid =me.record.id;
                                         params.fmy001=me.record.fmy001;
@@ -95,7 +100,7 @@ define(function(){
                             handler:function(){
 
                                 require(['jqueryplugin/easyui-form','commonfuncs/AjaxForm'],function(js,AjaxForm){
-                                    var form=$('#checkwin').find('form');
+                                    var form=$('#propertycheckwin').find('form');
                                     var approvalstr=form.form('getValue','approvalresult');
 
                                     var submit=function(param){
@@ -119,30 +124,28 @@ define(function(){
                                     };
 
                                     var success=function(res){
+
                                         resitem=eval('('+res+')');
                                         if(resitem.success){
                                             $.messager.alert('操作成功','审核成功!');
-                                            $('#checkwin').dialog('close');
+                                            $('#propertycheckwin').dialog('close');
                                             $('#tabs').tabs('close',1);
                                         }else{
                                             $.messager.alert('操作失败',resitem.msg);
                                         }
+                                        $('#propertycheckwin').dialog('close').parent().remove();
 
                                     };
                                     AjaxForm.ajaxform(form,'ajax/sendfamilypropertyinfo.jsp',submit,success);
 
 
                                 });
-                                //param.fm01=JSON.stringify(obj);
-                                ///ajax/sendfamilypropertyinfo.jsp:102
-                                //me.formSubmit(ajaxform, params, 'ajax/sendcheckform.jsp', successFunc, failFunc,"正在提交数据");
-
 
                             }
                         },{
                             text:'取消',
                             handler:function(){
-                                $('#checkwin').dialog('close');
+                                $('#propertycheckwin').dialog('close');
                             }
                         }],
                         modal: true });
@@ -340,45 +343,29 @@ define(function(){
         var record=datares.record;
         this.record=record;
         var approvalname=$(item).attr('namevalue');
-        var checkwindiv=$('#checkwin');
+        $('#propertycheckwin').dialog('close').parent().remove();
+        var checkwindiv=$('#propertycheckwin');
         if(checkwindiv.length>0){
             checkwindiv.window('open');
         }
         else{
             var me=this;
-            require(['text!views/dbgl/dbglcheckwin.htm','text!views/propertycheck/propertycheckapplyhistoryfieldset.htm'],
-                function(div,table){
+            require(['text!views/propertycheck/propertycheckwin.htm'],
+                function(div){
                     $('body').append(div);
-                    $('#checkwin').append($(table).find('div .siglecontent').html());
-                    $('#checkwin').dialog({
-                        title: '业务审核',
-                        width: 650,
-                        height: 370,
+                    //$('#checkwin').append($(table).find('div .siglecontent').html());
+                    $('#propertycheckwin').dialog({
+                        title: '业务核定',
+                        width: 550,
+                        height: 170,
                         closed: false,
                         cache: false,
-                        onOpen:function(){
-                            $.parser.parse($('#checkwin').parent());
-                            var grid=$('#checkwin').find('.easyui-datagrid');
-                            var options = grid.datagrid('options');
-                            //console.log(options);
-                            grid.datagrid(
-                                {
-                                    onBeforeLoad: function (params) {
-                                        params.businessid =me.record.id;
-                                        params.fmy001=me.record.fmy001;
-                                        params.start = (options.pageNumber - 1) * options.pageSize;
-                                        params.limit = options.pageSize;
-                                        params.totalname = "total";
-                                        params.rowsname = "rows";
-                                    }
-                                });
-                        },
                         buttons:[{
                             text:'确定',
                             handler:function(){
 
                                 require(['jqueryplugin/easyui-form','commonfuncs/AjaxForm'],function(js,AjaxForm){
-                                    var form=$('#checkwin').find('form');
+                                    var form=$('#propertycheckwin').find('form');
                                     var approvalstr=form.form('getValue','approvalresult');
 
                                     var submit=function(param){
@@ -402,8 +389,8 @@ define(function(){
                                     var success=function(res){
                                         resitem=eval('('+res+')');
                                         if(resitem.success){
-                                            $.messager.alert('操作成功','审核成功!');
-                                            $('#checkwin').dialog('close');
+                                            $.messager.alert('操作成功',me.record.checkitem+'成功!');
+                                            $('#propertycheckwin').dialog('close');
                                             $('#tabs').tabs('close',1);
                                         }else{
                                             $.messager.alert('操作失败',resitem.msg);
@@ -414,16 +401,13 @@ define(function(){
 
 
                                 });
-                                  //param.fm01=JSON.stringify(obj);
-                                  ///ajax/sendfamilypropertyinfo.jsp:102
-                                //me.formSubmit(ajaxform, params, 'ajax/sendcheckform.jsp', successFunc, failFunc,"正在提交数据");
 
 
                             }
                         },{
                             text:'取消',
                             handler:function(){
-                                $('#checkwin').dialog('close');
+                                $('#propertycheckwin').dialog('close');
                             }
                         }],
                         modal: true });

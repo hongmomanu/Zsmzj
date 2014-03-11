@@ -21,7 +21,26 @@ define(function(){
                     pagination:true,
                     pageSize:10,
                     rowStyler:function(index,row){
-                        if (row.processstatus===processdiction.stepthree){
+                        var processstatus=row['processstatus'];
+                        var vprocessstatustype=row['processstatustype'];
+                        var rowclass='';
+                        switch (processstatus){
+                            case  processdiction.stepzero:rowclass='color: #33CC33;';break;
+                            case  processdiction.stepone:rowclass='color: darkgreen;';break;
+                            case  processdiction.steptwo:rowclass='color: #CC0000;';break;
+                            case  processdiction.stepthree:
+                                rowclass='color: #000099;';
+                                if(vprocessstatustype==processstatustype.change){
+                                    rowclass='color: #aa0099; ';
+                                }else if(vprocessstatustype==processstatustype.logout){
+                                    rowclass='color: #FF9900; ';
+                                }
+                                break;
+                            case  processdiction.stepback:rowclass='';break;
+                        }
+
+                        return rowclass;
+                        /*if (row.processstatus===processdiction.stepthree){
                             if(row.processstatustype===processstatustype.logout){
                                 return 'color:red;font-weight:bold;';
                             }
@@ -32,7 +51,7 @@ define(function(){
                             return 'color:gray;font-weight:bold;';
                         }else{
                             return 'color:pink;font-weight:bold;';
-                        }
+                        }*/
                     },
                     onBeforeLoad: function (params) {
                         var options = $('#businessgrid').datagrid('options');
@@ -176,6 +195,17 @@ define(function(){
 
                 }
             });
+
+
+            var squarediv='<div class="yw-block">'+
+                '<div class="yw-stepzerobgcolor"></div><span>申请</span>'+
+                '<div class="yw-steponebgcolor"></div><span>提交</span>'+
+                '<div class="yw-steptwobgcolor"></div><span>审核</span>'+
+                '<div class="yw-stepthreebgcolor"></div><span>审批</span>'+
+                '<div class="yw-changebgcolor"></div><span>变更</span>'+
+                '<div class="yw-logoutbgcolor"></div><span>注销</span>'+
+                '</div>';
+            $('#businesstb').delay(5*1000,function(){$(this).append(squarediv)})
         }
     }
     return a;

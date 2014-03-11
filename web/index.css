@@ -100,6 +100,10 @@ h2 {
      background:url('img/edit_add.png') no-repeat;
  }.icon-add{
      background:url('img/edit_add.png') no-repeat;
+ }.icon-save{
+     background:url('img/head/3.png') no-repeat;
+ }.icon-remove{
+     background:url('img/del.gif') no-repeat;
  }.icon-cancelsteptwobtn,.icon-cancelstepthreebtn{
      background:url('img/icon16_error.png') no-repeat;
  }
@@ -292,6 +296,31 @@ a:active {
 .ui-skin-nav .li-skinitem span.dark-hive{background-color:black;}
 .ui-skin-nav .li-skinitem span.sunny{background-color:#FFE57E;}
 
+/*业务状态指示小方块*/
+.yw-stepzerobgcolor {background-color: #33CC33;}
+.yw-steponebgcolor {background-color: darkgreen; }
+.yw-steptwobgcolor {background-color: #CC0000;}
+.yw-stepthreebgcolor {background-color: #000099; }
+.yw-changebgcolor {background-color: #aa0099; }
+.yw-logoutbgcolor {background-color: #FF9900; }
+div.yw-block{
+    margin-top: 5px;
+    margin-right: 5px;
+    height: 14px;
+    float: right;
+}
+div.yw-block > div{
+
+    width: 12px;
+    height: 12px;
+    float: left;
+}
+div.yw-block > span{
+    line-height:14px;
+    font-family: 'Courier New';
+    display: block;
+    float: left;
+}
 /*打印表彰设置宽度为1024px时两个table个单元的宽度*/
 .mywidth1 td{
     width:255px;

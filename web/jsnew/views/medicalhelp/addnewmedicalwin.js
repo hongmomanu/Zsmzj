@@ -11,7 +11,7 @@ define(function () {
 
                 };
                 var success=function(){
-                    $.messager.alert('消息提示','资金发放成功');
+                    $.messager.alert('消息提示','操作成功');
                     $('#addnewmedicalwin').dialog('close');
                     $('#businessgrid').datagrid('reload');
                 };

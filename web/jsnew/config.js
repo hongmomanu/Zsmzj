@@ -10,7 +10,7 @@
 var extLocation="http://115.193.181.185/easyui/";
 
  //extLocation="http://127.168.2.141/ext-4.2.1/";
- extLocation="http://127.168.2.112/easyui/";
+ extLocation="http://192.168.2.31/easyui/";
 
 var businessTableType=
         {   'dbgl':"低保",
@@ -478,3 +478,24 @@ var processstatustype={"ok":"正常","change":"变更","logout":"注销"};
 var isenjoyedtype={"yes":"享受","no":"不享受"};
 var disabledtype={"heavy":['一级','二级']};
 
+var manangerRowClass=function (row) {
+    var processstatus=row['processstatus'];
+    var vprocessstatustype=row['processstatustype'];
+    var rowclass='';
+    switch (processstatus){
+        case  processdiction.stepzero:rowclass='yw-stepzero';break;
+        case  processdiction.stepone:rowclass='yw-stepone';break;
+        case  processdiction.steptwo:rowclass='yw-steptwo';break;
+        case  processdiction.stepthree:
+            rowclass='yw-stepthree';
+            if(vprocessstatustype==processstatustype.change){
+                rowclass='yw-change';
+            }else if(vprocessstatustype==processstatustype.logout){
+                rowclass='yw-logout';
+            }
+            break;
+        case  processdiction.stepback:rowclass='';break;
+    }
+    return rowclass;
+
+}

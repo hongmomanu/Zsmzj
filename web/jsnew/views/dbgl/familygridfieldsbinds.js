@@ -18,6 +18,7 @@ define(function(){
                         var age=$('#familymembersgrid').datagrid('getEditor', {index:index,field:'age'});
                         $(birthday.target).val(sex_birth.birthday);
                         $(sex.target).val(sex_birth.sex);
+                        $(sex.target).combobox('setValue',sex_birth.sex);
                         $(age.target).val((new Date()).getFullYear()-parseInt(sex_birth.birthday.split("-")[0]));
                     }
                 })
@@ -29,6 +30,7 @@ define(function(){
                 var relationship=$('#familymembersgrid').datagrid('getEditor', {index:index,field:'relationship'});
                 if($(relationship.target).val()==='户主')$('#owername').val($(ed.target).val());
             });
+
 
         },
         isenjoyedbind:function(index){

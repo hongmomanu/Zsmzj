@@ -732,12 +732,24 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
     public ResultInfo getPorcessCheck(Map<String, Object> param) {
 
         ArrayList<Map<String,Object>> list=new ArrayList<Map<String, Object>>();
-        String sql="select a.*,u.displayname from fm04 a,users u where fmy001=? and a.userid=u.id";
+        Integer limit=-1,offset=0;
+        if(param.get("limit")!=null){
+            limit=Integer.parseInt(param.get("limit").toString());
+        }
+        if(param.get("start")!=null){
+            offset=Integer.parseInt(param.get("start").toString());
+        }
+        String sql="select a.*,u.displayname from fm04 a,users u where fmy001=? and a.userid=u.id order by a.time desc limit ? offset ?";
+        String sql_count="select count(1) from fm04 a,users u where fmy001=? and a.userid=u.id";
         PreparedStatement pstmt=null;
+        PreparedStatement pstmt_count=null;
+        int count=0;
         Integer fmy001= Integer.parseInt((String)param.get("fmy001"));
         try {
             pstmt=conn.prepareStatement(sql);
             pstmt.setInt(1,fmy001);
+            pstmt.setInt(2,limit);
+            pstmt.setInt(3,offset);
             ResultSet rs = pstmt.executeQuery();
             ResultSetMetaData data=rs.getMetaData();
             int colnums=data.getColumnCount();
@@ -750,18 +762,30 @@ public class PropertyCheckDAOImpl implements PropertyCheckDAO {
                 }
                 list.add(map);
             }
+
+            pstmt_count=conn.prepareStatement(sql_count);
+            pstmt_count.setInt(1,fmy001);
+            ResultSet rs_count=pstmt_count.executeQuery();
+            if(rs_count.next()){
+                count=rs_count.getInt(1);
+            }
+
+            rs.close();
+            rs_count.close();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally{
             try{
                 if(null!=pstmt){
                     pstmt.close();
+                }if(null!=pstmt_count){
+                    pstmt_count.close();
                 }
             }catch(SQLException e){
                 e.printStackTrace();
             }
         }
-        return new ResultInfo(list.size(),list);
+        return new ResultInfo(count,list);
     }
 
 

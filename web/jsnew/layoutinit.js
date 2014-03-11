@@ -86,6 +86,20 @@ define(function(){
             }
 
         });
+        $('#domlogout').click(function(){
+            $.messager.confirm('您确定要退出吗?', '你正在试图退出.你想继续么?', function(r){
+                if(r){
+                    $.ajax({
+                        type: 'get',
+                        url: 'logout',
+                        complete :function() {
+                            location.href="login.jsp";
+                        }
+                    });
+                }
+            });
+
+        })
 
     }
 
