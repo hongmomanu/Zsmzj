@@ -74,7 +74,10 @@ define(function () {
                     var businesstype=$('#tabs').tabs('getSelected').panel('options').businesstype;
                     param.isnew=isnew;
                     param.userid=userid;
-                    param.grantid=selectItmes;
+
+                    if(selectItmes.length>0){
+                        param.grantid=selectItmes;
+                    }
                     param.businesstype=businesstype;
                     param.divisionpath=divisionpath;
 
