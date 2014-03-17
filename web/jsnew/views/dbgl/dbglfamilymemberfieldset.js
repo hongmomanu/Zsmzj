@@ -1,3 +1,30 @@
+$.extend($.fn.validatebox.defaults.rules, {
+    uniquepersonid: {
+        validator: function(value, param){
+            //return value.length >= param[0];
+            var rows=$('#familymembersgrid').datagrid('getData').rows;
+
+            var ids=[];
+            var uids=[];
+            for(var i=0;i<rows.length;i++){
+                $('#familymembersgrid').datagrid('beginEdit',i);
+                var ed=$('#familymembersgrid').datagrid('getEditor', {index:i,field:'personid'})
+                if(ed){
+                    var id=$(ed.target).val();
+                    ids.push(id)
+                    if(uids.indexOf(id)<0){
+                        uids.push(id);
+                    }else{
+                        this.message= "身份证信息("+id+")重复!"
+                    }
+                }
+            }
+            return ids.length==uids.length;
+        },
+        message: "身份证信息重复!"
+    }
+});
+
 define(['commonfuncs/PersonidValidator'], function (PersonidValidator) {
 
     function render(parameters,res) {

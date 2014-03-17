@@ -23,7 +23,8 @@
                 <th data-options="field:'personid',width:150,align:'right',editor:{
                             type:'validatebox',
                             options:{
-                                required:true
+                                required:true,
+                                validType:'uniquepersonid'
                             }
                         }">身份证</th>
                 <th data-options="field:'sex',width:60,editor:{
@@ -66,7 +67,7 @@
                                 textField: 'label'
 							}
 						}">职业状况</th>
-                <th data-options="field:'bodystatus',width:60,align:'center',editor:{
+                <th data-options="field:'bodystatus',width:70,align:'center',editor:{
 							type:'combobox',
 							options:{
 								valueField: 'value',
@@ -85,7 +86,7 @@
 							}
 						}">特定救助对象</th>
                 <th data-options="field:'workunits',width:60,align:'center',editor:'text'">工作单位</th>
-                <th data-options="field:'monthlyincome',width:60,align:'center',editor:'text'">月收入</th>
+                <!--<th data-options="field:'monthlyincome',width:60,align:'center',editor:'text'">月收入</th>-->
                 <th data-options="field:'accounttype',width:60,align:'center',editor:'text'">户口性质</th>
                 <th data-options="field:'maritalstatus',width:60,align:'center',editor:{
 							type:'combobox',

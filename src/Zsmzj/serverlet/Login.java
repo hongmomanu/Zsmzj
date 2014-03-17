@@ -47,6 +47,7 @@ public class Login extends HttpServlet {
             password=userpwd;
             String decodeing="UTF-8";
             StringTokenizer st = new StringTokenizer(request.getHeader("User-Agent"),";");
+            System.out.println("浏览器信息"+request.getHeader("User-Agent"));
             st.nextToken();//得到用户的浏览器名
             String userbrowser = st.nextToken();
             if(userbrowser.toUpperCase().contains("MSIE")){ //如果是ie浏览器进行GBK解码
