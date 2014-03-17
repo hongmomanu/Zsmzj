@@ -2,26 +2,42 @@ $.extend($.fn.validatebox.defaults.rules, {
     uniquepersonid: {
         validator: function(value, param){
             //return value.length >= param[0];
+            var f=function(array,value){
+                for(var i=0;i< array.length; i++){
+                   if(array[i]==value){
+                       return i;
+                   }
+                }
+                return -1;
+            }
+
             var rows=$('#familymembersgrid').datagrid('getData').rows;
 
             var ids=[];
-            var uids=[];
             for(var i=0;i<rows.length;i++){
                 $('#familymembersgrid').datagrid('beginEdit',i);
                 var ed=$('#familymembersgrid').datagrid('getEditor', {index:i,field:'personid'})
                 if(ed){
                     var id=$(ed.target).val();
                     ids.push(id)
-                    if(uids.indexOf(id)<0){
-                        uids.push(id);
-                    }else{
-                        this.message= "身份证信息("+id+")重复!"
-                    }
                 }
             }
-            return ids.length==uids.length;
+            var tmparr=[];
+            var cfids=[];
+            for(var i=0;i<ids.length;i++){
+                if(f(tmparr,ids[i])>-1){
+                    cfids.push(ids[i])
+                }else{
+                    tmparr.push(ids[i])
+                }
+            }
+            if(f(cfids,value)>-1){
+                this.message= "身份证信息("+value+")重复!";
+                return false;
+            }
+            return true;
         },
-        message: "身份证信息重复!"
+        message: ""
     }
 });
 
