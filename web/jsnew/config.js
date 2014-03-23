@@ -10,7 +10,12 @@
 var extLocation="http://115.193.181.185/easyui/";
 
  //extLocation="http://127.168.2.141/ext-4.2.1/";
- extLocation="http://192.168.2.31/easyui/";
+ extLocation="http://127.168.2.31/easyui/";
+if(window.location.href.search("localhost")>0){
+    extLocation='http://localhost/easyui/'
+}else{
+    extLocation="http://115.193.175.146/easyui/";
+}
 
 var businessTableType=
         {   'dbgl':"低保",
@@ -477,7 +482,7 @@ var processRoleBtn=null;
 var processstatustype={"ok":"正常","change":"变更","logout":"注销"};
 var isenjoyedtype={"yes":"享受","no":"不享受"};
 var disabledtype={"heavy":['一级','二级']};
-
+var locationSystemName="定位系统";
 var manangerRowClass=function (row) {
     var processstatus=row['processstatus'];
     var vprocessstatustype=row['processstatustype'];

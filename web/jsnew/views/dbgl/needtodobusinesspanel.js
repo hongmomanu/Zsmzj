@@ -6,10 +6,17 @@ define(function () {
     function render(parameters) {
         var type=null;
         var businesstype=$('#tabs').tabs('getSelected').panel('options').businesstype;
-        require(['commonfuncs/BusinessGridCommon'],function(BusinessGridCommon){
-            BusinessGridCommon.initbusinessgrid(type,businesstype);
+        var title=$('#tabs').tabs('getSelected').panel('options').title;
+        if(locationSystemName==title){
+            require(['commonfuncs/LocationGridCommon'],function(LocationGridCommon){
+                LocationGridCommon.initbusinessgrid(type,businesstype);
+            });
+        }else{
+            require(['commonfuncs/BusinessGridCommon'],function(BusinessGridCommon){
+                BusinessGridCommon.initbusinessgrid(type,businesstype);
+            });
+        }
 
-        });
 
     }
 

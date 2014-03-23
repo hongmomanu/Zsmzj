@@ -12,7 +12,7 @@
 								valueField: 'value',
 								url:'ajax/getenumbytype.jsp?type=dbglrelationship',
 								width:60,
-                                textField: 'label'
+                                textField: 'label' ,panelHeight:'auto'
 							}
 						}">与户主关系</th>
             </tr>
@@ -23,8 +23,7 @@
                 <th data-options="field:'personid',width:150,align:'right',editor:{
                             type:'validatebox',
                             options:{
-                                required:true,
-                                validType:'uniquepersonid'
+                                required:true,invalidMessage:'请输入正确身份证号!',validType:'personid'
                             }
                         }">身份证</th>
                 <th data-options="field:'sex',width:60,editor:{
@@ -33,7 +32,8 @@
 								valueField: 'value',
 								url:'ajax/getenumbytype.jsp?type=dbglsex',
 								width:60,
-                                textField: 'label'
+                                textField: 'label',panelHeight:'auto'
+
 							}
 						}">性别</th>
                 <th data-options="field:'birthday',width:90,align:'center',editor:'text'">出生日期</th>
@@ -45,7 +45,7 @@
 								url:'ajax/getenumbytype.jsp?type=isenjoyed',
 								width:60,
 								required:true,
-                                textField: 'label'
+                                textField: 'label',panelHeight:'auto'
 							}
 						}">是否享受</th>
                 <th data-options="field:'noenjoyedreason',width:200,editor:'text'">不享受原因</th>
@@ -55,7 +55,7 @@
 								valueField: 'value',
 								url:'ajax/getenumbytype.jsp?type=persontype',
 								width:60,
-                                textField: 'label'
+                                textField: 'label' ,panelHeight:'auto'
 							}
 						}">人员类别</th>
                 <th data-options="field:'jobstatus',width:90,editor:{
@@ -64,7 +64,7 @@
 								valueField: 'value',
 								url:'ajax/getenumbytype.jsp?type=jobstatus',
 								width:60,
-                                textField: 'label'
+                                textField: 'label',panelHeight:'auto'
 							}
 						}">职业状况</th>
                 <th data-options="field:'bodystatus',width:70,align:'center',editor:{
@@ -73,16 +73,16 @@
 								valueField: 'value',
 								url:'ajax/getenumbytype.jsp?type=bodystatus',
 								width:60,
-                                textField: 'label'
+                                textField: 'label',panelHeight:'auto'
 							}
 						}">健康状况</th>
-                <th data-options="field:'specialobject',width:60,align:'center',editor:{
+                <th data-options="field:'specialobject',width:80,align:'center',editor:{
 							type:'combobox',
 							options:{
 								valueField: 'value',
 								url:'ajax/getenumbytype.jsp?type=specialobject',
 								width:60,
-                                textField: 'label'
+                                textField: 'label',panelHeight:'auto'
 							}
 						}">特定救助对象</th>
                 <th data-options="field:'workunits',width:60,align:'center',editor:'text'">工作单位</th>
@@ -94,16 +94,16 @@
 								valueField: 'value',
 								url:'ajax/getenumbytype.jsp?type=maritalstatus',
 								width:60,
-                                textField: 'label'
+                                textField: 'label',panelHeight:'auto'
 							}
 						}">婚姻状况</th>
-                <th data-options="field:'education',width:60,align:'center',editor:{
+                <th data-options="field:'education',width:70,align:'center',editor:{
 							type:'combobox',
 							options:{
 								valueField: 'value',
 								url:'ajax/getenumbytype.jsp?type=education',
 								width:60,
-                                textField: 'label'
+                                textField: 'label',panelHeight:'auto'
 							}
 						}">文化程度</th>
                 <th data-options="field:'political',width:60,align:'center',editor:'text'">政治面貌</th>
@@ -113,7 +113,7 @@
 								valueField: 'value',
 								url:'ajax/getenumbytype.jsp?type=disabledtype',
 								width:60,
-                                textField: 'label'
+                                textField: 'label',panelHeight:'auto'
 							}
 						}">残疾类别</th>
                 <th data-options="field:'disabledlevel',width:60,align:'center',editor:{
@@ -122,7 +122,7 @@
 								valueField: 'value',
 								url:'ajax/getenumbytype.jsp?type=disabledlevel',
 								width:60,
-                                textField: 'label'
+                                textField: 'label',panelHeight:'auto'
 							}
 						}">残疾等级</th>
                 <th data-options="field:'disablenum',width:60,align:'center',editor:'text'">残疾证号</th>

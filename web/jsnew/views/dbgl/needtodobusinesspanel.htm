@@ -12,6 +12,10 @@
 
                 var str='<div></div>';
 
+                str=$(str).append('<a action=&quot;location&quot; class=&quot;locationbtn&quot; style=&quot;display:none;&quot;>定位</a>');
+                str=$(str).append('<a action=&quot;location&quot; class=&quot;locationbrsbtn&quot; style=&quot;display:none;&quot;>浏览</a>');
+                str=$(str).append('<a action=&quot;location&quot; class=&quot;locationyzbtn&quot; style=&quot;display:none;&quot;>验证</a>');
+
                 str=$(str).append('<a action=&quot;appformsubmit_alter&quot; class=&quot;viewbtn&quot; style=&quot;display:none;&quot;>查看</a>');
                 str=$(str).append('<a action=&quot;appformsubmit_alter&quot; class=&quot;alterbtn&quot; style=&quot;display:none;&quot;>修改</a>');
                 str=$(str).append('<a action=&quot;appformsubmit_process&quot; class=&quot;processbtn&quot; style=&quot;display:none;&quot;>流程</a>');

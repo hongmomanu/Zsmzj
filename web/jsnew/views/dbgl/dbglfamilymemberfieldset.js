@@ -1,7 +1,10 @@
-$.extend($.fn.validatebox.defaults.rules, {
+/*$.extend($.fn.validatebox.defaults.rules, {
     uniquepersonid: {
         validator: function(value, param){
             //return value.length >= param[0];
+            if(value.length<18){
+                return true;
+            }
             var f=function(array,value){
                 for(var i=0;i< array.length; i++){
                    if(array[i]==value){
@@ -39,7 +42,8 @@ $.extend($.fn.validatebox.defaults.rules, {
         },
         message: ""
     }
-});
+});*/
+
 
 define(['commonfuncs/PersonidValidator'], function (PersonidValidator) {
 
@@ -132,6 +136,38 @@ define(['commonfuncs/PersonidValidator'], function (PersonidValidator) {
                 return false;
             }
         }
+        function uniquePersonid(){
+            var f=function(array,value){
+                for(var i=0;i< array.length; i++){
+                    if(array[i]==value){
+                        return i;
+                    }
+                }
+                return -1;
+            }
+            var ids=[];
+            var rows=$('#familymembersgrid').datagrid('getData').rows;
+            for(var i=0;i<rows.length;i++){
+                if(rows[i].personid){
+                    if(f(ids,rows[i].personid)>-1){
+                        return false;
+                    }else{
+                        ids.push(rows[i].personid);
+                    }
+                }else{
+                    var ed=$('#familymembersgrid').datagrid('getEditor', {index:i,field:'personid'})
+                    if(ed){
+                        var id=$(ed.target).val();
+                        if(f(ids,id)>-1){
+                            return false;
+                        }else{
+                            ids.push(id)
+                        }
+                    }
+                }
+            }
+            return true;
+        }
 
         $('#familymembersgrid').datagrid({
             width: $('#familymembersdiv').width()-15,
@@ -183,6 +219,9 @@ define(['commonfuncs/PersonidValidator'], function (PersonidValidator) {
 
         });
         $('#newfamilymemer_save').bind('click', function () {
+            if(!uniquePersonid()){
+                alert('存在重复的身份证号码');return;
+            }
             if (endEditing()){
                 $('#familymembersgrid').datagrid('acceptChanges');
                 var rows=$('#familymembersgrid').datagrid('getRows');

@@ -3,7 +3,15 @@
  */
 
 define(function(){
-
+    var grantmoneyformat=['序号','户主姓名','户主身份证','申请类别','银行帐号','享受人数','救助金额','发放日期'];
+    var f=function(array,value){
+        for(var i=0;i< array.length; i++){
+            if(array[i]==value){
+                return i;
+            }
+        }
+        return -1;
+    }
     var a={
 
         exportbygrid:function(grid,btn){
@@ -28,14 +36,27 @@ define(function(){
                 {name:"序号",value:"index",columns:[],
                     col:[0,0],
                     row:[1,1]}];
-            for(var i=0;i<columns.length;i++){
-                var column=columns[i];
-                if(!(column.hidden||column.title=='操作栏'||column.title=='业务操作')){
-                    var item={name:column.title,value:column.field,columns:[],col:[index,index],row:[1,1]};
-                    headers.push(item);
-                    index++;
+            var data_options=$(grid).attr('data-options');
+            if(data_options&&data_options.indexOf('getgrantmoneybytype.jsp')>0){
+                for(var i=0;i<columns.length;i++){
+                    var column=columns[i];
+                    if(f(grantmoneyformat,column.title)>-1){
+                        var item={name:column.title,value:column.field,columns:[],col:[index,index],row:[1,1]};
+                        headers.push(item);
+                        index++;
+                    }
+                }
+            }else{
+                for(var i=0;i<columns.length;i++){
+                    var column=columns[i];
+                    if(!(column.hidden||column.title=='操作栏'||column.title=='业务操作')){
+                        var item={name:column.title,value:column.field,columns:[],col:[index,index],row:[1,1]};
+                        headers.push(item);
+                        index++;
+                    }
                 }
             }
+
 
             return headers;
         },

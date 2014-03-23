@@ -83,13 +83,15 @@ define(function(){
                         }else{
                             totalmoney+=helpmomey.toFixed(1)*(num-disablednum)
                         }
-                        $('#totalhelpmoney').val(totalmoney.toFixed(1));
+                        //2014-3-20,4舍5入
+                        //totalmoney=Number(totalmoney.toFixed(0));
+                        $('#totalhelpmoney').val(totalmoney.toFixed(0));
 
                     }else if(businesstype===businessTableType.dbbyh){
                         var disablednum=parseInt($('#disabledpersons').val());
                         var totalmoney=parseInt(poorstandard.val())*disablednum;
                         totalmoney+=parseFloat(poorstandard.val())*0.2*(num-disablednum)
-                        $('#totalhelpmoney').val(totalmoney.toFixed(1));
+                        $('#totalhelpmoney').val(totalmoney.toFixed(0)); //2014-3-20,4舍5入
                     }
 
 

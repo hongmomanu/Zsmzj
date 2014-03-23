@@ -23,13 +23,14 @@
             <th data-options="field:'owername',width:70,align:'center'">户主姓名</th>
             <th data-options="field:'owerid',width:150,align:'center'">户主身份证</th>
             <th data-options="field:'applytype',width:80,align:'center'">申请类别</th>
+            <th data-options="field:'bankid',width:90,align:'center',hidden:true">银行帐号</th>
             <th data-options="field:'poorfamilytype',width:80,align:'center'">致贫原因</th>
             <th data-options="field:'poortype',width:80,align:'center'">分类管理</th>
             <th data-options="field:'familyaccount',width:80,align:'center'">家庭户口</th>
             <th data-options="field:'totalhelpmoney',width:80,align:'center'">救助金额</th>
             <th data-options="field:'adjustmoney',width:80,align:'center'">调整金额</th>
             <th data-options="field:'familynum',width:80,align:'center'">家庭人数</th>
-            <th data-options="field:'enjoynum',width:80,align:'center'">享受人数</th>
+            <th data-options="field:'enjoyednum',width:80,align:'center'">享受人数</th>
             <th data-options="field:'grantuser',width:80,align:'center'">发放人</th>
             <th data-options="field:'time',width:80,align:'center',sortable:true,hidden:true">救助开始日期</th>
             <th data-options="field:'grantdate',width:80,align:'center',sortable:true,formatter:function(val,rowData,rowIndex)
@@ -61,5 +62,11 @@
 
         <a  class="easyui-linkbutton search"  iconCls="icon-search" >搜索</a>
             <a class="easyui-linkbutton newgrant" iconCls="icon-new">新增</a>
+        <a href="#" id="excelmenu_btn" >Excel导出</a>
     </div>
 
+    <div id="excelmenu" style="width:100px;">
+        <div data-options="name:'false'">导出当前页</div>
+        <div data-options="name:'true'">导出所有</div>
+
+    </div>

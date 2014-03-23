@@ -86,6 +86,12 @@ h2 {
 .icon-excel{
     background:url('img/xls.png') no-repeat;
 }
+
+
+.icon-locationbtn,.icon-locationbrsbtn,.icon-locationyzbtn{
+    background:url('img/form_show.png') no-repeat;
+}
+
 .icon-processbtn{
     background:url('img/process.png') no-repeat;
 }.icon-alterbtn{
