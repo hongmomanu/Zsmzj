@@ -98,7 +98,8 @@ public class LocationMapGuid {
         JSONObject jsonObject=new JSONObject();
         try {
             URL url = new URL("http://www.tianditu.com/wfssearch.shtml");
-            url = new URL("http://localhost:80/geoserver/wfs");
+            url = new URL("http://172.25.102.101:9090/geoserver/zsdata/wfs");
+            //url = new URL("http://localhost/geoserver/wfs");
             //url = new URL("http://192.168.2.141:8082/geoserver/wfs");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestProperty("Content-Type", "text/xml; charset=utf-8");   //附加上去的
@@ -120,7 +121,9 @@ public class LocationMapGuid {
                     "    </ogc:Filter>" +
                     "    </wfs:Query>" +
                     "</wfs:GetFeature>";
+
             String strQuest22=
+
                     "<wfs:GetFeature service=\"WFS\" version=\"1.1.0\"" +
                     "  outputFormat=\"json\"" +
                     "  xmlns:tzdata=\"http://tzdata/\"" +
@@ -139,17 +142,21 @@ public class LocationMapGuid {
                     "    </wfs:Query>" +
                     "</wfs:GetFeature>";
 
-            //strQuest=strQuest22;
+            strQuest=strQuest22;
             out.write(strQuest.getBytes());
             out.close();
             StringBuffer jsontext=new StringBuffer();
             BufferedReader br = new BufferedReader(new InputStreamReader(con
                     .getInputStream()));
             String line = "";
+            FileWriter fw = null;
+            fw = new FileWriter("E:\\seachresult.xml", false);
             for (line = br.readLine(); line != null; line = br.readLine()) {
                 System.out.println(line);
+                fw.write(line);
                 jsontext.append(line);
             }
+            fw.close();
             jsonObject=JSONObject.fromObject(jsontext.toString());
         } catch (MalformedURLException e) {
             e.printStackTrace();

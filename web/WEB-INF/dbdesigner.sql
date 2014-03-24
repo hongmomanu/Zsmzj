@@ -238,8 +238,9 @@ beforepeople					        integer,								--变更前人数
 beforetotalhelpmoney					real,								--变更前救助金
 approvaltime                  DATETIME,           --审核时间
 approvaluser                  VARCHAR(50),           --审核人
-approvaluserid                  VARCHAR(50)           --审核id
-
+approvaluserid                  VARCHAR(50),           --审核id
+mapguid                       VARCHAR(50),             --地图mapguid
+localtionresult               VARCHAR(1)             --地图定位结果,1成功,0为失败
 );
 
 
@@ -397,7 +398,8 @@ CREATE VIRTUAL TABLE IF NOT EXISTS businesschange USING fts3
   approvaltime                  DATETIME,           --审核时间
   approvaluser                  VARCHAR(50),           --审核人
   approvaluserid                  VARCHAR(50),           --审核id
-
+  mapguid                       VARCHAR(50),             --地图mapguid
+  localtionresult               VARCHAR(1),             --地图定位结果,1成功,0为失败
   businessid               integer,                                 --业务id
   insertdate               VARCHAR(50)                              --charuriq
   );

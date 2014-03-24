@@ -6,7 +6,7 @@ define(function(){
 
     var generateMapGuid=function(){
         var str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        var len=str.length;
+        var len=62;
         var buf = "";
         for (var i = 0; i < 31; i++) {
             var num = Number((Math.random()*len).toFixed(0));
@@ -24,10 +24,10 @@ define(function(){
         var realaddress=row.realaddress;
         var mapguid=row.mapguid;
         var genMapGuid=generateMapGuid();
-        if(!realaddress||(realaddress&&realaddress.trim().length==0)){
+        if(!realaddress||(realaddress&&realaddress.length>0)){
             realaddress='无实际居住地';
         }
-        if(!mapguid||(mapguid&&mapguid.trim().length==0)){
+        if(!mapguid||(mapguid&&mapguid.length<10)){
             $(row).attr('mapguid',genMapGuid);
             $.ajax({
                 url:'ajax/locationMapGuid.jsp',
@@ -107,7 +107,11 @@ define(function(){
                     pagination:true,
                     pageSize:10,
                     rowStyler:function(index,row){
-                        return 'color: #aa0099; ';
+                        //return 'color: black; ';
+                        if(index%2==1){
+                            return 'background-color: #F4F4F4; ';
+                        }
+                        return '';
                     },
                     onBeforeLoad: function (params) {
                         var options = $('#businessgrid').datagrid('options');
@@ -129,7 +133,7 @@ define(function(){
                         var locationbtns=$('#tabs .locationbtn');
                         var locationbrsbtns=$('#tabs .locationbrsbtn');
                         var locationyzbtns=$('#tabs .locationyzbtn');
-                        var btns_arr=[locationbtns,locationbrsbtns,locationyzbtns];
+                        var btns_arr=[locationbtns,locationbrsbtns];
                         require(['commonfuncs/LookupItemName'], function(LookupItemName){
                             var rows=data.rows;
                             for(var i=0;i<rows.length;i++){
@@ -137,18 +141,18 @@ define(function(){
                                     if(btns_arr[j].length>0){
                                         var classname=$(btns_arr[j][i]).attr("class");
                                         $(btns_arr[j][i]).linkbutton({ iconCls: 'icon-' + classname });
-                                        (function(index){
+                                        (function(index,cls){
                                             $(btns_arr[j][i]).click(function(){
                                                 var clickitem=this;
                                                 var record=rows[index];
-                                                if("locationyzbtn"==classname){
+                                                if("locationyzbtn"==cls){
                                                     locationResultQuery(record,clickitem);
                                                 }else{
                                                     goToLocation(record,clickitem);
                                                 }
 
                                             });
-                                        })(i);
+                                        })(i,classname);
                                         $(btns_arr[j][i]).show();
                                     }
 
