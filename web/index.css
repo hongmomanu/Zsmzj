@@ -92,7 +92,9 @@ h2 {
     background:url('img/form_show.png') no-repeat;
 }
 
-.icon-processbtn{
+.icon-shenhe{
+    background:url('img/shenhe.gif') no-repeat;
+}.icon-processbtn{
     background:url('img/process.png') no-repeat;
 }.icon-alterbtn{
     background:url('img/change.png') no-repeat;

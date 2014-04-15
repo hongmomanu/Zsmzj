@@ -126,12 +126,52 @@
 							}
 						}">残疾等级</th>
                 <th data-options="field:'disablenum',width:60,align:'center',editor:'text'">残疾证号</th>
-                <th data-options="field:'workability',width:60,align:'center',editor:'text'">劳动能力</th>
-                <th data-options="field:'ispension',width:60,align:'center',editor:'text'">养老保险</th>
-                <th data-options="field:'ismedical',width:60,align:'center',editor:'text'">医疗保险</th>
-                <th data-options="field:'medicaltype',width:60,align:'center',editor:'text'">医疗类型</th>
+                <th data-options="field:'workability',width:120,align:'center',editor:{
+							type:'combobox',
+							options:{
+								valueField: 'value',
+								url:'ajax/getenumbytype.jsp?type=workability',
+								width:60,
+                                textField: 'label',panelHeight:'auto'
+							}
+						}">劳动能力</th>
+                <th data-options="field:'ispension',width:60,align:'center',editor:{
+							type:'combobox',
+							options:{
+								valueField: 'value',
+								url:'ajax/getenumbytype.jsp?type=ismedical',
+								width:60,
+                                textField: 'label',panelHeight:'auto'
+							}
+						}">养老保险</th>
+                <th data-options="field:'ismedical',width:60,align:'center',editor:{
+							type:'combobox',
+							options:{
+								valueField: 'value',
+								url:'ajax/getenumbytype.jsp?type=ismedical',
+								width:60,
+                                textField: 'label',panelHeight:'auto'
+							}
+						}">医疗保险</th>
+                <th data-options="field:'medicaltype',width:120,align:'center',editor:{
+							type:'combobox',
+							options:{
+								valueField: 'value',
+								url:'ajax/getenumbytype.jsp?type=medicaltype',
+								width:60,
+                                textField: 'label',panelHeight:'auto'
+							}
+						}">医疗类型</th>
                 <th data-options="field:'medicalnum',width:60,align:'center',editor:'text'">医保卡号</th>
-                <th data-options="field:'isunemployment',width:60,align:'center',editor:'text'">失业保险</th>
+                <th data-options="field:'isunemployment',width:60,align:'center',editor:{
+							type:'combobox',
+							options:{
+								valueField: 'value',
+								url:'ajax/getenumbytype.jsp?type=isunemployment',
+								width:60,
+                                textField: 'label',panelHeight:'auto'
+							}
+						}">失业保险</th>
                 <th data-options="field:'unemploymentnum',width:60,align:'center',editor:'text'">失业证号</th>
                 <th data-options="field:'other',width:60,align:'center',editor:'text'">备注</th>
             </tr>

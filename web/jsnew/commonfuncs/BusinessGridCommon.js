@@ -6,9 +6,10 @@ define(function(){
 
     var a={
         initbusinessgrid:function(type,businesstype,columns,customparamfunc){
+
             $('#businessgrid').datagrid(
                 {
-                    singleSelect: true,
+                    //singleSelect: true,
                     collapsible: true,
                     rownumbers: true,
                     method:'post',

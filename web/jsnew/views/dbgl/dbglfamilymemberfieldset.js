@@ -74,6 +74,7 @@ define(['commonfuncs/PersonidValidator'], function (PersonidValidator) {
             require(['commonfuncs/ShowBirthDay','jqueryplugin/easyui-form'], function (ShowBirthDay) {
                 var oweridvalue=$('#mainform').form('getValue','owerid');
                 var sex_birth=ShowBirthDay.showBirthday(oweridvalue);
+                var age=(new Date()).getFullYear()-parseInt(sex_birth.birthday.split("-")[0]);
                 if(sex_birth.birthday){
                     $('#familymembersgrid').datagrid('appendRow',
                         {
@@ -87,8 +88,9 @@ define(['commonfuncs/PersonidValidator'], function (PersonidValidator) {
                             jobstatus:'',
                             bodystatus:'健康',
 
-                            age:(new Date()).getFullYear()-parseInt(sex_birth.birthday.split("-")[0]),
-                            monthlyincome: 0
+                            age:age,
+                            monthlyincome: 0 ,
+                            jobstatus:age>=60?'老年人':''
 
                         }
                     );

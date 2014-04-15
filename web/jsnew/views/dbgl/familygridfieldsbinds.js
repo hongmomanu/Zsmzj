@@ -13,13 +13,22 @@ define(function(){
                     var relationship=$('#familymembersgrid').datagrid('getEditor', {index:index,field:'relationship'});
                     if(relationship&&$(relationship.target).val()==='户主')$('#owerid').val($(ed.target).val());
                     if(sex_birth.birthday){
+                        var agevalue= (new Date()).getFullYear()-parseInt(sex_birth.birthday.split("-")[0]);
                         var birthday = $('#familymembersgrid').datagrid('getEditor', {index:index,field:'birthday'});
                         var sex=$('#familymembersgrid').datagrid('getEditor', {index:index,field:'sex'});
                         var age=$('#familymembersgrid').datagrid('getEditor', {index:index,field:'age'});
+                        var jobstatus=$('#familymembersgrid').datagrid('getEditor', {index:index,field:'jobstatus'});
                         $(birthday.target).val(sex_birth.birthday);
                         $(sex.target).val(sex_birth.sex);
                         $(sex.target).combobox('setValue',sex_birth.sex);
-                        $(age.target).val((new Date()).getFullYear()-parseInt(sex_birth.birthday.split("-")[0]));
+                        $(age.target).val(agevalue);
+                        if(agevalue>=60){
+                            $(jobstatus.target).val('老年人');
+                            $(jobstatus.target).combobox('setValue','老年人');
+                        }else{
+                            $(jobstatus.target).val('');
+                            $(jobstatus.target).combobox('setValue','');
+                        }
                     }
                 })
             });

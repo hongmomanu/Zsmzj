@@ -10,13 +10,7 @@
 var extLocation="http://115.193.181.185/easyui/";
 
  //extLocation="http://127.168.2.141/ext-4.2.1/";
- extLocation="http://127.168.2.31/easyui/";
-if(window.location.href.search("localhost")>0){
-    extLocation='http://localhost/easyui/'
-}else{
-    extLocation="http://115.193.175.146/easyui/";
-}
-
+ extLocation="http://127.168.2.112/easyui/";
 var businessTableType=
         {   'dbgl':"低保",
             'dbbyh':"边缘户",
@@ -121,21 +115,17 @@ var applyformviews={
     'dbglapply':[
         'dbglfamilybasicfieldset',
         'dbglfamilymemberfieldset',
-        'dbglfamilymoneyfieldset',
-        'dbglfamilyhousefieldset',
         'dbglfamilyinputfieldset',
-        'dbglfamilyaffixfieldset',
         'dbglfamilyapplyfieldset',
+        'dbglfamilyaffixfieldset',
         'dbglapplysubmitfieldset'
     ],
     'dbglalter':[
         'dbglfamilybasicfieldset',
         'dbglfamilymemberfieldset',
-        'dbglfamilymoneyfieldset',
-        'dbglfamilyhousefieldset',
         'dbglfamilyinputfieldset',
-        'dbglfamilyaffixfieldset',
         'dbglfamilyapplyfieldset',
+        'dbglfamilyaffixfieldset',
         'dbglapplysubmitfieldset',
         'dbglapplyhistoryfieldset'
 
@@ -143,33 +133,27 @@ var applyformviews={
     'dbglchange':[
         'dbglfamilybasicfieldset',
         'dbglfamilymemberfieldset',
-        'dbglfamilymoneyfieldset',
-        'dbglfamilyhousefieldset',
         'dbglfamilyinputfieldset',
-        'dbglfamilyaffixfieldset',
         'dbglfamilyapplyfieldset',
+        'dbglfamilyaffixfieldset',
         'dbglchangesubmitfieldset',
         'dbglapplyhistoryfieldset'
 
     ],'dbglchangeclick':[
         'dbglfamilybasicfieldset',
         'dbglfamilymemberfieldset',
-        'dbglfamilymoneyfieldset',
-        'dbglfamilyhousefieldset',
         'dbglfamilyinputfieldset',
-        'dbglfamilyaffixfieldset',
         'dbglfamilyapplyfieldset',
+        'dbglfamilyaffixfieldset',
         'dbglchangesubmitfieldset',
         'dbglapplyhistoryfieldset'
 
     ],'dbgllogout':[
         'dbglfamilybasicfieldset',
         'dbglfamilymemberfieldset',
-        'dbglfamilymoneyfieldset',
-        'dbglfamilyhousefieldset',
         'dbglfamilyinputfieldset',
-        'dbglfamilyaffixfieldset',
         'dbglfamilyapplyfieldset',
+        'dbglfamilyaffixfieldset',
         'dbgllogoutsubmitfieldset',
         'dbglapplyhistoryfieldset'
 
@@ -177,8 +161,6 @@ var applyformviews={
         'dbglfamilybasicfieldset',
         'dbgllogoutsubmitfieldset',
         'dbglfamilymemberfieldset',
-        'dbglfamilymoneyfieldset',
-        'dbglfamilyhousefieldset',
         'dbglfamilyinputfieldset',
         'dbglfamilyaffixfieldset',
         'dbglfamilyapplyfieldset',
