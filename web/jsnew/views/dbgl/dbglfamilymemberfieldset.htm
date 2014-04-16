@@ -106,7 +106,15 @@
                                 textField: 'label',panelHeight:'auto'
 							}
 						}">文化程度</th>
-                <th data-options="field:'political',width:60,align:'center',editor:'text'">政治面貌</th>
+                <th data-options="field:'political',width:60,align:'center',editor:{
+							type:'combobox',
+							options:{
+								valueField: 'value',
+								url:'ajax/getenumbytype.jsp?type=political',
+								width:60,
+                                textField: 'label',panelHeight:'auto'
+							}
+						}">政治面貌</th>
                 <th data-options="field:'disabledtype',width:60,align:'center',editor:{
 							type:'combobox',
 							options:{

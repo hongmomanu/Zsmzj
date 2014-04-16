@@ -116,7 +116,7 @@ var applyformviews={
         'dbglfamilybasicfieldset',
         'dbglfamilymemberfieldset',
         'dbglfamilyinputfieldset',
-        'dbglfamilyapplyfieldset',
+        //'dbglfamilyapplyfieldset',
         'dbglfamilyaffixfieldset',
         'dbglapplysubmitfieldset'
     ],
@@ -124,7 +124,7 @@ var applyformviews={
         'dbglfamilybasicfieldset',
         'dbglfamilymemberfieldset',
         'dbglfamilyinputfieldset',
-        'dbglfamilyapplyfieldset',
+        //'dbglfamilyapplyfieldset',
         'dbglfamilyaffixfieldset',
         'dbglapplysubmitfieldset',
         'dbglapplyhistoryfieldset'

@@ -27,15 +27,6 @@
         </thead>
         <thead>
         <tr>
-            <th data-options="field:'division',width:200,align:'center'">行政区划</th>
-            <th data-options="field:'owername',width:70,align:'center'">户主姓名</th>
-            <th data-options="field:'owerid',width:150,align:'center'">户主身份证</th>
-            <th data-options="field:'time',width:80,align:'center',sortable:true,hidden:true">救助开始日期</th>
-            <th data-options="field:'applytype',width:80,align:'center'">申请类别</th>
-            <th data-options="field:'poortype',width:80,align:'center'">分类管理</th>
-            <th data-options="field:'logoutdate',width:80,align:'center',sortable:true,hidden:true">注销日期</th>
-            <th data-options="field:'logoutreason',width:80,align:'center',sortable:true">注销原因</th>
-
             <th data-options="field:'processstatus',width:80,align:'center',formatter:function(val,rowData,rowIndex)
             {if(rowData['processstatustype']==processstatustype.ok){
             if(val==processdiction.steptwo)return val+'中';
@@ -45,6 +36,17 @@
             if(val==processdiction.stepzero)return '已审批'
             else if(val==processdiction.steptwo)return val+'中';
             else return '已'+val; }}">状态</th>
+
+            <th data-options="field:'division',width:200,align:'center'">行政区划</th>
+            <th data-options="field:'owername',width:70,align:'center'">户主姓名</th>
+            <th data-options="field:'owerid',width:150,align:'center'">户主身份证</th>
+            <th data-options="field:'time',width:80,align:'center',sortable:true,hidden:true">救助开始日期</th>
+            <th data-options="field:'applytype',width:80,align:'center'">申请类别</th>
+            <th data-options="field:'poortype',width:80,align:'center'">分类管理</th>
+            <th data-options="field:'logoutdate',width:80,align:'center',sortable:true,hidden:true">注销日期</th>
+            <th data-options="field:'logoutreason',width:80,align:'center',sortable:true">注销原因</th>
+
+
             <th data-options="field:'approvaluser',width:80,align:'center'">审核人</th>
             <th data-options="field:'approvaltime',width:80,align:'center'">审核日期</th>
             <th data-options="field:'displayname',width:80,align:'center'">制单人</th>

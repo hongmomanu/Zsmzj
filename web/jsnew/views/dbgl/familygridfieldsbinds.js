@@ -71,20 +71,23 @@ define(function(){
             $(edp.target).val($('#owerid').val());
         },
         caculatehelpmoney:function(){
-            if($('#averageincome').length>0){
+            //if($('#averageincome').length>0||true){
+            if(true){
+                var businesstype=$('#tabs').tabs('getSelected').panel('options').businesstype;
+                var isdbgl=businesstype==businessTableType.dbgl;
                 var num=parseInt($('#FamilyPersons').val());
-                if($('#incomesum').length>0&&$('#propertysum').length>0){
-                    var familyincome= parseFloat($('#incomesum').val())+parseFloat($('#propertysum').val());
+                /*if($('#incomesum').length>0&&($('#propertysum').length>0||isdbgl)){
+                    var familyincome= parseFloat($('#incomesum').val())+parseFloat($('#propertysum').val()||0);
                     $('#averageincome').val((familyincome/12/num).toFixed(1));
                     $('#familyincome').val(familyincome);
-                }
-
+                }*/
+                var averageincome=(parseFloat($('#incomesum').val())/12/num).toFixed(1);
                 var poorstandard=$('#poorstandard');
                 if(poorstandard.length>0){
-                    var businesstype=$('#tabs').tabs('getSelected').panel('options').businesstype;
+
                     if(businesstype===businessTableType.dbgl){
                         var minpercent=0.4;
-                        var helpmomey=parseInt(poorstandard.val())-$('#averageincome').val();
+                        var helpmomey=parseInt(poorstandard.val())-averageincome;
                         var disablednum=parseInt($('#disabledpersons').val());
                         var totalmoney=parseFloat(poorstandard.val())*disablednum;
                         if(helpmomey<minpercent*parseFloat(poorstandard.val())){

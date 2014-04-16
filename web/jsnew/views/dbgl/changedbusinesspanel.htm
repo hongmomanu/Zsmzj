@@ -26,6 +26,16 @@
         </thead>
         <thead>
         <tr>
+            <th data-options="field:'processstatus',width:80,align:'center',formatter:function(val,rowData,rowIndex)
+            {if(rowData['processstatustype']==processstatustype.ok){
+            if(val==processdiction.steptwo)return val+'中';
+                else return '已'+val;
+            }
+            else{
+            if(val==processdiction.stepzero)return '已审批'
+            else if(val==processdiction.steptwo)return val+'中';
+            else return '已'+val; }}">状态</th>
+
             <th data-options="field:'division',width:200,align:'center'">行政区划</th>
             <th data-options="field:'owername',width:70,align:'center'">户主姓名</th>
             <th data-options="field:'owerid',width:150,align:'center'">户主身份证</th>
@@ -38,15 +48,7 @@
             <th data-options="field:'changedate',width:80,align:'center',sortable:true,hidden:true">变更日期</th>
             <th data-options="field:'changereason',width:80,align:'center',sortable:true">变更原因</th>
 
-            <th data-options="field:'processstatus',width:80,align:'center',formatter:function(val,rowData,rowIndex)
-            {if(rowData['processstatustype']==processstatustype.ok){
-            if(val==processdiction.steptwo)return val+'中';
-                else return '已'+val;
-            }
-            else{
-            if(val==processdiction.stepzero)return '已审批'
-            else if(val==processdiction.steptwo)return val+'中';
-            else return '已'+val; }}">状态</th>
+
             <th data-options="field:'approvaluser',width:80,align:'center'">审核人</th>
             <th data-options="field:'approvaltime',width:80,align:'center'">审核日期</th>
             <th data-options="field:'displayname',width:80,align:'center'">制单人</th>

@@ -32,6 +32,13 @@ define(function () {
                 conditions[item]=conditions[item].split(",");
                 options.search_params[item]=options.search_params[item]?options.search_params[item].concat(conditions[item]):conditions[item];
             }
+
+            var names=conditions['name'];
+            for(var i in names){   //表里没有age字段
+                if(names[i]=='age'){
+                    names[i]=" strftime('%Y','now')-strftime('%Y',birthday) "
+                }
+            }
             $('#businessgrid').datagrid('load',conditions);
 
         },

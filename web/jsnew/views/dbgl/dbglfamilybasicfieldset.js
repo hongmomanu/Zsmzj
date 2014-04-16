@@ -84,6 +84,16 @@ define(function () {
 
                 });
             });
+
+           $('#owername').bind('blur',function(){
+               $(':input[name=bankower]').val($(this).val())
+           })
+           //FamilyPersons
+               $('#zhufangzmj').bind('blur',function(){
+                   var avg=($(this).val()||0)/Number($('#FamilyPersons').val());
+                   $('#zhufangavgmj').val(avg.toFixed(1))
+               })
+
         })
 
 
