@@ -6,7 +6,10 @@ html,body {
     margin: 0;
     height:100%;
 }
-
+fieldset{
+    width: 900px;
+    margin: 0px auto;
+}
 
 h2 {
     font-size:18px;

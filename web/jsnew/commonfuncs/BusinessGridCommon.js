@@ -198,6 +198,15 @@ define(function(){
             });
 
 
+            $('#cc').combo({ editable: false });
+            $('#sp').appendTo($('#cc').combo('panel'));
+            $('#sp span').click(function(){
+                var v = $(this).text();
+                $('#cc').combo('setValue', v).combo('setText', v).combo('hidePanel');
+                options.search_params.yy=v;
+                $('#businessgrid').datagrid('load',options.search_params);
+            });
+
             var squarediv='<div class="yw-block">'+
                 '<div class="yw-stepzerobgcolor"></div><span>申请</span>'+
                 '<div class="yw-steponebgcolor"></div><span>提交</span>'+
