@@ -6,7 +6,7 @@ define(function () {
             $('#tabs').tabs('close',1);
         });
 
-        $('#appformmore').click(function(){
+        /*$('#appformmore').click(function(){
             var isValid = $('#mainform').form('validate');
             if(isValid){
                 require(['commonfuncs/FormAdd'],function(FormAdd){
@@ -15,7 +15,7 @@ define(function () {
 
             }
 
-        });
+        });*/
 
         function isscroll_func(){
             require(['commonfuncs/IsScroll'],function(IsScroll){
@@ -58,7 +58,7 @@ define(function () {
                 }
             });
         }
-        //isscroll_func();
+        isscroll_func();
 
         $('#appformsubmit').click(function(){
             //$('#tabs').tabs('close',1);

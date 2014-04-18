@@ -1,50 +1,3 @@
-/*$.extend($.fn.validatebox.defaults.rules, {
-    uniquepersonid: {
-        validator: function(value, param){
-            //return value.length >= param[0];
-            if(value.length<18){
-                return true;
-            }
-            var f=function(array,value){
-                for(var i=0;i< array.length; i++){
-                   if(array[i]==value){
-                       return i;
-                   }
-                }
-                return -1;
-            }
-
-            var rows=$('#familymembersgrid').datagrid('getData').rows;
-
-            var ids=[];
-            for(var i=0;i<rows.length;i++){
-                $('#familymembersgrid').datagrid('beginEdit',i);
-                var ed=$('#familymembersgrid').datagrid('getEditor', {index:i,field:'personid'})
-                if(ed){
-                    var id=$(ed.target).val();
-                    ids.push(id)
-                }
-            }
-            var tmparr=[];
-            var cfids=[];
-            for(var i=0;i<ids.length;i++){
-                if(f(tmparr,ids[i])>-1){
-                    cfids.push(ids[i])
-                }else{
-                    tmparr.push(ids[i])
-                }
-            }
-            if(f(cfids,value)>-1){
-                this.message= "身份证信息("+value+")重复!";
-                return false;
-            }
-            return true;
-        },
-        message: ""
-    }
-});*/
-
-
 define(['commonfuncs/PersonidValidator'], function (PersonidValidator) {
 
     function render(parameters,res) {
@@ -72,30 +25,42 @@ define(['commonfuncs/PersonidValidator'], function (PersonidValidator) {
 
         }else{
             require(['commonfuncs/ShowBirthDay','jqueryplugin/easyui-form'], function (ShowBirthDay) {
-                var oweridvalue=$('#mainform').form('getValue','owerid');
-                var sex_birth=ShowBirthDay.showBirthday(oweridvalue);
-                var age=(new Date()).getFullYear()-parseInt(sex_birth.birthday.split("-")[0]);
-                if(sex_birth.birthday){
-                    $('#familymembersgrid').datagrid('appendRow',
-                        {
-                            name: $('#owername').val(),
-                            relationship:'户主',
-                            birthday:sex_birth.birthday,
-                            personid: oweridvalue,
-                            sex:sex_birth.sex,
-                            isenjoyed:'享受',
-                            persontype:'归正人员',
-                            jobstatus:'',
-                            bodystatus:'健康',
+                $('#owerid').bind('blur',function(){
+                    var isValid=$(this).validatebox('isValid');
+                    if(isValid){
+                        var familydt=$('#familymembersgrid').datagrid('getData').rows;
+                        for( var i=0;i<familydt.length;i++){
+                            if(familydt[i].relationship=='户主'){
+                                return;
+                            }
+                        }
+                        var oweridvalue=$('#mainform').form('getValue','owerid');
+                        var sex_birth=ShowBirthDay.showBirthday(oweridvalue);
+                        var age=(new Date()).getFullYear()-parseInt(sex_birth.birthday.split("-")[0]);
+                        if(sex_birth.birthday){
+                            $('#familymembersgrid').datagrid('appendRow',
+                                {
+                                    name: $('#owername').val(),
+                                    relationship:'户主',
+                                    birthday:sex_birth.birthday,
+                                    personid: oweridvalue,
+                                    sex:sex_birth.sex,
+                                    isenjoyed:'享受',
+                                    persontype:'归正人员',
+                                    jobstatus:'',
+                                    bodystatus:'健康',
 
-                            age:age,
-                            monthlyincome: 0 ,
-                            jobstatus:age>=60?'老年人':''
+                                    age:age,
+                                    monthlyincome: 0 ,
+                                    jobstatus:age>=60?'老年人':''
+
+                                }
+                            );
 
                         }
-                    );
+                    }
+                })
 
-                }
             });
 
         }

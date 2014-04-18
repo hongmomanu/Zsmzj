@@ -87,7 +87,15 @@
 						}">特定救助对象</th>
                 <th data-options="field:'workunits',width:60,align:'center',editor:'text'">工作单位</th>
                 <!--<th data-options="field:'monthlyincome',width:60,align:'center',editor:'text'">月收入</th>-->
-                <th data-options="field:'accounttype',width:60,align:'center',editor:'text'">户口性质</th>
+                <th data-options="field:'accounttype',width:60,align:'center',editor:{
+							type:'combobox',
+							options:{
+								valueField: 'value',
+								url:'ajax/getenumbytype.jsp?type=accounttype',
+								width:60,
+                                textField: 'label',panelHeight:'auto'
+							}
+						}">户口性质</th>
                 <th data-options="field:'maritalstatus',width:60,align:'center',editor:{
 							type:'combobox',
 							options:{
@@ -97,12 +105,12 @@
                                 textField: 'label',panelHeight:'auto'
 							}
 						}">婚姻状况</th>
-                <th data-options="field:'education',width:70,align:'center',editor:{
+                <th data-options="field:'education',width:100,align:'center',editor:{
 							type:'combobox',
 							options:{
 								valueField: 'value',
 								url:'ajax/getenumbytype.jsp?type=education',
-								width:60,
+								width:80,
                                 textField: 'label',panelHeight:'auto'
 							}
 						}">文化程度</th>
@@ -115,12 +123,12 @@
                                 textField: 'label',panelHeight:'auto'
 							}
 						}">政治面貌</th>
-                <th data-options="field:'disabledtype',width:60,align:'center',editor:{
+                <th data-options="field:'disabledtype',width:80,align:'center',editor:{
 							type:'combobox',
 							options:{
 								valueField: 'value',
 								url:'ajax/getenumbytype.jsp?type=disabledtype',
-								width:60,
+								width:80,
                                 textField: 'label',panelHeight:'auto'
 							}
 						}">残疾类别</th>
@@ -170,7 +178,7 @@
                                 textField: 'label',panelHeight:'auto'
 							}
 						}">医疗类型</th>
-                <th data-options="field:'medicalnum',width:60,align:'center',editor:'text'">医保卡号</th>
+                <th data-options="field:'medicalnum',width:60,align:'center',editor:'text'">参保序号</th>
                 <th data-options="field:'isunemployment',width:60,align:'center',editor:{
 							type:'combobox',
 							options:{
