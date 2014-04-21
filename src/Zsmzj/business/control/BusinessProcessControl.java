@@ -2097,7 +2097,7 @@ public class BusinessProcessControl {
 
     public String getNeedTodoBusinessList(int start,int limit,String keyword,String type,
                                           String businesstype,boolean ispublicinfo,String bgdate,
-                                          String edddate,String divisionpath,String totalname,String rowsname){
+                                          String edddate,String divisionpath,String totalname,String rowsname,int statusType){
         totalname=totalname==null?"totalCount":totalname;
         rowsname=rowsname==null?"results":rowsname;
         BusinessProcess bp=new BusinessProcess();
@@ -2199,6 +2199,22 @@ public class BusinessProcessControl {
                 sql_count+=" and (a.owerid  like '"+keyword+"%' or a.owername like '"+keyword+"%') ";
 
         }
+
+        /*
+        0:全部记录1:未提交记录2:审批中记录3:已审批记录4:审批已回退记录5:注销记录
+         */
+        String addStr=" and";
+        switch (statusType){
+            case 0: addStr="";break;
+            case 1: addStr+="(a.processstatus in('申请'))";break;
+            case 2: addStr+="(a.processstatus in('提交','审核'))";break;
+            case 3: addStr+="(a.processstatus in('审批'))";break;
+            //case 4: addStr+="(a.processstatus in('申请'))";break;
+            case 5: addStr+="(a.processstatus ='审批' and a.processstatustype='注销')";break;
+            default:addStr="";
+        }
+        sql_list+=addStr;
+        sql_count+=addStr;
 
         totalnum=cd.getTotalCountBySql(sql_count);
 

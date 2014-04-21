@@ -64,8 +64,9 @@
         </div>
 
 
-        <ul class="ui-skin-nav" style="display: none;">
-            <li class="li-skinitem" title="gray"><span class="gray" rel="gray"></span></li>
+        <ul class="ui-skin-nav">
+            <li class="li-skinitem" title="blue"><span class="blue" rel="blue"></span></li>
+            <%--<li class="li-skinitem" title="gray"><span class="gray" rel="gray"></span></li>
             <li class="li-skinitem" title="default"><span class="default" rel="default"></span></li>
             <li class="li-skinitem" title="bootstrap"><span class="bootstrap" rel="bootstrap"></span></li>
             <li class="li-skinitem" title="black"><span class="black" rel="black"></span></li>
@@ -74,7 +75,7 @@
             <li class="li-skinitem" title="blue"><span class="blue" rel="blue"></span></li>
             <li class="li-skinitem" title="cupertino"><span class="cupertino" rel="cupertino"></span></li>
             <li class="li-skinitem" title="dark-hive"><span class="dark-hive" rel="dark-hive"></span></li>
-            <li class="li-skinitem" title="sunny"><span class="sunny" rel="sunny"></span></li>
+            <li class="li-skinitem" title="sunny"><span class="sunny" rel="sunny"></span></li>--%>
         </ul>
 
         <ul id="headnavul">
@@ -102,10 +103,8 @@
 </div>
 <div id="mainPanle" region="center" border="true" border="false">
     <div id="tabs" class="easyui-tabs"   fit="true" border="false" >
-        <div title="主页" class="indexbackground">
-            <div class="cs-home-remark">
-                <h1>欢迎使用舟山市民政局救灾救助系统</h1>
-            </div>
+        <div id="homepage" title="主页" class="indexbackground">
+
         </div>
     </div>
 </div>
