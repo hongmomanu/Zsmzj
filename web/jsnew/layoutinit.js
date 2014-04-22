@@ -101,6 +101,11 @@ define(function(){
 
         })
 
+        require(['views/homepage/homepage'],function(js){
+             js.render()
+
+        })
+
     }
 
     function initindextime(){

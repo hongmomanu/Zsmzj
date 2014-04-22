@@ -29,7 +29,13 @@
         String businesstype=request.getParameter("businesstype");
         String divisionpath=request.getParameter("divisionpath");
         boolean ispublicinfo=request.getParameter("ispublicinfo")!=null?Boolean.parseBoolean(request.getParameter("ispublicinfo")):false;
-        out.print(bp.getNeedTodoBusinessList(start,limit,keyword,type,businesstype,ispublicinfo,bgdate,eddate,divisionpath,totalname,rowsname));
+
+        String st=request.getParameter("statusType");
+        int statusType=0;
+        if(st!=null&&!"".equals(st)){
+            statusType=Integer.parseInt(st);
+        }
+        out.print(bp.getNeedTodoBusinessList(start,limit,keyword,type,businesstype,ispublicinfo,bgdate,eddate,divisionpath,totalname,rowsname,statusType));
     }
     //out.print("ok");
 %>

@@ -28,6 +28,7 @@ define(function(){
                             var title=node.text;
                             require(['commonfuncs/TreeClickEvent'],function(TreeClickEvent){
                                 if(spatialchildTableType[title]) businesstype=title;
+                                TreeClickEvent.setCurrentMenu(node);
                                 TreeClickEvent.ShowContent(htmlfile,jsfile,title,value,folder,null,node.id,businesstype);
                                 me.nodeid=node.id;
                             });

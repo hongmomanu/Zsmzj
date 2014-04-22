@@ -6,7 +6,10 @@ html,body {
     margin: 0;
     height:100%;
 }
-
+fieldset{
+    width: 900px;
+    margin: 0px auto;
+}
 
 h2 {
     font-size:18px;
@@ -275,7 +278,18 @@ a:active {
 {
     background:#e6f4fc url(img/mainbg.jpg) bottom center no-repeat;
 }
-
+#homepage{
+    padding: 5 5 5 5;
+}
+#homepage>div>div{
+    margin: 5px 5px 5px 5px;
+    float: left;
+    width: 48%;
+    height: 47%;
+}
+.button-refresh{
+    background: url('img/toolbar/refresh.gif') no-repeat 0 -16px;
+}
 .ui-skin-nav .li-skinitem,#headnavul .li-skinitem {
     float: left;
     font-size: 12px;
