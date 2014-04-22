@@ -3,7 +3,7 @@
  */
 
 define(function(){
-    var grantmoneyformat=['序号','户主姓名','户主身份证','申请类别','银行帐号','享受人数','救助金额','发放日期'];
+    var grantmoneyformat=['序号','户主姓名','户主身份证','申请类别','银行帐号','享受人数','救助金额','发放日期','重残人数'];
     var f=function(array,value){
         for(var i=0;i< array.length; i++){
             if(array[i]==value){

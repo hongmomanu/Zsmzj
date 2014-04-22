@@ -13,7 +13,19 @@ define(function(){
         }
         return arr;
     })()
-
+    var doChecked=function(dg,id,f){
+        $.ajax({
+            url:'ajax/setCheckedApprovalFail.jsp',
+            data:{id:id},
+            type:'post',
+            success:function(){
+               dg.datagrid('reload');
+               if(f){
+                   f();
+               }
+            }
+        })
+    }
     var f=function(s){
         require(pagepath,function(){
             for(var i=0;i<arguments.length;i++){
@@ -26,22 +38,45 @@ define(function(){
                 url:'ajax/getUnCheckedApprovalFail.jsp',
                 queryParams: {
                     start: 0,
-                    limit: 5
+                    limit: 5,
+                    userid:userid
                 },
                 fitColumns:true,
-                columns:[[
-                    {field:'owername',title:'人员',width:60,align:'center',fixed:true},
-                    {field:'owerid',title:'身份证',width:130,align:'center',fixed:true},
-                    {field:'businesstype',title:'名称',width:60,align:'center'},
-                    {field:'time',title:'提交时间',width:100,align:'center',formatter:function(v,r,i){
-                        return v.substr(5)
-                    }},
-                    {field:'username',title:'提交人',width:80,align:'center'},
-                    {field:'approvalopinion',title:'原因',width:130,align:'right'}
-                ]]
+                onLoadSuccess:function(data){
+                    var $table=$(this);
+                    var checkedbtns=$('#tabs [action=checked]');
+                    var owernames=$('#tabs [action=owername]');
+                    var rows=data.rows;
+                    for( var i in rows){
+                        (function(index){
+                           $(checkedbtns[index]).bind('click',function(){
+                               doChecked($table,rows[index].businessid)
+                           })
+                        })(i);
+
+                        (function(index){
+                            $(owernames[index]).bind('click',function(){
+                                var clickitem=$(this).attr('action','appformsubmit_alter');
+                                var record=rows[index];
+                                doChecked($table,rows[index].businessid,function(){
+                                    require(['commonfuncs/ButtonsEvent'],function(ButtonsEvent){
+                                        var data={record:record};
+                                        ButtonsEvent.approvl_btns(clickitem,data);
+                                    });
+                                })
+                            })
+                        })(i);
+                    }
+                }
             }).closest('.panel').find('div.panel-tool')
-                .append(
-                    '<a href="javascript:void(0)" class="layout-button-right"></a><span style="margin-right: 3px;">更多</span>')
+                .append('<a href="javascript:void(0)" class="layout-button-right"></a><span style="margin-right: 3px;" opt="refresh">刷新</span>')
+                .find('[opt=refresh]').click(function(){
+                    $('#hometodolist').datagrid('reload');
+                })
+                .end()
+                .find('[opt=more]').click(function(){
+                    alert("more")
+                })
 
             $('#homenotice').datagrid({
                 title:'通知公告',

@@ -67,6 +67,7 @@ define(function(){
             var successFunc = function(res){
                 var count=res.count;
                 updateitem.updateitemnum($('#domneedtodocount'),count,"(",")");
+
             };
 
            ajaxform.ajaxsend("post","json","ajax/getneedtodos.jsp",params,successFunc,null);

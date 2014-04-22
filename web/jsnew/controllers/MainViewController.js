@@ -5,8 +5,9 @@ define(['views/MainTree','commonfuncs/LoadingMask'], function(MainTree,LoadingMa
 
     function start(){
         MainTree.render({LoadingMask:LoadingMask});
-        require(['commonfuncs/initFuncs'],function(initFuncs){
+        require(['commonfuncs/initFuncs','commonfuncs/initDisplay'],function(initFuncs,initDisplay){
             initFuncs.initProcessFromRole(roleid,"流程操作");
+            initDisplay.initProcessFromRole(roleid,"显示操作");
         })
     }
 

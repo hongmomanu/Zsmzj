@@ -461,6 +461,7 @@ var ViewWaitMask=null;
 var processdiction={"stepzero":"申请","stepone":"提交","steptwo":"审核","stepthree":"审批","stepback":"退回","noprocess":"无流程"};
 var approvalresult={"yes":"同意","no":"不同意"};
 var processRoleBtn=null;
+var hiddenSomeTextArea="";
 var processstatustype={"ok":"正常","change":"变更","logout":"注销"};
 var isenjoyedtype={"yes":"享受","no":"不享受"};
 var disabledtype={"heavy":['一级','二级']};
