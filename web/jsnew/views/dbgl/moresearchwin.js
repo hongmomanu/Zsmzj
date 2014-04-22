@@ -1,5 +1,7 @@
 define(function () {
+
     return {
+
         grantmoney:function(btn){
             /*var form=$('#addnewgrantwin').find('.easyui-tabs').tabs('getSelected').find('form');
             var isnew=$(btn).linkbutton('options').isnew;
@@ -57,6 +59,7 @@ define(function () {
                     }
                 });
                 $.parser.parse(newitem);
+
                 newitem.find('.moresearchcomb').combobox({
                     onShowPanel: function () {
                         var mysearchtype = $(this).attr('searchtype');
@@ -83,6 +86,7 @@ define(function () {
                         }
                     }
 
+
                 });
 
                 newitem.find('.name').combobox({
@@ -101,6 +105,7 @@ define(function () {
         render:function(searchtype){
             var me=this;
             me.searchtype=searchtype;
+
             var moresearchwindiv=$('#moresearchwin');
             if(moresearchwindiv.length>0){
                 moresearchwindiv.dialog('open');
@@ -112,8 +117,8 @@ define(function () {
 
                     $('#moresearchwin').dialog({
                         title: '高级搜索',
-                        width: 450,
-                        height: 250,
+                        width: 540,
+                        height: 350,
                         //fit:true,
 
                         closed: false,
@@ -148,6 +153,8 @@ define(function () {
 
                     me.newcondition(null);
 
+
+
                 });
 
             }
@@ -155,7 +162,13 @@ define(function () {
 
         }
 
+
+
+
+
     }
+
+
 
 
 })

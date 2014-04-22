@@ -70,8 +70,9 @@ h2 {
     border-top: 1px solid #ADD8E6;
     letter-spacing: 2px;
     text-align: left;
-    padding: 10px 0px 10px 0px;
-    background: url(img/tablehdbg.png);
+    padding: 5px 0px 5px 0px;
+    /*background: url(img/tablehdbg1.png);*/
+    background-color: #b3c5ff;
     white-space:nowrap;
     text-align:center;
     overflow: hidden;
