@@ -284,8 +284,7 @@ a:active {
 #homepage>div>div{
     margin: 5px 5px 5px 5px;
     float: left;
-    width: 48%;
-    height: 47%;
+    background-color: #dcdcdc;
 }
 .button-refresh{
     background: url('img/toolbar/refresh.gif') no-repeat 0 -16px;

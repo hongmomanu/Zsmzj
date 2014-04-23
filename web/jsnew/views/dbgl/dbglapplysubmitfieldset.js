@@ -46,7 +46,11 @@ define( function () {
 
             });
 
-
+            require(['commonfuncs/hiddenTextArea'],function(js){
+                if(res){
+                    js.hidden(res.form.processstatus);
+                }
+            })
 
 
     }

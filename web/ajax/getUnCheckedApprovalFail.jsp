@@ -9,11 +9,12 @@
     else{
         int start=Integer.parseInt(request.getParameter("start"));
         int limit=Integer.parseInt(request.getParameter("limit"));
+        int userid=Integer.parseInt(request.getParameter("userid"));
         String keyword=request.getParameter("keyword");
         String totalname = request.getParameter("totalname");
         String rowsname = request.getParameter("rowsname");
 
         CheckApprovalFail check=new CheckApprovalFail();
-        out.print(check.getUnCheckedApprovalFail(limit,start));
+        out.print(check.getUnCheckedApprovalFail(limit,start,userid));
     }
 %>
