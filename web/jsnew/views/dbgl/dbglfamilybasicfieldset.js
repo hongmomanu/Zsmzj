@@ -90,7 +90,7 @@ define(function () {
            })
            //FamilyPersons
                $('#zhufangzmj').bind('blur',function(){
-                   var avg=($(this).val()||0)/Number($('#FamilyPersons').val());
+                   var avg=($(this).val()||0)/(Number($('#FamilyPersons').val())||1);
                    $('#zhufangavgmj').val(avg.toFixed(1))
                })
 

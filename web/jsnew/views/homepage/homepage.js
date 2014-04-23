@@ -26,6 +26,26 @@ define(function(){
             }
         })
     }
+    var getCount=function(){
+        require(['commonfuncs/UpdateItemNum','commonfuncs/AjaxForm'],function(updateitem,ajaxform){
+            var params = {
+                roleid:roleid,
+                userid:userid,
+                divisionpath:divisionpath,
+                type:'count'
+            };
+            var successFunc = function(res){
+                var count=res.count;
+                $('#homegreetcount').text(count).click(function(){
+                    $('#domneedtodocount').trigger('click');
+                });
+                updateitem.updateitemnum($('#domneedtodocount'),count,"(",")");
+            };
+
+            ajaxform.ajaxsend("post","json","ajax/getneedtodos.jsp",params,successFunc,null);
+
+        })
+    }
     var f=function(s){
         require(pagepath,function(){
             for(var i=0;i<arguments.length;i++){
@@ -69,14 +89,17 @@ define(function(){
                     }
                 }
             }).closest('.panel').find('div.panel-tool')
-                .append('<a href="javascript:void(0)" class="layout-button-right"></a><span style="margin-right: 3px;" opt="refresh">刷新</span>')
+                .append('<span  class="btn1 pbtn1" opt="refresh">刷新</span>')
                 .find('[opt=refresh]').click(function(){
-                    $('#hometodolist').datagrid('reload');
+                    $('#hometodolist').datagrid('reload');// getCount();
                 })
                 .end()
                 .find('[opt=more]').click(function(){
                     alert("more")
                 })
+            getCount();
+            $('div[name=homegreetname]').text(displayname)
+            $('span[name=homegreetname]').text(divisionpath)
 
             $('#homenotice').datagrid({
                 title:'通知公告',
