@@ -548,7 +548,7 @@ public class BusinessProcessControl {
 
 
     public String getStatisticsBytype(String type,String bgmonth,int divisionpid,String businesstype,
-                                      String divisionpath,boolean isonlychild){
+                                      String divisionpath,boolean isonlychild,boolean iddefault){
         SimpleDateFormat sDateFormat   =   new SimpleDateFormat("yyyy-MM");
         String edmonth="";
         if(bgmonth==null||bgmonth.equals("")) bgmonth=sDateFormat.format(new   java.util.Date());
@@ -597,6 +597,28 @@ public class BusinessProcessControl {
             ArrayList<Map<String,Object>> division_list=cd.getTableList(sql_list_division);
             ArrayList<Map<String,Object>> result_list=new ArrayList<Map<String, Object>>();
 
+            String sql_list_base="select  count (CASE when c.relationship= '户主' THEN 1 ELSE null  END) AS totalfamily  " +
+                    ",count (*) AS totalperson " +
+                    ",count (CASE when c.sex= '男' THEN 1 ELSE null  END) AS totalmen " +
+                    ",count (CASE when c.sex= '女' THEN 1 ELSE null  END) AS totalgirls " +
+                    ",sum(case when c.relationship='户主' then totalhelpmoney else 0 end) as totalmoney " +
+
+                    ",count (CASE when c.relationship= '户主' and b.familyaccount='城镇' THEN 1 ELSE null  END) AS cityfamily "+
+                    ",count (CASE when b.familyaccount='城镇' THEN 1 ELSE null  END) AS cityperson " +
+                    ",count (CASE when b.familyaccount='城镇' and c.sex= '男' THEN 1 ELSE null  END) AS citymen " +
+                    ",count (CASE when b.familyaccount='城镇' and c.sex= '女' THEN 1 ELSE null  END) AS citygirls " +
+                    ",sum(case when c.relationship='户主' and b.familyaccount='城镇' then totalhelpmoney else 0 end) as citymoney " +
+
+                    ",count (CASE when c.relationship= '户主' and b.familyaccount='农村' THEN 1 ELSE null  END) AS villagefamily "+
+                    ",count (CASE when b.familyaccount='农村' THEN 1 ELSE null  END) AS villageperson " +
+                    ",count (CASE when b.familyaccount='农村' and c.sex= '男' THEN 1 ELSE null  END) AS villagemen " +
+                    ",count (CASE when b.familyaccount='农村' and c.sex= '女' THEN 1 ELSE null  END) AS villagegirls " +
+                    ",sum(case when c.relationship='户主' and b.familyaccount='农村' then totalhelpmoney else 0 end) as villagemoney " +
+
+                    "from "+BusinessTable+" b, "+FamilyTable +
+                    " c  where  c.businessid= b.id and b.time Between '"+bgmonth+"' and  '"+edmonth
+                    +"' and b.businesstype='"+businesstype+"' and  b.division like ";
+
             for(Map<String,Object>division_item:division_list){
                 String division_item_path="'"+division_item.get("divisionpath")+"%'";
                 String division_id=division_item.get("rowid").toString();
@@ -605,28 +627,7 @@ public class BusinessProcessControl {
                 Map<String,Object> map=new HashMap<String, Object>();
 
 
-                String sql_list="select  count (CASE when c.relationship= '户主' THEN 1 ELSE null  END) AS totalfamily  " +
-                        ",count (*) AS totalperson " +
-                        ",count (CASE when c.sex= '男' THEN 1 ELSE null  END) AS totalmen " +
-                        ",count (CASE when c.sex= '女' THEN 1 ELSE null  END) AS totalgirls " +
-                        ",sum(case when c.relationship='户主' then totalhelpmoney else 0 end) as totalmoney " +
-
-                        ",count (CASE when c.relationship= '户主' and b.familyaccount='城镇' THEN 1 ELSE null  END) AS cityfamily "+
-                        ",count (CASE when b.familyaccount='城镇' THEN 1 ELSE null  END) AS cityperson " +
-                        ",count (CASE when b.familyaccount='城镇' and c.sex= '男' THEN 1 ELSE null  END) AS citymen " +
-                        ",count (CASE when b.familyaccount='城镇' and c.sex= '女' THEN 1 ELSE null  END) AS citygirls " +
-                        ",sum(case when c.relationship='户主' and b.familyaccount='城镇' then totalhelpmoney else 0 end) as citymoney " +
-
-                        ",count (CASE when c.relationship= '户主' and b.familyaccount='农村' THEN 1 ELSE null  END) AS villagefamily "+
-                        ",count (CASE when b.familyaccount='农村' THEN 1 ELSE null  END) AS villageperson " +
-                        ",count (CASE when b.familyaccount='农村' and c.sex= '男' THEN 1 ELSE null  END) AS villagemen " +
-                        ",count (CASE when b.familyaccount='农村' and c.sex= '女' THEN 1 ELSE null  END) AS villagegirls " +
-                        ",sum(case when c.relationship='户主' and b.familyaccount='农村' then totalhelpmoney else 0 end) as villagemoney " +
-
-                        "from "+BusinessTable+" b, "+FamilyTable +
-                        " c  where  c.businessid= b.id and b.time Between '"+bgmonth+"' and  '"+edmonth
-                        +"' and b.businesstype='"+businesstype+"' and  b.division like " +division_item_path+
-                        "" ;
+                String sql_list=sql_list_base+division_item_path+ "";
 
                 map=cd.getSigleObj(sql_list);
                 map.put("divisionname",division_name);
@@ -634,6 +635,21 @@ public class BusinessProcessControl {
                 result_list.add(map);
 
             }
+            /*合计*/
+            if(division_list.size()==0&&iddefault){
+                String  sql_divisionname="select divisionpath,rowid,divisionname from "+DivisionsTable +" where rowid = "+divisionpid;
+                ArrayList<Map<String,Object>> division_list_1=cd.getTableList(sql_divisionname);
+                String divisionname="合计";
+                if(division_list_1.size()==1){
+                    divisionname=division_list_1.get(0).get("divisionname").toString();
+                }
+                String sql_sum=sql_list_base+"'"+divisionpath+"%'";
+                Map map_sum=cd.getSigleObj(sql_sum);
+                map_sum.put("divisionname",divisionname);
+                map_sum.put("id","9999"); //9999无效的 division_id
+                result_list.add(map_sum);
+            }
+
 
             res.put("divisionname","");
             res.put("children",result_list);

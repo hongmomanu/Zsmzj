@@ -76,7 +76,19 @@
                 <td ><input type="text" name="bankid"></td>
 
             </tr>
+            <tr><td class="formtdtext">住房结构:</td>
+                <td><input  type="text" name="housestructure"
+                            class="easyui-combobox lazy-combobox"
+                            searchtype="dbglhousestructure"
+                            data-options="valueField: 'value',
+                                         textField: 'label' "></td>
+                <td class="formtdtext">住房总建筑面积(㎡):</td>
+                <td><input  type="text" name="housearea" id="zhufangzmj"></td>
 
+
+                <td class="formtdtext">住房人均建筑面积(㎡):</td>
+                <td><input  type="text" name="houseaveragearea" id="zhufangavgmj"></td>
+            </tr>
 
         </table>
     </div>

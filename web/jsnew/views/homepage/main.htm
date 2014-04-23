@@ -1,11 +1,11 @@
 <div style="height: 100%;width: 100%;">
     <div style="width: 570px;">
         <div>
-            <div style="height: 250px;">
-                <div id="homegreet">
-                    <p>岱山县!</p>
-                    <p>欢迎您登录岱山县社会救助信息平台!</p>
-                    <div>您有未读<span  id="homegreetcount">0</span>条待处理事务</div>
+            <div style="height: 190px;background-image: url(img/welimg.gif);margin-bottom: 30px;margin-top: 20px;border: 1px solid #95B8E7">
+                <div id="homegreet" style="padding-left: 10px;padding-top: 10px;">
+                    <div name="homegreetname" style="font-size: larger;color: maroon;"></div>
+                    <div>欢迎您登录<span name="homegreetname" style="font-size: larger;color: maroon;"></span>社会救助信息平台!</div>
+                    <div>您有<span style="font-size: larger;color: maroon;"><a id="homegreetcount">0</a></span>条待处理事务</div>
                 </div>
             </div>
 
@@ -29,9 +29,9 @@
                     <th data-options="field:'approvalopinion',width:120,align:'center'">原因</th>
                     <th data-options="field:'action',width:40,align:'center',formatter:function(v,r,i){
                          var str='<div></div>';
-                          str=$(str).append('<a class=&quot;yw-regist&quot; action=&quot;checked&quot;>&nbsp;&nbsp;&nbsp;&nbsp;</a>');
+                          str=$(str).append('<a class=&quot;yw-drop-no&quot; action=&quot;checked&quot;>&nbsp;&nbsp;&nbsp;&nbsp;</a>');
                           return str.html();
-                    }">已阅</th>
+                    }"></th>
                 </tr>
                 </thead>
                 </table>

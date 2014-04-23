@@ -193,6 +193,9 @@ h2 {
 .yw-busiapproval{
     background: url('img/busiicon/busiapproval.png')  no-repeat center center;
 }
+.yw-drop-no{
+    background: url('img/drop-no.gif')  no-repeat center center;
+}
 
 .layout-split-north{
     border-bottom:5px solid #efefef;
@@ -284,7 +287,6 @@ a:active {
 #homepage>div>div{
     margin: 5px 5px 5px 5px;
     float: left;
-    background-color: #dcdcdc;
 }
 .button-refresh{
     background: url('img/toolbar/refresh.gif') no-repeat 0 -16px;
@@ -349,4 +351,15 @@ div.yw-block > span{
 }
 .mywidth2 td{
     width:170px;
+}
+
+.pbtn1
+{
+    border:solid 1px #dcdcdc;
+    padding:4px 4px 4px 34px;
+}
+.btn1
+{
+    background:url("img/toolbar/refresh.gif") no-repeat 18px center;
+    /*background-color:#f9f9f9;*/
 }

@@ -22,8 +22,19 @@
         String businesstype=request.getParameter("businesstype");
         String bgmonth=request.getParameter("bgmonth");
         int divisionpid=Integer.parseInt(request.getParameter("node"));
+
+        boolean isdefault=false;
+        if(0==divisionpid){
+            Object obj=request.getSession().getAttribute("divisionid");
+            if(null==obj){
+                divisionpid=9999;
+            }else{
+                divisionpid=(Integer)obj;
+                isdefault=true;
+            }
+        }
         boolean isonlychild=request.getParameter("isonlychild")==null?
                 false:Boolean.parseBoolean(request.getParameter("isonlychild"));
-        out.print(bp.getStatisticsBytype(type,bgmonth,divisionpid,businesstype,divisionpath,isonlychild));
+        out.print(bp.getStatisticsBytype(type,bgmonth,divisionpid,businesstype,divisionpath,isonlychild,isdefault));
     }
 %>
