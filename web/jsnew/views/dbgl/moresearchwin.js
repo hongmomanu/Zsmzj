@@ -28,19 +28,44 @@ define(function () {
         },
         search:function(){
             /**多条件数组**/
-            var conditions=$('#moresearchwin form').form('serialize');
+             conditions=$('#moresearchwin form').form('serialize');
             var options=$('#businessgrid').datagrid('options');
             for(var item in conditions){
                 conditions[item]=conditions[item].split(",");
                 options.search_params[item]=options.search_params[item]?options.search_params[item].concat(conditions[item]):conditions[item];
             }
-
+             //console.log(conditions);
             var names=conditions['name'];
             for(var i in names){   //表里没有age字段
                 if(names[i]=='age'){
                     names[i]=" strftime('%Y','now')-strftime('%Y',birthday) "
                 }
             }
+
+            vv=conditions;
+            var division = "";
+            for(var p in conditions){
+                if(p!='name'&&p!='compare'&&p!='value'&&p!='logic'&&conditions[p]!="") {
+                    console.log(p);
+                    if(p!='shi'&&p!='qu'&&p!='jie'&&p!='cun'){
+                        conditions['name'].push(p);
+                        conditions['compare'].push('match');
+                        conditions['value'].push(conditions[p][0]);
+                        conditions['logic'].push('and');
+                    }else{
+                        division = division + conditions[p][0];
+                    }
+
+                }
+            }
+            if(division!=""){
+                conditions['name'].push('division');
+                conditions['compare'].push('match');
+                conditions['value'].push(division);
+                conditions['logic'].push('and');
+            }
+
+            //console.log(conditions['name'])
             $('#businessgrid').datagrid('load',conditions);
 
         },
@@ -117,8 +142,8 @@ define(function () {
 
                     $('#moresearchwin').dialog({
                         title: '高级搜索',
-                        width: 540,
-                        height: 350,
+                        width: 550,
+                        height: 380,
                         //fit:true,
 
                         closed: false,
@@ -129,7 +154,7 @@ define(function () {
                         buttons:[{
                             text:'检索',
                             id:'moresearchwin_search',
-                            disabled:true,
+                            /*disabled:true,*/
                             handler:function(){
                                 me.search();
 

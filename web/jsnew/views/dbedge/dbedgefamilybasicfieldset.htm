@@ -12,10 +12,14 @@
             </tr>
             <tr>
                 <td class="formtdtext">申请类别:</td>
-                <td><input class="easyui-combobox lazy-combobox" type="text" searchtype="dbglapplytype"
+                <td><input class="easyui-combobox lazy-combobox" type="text" searchtype="edgeapplytype"
                            name="applytype"
                            data-options="required:true,valueField: 'value',
-                                         textField: 'label' "></td>
+                                         textField: 'label',
+                                          onSelect: function(rec){
+                                            var fm=rec.value.substr(0,2);
+                                            var b = $('#poorstandard').val((fm=='农村')?473:525);
+                                        }"></td>
                 <!--<td class="formtdtext">家庭类别:</td>
                 <td><input class="easyui-combobox lazy-combobox" type="text"
                            name="familytype" searchtype="dbedgefamilytype"
