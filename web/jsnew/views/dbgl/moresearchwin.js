@@ -151,6 +151,9 @@ define(function () {
                         onOpen:function(){
 
                         },
+                        onClose:function(){
+                            $('#moresearchwin').dialog('destroy');
+                        },
                         buttons:[{
                             text:'检索',
                             id:'moresearchwin_search',
@@ -169,6 +172,7 @@ define(function () {
                             text:'取消',
                             handler:function(){
                                 $('#moresearchwin').dialog('close');
+                                $('#moresearchwin').dialog('destroy');
                             }
                         }],
                         maximized:false,
