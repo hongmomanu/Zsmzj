@@ -17,8 +17,11 @@
                            data-options="required:true,valueField: 'value',
                                          textField: 'label',
                                           onSelect: function(rec){
-                                            var fm=rec.value.substr(0,2);
-                                            var b = $('#poorstandard').val((fm=='农村')?473:525);
+                                            var fm=rec.value.substr(0,2)
+                                            var a=$(':input[opt=familyaccount]');
+                                            a.val(fm)
+                                            a.combobox('setValue',fm)
+                                            var b = $('#poorstandard').val((fm=='农村')?473:525)
                                         }"></td>
                 <!--<td class="formtdtext">家庭类别:</td>
                 <td><input class="easyui-combobox lazy-combobox" type="text"
@@ -42,7 +45,7 @@
                            data-options="required:true,valueField: 'value',
                                          textField: 'label'"></td>
                 <td class="formtdtext">家庭户口:</td>
-                <td><input class="easyui-combobox lazy-combobox" type="text"
+                <td><input class="easyui-combobox lazy-combobox" type="text" opt="familyaccount"
                            name="familyaccount"  searchtype="dbglfamilyaccount"
                            data-options="required:true,valueField: 'value',
                                          textField: 'label'"></td>
