@@ -1,53 +1,43 @@
-<div style="height: 100%;width: 100%;">
-    <div style="width: 570px;">
-        <div>
-            <div style="height: 190px;background-image: url(img/welimg.gif);margin-bottom: 30px;margin-top: 20px;border: 1px solid #95B8E7">
-                <div id="homegreet" style="padding-left: 10px;padding-top: 10px;">
-                    <div name="homegreetname" style="font-size: larger;color: maroon;"></div>
-                    <div>欢迎您登录<span name="homegreetname" style="font-size: larger;color: maroon;"></span>社会救助信息平台!</div>
-                    <div>您有<span style="font-size: larger;color: maroon;"><a id="homegreetcount">0</a></span>条待处理事务</div>
-                </div>
-            </div>
-
+<div>
+    <div style="height:190px;background-image: url(img/welimg.gif);border: 1px solid #95B8E7">
+        <div id="homegreet" style="padding-left: 10px;padding-top: 10px;">
+            <div name="homegreetname" style="font-size: larger;color: maroon;"></div>
+            <div>欢迎您登录<span name="homegreetname" style="font-size: larger;color: maroon;"></span>社会救助信息平台!</div>
+            <div>您有<span style="font-size: larger;color: maroon;"><a id="homegreetcount">0</a></span>条待处理事务</div>
         </div>
+    </div>
 
-        <div>
-            <table id="hometodolist"  style="height:250px">
-                <thead>
-                <tr>
-                    <th data-options="field:'owername',width:60,align:'center',fixed:true,formatter:function(v,r,i){
+    <div>
+        <table id="homenotice" style="height:190px;"></table>
+    </div>
+
+    <div>
+        <table id="hometodolist"  style="height:250px">
+            <thead>
+            <tr>
+                <th data-options="field:'owername',width:60,align:'center',fixed:true,formatter:function(v,r,i){
                          var str='<div></div>';
                           str=$(str).append('<a action=&quot;owername&quot;>'+v+'</a>');
                           return str.html();
                     }">人员</th>
-                    <th data-options="field:'owerid',width:130,align:'center',fixed:true">身份证</th>
-                    <th data-options="field:'businesstype',width:60,align:'center'">名称</th>
-                    <th data-options="field:'time',width:100,align:'center',formatter:function(v,r,i){
+                <th data-options="field:'owerid',width:130,align:'center',fixed:false">身份证</th>
+                <th data-options="field:'businesstype',width:60,align:'center',fixed:false">名称</th>
+                <th data-options="field:'time',width:100,align:'center',formatter:function(v,r,i){
                         return v.substr(5)
                     }">提交时间</th>
-                    <th data-options="field:'username',width:80,align:'center'">提交人</th>
-                    <th data-options="field:'approvalopinion',width:120,align:'center'">原因</th>
-                    <th data-options="field:'action',width:40,align:'center',formatter:function(v,r,i){
+                <th data-options="field:'username',width:80,align:'center',fixed:false">提交人</th>
+                <th data-options="field:'approvalopinion',width:120,align:'center',fixed:false">原因</th>
+                <th data-options="field:'action',width:40,align:'center',formatter:function(v,r,i){
                          var str='<div></div>';
                           str=$(str).append('<a class=&quot;yw-drop-no&quot; action=&quot;checked&quot;>&nbsp;&nbsp;&nbsp;&nbsp;</a>');
                           return str.html();
                     }"></th>
-                </tr>
-                </thead>
-                </table>
-        </div>
+            </tr>
+            </thead>
+        </table>
     </div>
 
-    <div style="width: 300px;display: none;">
-        <div style="height: 250px;">
-            <table id="homenotice"></table>
-        </div>
-        <div>
-            <table id="homefiledownload"></table>
-        </div>
+    <div>
+        <table id="homefiledownload" style="height:250px"></table>
     </div>
-
-
-
-
 </div>

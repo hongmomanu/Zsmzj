@@ -103,22 +103,26 @@ define(function(){
 
             $('#homenotice').datagrid({
                 title:'通知公告',
-                height:250,
+                fitColumns:true,
                 url:'datagrid_data1.json',
                 columns:[[
-                    {field:'unitcost',title:'Price',width:100,align:'right'}
+                    {field:'noteice',align:'center',width:100,fixed:false}
                 ]]
             });
 
             $('#homefiledownload').datagrid({
                 title:'文件下载',
-                height:250,
+                fitColumns:true,
                 url:'datagrid_data1.json',
                 columns:[[
-                    {field:'unitcost',title:'Price',width:100,align:'right'}
+                    {field:'filedownload',align:'center',width:100,fixed:false}
                 ]]
             });
-
+            $(window).resize(function(){
+                //$('#hometodolist').datagrid('resize')
+                $('#homenotice').datagrid('resize')
+                $('#homefiledownload').datagrid('resize')
+            })
 
         })
     }
