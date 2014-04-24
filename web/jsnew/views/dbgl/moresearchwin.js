@@ -143,7 +143,8 @@ define(function () {
                     $('#moresearchwin').dialog({
                         title: '高级搜索',
                         width: 550,
-                        height: 380,
+                        height: 410,
+
                         //fit:true,
 
                         closed: false,

@@ -6,38 +6,38 @@
                 <table class="formtable">
                     <tr>
                         <td>姓名</td>
-                        <td><input class="easyui-validatebox" type="text" name="owername"></td>
+                        <td><input class="easyui-validatebox" type="text" name="owername" style="width: 116px"></td>
                         <td>身份证</td>
-                        <td><input class="easyui-validatebox" type="text" name="owerid"></td>
+                        <td colspan="2"><input class="easyui-validatebox" type="text" name="owerid" style="width: 116px"></td>
                     </tr>
                     <tr>
                         <td>申请类别</td>
-                        <td colspan="3"><input class="easyui-combobox" type="text"
-                                               name="applytype" data-options="valueField: 'value', textField: 'label',url:'ajax/getenumbytype.jsp?type=dbglapplytype'"></td>
+                        <td colspan="4"><input class="easyui-combobox" type="text"
+                                               name="applytype" data-options="valueField: 'value',width:120, textField: 'label',url:'ajax/getenumbytype.jsp?type=dbglapplytype'"></td>
                     </tr>
                     <tr>
                         <td>性别</td>
                         <td><input class="easyui-combobox lazy-combobox" type="text"
-                                   name="sex" data-options="valueField: 'value', textField: 'label',url:'ajax/getenumbytype.jsp?type=dbglsex'"></td>
+                                   name="sex" data-options="valueField: 'value',width:120, textField: 'label',url:'ajax/getenumbytype.jsp?type=dbglsex'"></td>
                         <td>文化程度</td>
-                        <td><input class="easyui-combobox lazy-combobox" type="text"
-                                   name="education" data-options="valueField: 'value', textField: 'label',url:'ajax/getenumbytype.jsp?type=education'"></td>
+                        <td colspan="2"><input class="easyui-combobox lazy-combobox" type="text"
+                                   name="education" data-options="valueField: 'value',width:120,textField: 'label',url:'ajax/getenumbytype.jsp?type=education'"></td>
                     </tr>
                     <tr>
                         <td>婚姻状况</td>
                         <td><input class="easyui-combobox lazy-combobox" type="text"
-                                   name="maritalstatus" data-options="valueField: 'value', textField: 'label',url:'ajax/getenumbytype.jsp?type=maritalstatus'"></td>
+                                   name="maritalstatus" data-options="valueField: 'value',width:120, textField: 'label',url:'ajax/getenumbytype.jsp?type=maritalstatus'"></td>
                         <td>人员类别</td>
-                        <td><input class="easyui-combobox lazy-combobox" type="text"
-                                   name="persontype" data-options="valueField: 'value', textField: 'label',url:'ajax/getenumbytype.jsp?type=persontype'"></td>
+                        <td colspan="2"><input class="easyui-combobox lazy-combobox" type="text"
+                                   name="persontype" data-options="valueField: 'value',width:120, textField: 'label',url:'ajax/getenumbytype.jsp?type=persontype'"></td>
                     </tr>
                     <tr>
                         <td>是否享受</td>
                         <td><input class="easyui-combobox lazy-combobox" type="text"
-                                   name="isenjoyed" data-options="valueField: 'value', textField: 'label',url:'ajax/getenumbytype.jsp?type=isenjoyed'"></td>
+                                   name="isenjoyed" data-options="valueField: 'value',width:120, textField: 'label',url:'ajax/getenumbytype.jsp?type=isenjoyed'"></td>
                         <td>职业文化</td>
-                        <td><input class="easyui-combobox lazy-combobox" type="text"
-                                   name="jobstatus" data-options="valueField: 'value', textField: 'label',url:'ajax/getenumbytype.jsp?type=jobstatus'"></td>
+                        <td colspan="2"><input class="easyui-combobox lazy-combobox" type="text"
+                                   name="jobstatus" data-options="valueField: 'value',width:120, textField: 'label',url:'ajax/getenumbytype.jsp?type=jobstatus'"></td>
                     </tr>
                     <tr>
                         <td>市</td>
@@ -45,6 +45,7 @@
                                 data-options="
                                 valueField: 'value',
                                 textField: 'label',
+                                width:120,
                                 url:'ajax/getsingleplace.jsp?type=shi',
                                 onSelect:function(rec){
                                     var url = 'ajax/getsingleplace.jsp?type='+rec.sid;
@@ -52,10 +53,11 @@
                                 }
                                 "></td>
                         <td>区（县）</td>
-                        <td><input name="qu" opt="qu" class="easyui-combobox" type="text"
+                        <td colspan="2"><input name="qu" opt="qu" class="easyui-combobox" type="text"
                                    data-options="
                                 valueField: 'value',
                                 textField: 'label',
+                                width:120,
                                 onSelect:function(rec){
                                     $(':input[opt=jie]').combobox('clear');
                                     $(':input[opt=cun]').combobox('clear') ;
@@ -70,6 +72,7 @@
                                    data-options="
                                 valueField: 'value',
                                 textField: 'label',
+                                width:120,
                                 onSelect:function(rec){
                                     $(':input[opt=cun]').combobox('clear') ;
                                     var url = 'ajax/getsingleplace.jsp?type='+rec.sid;
@@ -77,15 +80,16 @@
                                 }
                                 "></td>
                         <td>社区（村）</td>
-                        <td><input name="cun" opt="cun" class="easyui-combobox" type="text"
+                        <td colspan="2"><input name="cun" opt="cun" class="easyui-combobox" type="text"
                                    data-options="
                                 valueField: 'value',
-                                textField: 'label'
+                                textField: 'label',
+                                width:120
                                 "></td>
                     </tr>
                     <tr>
                         <td>审批状态</td>
-                        <td colspan="3">
+                        <td colspan="4">
                             <div>
                                 <input type="radio" name="processstatus" value="提交"  />提交
                                 <input type="radio" name="processstatus" value="申请" />申请
@@ -99,7 +103,7 @@
                     </tr>
                     <tr>
                         <td>享受状态</td>
-                        <td colspan="3">
+                        <td colspan="4">
                             <div>
                                 <input type="radio" name="isenjoyed" value="未享受"  />未享受
                                 <!--<input type="radio" name="enjoy" value="已退出享受" />已退出享受-->
@@ -113,6 +117,7 @@
                         <th>操作符</th>
                         <th>值</th>
                         <th>逻辑符</th>
+                        <th>删除</th>
                     </tr>
 
 
