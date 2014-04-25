@@ -151,7 +151,8 @@ define(function(){
                 var search_params={
                     bgdate:$('#businesstb .bgdate').length>0?$('#businesstb .bgdate').datebox('getValue'):null,
                     eddate:$('#businesstb .eddate').length>0?$('#businesstb .eddate').datebox('getValue'):null,
-                    keyword:$('#businesstb .keyword').val()
+                    keyword:$('#businesstb .keyword').val(),
+                    statusType:($('#cc').attr('statusType')||0)
                 };
                 $('#businessgrid').datagrid('load',search_params);
                 for(var item in search_params){
@@ -203,8 +204,11 @@ define(function(){
             $('#sp span').click(function(){
                 var v = $(this).attr('value');
                 $('#cc').combo('setValue', v).combo('setText', $(this).text()).combo('hidePanel');
-                options.search_params.statusType=v;
+                var options=$('#businessgrid').datagrid('options');
+                options.search_params['statusType']=v;
+                $('#cc').attr('statusType',v);
                 $('#businessgrid').datagrid('load',options.search_params);
+
             });
 
             var squarediv='<div class="yw-block">'+

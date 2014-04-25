@@ -34,6 +34,8 @@ define(['commonfuncs/PersonidValidator'], function (PersonidValidator) {
                                 return;
                             }
                         }
+                        var familynum=Number($(':input[name=familynum]').val()||0);
+                        $(':input[name=familynum]').val(familynum+1);
                         var oweridvalue=$('#mainform').form('getValue','owerid');
                         var sex_birth=ShowBirthDay.showBirthday(oweridvalue);
                         var age=(new Date()).getFullYear()-parseInt(sex_birth.birthday.split("-")[0]);
