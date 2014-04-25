@@ -198,18 +198,21 @@ define(function(){
                 }
             });
 
+            require(['text!views/dbgl/statusTypeCombox.htm'],function(filehtml){
+                $('#businesstb').append(filehtml);
+                $('#cc').combo({ editable: false });
+                $('#sp').appendTo($('#cc').combo('panel'));
+                $('#sp span').click(function(){
+                    var v = $(this).attr('value');
+                    $('#cc').combo('setValue', v).combo('setText', $(this).text()).combo('hidePanel');
+                    var options=$('#businessgrid').datagrid('options');
+                    options.search_params['statusType']=v;
+                    $('#cc').attr('statusType',v);
+                    $('#businessgrid').datagrid('load',options.search_params);
 
-            $('#cc').combo({ editable: false });
-            $('#sp').appendTo($('#cc').combo('panel'));
-            $('#sp span').click(function(){
-                var v = $(this).attr('value');
-                $('#cc').combo('setValue', v).combo('setText', $(this).text()).combo('hidePanel');
-                var options=$('#businessgrid').datagrid('options');
-                options.search_params['statusType']=v;
-                $('#cc').attr('statusType',v);
-                $('#businessgrid').datagrid('load',options.search_params);
+                });
+            })
 
-            });
 
             var squarediv='<div class="yw-block">'+
                 '<div class="yw-stepzerobgcolor"></div><span>申请</span>'+
