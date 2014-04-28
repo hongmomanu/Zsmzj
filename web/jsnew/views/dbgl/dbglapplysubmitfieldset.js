@@ -52,6 +52,13 @@ define( function () {
                 }
             })
 
+            /*申请时隐藏表单中的审核审批栏*/
+            if(!res){
+                require(['commonfuncs/applyStatusHiddenOpinion'],function(js){
+                    js.hidden();
+                })
+            }
+
 
     }
 

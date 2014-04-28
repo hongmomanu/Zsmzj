@@ -214,6 +214,7 @@ define(function(){
             })
 
 
+
             var squarediv='<div class="yw-block">'+
                 '<div class="yw-stepzerobgcolor"></div><span>申请</span>'+
                 '<div class="yw-steponebgcolor"></div><span>提交</span>'+
