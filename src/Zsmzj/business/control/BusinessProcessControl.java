@@ -2111,9 +2111,11 @@ public class BusinessProcessControl {
 
     }
 
+
     public String getNeedTodoBusinessList(int start,int limit,String keyword,String type,
                                           String businesstype,boolean ispublicinfo,String bgdate,
-                                          String edddate,String divisionpath,String totalname,String rowsname,int statusType){
+                                          String edddate,String divisionpath,String totalname,String rowsname,int statusType,
+                                          String[]name, String[] compare, String[] value, String[] logic){
         totalname=totalname==null?"totalCount":totalname;
         rowsname=rowsname==null?"results":rowsname;
         BusinessProcess bp=new BusinessProcess();
@@ -2229,6 +2231,10 @@ public class BusinessProcessControl {
             case 5: addStr+="(a.processstatus ='审批' and a.processstatustype='注销')";break;
             default:addStr="";
         }
+        String[] intelStr=Intelligent.generalSql(sql_list,name,compare,value,logic);
+        System.out.printf(sql_list);
+        System.out.println(intelStr[0]);
+        System.out.println("ssssssssssssssssssssssssssssssssssssssssssssssssssssssssss");
         sql_list+=addStr;
         sql_count+=addStr;
 
