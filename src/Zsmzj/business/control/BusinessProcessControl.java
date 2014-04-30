@@ -2755,9 +2755,17 @@ public class BusinessProcessControl {
 
     }
 
+
     public String getNeedTodoBusinessList(int start,int limit,String keyword,String type,
                                           String businesstype,boolean ispublicinfo,String bgdate,
-                                          String edddate,String divisionpath,String totalname,String rowsname,int statusType){
+                                          String edddate,String divisionpath,String totalname,String rowsname,String st,
+                                          String[]name, String[] compare, String[] value, String[] logic){
+
+        int statusType=0;
+        if(st!=null&&!"".equals(st)){
+            statusType=Integer.parseInt(st);
+        }
+
         totalname=totalname==null?"totalCount":totalname;
         rowsname=rowsname==null?"results":rowsname;
         BusinessProcess bp=new BusinessProcess();
@@ -2783,6 +2791,11 @@ public class BusinessProcessControl {
                 " from "+BusinessTable +" a,"+UserTable+" b " +
                 "where a.userid = b.id  ";
 
+        if(name!=null&&name.length>0){
+            sql_list="SELECT a.*, a.rowid AS businessid, b.displayname," +
+                    "f.sex,f.maritalstatus,f.education,f.isenjoyed"+
+                    " FROM business a, users b, familymembers f WHERE a.userid = b.id AND a.id=f.businessid ";
+        }
         sql_list+=" and a.division like '"+divisionpath+"%'";
         sql_count+=" and a.division like  '"+divisionpath+"%'";
 
@@ -2873,9 +2886,16 @@ public class BusinessProcessControl {
             case 5: addStr+="(a.processstatus ='审批' and a.processstatustype='注销')";break;
             default:addStr="";
         }
+
         sql_list+=addStr;
         sql_count+=addStr;
 
+        String intelStr=Intelligent.generalSql(sql_list,name,compare,value,logic);
+        if(!intelStr.trim().equals("")){   //高级搜索查询
+            sql_list="select * from ("+sql_list+") where 1=1 "+intelStr;
+            sql_count="select count(1) from ("+sql_list+") where 1=1 "+intelStr;
+        }
+        System.out.println(sql_list);
         totalnum=cd.getTotalCountBySql(sql_count);
 
         if(start>=0){
