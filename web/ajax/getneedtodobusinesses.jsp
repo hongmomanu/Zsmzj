@@ -47,11 +47,9 @@
 
 
         String st=request.getParameter("statusType");
-        int statusType=0;
-        if(st!=null&&!"".equals(st)){
-            statusType=Integer.parseInt(st);
-        }
-        out.print(bp.getNeedTodoBusinessList(start,limit,keyword,type,businesstype,ispublicinfo,bgdate,eddate,divisionpath,totalname,rowsname,statusType,name,compare,value,logic));
+
+
+        out.print(bp.getNeedTodoBusinessList(start,limit,keyword,type,businesstype,ispublicinfo,bgdate,eddate,divisionpath,totalname,rowsname,st,name,compare,value,logic));
     }
     //out.print("ok");
 %>

@@ -15,7 +15,7 @@ import java.util.Map;
  */
 public class CheckApprovalFail
 {
-
+    ComonDao commonDao;
     public CheckApprovalFail()
     {
         commonDao = new ComonDao();
@@ -71,5 +71,5 @@ public class CheckApprovalFail
         return jsonObject.toString();
     }
 
-    ComonDao commonDao;
+
 }
