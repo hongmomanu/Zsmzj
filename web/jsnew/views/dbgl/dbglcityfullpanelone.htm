@@ -1,0 +1,80 @@
+
+
+    <table id="staticsgrid"  style="width:100%;height:100%" data-options="
+                url: 'ajax/getcitypanelonebytype.jsp',
+                field: 'divisionname'
+            ">
+        <thead frozen="true">
+        <tr>
+            <th field="divisionname" align="center" rowspan="3">地区</th>
+        </tr>
+        </thead>
+        <thead>
+
+        <tr>
+
+            <th field="huzhu" rowspan="3" style="width: 20px">低保户数（户）</th>
+            <th field="dbren" rowspan="3">低保人数（口）</th>
+            <th colspan="7">低保人数（按类别分）</th>
+            <th field="" rowspan="3">女性</th>
+            <th field="" rowspan="3">三无人员</th>
+            <th colspan="2">残疾人</th>
+            <th field="" rowspan="3">1-当月累计低保人数（万人/次）</th>
+            <th colspan="2">资金支出</th>
+            <th colspan="2">月人均补助水平</th>
+            <th field="" rowspan="3">低保标准</th>
+        </tr>
+        <tr>
+            <!--<th field="totalfamily" width="60" align="right">总户数</th>-->
+            <th field="" rowspan="2"  align="right">老年人</th>
+            <th colspan="4" align="right">成年人</th>
+            <th colspan="2" align="right">未成年人</th>
+            <th field="" rowspan="2" align="right">总人数</th>
+            <th align="right">其中</th>
+            <th field="" rowspan="2" align="right">当月支出（万元）</th>
+            <th field="" rowspan="2" align="right">1-当月累计（万元）</th>
+            <th field="" rowspan="2" align="right">当月（元）</th>
+            <th field="" rowspan="2" align="right">1-当月平均（元）</th>
+        </tr>
+        <tr>
+            <th field="" align="right">在职员工</th>
+            <th field="" align="right">灵活就业人员</th>
+            <th field="" align="right">登记失业人员</th>
+            <th field="" align="right">未登记失业人员</th>
+            <th field="" align="right">在校生</th>
+            <th field="" align="right">其他人员</th>
+            <th field="" align="right">重疾残疾人</th>
+        </tr>
+        <!--<tr>
+            <th style="width: 20px">1</th>
+            <th style="width: 20px">2</th>
+            <th style="width: 20px">3</th>
+            <th style="width: 20px">4</th>
+            <th style="width: 20px">5</th>
+            <th style="width: 20px">6</th>
+            <th style="width: 20px">7</th>
+            <th style="width: 20px">8</th>
+            <th style="width: 20px">9</th>
+            <th style="width: 20px">10</th>
+            <th style="width: 20px">11</th>
+            <th style="width: 20px">12</th>
+            <th style="width: 20px">13</th>
+            <th style="width: 20px">14</th>
+            <th style="width: 20px">15</th>
+            <th style="width: 20px">16</th>
+            <th style="width: 20px">17</th>
+            <th style="width: 20px">18</th>
+            <th style="width: 20px">19</th>
+        </tr>-->
+        </thead>
+    </table>
+
+
+    <div id="businesstb" style="padding:5px;height:auto;vertical-align: middle;">
+
+        <a>选择年月:<input  class="year" style="width: 80px;" >
+            <input  class="month" style="width: 80px;" >
+        </a>
+        <a  class="easyui-linkbutton search"  iconCls="icon-search" >搜索</a>
+    </div>
+

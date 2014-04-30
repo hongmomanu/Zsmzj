@@ -13,11 +13,11 @@ import net.sf.json.JSONObject;
 import org.apache.commons.collections.ArrayStack;
 import org.apache.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Date;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -1131,7 +1131,651 @@ public class BusinessProcessControl {
 
 
     }
+    /* citypanelone */
+    public String getCityPaneloneBytype(String type,String bgmonth,int divisionpid,String businesstype,
+                                      String divisionpath,boolean isonlychild,boolean iddefault){
+        String canshu = "type:" +type +",bgmonth:"+bgmonth+",divisionpid:"+divisionpid+",businesstype:"+businesstype+"divisionpath:"+divisionpath+"isonlychild:"+isonlychild+"iddefault:"+iddefault;
+        SimpleDateFormat sDateFormat   =   new SimpleDateFormat("yyyy-MM");
+        String edmonth="";
+        if(bgmonth==null||bgmonth.equals("")) bgmonth=sDateFormat.format(new   java.util.Date());
+        try {
+            Date date = sDateFormat.parse( bgmonth);
+            java.util.Calendar   calendar=java.util.Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.MONTH, +1);    //得到下一个月
+            edmonth=sDateFormat.format(calendar.getTime());
 
+        } catch (ParseException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        Map<String,Object>res=new HashMap<String, Object>();
+        if(type.equals(StatisticsType.UseStatisticsType.getChineseSeason(StatisticsType.Full))){
+            BusinessProcess bp=new BusinessProcess();
+            ComonDao cd=new ComonDao();
+
+            /*String sql_list="select divisionpath from "+DivisionsTable +" where parentid MATCH "+divisionpid;
+            ArrayList<Map<String,Object>> division_list=cd.getTableList(sql_list);
+            ArrayList<Map<String,Object>> result_list=new ArrayList<Map<String, Object>>();
+
+            CountDownLatch latch=new CountDownLatch(5);
+            for(Map<String,Object>division_item:division_list){
+                Map<String,Object> map=new HashMap<String, Object>();
+                map.put("division",divisionpath);
+                String sql_totalfamily="select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+
+                        "' and businesstype='"+businesstype+"' and  division like '"+division_item.get("divisionpath")+"%' ";
+
+                SigleSqlThread m=new SigleSqlThread(map,sql_totalfamily,"totalfamily",latch);
+                result_list.add(map);
+                Thread t=new Thread(m);
+                t.start();
+            }
+            try {
+                log.debug("wait begin at here");
+                latch.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            res.put("divisionname","");
+            res.put("children",result_list);
+
+*/
+            String sql_list_division="select divisionpath,rowid,divisionname from "+DivisionsTable +" where parentid MATCH "+divisionpid;
+            ArrayList<Map<String,Object>> division_list=cd.getTableList(sql_list_division);
+            ArrayList<Map<String,Object>> result_list=new ArrayList<Map<String, Object>>();
+
+            String sql_list_base="select  count (CASE when c.relationship= '户主' THEN 1 ELSE null  END) AS totalfamily  " +
+                    ",count (*) AS totalperson " +
+                    ",count (CASE when c.sex= '男' THEN 1 ELSE null  END) AS totalmen " +
+                    ",count (CASE when c.sex= '女' THEN 1 ELSE null  END) AS totalgirls " +
+                    ",sum(case when c.relationship='户主' then totalhelpmoney else 0 end) as totalmoney " +
+
+                    ",count (CASE when c.relationship= '户主' and b.familyaccount='城镇' THEN 1 ELSE null  END) AS cityfamily "+
+                    ",count (CASE when b.familyaccount='城镇' THEN 1 ELSE null  END) AS cityperson " +
+                    ",count (CASE when b.familyaccount='城镇' and c.sex= '男' THEN 1 ELSE null  END) AS citymen " +
+                    ",count (CASE when b.familyaccount='城镇' and c.sex= '女' THEN 1 ELSE null  END) AS citygirls " +
+                    ",sum(case when c.relationship='户主' and b.familyaccount='城镇' then totalhelpmoney else 0 end) as citymoney " +
+
+                    ",count (CASE when c.relationship= '户主' and b.familyaccount='农村' THEN 1 ELSE null  END) AS villagefamily "+
+                    ",count (CASE when b.familyaccount='农村' THEN 1 ELSE null  END) AS villageperson " +
+                    ",count (CASE when b.familyaccount='农村' and c.sex= '男' THEN 1 ELSE null  END) AS villagemen " +
+                    ",count (CASE when b.familyaccount='农村' and c.sex= '女' THEN 1 ELSE null  END) AS villagegirls " +
+                    ",sum(case when c.relationship='户主' and b.familyaccount='农村' then totalhelpmoney else 0 end) as villagemoney " +
+
+                    "from "+BusinessTable+" b, "+FamilyTable +
+                    " c  where  c.businessid= b.id and b.time Between '"+bgmonth+"' and  '"+edmonth
+                    +"' and b.businesstype='"+businesstype+"' and  b.division like ";
+
+            for(Map<String,Object>division_item:division_list){
+                String division_item_path="'"+division_item.get("divisionpath")+"%'";
+                String division_id=division_item.get("rowid").toString();
+                String division_name=division_item.get("divisionname").toString();
+
+                Map<String,Object> map=new HashMap<String, Object>();
+
+
+                String sql_list=sql_list_base+division_item_path+ "";
+
+                map=cd.getSigleObj(sql_list);
+                map.put("divisionname",division_name);
+                map.put("id",division_id);
+                result_list.add(map);
+
+            }
+            /*合计*/
+            if(division_list.size()==0&&iddefault){
+                String  sql_divisionname="select divisionpath,rowid,divisionname from "+DivisionsTable +" where rowid = "+divisionpid;
+                ArrayList<Map<String,Object>> division_list_1=cd.getTableList(sql_divisionname);
+                String divisionname="合计";
+                if(division_list_1.size()==1){
+                    divisionname=division_list_1.get(0).get("divisionname").toString();
+                }
+                String sql_sum=sql_list_base+"'"+divisionpath+"%'";
+                Map map_sum=cd.getSigleObj(sql_sum);
+                map_sum.put("divisionname",divisionname);
+                map_sum.put("id","9999"); //9999无效的 division_id
+                result_list.add(map_sum);
+            }
+
+
+            res.put("divisionname","");
+            res.put("children",result_list);
+
+
+
+
+            /*String sql_list="select a.divisionname  ,a.rowid as id," +
+                        "(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and  division like (a.divisionpath||'%')) as totalfamily ,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and c.businessid = b.id and b.division like (a.divisionpath||'%')) as totalperson, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and c.businessid = b.id and c.sex ='男' and b.division like (a.divisionpath||'%')) as totalmen, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and c.businessid = b.id and c.sex ='女' and b.division like (a.divisionpath||'%')) as totalgirls,"
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and division like (a.divisionpath||'%')) as totalmoney, "
+
+                    +"(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='城镇' and division like (a.divisionpath||'%')) as cityfamily ,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid = b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇' and b.division like (a.divisionpath||'%')) as cityperson, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid = b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇' and c.sex ='男' and b.division like (a.divisionpath||'%')) as citymen, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid = b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇' and c.sex ='女' and b.division like (a.divisionpath||'%')) as citygirls,"
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='城镇' and division like (a.divisionpath||'%')) as citymoney,"
+
+
+                    +"(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='农村' and division like (a.divisionpath||'%')) as villagefamily ,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid = b.id and b.familyaccount='农村' and businesstype='"+businesstype+"' and b.division like (a.divisionpath||'%')) as villageperson, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid = b.id and b.familyaccount='农村' and businesstype='"+businesstype+"' and c.sex ='男' and b.division like (a.divisionpath||'%')) as villagemen, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid = b.id and b.familyaccount='农村' and businesstype='"+businesstype+"' and c.sex ='女' and b.division like (a.divisionpath||'%')) as villagegirls,"
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='农村' and division like (a.divisionpath||'%')) as villagemoney "
+
+
+
+                    +"  from "+DivisionsTable+" a where a.parentid = "+divisionpid;
+*/
+            /*ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
+
+            res.put("divisionname","");
+            res.put("children",list);*/
+
+        }
+        else if(type.equals(StatisticsType.UseStatisticsType.getChineseSeason(StatisticsType.ComplexOne))){
+
+            BusinessProcess bp=new BusinessProcess();
+            ComonDao cd=new ComonDao();
+            /*String sql_list="select divisionpath from "+DivisionsTable +" where parentid MATCH "+divisionpid;
+            ArrayList<Map<String,Object>> division_list=cd.getTableList(sql_list);
+            ArrayList<Map<String,Object>> result_list=new ArrayList<Map<String, Object>>();
+
+            CountDownLatch latch=new CountDownLatch(1);
+            for(Map<String,Object>division_item:division_list){
+                Map<String,Object> map=new HashMap<String, Object>();
+                String sql_totalfamily="select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+
+                        "' and businesstype='"+businesstype+"' and  division like '"+division_item.get("divisionpath")+"%' ";
+
+                SigleSqlThread m=new SigleSqlThread(map,sql_totalfamily,"totalfamily",latch);
+                result_list.add(map);
+                Thread t=new Thread(m);
+                t.start();
+            }
+            try {
+                latch.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            res.put("divisionname","");
+            res.put("children",result_list);
+*/
+            String sql_list="select a.divisionname  ,a.rowid as id," +
+                    "(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and  division like (a.divisionpath||'%')) as totalfamily ,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.division like (a.divisionpath||'%')) as totalperson, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and c.jobstatus ='老年人' and b.division like (a.divisionpath||'%')) as oldperson, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and  c.jobstatus ='登记失业' and b.division like (a.divisionpath||'%')) as loginnojob,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and c.jobstatus ='在校生' and b.division like (a.divisionpath||'%')) as student,"
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and division like (a.divisionpath||'%')) as totalmoney, "
+
+                    +"(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='城镇' and division like (a.divisionpath||'%')) as cityfamily ,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇' and b.division like (a.divisionpath||'%')) as cityperson, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇' and c.sex ='男' and b.division like (a.divisionpath||'%')) as citymen, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇' and c.sex ='女' and b.division like (a.divisionpath||'%')) as citygirls,"
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='城镇' and division like (a.divisionpath||'%')) as citymoney,"
+
+
+                    +"(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and familyaccount='农村' and businesstype='"+businesstype+"' and division like (a.divisionpath||'%')) as villagefamily ,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and b.familyaccount='农村' and businesstype='"+businesstype+"' and b.division like (a.divisionpath||'%')) as villageperson, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and b.familyaccount='农村' and businesstype='"+businesstype+"' and c.sex ='男' and b.division like (a.divisionpath||'%')) as villagemen, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and b.familyaccount='农村' and businesstype='"+businesstype+"' and c.sex ='女' and b.division like (a.divisionpath||'%')) as villagegirls,"
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='农村' and division like (a.divisionpath||'%')) as villagemoney "
+
+
+
+                    +"  from "+DivisionsTable+" a where a.parentid MATCH "+divisionpid;
+
+            ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
+
+            res.put("divisionname","");
+            res.put("children",list);
+
+
+
+        }else if(type.equals(StatisticsType.UseStatisticsType.getChineseSeason(StatisticsType.ComplexTwo))){
+            BusinessProcess bp=new BusinessProcess();
+            ComonDao cd=new ComonDao();
+            String sql_list="select a.divisionname  ,a.rowid as id," +
+                    "(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and rowid in (select rowid from "
+                    +BusinessTable+" where businesstype MATCH '"+businesstype+"') and  division MATCH (a.divisionpath||'*')) as newmonthfamilynum ,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and b.rowid in ( select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') and c.businessid=b.rowid and b.division MATCH (a.divisionpath||'*')) as newmonthpeoplenum, "
+
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and division MATCH (a.divisionpath||'*')) as newtotalhelpmoney, "
+
+                    +"(select count(*) from "+BusinessTable+" where  time Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and rowid in(select rowid from "+BusinessTable+" where  businesstype MATCH '"+businesstype+"') " +
+                    " and rowid in(select rowid from "+BusinessTable+" where  processstatustype  MATCH '"+ProcessType.UseProcessType.getChineseSeason(ProcessType.Cancellation)+"') " +
+
+                    " and  division MATCH (a.divisionpath||'*')) as logoutmonthfamilynum ,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and b.rowid in(select rowid from "+BusinessTable+" where  processstatustype  MATCH '"+ProcessType.UseProcessType.getChineseSeason(ProcessType.Cancellation)+"') " +
+                    " and c.businessid=b.rowid and b.division MATCH (a.divisionpath||'*')) as logoutmonthpeoplenum, "
+
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+
+
+                    "' and rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and rowid in(select rowid from "+BusinessTable+" where  processstatustype  MATCH '"+ProcessType.UseProcessType.getChineseSeason(ProcessType.Cancellation)+"') "+
+                    " and division MATCH (a.divisionpath||'*')) as logouttotalhelpmoney ,"+
+
+
+                    "(select count(*) from "+GrantTable+" e,"+BusinessTable+" f where e.businessid=f.rowid and e.grantdate Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and f.rowid in (select rowid from "
+                    +BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+
+                    " and e.rowid in(select rowid from "+ GrantTable+" where CAST(adjustmoney AS real)>0) "+
+
+                    "and  f.division MATCH (a.divisionpath||'*')) as addmoneymonthfamilynum ,"
+
+                    +"(select count(*) from "+GrantTable+" e,"+BusinessTable+" f,"+FamilyTable+" " +
+                    "c where e.businessid=f.rowid and e.grantdate Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and f.rowid in ( select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and e.rowid in(select rowid from "+ GrantTable+" where CAST(adjustmoney AS real)>0) "+
+                    "and c.businessid=f.rowid and f.division MATCH (a.divisionpath||'*')) as addmoneymonthpeoplenum, "
+
+                    +  "(select sum(CAST(e.adjustmoney AS real)) from "+GrantTable+" e," +
+                    BusinessTable+" f where e.businessid=f.rowid and e.grantdate Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and f.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and e.rowid in(select rowid from "+ GrantTable+" where CAST(adjustmoney AS real)>0) "+
+                    "and division MATCH (a.divisionpath||'*')) as addmoneytotalhelpmoney, " +
+
+
+
+                    "(select count(*) from "+GrantTable+" e,"+BusinessTable+" f where e.businessid=f.rowid and e.grantdate Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and f.rowid in (select rowid from "
+                    +BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+
+                    " and e.rowid in(select rowid from "+ GrantTable+" where CAST(adjustmoney AS real)<0) "+
+
+                    "and  f.division MATCH (a.divisionpath||'*')) as reducemoneymonthfamilynum ,"
+
+                    +"(select count(*) from "+GrantTable+" e,"+BusinessTable+" f,"+FamilyTable+" " +
+                    "c where e.businessid=f.rowid and e.grantdate Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and f.rowid in ( select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and e.rowid in(select rowid from "+ GrantTable+" where CAST(adjustmoney AS real)<0) "+
+                    "and c.businessid=f.rowid and f.division MATCH (a.divisionpath||'*')) as reducemoneymonthpeoplenum, "
+
+                    +  "(select sum(CAST(e.adjustmoney AS real)) from "+GrantTable+" e," +
+                    BusinessTable+" f where e.businessid=f.rowid and e.grantdate Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and f.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and e.rowid in(select rowid from "+ GrantTable+" where CAST(adjustmoney AS real)<0) "+
+                    "and division MATCH (a.divisionpath||'*')) as reducemoneytotalhelpmoney " +
+
+
+                    "  from "+DivisionsTable+" a where a.parentid MATCH "+divisionpid;
+
+            ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
+
+            res.put("divisionname","");
+            res.put("children",list);
+
+        }else if(type.equals(StatisticsType.UseStatisticsType.getChineseSeason(StatisticsType.ComplexThree))){
+
+            BusinessProcess bp=new BusinessProcess();
+            ComonDao cd=new ComonDao();
+            String sql_list="select a.divisionname  ,a.rowid as id,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and c.businessid=b.rowid " +
+                    "and b.division MATCH (a.divisionpath||'*')) as totalpeoplenum, "
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+
+                    " where time Between '"+bgmonth+"' and  '"+edmonth+"'" +
+                    " and rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') and " +
+                    "division MATCH (a.divisionpath||'*')) as totalhelpmoney ,"
+
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where poortype MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.A)+"') " +
+                    "and c.businessid=b.rowid " +
+                    "and b.division MATCH (a.divisionpath||'*')) as atotalpeoplenum, "
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+
+                    " where time Between '"+bgmonth+"' and  '"+edmonth+"'" +
+                    " and rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"')  " +
+                    "and rowid in (select rowid from "+BusinessTable+" where poortype MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.A)+"') " +
+                    "and division MATCH (a.divisionpath||'*')) as atotalhelpmoney ,"
+
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where poortype MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.B)+"') " +
+                    "and c.businessid=b.rowid " +
+                    "and b.division MATCH (a.divisionpath||'*')) as btotalpeoplenum, "
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+
+                    " where time Between '"+bgmonth+"' and  '"+edmonth+"'" +
+                    " and rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"')  " +
+                    "and rowid in (select rowid from "+BusinessTable+" where poortype MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.B)+"') " +
+                    "and division MATCH (a.divisionpath||'*')) as btotalhelpmoney ,"
+
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where poortype MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.C)+"') " +
+                    "and c.businessid=b.rowid " +
+                    "and b.division MATCH (a.divisionpath||'*')) as ctotalpeoplenum, "
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+
+                    " where time Between '"+bgmonth+"' and  '"+edmonth+"'" +
+                    " and rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"')  " +
+                    "and rowid in (select rowid from "+BusinessTable+" where poortype MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.C)+"') " +
+                    "and division MATCH (a.divisionpath||'*')) as ctotalhelpmoney "
+
+
+                    +"  from "+DivisionsTable+" a where a.parentid MATCH "+divisionpid;
+
+            ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
+
+            res.put("divisionname","");
+            res.put("children",list);
+
+
+
+
+
+
+        }else if(type.equals(StatisticsType.UseStatisticsType.getChineseSeason(StatisticsType.ComplexFour))){
+
+            BusinessProcess bp=new BusinessProcess();
+            ComonDao cd=new ComonDao();
+            String sql_list="select a.divisionname  ,a.rowid as id,"
+
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Farmer)+"') " +
+
+                    "and c.businessid=b.rowid " +
+
+                    "and b.division MATCH (a.divisionpath||'*')) as farmer, "
+
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Forester)+"') " +
+
+                    "and c.businessid=b.rowid " +
+
+                    "and b.division MATCH (a.divisionpath||'*')) as forester, "
+
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Criminal)+"') " +
+
+                    "and c.businessid=b.rowid " +
+
+                    "and b.division MATCH (a.divisionpath||'*')) as criminal, "
+
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Compatriot)+"') " +
+
+                    "and c.businessid=b.rowid " +
+
+                    "and b.division MATCH (a.divisionpath||'*')) as compatriot, "
+
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Immigrant)+"') " +
+
+                    "and c.businessid=b.rowid " +
+
+                    "and b.division MATCH (a.divisionpath||'*')) as immigrant, "
+
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Graduate)+"') " +
+
+                    "and c.businessid=b.rowid " +
+
+                    "and b.division MATCH (a.divisionpath||'*')) as graduate, "
+
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Veterans)+"') " +
+
+                    "and c.businessid=b.rowid " +
+
+                    "and b.division MATCH (a.divisionpath||'*')) as veterans "
+
+
+                    +"  from "+DivisionsTable+" a where a.parentid MATCH "+divisionpid;
+
+            ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
+
+            res.put("divisionname","");
+            res.put("children",list);
+
+
+
+
+
+
+        }else if(type.equals(StatisticsType.UseStatisticsType.getChineseSeason(StatisticsType.ComplexNewLogout)))
+        {
+            BusinessProcess bp=new BusinessProcess();
+            ComonDao cd=new ComonDao();
+            String sql_list="select a.divisionname  ,a.rowid as id," +
+                    "(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and rowid in (select rowid from "
+                    +BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and rowid in (select rowid from "
+                    +BusinessTable+" where familyaccount MATCH '"
+                    +EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.CountryAccount)+"') " +
+                    "and  division MATCH (a.divisionpath||'*')) as newmonthfamilynum ,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and b.rowid in ( select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and b.rowid in (select rowid from "
+                    +BusinessTable+" where familyaccount MATCH '"
+                    +EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.CountryAccount)+"') " +
+
+                    "and c.businessid=b.rowid and b.division MATCH (a.divisionpath||'*')) as newmonthpeoplenum, "
+
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and rowid in (select rowid from "
+                    +BusinessTable+" where familyaccount MATCH '"
+                    +EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.CountryAccount)+"') " +
+
+                    "and division MATCH (a.divisionpath||'*')) as newmonthmoney, "
+
+                    +"(select count(*) from "+BusinessTable+" where  time Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and rowid in(select rowid from "+BusinessTable+" where  businesstype MATCH '"+businesstype+"') " +
+                    " and rowid in(select rowid from "+BusinessTable+" where  processstatustype  MATCH '"+ProcessType.UseProcessType.getChineseSeason(ProcessType.Cancellation)+"') " +
+                    " and rowid in (select rowid from "
+                    +BusinessTable+" where familyaccount MATCH '"
+                    +EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.CountryAccount)+"') " +
+
+                    " and  division MATCH (a.divisionpath||'*')) as logoutmonthfamilynum ,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and b.rowid in (select rowid from "
+                    +BusinessTable+" where familyaccount MATCH '"
+                    +EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.CountryAccount)+"') " +
+
+                    " and b.rowid in(select rowid from "+BusinessTable+" where  processstatustype  MATCH '"+ProcessType.UseProcessType.getChineseSeason(ProcessType.Cancellation)+"') " +
+                    " and c.businessid=b.rowid and b.division MATCH (a.divisionpath||'*')) as logoutmonthpeoplenum, "
+
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+
+
+                    "' and rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and rowid in(select rowid from "+BusinessTable+" where  processstatustype  MATCH '"+ProcessType.UseProcessType.getChineseSeason(ProcessType.Cancellation)+"') "+
+                    " and rowid in (select rowid from "
+                    +BusinessTable+" where familyaccount MATCH '"
+                    +EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.CountryAccount)+"') " +
+
+                    " and division MATCH (a.divisionpath||'*')) as logoutmonthmoney, "+
+
+
+                    //城镇
+
+
+                    "(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and rowid in (select rowid from "
+                    +BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and rowid in (select rowid from "
+                    +BusinessTable+" where familyaccount MATCH '"
+                    +EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.CityAccount)+"') " +
+                    "and  division MATCH (a.divisionpath||'*')) as newcitymonthfamilynum ,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and b.rowid in ( select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and b.rowid in (select rowid from "
+                    +BusinessTable+" where familyaccount MATCH '"
+                    +EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.CityAccount)+"') " +
+
+                    "and c.businessid=b.rowid and b.division MATCH (a.divisionpath||'*')) as newcitymonthpeoplenum, "
+
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and rowid in (select rowid from "
+                    +BusinessTable+" where familyaccount MATCH '"
+                    +EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.CityAccount)+"') " +
+
+                    "and division MATCH (a.divisionpath||'*')) as newcitymonthmoney, "
+
+                    +"(select count(*) from "+BusinessTable+" where  time Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and rowid in(select rowid from "+BusinessTable+" where  businesstype MATCH '"+businesstype+"') " +
+                    " and rowid in(select rowid from "+BusinessTable+" where  processstatustype  MATCH '"+ProcessType.UseProcessType.getChineseSeason(ProcessType.Cancellation)+"') " +
+                    " and rowid in (select rowid from "
+                    +BusinessTable+" where familyaccount MATCH '"
+                    +EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.CityAccount)+"') " +
+
+                    " and  division MATCH (a.divisionpath||'*')) as logoutcitymonthfamilynum ,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and b.rowid in (select rowid from "
+                    +BusinessTable+" where familyaccount MATCH '"
+                    +EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.CityAccount)+"') " +
+
+                    " and b.rowid in(select rowid from "+BusinessTable+" where  processstatustype  MATCH '"+ProcessType.UseProcessType.getChineseSeason(ProcessType.Cancellation)+"') " +
+                    " and c.businessid=b.rowid and b.division MATCH (a.divisionpath||'*')) as logoutcitymonthpeoplenum, "
+
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+
+
+                    "' and rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    " and rowid in(select rowid from "+BusinessTable+" where  processstatustype  MATCH '"+ProcessType.UseProcessType.getChineseSeason(ProcessType.Cancellation)+"') "+
+                    " and rowid in (select rowid from "
+                    +BusinessTable+" where familyaccount MATCH '"
+                    +EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.CityAccount)+"') " +
+
+                    " and division MATCH (a.divisionpath||'*')) as logoutcitymonthmoney "+
+
+
+
+                    "  from "+DivisionsTable+" a where a.parentid MATCH "+divisionpid;
+
+            ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
+
+            res.put("divisionname","");
+            res.put("children",list);
+
+        }
+        /*if(isonlychild){
+            JSONArray array_list=JSONArray.fromObject(res.get("children"));
+            JSONArray new_list=new JSONArray();
+            for(Object list_item:array_list){
+                JSONObject new_item=JSONObject.fromObject(list_item);
+                new_item.put("state","closed");
+                new_list.add(new_item);
+            }
+            return  JSONArray.fromObject(new_list).toString();
+        }else{
+            return JSONObject.fromObject(res).toString();
+    }*/
+
+        String panelsql = "select divisionname from divisions where parentid = "+divisionpid;
+        ComonDao pcd=new ComonDao();
+        ArrayList<Map<String,Object>> plist=pcd.getTableList(panelsql);
+        ArrayList<Map<String,Object>> elist =new ArrayList<Map<String, Object>>();
+
+        Iterator it= plist.iterator();
+        while (it.hasNext()){
+            Map<String,Object> rmap = new HashMap<String, Object>();
+             Map map=(Map)it.next();
+            //System.out.println(map.get("divisionname"));
+            String divisionname = map.get("divisionname").toString() ;
+            rmap.put("divisionname",divisionname);
+            divisionname = divisionname=="市本级"?"舟山市":divisionname;
+            String everysql = "select count (*) AS huzhu from business where division like '%"+divisionname+"%'";    //计算户主数
+            rmap.put("huzhu",getMap(everysql).get("huzhu"));
+            String rensql = "select count(CASE when a.isenjoyed = '享受' THEN 1 ELSE null  END) as dbren  from familymembers a " +
+                    " where (select b.division from business b where b.id = a.businessid) like '%"+divisionname+"%'";          //计算低保人口数
+             rmap.put("dbren",getMap(rensql).get("dbren"));
+            elist.add(rmap);
+        }
+
+
+
+        return  JSONArray.fromObject(elist).toString();
+
+    }
+
+    public Map<String,Object> getMap(String sql){                        //获取统计查询结果，只适合查询结果只有一行的sql
+         ResultSet rs = resultSet(sql);
+         Map<String,Object>  mp = new HashMap<String, Object>();
+        try {
+            ResultSetMetaData data=rs.getMetaData();
+            int colnums=data.getColumnCount();
+            while (rs.next()){
+                for(int i = 1;i<= colnums;i++){                                             //多个字段循环存入map中
+                    String columnName = data.getColumnName(i);
+                    String value=rs.getString(columnName);
+                    mp.put(columnName,value);
+                }
+                 return     mp;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        return  null;
+    }
+
+    public ResultSet resultSet(String rsql){
+        Connection testConn= JdbcFactory.getConn("sqlite");
+        PreparedStatement pstmt = JdbcFactory.getPstmt(testConn, rsql);
+        try {
+            ResultSet rs = pstmt.executeQuery();
+            return rs;
+        } catch (SQLException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        return null;
+    }
+
+   /* ************* */
     public String getFamilyInfoList(int start,int limit,String keyword,String businesstype,String[]name,
                                     String[]compare,String[]value,String[]logic,String bgdate,String eddate,
                                     String divisionpath,String totalname,String rowsname){
