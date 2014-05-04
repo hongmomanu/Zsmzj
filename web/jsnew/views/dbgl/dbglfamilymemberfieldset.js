@@ -174,6 +174,7 @@ define(['commonfuncs/PersonidValidator'], function (PersonidValidator) {
             });
 
             $('#FamilyPersons').val($('#familymembersgrid').datagrid('getRows').length);
+            $(':input[name=housearea]').trigger('blur');
         });
 
         $('#delfamilymemer_btn').bind('click', function () {
@@ -184,6 +185,7 @@ define(['commonfuncs/PersonidValidator'], function (PersonidValidator) {
                 $('#familymembersgrid').datagrid('deleteRow', index);
                 $('#delfamilymemer_btn').linkbutton('disable');
                 $('#FamilyPersons').val($('#familymembersgrid').datagrid('getRows').length);
+                $(':input[name=housearea]').trigger('blur');
             }
 
         });
