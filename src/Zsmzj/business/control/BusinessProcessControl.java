@@ -1655,8 +1655,13 @@ public class BusinessProcessControl {
             return JSONObject.fromObject(res).toString();
     }*/
         StringBuffer sb=new StringBuffer();
-        sb.append("select \n");
-        sb.append(" divisionname,sum(hushu) shushu,sum(renshu) srenshu,sum(laonianrenshu) slaonianrenshu,\n");
+
+
+        sb.append("select dd.divisionname,yy.* from \n");
+        sb.append("divisions dd left outer join\n");
+        sb.append("(select\n");
+        sb.append(" divisionname divisionname0,\n");
+        sb.append(" sum(hushu) shushu,sum(renshu) srenshu,sum(laonianrenshu) slaonianrenshu,\n");
         sb.append(" sum(auditzzzg) sauditzzzg,sum(auditlhjy) sauditlhjy,sum(auditdjsy) sauditdjsy,sum(auditwdjsy) sauditwdjsy,\n");
         sb.append(" sum(yang) syang,sum(yangqt) syangqt,sum(woman) swoman,sum(sanwu) ssanwu,sum(canji) scanji,sum(zhongcan) szhongcan,\n");
         sb.append(" sum(curmonthrenshu) scurmonthrenshu,\n");
@@ -1664,7 +1669,7 @@ public class BusinessProcessControl {
         sb.append(" sum(onetocurmonthrenshu) sonetocurmonthrenshu,\n");
         sb.append(" sum(curmonthmoney)/sum(curmonthrenshu) scurmoneyallowance,\n");
         sb.append(" sum(onetocurmonthrenshu)/sum(renshu) sonecurmoneyallowance\n");
-        sb.append("from \n");
+        sb.append("from\n");
         sb.append("\n");
         sb.append("(select\n");
         sb.append("divisionname,\n");
@@ -1687,10 +1692,10 @@ public class BusinessProcessControl {
         sb.append("0 'onetocurmonthmoney'\n");
         sb.append("from\n");
         sb.append("(select d.divisionname,d.divisionpath,b.* from divisions d,business b\n");
-        sb.append(" where d.parentid=(select rowid from divisions where divisionpath='"+divisionpath+"')\n");
+        sb.append(" where d.parentid in(select rowid from divisions where divisionname='"+divisionpath+"')\n");
         sb.append(" and substr(b.division,0,length(d.divisionpath)+1)=d.divisionpath) y,familymembers f\n");
         sb.append("where y.id=f.businessid and y.businesstype='"+businesstype+"'\n");
-        sb.append("and y.familyaccount='城镇'");
+        sb.append("and y.familyaccount='城镇'\n");
         sb.append("group by divisionname\n");
         sb.append("\n");
         sb.append("union all\n");
@@ -1717,13 +1722,15 @@ public class BusinessProcessControl {
         sb.append("\n");
         sb.append("from\n");
         sb.append("(select d.divisionname,d.divisionpath,b.* from divisions d,business b\n");
-        sb.append(" where d.parentid=(select rowid from divisions where divisionpath='"+divisionpath+"')\n");
+        sb.append(" where d.parentid in(select rowid from divisions where divisionname='"+divisionpath+"')\n");
         sb.append(" and substr(b.division,0,length(d.divisionpath)+1)=d.divisionpath) y,grantmoney g\n");
         sb.append("where y.id=g.businessid and y.businesstype='"+businesstype+"'\n");
-        sb.append("and y.familyaccount='城镇'");
+        sb.append("and y.familyaccount='城镇'\n");
         sb.append("group by divisionname\n");
         sb.append(")\n");
-        sb.append("group by divisionname\n");
+        sb.append("group by divisionname) \n");
+        sb.append("yy  on yy.divisionname0=dd.divisionname\n");
+        sb.append("where dd.parentid in(select rowid from divisions where divisionname='"+divisionpath+"')\n");
         String panelsql = "select divisionname from divisions where parentid = "+divisionpid;
         ComonDao pcd=new ComonDao();
        /* ArrayList<Map<String,Object>> plist=pcd.getTableList(panelsql);

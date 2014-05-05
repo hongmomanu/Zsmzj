@@ -12,16 +12,16 @@
 <%
     if(request.getParameter("type")==null){
        out.print("缺少参数type");
-    }if(request.getParameter("node")==null){
+    }/*if(request.getParameter("node")==null){
         out.print("缺少参数node");
-    }
+    }*/
     else{
         BusinessProcessControl bp=new BusinessProcessControl();
         String type=request.getParameter("type");
         String divisionpath=request.getParameter("divisionpath");
         String businesstype=request.getParameter("businesstype");
         String bgmonth=request.getParameter("bgmonth");
-        int divisionpid=Integer.parseInt(request.getParameter("node"));
+        int divisionpid=0;//Integer.parseInt(request.getParameter("node"));
 
         boolean isdefault=false;
         if(0==divisionpid){
