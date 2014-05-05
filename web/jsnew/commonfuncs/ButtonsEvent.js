@@ -25,7 +25,10 @@ define(function(){
                 ajaxform.ajaxsend("post","json","ajax/changeapplystatus.jsp",params,successFunc,null);
             });
 
-
+           // alert("shenpi");
+            require(['views/dbgl/needtodopanel'],function(js){
+                js.updateneedtodocount();
+            })
         }
 
     }

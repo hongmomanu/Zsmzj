@@ -21,8 +21,8 @@ define(function(){
                     require(['views/dbgl/needtodopanel'],function(js){
                         //alert(111);
 
-                        setTimeout(js.updateneedtodocount,5000)  ;
-
+                        //setTimeout(js.updateneedtodocount,5000)  ;
+                        js.updateneedtodocount();
                     })
                 }
             });

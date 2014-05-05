@@ -77,7 +77,9 @@ define(function(){
 
                                     };
                                     AjaxForm.ajaxform(form,'ajax/sendcheckform.jsp',submit,success);
-
+                                    require(['views/dbgl/needtodopanel'],function(js){
+                                        js.updateneedtodocount();
+                                    })
 
                                 });
 
