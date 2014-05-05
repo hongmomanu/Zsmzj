@@ -9,7 +9,7 @@ define(function(){
     var hidden=function(processstatus){
 
         if(processstatus=='审核'||processstatus=='提交'){
-            readonlyaction();
+            //readonlyaction();
             if(hiddenSomeTextArea=='审批'){
                 $('textarea[name=villageopinion],textarea[name=townopinion]').attr({ 'disabled': 'disabled' });
                 $('textarea[name=civilopinion]').attr({'disoption':'yes'});  //显示可编辑
@@ -21,7 +21,7 @@ define(function(){
                 $('textarea[name=civilopinion],textarea[name=townopinion]').closest('tr').remove();
             }
         }
-        $('#tabs').tabs('getSelected').find('[disoption=yes]').removeAttr('disabled');
+        //$('#tabs').tabs('getSelected').find('[disoption=yes]').removeAttr('disabled');
     }
     return {hidden:hidden,readonlyaction:readonlyaction}
 })

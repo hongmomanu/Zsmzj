@@ -4,6 +4,21 @@
 
 define(function(){
 
+    var updateapply=function(datares,f){
+        $.ajax({
+            url:'ajax/updateapply.jsp',
+            data:{
+                businessid:datares.record.id,
+                villageopinion:$('textarea[name=villageopinion]').val(),
+                townopinion:$('textarea[name=townopinion]').val(),
+                civilopinion:$('textarea[name=civilopinion]').val()
+            },
+            type:'post',
+            success:f
+        })
+
+
+    }
     var a={
         render:function(item,datares){
             var record=datares.record;
@@ -76,10 +91,14 @@ define(function(){
                                         }
 
                                     };
-                                    AjaxForm.ajaxform(form,'ajax/sendcheckform.jsp',submit,success);
-                                    require(['views/dbgl/needtodopanel'],function(js){
-                                        js.updateneedtodocount();
-                                    })
+                                    updateapply(datares,function(){
+                                        AjaxForm.ajaxform(form,'ajax/sendcheckform.jsp',submit,success);
+                                        require(['views/dbgl/needtodopanel'],function(js){
+                                            js.updateneedtodocount();
+                                        })
+                                    });
+
+
 
                                 });
 
