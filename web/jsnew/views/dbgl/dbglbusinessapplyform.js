@@ -6,6 +6,7 @@ define(function () {
             $('#tabs').tabs('close',1);
         });
 
+
         /*$('#appformmore').click(function(){
             var isValid = $('#mainform').form('validate');
             if(isValid){
@@ -65,9 +66,14 @@ define(function () {
             require(['commonfuncs/AjaxForm'],function(ajaxform){
                 var sucfun=function(){
                     $('#tabs').tabs('close',1);
+                    require(['views/dbgl/needtodopanel'],function(js){
+                        js.updateneedtodocount();
+                    }) ;
                 };
                 ajaxform.submitForm('new',null,sucfun);
             });
+
+
         });
 
     }
