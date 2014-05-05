@@ -3,17 +3,22 @@
  */
 define(function () {
     var updateneedtodocount=function(){
-        $.ajax({
-            dataType:'json',
-            url:'ajax/getneedtodos.jsp',
-            data:{
-                userid:userid,divisionpath:divisionpath,type:'count'
-            },
-            success:function(res){
-                var count=res.count;
-                updateitem.updateitemnum($('#domneedtodocount'),count,"(",")");
-            }
+        require(['commonfuncs/UpdateItemNum','commonfuncs/AjaxForm'],function(updateitem,js2){
+            $.ajax({
+                dataType:'json',
+                url:'ajax/getneedtodos.jsp',
+                data:{
+                    roleid:roleid,
+                    userid:userid,divisionpath:divisionpath,type:'count'
+                },
+                success:function(res){
+                    var count=res.count;
+                    updateitem.updateitemnum($('#domneedtodocount'),count,"(",")");
+                    $('#homegreetcount').text(count);
+                }
+            })
         })
+
     }
 
 
@@ -79,6 +84,7 @@ define(function () {
 
     return {
         render: render,
-        rowformater: rowformater
+        rowformater: rowformater ,
+        updateneedtodocount:updateneedtodocount
     };
 });

@@ -79,12 +79,12 @@
         </ul>
 
         <ul id="headnavul">
-            <li class="li-skinitem" ><img src="img/head/1.png"/><a id="welcomename">欢迎您:</a></li>
-            <li class="li-skinitem"><img src="img/head/2.png"/><a id="domneedtodocount" style="cursor:pointer">待办业务(55)</a></li>
-            <li class="li-skinitem"><img src="img/head/4.png"/><a id="onlinenums">在线人数(1)</a></li>
-            <li class="li-skinitem"><img src="img/head/5.png"/><a id="domshowalterpwd">重设密码</a></li>
+            <li class="li-skinitem" ><img src="img/head/1.png"/><a id="welcomename" style="text-decoration: none;cursor:default">欢迎您:</a></li>
+            <li class="li-skinitem"><img src="img/head/2.png"/><a id="domneedtodocount" style="text-decoration: none;cursor:pointer">待办业务(55)</a></li>
+            <li class="li-skinitem"><img src="img/head/4.png"/><a id="onlinenums" style="text-decoration: none;cursor:default">在线人数(1)</a></li>
+            <li class="li-skinitem"><img src="img/head/5.png"/><a id="domshowalterpwd" style="text-decoration: none;cursor:pointer">重设密码</a></li>
             <li class="li-skinitem"><img src="img/head/7.png"/>
-                <a id="domlogout" style="text-decoration: none;">退出</a></li>
+                <a id="domlogout" style="text-decoration: none;cursor:pointer">退出</a></li>
             <li class="li-skinitem">
                 <input id="routermenu" class="easyui-combobox" style="position: absolute;top:20px;float: left;padding:0;" data-options="
         valueField: 'value',

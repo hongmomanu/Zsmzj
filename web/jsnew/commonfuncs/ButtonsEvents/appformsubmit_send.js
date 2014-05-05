@@ -18,7 +18,12 @@ define(function(){
                      require(['commonfuncs/ButtonsEvent'],function(ButtonsEvent){
                          ButtonsEvent.changeapplystatus(data.id,data.process,callback);
                      });
+                    require(['views/dbgl/needtodopanel'],function(js){
+                        //alert(111);
 
+                        setTimeout(js.updateneedtodocount,5000)  ;
+
+                    })
                 }
             });
 
