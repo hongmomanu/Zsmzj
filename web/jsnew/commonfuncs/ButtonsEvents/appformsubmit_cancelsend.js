@@ -19,6 +19,10 @@ define(function(){
                          ButtonsEvent.changeapplystatus(data.id,processdiction.stepzero,callback);
                      });
 
+                    /*require(['views/dbgl/needtodopanel'],function(js){
+                        //alert(111);
+                        js.updateneedtodocount();
+                    })*/
                 }
             });
 
