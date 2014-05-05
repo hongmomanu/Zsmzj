@@ -11,6 +11,7 @@ define(function () {
                     roleid:roleid,
                     userid:userid,divisionpath:divisionpath,type:'count'
                 },
+                type:'post',
                 success:function(res){
                     var count=res.count;
                     updateitem.updateitemnum($('#domneedtodocount'),count,"(",")");
