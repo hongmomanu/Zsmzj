@@ -200,7 +200,7 @@ define(function(){
 
             require(['text!views/dbgl/statusTypeCombox.htm'],function(filehtml){
                 $('#businesstb').append(filehtml);
-                $('#cc').combo({ editable: false });
+                $('#cc').combo({ editable: false }).combo('setText','--请选择--');
                 $('#sp').appendTo($('#cc').combo('panel'));
                 $('#sp span').click(function(){
                     var v = $(this).attr('value');
@@ -209,8 +209,9 @@ define(function(){
                     options.search_params['statusType']=v;
                     $('#cc').attr('statusType',v);
                     $('#businessgrid').datagrid('load',options.search_params);
-
-                });
+                }).hover(function(){
+                        $(this).addClass('selecthover').siblings().removeClass('selecthover');
+                    });
             })
 
 

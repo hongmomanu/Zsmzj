@@ -377,3 +377,7 @@ div.yw-block > span{
     background:url("img/toolbar/refresh.gif") no-repeat 18px center;
     /*background-color:#f9f9f9;*/
 }
+.selecthover{
+    color: red;
+    cursor:pointer;
+}

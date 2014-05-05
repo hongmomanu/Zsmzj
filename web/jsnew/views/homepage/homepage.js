@@ -53,7 +53,7 @@ define(function(){
             }
 
             $('#hometodolist').datagrid({
-                title:'项目名称',
+                title:'未读消息',
                 height:250,
                 url:'ajax/getUnCheckedApprovalFail.jsp',
                 queryParams: {
