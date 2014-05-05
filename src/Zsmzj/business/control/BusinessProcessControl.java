@@ -1153,32 +1153,7 @@ public class BusinessProcessControl {
             BusinessProcess bp=new BusinessProcess();
             ComonDao cd=new ComonDao();
 
-            /*String sql_list="select divisionpath from "+DivisionsTable +" where parentid MATCH "+divisionpid;
-            ArrayList<Map<String,Object>> division_list=cd.getTableList(sql_list);
-            ArrayList<Map<String,Object>> result_list=new ArrayList<Map<String, Object>>();
 
-            CountDownLatch latch=new CountDownLatch(5);
-            for(Map<String,Object>division_item:division_list){
-                Map<String,Object> map=new HashMap<String, Object>();
-                map.put("division",divisionpath);
-                String sql_totalfamily="select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+
-                        "' and businesstype='"+businesstype+"' and  division like '"+division_item.get("divisionpath")+"%' ";
-
-                SigleSqlThread m=new SigleSqlThread(map,sql_totalfamily,"totalfamily",latch);
-                result_list.add(map);
-                Thread t=new Thread(m);
-                t.start();
-            }
-            try {
-                log.debug("wait begin at here");
-                latch.await();
-            } catch (InterruptedException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            }
-            res.put("divisionname","");
-            res.put("children",result_list);
-
-*/
             String sql_list_division="select divisionpath,rowid,divisionname from "+DivisionsTable +" where parentid MATCH "+divisionpid;
             ArrayList<Map<String,Object>> division_list=cd.getTableList(sql_list_division);
             ArrayList<Map<String,Object>> result_list=new ArrayList<Map<String, Object>>();
@@ -1243,43 +1218,7 @@ public class BusinessProcessControl {
 
 
 
-            /*String sql_list="select a.divisionname  ,a.rowid as id," +
-                        "(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and  division like (a.divisionpath||'%')) as totalfamily ,"
-                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and c.businessid = b.id and b.division like (a.divisionpath||'%')) as totalperson, "
-                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and c.businessid = b.id and c.sex ='男' and b.division like (a.divisionpath||'%')) as totalmen, "
-                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and c.businessid = b.id and c.sex ='女' and b.division like (a.divisionpath||'%')) as totalgirls,"
-                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and division like (a.divisionpath||'%')) as totalmoney, "
 
-                    +"(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='城镇' and division like (a.divisionpath||'%')) as cityfamily ,"
-                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid = b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇' and b.division like (a.divisionpath||'%')) as cityperson, "
-                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid = b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇' and c.sex ='男' and b.division like (a.divisionpath||'%')) as citymen, "
-                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid = b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇' and c.sex ='女' and b.division like (a.divisionpath||'%')) as citygirls,"
-                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='城镇' and division like (a.divisionpath||'%')) as citymoney,"
-
-
-                    +"(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='农村' and division like (a.divisionpath||'%')) as villagefamily ,"
-                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid = b.id and b.familyaccount='农村' and businesstype='"+businesstype+"' and b.division like (a.divisionpath||'%')) as villageperson, "
-                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid = b.id and b.familyaccount='农村' and businesstype='"+businesstype+"' and c.sex ='男' and b.division like (a.divisionpath||'%')) as villagemen, "
-                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid = b.id and b.familyaccount='农村' and businesstype='"+businesstype+"' and c.sex ='女' and b.division like (a.divisionpath||'%')) as villagegirls,"
-                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='农村' and division like (a.divisionpath||'%')) as villagemoney "
-
-
-
-                    +"  from "+DivisionsTable+" a where a.parentid = "+divisionpid;
-*/
-            /*ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
-
-            res.put("divisionname","");
-            res.put("children",list);*/
 
         }
         else if(type.equals(StatisticsType.UseStatisticsType.getChineseSeason(StatisticsType.ComplexOne))){
@@ -1715,10 +1654,79 @@ public class BusinessProcessControl {
         }else{
             return JSONObject.fromObject(res).toString();
     }*/
-
+        StringBuffer sb=new StringBuffer();
+        sb.append("select \n");
+        sb.append(" divisionname,sum(hushu) shushu,sum(renshu) srenshu,sum(laonianrenshu) slaonianrenshu,\n");
+        sb.append(" sum(auditzzzg) sauditzzzg,sum(auditlhjy) sauditlhjy,sum(auditdjsy) sauditdjsy,sum(auditwdjsy) sauditwdjsy,\n");
+        sb.append(" sum(yang) syang,sum(yangqt) syangqt,sum(woman) swoman,sum(sanwu) ssanwu,sum(canji) scanji,sum(zhongcan) szhongcan,\n");
+        sb.append(" sum(curmonthrenshu) scurmonthrenshu,\n");
+        sb.append(" sum(curmonthmoney) scurmonthmoney,\n");
+        sb.append(" sum(onetocurmonthrenshu) sonetocurmonthrenshu,\n");
+        sb.append(" sum(curmonthmoney)/sum(curmonthrenshu) scurmoneyallowance,\n");
+        sb.append(" sum(onetocurmonthrenshu)/sum(renshu) sonecurmoneyallowance\n");
+        sb.append("from \n");
+        sb.append("\n");
+        sb.append("(select\n");
+        sb.append("divisionname,\n");
+        sb.append("count(distinct(businessid)) 'hushu',\n");
+        sb.append("count(1) 'renshu',\n");
+        sb.append("count(strftime('%Y','now')-strftime('%Y',birthday)>=60) 'laonianrenshu',\n");
+        sb.append("count(case when ((strftime('%Y','now')-strftime('%Y',birthday)) between 20 and 60)and jobstatus == '在职职工'  THEN 1 ELSE null  END) as auditzzzg ,\n");
+        sb.append("count(case when ((strftime('%Y','now')-strftime('%Y',birthday)) between 20 and 60)and jobstatus == '灵活就业'  THEN 1 ELSE null  END) as auditlhjy ,\n");
+        sb.append("count(case when ((strftime('%Y','now')-strftime('%Y',birthday)) between 20 and 60)and jobstatus == '登记失业'  THEN 1 ELSE null  END) as auditdjsy ,\n");
+        sb.append("count(case when ((strftime('%Y','now')-strftime('%Y',birthday)) between 20 and 60)and jobstatus == '未登记失业'  THEN 1 ELSE null  END) as auditwdjsy ,\n");
+        sb.append("count(case when (strftime('%Y','now')-strftime('%Y',birthday))<=20 and jobstatus == '在校生' THEN 1 ELSE null  END) as yang  ,\n");
+        sb.append("count(case when (strftime('%Y','now')-strftime('%Y',birthday))<=20 and jobstatus == '其它' THEN 1 ELSE null  END) as yangqt ,\n");
+        sb.append("count(case when sex == '女' THEN 1 ELSE null  END) as woman ,\n");
+        sb.append("count(case when persontype == '三无人员' THEN 1 ELSE null  END) as sanwu ,\n");
+        sb.append("count(case when bodystatus == '残疾' or bodystatus == '重残' THEN 1 ELSE null  END) as canji ,\n");
+        sb.append("count(case when bodystatus == '重残' THEN 1 ELSE null  END) as zhongcan,\n");
+        sb.append("count(strftime('%Y%m','"+bgmonth+"-01')-strftime('%Y%m',y.time)==0) 'curmonthrenshu',\n");
+        sb.append("count(case when strftime('%Y','now')-strftime('%Y',y.time)=0 THEN 1 ELSE 0  END) as 'onetocurmonthrenshu',\n");
+        sb.append("0 'curmonthmoney',\n");
+        sb.append("0 'onetocurmonthmoney'\n");
+        sb.append("from\n");
+        sb.append("(select d.divisionname,d.divisionpath,b.* from divisions d,business b\n");
+        sb.append(" where d.parentid=(select rowid from divisions where divisionpath='"+divisionpath+"')\n");
+        sb.append(" and substr(b.division,0,length(d.divisionpath)+1)=d.divisionpath) y,familymembers f\n");
+        sb.append("where y.id=f.businessid and y.businesstype='"+businesstype+"'\n");
+        sb.append("and y.familyaccount='城镇'");
+        sb.append("group by divisionname\n");
+        sb.append("\n");
+        sb.append("union all\n");
+        sb.append("\n");
+        sb.append("select\n");
+        sb.append("divisionname,\n");
+        sb.append("0 'hushu',\n");
+        sb.append("0 'renshu',\n");
+        sb.append("0 'laonianrenshu',\n");
+        sb.append("0 auditzzzg ,\n");
+        sb.append("0 auditlhjy ,\n");
+        sb.append("0 auditdjsy ,\n");
+        sb.append("0 auditwdjsy ,\n");
+        sb.append("0 yang  ,\n");
+        sb.append("0 yangqt  ,\n");
+        sb.append("0 woman ,\n");
+        sb.append("0 sanwu ,\n");
+        sb.append("0 canji ,\n");
+        sb.append("0 zhongcan,\n");
+        sb.append("0 'curmonthrenshu',\n");
+        sb.append("0 'onetocurmonthrenshu',\n");
+        sb.append("sum(case when strftime('%Y%m','"+bgmonth+"-01')-strftime('%Y%m',g.grantdate)=0 THEN y.applymoney ELSE 0  END) 'curmonthmoney',\n");
+        sb.append("sum(case when strftime('%Y','now')-strftime('%Y',g.grantdate)=0 THEN y.applymoney ELSE 0  END) 'onetocurmonthmoney'\n");
+        sb.append("\n");
+        sb.append("from\n");
+        sb.append("(select d.divisionname,d.divisionpath,b.* from divisions d,business b\n");
+        sb.append(" where d.parentid=(select rowid from divisions where divisionpath='"+divisionpath+"')\n");
+        sb.append(" and substr(b.division,0,length(d.divisionpath)+1)=d.divisionpath) y,grantmoney g\n");
+        sb.append("where y.id=g.businessid and y.businesstype='"+businesstype+"'\n");
+        sb.append("and y.familyaccount='城镇'");
+        sb.append("group by divisionname\n");
+        sb.append(")\n");
+        sb.append("group by divisionname\n");
         String panelsql = "select divisionname from divisions where parentid = "+divisionpid;
         ComonDao pcd=new ComonDao();
-        ArrayList<Map<String,Object>> plist=pcd.getTableList(panelsql);
+       /* ArrayList<Map<String,Object>> plist=pcd.getTableList(panelsql);
         ArrayList<Map<String,Object>> elist =new ArrayList<Map<String, Object>>();
 
         Iterator it= plist.iterator();
@@ -1735,11 +1743,13 @@ public class BusinessProcessControl {
                     " where (select b.division from business b where b.id = a.businessid) like '%"+divisionname+"%'";          //计算低保人口数
              rmap.put("dbren",getMap(rensql).get("dbren"));
             elist.add(rmap);
-        }
+        }*/
 
 
 
-        return  JSONArray.fromObject(elist).toString();
+
+
+        return  JSONArray.fromObject(pcd.getTableList(sb.toString())).toString();
 
     }
 
