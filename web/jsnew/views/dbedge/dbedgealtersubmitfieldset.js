@@ -41,13 +41,13 @@ define( function () {
             });
         });
 
-        /*申请时隐藏表单中的审核审批栏*/
-        if(!res){
-            require(['commonfuncs/applyStatusHiddenOpinion'],function(js){
-                js.hidden();
-            })
-        }
-
+        require(['commonfuncs/hiddenTextArea','commonfuncs/applyStatusHiddenOpinion'],function(js1,js2){
+            if(res){ /*审核审批时隐藏表单中的opinion*/
+                js1.hidden(res.form.processstatus);
+            }else{   /*申请时隐藏表单中的审核审批栏*/
+                js2.hidden();
+            }
+        })
 
 
     }

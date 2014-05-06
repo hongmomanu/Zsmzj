@@ -179,9 +179,16 @@ define(function(){
 
             $('#businesstb .moresearch').bind('click',function(e){
                 var searchtype=$(this).attr('searchtype');
-                require(['views/dbgl/moresearchwin','jqueryplugin/jquery-formatDateTime'],function(js){
-                    js.render(searchtype);
-                });
+                if($(this).attr('opt')=='grantmoney'){
+                    require(['views/dbgl/moresearchgrantwin','jqueryplugin/jquery-formatDateTime'],function(js){
+                        js.render(searchtype);
+                    });
+                }else{
+                    require(['views/dbgl/moresearchwin','jqueryplugin/jquery-formatDateTime'],function(js){
+                        js.render(searchtype);
+                    });
+                }
+
             });
 
             $('#excelmenu_btn').menubutton({
@@ -198,21 +205,7 @@ define(function(){
                 }
             });
 
-            require(['text!views/dbgl/statusTypeCombox.htm'],function(filehtml){
-                $('#businesstb').append(filehtml);
-                $('#cc').combo({ editable: false }).combo('setText','--请选择--');
-                $('#sp').appendTo($('#cc').combo('panel'));
-                $('#sp span').click(function(){
-                    var v = $(this).attr('value');
-                    $('#cc').combo('setValue', v).combo('setText', $(this).text()).combo('hidePanel');
-                    var options=$('#businessgrid').datagrid('options');
-                    options.search_params['statusType']=v;
-                    $('#cc').attr('statusType',v);
-                    $('#businessgrid').datagrid('load',options.search_params);
-                }).hover(function(){
-                        $(this).addClass('selecthover').siblings().removeClass('selecthover');
-                    });
-            })
+
 
 
 
@@ -224,7 +217,27 @@ define(function(){
                 '<div class="yw-changebgcolor"></div><span>变更</span>'+
                 '<div class="yw-logoutbgcolor"></div><span>注销</span>'+
                 '</div>';
-            $('#businesstb').delay(5*1000,function(){$(this).append(squarediv)})
+            if(!$('#businesstb[opt=disablecolorblock]').get(0)){
+
+                require(['text!views/dbgl/statusTypeCombox.htm'],function(filehtml){
+                    $('#businesstb').append(filehtml);
+                    $('#cc').combo({ editable: false }).combo('setText','--请选择--');
+                    $('#sp').appendTo($('#cc').combo('panel'));
+                    $('#sp span').click(function(){
+                        var v = $(this).attr('value');
+                        $('#cc').combo('setValue', v).combo('setText', $(this).text()).combo('hidePanel');
+                        var options=$('#businessgrid').datagrid('options');
+                        options.search_params['statusType']=v;
+                        $('#cc').attr('statusType',v);
+                        $('#businessgrid').datagrid('load',options.search_params);
+                    }).hover(function(){
+                            $(this).addClass('selecthover').siblings().removeClass('selecthover');
+                        });
+                })
+
+                $('#businesstb').delay(5*1000,function(){$(this).append(squarediv)})
+            }
+
         }
     }
     return a;

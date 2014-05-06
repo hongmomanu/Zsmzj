@@ -101,8 +101,9 @@ define(function(){
 
                     }else if(businesstype===businessTableType.dbbyh){
                         var disablednum=parseInt($('#disabledpersons').val());
-                        var totalmoney=parseInt(poorstandard.val())*disablednum;
-                        totalmoney+=parseFloat(poorstandard.val())*0.2*(num-disablednum)
+                        /*var totalmoney=parseInt(poorstandard.val())*disablednum;
+                        totalmoney+=parseFloat(poorstandard.val())*0.2*(num-disablednum)*/
+                        var totalmoney=($('#poorstandard_hidden').val()*0.2||parseInt(poorstandard.val())-0.5)*num;
                         $('#totalhelpmoney').val(totalmoney.toFixed(0)); //2014-3-20,4舍5入
                     }
 
