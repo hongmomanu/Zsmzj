@@ -728,21 +728,41 @@ public class BusinessProcessControl {
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
                     "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.division like (a.divisionpath||'%')) as totalperson, "
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and c.jobstatus ='老年人' and b.division like (a.divisionpath||'%')) as oldperson, "
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇'  and c.jobstatus ='老年人' and b.division like (a.divisionpath||'%')) as oldperson, "
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and  c.jobstatus ='登记失业' and b.division like (a.divisionpath||'%')) as loginnojob,"
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"'  and b.familyaccount='城镇'   and  c.jobstatus ='登记失业' and b.division like (a.divisionpath||'%')) as loginnojob,"
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and c.jobstatus ='在校生' and b.division like (a.divisionpath||'%')) as student,"
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"'  and b.familyaccount='城镇'   and  c.jobstatus ='在职职工' and b.division like (a.divisionpath||'%')) as loginjob,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"'  and b.familyaccount='城镇'   and  c.jobstatus ='灵活就业' and b.division like (a.divisionpath||'%')) as loginlingjob,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"'  and b.familyaccount='城镇'   and  c.jobstatus ='未登记失业' and b.division like (a.divisionpath||'%')) as nologinnojob,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"'  and b.familyaccount='城镇'   and c.jobstatus ='在校生' and b.division like (a.divisionpath||'%')) as student,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"'  and b.familyaccount='城镇'   and c.jobstatus ='其它' and b.division like (a.divisionpath||'%')) as jobother,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"'  and b.familyaccount='城镇'   and c.persontype ='三无对象' and b.division like (a.divisionpath||'%')) as nonepeople,"
                     +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and division like (a.divisionpath||'%')) as totalmoney, "
 
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇' and c.bodystatus like '%残%' and b.division like (a.divisionpath||'%')) as canji, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇' and c.bodystatus ='重残' and b.division like (a.divisionpath||'%')) as zhongcan, "
                     +"(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='城镇' and division like (a.divisionpath||'%')) as cityfamily ,"
+                    +"(select count(*)/10000.0  from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where (strftime('%Y','now')-strftime('%Y',b.time))=0 and c.businessid=b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇' and b.division like (a.divisionpath||'%')) as cityyearperson, "
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
                     "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇' and b.division like (a.divisionpath||'%')) as cityperson, "
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
                     "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇' and c.sex ='男' and b.division like (a.divisionpath||'%')) as citymen, "
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
                     "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇' and c.sex ='女' and b.division like (a.divisionpath||'%')) as citygirls,"
-                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='城镇' and division like (a.divisionpath||'%')) as citymoney,"
+                    +  "(select sum(CAST(totalhelpmoney AS real))/10000.0 from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='城镇' and division like (a.divisionpath||'%')) as citymoney,"
+                    +  "(select sum(CAST(totalhelpmoney AS real))/10000.0 from "+BusinessTable+" where (strftime('%Y','now')-strftime('%Y',time))=0 and businesstype='"+businesstype+"' and familyaccount='城镇' and division like (a.divisionpath||'%')) as cityyearmoney,"
+                    +  "(select avg(totalhelpmoney) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='城镇' and division like (a.divisionpath||'%')) as avgcitymoney,"
+                    +  "(select avg(totalhelpmoney) from "+BusinessTable+" where (strftime('%Y','now')-strftime('%Y',time))=0 and businesstype='"+businesstype+"' and familyaccount='城镇' and division like (a.divisionpath||'%')) as avgcityyearmoney,"
+
 
 
                     +"(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and familyaccount='农村' and businesstype='"+businesstype+"' and division like (a.divisionpath||'%')) as villagefamily ,"
@@ -771,74 +791,74 @@ public class BusinessProcessControl {
             String sql_list="select a.divisionname  ,a.rowid as id," +
                     "(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+
                     "' and rowid in (select rowid from "
-                    +BusinessTable+" where businesstype MATCH '"+businesstype+"') and  division MATCH (a.divisionpath||'*')) as newmonthfamilynum ,"
+                    +BusinessTable+" where businesstype like '%"+businesstype+"%') and  division = (a.divisionpath||'*')) as newmonthfamilynum ,"
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
                     "c where b.time Between '"+bgmonth+"' and  '"+edmonth+
-                    "' and b.rowid in ( select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') and c.businessid=b.rowid and b.division MATCH (a.divisionpath||'*')) as newmonthpeoplenum, "
+                    "' and b.rowid in ( select rowid from "+BusinessTable+" where businesstype like '%"+businesstype+"%') and c.businessid=b.rowid and b.division = (a.divisionpath||'*')) as newmonthpeoplenum, "
 
                     +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+
-                    "' and rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
-                    "and division MATCH (a.divisionpath||'*')) as newtotalhelpmoney, "
+                    "' and rowid in (select rowid from "+BusinessTable+" where businesstype like '%"+businesstype+"%') " +
+                    "and division = (a.divisionpath||'*')) as newtotalhelpmoney, "
 
             +"(select count(*) from "+BusinessTable+" where  time Between '"+bgmonth+"' and  '"+edmonth+
-                    "' and rowid in(select rowid from "+BusinessTable+" where  businesstype MATCH '"+businesstype+"') " +
-                    " and rowid in(select rowid from "+BusinessTable+" where  processstatustype  MATCH '"+ProcessType.UseProcessType.getChineseSeason(ProcessType.Cancellation)+"') " +
+                    "' and rowid in(select rowid from "+BusinessTable+" where  businesstype like '%"+businesstype+"%') " +
+                    " and rowid in(select rowid from "+BusinessTable+" where  processstatustype  like '%"+ProcessType.UseProcessType.getChineseSeason(ProcessType.Cancellation)+"%') " +
 
-                    " and  division MATCH (a.divisionpath||'*')) as logoutmonthfamilynum ,"
+                    " and  division = (a.divisionpath||'*')) as logoutmonthfamilynum ,"
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
                     "c where b.time Between '"+bgmonth+"' and  '"+edmonth+
-                    "' and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
-                    " and b.rowid in(select rowid from "+BusinessTable+" where  processstatustype  MATCH '"+ProcessType.UseProcessType.getChineseSeason(ProcessType.Cancellation)+"') " +
-                    " and c.businessid=b.rowid and b.division MATCH (a.divisionpath||'*')) as logoutmonthpeoplenum, "
+                    "' and b.rowid in (select rowid from "+BusinessTable+" where businesstype like '%"+businesstype+"%') " +
+                    " and b.rowid in(select rowid from "+BusinessTable+" where  processstatustype  like '%"+ProcessType.UseProcessType.getChineseSeason(ProcessType.Cancellation)+"%') " +
+                    " and c.businessid=b.rowid and b.division = (a.divisionpath||'*')) as logoutmonthpeoplenum, "
 
                     +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+
 
-                    "' and rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
-                    " and rowid in(select rowid from "+BusinessTable+" where  processstatustype  MATCH '"+ProcessType.UseProcessType.getChineseSeason(ProcessType.Cancellation)+"') "+
-                    " and division MATCH (a.divisionpath||'*')) as logouttotalhelpmoney ,"+
+                    "' and rowid in (select rowid from "+BusinessTable+" where businesstype like '%"+businesstype+"%') " +
+                    " and rowid in(select rowid from "+BusinessTable+" where  processstatustype  like '%"+ProcessType.UseProcessType.getChineseSeason(ProcessType.Cancellation)+"%') "+
+                    " and division = (a.divisionpath||'*')) as logouttotalhelpmoney ,"+
 
 
                     "(select count(*) from "+GrantTable+" e,"+BusinessTable+" f where e.businessid=f.rowid and e.grantdate Between '"+bgmonth+"' and  '"+edmonth+
                     "' and f.rowid in (select rowid from "
-                    +BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    +BusinessTable+" where businesstype like '%"+businesstype+"%') " +
 
                     " and e.rowid in(select rowid from "+ GrantTable+" where CAST(adjustmoney AS real)>0) "+
 
-                    "and  f.division MATCH (a.divisionpath||'*')) as addmoneymonthfamilynum ,"
+                    "and  f.division = (a.divisionpath||'*')) as addmoneymonthfamilynum ,"
 
                     +"(select count(*) from "+GrantTable+" e,"+BusinessTable+" f,"+FamilyTable+" " +
                     "c where e.businessid=f.rowid and e.grantdate Between '"+bgmonth+"' and  '"+edmonth+
-                    "' and f.rowid in ( select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "' and f.rowid in ( select rowid from "+BusinessTable+" where businesstype like '%"+businesstype+"%') " +
                     " and e.rowid in(select rowid from "+ GrantTable+" where CAST(adjustmoney AS real)>0) "+
-                    "and c.businessid=f.rowid and f.division MATCH (a.divisionpath||'*')) as addmoneymonthpeoplenum, "
+                    "and c.businessid=f.rowid and f.division = (a.divisionpath||'*')) as addmoneymonthpeoplenum, "
 
                     +  "(select sum(CAST(e.adjustmoney AS real)) from "+GrantTable+" e," +
                     BusinessTable+" f where e.businessid=f.rowid and e.grantdate Between '"+bgmonth+"' and  '"+edmonth+
-                    "' and f.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "' and f.rowid in (select rowid from "+BusinessTable+" where businesstype like '%"+businesstype+"%') " +
                     " and e.rowid in(select rowid from "+ GrantTable+" where CAST(adjustmoney AS real)>0) "+
-                    "and division MATCH (a.divisionpath||'*')) as addmoneytotalhelpmoney, " +
+                    "and division = (a.divisionpath||'*')) as addmoneytotalhelpmoney, " +
 
 
 
                     "(select count(*) from "+GrantTable+" e,"+BusinessTable+" f where e.businessid=f.rowid and e.grantdate Between '"+bgmonth+"' and  '"+edmonth+
                     "' and f.rowid in (select rowid from "
-                    +BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    +BusinessTable+" where businesstype like '%"+businesstype+"%') " +
 
                     " and e.rowid in(select rowid from "+ GrantTable+" where CAST(adjustmoney AS real)<0) "+
 
-                    "and  f.division MATCH (a.divisionpath||'*')) as reducemoneymonthfamilynum ,"
+                    "and  f.division = (a.divisionpath||'*')) as reducemoneymonthfamilynum ,"
 
                     +"(select count(*) from "+GrantTable+" e,"+BusinessTable+" f,"+FamilyTable+" " +
                     "c where e.businessid=f.rowid and e.grantdate Between '"+bgmonth+"' and  '"+edmonth+
-                    "' and f.rowid in ( select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "' and f.rowid in ( select rowid from "+BusinessTable+" where businesstype like '%"+businesstype+"%') " +
                     " and e.rowid in(select rowid from "+ GrantTable+" where CAST(adjustmoney AS real)<0) "+
-                    "and c.businessid=f.rowid and f.division MATCH (a.divisionpath||'*')) as reducemoneymonthpeoplenum, "
+                    "and c.businessid=f.rowid and f.division = (a.divisionpath||'*')) as reducemoneymonthpeoplenum, "
 
                     +  "(select sum(CAST(e.adjustmoney AS real)) from "+GrantTable+" e," +
                     BusinessTable+" f where e.businessid=f.rowid and e.grantdate Between '"+bgmonth+"' and  '"+edmonth+
-                    "' and f.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "' and f.rowid in (select rowid from "+BusinessTable+" where businesstype like '%"+businesstype+"%') " +
                     " and e.rowid in(select rowid from "+ GrantTable+" where CAST(adjustmoney AS real)<0) "+
-                    "and division MATCH (a.divisionpath||'*')) as reducemoneytotalhelpmoney " +
+                    "and division = (a.divisionpath||'*')) as reducemoneytotalhelpmoney " +
 
 
                     "  from "+DivisionsTable+" a where a.parentid MATCH "+divisionpid;

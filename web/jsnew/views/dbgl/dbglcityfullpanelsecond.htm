@@ -1,7 +1,7 @@
 
 
     <table id="staticsgrid"  style="width:100%;height:100%" data-options="
-                url: 'ajax/getcitypanelonebytype.jsp',
+                url: 'ajax/getstatisticsbytype.jsp',
                 field: 'divisionname'
             ">
         <thead frozen="true">
@@ -18,18 +18,18 @@
             <th colspan="3">当月补差调减情况</th>
         </tr>
         <tr>
-            <th>户口</th>
-            <th>人数</th>
-            <th>金额（万元）</th>
-            <th>户口</th>
-            <th>人数</th>
-            <th>金额（万元）</th>
-            <th>户口</th>
-            <th>人数</th>
-            <th>金额（万元）</th>
-            <th>户口</th>
-            <th>人数</th>
-            <th>金额（万元）</th>
+            <th field="newmonthfamilynum">户口</th>
+            <th field="newmonthpeoplenum">人数</th>
+            <th field="newtotalhelpmoney">金额（万元）</th>
+            <th field="logoutmonthfamilynum">户口</th>
+            <th field="logoutmonthpeoplenum">人数</th>
+            <th field="logouttotalhelpmoney">金额（万元）</th>
+            <th field="addmoneymonthfamilynum">户口</th>
+            <th field="addmoneymonthpeoplenum">人数</th>
+            <th field="addmoneytotalhelpmoney">金额（万元）</th>
+            <th field="reducemoneymonthfamilynum">户口</th>
+            <th field="reducemoneymonthpeoplenum">人数</th>
+            <th field="reducemoneytotalhelpmoney">金额（万元）</th>
         </tr>
 
         </thead>

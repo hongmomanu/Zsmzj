@@ -5,7 +5,7 @@ define(function () {
 
     function render(parameters) {
         var businesstype=$('#tabs').tabs('getSelected').panel('options').businesstype;
-        var type="full";
+        var type="complextwo";
         require(['commonfuncs/StatisticsGridCommon','jqueryplugin/jquery-formatDateTime'],function(StatisticsGridCommon){
             StatisticsGridCommon.initbusinessgrid(type,businesstype);
 
