@@ -273,6 +273,7 @@ public class BusinessProcessControl {
             sql_list+=sql;
             sql_count+=sql;
         }
+        String innerSql=" (select b.rowid,b.*,f.birthday from "+BusinessTable+" b,"+FamilyTable+" f where b.id=f.businessid and f.relationship='户主') "; //联合两张表，加入birthday
         if(name!=null&&name.length>0){
             for(int i=0;i<name.length;i++){
                 String col_name=name[i].split("附")[0];
@@ -280,10 +281,10 @@ public class BusinessProcessControl {
                     if(compare[i].equals(">=")){
                         String sql=" ";
                         if(logic[i].equals("and")){
-                            sql=" "+logic[i]+" a.rowid in (select rowid from "+BusinessTable+" where CAST("+col_name+" AS real) >= "+value[i]+") ";
+                            sql=" "+logic[i]+" a.rowid in (select rowid from "+innerSql+" where CAST("+col_name+" AS real) >= "+value[i]+") ";
 
                         }else{
-                            sql=" "+logic[i]+" (a.rowid in (select rowid from "+BusinessTable+" where CAST("+col_name+" AS real) >= "+value[i]+") and ("+basic_sql+")) ";
+                            sql=" "+logic[i]+" (a.rowid in (select rowid from "+innerSql+" where CAST("+col_name+" AS real) >= "+value[i]+") and ("+basic_sql+")) ";
                         }
                         sql_list+=sql;
                         sql_count+=sql;
@@ -292,10 +293,10 @@ public class BusinessProcessControl {
                     }else if(compare[i].equals("<=")){
                         String sql=" ";
                         if(logic[i].equals("and")){
-                            sql=" "+logic[i]+" a.rowid in (select rowid from "+BusinessTable+" where CAST("+col_name+" AS real) <= "+value[i]+") ";
+                            sql=" "+logic[i]+" a.rowid in (select rowid from "+innerSql+" where CAST("+col_name+" AS real) <= "+value[i]+") ";
 
                         }else{
-                            sql=" "+logic[i]+" (a.rowid in (select rowid from "+BusinessTable+" where CAST("+col_name+" AS real) <= "+value[i]+") and ("+basic_sql+")) ";
+                            sql=" "+logic[i]+" (a.rowid in (select rowid from "+innerSql+" where CAST("+col_name+" AS real) <= "+value[i]+") and ("+basic_sql+")) ";
                         }
                         sql_list+=sql;
                         sql_count+=sql;
