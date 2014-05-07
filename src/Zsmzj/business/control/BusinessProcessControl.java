@@ -1035,45 +1035,46 @@ public class BusinessProcessControl {
                     "' and f.rowid in ( select rowid from "+BusinessTable+" where businesstype like '%"+businesstype+"%') " +
                     " and e.rowid in(select rowid from "+ GrantTable+" where CAST(adjustmoney AS real)>0) "+
                     "and c.businessid=f.rowid and f.division = (a.divisionpath)) as addmoneymonthpeoplenum, "+
+                     "(select avg(poorstandard) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='农村'  and poorstandard>0  and division like (a.divisionpath||'%')) as citypoorstandard,"+
 
             "(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and  division like (a.divisionpath||'%')) as totalfamily ,"
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
                     "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.division like (a.divisionpath||'%')) as totalperson, "
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇'  and c.jobstatus ='老年人' and b.division like (a.divisionpath||'%')) as oldperson, "
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.familyaccount='农村'  and c.jobstatus ='老年人' and b.division like (a.divisionpath||'%')) as oldperson, "
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"'  and b.familyaccount='城镇'   and  c.jobstatus ='登记失业' and b.division like (a.divisionpath||'%')) as loginnojob,"
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"'  and b.familyaccount='农村'   and  c.jobstatus ='登记失业' and b.division like (a.divisionpath||'%')) as loginnojob,"
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"'  and b.familyaccount='城镇'   and  c.jobstatus ='在职职工' and b.division like (a.divisionpath||'%')) as loginjob,"
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"'  and b.familyaccount='农村'   and  c.jobstatus ='在职职工' and b.division like (a.divisionpath||'%')) as loginjob,"
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"'  and b.familyaccount='城镇'   and  c.jobstatus ='灵活就业' and b.division like (a.divisionpath||'%')) as loginlingjob,"
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"'  and b.familyaccount='农村'   and  c.jobstatus ='灵活就业' and b.division like (a.divisionpath||'%')) as loginlingjob,"
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"'  and b.familyaccount='城镇'   and  c.jobstatus ='未登记失业' and b.division like (a.divisionpath||'%')) as nologinnojob,"
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"'  and b.familyaccount='农村'   and  c.jobstatus ='未登记失业' and b.division like (a.divisionpath||'%')) as nologinnojob,"
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"'  and b.familyaccount='城镇'   and c.jobstatus ='在校生' and b.division like (a.divisionpath||'%')) as student,"
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"'  and b.familyaccount='农村'   and c.jobstatus ='在校生' and b.division like (a.divisionpath||'%')) as student,"
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"'  and b.familyaccount='城镇'   and c.jobstatus ='其它' and b.division like (a.divisionpath||'%')) as jobother,"
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"'  and b.familyaccount='农村'   and c.jobstatus ='其它' and b.division like (a.divisionpath||'%')) as jobother,"
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"'  and b.familyaccount='城镇'   and c.persontype ='三无对象' and b.division like (a.divisionpath||'%')) as nonepeople,"
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"'  and b.familyaccount='农村'   and c.persontype ='三无对象' and b.division like (a.divisionpath||'%')) as nonepeople,"
                     +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and division like (a.divisionpath||'%')) as totalmoney, "
 
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇' and c.bodystatus like '%残%' and b.division like (a.divisionpath||'%')) as canji, "
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.familyaccount='农村' and c.bodystatus like '%残%' and b.division like (a.divisionpath||'%')) as canji, "
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇' and c.bodystatus ='重残' and b.division like (a.divisionpath||'%')) as zhongcan, "
-                    +"(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='城镇' and division like (a.divisionpath||'%')) as cityfamily ,"
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.familyaccount='农村' and c.bodystatus ='重残' and b.division like (a.divisionpath||'%')) as zhongcan, "
+                    +"(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='农村' and division like (a.divisionpath||'%')) as cityfamily ,"
                     +"(select count(*)/10000.0  from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where (strftime('%Y','now')-strftime('%Y',b.time))=0 and c.businessid=b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇' and b.division like (a.divisionpath||'%')) as cityyearperson, "
+                    "c where (strftime('%Y','now')-strftime('%Y',b.time))=0 and c.businessid=b.id and businesstype='"+businesstype+"' and b.familyaccount='农村' and b.division like (a.divisionpath||'%')) as cityyearperson, "
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇' and b.division like (a.divisionpath||'%')) as cityperson, "
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.familyaccount='农村' and b.division like (a.divisionpath||'%')) as cityperson, "
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇' and c.sex ='男' and b.division like (a.divisionpath||'%')) as citymen, "
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.familyaccount='农村' and c.sex ='男' and b.division like (a.divisionpath||'%')) as citymen, "
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
-                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇' and c.sex ='女' and b.division like (a.divisionpath||'%')) as citygirls,"
-                    +  "(select sum(CAST(totalhelpmoney AS real))/10000.0 from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='城镇' and division like (a.divisionpath||'%')) as citymoney,"
-                    +  "(select sum(CAST(totalhelpmoney AS real))/10000.0 from "+BusinessTable+" where (strftime('%Y','now')-strftime('%Y',time))=0 and businesstype='"+businesstype+"' and familyaccount='城镇' and division like (a.divisionpath||'%')) as cityyearmoney,"
-                    +  "(select avg(totalhelpmoney) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='城镇' and division like (a.divisionpath||'%')) as avgcitymoney,"
-                    +  "(select avg(totalhelpmoney) from "+BusinessTable+" where (strftime('%Y','now')-strftime('%Y',time))=0 and businesstype='"+businesstype+"' and familyaccount='城镇' and division like (a.divisionpath||'%')) as avgcityyearmoney,"
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.familyaccount='农村' and c.sex ='女' and b.division like (a.divisionpath||'%')) as citygirls,"
+                    +  "(select sum(CAST(totalhelpmoney AS real))/10000.0 from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='农村' and division like (a.divisionpath||'%')) as citymoney,"
+                    +  "(select sum(CAST(totalhelpmoney AS real))/10000.0 from "+BusinessTable+" where (strftime('%Y','now')-strftime('%Y',time))=0 and businesstype='"+businesstype+"' and familyaccount='农村' and division like (a.divisionpath||'%')) as cityyearmoney,"
+                    +  "(select avg(totalhelpmoney) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='农村' and division like (a.divisionpath||'%')) as avgcitymoney,"
+                    +  "(select avg(totalhelpmoney) from "+BusinessTable+" where (strftime('%Y','now')-strftime('%Y',time))=0 and businesstype='"+businesstype+"' and familyaccount='农村' and division like (a.divisionpath||'%')) as avgcityyearmoney,"
 
 
 
