@@ -1,5 +1,6 @@
 <fieldset ><legend>用户基本信息</legend>
     <div>
+        <input type="hidden" id="poorstandard_hidden">
         <table class="formtable">
             <tr>
                 <td class="formtdtext">行政区划:</td>
@@ -21,7 +22,10 @@
                                             var a=$(':input[opt=familyaccount]');
                                             a.val(fm)
                                             a.combobox('setValue',fm)
-                                            var b = $('#poorstandard').val((fm=='农村')?473:525)
+                                            $('#poorstandard_hidden').val((fm=='农村')?473:525);
+                                            var b = $('#poorstandard').val(
+                                                (((fm=='农村')?473:525)/5).toFixed(0)
+                                            )
                                         }"></td>
                 <!--<td class="formtdtext">家庭类别:</td>
                 <td><input class="easyui-combobox lazy-combobox" type="text"
@@ -76,7 +80,7 @@
                 <td class="formtdtext">开户人:</td>
                 <td><input type="text" name="bankower"></td>
                 <td class="formtdtext">银行账号:</td>
-                <td ><input type="text" name="bankid"></td>
+                <td ><input type="text" name="bankid" class="easyui-validatebox" data-options="required:true"></td>
 
             </tr>
             <tr><td class="formtdtext">住房结构:</td>

@@ -1,0 +1,125 @@
+
+<div id="moresearchwin" >
+
+
+            <form method="post">
+                <table class="formtable">
+                    <tr>
+                        <td>姓名</td>
+                        <td><input class="easyui-validatebox" type="text" name="owername" style="width: 116px"></td>
+                        <td>身份证</td>
+                        <td colspan="2"><input class="easyui-validatebox" type="text" name="owerid" style="width: 116px"></td>
+                    </tr>
+                    <tr>
+                        <td>致贫原因</td>
+                        <td><input class="easyui-combobox" type="text"
+                                               name="applytype" data-options="valueField: 'value',width:120, textField: 'label',url:'ajax/getenumbytype.jsp?type=dbedgepoorfamilytype'"></td>
+                        <td>申请类别</td>
+                        <td colspan="2"><input class="easyui-combobox" type="text"
+                                               name="applytype" data-options="valueField: 'value',width:120, textField: 'label',url:'ajax/getenumbytype.jsp?type=dbglapplytype'"></td>
+                    </tr>
+                    <tr>
+                        <td>市</td>
+                        <td><input name="shi" opt="shi" class="easyui-combobox" type="text"
+                                data-options="
+                                valueField: 'value',
+                                textField: 'label',
+                                width:120,
+                                url:'ajax/getsingleplace.jsp?type=shi',
+                                onSelect:function(rec){
+                                    var url = 'ajax/getsingleplace.jsp?type='+rec.sid;
+                                    $(':input[opt=qu]').combobox('reload',url);
+                                }
+                                "></td>
+                        <td>区（县）</td>
+                        <td colspan="2"><input name="qu" opt="qu" class="easyui-combobox" type="text"
+                                   data-options="
+                                valueField: 'value',
+                                textField: 'label',
+                                width:120,
+                                onSelect:function(rec){
+                                    $(':input[opt=jie]').combobox('clear');
+                                    $(':input[opt=cun]').combobox('clear') ;
+                                    var url = 'ajax/getsingleplace.jsp?type='+rec.sid;
+                                    $(':input[opt=jie]').combobox('reload',url);
+                                }
+                                "></td>
+                    </tr>
+                    <tr>
+                        <td>街道</td>
+                        <td><input name="jie" opt="jie" class="easyui-combobox" type="text"
+                                   data-options="
+                                valueField: 'value',
+                                textField: 'label',
+                                width:120,
+                                onSelect:function(rec){
+                                    $(':input[opt=cun]').combobox('clear') ;
+                                    var url = 'ajax/getsingleplace.jsp?type='+rec.sid;
+                                    $(':input[opt=cun]').combobox('reload',url);
+                                }
+                                "></td>
+                        <td>社区（村）</td>
+                        <td colspan="2"><input name="cun" opt="cun" class="easyui-combobox" type="text"
+                                   data-options="
+                                valueField: 'value',
+                                textField: 'label',
+                                width:120
+                                "></td>
+                    </tr>
+                    <tr>
+                        <td>审批状态</td>
+                        <td colspan="4">
+                            <div>
+                                <input type="radio" name="processstatus" value="提交"  />提交
+                                <input type="radio" name="processstatus" value="申请" />申请
+                                <input type="radio" name="processstatus" value="审核" />审核
+                                <input type="radio" name="processstatus" value="审批"  />审批
+                                <!--<input type="radio" name="processstatus" value="已审批" />已审批
+                                <input type="radio" name="processstatus" value="审批终止" />审批终止-->
+                                <input type="radio" name="processstatus" value="" checked="checked"/>全部
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>享受状态</td>
+                        <td colspan="4">
+                            <div>
+                                <input type="radio" name="isenjoyed" value="未享受"  />未享受
+                                <!--<input type="radio" name="enjoy" value="已退出享受" />已退出享受-->
+                                <input type="radio" name="isenjoyed" value="享受" />享受
+                                <input type="radio" name="isenjoyed" value="" checked="checked"/>全部
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="formtdtext">救助日期:</td>
+                        <td><input class="easyui-datebox" type="text" name="bgdate"></td>
+                        <td class="formtdtext">--</td>
+                        <td colspan="2"><input class="easyui-datebox" type="text" name="eddate"></td>
+                    </tr>
+                    <tr>
+                        <th>查询项目</th>
+                        <th>操作符</th>
+                        <th>值</th>
+                        <th>逻辑符</th>
+                        <th>删除</th>
+                    </tr>
+
+
+                </table>
+            </form>
+
+
+
+</div>
+<!--
+<script type="text/JavaScript">
+    $('.lazy-combobox').combobox({
+        onShowPanel: function () {
+            var searchtype = $(this).attr('searchtype');
+            var url = 'ajax/getenumbytype.jsp?type=' + searchtype;
+            $(this).combobox('reload', url);
+        }
+
+    });
+</script>-->
