@@ -1,6 +1,6 @@
 
 
-    <table id="staticsgrid"  style="width:100%;height:100%" data-options="
+    <table id="staticsgrid"  style="width:90%;height:90%" data-options="
                 url: 'ajax/getstatisticsbytype.jsp',
                 field: 'divisionname'
             ">
@@ -18,18 +18,30 @@
             <th colspan="3">C类</th>
         </tr>
         <tr>
-            <th>人数</th>
-            <th>资金支出（万元）</th>
-            <th>月人均补助水平（元）</th>
-            <th>人数</th>
-            <th>资金支出（万元）</th>
-            <th>月人均补助水平（元）</th>
-            <th>人数</th>
-            <th>资金支出（万元）</th>
-            <th>月人均补助水平（元）</th>
-            <th>人数</th>
-            <th>资金支出（万元）</th>
-            <th>月人均补助水平（元）</th>
+            <th data-options="field:'totalpeoplenum',width:90,align:'center'">人数</th>
+            <th data-options="field:'totalhelpmoney',width:90,align:'center'">资金支出<br>（万元）</th>
+            <th data-options="field:'id',width:80,align:'center',formatter:function(v,r,i){
+                 return r.totalhelpmoney/r.totalpeoplenum||0;
+
+            }">月人均补助<br>水平（元）</th>
+            <th data-options="field:'atotalpeoplenum',width:90,align:'center'">人数</th>
+            <th data-options="field:'atotalhelpmoney',width:90,align:'center'">资金支出<br>（万元）</th>
+            <th data-options="field:'id',width:80,align:'center',formatter:function(v,r,i){
+                 return r.atotalhelpmoney/r.atotalpeoplenum||0;
+
+            }">月人均补助<br>水平（元）</th>
+            <th data-options="field:'btotalpeoplenum',width:90,align:'center'">人数</th>
+            <th data-options="field:'btotalhelpmoney',width:90,align:'center'">资金支出<br>（万元）</th>
+            <th data-options="field:'id',width:80,align:'center',formatter:function(v,r,i){
+                 return r.btotalhelpmoney/r.btotalpeoplenum||0;
+
+            }">月人均补助<br>水平（元）</th>
+            <th data-options="field:'ctotalpeoplenum',width:90,align:'center'">人数</th>
+            <th data-options="field:'ctotalhelpmoney',width:90,align:'center'">资金支出<br>（万元）</th>
+            <th data-options="field:'id',width:80,align:'center',formatter:function(v,r,i){
+                 return r.ctotalhelpmoney/r.ctotalpeoplenum||0;
+
+            }">月人均补助<br>水平（元）</th>
         </tr>
 
         </thead>

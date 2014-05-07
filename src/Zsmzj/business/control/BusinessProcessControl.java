@@ -876,52 +876,52 @@ public class BusinessProcessControl {
             String sql_list="select a.divisionname  ,a.rowid as id,"
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
                     "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
-                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype like '"+businesstype+"%') " +
                     "and c.businessid=b.rowid " +
-                    "and b.division MATCH (a.divisionpath||'*')) as totalpeoplenum, "
+                    "and b.division = a.divisionpath) as totalpeoplenum, "
                     +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+
                     " where time Between '"+bgmonth+"' and  '"+edmonth+"'" +
-                    " and rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') and " +
-                    "division MATCH (a.divisionpath||'*')) as totalhelpmoney ,"
+                    " and rowid in (select rowid from "+BusinessTable+" where businesstype like '"+businesstype+"%') and " +
+                    "division = a.divisionpath) as totalhelpmoney ,"
 
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
                     "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
-                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
-                    "and b.rowid in (select rowid from "+BusinessTable+" where poortype MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.A)+"') " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype like '"+businesstype+"%') " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where poortype like '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.A)+"%') " +
                     "and c.businessid=b.rowid " +
-                    "and b.division MATCH (a.divisionpath||'*')) as atotalpeoplenum, "
+                    "and b.division = (a.divisionpath)) as atotalpeoplenum, "
                     +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+
                     " where time Between '"+bgmonth+"' and  '"+edmonth+"'" +
-                    " and rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"')  " +
-                    "and rowid in (select rowid from "+BusinessTable+" where poortype MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.A)+"') " +
-                    "and division MATCH (a.divisionpath||'*')) as atotalhelpmoney ,"
+                    " and rowid in (select rowid from "+BusinessTable+" where businesstype like '"+businesstype+"%')  " +
+                    "and rowid in (select rowid from "+BusinessTable+" where poortype like '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.A)+"%') " +
+                    "and division = (a.divisionpath)) as atotalhelpmoney ,"
 
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
                     "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
-                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
-                    "and b.rowid in (select rowid from "+BusinessTable+" where poortype MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.B)+"') " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype like '"+businesstype+"%') " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where poortype like '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.B)+"%') " +
                     "and c.businessid=b.rowid " +
-                    "and b.division MATCH (a.divisionpath||'*')) as btotalpeoplenum, "
+                    "and b.division = (a.divisionpath)) as btotalpeoplenum, "
                     +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+
                     " where time Between '"+bgmonth+"' and  '"+edmonth+"'" +
-                    " and rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"')  " +
-                    "and rowid in (select rowid from "+BusinessTable+" where poortype MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.B)+"') " +
-                    "and division MATCH (a.divisionpath||'*')) as btotalhelpmoney ,"
+                    " and rowid in (select rowid from "+BusinessTable+" where businesstype like '"+businesstype+"%')  " +
+                    "and rowid in (select rowid from "+BusinessTable+" where poortype like '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.B)+"%') " +
+                    "and division = (a.divisionpath)) as btotalhelpmoney ,"
 
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
                     "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
-                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
-                    "and b.rowid in (select rowid from "+BusinessTable+" where poortype MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.C)+"') " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype like '"+businesstype+"%') " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where poortype like '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.C)+"%') " +
                     "and c.businessid=b.rowid " +
-                    "and b.division MATCH (a.divisionpath||'*')) as ctotalpeoplenum, "
+                    "and b.division like (a.divisionpath)) as ctotalpeoplenum, "
                     +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+
                     " where time Between '"+bgmonth+"' and  '"+edmonth+"'" +
-                    " and rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"')  " +
-                    "and rowid in (select rowid from "+BusinessTable+" where poortype MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.C)+"') " +
-                    "and division MATCH (a.divisionpath||'*')) as ctotalhelpmoney "
+                    " and rowid in (select rowid from "+BusinessTable+" where businesstype like '"+businesstype+"%')  " +
+                    "and rowid in (select rowid from "+BusinessTable+" where poortype like '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.C)+"%') " +
+                    "and division = (a.divisionpath)) as ctotalhelpmoney "
 
 
-                    +"  from "+DivisionsTable+" a where a.parentid MATCH "+divisionpid;
+                    +"  from "+DivisionsTable+" a where a.parentid = "+divisionpid;
 
             ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
 
@@ -941,69 +941,69 @@ public class BusinessProcessControl {
 
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
                     "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
-                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
-                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Farmer)+"') " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype like '"+businesstype+"%') " +
+                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject like '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Farmer)+"%') " +
 
                     "and c.businessid=b.rowid " +
 
-                    "and b.division MATCH (a.divisionpath||'*')) as farmer, "
+                    "and b.division = (a.divisionpath)) as farmer, "
 
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
                     "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
-                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
-                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Forester)+"') " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype like '"+businesstype+"%') " +
+                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject like '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Forester)+"%') " +
 
                     "and c.businessid=b.rowid " +
 
-                    "and b.division MATCH (a.divisionpath||'*')) as forester, "
+                    "and b.division = (a.divisionpath)) as forester, "
 
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
                     "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
-                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
-                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Criminal)+"') " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype like '"+businesstype+"%') " +
+                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject like '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Criminal)+"%') " +
 
                     "and c.businessid=b.rowid " +
 
-                    "and b.division MATCH (a.divisionpath||'*')) as criminal, "
+                    "and b.division = (a.divisionpath)) as criminal, "
 
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
                     "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
-                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
-                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Compatriot)+"') " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype like '"+businesstype+"%') " +
+                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject like '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Compatriot)+"%') " +
 
                     "and c.businessid=b.rowid " +
 
-                    "and b.division MATCH (a.divisionpath||'*')) as compatriot, "
+                    "and b.division = (a.divisionpath)) as compatriot, "
 
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
                     "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
-                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
-                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Immigrant)+"') " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype like '"+businesstype+"%') " +
+                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject like '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Immigrant)+"%') " +
 
                     "and c.businessid=b.rowid " +
 
-                    "and b.division MATCH (a.divisionpath||'*')) as immigrant, "
+                    "and b.division = (a.divisionpath)) as immigrant, "
 
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
                     "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
-                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
-                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Graduate)+"') " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype like '"+businesstype+"%') " +
+                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject like '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Graduate)+"%') " +
 
                     "and c.businessid=b.rowid " +
 
-                    "and b.division MATCH (a.divisionpath||'*')) as graduate, "
+                    "and b.division = (a.divisionpath)) as graduate, "
 
                     +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
                     "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' " +
-                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype MATCH '"+businesstype+"') " +
-                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject MATCH '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Veterans)+"') " +
+                    "and b.rowid in (select rowid from "+BusinessTable+" where businesstype like '"+businesstype+"%') " +
+                    "and c.rowid in (select rowid from "+FamilyTable+" where specialobject like '"+ EnumApplyType.UseStatisticsType.getChineseSeason(EnumApplyType.Veterans)+"%') " +
 
                     "and c.businessid=b.rowid " +
 
-                    "and b.division MATCH (a.divisionpath||'*')) as veterans "
+                    "and b.division = (a.divisionpath)) as veterans "
 
 
-                    +"  from "+DivisionsTable+" a where a.parentid MATCH "+divisionpid;
+                    +"  from "+DivisionsTable+" a where a.parentid = "+divisionpid;
 
             ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
 
@@ -1012,6 +1012,87 @@ public class BusinessProcessControl {
 
 
 
+
+
+
+        }else if(type.equals("Quarter")){//季报和报表1相似
+
+            BusinessProcess bp=new BusinessProcess();
+            ComonDao cd=new ComonDao();
+
+            String sql_list="select a.divisionname  ,a.rowid as id," +
+                    "(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and b.rowid in ( select rowid from "+BusinessTable+" where businesstype like '%"+businesstype+"%') and c.businessid=b.rowid and b.division = (a.divisionpath)) as newmonthpeoplenum, " +
+                    "(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and b.rowid in (select rowid from "+BusinessTable+" where businesstype like '%"+businesstype+"%') " +
+                    " and b.rowid in(select rowid from "+BusinessTable+" where  processstatustype  like '%"+ProcessType.UseProcessType.getChineseSeason(ProcessType.Cancellation)+"%') " +
+                    " and c.businessid=b.rowid and b.division = (a.divisionpath)) as logoutmonthpeoplenum, "+
+                    "(select count(*) from "+GrantTable+" e,"+BusinessTable+" f,"+FamilyTable+" " +
+                    "c where e.businessid=f.rowid and e.grantdate Between '"+bgmonth+"' and  '"+edmonth+
+                    "' and f.rowid in ( select rowid from "+BusinessTable+" where businesstype like '%"+businesstype+"%') " +
+                    " and e.rowid in(select rowid from "+ GrantTable+" where CAST(adjustmoney AS real)>0) "+
+                    "and c.businessid=f.rowid and f.division = (a.divisionpath)) as addmoneymonthpeoplenum, "+
+
+            "(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and  division like (a.divisionpath||'%')) as totalfamily ,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.division like (a.divisionpath||'%')) as totalperson, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇'  and c.jobstatus ='老年人' and b.division like (a.divisionpath||'%')) as oldperson, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"'  and b.familyaccount='城镇'   and  c.jobstatus ='登记失业' and b.division like (a.divisionpath||'%')) as loginnojob,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"'  and b.familyaccount='城镇'   and  c.jobstatus ='在职职工' and b.division like (a.divisionpath||'%')) as loginjob,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"'  and b.familyaccount='城镇'   and  c.jobstatus ='灵活就业' and b.division like (a.divisionpath||'%')) as loginlingjob,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"'  and b.familyaccount='城镇'   and  c.jobstatus ='未登记失业' and b.division like (a.divisionpath||'%')) as nologinnojob,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"'  and b.familyaccount='城镇'   and c.jobstatus ='在校生' and b.division like (a.divisionpath||'%')) as student,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"'  and b.familyaccount='城镇'   and c.jobstatus ='其它' and b.division like (a.divisionpath||'%')) as jobother,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"'  and b.familyaccount='城镇'   and c.persontype ='三无对象' and b.division like (a.divisionpath||'%')) as nonepeople,"
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and division like (a.divisionpath||'%')) as totalmoney, "
+
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇' and c.bodystatus like '%残%' and b.division like (a.divisionpath||'%')) as canji, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇' and c.bodystatus ='重残' and b.division like (a.divisionpath||'%')) as zhongcan, "
+                    +"(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='城镇' and division like (a.divisionpath||'%')) as cityfamily ,"
+                    +"(select count(*)/10000.0  from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where (strftime('%Y','now')-strftime('%Y',b.time))=0 and c.businessid=b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇' and b.division like (a.divisionpath||'%')) as cityyearperson, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇' and b.division like (a.divisionpath||'%')) as cityperson, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇' and c.sex ='男' and b.division like (a.divisionpath||'%')) as citymen, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and businesstype='"+businesstype+"' and b.familyaccount='城镇' and c.sex ='女' and b.division like (a.divisionpath||'%')) as citygirls,"
+                    +  "(select sum(CAST(totalhelpmoney AS real))/10000.0 from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='城镇' and division like (a.divisionpath||'%')) as citymoney,"
+                    +  "(select sum(CAST(totalhelpmoney AS real))/10000.0 from "+BusinessTable+" where (strftime('%Y','now')-strftime('%Y',time))=0 and businesstype='"+businesstype+"' and familyaccount='城镇' and division like (a.divisionpath||'%')) as cityyearmoney,"
+                    +  "(select avg(totalhelpmoney) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='城镇' and division like (a.divisionpath||'%')) as avgcitymoney,"
+                    +  "(select avg(totalhelpmoney) from "+BusinessTable+" where (strftime('%Y','now')-strftime('%Y',time))=0 and businesstype='"+businesstype+"' and familyaccount='城镇' and division like (a.divisionpath||'%')) as avgcityyearmoney,"
+
+
+
+                    +"(select count(*) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and familyaccount='农村' and businesstype='"+businesstype+"' and division like (a.divisionpath||'%')) as villagefamily ,"
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and b.familyaccount='农村' and businesstype='"+businesstype+"' and b.division like (a.divisionpath||'%')) as villageperson, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and b.familyaccount='农村' and businesstype='"+businesstype+"' and c.sex ='男' and b.division like (a.divisionpath||'%')) as villagemen, "
+                    +"(select count(*) from "+BusinessTable+" b,"+FamilyTable+" " +
+                    "c where b.time Between '"+bgmonth+"' and  '"+edmonth+"' and c.businessid=b.id and b.familyaccount='农村' and businesstype='"+businesstype+"' and c.sex ='女' and b.division like (a.divisionpath||'%')) as villagegirls,"
+                    +  "(select sum(CAST(totalhelpmoney AS real)) from "+BusinessTable+" where time Between '"+bgmonth+"' and  '"+edmonth+"' and businesstype='"+businesstype+"' and familyaccount='农村' and division like (a.divisionpath||'%')) as villagemoney "
+
+
+
+                    +"  from "+DivisionsTable+" a where a.parentid MATCH "+divisionpid;
+
+            ArrayList<Map<String,Object>> list=cd.getTableList(sql_list);
+
+            res.put("divisionname","");
+            res.put("children",list);
 
 
 
