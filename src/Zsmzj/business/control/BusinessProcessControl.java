@@ -1016,7 +1016,23 @@ public class BusinessProcessControl {
 
 
 
-        }else if(type.equals("Quarter")){//季报和报表1相似
+        }else if(type.equals("Quarter")){//季报农低
+            SimpleDateFormat fmt=new SimpleDateFormat("yyyy-MM");
+            Date dt= null;
+            try {
+                dt = fmt.parse(bgmonth);
+                Calendar cl=Calendar.getInstance();
+                cl.setTime(dt);
+                int currentyear=cl.get(Calendar.YEAR);
+                cl.add(Calendar.MONTH,-4);            //设置   bgmonth 为当年当月前四月
+                if(cl.get(Calendar.YEAR)!=currentyear){
+                    cl.set(Calendar.YEAR,currentyear);
+                    cl.set(Calendar.MONTH,0);
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
 
             BusinessProcess bp=new BusinessProcess();
             ComonDao cd=new ComonDao();
