@@ -20,26 +20,24 @@
         <tr>
             <th data-options="field:'totalpeoplenum',width:90,align:'center'">人数</th>
             <th data-options="field:'totalhelpmoney',width:90,align:'center'">资金支出<br>（万元）</th>
-            <th data-options="field:'id',width:80,align:'center',formatter:function(v,r,i){
-                 return r.totalhelpmoney/r.totalpeoplenum||0;
-
+            <th data-options="field:'total_tmpavg',width:80,align:'center',formatter:function(v,r,i){
+                 return (r.totalhelpmoney/r.totalpeoplenum||0).toFixed(2);
             }">月人均补助<br>水平（元）</th>
             <th data-options="field:'atotalpeoplenum',width:90,align:'center'">人数</th>
             <th data-options="field:'atotalhelpmoney',width:90,align:'center'">资金支出<br>（万元）</th>
-            <th data-options="field:'id',width:80,align:'center',formatter:function(v,r,i){
-                 return r.atotalhelpmoney/r.atotalpeoplenum||0;
-
+            <th data-options="field:'atotal_tmpavg',width:80,align:'center',formatter:function(v,r,i){
+                 return (r.atotalhelpmoney/r.atotalpeoplenum||0).toFixed(2);
             }">月人均补助<br>水平（元）</th>
+
             <th data-options="field:'btotalpeoplenum',width:90,align:'center'">人数</th>
             <th data-options="field:'btotalhelpmoney',width:90,align:'center'">资金支出<br>（万元）</th>
-            <th data-options="field:'id',width:80,align:'center',formatter:function(v,r,i){
-                 return r.btotalhelpmoney/r.btotalpeoplenum||0;
-
+            <th data-options="field:'btotal_tmpavg',width:80,align:'center',formatter:function(v,r,i){
+                 return (r.btotalhelpmoney/r.btotalpeoplenum||0).toFixed(2);
             }">月人均补助<br>水平（元）</th>
             <th data-options="field:'ctotalpeoplenum',width:90,align:'center'">人数</th>
             <th data-options="field:'ctotalhelpmoney',width:90,align:'center'">资金支出<br>（万元）</th>
-            <th data-options="field:'id',width:80,align:'center',formatter:function(v,r,i){
-                 return r.ctotalhelpmoney/r.ctotalpeoplenum||0;
+            <th data-options="field:'ctotal_tmpavg',width:80,align:'center',formatter:function(v,r,i){
+                 return (r.ctotalhelpmoney/r.ctotalpeoplenum||0).toFixed(2);
 
             }">月人均补助<br>水平（元）</th>
         </tr>
