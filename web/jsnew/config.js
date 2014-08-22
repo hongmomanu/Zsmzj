@@ -10,7 +10,10 @@
 var extLocation="http://115.193.181.185/easyui/";
 
  //extLocation="http://127.168.2.141/ext-4.2.1/";
- extLocation="http://ics7891pc/easyui/";
+ extLocation="http://112.124.50.195:8080/easyui/";
+if(document.URL.indexOf('localhost')>0){
+    extLocation="http://localhost:8080/easyui/";
+}
 var businessTableType=
         {   'dbgl':"低保",
             'dbbyh':"边缘户",

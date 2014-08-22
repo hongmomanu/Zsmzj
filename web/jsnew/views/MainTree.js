@@ -6,7 +6,7 @@ define(function(){
     var a={
 
         render:function(parameters){
-            $('#menu_shjz .navigation-tree').tree({
+            $('.navigation-tree').tree({
                 //url:'tree_data.json'
                 onClick: function (node){
 

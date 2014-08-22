@@ -4,6 +4,7 @@
 define(function(){
 
     var routes = [{hash:'#menu_shjz', controller:'MainViewController'},
+        {hash:'#menu_propertycheck', controller:'MainViewController'},
         {hash:'#menu_qxgl',  controller:'ManagerController'}];
     //var defaultRoute = '#mainview';
     var defaultRoute ='';

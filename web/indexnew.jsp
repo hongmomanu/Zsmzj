@@ -47,8 +47,8 @@
                 'jquery.easyui.min.js"><\/script>');
         document.write('<script type="text/javascript"  src="'+extLocation+
                 'locale/easyui-lang-zh_CN.js"><\/script>');
-        document.write('<link rel="stylesheet" type="text/css" id="swicth-style" href="'+extLocation+
-                'themes/gray/easyui.css"><\/>');//resources/css/ext-all.css
+        document.write('<link rel="stylesheet" type="text/css"  href="'+extLocation+
+                'themes/default/easyui.css"><\/>');//resources/css/ext-all.css
 
     </script>
     <link rel="stylesheet" type="text/css" href="index.css">
@@ -65,8 +65,8 @@
 
 
         <ul class="ui-skin-nav">
-            <li class="li-skinitem" title="blue"><span class="blue" rel="blue"></span></li>
-            <%--<li class="li-skinitem" title="gray"><span class="gray" rel="gray"></span></li>
+            <%--<li class="li-skinitem" title="blue"><span class="blue" rel="blue"></span></li>
+            <li class="li-skinitem" title="gray"><span class="gray" rel="gray"></span></li>
             <li class="li-skinitem" title="default"><span class="default" rel="default"></span></li>
             <li class="li-skinitem" title="bootstrap"><span class="bootstrap" rel="bootstrap"></span></li>
             <li class="li-skinitem" title="black"><span class="black" rel="black"></span></li>
